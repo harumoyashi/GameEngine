@@ -111,7 +111,7 @@ public:
 	//"volume" ボリューム
 	//0で無音、1がデフォルト音量。あまり大きくしすぎると音割れする
 	//return 再生ハンドル
-	uint32_t PlayWave(uint32_t soundDataHandle, bool loopFlag = false, float volume = 1.0f);
+	uint32_t PlayWave(uint32_t soundDataHandle, const bool& loopFlag = false, const int& roopNum = 0, float volume = 1.0f);
 
 	//音声削除
 	//"voiceHandle" 再生ハンドル

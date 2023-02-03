@@ -141,7 +141,7 @@ void NAudio::Unload(SoundData* soundData) {
 	soundData->wfex = {};
 }
 
-uint32_t NAudio::PlayWave(uint32_t soundDataHandle, bool loopFlag, float volume) {
+uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, const int& roopNum, float volume) {
 	HRESULT result;
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 
@@ -175,11 +175,19 @@ uint32_t NAudio::PlayWave(uint32_t soundDataHandle, bool loopFlag, float volume)
 		// 無限ループ
 		buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	}
+	else
+	{
+		buf.LoopCount = roopNum;
+	}
 
 	// 波形データの再生
-	result = pSourceVoice->SubmitSourceBuffer(&buf);
-	pSourceVoice->SetVolume(volume);
-	result = pSourceVoice->Start();
+	if (buf.LoopCount >= 0)
+	{
+		result = pSourceVoice->SubmitSourceBuffer(&buf);
+		pSourceVoice->SetVolume(volume);
+		result = pSourceVoice->Start();
+	}
+	buf.LoopCount--;
 
 	return handle;
 }

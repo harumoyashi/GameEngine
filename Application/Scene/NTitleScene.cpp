@@ -16,8 +16,8 @@ void NTitleScene::Init()
 #pragma region	オーディオ初期化
 	audio = NAudio::GetInstance();
 	audio->Init();
-	//soundData[0] = audio->LoadWave("clear_BGM.wav");
-	//audio->PlayWave(soundData[0],true);
+	soundData[0] = audio->LoadWave("clear_BGM.wav");
+	audio->PlayWave(soundData[0]);
 #pragma endregion
 #pragma region	カメラ初期化
 	camera.ProjectiveProjection();
@@ -100,6 +100,11 @@ void NTitleScene::Update()
 	//ビュー行列の再生成
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
+
+	if (NInput::IsKey(DIK_RETURN))
+	{
+		audio->StopWave(soundData[0]);
+	}
 
 	if (timer < 10000)
 	{
