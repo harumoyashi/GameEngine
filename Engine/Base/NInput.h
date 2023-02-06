@@ -15,6 +15,9 @@ private:
 	static ComPtr<IDirectInputDevice8> keyboard;
 	static ComPtr<IDirectInput8> directInput;
 
+	//振動
+	XINPUT_VIBRATION vibration;
+
 public:
 	NInput() {};
 	static NInput* GetInstance();
@@ -39,9 +42,6 @@ public:
 
 	//接続されてるか
 	bool isConnect = false;
-
-	//振動
-	XINPUT_VIBRATION vibration;
 
 public:
 	//初期化
@@ -74,5 +74,7 @@ public:
 	//isLeft:右左どっち！
 	bool IsStickDown(bool isLeft = true);
 
-	void Vibration(int leftVibrationPower, int rightVibrationPower);
+	//コントローラーの振動を設定
+	//パワーは0.0f~1.0fで入力してね
+	void Vibration(float leftVibrationPower, float rightVibrationPower);
 };

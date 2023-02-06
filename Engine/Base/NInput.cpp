@@ -1,4 +1,5 @@
 #include "NInput.h"
+#include "NMathUtil.h"
 #include <cassert>
 
 //xinput.lib をインポート
@@ -204,9 +205,12 @@ bool NInput::IsStickDown(bool isLeft)
 	}
 }
 
-void NInput::Vibration(int leftVibrationPower, int rightVibrationPower)
+void NInput::Vibration(float leftVibrationPower, float rightVibrationPower)
 {
-	vibration.wLeftMotorSpeed = leftVibrationPower;
-	vibration.wRightMotorSpeed = rightVibrationPower;
+	leftVibrationPower = MathUtil::Clamp(leftVibrationPower, 0.0f, 1.0f);
+	rightVibrationPower = MathUtil::Clamp(rightVibrationPower, 0.0f, 1.0f);
+
+	vibration.wLeftMotorSpeed = (int)(leftVibrationPower * 65535.0f);
+	vibration.wRightMotorSpeed = (int)(rightVibrationPower * 65535.0f);
 	XInputSetState(0, &vibration);
 }
