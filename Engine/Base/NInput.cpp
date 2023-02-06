@@ -203,3 +203,10 @@ bool NInput::IsStickDown(bool isLeft)
 			statePad.Gamepad.sThumbRY <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
 	}
 }
+
+void NInput::Vibration(int leftVibrationPower, int rightVibrationPower)
+{
+	vibration.wLeftMotorSpeed = leftVibrationPower;
+	vibration.wRightMotorSpeed = rightVibrationPower;
+	XInputSetState(0, &vibration);
+}

@@ -40,6 +40,9 @@ public:
 	//接続されてるか
 	bool isConnect = false;
 
+	//振動
+	XINPUT_VIBRATION vibration;
+
 public:
 	//初期化
 	void PadInit();
@@ -70,4 +73,6 @@ public:
 	//スティックを下に倒した瞬間か
 	//isLeft:右左どっち！
 	bool IsStickDown(bool isLeft = true);
+
+	void Vibration(int leftVibrationPower, int rightVibrationPower);
 };
