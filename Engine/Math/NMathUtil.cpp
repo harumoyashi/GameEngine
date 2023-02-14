@@ -1,4 +1,9 @@
 #include "NMathUtil.h"
+#include <math.h>
+#include <random>
+
+std::random_device seed;
+std::mt19937 engine(seed());
 
 NMatrix4 MathUtil::MatView(NVector3 eye, NVector3 target, NVector3 up)
 {
@@ -103,14 +108,16 @@ float MathUtil::Sign(float value)
 	}
 }
 
-float MathUtil::Clamp(float value, float max, float min)
+int MathUtil::Random(int min, int max)
 {
-	// 値が最大値を上回っていたら最大値を返す
-	if (value >= max) return max;
+	std::uniform_real_distribution<> dist1(min, max);
 
-	// 値が最小値を下回っていたら最小値を返す
-	if (value <= min) return min;
+	return dist1(engine);
+}
 
-	// どちらにも当てはまらなかったら値をそのまま返す
-	return value;
+float MathUtil::Random(float min, float max)
+{
+	std::uniform_real_distribution<> dist1(min, max);
+
+	return dist1(engine);
 }

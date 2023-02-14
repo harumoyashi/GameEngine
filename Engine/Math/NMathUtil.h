@@ -1,5 +1,4 @@
 #pragma once
-#include <math.h>
 #include "NVector2.h"
 #include "NVector3.h"
 #include "NMatrix4.h"
@@ -22,6 +21,21 @@ namespace MathUtil
 	int Sign(int value);
 	//符号返す
 	float Sign(float value);
+	//ランダムな値を返す
+	int Random(int min,int max);
+	//ランダムな値を返す
+	float Random(float min,float max);
 	//最小、最大値設定
-	float Clamp(float value, float max, float min);
+	template <typename Type>
+	Type Clamp(Type value, Type min, Type max)
+	{
+		// 値が最大値を上回っていたら最大値を返す
+		if (value >= max) return max;
+
+		// 値が最小値を下回っていたら最小値を返す
+		if (value <= min) return min;
+
+		// どちらにも当てはまらなかったら値をそのまま返す
+		return static_cast<Type>(value);
+	}
 }

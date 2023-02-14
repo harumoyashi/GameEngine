@@ -1,4 +1,13 @@
 #pragma once
+
+//時間取得の際に使う時間の種類
+enum class TimeType
+{
+	MilliSecond,
+	Second,
+	Minute
+};
+
 class NTimer
 {
 private:
@@ -28,4 +37,6 @@ public:
 	inline float GetTimer() { return (float)timer; }
 	//タイマーの進み具合を取得
 	inline float GetTimeRate() { return (float)timer / (float)maxTimer; }
+	//システムが開始されてからの時間を取得
+	unsigned long GetNowTime(const TimeType& timeType);
 };

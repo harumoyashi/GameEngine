@@ -15,9 +15,6 @@ void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
 	audio = NAudio::GetInstance();
-	audio->Init();
-	soundData[0] = audio->LoadWave("clear_BGM.wav");
-	audio->PlayWave(soundData[0]);
 #pragma endregion
 #pragma region	カメラ初期化
 	camera.ProjectiveProjection();
@@ -48,7 +45,7 @@ void NTitleScene::Init()
 	obj[2]->SetModel(model[1].get());
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,0,0 };
+	obj[0]->position = { 0,2,0 };
 	obj[1]->position = { 2,0,0 };
 	obj[2]->position = { 0,0,0 };
 	obj[2]->scale = { 10,0.1f,10 };
@@ -86,6 +83,8 @@ void NTitleScene::Init()
 	lightGroup->SetPointLightActive(2, false);
 
 	lightGroup->SetCircleShadowActive(0, true);
+
+	timer.SetMaxTimer(10);
 }
 
 void NTitleScene::Update()
@@ -101,34 +100,22 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	if (NInput::IsKey(DIK_RETURN))
+	timer.Update();
+	if (timer.GetisTimeOut())
 	{
-		audio->StopWave(soundData[0]);
+		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
+		timer.Reset();
 	}
-
-	if (timer < 10000)
-	{
-		timer += 0.02f;
-	}
-	else
-	{
-		timer = 0;
-	}
-	obj[0]->position.y = sinf(timer) * 2.0f;
-	if (NInput::IsKey(DIK_UP)) { obj[2]->position.y += 0.5f; }
-	else if (NInput::IsKey(DIK_DOWN)) { obj[2]->position.y -= 0.5f; }
-	if (NInput::IsKey(DIK_RIGHT)) { obj[2]->position.x += 0.5f; }
-	else if (NInput::IsKey(DIK_LEFT)) { obj[2]->position.x -= 0.5f; }
 
 	if (isCol)
 	{
 		obj[0]->model->material.SetColor(255, 0, 0, 255);
-		NInput::GetInstance()->Vibration(30000,1000);
+		NInput::GetInstance()->Vibration(30000, 1000);
 	}
 	else
 	{
 		obj[0]->model->material.SetColor(255, 255, 255, 255);
-		NInput::GetInstance()->Vibration(0,0);
+		NInput::GetInstance()->Vibration(0, 0);
 	}
 	obj[2]->model->material.SetColor(255, 255, 255, 255);
 

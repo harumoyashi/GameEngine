@@ -15,6 +15,7 @@
 #include "NCamera.h"
 #include "NCollision.h"
 #include "NLightGroup.h"
+#include "NTimer.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -51,7 +52,7 @@ private:
 
 	std::unique_ptr<NLightGroup> lightGroup;
 
-	float timer;
+	NTimer timer;
 
 public:
 	//インスタンス取得

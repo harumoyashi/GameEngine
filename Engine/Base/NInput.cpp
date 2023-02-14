@@ -207,8 +207,8 @@ bool NInput::IsStickDown(bool isLeft)
 
 void NInput::Vibration(float leftVibrationPower, float rightVibrationPower)
 {
-	leftVibrationPower = MathUtil::Clamp(leftVibrationPower, 0.0f, 1.0f);
-	rightVibrationPower = MathUtil::Clamp(rightVibrationPower, 0.0f, 1.0f);
+	leftVibrationPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
+	rightVibrationPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
 
 	vibration.wLeftMotorSpeed = (int)(leftVibrationPower * 65535.0f);
 	vibration.wRightMotorSpeed = (int)(rightVibrationPower * 65535.0f);
