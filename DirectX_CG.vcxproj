@@ -149,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="NCircleShadow.h" />
+    <ClInclude Include="NColor.h" />
     <ClInclude Include="NDirectionalLight.h" />
     <ClInclude Include="Engine\Audio\NAudio.h" />
     <ClInclude Include="Engine\3d\NCamera.h" />
@@ -181,8 +182,10 @@
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
+    <ClInclude Include="NTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NColor.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
     <ClCompile Include="Engine\Audio\NAudio.cpp" />
     <ClCompile Include="Engine\3d\NCamera.cpp" />
@@ -214,6 +217,7 @@
     <ClCompile Include="Engine\Math\NVector2.cpp" />
     <ClCompile Include="Engine\Math\NVector3.cpp" />
     <ClCompile Include="NResultScene.cpp" />
+    <ClCompile Include="NTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli" />

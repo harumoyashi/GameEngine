@@ -82,6 +82,12 @@
     <Filter Include="Engine\ヘッダー ファイル\Light">
       <UniqueIdentifier>{cc04c958-969a-477d-90f5-3c0eef52b2e7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\Util">
+      <UniqueIdentifier>{5e6f6282-45a8-4c3e-a247-1ec7b415dd8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\Util">
+      <UniqueIdentifier>{046cd6df-1f79-47bd-90b6-63817f1681cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -183,6 +189,12 @@
     <ClInclude Include="NResultScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="NColor.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NTimer.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -277,6 +289,12 @@
     </ClCompile>
     <ClCompile Include="NResultScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NColor.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NTimer.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
