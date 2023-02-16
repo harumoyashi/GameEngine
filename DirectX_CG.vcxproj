@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="NAudioManager.h" />
     <ClInclude Include="NCircleShadow.h" />
     <ClInclude Include="NColor.h" />
     <ClInclude Include="NDirectionalLight.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="NTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="NAudioManager.cpp" />
     <ClCompile Include="NColor.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
     <ClCompile Include="Engine\Audio\NAudio.cpp" />

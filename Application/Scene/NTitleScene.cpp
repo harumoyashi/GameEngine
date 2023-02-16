@@ -1,6 +1,7 @@
 #include "NDX12.h"
 #include "NTitleScene.h"
 #include "NSceneManager.h"
+#include "NAudioManager.h"
 #include "NInput.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
@@ -14,7 +15,8 @@ NTitleScene* NTitleScene::GetInstance()
 void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
-	audio = NAudio::GetInstance();
+	NAudio::GetInstance()->Init();
+	//NAudioManager::Play("WinSE",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	camera.ProjectiveProjection();
@@ -92,6 +94,11 @@ void NTitleScene::Update()
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
 		NSceneManager::SetScene(GAMESCENE);
+	}
+
+	if (NInput::IsKeyDown(DIK_RETURN))
+	{
+		NAudioManager::Play("WinSE",false,0.5f);
 	}
 
 	lightGroup->Update();

@@ -4,6 +4,7 @@
 #include "NAudio.h"
 #include "NTexture.h"
 #include "NSceneManager.h"
+#include "NAudioManager.h"
 
 //Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -26,6 +27,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #pragma region オーディオ初期化
 	NAudio* audio = NAudio::GetInstance();
 	audio->Init();
+	NAudioManager::AllLoad();
 #pragma endregion
 #pragma region テクスチャマネージャー初期化
 	NTextureManager* texManager = NTextureManager::GetInstance();
