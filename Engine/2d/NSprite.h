@@ -3,6 +3,7 @@
 #include "NRootParam.h"
 #include "NGPipeline.h"
 #include "NMatrix4.h"
+#include "NColor.h"
 
 #include <d3dx12.h>
 #include <wrl.h>
@@ -17,7 +18,7 @@ struct VertexUV
 //定数バッファ用データ構造体（3D変換行列）
 struct  SpriteCBDataTransform
 {
-	XMFLOAT4 color;	//色(RGBA)
+	NColor color;	//色(RGBA)
 	NMatrix4 mat;	//3D変換行列
 };
 

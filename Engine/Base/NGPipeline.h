@@ -16,6 +16,13 @@ struct PipelineSet
 	NRootSignature rootSig;
 };
 
+enum class PipelineType
+{
+	Basic,
+	Sprite,
+	Particle,
+};
+
 class NGPipeline
 {
 private:

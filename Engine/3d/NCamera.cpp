@@ -8,12 +8,6 @@ NCamera* NCamera::nowCamera = _nCamera.get();
 void NCamera::CreateMatView()
 {
 	matView = MathUtil::MatView(eye, target, up);
-	/*XMMATRIX mat = XMMatrixLookAtLH(XMVECTOR({eye.x,eye.y,eye.z,0}), XMVECTOR({ target.x,target.y,target.z,0 }) , XMVECTOR({ up.x,up.y,up.z,0 }) );
-	for (size_t i = 0; i < 4; i++) {
-		for (size_t j = 0; j < 4; j++) {
-			matView.m[i][j] = mat.r[i].m128_f32[j];
-		}
-	}*/
 }
 
 void NCamera::ProjectiveProjection()

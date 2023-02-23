@@ -253,12 +253,12 @@ void NSprite::SetTexHandle(std::string texHandle)
 
 void NSprite::SetColor(int R, int G, int B, int A)
 {
-	XMFLOAT4 color = {};
+	NColor color = {};
 
-	color.x = static_cast<float>(R) / 255.0f;
-	color.y = static_cast<float>(G) / 255.0f;
-	color.z = static_cast<float>(B) / 255.0f;
-	color.w = static_cast<float>(A) / 255.0f;
+	color.r = static_cast<float>(R) / 255.0f;
+	color.g = static_cast<float>(G) / 255.0f;
+	color.b = static_cast<float>(B) / 255.0f;
+	color.a = static_cast<float>(A) / 255.0f;
 	constMapTransform->color = color;
 }
 
