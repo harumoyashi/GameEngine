@@ -1,6 +1,9 @@
 #include "NWindows.h"
+#include "imgui_impl_win32.h"
 
 #pragma comment(lib,"winmm.lib")
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 NWindows* NWindows::GetInstance()
 {
@@ -12,6 +15,12 @@ NWindows* NWindows::GetInstance()
 //面倒だけど書かなきゃいけない関数
 LRESULT NWindows::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	//ImGui用ウィンドウプロシージャ呼び出し
+	if (ImGui_ImplWin32_WndProcHandler(hwnd,msg,wparam,lparam))
+	{
+		return true;
+	}
+
 	switch (msg)
 	{
 		//ウィンドウが破棄されたら呼ばれる

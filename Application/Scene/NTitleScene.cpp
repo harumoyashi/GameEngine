@@ -2,6 +2,7 @@
 #include "NTitleScene.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "imgui.h"
 #include "NInput.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
@@ -91,6 +92,8 @@ void NTitleScene::Init()
 
 void NTitleScene::Update()
 {
+	ImGui::ShowDemoWindow();
+
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
 		NSceneManager::SetScene(GAMESCENE);

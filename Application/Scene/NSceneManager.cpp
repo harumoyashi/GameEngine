@@ -1,4 +1,6 @@
 #include "NSceneManager.h"
+#include "ImGuiManager.h"
+#include "imgui.h"
 #pragma region staticメンバ変数初期化
 //シーンの初期化
 int NSceneManager::scene = TITLESCENE;
@@ -13,6 +15,9 @@ NSceneManager* NSceneManager::GetInstance()
 
 void NSceneManager::Init()
 {
+#pragma region ImGui初期化
+	ImGuiManager::GetInstance()->Init();
+#pragma endregion
 	titleScene->Init();
 	gameScene->Init();
 	if (scene == TITLESCENE)
@@ -27,6 +32,7 @@ void NSceneManager::Init()
 
 void NSceneManager::Update()
 {
+	ImGuiManager::GetInstance()->Begin();
 	//タイトルシーンの更新処理
 	if (scene == TITLESCENE) {
 		titleScene->Update();
@@ -51,6 +57,12 @@ void NSceneManager::Update()
 		//シーン変更フラグOFFにする
 		isSceneChange = false;
 	}
+
+	/*ImGui::Begin("maru");
+	ImGui::Text("yoyoyo");
+	ImGui::End();
+	ImGui::ShowDemoWindow();*/
+	ImGuiManager::GetInstance()->End();
 }
 
 void NSceneManager::Draw()
@@ -74,11 +86,14 @@ void NSceneManager::Draw()
 	else if (scene == GAMESCENE) {
 		gameScene->Draw();
 	}
+
+	ImGuiManager::GetInstance()->Draw();
 	NDX12::GetInstance()->PostDraw(preDraw->barrierDesc);
 }
 
 void NSceneManager::Finalize()
 {
+	ImGuiManager::GetInstance()->Finalize();
 }
 
 void NSceneManager::SetScene(int selectScene)

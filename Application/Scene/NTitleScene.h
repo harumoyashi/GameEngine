@@ -54,6 +54,9 @@ private:
 
 	NTimer timer;
 
+	bool flag = true;
+	float color = 0.0f;
+
 public:
 	//インスタンス取得
 	static NTitleScene* GetInstance();

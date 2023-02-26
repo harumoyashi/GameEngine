@@ -44,7 +44,7 @@ public:
 	void Finalize();
 #pragma endregion
 #pragma region ÉQÉbÉ^Å[
-	HWND GetHwnd()const { return hwnd; }
-	HINSTANCE GetHInstance()const { return w.hInstance; }
+	inline HWND GetHwnd()const { return hwnd; }
+	inline HINSTANCE GetHInstance()const { return w.hInstance; }
 #pragma endregion
 };

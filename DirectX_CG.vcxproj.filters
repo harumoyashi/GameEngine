@@ -192,11 +192,14 @@
     <ClInclude Include="NColor.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NTimer.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+    <ClInclude Include="imgui\ImGuiManager.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="NAudioManager.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NTimer.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,11 +299,14 @@
     <ClCompile Include="NColor.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NTimer.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+    <ClCompile Include="imgui\ImGuiManager.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="NAudioManager.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NTimer.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

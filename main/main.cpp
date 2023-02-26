@@ -44,14 +44,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (win->WindowMessage()) { break; }
 #pragma endregion
 #pragma region DirectX毎フレーム処理
-		//DirectX毎フレーム　ここから
 		NInput::KeyUpdate();
 		NInput::GetInstance()->PadUpdate();
 		sceneMane->Update();
 		sceneMane->Draw();
+		
 	}
 #pragma endregion
-#pragma region WindowsAPI後始末
+#pragma region 後始末
 	audio->Finalize();
 	win->Finalize();
 	sceneMane->Finalize();

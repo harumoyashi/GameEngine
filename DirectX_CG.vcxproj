@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="imgui\ImGuiManager.h" />
     <ClInclude Include="NAudioManager.h" />
     <ClInclude Include="NCircleShadow.h" />
     <ClInclude Include="NColor.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="NTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="imgui\ImGuiManager.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
     <ClCompile Include="NColor.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
