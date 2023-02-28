@@ -180,6 +180,7 @@
     <ClInclude Include="Engine\Base\NWindows.h" />
     <ClInclude Include="Engine\Math\NVector2.h" />
     <ClInclude Include="Engine\Math\NVector3.h" />
+    <ClInclude Include="NGame.h" />
     <ClInclude Include="NLightGroup.h" />
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NResultScene.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="Engine\Math\NMatrix4.cpp" />
     <ClCompile Include="Engine\Base\NDX12.cpp" />
     <ClCompile Include="Engine\Base\NInput.cpp" />
+    <ClCompile Include="NGame.cpp" />
     <ClCompile Include="NLightGroup.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="Engine\Math\NQuaternion.cpp" />
