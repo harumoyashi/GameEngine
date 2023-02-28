@@ -6,8 +6,9 @@
 #include "NTexture.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "NFramework.h"
 
-class NGame
+class NGame :public NFramework
 {
 private:
 	NWindows* win;
@@ -17,15 +18,9 @@ private:
 	NTextureManager* texManager;
 	NSceneManager* sceneMane;
 
-	//ゲーム終了フラグ
-	bool isGameEnd = false;
-
 public:
-	void Init();
-	void Update();
-	void Draw();
-	void Finalize();
-
-	//ゲーム終了フラグ取得
-	inline bool GetIsGameEnd() { return isGameEnd; }
+	void Init() override;
+	void Update() override;
+	void Draw() override;
+	void Finalize() override;
 };

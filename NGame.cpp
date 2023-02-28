@@ -2,6 +2,8 @@
 
 void NGame::Init()
 {
+	NFramework::Init();
+
 #pragma region WindowsAPI初期化
 	win = NWindows::GetInstance();
 	win->Set();
@@ -35,8 +37,9 @@ void NGame::Init()
 
 void NGame::Update()
 {
+	NFramework::Update();
 #pragma region ウィンドウメッセージ処理
-	if (win->WindowMessage()) { isGameEnd = true; }
+	if (win->WindowMessage()) { NFramework::isGameEnd = true; }
 #pragma endregion
 #pragma region DirectX毎フレーム処理
 	NInput::KeyUpdate();
@@ -57,4 +60,5 @@ void NGame::Finalize()
 	win->Finalize();
 	sceneMane->Finalize();
 #pragma endregion
+	NFramework::Finalize();
 }

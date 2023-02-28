@@ -148,7 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="imgui\ImGuiManager.h" />
+    <ClInclude Include="imgui\NImGuiManager.h" />
     <ClInclude Include="NAudioManager.h" />
     <ClInclude Include="NCircleShadow.h" />
     <ClInclude Include="NColor.h" />
@@ -180,6 +180,7 @@
     <ClInclude Include="Engine\Base\NWindows.h" />
     <ClInclude Include="Engine\Math\NVector2.h" />
     <ClInclude Include="Engine\Math\NVector3.h" />
+    <ClInclude Include="NFramework.h" />
     <ClInclude Include="NGame.h" />
     <ClInclude Include="NLightGroup.h" />
     <ClInclude Include="NPointLight.h" />
@@ -188,7 +189,7 @@
     <ClInclude Include="NTimer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="imgui\ImGuiManager.cpp" />
+    <ClCompile Include="imgui\NImGuiManager.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
     <ClCompile Include="NColor.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Engine\Math\NMatrix4.cpp" />
     <ClCompile Include="Engine\Base\NDX12.cpp" />
     <ClCompile Include="Engine\Base\NInput.cpp" />
+    <ClCompile Include="NFramework.cpp" />
     <ClCompile Include="NGame.cpp" />
     <ClCompile Include="NLightGroup.cpp" />
     <ClCompile Include="main\main.cpp" />

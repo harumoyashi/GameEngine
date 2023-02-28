@@ -192,7 +192,7 @@
     <ClInclude Include="NColor.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\ImGuiManager.h">
+    <ClInclude Include="imgui\NImGuiManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="NAudioManager.h">
@@ -202,6 +202,9 @@
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
     <ClInclude Include="NGame.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NFramework.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -302,7 +305,7 @@
     <ClCompile Include="NColor.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\ImGuiManager.cpp">
+    <ClCompile Include="imgui\NImGuiManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="NAudioManager.cpp">
@@ -312,6 +315,9 @@
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="NGame.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NFramework.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

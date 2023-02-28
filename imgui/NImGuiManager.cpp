@@ -1,16 +1,16 @@
-#include "ImGuiManager.h"
+#include "NImGuiManager.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx12.h"
 #include "NWindows.h"
 
-ImGuiManager* ImGuiManager::GetInstance()
+NImGuiManager* NImGuiManager::GetInstance()
 {
-	static ImGuiManager instance;
+	static NImGuiManager instance;
 	return &instance;
 }
 
-void ImGuiManager::Init()
+void NImGuiManager::Init()
 {
 	//ImGuiのコンテキストを生成
 	ImGui::CreateContext();
@@ -41,7 +41,7 @@ void ImGuiManager::Init()
 	io.Fonts->AddFontDefault();
 }
 
-void ImGuiManager::Finalize()
+void NImGuiManager::Finalize()
 {
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
@@ -50,19 +50,19 @@ void ImGuiManager::Finalize()
 	srvHeap_.Reset();
 }
 
-void ImGuiManager::Begin()
+void NImGuiManager::Begin()
 {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 }
 
-void ImGuiManager::End()
+void NImGuiManager::End()
 {
 	ImGui::Render();
 }
 
-void ImGuiManager::Draw()
+void NImGuiManager::Draw()
 {
 	//デスクリプタヒープの配列をセットするコマンド
 	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get()};
