@@ -39,7 +39,7 @@ void NGame::Update()
 {
 	NFramework::Update();
 #pragma region ウィンドウメッセージ処理
-	if (win->WindowMessage()) { NFramework::isGameEnd = true; }
+	if (win->WindowMessage()) { NFramework::SetIsGameEnd(true); }
 #pragma endregion
 #pragma region DirectX毎フレーム処理
 	NInput::KeyUpdate();
