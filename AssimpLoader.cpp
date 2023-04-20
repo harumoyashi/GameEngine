@@ -7,12 +7,14 @@
 
 namespace fs = std::filesystem;
 
+//ディレクトリパスのみにする
 std::wstring GetDirectoryPath(const std::wstring& origin)
 {
     fs::path p = origin.c_str();
     return p.remove_filename().c_str();
 }
 
+//型変換
 std::string ToUTF8(const std::wstring& value)
 {
     auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
