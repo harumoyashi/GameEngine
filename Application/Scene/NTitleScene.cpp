@@ -6,6 +6,7 @@
 #include "NInput.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
+#include "AssimpLoader.h"
 
 NTitleScene* NTitleScene::GetInstance()
 {
@@ -46,6 +47,24 @@ void NTitleScene::Init()
 	obj[0]->SetModel(model[0].get());
 	obj[1]->SetModel(model[0].get());
 	obj[2]->SetModel(model[1].get());
+
+	//FBX読み込み
+	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
+	std::vector<Mesh> meshes;
+
+	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
+	{
+		modelFile,
+		meshes,
+		false,
+		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
+	};
+
+	AssimpLoader loader;
+	if (!loader.Load(importSetting))
+	{
+		
+	}
 
 #pragma region オブジェクトの初期値設定
 	obj[0]->position = { 0,2,0 };
@@ -101,7 +120,7 @@ void NTitleScene::Update()
 
 	if (NInput::IsKeyDown(DIK_RETURN))
 	{
-		NAudioManager::Play("WinSE",false,0.5f);
+		NAudioManager::Play("WinSE", false, 0.5f);
 	}
 
 	lightGroup->Update();
