@@ -155,6 +155,7 @@
     <ClInclude Include="NAudioManager.h" />
     <ClInclude Include="NCircleShadow.h" />
     <ClInclude Include="NColor.h" />
+    <ClInclude Include="NConstBuff.h" />
     <ClInclude Include="NDirectionalLight.h" />
     <ClInclude Include="Engine\Audio\NAudio.h" />
     <ClInclude Include="Engine\3d\NCamera.h" />
@@ -196,6 +197,7 @@
     <ClCompile Include="imgui\NImGuiManager.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
     <ClCompile Include="NColor.cpp" />
+    <ClCompile Include="NConstBuff.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
     <ClCompile Include="Engine\Audio\NAudio.cpp" />
     <ClCompile Include="Engine\3d\NCamera.cpp" />

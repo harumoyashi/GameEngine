@@ -27,8 +27,8 @@ private:
 	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
-	ConstBufferDataTransform* constMapTransform;	//3D変換行列
-	ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
+	//ConstBufferDataTransform* constMapTransform;	//3D変換行列
+	//ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
 
 	NMatrix4 matWorld;	//3D変換行列
 

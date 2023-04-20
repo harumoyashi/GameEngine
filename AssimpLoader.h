@@ -29,6 +29,9 @@ struct ImportSettings
 class AssimpLoader
 {
 public:
+	NVertexBuff vertexBuff;
+	NIndexBuff indexBuff;
+
 	bool Load(ImportSettings setting); // ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
 
 private:

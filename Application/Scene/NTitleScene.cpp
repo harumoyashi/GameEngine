@@ -31,24 +31,20 @@ void NTitleScene::Init()
 	//立方体情報
 
 	//モデル情報
-	for (int i = 0; i < maxModel; i++)
-	{
-		model[i] = std::make_unique<NModel>();
-	}
-	model[0]->Create("sphere");
-	model[1]->Create("Cube");
+	
 
 	//オブジェクト
-	for (int i = 0; i < maxObj; i++)
-	{
-		obj[i] = std::make_unique<NObj3d>();
-		obj[i]->Init();
-	}
-	obj[0]->SetModel(model[0].get());
-	obj[1]->SetModel(model[0].get());
-	obj[2]->SetModel(model[1].get());
+	
 
 	//FBX読み込み
+	// メッシュの数だけ頂点バッファを用意する
+	vertexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		vertexBuffers[i]->Init(meshes[i].vertices);
+		indexBuffers[i]->Init(meshes[i].indices);
+	}
+
 	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 	std::vector<Mesh> meshes;
 
@@ -67,27 +63,11 @@ void NTitleScene::Init()
 	}
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,2,0 };
-	obj[1]->position = { 2,0,0 };
-	obj[2]->position = { 0,0,0 };
-	obj[2]->scale = { 10,0.1f,10 };
-
-	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
-	{
-		obj[i]->UpdateMatrix();
-	}
-
-	sphere.pos = obj[0]->position;
-	sphere.radius = obj[0]->scale.x;
-	plane.normal = { 0,1,0 };
-	plane.distance = obj[2]->position.Length();
+	
 #pragma endregion
 	//背景スプライト生成
 
 	//前景スプライト生成
-	foreSprite[0] = std::make_unique<NSprite>();
-	foreSprite[0]->CreateSprite("hamu");
 
 #pragma endregion
 	// ライト生成
@@ -167,18 +147,29 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (int i = 0; i < maxObj; i++)
+
+	// メッシュの数だけインデックス分の描画を行う処理を回す
+	for (size_t i = 0; i < meshes.size(); i++)
 	{
-		obj[i]->CommonBeginDraw();
-		obj[i]->Draw();
+		auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+		auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+
+		// パイプラインステートとルートシグネチャの設定コマンド
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
+
+		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuff->GetGPUVirtualAddress());
+
+		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
+
+		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	}
 
 	//前景スプライト
-	if (isCol)
-	{
-		foreSprite[0]->CommonBeginDraw();
-		foreSprite[0]->Draw();
-	}
+	
 
 	// 4.描画コマンドここまで
 #pragma endregion

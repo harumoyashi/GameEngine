@@ -1,9 +1,9 @@
-#include "AssimpLoader.h"
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <d3dx12.h>
 #include <filesystem>
+#include "AssimpLoader.h"
 
 namespace fs = std::filesystem;
 

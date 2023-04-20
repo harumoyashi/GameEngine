@@ -2,6 +2,7 @@
 #include "NDX12.h"
 #include "NVertexBuff.h"
 #include "NIndexBuff.h"
+#include "NConstBuff.h"
 #include "NMaterial.h"
 
 #include <wrl.h>
@@ -15,6 +16,7 @@ public:
 	std::string name;
 	NVertexBuff vertexBuff;
 	NIndexBuff indexBuff;
+	NConstBuff constBuff;
 
 	std::vector<NVertexPNU> vertices;
 	std::vector<UINT> indices;

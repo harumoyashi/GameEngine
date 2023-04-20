@@ -57,6 +57,10 @@ private:
 	bool flag = true;
 	float color = 0.0f;
 
+	std::vector<Mesh> meshes; // メッシュの配列
+	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
+	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
+
 public:
 	//インスタンス取得
 	static NTitleScene* GetInstance();

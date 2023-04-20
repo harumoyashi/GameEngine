@@ -31,6 +31,9 @@ public:
 	//Vertex(PosNormalUv)のvectorで頂点バッファを作る
 	void Init(std::vector<NVertexPNU> vertices);
 
+	//Vertex(assimp用)のvectorで頂点バッファを作る
+	void Init(std::vector<NVertexAssimp> vertices);
+
 	ComPtr<ID3D12Resource> buff = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW view{};
 };
