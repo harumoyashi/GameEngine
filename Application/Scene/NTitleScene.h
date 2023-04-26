@@ -16,6 +16,8 @@
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NTimer.h"
+#include "AssimpLoader.h"
+#include "NConstBuff.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -60,6 +62,8 @@ private:
 	std::vector<Mesh> meshes; // メッシュの配列
 	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
+
+	NConstBuff cb;
 
 public:
 	//インスタンス取得

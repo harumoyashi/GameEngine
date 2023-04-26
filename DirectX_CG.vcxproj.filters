@@ -211,7 +211,7 @@
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NConstBuff.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -330,7 +330,7 @@
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NConstBuff.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Buffer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

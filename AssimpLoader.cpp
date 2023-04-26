@@ -137,6 +137,9 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         dst.indices[i * 3 + 1] = face.mIndices[1];
         dst.indices[i * 3 + 2] = face.mIndices[2];
     }
+
+    indexBuff.Init(dst.indices);
+    vertexBuff.Init(dst.vertices);
 }
 
 void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)

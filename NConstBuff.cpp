@@ -1,6 +1,14 @@
 #include "NConstBuff.h"
 #include "NCamera.h"
 
+void NConstBuff::Init()
+{
+	SetHeap();
+	SetResource();
+	Create();
+	Mapping();
+}
+
 void NConstBuff::SetHeap()
 {
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p

@@ -6,7 +6,6 @@
 #include "NInput.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
-#include "AssimpLoader.h"
 
 NTitleScene* NTitleScene::GetInstance()
 {
@@ -62,6 +61,11 @@ void NTitleScene::Init()
 		
 	}
 
+	cb.SetHeap();
+	cb.SetResource();
+	cb.Create();
+	cb.Mapping();
+
 #pragma region オブジェクトの初期値設定
 	
 #pragma endregion
@@ -109,35 +113,35 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	timer.Update();
-	if (timer.GetisTimeOut())
-	{
-		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
-		timer.Reset();
-	}
+	//timer.Update();
+	//if (timer.GetisTimeOut())
+	//{
+	//	obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
+	//	timer.Reset();
+	//}
 
-	if (isCol)
-	{
-		obj[0]->model->material.SetColor(255, 0, 0, 255);
-		NInput::GetInstance()->Vibration(30000, 1000);
-	}
-	else
-	{
-		obj[0]->model->material.SetColor(255, 255, 255, 255);
-		NInput::GetInstance()->Vibration(0, 0);
-	}
-	obj[2]->model->material.SetColor(255, 255, 255, 255);
+	//if (isCol)
+	//{
+	//	obj[0]->model->material.SetColor(255, 0, 0, 255);
+	//	NInput::GetInstance()->Vibration(30000, 1000);
+	//}
+	//else
+	//{
+	//	obj[0]->model->material.SetColor(255, 255, 255, 255);
+	//	NInput::GetInstance()->Vibration(0, 0);
+	//}
+	//obj[2]->model->material.SetColor(255, 255, 255, 255);
 
-	sphere.pos = obj[0]->position;
-	NVector3 vec;
-	plane.distance = obj[2]->position.Dot(plane.normal);
+	//sphere.pos = obj[0]->position;
+	//NVector3 vec;
+	//plane.distance = obj[2]->position.Dot(plane.normal);
 
-	for (size_t i = 0; i < maxObj; i++)
-	{
-		obj[i]->UpdateMatrix();
-	}
+	//for (size_t i = 0; i < maxObj; i++)
+	//{
+	//	obj[i]->UpdateMatrix();
+	//}
 
-	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+	//isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 #pragma endregion
 }
 
@@ -159,7 +163,7 @@ void NTitleScene::Draw()
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
 		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, constBuff->GetGPUVirtualAddress());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cb.constBuff->GetGPUVirtualAddress());
 
 		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);

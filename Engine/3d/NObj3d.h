@@ -6,18 +6,10 @@
 #include "NGPipeline.h"
 #include "NMatrix4.h"
 #include "NLightGroup.h"
+#include "NConstBuff.h"
 
 #include<memory>
 #include <wrl.h>
-
-//定数バッファ用データ構造体（3D変換行列）
-struct  ConstBufferDataTransform
-{
-	//NMatrix4 mat;	//3D変換行列
-	NMatrix4 viewproj;	// ビュープロジェクション行列
-	NMatrix4 world;		// ワールド行列
-	NVector3 cameraPos;	// カメラ座標(ワールド座標)
-};
 
 class NObj3d
 {
@@ -28,7 +20,7 @@ private:
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
 	//ConstBufferDataTransform* constMapTransform;	//3D変換行列
-	//ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
+	NConstBuff cb;		//定数バッファのGPUリソースのポインタ
 
 	NMatrix4 matWorld;	//3D変換行列
 
