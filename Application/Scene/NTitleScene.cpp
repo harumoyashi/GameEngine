@@ -49,6 +49,7 @@ void NTitleScene::Init()
 
 #pragma region オブジェクトの初期値設定
 	obj[0]->position = { 0,2,0 };
+	obj[0]->scale = { 5.0f,5.0f,5.0f };
 	obj[1]->position = { 2,0,0 };
 	obj[2]->position = { 0,0,0 };
 	obj[2]->scale = { 10,0.1f,10 };
@@ -73,26 +74,30 @@ void NTitleScene::Init()
 #pragma endregion
 	// ライト生成
 	lightGroup = std::make_unique<NLightGroup>();
-	lightGroup = lightGroup->Create();
+	lightGroup = lightGroup.get()->Create();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup.get());
 
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
+	lightGroup->SetDirLightActive(0, false);
+	lightGroup->SetDirLightActive(1, false);
+	lightGroup->SetDirLightActive(2, false);
 
-	lightGroup->SetPointLightActive(0, false);
-	lightGroup->SetPointLightActive(1, false);
-	lightGroup->SetPointLightActive(2, false);
+	lightGroup->SetPointLightActive(0, true);
+	lightGroup->SetPointLightActive(1, true);
+	lightGroup->SetPointLightActive(2, true);
 
-	lightGroup->SetCircleShadowActive(0, true);
+	lightGroup->SetPointLightColor(0, { 0,1,0 });
+	lightGroup->SetPointLightColor(1, { 0,1,0 });
+	lightGroup->SetPointLightColor(2, { 0,1,0 });
+
+	lightGroup->SetCircleShadowActive(0, false);
 
 	timer.SetMaxTimer(10);
 }
 
 void NTitleScene::Update()
 {
-	ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();
 
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
@@ -101,7 +106,7 @@ void NTitleScene::Update()
 
 	if (NInput::IsKeyDown(DIK_RETURN))
 	{
-		NAudioManager::Play("WinSE",false,0.5f);
+		NAudioManager::Play("WinSE", false, 0.5f);
 	}
 
 	lightGroup->Update();
@@ -110,26 +115,9 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	timer.Update();
-	if (timer.GetisTimeOut())
-	{
-		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
-		timer.Reset();
-	}
-
-	if (isCol)
-	{
-		obj[0]->model->material.SetColor(255, 0, 0, 255);
-		NInput::GetInstance()->Vibration(30000, 1000);
-	}
-	else
-	{
-		obj[0]->model->material.SetColor(255, 255, 255, 255);
-		NInput::GetInstance()->Vibration(0, 0);
-	}
-	obj[2]->model->material.SetColor(255, 255, 255, 255);
-
-	sphere.pos = obj[0]->position;
+	obj[0]->model->material.SetColor(200, 55, 55, 255);
+	obj[0]->MoveKey();
+	//sphere.pos = obj[0]->position;
 	NVector3 vec;
 	plane.distance = obj[2]->position.Dot(plane.normal);
 
@@ -148,11 +136,13 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (int i = 0; i < maxObj; i++)
+	/*for (int i = 0; i < maxObj; i++)
 	{
 		obj[i]->CommonBeginDraw();
 		obj[i]->Draw();
-	}
+	}*/
+	obj[0]->CommonBeginDraw();
+	obj[0]->Draw();
 
 	//前景スプライト
 	if (isCol)
