@@ -1,18 +1,9 @@
 #pragma once
 #include "NDX12.h"
-#include "NMatrix4.h"
+#include "NConstBuffData.h"
 
 #include<memory>
 #include <wrl.h>
-
-//定数バッファ用データ構造体（3D変換行列）
-struct  ConstBufferDataTransform
-{
-	//NMatrix4 mat;	//3D変換行列
-	NMatrix4 viewproj;	// ビュープロジェクション行列
-	NMatrix4 world;		// ワールド行列
-	NVector3 cameraPos;	// カメラ座標(ワールド座標)
-};
 
 class NConstBuff
 {
@@ -26,6 +17,12 @@ public:
 	ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
 
 public:
+	void Init();
+
+	//定数バッファへ送信
+	void TransferMatrix(NMatrix4 matWorld);
+
+private:
 	//ヒープ設定
 	void SetHeap();
 	//リソース設定
@@ -34,7 +31,4 @@ public:
 	void Create();
 	//定数バッファのマッピング
 	void Mapping();
-
-	//定数バッファへ送信
-	void TransferMatrix(NMatrix4 matWorld);
 };

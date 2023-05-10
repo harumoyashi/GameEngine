@@ -13,10 +13,7 @@ NObj3d::~NObj3d()
 bool NObj3d::Init()
 {
 	//定数バッファ
-	cb.SetHeap();
-	cb.SetResource();
-	cb.Create();
-	cb.Mapping();
+	cb.Init();
 
 	return true;
 }

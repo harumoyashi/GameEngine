@@ -213,6 +213,9 @@
     <ClInclude Include="NConstBuff.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="NConstBuffData.h">
+      <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">

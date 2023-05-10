@@ -90,6 +90,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AssimpLoader.h" />
+    <ClInclude Include="NConstBuffData.h" />
     <ClInclude Include="imgui\NImGuiManager.h" />
     <ClInclude Include="NAudioManager.h" />
     <ClInclude Include="NCircleShadow.h" />
