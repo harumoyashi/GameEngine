@@ -16,7 +16,6 @@ public:
 	std::string name;
 	NVertexBuff vertexBuff;
 	NIndexBuff indexBuff;
-	NConstBuff constBuff;
 
 	std::vector<NVertexPNU> vertices;
 	std::vector<UINT> indices;

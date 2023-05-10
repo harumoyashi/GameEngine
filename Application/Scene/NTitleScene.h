@@ -63,7 +63,7 @@ private:
 	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
 
-	NConstBuff cb;
+	NConstBuff<ConstBuffDataTransform> cbTrans;
 
 public:
 	//インスタンス取得
@@ -74,4 +74,6 @@ public:
 	void Draw();
 	void Reset();
 	void Finalize();
+
+	void TransferMatrix();
 };

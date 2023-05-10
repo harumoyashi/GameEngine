@@ -6,7 +6,7 @@
 //定数バッファ用データ構造体//
 
 //3D変換行列
-struct  ConstBufferDataTransform
+struct  ConstBuffDataTransform
 {
 	//NMatrix4 mat;	//3D変換行列
 	NMatrix4 viewproj;	// ビュープロジェクション行列
@@ -15,26 +15,26 @@ struct  ConstBufferDataTransform
 };
 
 //2D変換行列
-struct ConstantBufferDataTransform2D
+struct ConstBuffDataTransform2D
 {
 	NMatrix4 mat;	//3D変換行列
 };
 
 //ビルボード変換行列
-struct ConstantBufferDataBillboard
+struct ConstBuffDataBillboard
 {
 	NMatrix4 mat;	//3D変換行列
 	NMatrix4 matBillboard;	//ビルボード行列
 };
 
 //色
-struct ConstantBufferDataColor
+struct ConstBuffDataColor
 {
 	NColor color;	//色
 };
 
 //ADS
-struct ConstantBufferDataMaterial
+struct ConstBuffDataMaterial
 {
 	NVector3 ambient;	// アンビエント係数
 	float pad1;
@@ -44,8 +44,8 @@ struct ConstantBufferDataMaterial
 	float alpha;	// アルファ
 };
 
-//ライト
-struct ConstantBufferDataLight
+//平行光源
+struct ConstBuffDataLight
 {
 	NVector3 dir;
 	float pad1;
@@ -53,7 +53,7 @@ struct ConstantBufferDataLight
 };
 
 //ポイントライト
-struct ConstantBufferDataPointLight
+struct ConstBuffDataPointLight
 {
 	NVector3 pos;
 	float pad1;
@@ -64,7 +64,7 @@ struct ConstantBufferDataPointLight
 };
 
 //スポットライト
-struct ConstantBufferDataSpotLight
+struct ConstBuffDataSpotLight
 {
 	NVector3 vec;
 	float pad1;
@@ -80,7 +80,7 @@ struct ConstantBufferDataSpotLight
 };
 
 //丸影
-struct ConstantBufferDataCircleShadow
+struct ConstBuffDataCircleShadow
 {
 	NVector3 vec;
 	float pad1;

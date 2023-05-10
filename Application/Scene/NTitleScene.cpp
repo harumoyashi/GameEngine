@@ -29,11 +29,35 @@ void NTitleScene::Init()
 
 	//立方体情報
 
-	//モデル情報
-	
+	for (int i = 0; i < maxModel; i++)
+	{
+		model[i] = std::make_unique<NModel>();
+	}
+	model[0]->Create("sphere");
+	model[1]->Create("Cube");
 
 	//オブジェクト
-	
+	for (int i = 0; i < maxObj; i++)
+	{
+		obj[i] = std::make_unique<NObj3d>();
+		obj[i]->Init();
+	}
+	obj[0]->SetModel(model[0].get());
+	obj[1]->SetModel(model[0].get());
+	obj[2]->SetModel(model[1].get());
+
+#pragma region オブジェクトの初期値設定
+	obj[0]->position = { 0,0,0 };
+	obj[1]->position = { 0,-2,0 };
+	obj[1]->scale = { 10,0.1f,10 };
+	obj[2]->position = { 2,0,0 };
+	//設定したのを適用
+	for (int i = 0; i < maxObj; i++)
+	{
+		obj[i]->UpdateMatrix();
+	}
+
+#pragma endregion
 
 	//FBX読み込み
 	// メッシュの数だけ頂点バッファを用意する
@@ -61,10 +85,7 @@ void NTitleScene::Init()
 		
 	}
 
-	cb.SetHeap();
-	cb.SetResource();
-	cb.Create();
-	cb.Mapping();
+	cbTrans.Init();
 
 #pragma region オブジェクトの初期値設定
 	
@@ -113,35 +134,35 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	//timer.Update();
-	//if (timer.GetisTimeOut())
-	//{
-	//	obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
-	//	timer.Reset();
-	//}
+	timer.Update();
+	if (timer.GetisTimeOut())
+	{
+		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
+		timer.Reset();
+	}
 
-	//if (isCol)
-	//{
-	//	obj[0]->model->material.SetColor(255, 0, 0, 255);
-	//	NInput::GetInstance()->Vibration(30000, 1000);
-	//}
-	//else
-	//{
-	//	obj[0]->model->material.SetColor(255, 255, 255, 255);
-	//	NInput::GetInstance()->Vibration(0, 0);
-	//}
-	//obj[2]->model->material.SetColor(255, 255, 255, 255);
+	if (isCol)
+	{
+		obj[0]->model->material.SetColor(255, 0, 0, 255);
+		NInput::GetInstance()->Vibration(30000, 1000);
+	}
+	else
+	{
+		obj[0]->model->material.SetColor(255, 255, 255, 255);
+		NInput::GetInstance()->Vibration(0, 0);
+	}
+	obj[2]->model->material.SetColor(255, 255, 255, 255);
 
-	//sphere.pos = obj[0]->position;
-	//NVector3 vec;
-	//plane.distance = obj[2]->position.Dot(plane.normal);
+	sphere.pos = obj[0]->position;
+	NVector3 vec;
+	plane.distance = obj[2]->position.Dot(plane.normal);
 
-	//for (size_t i = 0; i < maxObj; i++)
-	//{
-	//	obj[i]->UpdateMatrix();
-	//}
+	for (size_t i = 0; i < maxObj; i++)
+	{
+		obj[i]->UpdateMatrix();
+	}
 
-	//isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 #pragma endregion
 }
 
@@ -151,6 +172,11 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
+	for (size_t i = 0; i < obj.size(); i++)
+	{
+		obj[i]->CommonBeginDraw();
+		obj[i]->Draw();
+	}
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
 	for (size_t i = 0; i < meshes.size(); i++)
@@ -163,13 +189,13 @@ void NTitleScene::Draw()
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
 		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cb.constBuff->GetGPUVirtualAddress());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
 
 		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	}
 
 	//前景スプライト

@@ -19,8 +19,7 @@ private:
 	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
-	//ConstBufferDataTransform* constMapTransform;	//3D変換行列
-	NConstBuff cb;		//定数バッファのGPUリソースのポインタ
+	NConstBuff<ConstBuffDataTransform> cbTrans;		//定数バッファのGPUリソースのポインタ
 
 	NMatrix4 matWorld;	//3D変換行列
 
@@ -39,6 +38,7 @@ public:
 	NModel* model;
 
 public:
+	NObj3d();
 	~NObj3d();
 #pragma region 初期化まわり
 	//初期化
@@ -46,14 +46,6 @@ public:
 
 	NObj3d* Create();
 
-	//ヒープ設定
-	void SetCBHeap();
-	//リソース設定
-	void SetCBResource();
-	//定数バッファの生成
-	void CreateCB();
-	//定数バッファのマッピング
-	void MappingCB();
 #pragma endregion
 #pragma region 更新まわり
 	//キーボード操作

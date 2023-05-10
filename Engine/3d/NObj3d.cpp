@@ -6,14 +6,19 @@
 
 NLightGroup* NObj3d::lightGroup = nullptr;
 
+NObj3d::NObj3d()
+{
+}
+
 NObj3d::~NObj3d()
 {
+	
 }
 
 bool NObj3d::Init()
 {
 	//定数バッファ
-	cb.Init();
+	cbTrans.Init();
 
 	return true;
 }
@@ -100,8 +105,6 @@ void NObj3d::MoveKey()
 
 void NObj3d::UpdateMatrix()
 {
-	HRESULT result;
-
 	//ワールド行列
 	NMatrix4 matScale;	//スケーリング行列
 	matScale = matScale.Scale(scale);
@@ -130,15 +133,21 @@ void NObj3d::UpdateMatrix()
 	}
 
 	// 定数バッファへデータ転送
-	cb.TransferMatrix(matWorld);
+	TransferMatrix();
 }
 
 void NObj3d::TransferMatrix()
 {
-	//constMapTransform->mat = matWorld * NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	cb.constMapTransform->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	cb.constMapTransform->world = matWorld;
-	cb.constMapTransform->cameraPos = NCamera::nowCamera->GetPos();
+	HRESULT result;
+	// 定数バッファへデータ転送
+	cbTrans.constMap = nullptr;
+	result = cbTrans.constBuff->Map(0, nullptr, (void**)&cbTrans.constMap);
+
+	cbTrans.constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	cbTrans.constMap->world = matWorld;
+	cbTrans.constMap->cameraPos = NCamera::nowCamera->GetPos();
+
+	cbTrans.constBuff->Unmap(0, nullptr);
 }
 
 void NObj3d::CommonBeginDraw()
@@ -156,7 +165,6 @@ void NObj3d::CommonBeginDraw()
 
 void NObj3d::Draw()
 {
-
 	SetMaterialCBV(model->material);
 	SetMatCBV();
 	SetVB(model->vertexBuff.view);
@@ -202,7 +210,7 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 void NObj3d::SetMatCBV()
 {
 	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cb.constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
 }
 
 void NObj3d::DrawCommand(UINT indexSize)
