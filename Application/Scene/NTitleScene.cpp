@@ -85,7 +85,7 @@ void NTitleScene::Init()
 		
 	}
 
-	cbTrans.Init();
+	//cbTrans.Init();
 
 #pragma region オブジェクトの初期値設定
 	
@@ -179,24 +179,24 @@ void NTitleScene::Draw()
 	}
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
-		auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//for (size_t i = 0; i < meshes.size(); i++)
+	//{
+	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 
-		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
+	//	// パイプラインステートとルートシグネチャの設定コマンド
+	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
-		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
+	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
 
-		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
-		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
+	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
-	}
+	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	//}
 
 	//前景スプライト
 	
