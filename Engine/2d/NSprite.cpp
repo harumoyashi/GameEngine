@@ -16,14 +16,11 @@ void NSprite::CreateSprite(std::string texHandle)
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	SetConstHeap();
-	SetConstResource();
-	CreateCB();
-	MappingCB();
+	cbTrans->Init();
+	cbColor->Init();
 	SetColor();
-	Unmap();
 	//平行投影を代入
-	matProjection = constMapTransform->mat = MathUtil::ParallelProjection(
+	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -47,14 +44,11 @@ void NSprite::CreateSprite(std::string texHandle,
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	SetConstHeap();
-	SetConstResource();
-	CreateCB();
-	MappingCB();
+	cbTrans->Init();
+	cbColor->Init();
 	SetColor();
-	Unmap();
 	//平行投影を代入
-	matProjection = constMapTransform->mat = MathUtil::ParallelProjection(
+	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -78,14 +72,11 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	SetConstHeap();
-	SetConstResource();
-	CreateCB();
-	MappingCB();
+	cbTrans->Init();
+	cbColor->Init();
 	SetColor();
-	Unmap();
 	//平行投影を代入
-	matProjection = constMapTransform->mat = MathUtil::ParallelProjection(
+	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -94,7 +85,7 @@ void NSprite::CreateClipSprite(std::string texHandle,
 
 void NSprite::SetVert()
 {
-	VertexUV vert[] = {
+	NVertexUV vert[] = {
 		//	x		y		z	 	u	v
 		{{   0.0f, 100.0f, 0.0f }, {0.0f,1.0f}},	// 左下
 		{{   0.0f,   0.0f, 0.0f }, {0.0f,0.0f}},	// 左上
@@ -202,46 +193,6 @@ void NSprite::CreateVertBuffView()
 	vbView.StrideInBytes = singleSizeVB;
 }
 
-void NSprite::SetConstHeap()
-{
-	heapPropConst.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
-}
-
-void NSprite::SetConstResource()
-{
-	resDescConst.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDescConst.Width = (sizeof(constMapTransform) + 0xff) & ~0xff;	//256バイトアラインメント
-	resDescConst.Height = 1;
-	resDescConst.DepthOrArraySize = 1;
-	resDescConst.MipLevels = 1;
-	resDescConst.SampleDesc.Count = 1;
-	resDescConst.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-}
-
-void NSprite::CreateCB()
-{
-	HRESULT result;
-
-	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapPropConst,	//ヒープ設定
-		D3D12_HEAP_FLAG_NONE,
-		&resDescConst,	//リソース設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuffTransform)
-	);
-	assert(SUCCEEDED(result));
-}
-
-void NSprite::MappingCB()
-{
-	HRESULT result;
-
-	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);	//マッピング
-
-	assert(SUCCEEDED(result));
-}
-
 void NSprite::SetTexHandle(std::string texHandle)
 {
 	this->texHandle = texHandle;
@@ -259,12 +210,7 @@ void NSprite::SetColor(int R, int G, int B, int A)
 	color.g = static_cast<float>(G) / 255.0f;
 	color.b = static_cast<float>(B) / 255.0f;
 	color.a = static_cast<float>(A) / 255.0f;
-	constMapTransform->color = color;
-}
-
-void NSprite::Unmap()
-{
-	constBuffTransform->Unmap(0, nullptr);
+	cbColor->constMap->color = color;
 }
 
 void NSprite::UpdateMatrix()
@@ -280,18 +226,20 @@ void NSprite::UpdateMatrix()
 	matWorld *= matRot;		//ワールド座標に回転を反映
 	matWorld *= matTrans;	//ワールド座標に平行移動を反映
 
-	TransferMatrix();
-}
+	HRESULT result;
+	// 定数バッファへデータ転送
+	cbTrans->constMap = nullptr;
+	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
 
-void NSprite::TransferMatrix()
-{
-	constMapTransform->mat = matWorld * matProjection;
+	cbTrans->constMap->mat = matWorld;
+
+	cbTrans->constBuff->Unmap(0, nullptr);
 }
 
 void NSprite::TransferVertex()
 {
 	//UVだけデフォルトで設定
-	VertexUV vert[] = {
+	NVertexUV vert[] = {
 		//		u	v
 		{{}, {0.0f,1.0f}},	// 左下
 		{{}, {0.0f,0.0f}},	// 左上
@@ -391,6 +339,6 @@ void NSprite::Draw()
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 
 	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, constBuffTransform->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans->constBuff->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }

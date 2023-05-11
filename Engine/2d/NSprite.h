@@ -4,23 +4,11 @@
 #include "NGPipeline.h"
 #include "NMatrix4.h"
 #include "NColor.h"
+#include "NConstBuff.h"
+#include "NVertex.h"
 
 #include <d3dx12.h>
 #include <wrl.h>
-
-//スプライト用頂点データ構造体
-struct VertexUV
-{
-	NVector3 pos;		//xyz座標
-	NVector2 uv;		//uv座標
-};
-
-//定数バッファ用データ構造体（3D変換行列）
-struct  SpriteCBDataTransform
-{
-	NColor color;	//色(RGBA)
-	NMatrix4 mat;	//3D変換行列
-};
 
 class NSprite
 {
@@ -30,18 +18,16 @@ private:
 	//頂点まわり//
 	UINT singleSizeVB;						//頂点バッファ1個当たりのサイズ
 	UINT sizeVB;							//頂点バッファ全体のサイズ
-	VertexUV vertices[4]{};					//頂点代入用
+	NVertexUV vertices[4]{};				//頂点代入用
 	D3D12_HEAP_PROPERTIES heapPropVert{};	//ヒープ
 	D3D12_RESOURCE_DESC resDescVert{};		//リソース
 	ComPtr<ID3D12Resource> vertBuff;		//頂点バッファ
-	VertexUV* vertMap = nullptr;			//マップ用
+	NVertexUV* vertMap = nullptr;			//マップ用
 	D3D12_VERTEX_BUFFER_VIEW vbView{};		//頂点バッファビュー
 
 	//定数バッファまわり//
-	D3D12_HEAP_PROPERTIES heapPropConst{};		//ヒープ
-	D3D12_RESOURCE_DESC resDescConst{};			//リソース
-	SpriteCBDataTransform* constMapTransform;	//3D変換行列
-	ComPtr<ID3D12Resource> constBuffTransform;	//定数バッファのGPUリソースのポインタ
+	NConstBuff<ConstBuffDataTransform2D>* cbTrans;	//2D変換行列
+	NConstBuff<ConstBuffDataColor>* cbColor;	//2D変換行列
 
 	//行列//
 	NMatrix4 matWorld{};		//変換行列
@@ -103,14 +89,7 @@ private:
 	void VertMaping();
 	//頂点バッファビュー作成
 	void CreateVertBuffView();
-	//定数用ヒープ設定
-	void SetConstHeap();
-	//定数用リソース設定
-	void SetConstResource();
-	//定数バッファの生成
-	void CreateCB();
-	//定数バッファのマッピング
-	void MappingCB();
+	
 	//テクスチャハンドルをセット
 	void SetTexHandle(std::string texHandle);
 #pragma endregion
@@ -118,12 +97,8 @@ public:
 #pragma region 更新
 	//スプライトの色変更(int型0~255)
 	void SetColor(int R = 255, int G = 255, int B = 255, int A = 255);
-	//マップ解除
-	void Unmap();
 	//ワールド行列の合成
 	void UpdateMatrix();
-	//定数バッファへ送信
-	void TransferMatrix();
 	//頂点バッファ転送
 	void TransferVertex();
 	//サイズ指定

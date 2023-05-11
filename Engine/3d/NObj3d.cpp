@@ -9,6 +9,7 @@ NLightGroup* NObj3d::lightGroup = nullptr;
 NObj3d::NObj3d() :
 	cbTrans(new NConstBuff<ConstBuffDataTransform>)
 {
+	Init();
 }
 
 NObj3d::~NObj3d()
@@ -173,7 +174,7 @@ void NObj3d::Draw()
 	SetIB(model->indexBuff.view);
 	SetSRVHeap(model->material.texture.gpuHandle);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
-	lightGroup->Draw(3);
+	//lightGroup->Draw(3);
 	DrawCommand((UINT)model->indices.size());
 }
 

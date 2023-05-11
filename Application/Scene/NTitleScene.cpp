@@ -93,6 +93,8 @@ void NTitleScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
+	foreSprite[0]->CreateSprite("a");
+	foreSprite[0]->SetPos(0,0);
 
 #pragma endregion
 	// ライト生成
@@ -163,6 +165,8 @@ void NTitleScene::Update()
 	}
 
 	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+
+	foreSprite[0]->UpdateMatrix();
 #pragma endregion
 }
 
@@ -199,7 +203,8 @@ void NTitleScene::Draw()
 	//}
 
 	//前景スプライト
-	
+	foreSprite[0]->CommonBeginDraw();
+	foreSprite[0]->Draw();
 
 	// 4.描画コマンドここまで
 #pragma endregion

@@ -9,8 +9,7 @@ NMaterial::NMaterial()
 	specular = { 0.0f,0.0f,0.0f };
 	alpha = 255.0f;
 	color = { 255.0f,255.0f,255.0f };
-	cbColor.Init();
-	cbMaterial.Init();
+	
 	Init();
 }
 
@@ -20,6 +19,8 @@ NMaterial::~NMaterial()
 
 void NMaterial::Init()
 {
+	cbColor.Init();
+	cbMaterial.Init();
 	TransferColor();
 	TransferMaterial();
 }
