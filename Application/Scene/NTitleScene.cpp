@@ -93,7 +93,7 @@ void NTitleScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
-	foreSprite[0]->CreateSprite("a");
+	foreSprite[0]->CreateSprite("hamu");
 	foreSprite[0]->SetPos(0,0);
 
 #pragma endregion
