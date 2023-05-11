@@ -1,8 +1,16 @@
 #include "NSprite.h"
 #include "NMathUtil.h"
 
+NSprite::NSprite() :
+	cbTrans(new NConstBuff<ConstBuffDataTransform2D>),
+	cbColor(new NConstBuff<ConstBuffDataColor>)
+{
+}
+
 NSprite::~NSprite()
 {
+	delete cbTrans;
+	delete cbColor;
 }
 
 void NSprite::CreateSprite(std::string texHandle)

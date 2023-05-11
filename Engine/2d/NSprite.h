@@ -51,6 +51,7 @@ public:
 	std::string texHandle = "";	//テクスチャ指定用
 
 public:
+	NSprite();
 	~NSprite();
 #pragma region 初期化
 	//スプライト生成

@@ -93,8 +93,10 @@ void NTitleScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
+	foreSprite[0] = std::make_unique<NSprite>();
 	foreSprite[0]->CreateSprite("hamu");
-	foreSprite[0]->SetPos(0,0);
+	foreSprite[0]->SetPos(900,350);
+	foreSprite[0]->SetSize(200,200);
 
 #pragma endregion
 	// ライト生成
@@ -203,7 +205,6 @@ void NTitleScene::Draw()
 	//}
 
 	//前景スプライト
-	foreSprite[0]->CommonBeginDraw();
 	foreSprite[0]->Draw();
 
 	// 4.描画コマンドここまで
