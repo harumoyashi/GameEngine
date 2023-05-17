@@ -11,6 +11,7 @@ NCircleShadow* NObj3d::circleShadow = nullptr;
 
 NObj3d::NObj3d()
 {
+	Init();
 }
 
 NObj3d::~NObj3d()

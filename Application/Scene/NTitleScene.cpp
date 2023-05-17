@@ -93,6 +93,10 @@ void NTitleScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
+	foreSprite[0] = std::make_unique<NSprite>();
+	foreSprite[0]->CreateSprite("hamu");
+	foreSprite[0]->SetPos(900,350);
+	foreSprite[0]->SetSize(200,200);
 
 #pragma endregion
 	// ライト生成
@@ -167,6 +171,8 @@ void NTitleScene::Update()
 	}
 
 	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+
+	foreSprite[0]->UpdateMatrix();
 #pragma endregion
 }
 
@@ -203,7 +209,7 @@ void NTitleScene::Draw()
 	//}
 
 	//前景スプライト
-	
+	foreSprite[0]->Draw();
 
 	// 4.描画コマンドここまで
 #pragma endregion

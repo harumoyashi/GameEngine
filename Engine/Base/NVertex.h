@@ -15,6 +15,18 @@ public:
 		: pos(pos) {}
 };
 
+class NVertexUV
+{
+public:
+	NVector3 pos = { 0, 0, 0 };
+	NVector2 uv = { 0, 0 };
+
+	NVertexUV(NVector3 pos = { 0, 0, 0 }, NVector2 uv = { 0, 0 })
+		: pos(pos), uv(uv) {}
+
+	bool operator==(const NVertexUV& a) const;
+};
+
 class NVertexPNU
 {
 public:

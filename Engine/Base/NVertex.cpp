@@ -108,3 +108,17 @@ void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vect
 		vertices[index2].normal = normal;
 	}
 }
+
+bool NVertexUV::operator==(const NVertexUV& a) const
+{
+	if (pos.x != a.pos.x || pos.y != a.pos.y || pos.z != a.pos.z)
+	{
+		return false;
+	}
+	else if (uv.x != a.uv.x || uv.y != a.uv.y)
+	{
+		return false;
+	}
+
+	return true;
+}

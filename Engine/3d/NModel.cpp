@@ -117,6 +117,8 @@ void NModel::LoadObjFile(const string name)
 			}
 		}
 	}
+	//モデル名を登録して
+	this->name = name;
 	//ファイル閉じる
 	file.close();
 }
