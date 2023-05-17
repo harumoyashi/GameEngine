@@ -27,7 +27,7 @@ private:
 
 	//定数バッファまわり//
 	NConstBuff<ConstBuffDataTransform2D>* cbTrans;	//2D変換行列
-	NConstBuff<ConstBuffDataColor>* cbColor;	//2D変換行列
+	NConstBuff<ConstBuffDataColor>* cbColor;	//色
 
 	//行列//
 	NMatrix4 matWorld{};		//変換行列

@@ -10,7 +10,7 @@ class NPointLight
 {
 public:
 	//定数バッファ
-	NConstBuff<ConstBuffDataPointLight> cbPointLight;
+	NConstBuff<ConstBuffDataPointLight>* cbPointLight;
 
 private://静的メンバ変数
 	NVector3 lightpos = { 0,0,0 };		// ライト座標(ワールド)
@@ -23,6 +23,9 @@ private://静的メンバ変数
 	bool isActive = false;
 
 public://メンバ関数
+	NPointLight();
+	~NPointLight();
+
 	//初期化
 	void Initialize();
 	//更新

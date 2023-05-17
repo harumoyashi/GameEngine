@@ -1,13 +1,18 @@
 #include "NDirectionalLight.h"
 #include "NDX12.h"
 
-NDirectionalLight::NDirectionalLight()
+NDirectionalLight::NDirectionalLight():cbLight(new NConstBuff<ConstBuffDataLight>)
 {
+}
+
+NDirectionalLight::~NDirectionalLight()
+{
+	delete cbLight;
 }
 
 void NDirectionalLight::Initialize()
 {
-	cbLight.Init();
+	cbLight->Init();
 }
 
 void NDirectionalLight::Update()
@@ -23,19 +28,19 @@ void NDirectionalLight::Draw(UINT rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbLight.constBuff->GetGPUVirtualAddress());
+		cbLight->constBuff->GetGPUVirtualAddress());
 }
 
 void NDirectionalLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbLight.constMap = nullptr;
-	result = cbLight.constBuff->Map(0, nullptr, (void**)&cbLight.constMap);
+	cbLight->constMap = nullptr;
+	result = cbLight->constBuff->Map(0, nullptr, (void**)&cbLight->constMap);
 	if (SUCCEEDED(result)) {
-		cbLight.constMap->dir = -lightdir;	//ライトの向きは逆向きで
-		cbLight.constMap->color = lightcolor;
-		cbLight.constBuff->Unmap(0, nullptr);
+		cbLight->constMap->dir = -lightdir;	//ライトの向きは逆向きで
+		cbLight->constMap->color = lightcolor;
+		cbLight->constBuff->Unmap(0, nullptr);
 	}
 }
 

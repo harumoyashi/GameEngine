@@ -29,61 +29,61 @@ void NTitleScene::Init()
 
 	//立方体情報
 
-	for (int i = 0; i < maxModel; i++)
-	{
-		model[i] = std::make_unique<NModel>();
-	}
-	model[0]->Create("sphere");
-	model[1]->Create("Cube");
-
-	//オブジェクト
-	for (int i = 0; i < maxObj; i++)
-	{
-		obj[i] = std::make_unique<NObj3d>();
-		obj[i]->Init();
-	}
-	obj[0]->SetModel(model[0].get());
-	obj[1]->SetModel(model[0].get());
-	obj[2]->SetModel(model[1].get());
-
-#pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,0,0 };
-	obj[1]->position = { 0,-2,0 };
-	obj[1]->scale = { 10,0.1f,10 };
-	obj[2]->position = { 2,0,0 };
-	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
-	{
-		obj[i]->UpdateMatrix();
-	}
+//	for (int i = 0; i < maxModel; i++)
+//	{
+//		model[i] = std::make_unique<NModel>();
+//	}
+//	model[0]->Create("sphere");
+//	model[1]->Create("Cube");
+//
+//	//オブジェクト
+//	for (int i = 0; i < maxObj; i++)
+//	{
+//		obj[i] = std::make_unique<NObj3d>();
+//		obj[i]->Init();
+//	}
+//	obj[0]->SetModel(model[0].get());
+//	obj[1]->SetModel(model[0].get());
+//	obj[2]->SetModel(model[1].get());
+//
+//#pragma region オブジェクトの初期値設定
+//	obj[0]->position = { 0,0,0 };
+//	obj[1]->position = { 0,-2,0 };
+//	obj[1]->scale = { 10,0.1f,10 };
+//	obj[2]->position = { 2,0,0 };
+//	//設定したのを適用
+//	for (int i = 0; i < maxObj; i++)
+//	{
+//		obj[i]->UpdateMatrix();
+//	}
 
 #pragma endregion
 
-	//FBX読み込み
-	// メッシュの数だけ頂点バッファを用意する
-	vertexBuffers.reserve(meshes.size());
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		vertexBuffers[i]->Init(meshes[i].vertices);
-		indexBuffers[i]->Init(meshes[i].indices);
-	}
+	////FBX読み込み
+	//// メッシュの数だけ頂点バッファを用意する
+	//vertexBuffers.reserve(meshes.size());
+	//for (size_t i = 0; i < meshes.size(); i++)
+	//{
+	//	vertexBuffers[i]->Init(meshes[i].vertices);
+	//	indexBuffers[i]->Init(meshes[i].indices);
+	//}
 
-	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
-	std::vector<Mesh> meshes;
+	//const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
+	//std::vector<Mesh> meshes;
 
-	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
-	{
-		modelFile,
-		meshes,
-		false,
-		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
-	};
+	//ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
+	//{
+	//	modelFile,
+	//	meshes,
+	//	false,
+	//	true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
+	//};
 
-	AssimpLoader loader;
-	if (!loader.Load(importSetting))
-	{
-		
-	}
+	//AssimpLoader loader;
+	//if (!loader.Load(importSetting))
+	//{
+	//	
+	//}
 
 	//cbTrans.Init();
 
@@ -97,6 +97,7 @@ void NTitleScene::Init()
 	foreSprite[0]->CreateSprite("hamu");
 	foreSprite[0]->SetPos(900,350);
 	foreSprite[0]->SetSize(200,200);
+	foreSprite[0]->SetColor(255,0,0,255);
 
 #pragma endregion
 	// ライト生成
@@ -143,7 +144,7 @@ void NTitleScene::Update()
 	NCamera::nowCamera = &camera;
 
 	timer.Update();
-	if (timer.GetisTimeOut())
+	/*if (timer.GetisTimeOut())
 	{
 		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
 		timer.Reset();
@@ -170,7 +171,7 @@ void NTitleScene::Update()
 		obj[i]->UpdateMatrix();
 	}
 
-	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+	isCol = NCollision::Sphere2PlaneCol(sphere, plane);*/
 
 	foreSprite[0]->UpdateMatrix();
 #pragma endregion
@@ -182,11 +183,11 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (size_t i = 0; i < obj.size(); i++)
+	/*for (size_t i = 0; i < obj.size(); i++)
 	{
 		obj[i]->CommonBeginDraw();
 		obj[i]->Draw();
-	}
+	}*/
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)

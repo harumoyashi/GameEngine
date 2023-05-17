@@ -1,9 +1,18 @@
 #include "NCircleShadow.h"
 #include "NDX12.h"
 
+NCircleShadow::NCircleShadow():cbCircleShadow(new NConstBuff<ConstBuffDataCircleShadow>)
+{
+}
+
+NCircleShadow::~NCircleShadow()
+{
+	delete cbCircleShadow;
+}
+
 void NCircleShadow::Initialize()
 {
-	cbCircleShadow.Init();
+	cbCircleShadow->Init();
 }
 
 void NCircleShadow::Update()
@@ -19,23 +28,23 @@ void NCircleShadow::Draw(UINT rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbCircleShadow.constBuff->GetGPUVirtualAddress());
+		cbCircleShadow->constBuff->GetGPUVirtualAddress());
 }
 
 void NCircleShadow::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbCircleShadow.constMap = nullptr;
-	result = cbCircleShadow.constBuff->Map(0, nullptr, (void**)&cbCircleShadow.constMap);
+	cbCircleShadow->constMap = nullptr;
+	result = cbCircleShadow->constBuff->Map(0, nullptr, (void**)&cbCircleShadow->constMap);
 	if (SUCCEEDED(result)) {
-		cbCircleShadow.constMap->dir = -dir;	//ライトの向きは逆向きで
-		cbCircleShadow.constMap->pos = casterPos;
-		cbCircleShadow.constMap->disCasterLight = distanceCasterLight;
-		cbCircleShadow.constMap->atten = atten;
-		cbCircleShadow.constMap->factorAngleCos = factorAngleCos;
-		cbCircleShadow.constMap->active = isActive;
-		cbCircleShadow.constBuff->Unmap(0, nullptr);
+		cbCircleShadow->constMap->dir = -dir;	//ライトの向きは逆向きで
+		cbCircleShadow->constMap->pos = casterPos;
+		cbCircleShadow->constMap->disCasterLight = distanceCasterLight;
+		cbCircleShadow->constMap->atten = atten;
+		cbCircleShadow->constMap->factorAngleCos = factorAngleCos;
+		cbCircleShadow->constMap->active = isActive;
+		cbCircleShadow->constBuff->Unmap(0, nullptr);
 	}
 }
 

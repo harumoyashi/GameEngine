@@ -1,7 +1,9 @@
 #include "NMaterial.h"
 
 
-NMaterial::NMaterial()
+NMaterial::NMaterial():
+	cbMaterial(new NConstBuff<ConstBuffDataMaterial>),
+	cbColor(new NConstBuff<ConstBuffDataColor>)
 {
 	//‚Æ‚è‚ ‚¦‚¸•`‰æ‚³‚ê‚é‚æ‚¤‚ÉÝ’è‚µ‚Æ‚­
 	ambient = { 0.3f,0.3f,0.3f };
@@ -15,12 +17,14 @@ NMaterial::NMaterial()
 
 NMaterial::~NMaterial()
 {
+	//delete cbMaterial;
+	//delete cbColor;
 }
 
 void NMaterial::Init()
 {
-	cbColor.Init();
-	cbMaterial.Init();
+	cbColor->Init();
+	cbMaterial->Init();
 	TransferColor();
 	TransferMaterial();
 }
@@ -33,14 +37,14 @@ void NMaterial::TransferColor()
 	color.b /= 255.0f;
 	color.a /= 255.0f;
 	//’l‚ð‘‚«ž‚Þ‚ÆŽ©“®“I‚É“]‘—‚³‚ê‚é
-	cbColor.constMap->color = color;
+	cbColor->constMap->color = color;
 }
 
 void NMaterial::TransferMaterial()
 {
-	cbMaterial.constMap->ambient = ambient;
-	cbMaterial.constMap->diffuse = diffuse;
-	cbMaterial.constMap->specular = specular;
+	cbMaterial->constMap->ambient = ambient;
+	cbMaterial->constMap->diffuse = diffuse;
+	cbMaterial->constMap->specular = specular;
 }
 
 void NMaterial::SetColor(int R, int G, int B, int A)
@@ -54,5 +58,5 @@ void NMaterial::SetColor(int R, int G, int B, int A)
 
 void NMaterial::SetCBV()
 {
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial.constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial->constBuff->GetGPUVirtualAddress());
 }

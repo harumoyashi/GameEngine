@@ -1,9 +1,18 @@
 #include "NSpotLight.h"
 #include "NDX12.h"
 
+NSpotLight::NSpotLight():cbSpotLight(new NConstBuff<ConstBuffDataSpotLight>)
+{
+}
+
+NSpotLight::~NSpotLight()
+{
+	delete cbSpotLight;
+}
+
 void NSpotLight::Initialize()
 {
-	cbSpotLight.Init();
+	cbSpotLight->Init();
 }
 
 void NSpotLight::Update()
@@ -19,22 +28,22 @@ void NSpotLight::Draw(UINT rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbSpotLight.constBuff->GetGPUVirtualAddress());
+		cbSpotLight->constBuff->GetGPUVirtualAddress());
 }
 
 void NSpotLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbSpotLight.constMap = nullptr;
-	result = cbSpotLight.constBuff->Map(0, nullptr, (void**)&cbSpotLight.constMap);
+	cbSpotLight->constMap = nullptr;
+	result = cbSpotLight->constBuff->Map(0, nullptr, (void**)&cbSpotLight->constMap);
 	if (SUCCEEDED(result)) {
-		cbSpotLight.constMap->dir = -lightdir;	//ライトの向きは逆向きで
-		cbSpotLight.constMap->color = lightcolor;
-		cbSpotLight.constMap->atten = lightatten;
-		cbSpotLight.constMap->factorAngleCos = lightFactorAngleCos;
-		cbSpotLight.constMap->active = isActive;
-		cbSpotLight.constBuff->Unmap(0, nullptr);
+		cbSpotLight->constMap->dir = -lightdir;	//ライトの向きは逆向きで
+		cbSpotLight->constMap->color = lightcolor;
+		cbSpotLight->constMap->atten = lightatten;
+		cbSpotLight->constMap->factorAngleCos = lightFactorAngleCos;
+		cbSpotLight->constMap->active = isActive;
+		cbSpotLight->constBuff->Unmap(0, nullptr);
 	}
 }
 

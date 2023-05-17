@@ -12,7 +12,7 @@ class NSpotLight
 {
 public:
 	//定数バッファ
-	NConstBuff<ConstBuffDataSpotLight> cbSpotLight;
+	NConstBuff<ConstBuffDataSpotLight>* cbSpotLight;
 
 private://静的メンバ変数
 	NVector3 lightdir = { 1,0,0 };	// ライト方向
@@ -27,6 +27,9 @@ private://静的メンバ変数
 	bool isActive = false;
 
 public://メンバ関数
+	NSpotLight();
+	~NSpotLight();
+
 	//初期化
 	void Initialize();
 	//更新

@@ -18,6 +18,7 @@ public:
 	NConstBuff() :constMap(nullptr) {}
 	~NConstBuff()
 	{
+
 	}
 
 	void Init()

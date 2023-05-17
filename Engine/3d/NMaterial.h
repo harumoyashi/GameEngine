@@ -16,8 +16,8 @@ private:
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
 public:
-	NConstBuff<ConstBuffDataColor> cbColor;
-	NConstBuff<ConstBuffDataMaterial> cbMaterial;
+	NConstBuff<ConstBuffDataColor>* cbColor;
+	NConstBuff<ConstBuffDataMaterial>* cbMaterial;
 
 	std::string name;	//マテリアル
 	NVector3 ambient;	//アンビエント影響度

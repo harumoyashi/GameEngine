@@ -19,10 +19,11 @@ private://静的メンバ変数
 
 public:
 	//定数バッファ
-	NConstBuff<ConstBuffDataLight> cbLight;
+	NConstBuff<ConstBuffDataLight>* cbLight;
 
 public: //メンバ関数
 	NDirectionalLight();
+	~NDirectionalLight();
 
 	//初期化
 	void Initialize();

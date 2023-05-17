@@ -1,9 +1,18 @@
 #include "NPointLight.h"
 #include "NDX12.h"
 
+NPointLight::NPointLight():cbPointLight(new NConstBuff<ConstBuffDataPointLight>)
+{
+}
+
+NPointLight::~NPointLight()
+{
+	delete cbPointLight;
+}
+
 void NPointLight::Initialize()
 {
-	cbPointLight.Init();
+	cbPointLight->Init();
 }
 
 void NPointLight::Update()
@@ -19,21 +28,21 @@ void NPointLight::Draw(UINT rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbPointLight.constBuff->GetGPUVirtualAddress());
+		cbPointLight->constBuff->GetGPUVirtualAddress());
 }
 
 void NPointLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbPointLight.constMap = nullptr;
-	result = cbPointLight.constBuff->Map(0, nullptr, (void**)&cbPointLight.constMap);
+	cbPointLight->constMap = nullptr;
+	result = cbPointLight->constBuff->Map(0, nullptr, (void**)&cbPointLight->constMap);
 	if (SUCCEEDED(result)) {
-		cbPointLight.constMap->pos = lightpos;
-		cbPointLight.constMap->color = lightcolor;
-		cbPointLight.constMap->atten = lightatten;
-		cbPointLight.constMap->active = isActive;
-		cbPointLight.constBuff->Unmap(0, nullptr);
+		cbPointLight->constMap->pos = lightpos;
+		cbPointLight->constMap->color = lightcolor;
+		cbPointLight->constMap->atten = lightatten;
+		cbPointLight->constMap->active = isActive;
+		cbPointLight->constBuff->Unmap(0, nullptr);
 	}
 }
 
