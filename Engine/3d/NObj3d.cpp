@@ -134,10 +134,10 @@ void NObj3d::Draw()
 	SetIB(model->indexBuff.view);
 	SetSRVHeap(model->material.texture.gpuHandle);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
-	/*directionalLight->Draw(3);
+	directionalLight->Draw(3);
 	pointLight->Draw(4);
 	spotLight->Draw(5);
-	circleShadow->Draw(6);*/
+	circleShadow->Draw(6);
 	DrawCommand((UINT)model->indices.size());
 }
 
