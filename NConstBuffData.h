@@ -66,7 +66,7 @@ struct ConstBuffDataPointLight
 //スポットライト
 struct ConstBuffDataSpotLight
 {
-	NVector3 vec;
+	NVector3 dir;
 	float pad1;
 	NVector3 pos;
 	float pad2;
@@ -75,20 +75,19 @@ struct ConstBuffDataSpotLight
 	NVector3 atten;
 	float pad4;
 	NVector2 factorAngleCos;
-	unsigned int isActive;
+	unsigned int active;
 	float pad5;
 };
 
 //丸影
 struct ConstBuffDataCircleShadow
 {
-	NVector3 vec;
+	NVector3 dir;
 	float pad1;
 	NVector3 pos;
 	float disCasterLight;
 	NVector3 atten;
 	float pad2;
 	NVector2 factorAngleCos;
-	float darkness;
-	unsigned int isActive;
+	unsigned int active;
 };

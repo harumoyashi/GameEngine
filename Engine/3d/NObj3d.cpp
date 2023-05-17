@@ -4,22 +4,23 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 
-NLightGroup* NObj3d::lightGroup = nullptr;
+NDirectionalLight* NObj3d::directionalLight = nullptr;
+NPointLight* NObj3d::pointLight = nullptr;
+NSpotLight* NObj3d::spotLight = nullptr;
+NCircleShadow* NObj3d::circleShadow = nullptr;
 
-NObj3d::NObj3d() :
-	cbTrans(new NConstBuff<ConstBuffDataTransform>)
+NObj3d::NObj3d()
 {
 }
 
 NObj3d::~NObj3d()
 {
-	delete cbTrans;
 }
 
 bool NObj3d::Init()
 {
 	//定数バッファ
-	cbTrans->Init();
+	cbTrans.Init();
 
 	return true;
 }
@@ -44,45 +45,6 @@ NObj3d* NObj3d::Create()
 
 	return obj3d;
 }
-
-//void NObj3d::SetCBHeap()
-//{
-//	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUへの転送用
-//}
-
-//void NObj3d::SetCBResource()
-//{
-//	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-//	resDesc.Width = (sizeof(constMapTransform) + 0xff) & ~0xff;	//256バイトアラインメント
-//	resDesc.Height = 1;
-//	resDesc.DepthOrArraySize = 1;
-//	resDesc.MipLevels = 1;
-//	resDesc.SampleDesc.Count = 1;
-//	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-//}
-//
-//void NObj3d::CreateCB()
-//{
-//	HRESULT result;
-//
-//	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-//		&heapProp,	//ヒープ設定
-//		D3D12_HEAP_FLAG_NONE,
-//		&resDesc,	//リソース設定
-//		D3D12_RESOURCE_STATE_GENERIC_READ,
-//		nullptr,
-//		IID_PPV_ARGS(&constBuff)
-//	);
-//	assert(SUCCEEDED(result));
-//}
-//
-//void NObj3d::MappingCB()
-//{
-//	HRESULT result;
-//
-//	result = constBuff->Map(0, nullptr, (void**)&constMapTransform);	//マッピング
-//	assert(SUCCEEDED(result));
-//}
 
 void NObj3d::MoveKey()
 {
@@ -141,14 +103,14 @@ void NObj3d::TransferMatrix()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbTrans->constMap = nullptr;
-	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+	cbTrans.constMap = nullptr;
+	result = cbTrans.constBuff->Map(0, nullptr, (void**)&cbTrans.constMap);
 
-	cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	cbTrans->constMap->world = matWorld;
-	cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	cbTrans.constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	cbTrans.constMap->world = matWorld;
+	cbTrans.constMap->cameraPos = NCamera::nowCamera->GetPos();
 
-	cbTrans->constBuff->Unmap(0, nullptr);
+	cbTrans.Unmap();
 }
 
 void NObj3d::CommonBeginDraw()
@@ -166,14 +128,16 @@ void NObj3d::CommonBeginDraw()
 
 void NObj3d::Draw()
 {
-
 	SetMaterialCBV(model->material);
 	SetMatCBV();
 	SetVB(model->vertexBuff.view);
 	SetIB(model->indexBuff.view);
 	SetSRVHeap(model->material.texture.gpuHandle);
 	//ライトの描画
-	lightGroup->Draw(3);
+	/*directionalLight->Draw(3);
+	pointLight->Draw(4);
+	spotLight->Draw(5);
+	circleShadow->Draw(6);*/
 	DrawCommand((UINT)model->indices.size());
 }
 
@@ -212,7 +176,7 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 void NObj3d::SetMatCBV()
 {
 	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
 }
 
 void NObj3d::DrawCommand(UINT indexSize)

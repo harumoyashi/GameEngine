@@ -96,20 +96,19 @@ void NTitleScene::Init()
 
 #pragma endregion
 	// ライト生成
-	lightGroup = std::make_unique<NLightGroup>();
-	lightGroup = lightGroup->Create();
+	directionalLight = std::make_unique<NDirectionalLight>();
+	directionalLight->Initialize();
+	pointLight = std::make_unique<NPointLight>();
+	pointLight->Initialize();
+	spotLight = std::make_unique<NSpotLight>();
+	spotLight->Initialize();
+	circleShadow = std::make_unique<NCircleShadow>();
+	circleShadow->Initialize();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
-
-	lightGroup->SetPointLightActive(0, false);
-	lightGroup->SetPointLightActive(1, false);
-	lightGroup->SetPointLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, true);
+	NObj3d::SetNDirectionalLight(directionalLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNSpotLight(spotLight.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());
 
 	timer.SetMaxTimer(10);
 }
@@ -128,7 +127,12 @@ void NTitleScene::Update()
 		NAudioManager::Play("WinSE", false, 0.5f);
 	}
 
-	lightGroup->Update();
+	//ライトたちの更新
+	directionalLight->Update();
+	pointLight->Update();
+	spotLight->Update();
+	circleShadow->Update();
+
 #pragma region 行列の計算
 	//ビュー行列の再生成
 	camera.CreateMatView();
@@ -208,17 +212,10 @@ void NTitleScene::Draw()
 void NTitleScene::Reset()
 {
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
-
-	lightGroup->SetPointLightActive(0, false);
-	lightGroup->SetPointLightActive(1, false);
-	lightGroup->SetPointLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, true);
+	NObj3d::SetNDirectionalLight(directionalLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNSpotLight(spotLight.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());
 }
 
 void NTitleScene::Finalize()

@@ -5,7 +5,10 @@
 #include "NRootParam.h"
 #include "NGPipeline.h"
 #include "NMatrix4.h"
-#include "NLightGroup.h"
+#include "NDirectionalLight.h"
+#include "NPointLight.h"
+#include "NSpotLight.h"
+#include "NCircleShadow.h"
 #include "NConstBuff.h"
 
 #include<memory>
@@ -19,12 +22,15 @@ private:
 	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
-	NConstBuff<ConstBuffDataTransform>* cbTrans;		//定数バッファのGPUリソースのポインタ
+	NConstBuff<ConstBuffDataTransform> cbTrans;		//定数バッファのGPUリソースのポインタ
 
 	NMatrix4 matWorld;	//3D変換行列
 
 	// ライト
-	static NLightGroup* lightGroup;
+	static NDirectionalLight* directionalLight;
+	static NPointLight* pointLight;
+	static NSpotLight* spotLight;
+	static NCircleShadow* circleShadow;
 
 public:
 	NVector3 scale = { 1.0f,1.0f,1.0f };	//スケーリング倍率
@@ -75,7 +81,16 @@ public:
 #pragma endregion
 	inline void SetModel(NModel* model) { this->model = model; }
 	//ライトのセット
-	static void SetLightGroup(NLightGroup* lightGroup) {
-		NObj3d::lightGroup = lightGroup;
+	static void SetNDirectionalLight(NDirectionalLight* directionalLight) {
+		NObj3d::directionalLight = directionalLight;
+	}
+	static void SetNPointLight(NPointLight* pointLight) {
+		NObj3d::pointLight = pointLight;
+	}
+	static void SetNSpotLight(NSpotLight* spotLight) {
+		NObj3d::spotLight = spotLight;
+	}
+	static void SetNCircleShadow(NCircleShadow* circleShadow) {
+		NObj3d::circleShadow = circleShadow;
 	}
 };

@@ -14,7 +14,10 @@
 #include "NAudio.h"
 #include "NCamera.h"
 #include "NCollision.h"
-#include "NLightGroup.h"
+#include "NDirectionalLight.h"
+#include "NPointLight.h"
+#include "NSpotLight.h"
+#include "NCircleShadow.h"
 #include "NTimer.h"
 #include "AssimpLoader.h"
 #include "NConstBuff.h"
@@ -52,7 +55,11 @@ private:
 	static const int maxSoundData = 3;		//サウンドデータの最大数
 	uint32_t soundData[maxSoundData] = {};	//サウンドデータ格納用
 
-	std::unique_ptr<NLightGroup> lightGroup;
+	//ライトたち
+	std::unique_ptr<NDirectionalLight> directionalLight;
+	std::unique_ptr<NPointLight > pointLight;
+	std::unique_ptr<NSpotLight> spotLight;
+	std::unique_ptr<NCircleShadow> circleShadow;
 
 	NTimer timer;
 

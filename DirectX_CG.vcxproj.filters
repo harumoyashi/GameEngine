@@ -171,9 +171,6 @@
     <ClInclude Include="Engine\Math\NMathUtil.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="NLightGroup.h">
-      <Filter>Engine\ヘッダー ファイル\Light</Filter>
-    </ClInclude>
     <ClInclude Include="NDirectionalLight.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
@@ -302,9 +299,6 @@
     <ClCompile Include="Engine\Math\NMathUtil.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NLightGroup.cpp">
-      <Filter>Engine\ソース ファイル\Light</Filter>
-    </ClCompile>
     <ClCompile Include="NDirectionalLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
@@ -334,6 +328,15 @@
     </ClCompile>
     <ClCompile Include="NConstBuff.cpp">
       <Filter>Engine\ソース ファイル\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NSpotLight.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NCircleShadow.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NPointLight.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -17,8 +17,7 @@ public:
 public:
 	NConstBuff() :constMap(nullptr) {}
 	~NConstBuff()
-	{/*
-		constBuff->Unmap(0, nullptr);*/
+	{
 	}
 
 	void Init()
@@ -53,4 +52,6 @@ public:
 		result = constBuff->Map(0, nullptr, (void**)&constMap);	//マッピング
 		assert(SUCCEEDED(result));
 	};
+
+	inline void Unmap(){ constBuff->Unmap(0, nullptr); }
 };

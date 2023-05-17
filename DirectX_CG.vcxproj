@@ -126,7 +126,6 @@
     <ClInclude Include="Engine\Math\NVector3.h" />
     <ClInclude Include="NFramework.h" />
     <ClInclude Include="NGame.h" />
-    <ClInclude Include="NLightGroup.h" />
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
@@ -136,6 +135,7 @@
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
+    <ClCompile Include="NCircleShadow.cpp" />
     <ClCompile Include="NColor.cpp" />
     <ClCompile Include="NConstBuff.cpp" />
     <ClCompile Include="NDirectionalLight.cpp" />
@@ -156,7 +156,6 @@
     <ClCompile Include="Engine\Base\NInput.cpp" />
     <ClCompile Include="NFramework.cpp" />
     <ClCompile Include="NGame.cpp" />
-    <ClCompile Include="NLightGroup.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="Engine\Math\NQuaternion.cpp" />
     <ClCompile Include="Engine\Base\NRootParam.cpp" />
@@ -170,7 +169,9 @@
     <ClCompile Include="Engine\Base\NWindows.cpp" />
     <ClCompile Include="Engine\Math\NVector2.cpp" />
     <ClCompile Include="Engine\Math\NVector3.cpp" />
+    <ClCompile Include="NPointLight.cpp" />
     <ClCompile Include="NResultScene.cpp" />
+    <ClCompile Include="NSpotLight.cpp" />
     <ClCompile Include="NTimer.cpp" />
   </ItemGroup>
   <ItemGroup>

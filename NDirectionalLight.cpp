@@ -1,45 +1,13 @@
 #include "NDirectionalLight.h"
 #include "NDX12.h"
 
-NDirectionalLight* NDirectionalLight::Creare()
+NDirectionalLight::NDirectionalLight()
 {
-	//3Dオブジェクトのインスタンスを生成
-	NDirectionalLight* instance = new NDirectionalLight();
-	//初期化
-	instance->Initialize();
-	//生成したインスタンスを返す
-	return instance;
 }
 
 void NDirectionalLight::Initialize()
 {
-	// ヒープ設定
-	D3D12_HEAP_PROPERTIES cbHeapProp{};
-	cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-	// リソース設定
-	D3D12_RESOURCE_DESC cbResourceDesc{};
-	cbResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	cbResourceDesc.Width = (sizeof(ConstBufferData) + 0xff) & ~0xff;
-	cbResourceDesc.Height = 1;
-	cbResourceDesc.DepthOrArraySize = 1;
-	cbResourceDesc.MipLevels = 1;
-	cbResourceDesc.SampleDesc.Count = 1;
-	cbResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-	// 定数バッファの生成
-	HRESULT result;
-	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-		&cbHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&cbResourceDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuff));
-
-	assert(SUCCEEDED(result));
-
-	//定数バッファへデータ転送
-	TransferConstBuffer();
+	cbLight.Init();
 }
 
 void NDirectionalLight::Update()
@@ -51,23 +19,23 @@ void NDirectionalLight::Update()
 	}
 }
 
-void NDirectionalLight::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex)
+void NDirectionalLight::Draw(UINT rootParameterIndex)
 {
 	//定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
+		cbLight.constBuff->GetGPUVirtualAddress());
 }
 
 void NDirectionalLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	ConstBufferData* constMap = nullptr;
-	result = constBuff->Map(0, nullptr, (void**)&constMap);
+	cbLight.constMap = nullptr;
+	result = cbLight.constBuff->Map(0, nullptr, (void**)&cbLight.constMap);
 	if (SUCCEEDED(result)) {
-		constMap->lightv = -lightdir;	//ライトの向きは逆向きで
-		constMap->lightcolor = lightcolor;
-		constBuff->Unmap(0, nullptr);
+		cbLight.constMap->dir = -lightdir;	//ライトの向きは逆向きで
+		cbLight.constMap->color = lightcolor;
+		cbLight.constBuff->Unmap(0, nullptr);
 	}
 }
 

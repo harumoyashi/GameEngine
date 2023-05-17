@@ -62,20 +62,19 @@ void NGameScene::Init()
 
 #pragma endregion
 	// ライト生成
-	lightGroup = std::make_unique<NLightGroup>();
-	lightGroup = lightGroup->Create();
+	directionalLight = std::make_unique<NDirectionalLight>();
+	directionalLight->Initialize();
+	pointLight = std::make_unique<NPointLight>();
+	pointLight->Initialize();
+	spotLight = std::make_unique<NSpotLight>();
+	spotLight->Initialize();
+	circleShadow = std::make_unique<NCircleShadow>();
+	circleShadow->Initialize();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
-
-	lightGroup->SetPointLightActive(0, false);
-	lightGroup->SetPointLightActive(1, false);
-	lightGroup->SetPointLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, true);
+	NObj3d::SetNDirectionalLight(directionalLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNSpotLight(spotLight.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());
 }
 
 void NGameScene::Update()
@@ -97,6 +96,12 @@ void NGameScene::Update()
 		obj[i]->UpdateMatrix();
 	}
 #pragma endregion
+
+	//ライトたちの更新
+	directionalLight->Update();
+	pointLight->Update();
+	spotLight->Update();
+	circleShadow->Update();
 }
 
 void NGameScene::Draw()
@@ -120,17 +125,10 @@ void NGameScene::Draw()
 void NGameScene::Reset()
 {
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, true);
-	lightGroup->SetDirLightActive(1, true);
-	lightGroup->SetDirLightActive(2, true);
-
-	lightGroup->SetPointLightActive(0, false);
-	lightGroup->SetPointLightActive(1, false);
-	lightGroup->SetPointLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, true);
+	NObj3d::SetNDirectionalLight(directionalLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNSpotLight(spotLight.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());
 }
 
 void NGameScene::Finalize()

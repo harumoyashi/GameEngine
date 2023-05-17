@@ -17,118 +17,106 @@ float4 main(VSOutput input) : SV_TARGET
     float3 ambient = m_ambient;
     
 	// シェーディングによる色
-    float4 shadecolor = float4(ambientColor * ambient, m_alpha);
+    float4 shadecolor = float4(ambient, m_alpha);
 	
     //平行光源
-    for (int i = 0; i < DIRLIGHT_NUM; i++)
+    if (dirLight.active)
     {
-        if (dirLights[i].active)
-        {
             // ライトに向かうベクトルと法線の内積
-            float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
+        float3 dotlightnormal = dot(dirLight.lightv, input.normal);
 	        // 反射光ベクトル
-            float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
+        float3 reflect = normalize(-dirLight.lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+        float3 diffuse = dotlightnormal * m_diffuse;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+        float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
-            shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor * m_color;
-            shadecolor.a = m_alpha;
-        }
+        shadecolor.rgb += (diffuse + specular) * dirLight.lightcolor * m_color;
+        shadecolor.a = m_alpha;
     }
     
     //点光源
-    for (i = 0; i < POINTLIGHT_NUM; i++)
+    if (pointLight.active)
     {
-        if (pointLights[i].active)
-        {
             // ライトのベクトル
-            float3 lightv = pointLights[i].lightpos - input.worldpos.xyz;
+        float3 lightv = pointLight.lightpos - input.worldpos.xyz;
             //ベクトルの長さ
-            float d = length(lightv);
+        float d = length(lightv);
             //正規化し、単位ベクトルにする
-            lightv = normalize(lightv);
+        lightv = normalize(lightv);
             //距離減衰係数
-            float atten = 1.0f / (pointLights[i].lightatten.x + pointLights[i].lightatten.y * d +
-            pointLights[i].lightatten.z * d * d);
+        float atten = 1.0f / (pointLight.lightatten.x + pointLight.lightatten.y * d +
+            pointLight.lightatten.z * d * d);
             // ライトに向かうベクトルと法線の内積
-            float3 dotlightnormal = dot(lightv, input.normal);
+        float3 dotlightnormal = dot(lightv, input.normal);
 	        // 反射光ベクトル
-            float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
+        float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+        float3 diffuse = dotlightnormal * m_diffuse;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+        float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
-            shadecolor.rgb += atten * (diffuse + specular) * pointLights[i].lightcolor * m_color;
-            shadecolor.a = m_alpha;
-        }
+        shadecolor.rgb += atten * (diffuse + specular) * pointLight.lightcolor * m_color;
+        shadecolor.a = m_alpha;
     }
     
     //スポットライト
-    for (i = 0; i < SPOTLIGHT_NUM; i++)
+    if (spotLight.active)
     {
-        if (spotLights[i].active)
-        {
             // ライトのベクトル
-            float3 lightv = spotLights[i].lightpos - input.worldpos.xyz;
+        float3 lightv = spotLight.lightpos - input.worldpos.xyz;
             //ベクトルの長さ
-            float d = length(lightv);
+        float d = length(lightv);
             //正規化し、単位ベクトルにする
-            lightv = normalize(lightv);
+        lightv = normalize(lightv);
             //距離減衰係数
-            float atten = saturate(1.0f / (spotLights[i].lightatten.x + spotLights[i].lightatten.y * d +
-            spotLights[i].lightatten.z * d * d));
+        float atten = saturate(1.0f / (spotLight.lightatten.x + spotLight.lightatten.y * d +
+            spotLight.lightatten.z * d * d));
             //角度減衰
-            float cos = dot(lightv, spotLights[i].lightv);
+        float cos = dot(lightv, spotLight.lightv);
             //減衰開始角度から減衰終了角度にかけて減衰
             //減衰開始角度の内側は1倍　減衰終了角度の外側は0倍の輝度
-            float angleatten = smoothstep(spotLights[i].lightfactoranglecos.y, spotLights[i].lightfactoranglecos.x, cos);
+        float angleatten = smoothstep(spotLight.lightfactoranglecos.y, spotLight.lightfactoranglecos.x, cos);
             //角度減衰を乗算
-            atten *= angleatten;
+        atten *= angleatten;
             // ライトに向かうベクトルと法線の内積
-            float3 dotlightnormal = dot(lightv, input.normal);
+        float3 dotlightnormal = dot(lightv, input.normal);
 	        // 反射光ベクトル
-            float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
+        float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+        float3 diffuse = dotlightnormal * m_diffuse;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+        float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
-            shadecolor.rgb += atten * (diffuse + specular) * spotLights[i].lightcolor * m_color;
-            shadecolor.a = m_alpha;
-        }
+        shadecolor.rgb += atten * (diffuse + specular) * spotLight.lightcolor * m_color;
+        shadecolor.a = m_alpha;
     }
     
     //丸影
-    for (i = 0; i < CIRCLESHADOW_NUM; i++)
+    if (circleShadow.active)
     {
-        if (circleShadows[i].active)
-        {
             //オブジェクト表面からキャスターへのベクトル
-            float3 casterv = circleShadows[i].casterPos - input.worldpos.xyz;
+        float3 casterv = circleShadow.casterPos - input.worldpos.xyz;
             //投影方向での距離
-            float d = dot(casterv, circleShadows[i].dir);
+        float d = dot(casterv, circleShadow.dir);
             //距離減衰係数
-            float atten = saturate(1.0f / (circleShadows[i].atten.x + circleShadows[i].atten.y * d +
-            circleShadows[i].atten.z * d * d));
+        float atten = saturate(1.0f / (circleShadow.atten.x + circleShadow.atten.y * d +
+            circleShadow.atten.z * d * d));
             //距離がマイナスなら0にする
-            atten *= step(0, d);
+        atten *= step(0, d);
             //仮想ライトの座標
-            float3 lightpos = circleShadows[i].casterPos + circleShadows[i].dir * circleShadows[i].distanceCasterLight;
+        float3 lightpos = circleShadow.casterPos + circleShadow.dir * circleShadow.distanceCasterLight;
             //オブジェクト表面からライトへのベクトル(単位ベクトル)
-            float3 lightv = normalize(lightpos - input.worldpos.xyz);
+        float3 lightv = normalize(lightpos - input.worldpos.xyz);
             //角度減衰
-            float cos = dot(lightv, circleShadows[i].dir);
+        float cos = dot(lightv, circleShadow.dir);
             //減衰開始角度から減衰終了角度にかけて減衰
             //減衰開始角度の内側は1倍　減衰終了角度の外側は0倍の輝度
-            float angleatten = smoothstep(circleShadows[i].factoranglecos.y, circleShadows[i].factoranglecos.x, cos);
+        float angleatten = smoothstep(circleShadow.factoranglecos.y, circleShadow.factoranglecos.x, cos);
             //角度減衰を乗算
-            atten *= angleatten;
+        atten *= angleatten;
 	        // 全て減算する
-            shadecolor.rgb -= atten;
-        }
+        shadecolor.rgb -= atten;
     }
 
     // シェーディング色で描画

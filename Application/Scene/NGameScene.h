@@ -14,7 +14,6 @@
 #include "NModel.h"
 #include "NCamera.h"
 #include "NAudio.h"
-#include "NLightGroup.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -45,7 +44,11 @@ private:
 	static const int maxSoundData = 3;		//サウンドデータの最大数
 	uint32_t soundData[maxSoundData] = {};	//サウンドデータ格納用
 
-	std::unique_ptr<NLightGroup> lightGroup;
+	//ライトたち
+	std::unique_ptr<NDirectionalLight> directionalLight;
+	std::unique_ptr<NPointLight > pointLight;
+	std::unique_ptr<NSpotLight> spotLight;
+	std::unique_ptr<NCircleShadow> circleShadow;
 
 public:
 
