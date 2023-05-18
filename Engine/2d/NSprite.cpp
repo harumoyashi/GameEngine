@@ -348,5 +348,6 @@ void NSprite::Draw()
 
 	//ルートパラメータ0番に定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor->constBuff->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }
