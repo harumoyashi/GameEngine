@@ -94,10 +94,10 @@ void NTitleScene::Init()
 
 	//前景スプライト生成
 	foreSprite[0] = std::make_unique<NSprite>();
-	foreSprite[0]->CreateSprite("hamu");
+	foreSprite[0]->CreateSprite("hamu",{0,0});
 	foreSprite[0]->SetPos(900,350);
-	foreSprite[0]->SetSize(200,200);
-	foreSprite[0]->SetColor(255,0,0,255);
+	foreSprite[0]->SetSize(500,500);
+	foreSprite[0]->SetColor(255,255,255,255);
 
 #pragma endregion
 	// ライト生成

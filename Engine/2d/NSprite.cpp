@@ -280,6 +280,8 @@ void NSprite::TransferVertex()
 	vert[2].pos = { right,bottom,0.0f };	// 右下
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
+	resDescVert = NTextureManager::GetInstance()->textureMap[texHandle].texBuff->GetDesc();
+
 	//テクスチャサイズをもとに切り取る部分のuvを計算
 	float tex_left = texLeftTop.x / resDescVert.Width;
 	float tex_right = (texLeftTop.x + texSize.x) / resDescVert.Width;
