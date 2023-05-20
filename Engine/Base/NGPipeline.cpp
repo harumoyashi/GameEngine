@@ -154,7 +154,7 @@ void NGPipeline::SetVertLayoutSprite()
 	vertLayoutSprite[0] = {
 	"POSITION",										//セマンティック名
 	0,												//同名のセマンティックがあるとき使うインデックス
-	DXGI_FORMAT_R32G32B32A32_FLOAT,					//要素数とビット数を表す
+	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
 	0,												//入力スロットインデックス
 	D3D12_APPEND_ALIGNED_ELEMENT,					//データのオフセット地(左のは自動設定)
 	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//入力データ種別
