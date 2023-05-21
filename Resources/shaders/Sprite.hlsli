@@ -14,7 +14,7 @@ cbuffer ConstBufferDataColor : register(b1)
 struct VSOutput
 {
 	//システム用頂点座標
-	float3 svpos:SV_POSITION;
+	float4 svpos:SV_POSITION;
 	//uv値
 	float2 uv:TEXCOORD;
 };
