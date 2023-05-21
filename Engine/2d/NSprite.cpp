@@ -239,7 +239,8 @@ void NSprite::UpdateMatrix()
 	cbTrans->constMap = nullptr;
 	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
 
-	cbTrans->constMap->mat = matWorld;
+	cbTrans->constMap->mat = matWorld * matProjection;
+	//constMapTransform->mat = matWorld * matProjection;
 
 	cbTrans->constBuff->Unmap(0, nullptr);
 }
