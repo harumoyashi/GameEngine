@@ -17,7 +17,7 @@ float4 main(VSOutput input) : SV_TARGET
     float3 ambient = m_ambient;
     
 	// シェーディングによる色
-    float4 shadecolor = float4(ambient, 1.0f);
+    float4 shadecolor = float4(ambient, m_color.a);
 	
     //平行光源
     if (dirLight.active)
@@ -32,6 +32,7 @@ float4 main(VSOutput input) : SV_TARGET
         float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
         shadecolor.rgb += (diffuse + specular) * dirLight.lightcolor;
+        //shadecolor.a = m_color.a;
     }
     
     //点光源
@@ -56,6 +57,7 @@ float4 main(VSOutput input) : SV_TARGET
         float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
         shadecolor.rgb += atten * (diffuse + specular) * pointLight.lightcolor;
+        //shadecolor.a = m_color.a;
     }
     
     //スポットライト
@@ -87,6 +89,7 @@ float4 main(VSOutput input) : SV_TARGET
         float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // 全て加算する
         shadecolor.rgb += atten * (diffuse + specular) * spotLight.lightcolor;
+        //shadecolor.a = m_color.a;
     }
     
     //丸影
