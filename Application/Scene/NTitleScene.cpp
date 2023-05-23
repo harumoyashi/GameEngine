@@ -29,33 +29,33 @@ void NTitleScene::Init()
 
 	//立方体情報
 
-//	for (int i = 0; i < maxModel; i++)
-//	{
-//		model[i] = std::make_unique<NModel>();
-//	}
-//	model[0]->Create("sphere");
-//	model[1]->Create("Cube");
-//
-//	//オブジェクト
-//	for (int i = 0; i < maxObj; i++)
-//	{
-//		obj[i] = std::make_unique<NObj3d>();
-//		obj[i]->Init();
-//	}
-//	obj[0]->SetModel(model[0].get());
-//	obj[1]->SetModel(model[0].get());
-//	obj[2]->SetModel(model[1].get());
-//
-//#pragma region オブジェクトの初期値設定
-//	obj[0]->position = { 0,0,0 };
-//	obj[1]->position = { 0,-2,0 };
-//	obj[1]->scale = { 10,0.1f,10 };
-//	obj[2]->position = { 2,0,0 };
-//	//設定したのを適用
-//	for (int i = 0; i < maxObj; i++)
-//	{
-//		obj[i]->UpdateMatrix();
-//	}
+	for (int i = 0; i < maxModel; i++)
+	{
+		model[i] = std::make_unique<NModel>();
+	}
+	model[0]->Create("sphere");
+	model[1]->Create("Cube");
+
+	//オブジェクト
+	for (int i = 0; i < maxObj; i++)
+	{
+		obj[i] = std::make_unique<NObj3d>();
+		obj[i]->Init();
+	}
+	obj[0]->SetModel(model[0].get());
+	obj[1]->SetModel(model[0].get());
+	obj[2]->SetModel(model[1].get());
+
+#pragma region オブジェクトの初期値設定
+	obj[0]->position = { 0,0,0 };
+	obj[1]->position = { 0,-2,0 };
+	obj[1]->scale = { 10,0.1f,10 };
+	obj[2]->position = { 2,0,0 };
+	//設定したのを適用
+	for (int i = 0; i < maxObj; i++)
+	{
+		obj[i]->UpdateMatrix();
+	}
 
 #pragma endregion
 
@@ -144,7 +144,7 @@ void NTitleScene::Update()
 	NCamera::nowCamera = &camera;
 
 	timer.Update();
-	/*if (timer.GetisTimeOut())
+	if (timer.GetisTimeOut())
 	{
 		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
 		timer.Reset();
@@ -153,12 +153,12 @@ void NTitleScene::Update()
 	if (isCol)
 	{
 		obj[0]->model->material.SetColor(255, 0, 0, 255);
-		NInput::GetInstance()->Vibration(30000, 1000);
+		//NInput::GetInstance()->Vibration(30000, 1000);
 	}
 	else
 	{
 		obj[0]->model->material.SetColor(255, 255, 255, 255);
-		NInput::GetInstance()->Vibration(0, 0);
+		//NInput::GetInstance()->Vibration(0, 0);
 	}
 	obj[2]->model->material.SetColor(255, 255, 255, 255);
 
@@ -171,7 +171,7 @@ void NTitleScene::Update()
 		obj[i]->UpdateMatrix();
 	}
 
-	isCol = NCollision::Sphere2PlaneCol(sphere, plane);*/
+	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 
 	foreSprite[0]->UpdateMatrix();
 #pragma endregion
@@ -183,11 +183,11 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	/*for (size_t i = 0; i < obj.size(); i++)
+	for (size_t i = 0; i < obj.size(); i++)
 	{
 		obj[i]->CommonBeginDraw();
 		obj[i]->Draw();
-	}*/
+	}
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)

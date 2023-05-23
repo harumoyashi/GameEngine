@@ -236,13 +236,12 @@ void NSprite::UpdateMatrix()
 
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbTrans->constMap = nullptr;
-	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+	/*cbTrans->constMap = nullptr;
+	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);*/
 
 	cbTrans->constMap->mat = matWorld * matProjection;
-	//constMapTransform->mat = matWorld * matProjection;
 
-	cbTrans->constBuff->Unmap(0, nullptr);
+	//cbTrans->constBuff->Unmap(0, nullptr);
 }
 
 void NSprite::TransferVertex()

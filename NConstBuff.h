@@ -52,6 +52,8 @@ public:
 		//定数バッファのマッピング
 		result = constBuff->Map(0, nullptr, (void**)&constMap);	//マッピング
 		assert(SUCCEEDED(result));
+
+		constBuff->Unmap(0, nullptr);
 	};
 
 	inline void Unmap(){ constBuff->Unmap(0, nullptr); }
