@@ -157,7 +157,7 @@ void NTitleScene::Update()
 
 	if (isCol)
 	{
-		obj[0]->model->material.SetColor( 0,255, 0, 255);
+		obj[0]->model->material.SetColor(255, 0, 0, 255);
 		//NInput::GetInstance()->Vibration(30000, 1000);
 	}
 	else
