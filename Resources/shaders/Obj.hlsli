@@ -3,11 +3,14 @@ cbuffer cbuff0 : register(b0)
     float3 m_ambient : packoffset(c0);  // アンビエント係数
     float3 m_diffuse : packoffset(c1);  // ディフューズ係数
     float3 m_specular : packoffset(c2); // スペキュラー係数
-    float m_alpha : packoffset(c2.w);   // アルファ
-    float3 m_color : packoffset(c3);    // 色
 }
 
 cbuffer cbuff1 : register(b1)
+{
+    float4 m_color;
+}
+
+cbuffer cbuff2 : register(b2)
 {
     matrix viewproj; // ビュープロジェクション行列
     matrix world; // ワールド行列
@@ -22,7 +25,7 @@ struct DirLight
     uint active;
 };
 
-cbuffer cbuff2 : register(b2)
+cbuffer cbuff3 : register(b3)
 {
     DirLight dirLight;
 };
@@ -36,7 +39,7 @@ struct PointLight
     uint active;
 };
 
-cbuffer cbuff3 : register(b3)
+cbuffer cbuff4 : register(b4)
 {
     PointLight pointLight;
 };
@@ -52,7 +55,7 @@ struct SpotLight
     uint active;
 };
 
-cbuffer cbuff4 : register(b4)
+cbuffer cbuff5 : register(b5)
 {
     SpotLight spotLight;
 };
@@ -68,7 +71,7 @@ struct CircleShadow
     uint active;
 };
 
-cbuffer cbuff5 : register(b5)
+cbuffer cbuff6 : register(b6)
 {
     CircleShadow circleShadow;
 };

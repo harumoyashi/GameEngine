@@ -136,10 +136,10 @@ void NObj3d::Draw()
 	SetIB(model->indexBuff.view);
 	SetSRVHeap(model->material.texture.gpuHandle);
 	//ライトの描画
-	directionalLight->Draw(3);
-	pointLight->Draw(4);
-	spotLight->Draw(5);
-	circleShadow->Draw(6);
+	directionalLight->Draw(4);
+	pointLight->Draw(5);
+	spotLight->Draw(6);
+	circleShadow->Draw(7);
 	DrawCommand((UINT)model->indices.size());
 }
 
@@ -178,7 +178,9 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 void NObj3d::SetMatCBV()
 {
 	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, model->material.cbMaterial->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, model->material.cbColor->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans->constBuff->GetGPUVirtualAddress());
 }
 
 void NObj3d::DrawCommand(UINT indexSize)

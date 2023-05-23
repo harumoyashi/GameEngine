@@ -13,6 +13,12 @@ NDirectionalLight::~NDirectionalLight()
 void NDirectionalLight::Initialize()
 {
 	cbLight->Init();
+
+	SetActive(true);
+	SetLightColor({ 1.0f, 1.0f, 1.0f });
+	SetLightDir({ 0.0f, -1.0f, 0.0f });
+
+	TransferConstBuffer();
 }
 
 void NDirectionalLight::Update()

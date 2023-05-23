@@ -13,6 +13,9 @@ NCircleShadow::~NCircleShadow()
 void NCircleShadow::Initialize()
 {
 	cbCircleShadow->Init();
+
+	SetActive(true);
+	TransferConstBuffer();
 }
 
 void NCircleShadow::Update()

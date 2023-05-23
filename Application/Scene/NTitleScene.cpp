@@ -47,16 +47,21 @@ void NTitleScene::Init()
 	obj[2]->SetModel(model[1].get());
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,0,0 };
-	obj[1]->position = { 0,-2,0 };
-	obj[1]->scale = { 10,0.1f,10 };
-	obj[2]->position = { 2,0,0 };
+	obj[0]->position = { 0,2,0 };
+	obj[1]->position = { 2,0,0 };
+	obj[2]->position = { 0,0,0 };
+	obj[2]->scale = { 10,0.1f,10 };
+
 	//設定したのを適用
 	for (int i = 0; i < maxObj; i++)
 	{
 		obj[i]->UpdateMatrix();
 	}
 
+	sphere.pos = obj[0]->position;
+	sphere.radius = obj[0]->scale.x;
+	plane.normal = { 0,1,0 };
+	plane.distance = obj[2]->position.Length();
 #pragma endregion
 
 	////FBX読み込み
@@ -143,16 +148,16 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	timer.Update();
+	/*timer.Update();
 	if (timer.GetisTimeOut())
 	{
 		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
 		timer.Reset();
-	}
+	}*/
 
 	if (isCol)
 	{
-		obj[0]->model->material.SetColor(255, 0, 0, 255);
+		obj[0]->model->material.SetColor( 0,255, 0, 255);
 		//NInput::GetInstance()->Vibration(30000, 1000);
 	}
 	else
@@ -162,8 +167,9 @@ void NTitleScene::Update()
 	}
 	obj[2]->model->material.SetColor(255, 255, 255, 255);
 
+	obj[0]->MoveKey();
+
 	sphere.pos = obj[0]->position;
-	NVector3 vec;
 	plane.distance = obj[2]->position.Dot(plane.normal);
 
 	for (size_t i = 0; i < maxObj; i++)
@@ -218,6 +224,10 @@ void NTitleScene::Draw()
 
 void NTitleScene::Reset()
 {
+	directionalLight->Initialize();
+	pointLight->Initialize();
+	spotLight->Initialize();
+	circleShadow->Initialize();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetNDirectionalLight(directionalLight.get());
 	NObj3d::SetNPointLight(pointLight.get());

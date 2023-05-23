@@ -11,6 +11,7 @@ void NModel::Create(const string modelname)
 	LoadObjFile(modelname);
 	vertexBuff.Init(vertices);
 	indexBuff.Init(indices);
+	material.SetColor();
 }
 
 void NModel::LoadObjFile(const string name)

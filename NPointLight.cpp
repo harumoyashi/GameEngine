@@ -13,6 +13,9 @@ NPointLight::~NPointLight()
 void NPointLight::Initialize()
 {
 	cbPointLight->Init();
+
+	SetActive(true);
+	TransferConstBuffer();
 }
 
 void NPointLight::Update()

@@ -13,6 +13,9 @@ NSpotLight::~NSpotLight()
 void NSpotLight::Initialize()
 {
 	cbSpotLight->Init();
+
+	SetActive(true);
+	TransferConstBuffer();
 }
 
 void NSpotLight::Update()

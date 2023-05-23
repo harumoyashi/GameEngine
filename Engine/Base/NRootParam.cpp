@@ -41,27 +41,33 @@ void NRootParam::SetRootParam()
 	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
 	entity.push_back(rootParam);
-	//定数バッファ3番(平行光源)
+	//定数バッファ3番(色)
 	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParam.Descriptor.ShaderRegister = 3;					//定数バッファ番号
 	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
 	entity.push_back(rootParam);
-	//定数バッファ4番(点光源)
+	//定数バッファ4番(平行光源)
 	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParam.Descriptor.ShaderRegister = 4;					//定数バッファ番号
 	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
 	entity.push_back(rootParam);
-	//定数バッファ5番(スポットライト)
+	//定数バッファ5番(点光源)
 	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParam.Descriptor.ShaderRegister = 5;					//定数バッファ番号
 	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
 	entity.push_back(rootParam);
-	//定数バッファ6番(丸影)
+	//定数バッファ6番(スポットライト)
 	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
 	rootParam.Descriptor.ShaderRegister = 6;					//定数バッファ番号
+	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
+	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
+	entity.push_back(rootParam);
+	//定数バッファ7番(丸影)
+	rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//種類
+	rootParam.Descriptor.ShaderRegister = 7;					//定数バッファ番号
 	rootParam.Descriptor.RegisterSpace = 0;						//デフォルト値
 	rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//全てのシェーダーから見える
 	entity.push_back(rootParam);
