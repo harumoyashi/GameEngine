@@ -13,6 +13,15 @@ NTitleScene* NTitleScene::GetInstance()
 	return &instance;
 }
 
+NTitleScene::NTitleScene() :cbTrans(new NConstBuff<ConstBuffDataTransform>)
+{
+}
+
+NTitleScene::~NTitleScene()
+{
+	delete cbTrans;
+}
+
 void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
@@ -87,38 +96,38 @@ void NTitleScene::Init()
 	//AssimpLoader loader;
 	//if (!loader.Load(importSetting))
 	//{
-	//	
+
 	//}
 
-	//cbTrans.Init();
+	//cbTrans->Init();
 
 #pragma region オブジェクトの初期値設定
-	
+
 #pragma endregion
 	//背景スプライト生成
 
 	//前景スプライト生成
 	foreSprite[0] = std::make_unique<NSprite>();
-	foreSprite[0]->CreateSprite("hamu",{0,0});
-	foreSprite[0]->SetPos(900,350);
-	foreSprite[0]->SetSize(100,100);
-	foreSprite[0]->SetColor(255,255,255,255);
+	foreSprite[0]->CreateSprite("hamu", { 0,0 });
+	foreSprite[0]->SetPos(900, 350);
+	foreSprite[0]->SetSize(100, 100);
+	foreSprite[0]->SetColor(255, 255, 255, 255);
 
 #pragma endregion
 	// ライト生成
 	directionalLight = std::make_unique<NDirectionalLight>();
 	directionalLight->Initialize();
-	pointLight = std::make_unique<NPointLight>();
+	/*pointLight = std::make_unique<NPointLight>();
 	pointLight->Initialize();
 	spotLight = std::make_unique<NSpotLight>();
 	spotLight->Initialize();
 	circleShadow = std::make_unique<NCircleShadow>();
-	circleShadow->Initialize();
+	circleShadow->Initialize();*/
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
+	/*NObj3d::SetNPointLight(pointLight.get());
 	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());*/
 
 	timer.SetMaxTimer(10);
 }
@@ -139,9 +148,9 @@ void NTitleScene::Update()
 
 	//ライトたちの更新
 	directionalLight->Update();
-	pointLight->Update();
+	/*pointLight->Update();
 	spotLight->Update();
-	circleShadow->Update();
+	circleShadow->Update();*/
 
 #pragma region 行列の計算
 	//ビュー行列の再生成
@@ -195,7 +204,7 @@ void NTitleScene::Draw()
 		obj[i]->Draw();
 	}
 
-	// メッシュの数だけインデックス分の描画を行う処理を回す
+	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
 	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
@@ -206,7 +215,7 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans.constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
 
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
@@ -225,14 +234,14 @@ void NTitleScene::Draw()
 void NTitleScene::Reset()
 {
 	directionalLight->Initialize();
-	pointLight->Initialize();
+	/*pointLight->Initialize();
 	spotLight->Initialize();
-	circleShadow->Initialize();
+	circleShadow->Initialize();*/
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
+	/*NObj3d::SetNPointLight(pointLight.get());
 	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	NObj3d::SetNCircleShadow(circleShadow.get());*/
 }
 
 void NTitleScene::Finalize()

@@ -70,11 +70,14 @@ private:
 	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
 
-	//NConstBuff<ConstBuffDataTransform>* cbTrans;
+	NConstBuff<ConstBuffDataTransform>* cbTrans;
 
 public:
 	//インスタンス取得
 	static NTitleScene* GetInstance();
+
+	NTitleScene();
+	~NTitleScene();
 
 	void Init();
 	void Update();
