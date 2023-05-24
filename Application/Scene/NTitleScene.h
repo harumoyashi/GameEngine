@@ -21,6 +21,7 @@
 #include "NTimer.h"
 #include "AssimpLoader.h"
 #include "NConstBuff.h"
+#include "LevelDataLoader.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -31,7 +32,7 @@ private:
 	//オブジェクト
 	NMaterial material;				//マテリアル
 	static const int maxObj = 3;	//オブジェクト数
-	std::array<std::unique_ptr<NObj3d>, maxObj> obj;			//オブジェクト(定数バッファ)
+	std::vector<std::unique_ptr<NObj3d>> obj;	//オブジェクト
 
 	static const int maxModel = 2;	//モデル数
 	std::array<std::unique_ptr<NModel>, maxModel> model;	//モデル情報
@@ -72,6 +73,8 @@ private:
 
 	NConstBuff<ConstBuffDataTransform>* cbTrans;
 
+	LevelData* levelData;
+
 public:
 	//インスタンス取得
 	static NTitleScene* GetInstance();
@@ -86,4 +89,7 @@ public:
 	void Finalize();
 
 	void TransferMatrix();
+
+	//レベルエディタから出力された読み込み済オブジェクトを配置していく
+	void SetObject(LevelData* levelData);
 };

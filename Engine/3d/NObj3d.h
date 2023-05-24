@@ -93,4 +93,6 @@ public:
 	static void SetNCircleShadow(NCircleShadow* circleShadow) {
 		NObj3d::circleShadow = circleShadow;
 	}
+
+	void SetMatWorld(NMatrix4 matWorld) { this->matWorld = matWorld; }
 };

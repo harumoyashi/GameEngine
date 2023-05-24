@@ -90,6 +90,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AssimpLoader.h" />
+    <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="LevelDataLoader.h" />
     <ClInclude Include="NConstBuffData.h" />
     <ClInclude Include="imgui\NImGuiManager.h" />
     <ClInclude Include="NAudioManager.h" />
@@ -134,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
+    <ClCompile Include="LevelDataLoader.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
     <ClCompile Include="NCircleShadow.cpp" />
     <ClCompile Include="NColor.cpp" />

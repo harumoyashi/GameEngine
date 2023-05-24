@@ -213,6 +213,12 @@
     <ClInclude Include="NConstBuffData.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
+    <ClInclude Include="LevelDataLoader.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="External\json.hpp">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -337,6 +343,9 @@
     </ClCompile>
     <ClCompile Include="NPointLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelDataLoader.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

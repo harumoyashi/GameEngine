@@ -41,36 +41,39 @@ void NTitleScene::Init()
 	for (int i = 0; i < maxModel; i++)
 	{
 		model[i] = std::make_unique<NModel>();
+		model[i]->Create("sphere");
 	}
-	model[0]->Create("sphere");
-	model[1]->Create("Cube");
+	//model[0]->Create("sphere");
+	//model[1]->Create("Cube");
 
 	//オブジェクト
-	for (int i = 0; i < maxObj; i++)
+	levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
+	SetObject(levelData);
+	/*for (int i = 0; i < maxObj; i++)
 	{
 		obj[i] = std::make_unique<NObj3d>();
 		obj[i]->Init();
-	}
-	obj[0]->SetModel(model[0].get());
+	}*/
+	/*obj[0]->SetModel(model[0].get());
 	obj[1]->SetModel(model[0].get());
-	obj[2]->SetModel(model[1].get());
+	obj[2]->SetModel(model[1].get());*/
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,2,0 };
-	obj[1]->position = { 2,0,0 };
-	obj[2]->position = { 0,0,0 };
-	obj[2]->scale = { 10,0.1f,10 };
+	//obj[0]->position = { 0,2,0 };
+	//obj[1]->position = { 2,0,0 };
+	//obj[2]->position = { 0,0,0 };
+	//obj[2]->scale = { 10,0.1f,10 };
 
-	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
-	{
-		obj[i]->UpdateMatrix();
-	}
+	////設定したのを適用
+	//for (int i = 0; i < maxObj; i++)
+	//{
+	//	obj[i]->UpdateMatrix();
+	//}
 
-	sphere.pos = obj[0]->position;
-	sphere.radius = obj[0]->scale.x;
-	plane.normal = { 0,1,0 };
-	plane.distance = obj[2]->position.Length();
+	//sphere.pos = obj[0]->position;
+	//sphere.radius = obj[0]->scale.x;
+	//plane.normal = { 0,1,0 };
+	//plane.distance = obj[2]->position.Length();
 #pragma endregion
 
 	////FBX読み込み
@@ -157,7 +160,7 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	if (isCol)
+	/*if (isCol)
 	{
 		obj[0]->model->material.SetColor(255, 0, 0, 255);
 	}
@@ -165,19 +168,19 @@ void NTitleScene::Update()
 	{
 		obj[0]->model->material.SetColor(255, 255, 255, 255);
 	}
-	obj[2]->model->material.SetColor(255, 255, 255, 255);
+	obj[2]->model->material.SetColor(255, 255, 255, 255);*/
 
-	obj[0]->MoveKey();
+	//obj[0]->MoveKey();
 
-	sphere.pos = obj[0]->position;
-	plane.distance = obj[2]->position.Dot(plane.normal);
+	/*sphere.pos = obj[0]->position;
+	plane.distance = obj[2]->position.Dot(plane.normal);*/
 
-	for (size_t i = 0; i < maxObj; i++)
+	for (auto& o : obj)
 	{
-		obj[i]->UpdateMatrix();
+		o->UpdateMatrix();
 	}
 
-	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
+	/*isCol = NCollision::Sphere2PlaneCol(sphere, plane);*/
 
 	foreSprite[0]->UpdateMatrix();
 #pragma endregion
@@ -237,4 +240,29 @@ void NTitleScene::Reset()
 
 void NTitleScene::Finalize()
 {
+}
+
+void NTitleScene::SetObject(LevelData* levelData)
+{
+	//レベルデータからオブジェクトを生成、配置
+	for (auto& objectData : levelData->objects)
+	{
+		/*NModel* model = nullptr;
+		decltype(levelData->models)::iterator it = levelData->models.find(objectData.filename);
+		if (it != levelData->models.end())
+		{*/
+			/*model = &it->second;*/
+			//モデルを指定して3Dオブジェクトを生成
+			//配列に登録してく
+			obj.emplace_back();
+			obj.back() = std::make_unique<NObj3d>();
+			obj.back()->Init();
+			obj.back()->SetModel(model[0].get());
+
+			obj.back()->position = objectData.trans;
+			obj.back()->rotation = objectData.rot;
+			obj.back()->scale = objectData.scale;
+			//obj.back()->SetMatWorld(objectData.matWorld);
+		/*}*/
+	}
 }
