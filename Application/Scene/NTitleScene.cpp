@@ -157,22 +157,13 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	/*timer.Update();
-	if (timer.GetisTimeOut())
-	{
-		obj[0]->position.x = MathUtil::Random(-1.0f, 1.0f);
-		timer.Reset();
-	}*/
-
 	if (isCol)
 	{
 		obj[0]->model->material.SetColor(255, 0, 0, 255);
-		//NInput::GetInstance()->Vibration(30000, 1000);
 	}
 	else
 	{
 		obj[0]->model->material.SetColor(255, 255, 255, 255);
-		//NInput::GetInstance()->Vibration(0, 0);
 	}
 	obj[2]->model->material.SetColor(255, 255, 255, 255);
 
