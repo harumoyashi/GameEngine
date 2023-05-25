@@ -21,6 +21,11 @@ public:
 	//Vertex(PosNormalUv)のvectorで頂点バッファを作る
 	NVertexBuff(std::vector<NVertexPNU> vertices);
 
+	//Vertex(NVertexAssimp)の配列とその大きさで頂点バッファを作る
+	NVertexBuff(NVertexAssimp* vertices, unsigned int size);
+	//Vertex(NVertexAssimp)のvectorで頂点バッファを作る
+	NVertexBuff(std::vector<NVertexAssimp> vertices);
+
 	//Vertex(Pos)の配列とその大きさで頂点バッファを作る
 	void Init(NVertex* vertices, unsigned int size);
 	//Vertex(Pos)のvectorで頂点バッファを作る
@@ -31,6 +36,8 @@ public:
 	//Vertex(PosNormalUv)のvectorで頂点バッファを作る
 	void Init(std::vector<NVertexPNU> vertices);
 
+	//Vertex(assimp用)の配列とその大きさで頂点バッファを作る
+	void Init(NVertexAssimp* vertices, unsigned int size);
 	//Vertex(assimp用)のvectorで頂点バッファを作る
 	void Init(std::vector<NVertexAssimp> vertices);
 

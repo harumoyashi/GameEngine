@@ -47,10 +47,11 @@ void NIndexBuff::Init(unsigned int* indices, unsigned int size)
 	result = buff->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
 	// 全インデックスに対して
-	for (UINT i = 0; i < size; i++)
-	{
-		indexMap[i] = indices[i];	//インデックスをコピー
-	}
+	//for (UINT i = 0; i < size; i++)
+	//{
+	//	indexMap[i] = indices[i];	//インデックスをコピー
+	//}
+	memcpy(indexMap, indices, size);
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
 

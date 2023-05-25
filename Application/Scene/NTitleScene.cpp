@@ -47,8 +47,10 @@ void NTitleScene::Init()
 	//model[1]->Create("Cube");
 
 	//オブジェクト
-	levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
-	SetObject(levelData);
+	// レベルデータからの読み込み
+	//levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
+	//SetObject(levelData);
+
 	/*for (int i = 0; i < maxObj; i++)
 	{
 		obj[i] = std::make_unique<NObj3d>();
@@ -76,33 +78,70 @@ void NTitleScene::Init()
 	//plane.distance = obj[2]->position.Length();
 #pragma endregion
 
-	////FBX読み込み
-	//// メッシュの数だけ頂点バッファを用意する
-	//vertexBuffers.reserve(meshes.size());
-	//for (size_t i = 0; i < meshes.size(); i++)
-	//{
-	//	vertexBuffers[i]->Init(meshes[i].vertices);
-	//	indexBuffers[i]->Init(meshes[i].indices);
-	//}
+	//FBX読み込み
+	// メッシュの数だけ頂点バッファを用意する
+	/*vertexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		vertexBuffers[i]->Init(meshes[i].vertices);
+		indexBuffers[i]->Init(meshes[i].indices);
+	}*/
 
-	//const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
-	//std::vector<Mesh> meshes;
+	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 
-	//ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
-	//{
-	//	modelFile,
-	//	meshes,
-	//	false,
-	//	true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
-	//};
+	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
+	{
+		modelFile,
+		meshes,
+		false,
+		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
+	};
 
-	//AssimpLoader loader;
-	//if (!loader.Load(importSetting))
-	//{
+	AssimpLoader loader;
+	if (!loader.Load(importSetting))
+	{
 
-	//}
+	}
 
-	//cbTrans->Init();
+	// メッシュの数だけ頂点バッファを用意する
+	vertexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto size = meshes[i].vertices.size();
+		auto stride = sizeof(NVertexAssimp);
+		auto vertices = meshes[i].vertices.data();
+		auto pVB = new NVertexBuff(vertices, (unsigned int)size);
+		/*if (!pVB->IsValid())
+		{
+			printf("頂点バッファの生成に失敗\n");
+		}*/
+
+		vertexBuffers.push_back(pVB);
+	}
+
+	// メッシュの数だけインデックスバッファを用意する
+	indexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto size = sizeof(uint32_t) * meshes[i].indices.size();
+		auto indices = meshes[i].indices.data();
+		auto pIB = new NIndexBuff(indices, (unsigned int)size);
+		/*if (!pIB->IsValid())
+		{
+			printf("インデックスバッファの生成に失敗\n");
+			return false;
+		}*/
+
+		indexBuffers.push_back(pIB);
+	}
+
+	// モデルのサイズが違うので、ちゃんと映るようにこの辺の値を変えておく
+	auto eyePos = XMVectorSet(0.0f, 120.0, 75.0, 0.0f);
+	auto targetPos = XMVectorSet(0.0f, 120.0, 0.0, 0.0f);
+	auto upward = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	auto fov = XMConvertToRadians(60);
+
+	cbTrans->Init();
 
 #pragma region オブジェクトの初期値設定
 
@@ -198,25 +237,25 @@ void NTitleScene::Draw()
 		obj[i]->Draw();
 	}
 
-	////メッシュの数だけインデックス分の描画を行う処理を回す
-	//for (size_t i = 0; i < meshes.size(); i++)
-	//{
-	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
-	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//メッシュの数だけインデックス分の描画を行う処理を回す
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+		auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 
-	//	// パイプラインステートとルートシグネチャの設定コマンド
-	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
+		// パイプラインステートとルートシグネチャの設定コマンド
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
-	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
 
-	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
-	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
+		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
-	//}
+		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	}
 
 	//前景スプライト
 	foreSprite[0]->Draw();
@@ -251,18 +290,18 @@ void NTitleScene::SetObject(LevelData* levelData)
 		decltype(levelData->models)::iterator it = levelData->models.find(objectData.filename);
 		if (it != levelData->models.end())
 		{*/
-			/*model = &it->second;*/
-			//モデルを指定して3Dオブジェクトを生成
-			//配列に登録してく
-			obj.emplace_back();
-			obj.back() = std::make_unique<NObj3d>();
-			obj.back()->Init();
-			obj.back()->SetModel(model[0].get());
+		/*model = &it->second;*/
+		//モデルを指定して3Dオブジェクトを生成
+		//配列に登録してく
+		obj.emplace_back();
+		obj.back() = std::make_unique<NObj3d>();
+		obj.back()->Init();
+		obj.back()->SetModel(model[0].get());
 
-			obj.back()->position = objectData.trans;
-			obj.back()->rotation = objectData.rot;
-			obj.back()->scale = objectData.scale;
-			//obj.back()->SetMatWorld(objectData.matWorld);
-		/*}*/
+		obj.back()->position = objectData.trans;
+		obj.back()->rotation = objectData.rot;
+		obj.back()->scale = objectData.scale;
+		//obj.back()->SetMatWorld(objectData.matWorld);
+	/*}*/
 	}
 }
