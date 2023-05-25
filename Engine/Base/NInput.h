@@ -67,12 +67,11 @@ public:
 	//isLeft:右左どっち！
 	NVector2 GetStick(bool isLeft = true);
 
-	//スティックを上に倒した瞬間か
-	//isLeft:右左どっち！
-	bool IsStickUp(bool isLeft = true);
-	//スティックを下に倒した瞬間か
-	//isLeft:右左どっち！
-	bool IsStickDown(bool isLeft = true);
+	//isVertical:垂直方向か
+	//isLstick:Lスティックか
+	//上、左はなら-1
+	//下、右なら+1が返ってくる
+	int StickTriggered(bool isVertical,bool isLstick = true);
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね
