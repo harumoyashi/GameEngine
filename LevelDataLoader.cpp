@@ -49,14 +49,7 @@ LevelData* LevelDataLoader::Load(const std::string& directoryPath, const std::st
 	{
 		Traversal(object, levelData);
 
-		//ToDo:オブジェクト走査を再起関数にまとめ、再起呼び出しで枝を走査する
-		/*if (object.contains("children"))
-		{
-			Traversal(object, levelData);
-		}
-		else
-		{
-		}*/
+		//再起呼び出しで枝を走査する
 		for (nlohmann::json& c : object["children"])
 		{
 			Traversal(c, levelData);
@@ -94,24 +87,5 @@ void LevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 		objectData.trans = { (float)transform["translation"][1],(float)transform["translation"][2],-(float)transform["translation"][0] };
 		objectData.rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
 		objectData.scale = { (float)transform["scaling"][1],(float)transform["scaling"][2],(float)transform["scaling"][0] };
-
-		////スケーリング行列
-		//objectData.scaling = objectData.scaling.Scale(scale);
-
-		////回転行列
-		//NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rot.z));
-		//NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rot.x));
-		//NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rot.y));
-		//objectData.rotation *= matZ;	//Z軸周りに回転してから
-		//objectData.rotation *= matX;	//X軸周りに回転して
-		//objectData.rotation *= matY;	//Y軸周りに回転
-
-		////平行移動行列
-		//objectData.translation = objectData.translation.Translation(trans);
-
-		//objectData.matWorld = objectData.matWorld.Identity();	//単位行列代入
-		//objectData.matWorld *= objectData.scaling;		//ワールド座標にスケーリングを反映
-		//objectData.matWorld *= objectData.rotation;		//ワールド座標に回転を反映
-		//objectData.matWorld *= objectData.translation;	//ワールド座標に平行移動を反映
 	}
 }
