@@ -4,9 +4,17 @@ class NColor
 public:
 	float r, g, b, a;
 
-	NColor() : r(255), g(255), b(255), a(255) {}
-	NColor(float r, float g, float b) : r(r), g(g), b(b), a(255) {}
+	NColor() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
+	NColor(float r, float g, float b) : r(r), g(g), b(b), a(1.0f) {}
 	NColor(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
+
+	//êFèÓïÒïœçX(intå^0~255)
+	void SetColor(int R = 255, int G = 255, int B = 255, int A = 255);
+	void SetColor(float R = 1.0f, float G = 1.0f, float B = 1.0f, float A = 1.0f);
+	//0.0f~1.0fÇ…íºÇ∑
+	void Convert01();
+	//0.0f~255.0fÇ…íºÇ∑
+	void Convert255();
 
 	const static NColor red;
 	const static NColor green;
@@ -24,4 +32,5 @@ public:
 	NColor operator-(float num) const;
 	NColor operator*(float num) const;
 	NColor operator/(float num) const;
+	NColor operator=(const NColor& col);
 };

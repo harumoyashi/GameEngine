@@ -67,6 +67,6 @@ NMaterial NMtllib::Load(const std::string& directoryPath, const std::string& fil
     file.close();
 
     //最後にちゃんと読み込んだ情報シェーダーに流して
-    material.TransferMaterial();
+    material;
     return material;
 }

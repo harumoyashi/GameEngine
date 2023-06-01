@@ -35,7 +35,7 @@ private:
 	std::vector<std::unique_ptr<NObj3d>> obj;	//オブジェクト
 
 	static const int maxModel = 2;	//モデル数
-	std::array<std::unique_ptr<NModel>, maxModel> model;	//モデル情報
+	std::vector<NModel> model;	//モデル情報
 
 	NCollision::Sphere sphere;
 	NCollision::Plane plane;

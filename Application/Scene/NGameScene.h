@@ -24,10 +24,10 @@ private:
 	//オブジェクト
 	NMaterial material;				//マテリアル
 	static const int maxObj = 4;	//オブジェクト数
-	std::unique_ptr<NObj3d> obj[maxObj];			//オブジェクト(定数バッファ)
+	std::vector<std::unique_ptr<NObj3d>> obj;			//オブジェクト(定数バッファ)
 
 	static const int maxModel = 3;	//モデル数
-	std::array<std::unique_ptr<NModel>, maxModel> model;	//モデル情報
+	std::vector<NModel> model;	//モデル情報
 
 	//背景スプライト
 	static const int maxBackSprite = 3;	//背景スプライト数

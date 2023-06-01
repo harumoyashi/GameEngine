@@ -9,7 +9,9 @@ NPointLight* NObj3d::pointLight = nullptr;
 NSpotLight* NObj3d::spotLight = nullptr;
 NCircleShadow* NObj3d::circleShadow = nullptr;
 
-NObj3d::NObj3d():cbTrans(new NConstBuff<ConstBuffDataTransform>)
+NObj3d::NObj3d():cbTrans(new NConstBuff<ConstBuffDataTransform>),
+	cbMaterial(new NConstBuff<ConstBuffDataMaterial>),
+	cbColor(new NConstBuff<ConstBuffDataColor>)
 {
 	Init();
 }
@@ -17,12 +19,16 @@ NObj3d::NObj3d():cbTrans(new NConstBuff<ConstBuffDataTransform>)
 NObj3d::~NObj3d()
 {
 	delete cbTrans;
+	delete cbMaterial;
+	delete cbColor;
 }
 
 bool NObj3d::Init()
 {
 	//定数バッファ
 	cbTrans->Init();
+	cbMaterial->Init();
+	cbColor->Init();
 
 	return true;
 }
@@ -46,6 +52,13 @@ NObj3d* NObj3d::Create()
 	obj3d->scale = { scale_val ,scale_val ,scale_val };
 
 	return obj3d;
+}
+
+void NObj3d::Update()
+{
+	UpdateMatrix();
+	TransferMaterial();
+	TransferColor();
 }
 
 void NObj3d::MoveKey()
@@ -115,6 +128,19 @@ void NObj3d::TransferMatrix()
 	cbTrans->Unmap();
 }
 
+void NObj3d::TransferColor()
+{
+	//値を書き込むと自動的に転送される
+	cbColor->constMap->color = color;
+}
+
+void NObj3d::TransferMaterial()
+{
+	cbMaterial->constMap->ambient = model.material.ambient;
+	cbMaterial->constMap->diffuse = model.material.diffuse;
+	cbMaterial->constMap->specular = model.material.specular;
+}
+
 void NObj3d::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
@@ -130,22 +156,16 @@ void NObj3d::CommonBeginDraw()
 
 void NObj3d::Draw()
 {
-	SetMaterialCBV(model->material);
-	SetMatCBV();
-	SetVB(model->vertexBuff.view);
-	SetIB(model->indexBuff.view);
-	SetSRVHeap(model->material.texture.gpuHandle);
+	SetCBV();
+	SetVB(model.vertexBuff.view);
+	SetIB(model.indexBuff.view);
+	SetSRVHeap(model.material.texture.gpuHandle);
 	//ライトの描画
 	directionalLight->Draw(4);
 	pointLight->Draw(5);
 	spotLight->Draw(6);
 	circleShadow->Draw(7);
-	DrawCommand((UINT)model->indices.size());
-}
-
-void NObj3d::SetMaterialCBV(NMaterial material)
-{
-	material.SetCBV();
+	DrawCommand((UINT)model.indices.size());
 }
 
 void NObj3d::SetSRVHeap()
@@ -175,11 +195,13 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 }
 
-void NObj3d::SetMatCBV()
+void NObj3d::SetCBV()
 {
-	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, model->material.cbMaterial->constBuff->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, model->material.cbColor->constBuff->GetGPUVirtualAddress());
+	//ルートパラメータ0番にマテリアルの定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial->constBuff->GetGPUVirtualAddress());
+	//ルートパラメータ2番に色情報の定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor->constBuff->GetGPUVirtualAddress());
+	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans->constBuff->GetGPUVirtualAddress());
 }
 

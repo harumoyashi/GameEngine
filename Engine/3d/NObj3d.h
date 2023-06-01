@@ -22,7 +22,10 @@ private:
 	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
-	NConstBuff<ConstBuffDataTransform>* cbTrans;		//定数バッファのGPUリソースのポインタ
+	//定数バッファ//
+	NConstBuff<ConstBuffDataTransform>* cbTrans;
+	NConstBuff<ConstBuffDataColor>* cbColor;
+	NConstBuff<ConstBuffDataMaterial>* cbMaterial;
 
 	NMatrix4 matWorld;	//3D変換行列
 
@@ -41,7 +44,8 @@ public:
 
 	int texNum = 0;	//テクスチャ指定用
 
-	NModel* model;
+	NModel model;
+	NColor color;
 
 public:
 	NObj3d();
@@ -54,12 +58,19 @@ public:
 
 #pragma endregion
 #pragma region 更新まわり
+	//更新
+	void Update();
 	//キーボード操作
 	void MoveKey();
 	//ワールド行列の合成
 	void UpdateMatrix();
 	//定数バッファへ送信
 	void TransferMatrix();
+	//色情報転送
+	void TransferColor();
+	//光情報転送
+	void TransferMaterial();
+
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
@@ -67,19 +78,19 @@ public:
 	//描画
 	void Draw();
 	//定数バッファビュー(CRV)の設定コマンド(マテリアル)
-	void SetMaterialCBV(NMaterial material);
+	void SetMaterialCBV();
 	void SetSRVHeap();
 	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
 	//頂点バッファビューの設定コマンド
 	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView);
 	//インデックスバッファビューの設定コマンド
 	void SetIB(D3D12_INDEX_BUFFER_VIEW ibView);
-	//定数バッファビュー(CRV)の設定コマンド(3D変換行列)
-	void SetMatCBV();
+	//定数バッファビュー(CBV)の設定コマンド
+	void SetCBV();
 	//描画コマンド
 	void DrawCommand(UINT indexSize);
 #pragma endregion
-	inline void SetModel(NModel* model) { this->model = model; }
+	inline void SetModel(NModel model) { this->model = model; }
 	//ライトのセット
 	static void SetNDirectionalLight(NDirectionalLight* directionalLight) {
 		NObj3d::directionalLight = directionalLight;

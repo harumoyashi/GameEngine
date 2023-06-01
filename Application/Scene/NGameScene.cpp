@@ -24,24 +24,25 @@ void NGameScene::Init()
 	//立方体情報
 	
 	//モデル情報
-	for (int i = 0; i < maxModel; i++)
+	for (size_t i = 0; i < maxModel; i++)
 	{
-		model[i] = std::make_unique<NModel>();
+		model.emplace_back();
 	}
-	model[0]->Create("sphere");
-	model[1]->Create("Cube");
-	model[2]->Create("busterSword");
+	model[0].Create("sphere");
+	model[1].Create("Cube");
+	model[2].Create("busterSword");
 
 	//オブジェクト
 	for (int i = 0; i < maxObj; i++)
 	{
+		obj.emplace_back();
 		obj[i] = std::make_unique<NObj3d>();
 		obj[i]->Init();
 	}
-	obj[0]->SetModel(model[0].get());
-	obj[1]->SetModel(model[1].get());
-	obj[2]->SetModel(model[0].get());
-	obj[3]->SetModel(model[2].get());
+	obj[0]->SetModel(model[0]);
+	obj[1]->SetModel(model[1]);
+	obj[2]->SetModel(model[0]);
+	obj[3]->SetModel(model[2]);
 
 #pragma region オブジェクトの初期値設定
 	obj[0]->position = { 0,0,0 };
@@ -52,7 +53,7 @@ void NGameScene::Init()
 	//設定したのを適用
 	for (int i = 0; i < maxObj; i++)
 	{
-		obj[i]->UpdateMatrix();
+		obj[i]->Update();
 	}
 
 #pragma endregion
@@ -93,7 +94,7 @@ void NGameScene::Update()
 
 	for (size_t i = 0; i < maxObj; i++)
 	{
-		obj[i]->UpdateMatrix();
+		obj[i]->Update();
 	}
 #pragma endregion
 
