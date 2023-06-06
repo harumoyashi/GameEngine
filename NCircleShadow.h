@@ -12,7 +12,7 @@ class NCircleShadow
 {
 public://サブクラス
 	//定数バッファ用データ構造体
-	NConstBuff<ConstBuffDataCircleShadow>* cbCircleShadow;
+	std::unique_ptr<NConstBuff<ConstBuffDataCircleShadow>> cbCircleShadow;
 
 private://静的メンバ変数
 	NVector3 dir = { 1,0,0 };			// 方向

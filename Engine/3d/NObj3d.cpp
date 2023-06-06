@@ -9,23 +9,21 @@ NPointLight* NObj3d::pointLight = nullptr;
 NSpotLight* NObj3d::spotLight = nullptr;
 NCircleShadow* NObj3d::circleShadow = nullptr;
 
-NObj3d::NObj3d():cbTrans(new NConstBuff<ConstBuffDataTransform>),
-	cbMaterial(new NConstBuff<ConstBuffDataMaterial>),
-	cbColor(new NConstBuff<ConstBuffDataColor>)
+NObj3d::NObj3d()
 {
 	Init();
 }
 
 NObj3d::~NObj3d()
 {
-	delete cbTrans;
-	delete cbMaterial;
-	delete cbColor;
 }
 
 bool NObj3d::Init()
 {
 	//定数バッファ
+	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
+	cbMaterial = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
+	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbTrans->Init();
 	cbMaterial->Init();
 	cbColor->Init();

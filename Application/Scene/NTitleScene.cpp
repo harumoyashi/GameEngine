@@ -13,13 +13,19 @@ NTitleScene* NTitleScene::GetInstance()
 	return &instance;
 }
 
-NTitleScene::NTitleScene() :cbTrans(new NConstBuff<ConstBuffDataTransform>)
+NTitleScene::NTitleScene() :
+	cbTrans(new NConstBuff<ConstBuffDataTransform>)
 {
 }
 
 NTitleScene::~NTitleScene()
 {
 	delete cbTrans;
+	for (size_t i = 0; i < vertexBuffers.size(); i++)
+	{
+		delete vertexBuffers[i];
+		delete indexBuffers[i];
+	}
 }
 
 void NTitleScene::Init()
@@ -46,8 +52,9 @@ void NTitleScene::Init()
 
 	//オブジェクト
 	// レベルデータからの読み込み
-	//levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
-	//SetObject(levelData);
+	levelData = std::make_unique<LevelData>();
+	levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
+	SetObject(levelData.get());
 
 	for (int i = 0; i < maxObj; i++)
 	{
@@ -77,22 +84,11 @@ void NTitleScene::Init()
 	plane.distance = obj[2]->position.Length();
 #pragma endregion
 
-	////FBX読み込み
-	//const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
+	//FBX読み込み
+	/*if (!loader.Load(importSetting))
+	{
 
-	//ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
-	//{
-	//	modelFile,
-	//	meshes,
-	//	false,
-	//	true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
-	//};
-
-	//AssimpLoader loader;
-	//if (!loader.Load(importSetting))
-	//{
-
-	//}
+	}*/
 
 	//// メッシュの数だけ頂点バッファを用意する
 	//vertexBuffers.reserve(meshes.size());
@@ -132,7 +128,62 @@ void NTitleScene::Init()
 	//auto upward = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	//auto fov = XMConvertToRadians(60);
 
-	//cbTrans->Init();
+	NVertexAssimp vertices[4] = {};
+	vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
+	vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
+
+	vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
+	vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
+
+	vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
+	vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
+
+	vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
+	vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
+
+	uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
+
+	Mesh mesh = {}; // これまでの四角形を入れるためのメッシュ構造体
+	mesh.vertices = std::vector<NVertexAssimp>(std::begin(vertices), std::end(vertices));
+	mesh.indices = std::vector<uint32_t>(std::begin(indices), std::end(indices));
+	meshes.clear(); // ちょっと無駄感あるが、一旦四角形で試したいのでAssimpLoaderで読み込んだモデルのメッシュを一旦クリア
+	meshes.shrink_to_fit(); // 中身をゼロにする
+	meshes.push_back(mesh);
+
+	// メッシュの数だけ頂点バッファを用意する
+	vertexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto size = sizeof(NVertexAssimp) * meshes[i].vertices.size();
+		auto vertices = meshes[i].vertices.data();
+		auto pVB = new NVertexBuff(vertices, (unsigned int)size);
+
+		vertexBuffers.push_back(pVB);
+	}
+
+	// メッシュの数だけインデックスバッファを用意する
+	indexBuffers.reserve(meshes.size());
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto size = sizeof(uint32_t) * meshes[i].indices.size();
+		auto indices = meshes[i].indices.data();
+		auto pIB = new NIndexBuff(indices, (unsigned int)size);
+
+		indexBuffers.push_back(pIB);
+	}
+
+	cbTrans->Init();
+
+	// 定数バッファへデータ転送
+	cbTrans->constMap = nullptr;
+	cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+
+	NMatrix4 mat;
+	cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	cbTrans->constMap->world = mat.Identity();
+	cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
+
+	cbTrans->Unmap();
 
 #pragma region オブジェクトの初期値設定
 
@@ -190,27 +241,32 @@ void NTitleScene::Update()
 	camera.CreateMatView();
 	NCamera::nowCamera = &camera;
 
-	/*if (isCol)
+	if (isCol)
 	{
-		obj[0]->model->material.SetColor(255, 0, 0, 255);
+		obj[0]->color.SetColor(255, 0, 0, 255);
 	}
 	else
 	{
-		obj[0]->model->material.SetColor(255, 255, 255, 255);
+		obj[0]->color.SetColor(255, 255, 255, 255);
 	}
-	obj[2]->model->material.SetColor(255, 255, 255, 255);*/
+	obj[2]->color.SetColor(255, 255, 255, 255);
 
-	//obj[0]->MoveKey();
+	obj[0]->MoveKey();
 
-	/*sphere.pos = obj[0]->position;
-	plane.distance = obj[2]->position.Dot(plane.normal);*/
+	sphere.pos = obj[0]->position;
+	plane.distance = obj[2]->position.Dot(plane.normal);
 
 	for (auto& o : obj)
 	{
 		o->Update();
 	}
 
-	/*isCol = NCollision::Sphere2PlaneCol(sphere, plane);*/
+	for (auto& lo : levelDataobj)
+	{
+		lo->Update();
+	}
+
+	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 
 	foreSprite[0]->UpdateMatrix();
 #pragma endregion
@@ -228,6 +284,12 @@ void NTitleScene::Draw()
 		obj[i]->Draw();
 	}
 
+	for (size_t i = 0; i < levelDataobj.size(); i++)
+	{
+		levelDataobj[i]->CommonBeginDraw();
+		levelDataobj[i]->Draw();
+	}
+
 	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
@@ -240,6 +302,7 @@ void NTitleScene::Draw()
 
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	//	//マテリアルとかカラーも送んなきゃいけないけど一旦後回し
 
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
@@ -247,6 +310,23 @@ void NTitleScene::Draw()
 
 	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	//}
+
+	// メッシュの数だけインデックス分の描画を行う処理を回す
+	for (size_t i = 0; i < meshes.size(); i++)
+	{
+		auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+		auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
+		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
+
+		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	}
 
 	//前景スプライト
 	foreSprite[0]->Draw();
@@ -284,14 +364,14 @@ void NTitleScene::SetObject(LevelData* levelData)
 		/*model = &it->second;*/
 		//モデルを指定して3Dオブジェクトを生成
 		//配列に登録してく
-		obj.emplace_back();
-		obj.back() = std::make_unique<NObj3d>();
-		obj.back()->Init();
-		obj.back()->SetModel(model[0]);
+		levelDataobj.emplace_back();
+		levelDataobj.back() = std::make_unique<NObj3d>();
+		levelDataobj.back()->Init();
+		levelDataobj.back()->SetModel(model[0]);
 
-		obj.back()->position = objectData.trans;
-		obj.back()->rotation = objectData.rot;
-		obj.back()->scale = objectData.scale;
+		levelDataobj.back()->position = objectData.trans;
+		levelDataobj.back()->rotation = objectData.rot;
+		levelDataobj.back()->scale = objectData.scale;
 		//obj.back()->SetMatWorld(objectData.matWorld);
 	/*}*/
 	}

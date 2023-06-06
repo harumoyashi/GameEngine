@@ -25,18 +25,18 @@ void NTimer::SubTimer(const float& subTimer)
 	timer -= subTimer;
 }
 
-unsigned long NTimer::GetNowTime(const TimeType& timeType)
+float NTimer::GetNowTime(const TimeType& timeType)
 {
 	switch (timeType)
 	{
 	case TimeType::MilliSecond:
-		return GetTickCount64();
+		return (float)GetTickCount64();
 		break;
 	case TimeType::Second:
-		return (GetTickCount64() / 1000) % 60;
+		return (float)((GetTickCount64() / 1000) % 60);
 		break;
 	case TimeType::Minute:
-		return (GetTickCount64() / 60000) % 60;
+		return (float)((GetTickCount64() / 60000) % 60);
 		break;
 	}
 

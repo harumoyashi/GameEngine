@@ -1,17 +1,17 @@
 #include "NCircleShadow.h"
 #include "NDX12.h"
 
-NCircleShadow::NCircleShadow():cbCircleShadow(new NConstBuff<ConstBuffDataCircleShadow>)
+NCircleShadow::NCircleShadow()
 {
 }
 
 NCircleShadow::~NCircleShadow()
 {
-	delete cbCircleShadow;
 }
 
 void NCircleShadow::Initialize()
 {
+	cbCircleShadow = std::make_unique<NConstBuff<ConstBuffDataCircleShadow>>();
 	cbCircleShadow->Init();
 
 	SetActive(true);

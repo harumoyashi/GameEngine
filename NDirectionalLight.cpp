@@ -1,17 +1,17 @@
 #include "NDirectionalLight.h"
 #include "NDX12.h"
 
-NDirectionalLight::NDirectionalLight():cbLight(new NConstBuff<ConstBuffDataLight>)
+NDirectionalLight::NDirectionalLight()
 {
 }
 
 NDirectionalLight::~NDirectionalLight()
 {
-	delete cbLight;
 }
 
 void NDirectionalLight::Initialize()
 {
+	cbLight = std::make_unique<NConstBuff<ConstBuffDataLight>>();
 	cbLight->Init();
 
 	SetActive(true);

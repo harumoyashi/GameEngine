@@ -12,7 +12,7 @@ class NSpotLight
 {
 public:
 	//定数バッファ
-	NConstBuff<ConstBuffDataSpotLight>* cbSpotLight;
+	std::unique_ptr<NConstBuff<ConstBuffDataSpotLight>> cbSpotLight;
 
 private://静的メンバ変数
 	NVector3 lightdir = { 1,0,0 };	// ライト方向

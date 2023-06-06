@@ -23,9 +23,9 @@ private:
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
 	//定数バッファ//
-	NConstBuff<ConstBuffDataTransform>* cbTrans;
-	NConstBuff<ConstBuffDataColor>* cbColor;
-	NConstBuff<ConstBuffDataMaterial>* cbMaterial;
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans;
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor;
+	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial;
 
 	NMatrix4 matWorld;	//3D変換行列
 
@@ -77,8 +77,6 @@ public:
 	void CommonBeginDraw();
 	//描画
 	void Draw();
-	//定数バッファビュー(CRV)の設定コマンド(マテリアル)
-	void SetMaterialCBV();
 	void SetSRVHeap();
 	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
 	//頂点バッファビューの設定コマンド

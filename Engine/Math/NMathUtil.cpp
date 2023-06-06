@@ -112,12 +112,12 @@ int MathUtil::Random(int min, int max)
 {
 	std::uniform_real_distribution<> dist1(min, max);
 
-	return dist1(engine);
+	return (int)dist1(engine);
 }
 
 float MathUtil::Random(float min, float max)
 {
 	std::uniform_real_distribution<> dist1(min, max);
 
-	return dist1(engine);
+	return (float)dist1(engine);
 }

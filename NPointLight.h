@@ -10,7 +10,7 @@ class NPointLight
 {
 public:
 	//定数バッファ
-	NConstBuff<ConstBuffDataPointLight>* cbPointLight;
+	std::unique_ptr<NConstBuff<ConstBuffDataPointLight>> cbPointLight;
 
 private://静的メンバ変数
 	NVector3 lightpos = { 0,0,0 };		// ライト座標(ワールド)

@@ -9,7 +9,7 @@ LevelDataLoader* LevelDataLoader::GetInstance()
 	return &instance;
 }
 
-LevelData* LevelDataLoader::Load(const std::string& directoryPath, const std::string& filename)
+std::unique_ptr<LevelData> LevelDataLoader::Load(const std::string& directoryPath, const std::string& filename)
 {
 	//連結してフルパスを見る
 	const std::string fullpath = directoryPath + filename;
@@ -42,17 +42,17 @@ LevelData* LevelDataLoader::Load(const std::string& directoryPath, const std::st
 	assert(name.compare("scene") == 0);
 
 	//レベルデータ格納用インスタンスを生成
-	LevelData* levelData = new LevelData();
+	std::unique_ptr<LevelData> levelData = std::make_unique<LevelData>();
 
 	//"objects"のオブジェクトを走査
 	for (nlohmann::json& object : deserialized["objects"])
 	{
-		Traversal(object, levelData);
+		Traversal(object, levelData.get());
 
 		//再起呼び出しで枝を走査する
 		for (nlohmann::json& c : object["children"])
 		{
-			Traversal(c, levelData);
+			Traversal(c, levelData.get());
 		}
 	}
 	return levelData;

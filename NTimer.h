@@ -11,13 +11,13 @@ enum class TimeType
 class NTimer
 {
 private:
-	int timer;		//タイマー
-	int maxTimer;	//タイマーの最大値
+	float timer;		//タイマー
+	float maxTimer;	//タイマーの最大値
 	bool isTimeOut;	//タイマーが最大値に達したかフラグ
 
 public:
 	NTimer() : timer(0), maxTimer(0), isTimeOut(false){}
-	NTimer(const int& maxTimer) : timer(0), maxTimer(maxTimer), isTimeOut(false) {}
+	NTimer(const float& maxTimer) : timer(0), maxTimer(maxTimer), isTimeOut(false) {}
 
 	//タイマーリセット
 	void Reset();
@@ -27,8 +27,8 @@ public:
 	void SubTimer(const float& subTimer);
 
 	//セッター
-	inline void SetTimer(const int& timer) { this->timer = timer; }
-	inline void SetMaxTimer(const int& maxTimer) { this->maxTimer = maxTimer; }
+	inline void SetTimer(const float& timer) { this->timer = timer; }
+	inline void SetMaxTimer(const float& maxTimer) { this->maxTimer = maxTimer; }
 	inline void SetisTimeOut(const bool& isTimeOut) { this->isTimeOut = isTimeOut; }
 
 	//ゲッター
@@ -38,5 +38,5 @@ public:
 	//タイマーの進み具合を取得
 	inline float GetTimeRate() { return (float)timer / (float)maxTimer; }
 	//システムが開始されてからの時間を取得
-	unsigned long GetNowTime(const TimeType& timeType);
+	float GetNowTime(const TimeType& timeType);
 };

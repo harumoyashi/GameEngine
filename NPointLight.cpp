@@ -1,17 +1,17 @@
 #include "NPointLight.h"
 #include "NDX12.h"
 
-NPointLight::NPointLight():cbPointLight(new NConstBuff<ConstBuffDataPointLight>)
+NPointLight::NPointLight()
 {
 }
 
 NPointLight::~NPointLight()
 {
-	delete cbPointLight;
 }
 
 void NPointLight::Initialize()
 {
+	cbPointLight = std::make_unique<NConstBuff<ConstBuffDataPointLight>>();
 	cbPointLight->Init();
 
 	SetActive(true);

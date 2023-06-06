@@ -1,17 +1,17 @@
 #include "NSpotLight.h"
 #include "NDX12.h"
 
-NSpotLight::NSpotLight():cbSpotLight(new NConstBuff<ConstBuffDataSpotLight>)
+NSpotLight::NSpotLight()
 {
 }
 
 NSpotLight::~NSpotLight()
 {
-	delete cbSpotLight;
 }
 
 void NSpotLight::Initialize()
 {
+	cbSpotLight = std::make_unique<NConstBuff<ConstBuffDataSpotLight>>();
 	cbSpotLight->Init();
 
 	SetActive(true);

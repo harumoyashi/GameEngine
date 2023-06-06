@@ -29,7 +29,7 @@ void NImGuiManager::Init()
 
 	ImGui_ImplWin32_Init(NWindows::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(NDX12::GetInstance()->GetDevice(),
-		NDX12::GetInstance()->backBuffers.size(),
+		(int)NDX12::GetInstance()->backBuffers.size(),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		srvHeap_.Get(),
 		srvHeap_->GetCPUDescriptorHandleForHeapStart(),

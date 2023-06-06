@@ -33,6 +33,7 @@ private:
 	NMaterial material;				//マテリアル
 	static const int maxObj = 3;	//オブジェクト数
 	std::vector<std::unique_ptr<NObj3d>> obj;	//オブジェクト
+	std::vector<std::unique_ptr<NObj3d>> levelDataobj;	//レベルデータから読み込んだオブジェクト
 
 	static const int maxModel = 2;	//モデル数
 	std::vector<NModel> model;	//モデル情報
@@ -70,10 +71,20 @@ private:
 	std::vector<Mesh> meshes; // メッシュの配列
 	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
+	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 
+	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
+	{
+		modelFile,
+		meshes,
+		false,
+		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
+	};
+	
+	AssimpLoader loader;
 	NConstBuff<ConstBuffDataTransform>* cbTrans;
 
-	LevelData* levelData;
+	std::unique_ptr<LevelData> levelData;
 
 public:
 	//インスタンス取得
