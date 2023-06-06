@@ -52,9 +52,9 @@ void NTitleScene::Init()
 
 	//オブジェクト
 	// レベルデータからの読み込み
-	levelData = std::make_unique<LevelData>();
+	/*levelData = std::make_unique<LevelData>();
 	levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
-	SetObject(levelData.get());
+	SetObject(levelData.get());*/
 
 	for (int i = 0; i < maxObj; i++)
 	{
@@ -261,10 +261,10 @@ void NTitleScene::Update()
 		o->Update();
 	}
 
-	for (auto& lo : levelDataobj)
+	/*for (auto& lo : levelDataobj)
 	{
 		lo->Update();
-	}
+	}*/
 
 	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 
@@ -284,11 +284,11 @@ void NTitleScene::Draw()
 		obj[i]->Draw();
 	}
 
-	for (size_t i = 0; i < levelDataobj.size(); i++)
+	/*for (size_t i = 0; i < levelDataobj.size(); i++)
 	{
 		levelDataobj[i]->CommonBeginDraw();
 		levelDataobj[i]->Draw();
-	}
+	}*/
 
 	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
