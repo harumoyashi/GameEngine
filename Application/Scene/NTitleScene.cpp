@@ -13,14 +13,12 @@ NTitleScene* NTitleScene::GetInstance()
 	return &instance;
 }
 
-NTitleScene::NTitleScene() :
-	cbTrans(new NConstBuff<ConstBuffDataTransform>)
+NTitleScene::NTitleScene()
 {
 }
 
 NTitleScene::~NTitleScene()
 {
-	delete cbTrans;
 	for (size_t i = 0; i < vertexBuffers.size(); i++)
 	{
 		delete vertexBuffers[i];
@@ -52,9 +50,15 @@ void NTitleScene::Init()
 
 	//オブジェクト
 	// レベルデータからの読み込み
-	/*levelData = std::make_unique<LevelData>();
+	levelData = std::make_unique<LevelData>();
 	levelData = LevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/","levelEditor.json");
-	SetObject(levelData.get());*/
+	//SetObject(levelData.get());
+	LevelDataLoader::GetInstance()->SetObject(levelData.get(), levelDataobj);
+	for (auto& lo : levelDataobj)
+	{
+		lo->SetModel(model[0]);
+	}
+
 
 	for (int i = 0; i < maxObj; i++)
 	{
@@ -128,62 +132,64 @@ void NTitleScene::Init()
 	//auto upward = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	//auto fov = XMConvertToRadians(60);
 
-	NVertexAssimp vertices[4] = {};
-	vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
-	vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
+	//assimpの四角形//
+	//NVertexAssimp vertices[4] = {};
+	//vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
+	//vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
 
-	vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
-	vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
+	//vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
+	//vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-	vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
-	vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
+	//vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
 
-	vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
-	vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
+	//vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
 
-	uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
+	//uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
 
-	Mesh mesh = {}; // これまでの四角形を入れるためのメッシュ構造体
-	mesh.vertices = std::vector<NVertexAssimp>(std::begin(vertices), std::end(vertices));
-	mesh.indices = std::vector<uint32_t>(std::begin(indices), std::end(indices));
-	meshes.clear(); // ちょっと無駄感あるが、一旦四角形で試したいのでAssimpLoaderで読み込んだモデルのメッシュを一旦クリア
-	meshes.shrink_to_fit(); // 中身をゼロにする
-	meshes.push_back(mesh);
+	//Mesh mesh = {}; // これまでの四角形を入れるためのメッシュ構造体
+	//mesh.vertices = std::vector<NVertexAssimp>(std::begin(vertices), std::end(vertices));
+	//mesh.indices = std::vector<uint32_t>(std::begin(indices), std::end(indices));
+	//meshes.clear(); // ちょっと無駄感あるが、一旦四角形で試したいのでAssimpLoaderで読み込んだモデルのメッシュを一旦クリア
+	//meshes.shrink_to_fit(); // 中身をゼロにする
+	//meshes.push_back(mesh);
 
-	// メッシュの数だけ頂点バッファを用意する
-	vertexBuffers.reserve(meshes.size());
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		auto size = sizeof(NVertexAssimp) * meshes[i].vertices.size();
-		auto vertices = meshes[i].vertices.data();
-		auto pVB = new NVertexBuff(vertices, (unsigned int)size);
+	//// メッシュの数だけ頂点バッファを用意する
+	//vertexBuffers.reserve(meshes.size());
+	//for (size_t i = 0; i < meshes.size(); i++)
+	//{
+	//	auto size = sizeof(NVertexAssimp) * meshes[i].vertices.size();
+	//	auto vertices = meshes[i].vertices.data();
+	//	auto pVB = new NVertexBuff(vertices, (unsigned int)size);
 
-		vertexBuffers.push_back(pVB);
-	}
+	//	vertexBuffers.push_back(pVB);
+	//}
 
-	// メッシュの数だけインデックスバッファを用意する
-	indexBuffers.reserve(meshes.size());
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		auto size = sizeof(uint32_t) * meshes[i].indices.size();
-		auto indices = meshes[i].indices.data();
-		auto pIB = new NIndexBuff(indices, (unsigned int)size);
+	//// メッシュの数だけインデックスバッファを用意する
+	//indexBuffers.reserve(meshes.size());
+	//for (size_t i = 0; i < meshes.size(); i++)
+	//{
+	//	auto size = sizeof(uint32_t) * meshes[i].indices.size();
+	//	auto indices = meshes[i].indices.data();
+	//	auto pIB = new NIndexBuff(indices, (unsigned int)size);
 
-		indexBuffers.push_back(pIB);
-	}
+	//	indexBuffers.push_back(pIB);
+	//}
 
-	cbTrans->Init();
+	//cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
+	//cbTrans->Init();
 
-	// 定数バッファへデータ転送
-	cbTrans->constMap = nullptr;
-	cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+	//// 定数バッファへデータ転送
+	//cbTrans->constMap = nullptr;
+	//cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
 
-	NMatrix4 mat;
-	cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	cbTrans->constMap->world = mat.Identity();
-	cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	//NMatrix4 mat;
+	//cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	//cbTrans->constMap->world = mat.Identity();
+	//cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
 
-	cbTrans->Unmap();
+	//cbTrans->Unmap();
 
 #pragma region オブジェクトの初期値設定
 
@@ -261,10 +267,10 @@ void NTitleScene::Update()
 		o->Update();
 	}
 
-	/*for (auto& lo : levelDataobj)
+	for (auto& lo : levelDataobj)
 	{
 		lo->Update();
-	}*/
+	}
 
 	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 
@@ -284,11 +290,11 @@ void NTitleScene::Draw()
 		obj[i]->Draw();
 	}
 
-	/*for (size_t i = 0; i < levelDataobj.size(); i++)
+	for (size_t i = 0; i < levelDataobj.size(); i++)
 	{
 		levelDataobj[i]->CommonBeginDraw();
 		levelDataobj[i]->Draw();
-	}*/
+	}
 
 	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
@@ -312,21 +318,21 @@ void NTitleScene::Draw()
 	//}
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
-	for (size_t i = 0; i < meshes.size(); i++)
-	{
-		auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
-		auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//for (size_t i = 0; i < meshes.size(); i++)
+	//{
+	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
-		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
-		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
-		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
+	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
+	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
-	}
+	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	//}
 
 	//前景スプライト
 	foreSprite[0]->Draw();

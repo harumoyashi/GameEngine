@@ -82,7 +82,7 @@ private:
 	};
 	
 	AssimpLoader loader;
-	NConstBuff<ConstBuffDataTransform>* cbTrans;
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans;
 
 	std::unique_ptr<LevelData> levelData;
 
@@ -98,8 +98,6 @@ public:
 	void Draw();
 	void Reset();
 	void Finalize();
-
-	void TransferMatrix();
 
 	//レベルエディタから出力された読み込み済オブジェクトを配置していく
 	void SetObject(LevelData* levelData);

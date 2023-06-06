@@ -89,3 +89,27 @@ void LevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 		objectData.scale = { (float)transform["scaling"][1],(float)transform["scaling"][2],(float)transform["scaling"][0] };
 	}
 }
+
+void LevelDataLoader::SetObject(LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
+{
+	//レベルデータからオブジェクトを生成、配置
+	for (auto& objectData : levelData->objects)
+	{
+		/*NModel* model = nullptr;
+		decltype(levelData->models)::iterator it = levelData->models.find(objectData.filename);
+		if (it != levelData->models.end())
+		{*/
+		/*model = &it->second;*/
+		//モデルを指定して3Dオブジェクトを生成(できてない)
+		//配列に登録してく
+		obj.emplace_back(std::make_unique<NObj3d>());
+		obj.back()->Init();
+		//obj.back()->SetModel(model[0]);
+
+		obj.back()->position = objectData.trans;
+		obj.back()->rotation = objectData.rot;
+		obj.back()->scale = objectData.scale;
+		//obj.back()->SetMatWorld(objectData.matWorld);
+	/*}*/
+	}
+}
