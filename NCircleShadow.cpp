@@ -27,7 +27,7 @@ void NCircleShadow::Update()
 	}
 }
 
-void NCircleShadow::Draw(UINT rootParameterIndex)
+void NCircleShadow::Draw(uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,

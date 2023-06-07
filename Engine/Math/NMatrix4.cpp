@@ -7,8 +7,8 @@ NMatrix4 NMatrix4::operator-() const
     NMatrix4 result;
     float mat[4][8] = { 0 };
 
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             mat[i][j] = m[i][j];
         }
     }
@@ -18,12 +18,12 @@ NMatrix4 NMatrix4::operator-() const
     mat[2][6] = 1;
     mat[3][7] = 1;
 
-    for (int n = 0; n < 4; n++) {
+    for (size_t n = 0; n < 4; n++) {
         //Å‘å‚Ìâ‘Î’l‚ð’Tõ‚·‚é(‚Æ‚è‚ ‚¦‚¸‘ÎÛ¬•ª‚ðÅ‘å‚Æ‰¼’è‚µ‚Ä‚¨‚­)
         float max = abs(mat[n][n]);
-        int maxIndex = n;
+        size_t maxIndex = n;
 
-        for (int i = n + 1; i < 4; i++) {
+        for (size_t i = n + 1; i < 4; i++) {
             if (abs(mat[i][n]) > max) {
                 max = abs(mat[i][n]);
                 maxIndex = i;
@@ -37,7 +37,7 @@ NMatrix4 NMatrix4::operator-() const
 
         //“ü‚ê‘Ö‚¦
         if (n != maxIndex) {
-            for (int i = 0; i < 8; i++) {
+            for (size_t i = 0; i < 8; i++) {
                 float f = mat[maxIndex][i];
                 mat[maxIndex][i] = mat[n][i];
                 mat[n][i] = f;
@@ -48,26 +48,26 @@ NMatrix4 NMatrix4::operator-() const
         float mul = 1 / mat[n][n];
 
         //Š|‚¯‚é
-        for (int i = 0; i < 8; i++) {
+        for (size_t i = 0; i < 8; i++) {
             mat[n][i] *= mul;
         }
 
         //‘¼‘S•”0‚É‚·‚é
-        for (int i = 0; i < 4; i++) {
+        for (size_t i = 0; i < 4; i++) {
             if (n == i) {
                 continue;
             }
 
             float mul = -mat[i][n];
 
-            for (int j = 0; j < 8; j++) {
+            for (size_t j = 0; j < 8; j++) {
                 mat[i][j] += mat[n][j] * mul;
             }
         }
     }
 
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             result.m[i][j] = mat[i][j + 4];
         }
     }
@@ -84,8 +84,8 @@ NMatrix4 NMatrix4::operator+(const NMatrix4& m) const
 
 NMatrix4& NMatrix4::operator+=(const NMatrix4& m)
 {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             this->m[i][j] += m.m[i][j];
         }
     }
@@ -101,8 +101,8 @@ NMatrix4 NMatrix4::operator-(const NMatrix4& m) const
 
 NMatrix4& NMatrix4::operator-=(const NMatrix4& m)
 {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             this->m[i][j] -= m.m[i][j];
         }
     }
@@ -120,12 +120,12 @@ NMatrix4& NMatrix4::operator*=(const NMatrix4& m)
 {
     NMatrix4 result = *this;
 
-    for (int i = 0; i < 4; i++)
+    for (size_t i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (size_t j = 0; j < 4; j++)
         {
             float f = 0;
-            for (int k = 0; k < 4; k++)
+            for (size_t k = 0; k < 4; k++)
             {
                 f += result.m[i][k] * m.m[k][j];
             }

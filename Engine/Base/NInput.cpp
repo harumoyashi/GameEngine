@@ -61,19 +61,19 @@ void NInput::KeyUpdate()
 }
 
 //âüÇµÇ¡ÇœÇ»Çµ
-bool NInput::IsKey(UINT8 key)
+bool NInput::IsKey(uint8_t key)
 {
 	return keys[key];
 }
 
 //âüÇµÇΩèuä‘
-bool NInput::IsKeyDown(UINT8 key)
+bool NInput::IsKeyDown(uint8_t key)
 {
 	return keys[key] && !prev[key];
 }
 
 //ó£ÇµÇΩèuä‘
-bool NInput::IsKeyRelease(UINT8 key)
+bool NInput::IsKeyRelease(uint8_t key)
 {
 	return !keys[key] && prev[key];
 }
@@ -111,22 +111,22 @@ void NInput::PadUpdate()
 	SetDeadZone();
 }
 
-bool NInput::IsButton(UINT button)
+bool NInput::IsButton(uint32_t button)
 {
 	return statePad.Gamepad.wButtons == button;
 }
 
-bool NInput::IsButtonDown(UINT button)
+bool NInput::IsButtonDown(uint32_t button)
 {
 	return statePad.Gamepad.wButtons == button && prevPad.Gamepad.wButtons != button;
 }
 
-bool NInput::IsButtonRelease(UINT button)
+bool NInput::IsButtonRelease(uint32_t button)
 {
 	return statePad.Gamepad.wButtons != button && prevPad.Gamepad.wButtons == button;
 }
 
-int NInput::GetTrigger(bool isLeft)
+uint32_t NInput::GetTrigger(bool isLeft)
 {
 	if (isLeft)
 	{
@@ -177,7 +177,7 @@ NVector2 NInput::GetStick(bool isLeft)
 	}
 }
 
-int NInput::StickTriggered(bool isVertical, bool isLstick)
+uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 {
 	if (isLstick)
 	{

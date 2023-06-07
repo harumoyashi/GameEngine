@@ -8,7 +8,7 @@ class NPreDraw
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	UINT bbIndex;
+	uint32_t bbIndex;
 	D3D12_RESOURCE_BARRIER barrierDesc{};		//リソースバリア
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle{};	//レンダーターゲットビューハンドル
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle{};	//デスクリプタハンドル

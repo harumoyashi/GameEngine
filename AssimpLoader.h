@@ -10,7 +10,7 @@
 struct Mesh
 {
 	std::vector<NVertexAssimp> vertices;
-	std::vector<UINT> indices;
+	std::vector<uint32_t> indices;
 
 	std::wstring textureName;
 };

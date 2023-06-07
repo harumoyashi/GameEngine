@@ -3,6 +3,7 @@
 #include "NVector3.h"
 #include "NMatrix4.h"
 #include "NQuaternion.h"
+#include <stdint.h>
 
 namespace MathUtil
 {
@@ -18,13 +19,9 @@ namespace MathUtil
 	//度数法→ラジアン
 	float Radian2Degree(float radian);
 	//符号返す
-	int Sign(int value);
-	//符号返す
-	float Sign(float value);
+	uint32_t Sign(uint32_t value);
 	//ランダムな値を返す
-	int Random(int min,int max);
-	//ランダムな値を返す
-	float Random(float min,float max);
+	uint32_t Random(uint32_t min,uint32_t max);
 	//最小、最大値設定
 	template <typename Type>
 	Type Clamp(Type value, Type min, Type max)

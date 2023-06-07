@@ -3,7 +3,7 @@
 
 #pragma comment(lib,"winmm.lib")
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t msg, WPARAM wParam, LPARAM lParam);
 
 NWindows* NWindows::GetInstance()
 {
@@ -13,7 +13,7 @@ NWindows* NWindows::GetInstance()
 
 //ウィンドプロシージャ
 //面倒だけど書かなきゃいけない関数
-LRESULT NWindows::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+LRESULT NWindows::WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam)
 {
 	//ImGui用ウィンドウプロシージャ呼び出し
 	if (ImGui_ImplWin32_WndProcHandler(hwnd,msg,wparam,lparam))

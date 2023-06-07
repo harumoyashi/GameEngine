@@ -57,7 +57,7 @@ bool AssimpLoader::Load(ImportSettings settings)
     auto path = ToUTF8(settings.filename);
 
     Assimp::Importer importer;
-    int flag = 0;
+    uint32_t flag = 0;
     flag |= aiProcess_Triangulate;
     flag |= aiProcess_PreTransformVertices;
     flag |= aiProcess_CalcTangentSpace;

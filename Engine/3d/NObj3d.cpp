@@ -163,7 +163,7 @@ void NObj3d::Draw()
 	pointLight->Draw(5);
 	spotLight->Draw(6);
 	circleShadow->Draw(7);
-	DrawCommand((UINT)model.indices.size());
+	DrawCommand((uint32_t)model.indices.size());
 }
 
 void NObj3d::SetSRVHeap()
@@ -171,8 +171,8 @@ void NObj3d::SetSRVHeap()
 	//シェーダリソースビュー(SRV)ヒープの先頭ハンドルを取得(SRVを指してるはず)
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NDX12::GetInstance()->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
 	//ハンドルを指定のとこまで進める
-	UINT incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	srvGpuHandle.ptr += incrementSize * (UINT)texNum;
+	uint32_t incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	srvGpuHandle.ptr += incrementSize * (uint32_t)texNum;
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 }
@@ -203,7 +203,7 @@ void NObj3d::SetCBV()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans->constBuff->GetGPUVirtualAddress());
 }
 
-void NObj3d::DrawCommand(UINT indexSize)
+void NObj3d::DrawCommand(uint32_t indexSize)
 {
 	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(indexSize, 1, 0, 0, 0); //インデックスを使って描画
 }

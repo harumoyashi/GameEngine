@@ -16,8 +16,8 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	//頂点まわり//
-	UINT singleSizeVB;						//頂点バッファ1個当たりのサイズ
-	UINT sizeVB;							//頂点バッファ全体のサイズ
+	uint32_t singleSizeVB;						//頂点バッファ1個当たりのサイズ
+	uint32_t sizeVB;							//頂点バッファ全体のサイズ
 	NVertexUV vertices[4]{};				//頂点代入用
 	D3D12_HEAP_PROPERTIES heapPropVert{};	//ヒープ
 	D3D12_RESOURCE_DESC resDescVert{};		//リソース
@@ -49,6 +49,7 @@ public:
 	bool isInvisible = false;	//非表示にするフラグ
 
 	std::string texHandle = "";	//テクスチャ指定用
+	NColor color;
 
 public:
 	NSprite();
@@ -96,10 +97,8 @@ private:
 #pragma endregion
 public:
 #pragma region 更新
-	//スプライトの色変更(int型0~255)
-	void SetColor(int R = 255, int G = 255, int B = 255, int A = 255);
 	//ワールド行列の合成
-	void UpdateMatrix();
+	void Update();
 	//頂点バッファ転送
 	void TransferVertex();
 	//サイズ指定

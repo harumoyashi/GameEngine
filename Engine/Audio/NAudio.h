@@ -19,7 +19,7 @@ struct SoundData
 	//バッファの先頭アドレス
 	BYTE* pBuffer;
 	//バッファのサイズ
-	unsigned int bufferSize;
+	uint32_t bufferSize;
 	//名前
 	std::string name_;
 };
@@ -34,7 +34,7 @@ class NAudio
 {
 private:
 	// サウンドデータの最大数
-	static const int kMaxSoundData = 256;
+	static const uint32_t kMaxSoundData = 256;
 
 	//チャンクヘッダー
 	struct ChunkHeader
@@ -72,7 +72,7 @@ private:
 	class XAudio2VoiceCallback : public IXAudio2VoiceCallback {
 	public:
 		// ボイス処理パスの開始時
-		STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ UINT32 BytesRequired) {};
+		STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ uint32_t BytesRequired) {};
 		// ボイス処理パスの終了時
 		STDMETHOD_(void, OnVoiceProcessingPassEnd)(THIS) {};
 		// バッファストリームの再生が終了した時

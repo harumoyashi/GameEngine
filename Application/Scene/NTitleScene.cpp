@@ -60,7 +60,7 @@ void NTitleScene::Init()
 	}
 
 
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < maxObj; i++)
 	{
 		obj.emplace_back();
 		obj[i] = std::make_unique<NObj3d>();
@@ -77,7 +77,7 @@ void NTitleScene::Init()
 	obj[2]->scale = { 10,0.1f,10 };
 
 	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < maxObj; i++)
 	{
 		obj[i]->Update();
 	}
@@ -201,7 +201,7 @@ void NTitleScene::Init()
 	foreSprite[0]->CreateSprite("hamu", { 0,0 });
 	foreSprite[0]->SetPos(0, 0);
 	foreSprite[0]->SetSize(100, 100);
-	foreSprite[0]->SetColor(255, 255, 255, 255);
+	foreSprite[0]->color.SetColor255(255, 255, 255, 255);
 
 #pragma endregion
 	// ライト生成
@@ -249,13 +249,13 @@ void NTitleScene::Update()
 
 	if (isCol)
 	{
-		obj[0]->color.SetColor(255, 0, 0, 255);
+		obj[0]->color.SetColor255(255, 0, 0, 255);
 	}
 	else
 	{
-		obj[0]->color.SetColor(255, 255, 255, 255);
+		obj[0]->color.SetColor255(255, 255, 255, 255);
 	}
-	obj[2]->color.SetColor(255, 255, 255, 255);
+	obj[2]->color.SetColor255(255, 255, 255, 255);
 
 	obj[0]->MoveKey();
 
@@ -274,7 +274,7 @@ void NTitleScene::Update()
 
 	isCol = NCollision::Sphere2PlaneCol(sphere, plane);
 
-	foreSprite[0]->UpdateMatrix();
+	foreSprite[0]->Update();
 #pragma endregion
 }
 

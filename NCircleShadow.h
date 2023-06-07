@@ -37,7 +37,7 @@ public://メンバ関数
 	void Update();
 	//描画
 	//rootParameterIndex = ルートパラメータの何番目にセットするか
-	void Draw(UINT rootParameterIndex);
+	void Draw(uint32_t rootParameterIndex);
 
 	//定数バッファ転送
 	void TransferConstBuffer();

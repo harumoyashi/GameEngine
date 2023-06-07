@@ -60,7 +60,7 @@ struct ConstBuffDataPointLight
 	NVector3 color;
 	float pad2;
 	NVector3 atten;
-	unsigned int active;
+	uint32_t active;
 };
 
 //スポットライト
@@ -75,7 +75,7 @@ struct ConstBuffDataSpotLight
 	NVector3 atten;
 	float pad4;
 	NVector2 factorAngleCos;
-	unsigned int active;
+	uint32_t active;
 	float pad5;
 };
 
@@ -89,5 +89,5 @@ struct ConstBuffDataCircleShadow
 	NVector3 atten;
 	float pad2;
 	NVector2 factorAngleCos;
-	unsigned int active;
+	uint32_t active;
 };

@@ -52,7 +52,7 @@ void NDX12::PostDraw(D3D12_RESOURCE_BARRIER barrierDesc)
 void NDX12::ChoiceAdapters()
 {
 	// パフォーマンスが高いものから順に、全てのアダプターを列挙する
-	for (UINT i = 0;
+	for (uint32_t i = 0;
 		dxgiFactory->EnumAdapterByGpuPreference(i,
 			DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE,
 			IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND;
@@ -203,9 +203,9 @@ void NDX12::CreateRTV()
 	backBuffers.resize(swapChainDesc.BufferCount);
 
 	// スワップチェーンの全てのバッファについて処理する
-	for (size_t i = 0; i < backBuffers.size(); i++) {
+	for (uint32_t i = 0; i < backBuffers.size(); i++) {
 		// スワップチェーンからバッファを取得
-		swapchain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+		swapchain->GetBuffer(i, IID_PPV_ARGS(&backBuffers[i]));
 		// デスクリプタヒープのハンドルを取得
 		rtvHandle = rtvHeap->GetCPUDescriptorHandleForHeapStart();
 		// 裏か表かでアドレスがずれる

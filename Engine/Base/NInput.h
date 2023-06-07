@@ -2,6 +2,7 @@
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 #include <dinput.h>
 #include <Xinput.h>
+#include <stdint.h>
 #include "NVector2.h"
 
 #include <wrl.h>
@@ -29,11 +30,11 @@ public:
 
 	//キーボード入力処理用 (返り値0,1)
 	//押しっぱなし
-	static bool IsKey(UINT8 key);	//UINTはビット数指定したら型自由ぽい
+	static bool IsKey(uint8_t key);	//UINTはビット数指定したら型自由ぽい
 	//押した瞬間
-	static bool IsKeyDown(UINT8 key);
+	static bool IsKeyDown(uint8_t key);
 	//離した瞬間
-	static bool IsKeyRelease(UINT8 key);
+	static bool IsKeyRelease(uint8_t key);
 
 public:
 	//XINPUT_STATE 構造体のインスタンスを作成
@@ -50,15 +51,15 @@ public:
 	void PadUpdate();
 
 	//押しっぱなし
-	bool IsButton(UINT button);    //UINTはビット数指定したら型自由ぽい
+	bool IsButton(uint32_t button);    //UINTはビット数指定したら型自由ぽい
 	//押した瞬間
-	bool IsButtonDown(UINT button);
+	bool IsButtonDown(uint32_t button);
 	//離した瞬間
-	bool IsButtonRelease(UINT button);
+	bool IsButtonRelease(uint32_t button);
 
 	//トリガーの押し込み具合取得
 	//isLeft:右左どっち！
-	int GetTrigger(bool isLeft = true);
+	uint32_t GetTrigger(bool isLeft = true);
 
 	//デッドゾーンの設定
 	void SetDeadZone();
@@ -71,7 +72,7 @@ public:
 	//isLstick:Lスティックか
 	//上、左はなら-1
 	//下、右なら+1が返ってくる
-	int StickTriggered(bool isVertical,bool isLstick = true);
+	uint32_t StickTriggered(bool isVertical,bool isLstick = true);
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね

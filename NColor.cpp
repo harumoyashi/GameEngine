@@ -9,7 +9,7 @@ const NColor NColor::lightblue(0, 1.0f, 1.0f);
 const NColor NColor::white(1.0f, 1.0f, 1.0f);
 const NColor NColor::black(0, 0, 0);
 
-void NColor::SetColor(int R, int G, int B, int A)
+void NColor::SetColor255(uint32_t R, uint32_t G, uint32_t B, uint32_t A)
 {
 	r = static_cast<float>(R);
 	g = static_cast<float>(G);

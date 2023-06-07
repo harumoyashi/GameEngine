@@ -19,15 +19,15 @@ bool NVertexPNU::operator==(const NVertexPNU& a) const
 	return true;
 }
 
-void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU> vertices, std::vector<unsigned int> indices)
+void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU> vertices, std::vector<uint32_t> indices)
 {
 	assert(indices.size() % 3 == 0);
-	for (int i = 0; i < indices.size() / 3; i++)
+	for (uint32_t i = 0; i < indices.size() / 3; i++)
 	{//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
-		unsigned short index0 = indices[i * 3 + 0];
-		unsigned short index1 = indices[i * 3 + 1];
-		unsigned short index2 = indices[i * 3 + 2];
+		uint32_t index0 = indices[i * 3 + 0];
+		uint32_t index1 = indices[i * 3 + 1];
+		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
 		NVector3 p0 = vertices[index0].pos;
@@ -77,15 +77,15 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	return true;
 }
 
-void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<unsigned int> indices)
+void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<uint32_t> indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (int i = 0; i < indices.size() / 3; i++)
 	{//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
-		unsigned short index0 = indices[i * 3 + 0];
-		unsigned short index1 = indices[i * 3 + 1];
-		unsigned short index2 = indices[i * 3 + 2];
+		uint32_t index0 = indices[i * 3 + 0];
+		uint32_t index1 = indices[i * 3 + 1];
+		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
 		NVector3 p0 = vertices[index0].pos;

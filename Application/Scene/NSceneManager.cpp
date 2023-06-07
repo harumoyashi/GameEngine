@@ -3,7 +3,7 @@
 #include "imgui.h"
 #pragma region staticメンバ変数初期化
 //シーンの初期化
-int NSceneManager::scene = TITLESCENE;
+uint32_t NSceneManager::scene = TITLESCENE;
 //シーン変更フラグの初期化
 bool NSceneManager::isSceneChange = false;
 #pragma region
@@ -96,7 +96,7 @@ void NSceneManager::Finalize()
 	NImGuiManager::GetInstance()->Finalize();
 }
 
-void NSceneManager::SetScene(int selectScene)
+void NSceneManager::SetScene(uint32_t selectScene)
 {
 	// --シーンを変更-- //
 	scene = selectScene;

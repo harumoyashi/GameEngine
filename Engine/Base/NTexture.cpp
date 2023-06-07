@@ -176,9 +176,9 @@ void NTextureManager::SetTBResource()
 	texResDesc.Format = metadata.format;
 
 	texResDesc.Width = metadata.width;	//幅
-	texResDesc.Height = (UINT)metadata.height;	//高さ
-	texResDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
-	texResDesc.MipLevels = (UINT16)metadata.mipLevels;
+	texResDesc.Height = (uint32_t)metadata.height;	//高さ
+	texResDesc.DepthOrArraySize = (uint32_t)metadata.arraySize;
+	texResDesc.MipLevels = (uint32_t)metadata.mipLevels;
 	texResDesc.SampleDesc.Count = 1;
 }
 
@@ -209,11 +209,11 @@ void NTextureManager::TexBuffMaping(ID3D12Resource* texBuff)
 		const Image* img = scratchImg.GetImage(i, 0, 0);
 		//テクスチャバッファにデータ転送
 		result = texBuff->WriteToSubresource(
-			(UINT)i,
+			(uint32_t)i,
 			nullptr,				//全領域へコピー
 			img->pixels,			//元データアドレス
-			(UINT)img->rowPitch,	//1ラインサイズ
-			(UINT)img->slicePitch	//全サイズ
+			(uint32_t)img->rowPitch,	//1ラインサイズ
+			(uint32_t)img->slicePitch	//全サイズ
 		);
 		assert(SUCCEEDED(result));
 	}
@@ -233,9 +233,9 @@ NTexture NTextureManager::CreateSRV(NTexture tex)
 	tex.cpuHandle = NDX12::GetInstance()->GetSRVHeap()->GetCPUDescriptorHandleForHeapStart();
 	tex.gpuHandle = NDX12::GetInstance()->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
 	//指定されたテクスチャ番号に応じてハンドルを進める
-	UINT incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	tex.cpuHandle.ptr += incrementSize * (UINT)textureMap.size();
-	tex.gpuHandle.ptr += incrementSize * (UINT)textureMap.size();
+	uint32_t incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	tex.cpuHandle.ptr += incrementSize * (uint32_t)textureMap.size();
+	tex.gpuHandle.ptr += incrementSize * (uint32_t)textureMap.size();
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
 	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texBuff.Get(), &srvDesc, tex.cpuHandle);

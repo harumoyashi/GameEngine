@@ -15,7 +15,7 @@ private:
 	NTitleScene* titleScene;
 	NGameScene* gameScene;	//ゲームシーン
 
-	static int scene;		//現在のシーン
+	static uint32_t scene;		//現在のシーン
 	static bool isSceneChange;	//シーンの初期化フラグ
 
 public:
@@ -34,7 +34,7 @@ public:
 	//終了処理
 	void Finalize();
 	//シーンの変更
-	static void SetScene(int selectScene);
+	static void SetScene(uint32_t selectScene);
 
 	NSceneManager();
 

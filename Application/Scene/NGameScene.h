@@ -23,25 +23,25 @@ class NGameScene
 private:
 	//オブジェクト
 	NMaterial material;				//マテリアル
-	static const int maxObj = 4;	//オブジェクト数
+	static const uint32_t maxObj = 4;	//オブジェクト数
 	std::vector<std::unique_ptr<NObj3d>> obj;			//オブジェクト(定数バッファ)
 
-	static const int maxModel = 3;	//モデル数
+	static const uint32_t maxModel = 3;	//モデル数
 	std::vector<NModel> model;	//モデル情報
 
 	//背景スプライト
-	static const int maxBackSprite = 3;	//背景スプライト数
+	static const uint32_t maxBackSprite = 3;	//背景スプライト数
 	std::unique_ptr<NSprite> backSprite[maxBackSprite];	//背景スプライト
 
 	//前景スプライト
-	static const int maxForeSprite = 3;	//前景スプライト数
+	static const uint32_t maxForeSprite = 3;	//前景スプライト数
 	std::unique_ptr<NSprite> foreSprite[maxForeSprite];	//前景スプライト
 
 	NCamera camera;	//カメラ
 
 	//オーディオ
 	NAudio* audio = nullptr;
-	static const int maxSoundData = 3;		//サウンドデータの最大数
+	static const uint32_t maxSoundData = 3;		//サウンドデータの最大数
 	uint32_t soundData[maxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち

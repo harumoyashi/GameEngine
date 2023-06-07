@@ -42,7 +42,7 @@ public:
 
 	NObj3d* parent = nullptr;	//親のポインタ
 
-	int texNum = 0;	//テクスチャ指定用
+	uint32_t texNum = 0;	//テクスチャ指定用
 
 	NModel model;
 	NColor color;
@@ -86,7 +86,7 @@ public:
 	//定数バッファビュー(CBV)の設定コマンド
 	void SetCBV();
 	//描画コマンド
-	void DrawCommand(UINT indexSize);
+	void DrawCommand(uint32_t indexSize);
 #pragma endregion
 	inline void SetModel(NModel model) { this->model = model; }
 	//ライトのセット

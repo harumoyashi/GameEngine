@@ -76,7 +76,7 @@ float MathUtil::Radian2Degree(float radian)
 	return radian * 180 / PI;
 }
 
-int MathUtil::Sign(int value)
+uint32_t MathUtil::Sign(uint32_t value)
 {
 	if (value > 0)
 	{
@@ -92,32 +92,9 @@ int MathUtil::Sign(int value)
 	}
 }
 
-float MathUtil::Sign(float value)
-{
-	if (value > 0.0f)
-	{
-		return 1.0f;
-	}
-	else if (value < 0.0f)
-	{
-		return -1.0f;
-	}
-	else
-	{
-		return 0.0f;
-	}
-}
-
-int MathUtil::Random(int min, int max)
+uint32_t MathUtil::Random(uint32_t min, uint32_t max)
 {
 	std::uniform_real_distribution<> dist1(min, max);
 
-	return (int)dist1(engine);
-}
-
-float MathUtil::Random(float min, float max)
-{
-	std::uniform_real_distribution<> dist1(min, max);
-
-	return (float)dist1(engine);
+	return (uint32_t)dist1(engine);
 }

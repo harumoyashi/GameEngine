@@ -5,8 +5,8 @@
 class NWindows
 {
 public:
-	static const int win_width = 1280;
-	static const int win_height = 720;
+	static const uint32_t win_width = 1280;
+	static const uint32_t win_height = 720;
 
 private:
 	//ウィンドウクラスの生成＆登録
@@ -24,7 +24,7 @@ public:
 	static NWindows* GetInstance();
 
 	//ウィンドウプロシージャ
-	static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+	static LRESULT WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam);
 	//Windowクラスの設定
 	void Set();
 	//コンソールへの文字出力

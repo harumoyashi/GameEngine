@@ -18,7 +18,7 @@ public:
 	NIndexBuff indexBuff;
 
 	std::vector<NVertexPNU> vertices;
-	std::vector<UINT> indices;
+	std::vector<uint32_t> indices;
 
 	NMaterial material;
 

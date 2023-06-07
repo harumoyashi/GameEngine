@@ -24,7 +24,7 @@ void NGameScene::Init()
 	//立方体情報
 	
 	//モデル情報
-	for (size_t i = 0; i < maxModel; i++)
+	for (uint32_t i = 0; i < maxModel; i++)
 	{
 		model.emplace_back();
 	}
@@ -33,7 +33,7 @@ void NGameScene::Init()
 	model[2].Create("busterSword");
 
 	//オブジェクト
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < maxObj; i++)
 	{
 		obj.emplace_back();
 		obj[i] = std::make_unique<NObj3d>();
@@ -51,7 +51,7 @@ void NGameScene::Init()
 	obj[2]->position = { 2,0,0 };
 	obj[3]->position = { -2,3,0 };
 	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < maxObj; i++)
 	{
 		obj[i]->Update();
 	}
@@ -111,7 +111,7 @@ void NGameScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (int i = 0; i < maxObj; i++)
+	for (size_t i = 0; i < maxObj; i++)
 	{
 		obj[i]->CommonBeginDraw();
 		obj[i]->Draw();

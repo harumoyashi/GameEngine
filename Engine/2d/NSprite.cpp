@@ -26,13 +26,12 @@ void NSprite::CreateSprite(std::string texHandle)
 	//定数バッファ
 	cbTrans->Init();
 	cbColor->Init();
-	SetColor();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
-	UpdateMatrix();
+	Update();
 }
 
 void NSprite::CreateSprite(std::string texHandle,
@@ -54,13 +53,12 @@ void NSprite::CreateSprite(std::string texHandle,
 	//定数バッファ
 	cbTrans->Init();
 	cbColor->Init();
-	SetColor();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
-	UpdateMatrix();
+	Update();
 }
 
 void NSprite::CreateClipSprite(std::string texHandle,
@@ -82,13 +80,12 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	//定数バッファ
 	cbTrans->Init();
 	cbColor->Init();
-	SetColor();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
-	UpdateMatrix();
+	Update();
 }
 
 void NSprite::SetVert()
@@ -105,8 +102,8 @@ void NSprite::SetVert()
 	std::copy(std::begin(vert), std::end(vert), vertices);
 
 	//頂点バッファのサイズを代入
-	singleSizeVB = static_cast<UINT>(sizeof(vertices[0]));
-	sizeVB = static_cast<UINT>(sizeof(vertices));
+	singleSizeVB = static_cast<uint32_t>(sizeof(vertices[0]));
+	sizeVB = static_cast<uint32_t>(sizeof(vertices));
 }
 
 void NSprite::SetVertHeap()
@@ -210,18 +207,7 @@ void NSprite::SetTexHandle(std::string texHandle)
 	}
 }
 
-void NSprite::SetColor(int R, int G, int B, int A)
-{
-	NColor color = {};
-
-	color.r = static_cast<float>(R) / 255.0f;
-	color.g = static_cast<float>(G) / 255.0f;
-	color.b = static_cast<float>(B) / 255.0f;
-	color.a = static_cast<float>(A) / 255.0f;
-	cbColor->constMap->color = color;
-}
-
-void NSprite::UpdateMatrix()
+void NSprite::Update()
 {
 	//ワールド行列
 	NMatrix4 matRot;	//回転行列
@@ -234,14 +220,9 @@ void NSprite::UpdateMatrix()
 	matWorld *= matRot;		//ワールド座標に回転を反映
 	matWorld *= matTrans;	//ワールド座標に平行移動を反映
 
-	HRESULT result;
 	// 定数バッファへデータ転送
-	/*cbTrans->constMap = nullptr;
-	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);*/
-
 	cbTrans->constMap->mat = matWorld * matProjection;
-
-	//cbTrans->constBuff->Unmap(0, nullptr);
+	cbColor->constMap->color = color;
 }
 
 void NSprite::TransferVertex()
@@ -298,8 +279,8 @@ void NSprite::TransferVertex()
 	std::copy(std::begin(vert), std::end(vert), vertices);
 
 	//頂点バッファのサイズを代入
-	singleSizeVB = static_cast<UINT>(sizeof(vertices[0]));
-	sizeVB = static_cast<UINT>(sizeof(vertices));
+	singleSizeVB = static_cast<uint32_t>(sizeof(vertices[0]));
+	sizeVB = static_cast<uint32_t>(sizeof(vertices));
 
 	//頂点バッファへのデータ転送
 	VertMaping();
@@ -314,7 +295,7 @@ void NSprite::SetSize(float x, float y)
 void NSprite::SetPos(float x, float y)
 {
 	position = { x,y };
-	UpdateMatrix();
+	Update();
 }
 
 void NSprite::CommonBeginDraw()

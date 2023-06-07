@@ -6,7 +6,7 @@ void NRootSignature::SetRootSignature(ComPtr<ID3DBlob> errorBlob, std::vector<D3
 
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	rootSignatureDesc.pParameters = &rootParams.front();		//ルートパラメータの先頭アドレス
-	rootSignatureDesc.NumParameters = (UINT)rootParams.size();		//ルートパラメータ数
+	rootSignatureDesc.NumParameters = (uint32_t)rootParams.size();		//ルートパラメータ数
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
