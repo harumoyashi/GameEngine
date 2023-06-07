@@ -26,8 +26,8 @@ private:
 	D3D12_VERTEX_BUFFER_VIEW vbView{};		//頂点バッファビュー
 
 	//定数バッファまわり//
-	NConstBuff<ConstBuffDataTransform2D>* cbTrans;	//2D変換行列
-	NConstBuff<ConstBuffDataColor>* cbColor;	//色
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans;	//2D変換行列
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor;	//色
 
 	//行列//
 	NMatrix4 matWorld{};		//変換行列

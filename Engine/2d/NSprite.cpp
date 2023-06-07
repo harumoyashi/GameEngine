@@ -1,16 +1,13 @@
 #include "NSprite.h"
 #include "NMathUtil.h"
 
-NSprite::NSprite() :
-	cbTrans(new NConstBuff<ConstBuffDataTransform2D>),
-	cbColor(new NConstBuff<ConstBuffDataColor>)
+NSprite::NSprite()
 {
+	
 }
 
 NSprite::~NSprite()
 {
-	delete cbTrans;
-	delete cbColor;
 }
 
 void NSprite::CreateSprite(std::string texHandle)
@@ -24,7 +21,9 @@ void NSprite::CreateSprite(std::string texHandle)
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
+	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
 	cbTrans->Init();
+	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor->Init();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
@@ -51,7 +50,9 @@ void NSprite::CreateSprite(std::string texHandle,
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
+	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
 	cbTrans->Init();
+	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor->Init();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
@@ -78,7 +79,9 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
+	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
 	cbTrans->Init();
+	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor->Init();
 	//平行投影を代入
 	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
