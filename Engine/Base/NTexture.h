@@ -52,7 +52,7 @@ public:
 	//テクスチャの読み込み
 	//indexを入れなかったら0番目に格納
 	//読み込むたびに書き変わるから、一回きりの時だけにして
-	NTexture LoadTexture(const std::string pictureName, const std::string handle = "");
+	NTexture LoadTexture(const std::string pictureName, const std::string handle_ = "");
 
 private:
 	//WICテクスチャのロード

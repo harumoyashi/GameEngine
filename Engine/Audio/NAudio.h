@@ -1,7 +1,7 @@
 #pragma once
-#include <xaudio2.h>
+#include <xAudio2.h>
 
-#pragma comment(lib,"xaudio2.lib")
+#pragma comment(lib,"xAudio2.lib")
 
 #include <array>
 #include <cstdint>
@@ -21,7 +21,7 @@ struct SoundData
 	//バッファのサイズ
 	uint32_t bufferSize;
 	//名前
-	std::string name_;
+	std::string name;
 };
 
 // 再生データ
@@ -34,7 +34,7 @@ class NAudio
 {
 private:
 	// サウンドデータの最大数
-	static const uint32_t kMaxSoundData = 256;
+	static const uint32_t kMaxSoundData_ = 256;
 
 	//チャンクヘッダー
 	struct ChunkHeader
@@ -59,14 +59,14 @@ private:
 
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<IXAudio2> xAudio2;
-	IXAudio2MasteringVoice* masterVoice;
+	ComPtr<IXAudio2> xAudio2_;
+	IXAudio2MasteringVoice* masterVoice_;
 
-	std::ifstream file;			//ファイル入力ストリームのインスタンス
-	FormatChunk format = {};	//フォーマットチャンク
-	ChunkHeader data;			//データチャンク
-	char* pBuffer;
-	SoundData soundData = {};	//音声データ
+	std::ifstream file_;			//ファイル入力ストリームのインスタンス
+	FormatChunk format_ = {};	//フォーマットチャンク
+	ChunkHeader data_;			//データチャンク
+	char* pBuffer_;
+	SoundData soundData_ = {};	//音声データ
 
 	//オーディオコールバック
 	class XAudio2VoiceCallback : public IXAudio2VoiceCallback {
@@ -78,13 +78,13 @@ private:
 		// バッファストリームの再生が終了した時
 		STDMETHOD_(void, OnStreamEnd)(THIS) {};
 		// バッファの使用開始時
-		STDMETHOD_(void, OnBufferStart)(THIS_ void* pBufferContext) {};
+		STDMETHOD_(void, OnBufferStart)(THIS_ void* pBuffer_Context) {};
 		// バッファの末尾に達した時
-		STDMETHOD_(void, OnBufferEnd)(THIS_ void* pBufferContext);
+		STDMETHOD_(void, OnBufferEnd)(THIS_ void* pBuffer_Context);
 		// 再生がループ位置に達した時
-		STDMETHOD_(void, OnLoopEnd)(THIS_ void* pBufferContext) {};
+		STDMETHOD_(void, OnLoopEnd)(THIS_ void* pBuffer_Context) {};
 		// ボイスの実行エラー時
-		STDMETHOD_(void, OnVoiceError)(THIS_ void* pBufferContext, HRESULT Error) {};
+		STDMETHOD_(void, OnVoiceError)(THIS_ void* pBuffer_Context, HRESULT Error) {};
 	};
 
 public:
@@ -136,10 +136,8 @@ public:
 	void SetVolume(uint32_t voiceHandle, float volume);
 
 private:
-	// XAudio2のインスタンス
-	Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;
 	// サウンドデータコンテナ
-	std::array<SoundData, kMaxSoundData> soundDatas_;
+	std::array<SoundData, kMaxSoundData_> soundDatas_;
 	// 再生中データコンテナ
 	// std::unordered_map<uint32_t, IXAudio2SourceVoice*> voices_;
 	std::set<Voice*> voices_;

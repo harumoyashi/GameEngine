@@ -23,14 +23,14 @@ void NAudio::Init(const std::string& directoryPath) {
 	directoryPath_ = directoryPath;
 
 	HRESULT result;
-	IXAudio2MasteringVoice* masterVoice;
+	IXAudio2MasteringVoice* masterVoice_;
 
 	// XNAudioエンジンのインスタンスを生成
 	result = XAudio2Create(&xAudio2_, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	assert(SUCCEEDED(result));
 
 	// マスターボイスを生成
-	result = xAudio2_->CreateMasteringVoice(&masterVoice);
+	result = xAudio2_->CreateMasteringVoice(&masterVoice_);
 	assert(SUCCEEDED(result));
 
 	indexSoundData_ = 0u;
@@ -41,17 +41,17 @@ void NAudio::Finalize() {
 	// XAudio2解放
 	xAudio2_.Reset();
 	// 音声データ解放
-	for (auto& soundData : soundDatas_) {
-		Unload(&soundData);
+	for (auto& soundData_ : soundDatas_) {
+		Unload(&soundData_);
 	}
 }
 
 uint32_t NAudio::LoadWave(const std::string& fileName) {
-	assert(indexSoundData_ < kMaxSoundData);
+	assert(indexSoundData_ < kMaxSoundData_);
 	uint32_t handle = indexSoundData_;
 	// 読み込み済みサウンドデータを検索
-	auto it = std::find_if(soundDatas_.begin(), soundDatas_.end(), [&](const auto& soundData) {
-		return soundData.name_ == fileName;
+	auto it = std::find_if(soundDatas_.begin(), soundDatas_.end(), [&](const auto& soundData_) {
+		return soundData_.name == fileName;
 		});
 	if (it != soundDatas_.end()) {
 		// 読み込み済みサウンドデータの要素番号を取得
@@ -86,15 +86,14 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 	}
 
 	// Formatチャンクの読み込み
-	FormatChunk format = {};
 	// チャンクヘッダーの確認
-	file.read((char*)&format, sizeof(ChunkHeader));
-	if (strncmp(format.chunk.id, "fmt ", 4) != 0) {
+	file.read((char*)&format_, sizeof(ChunkHeader));
+	if (strncmp(format_.chunk.id, "fmt ", 4) != 0) {
 		assert(0);
 	}
 	// チャンク本体の読み込み
-	assert(format.chunk.size <= sizeof(format.fmt));
-	file.read((char*)&format.fmt, format.chunk.size);
+	assert(format_.chunk.size <= sizeof(format_.fmt));
+	file.read((char*)&format_.fmt, format_.chunk.size);
 
 	// Dataチャンクの読み込み
 	ChunkHeader data;
@@ -121,10 +120,10 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 	// 書き込むサウンドデータの参照
 	SoundData& soundData = soundDatas_.at(handle);
 
-	soundData.wfex = format.fmt;
+	soundData.wfex = format_.fmt;
 	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	soundData.bufferSize = data.size;
-	soundData.name_ = fileName;
+	soundData.name = fileName;
 
 	//実質的にハンドルを次に進める
 	indexSoundData_++;
@@ -153,7 +152,7 @@ uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, float 
 	// 未読み込みの検出
 	assert(soundData.bufferSize != 0);
 
-	uint32_t handle = soundDataHandle;
+	uint32_t handle_ = soundDataHandle;
 
 	// 波形フォーマットを元にSourceVoiceの生成
 	result = xAudio2_->CreateSourceVoice(&pSourceVoice, &soundData.wfex, 0, 2.0f, &voiceCallback_);
@@ -190,7 +189,7 @@ uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, float 
 	}
 	buf.LoopCount--;
 
-	return handle;
+	return handle_;
 }
 
 void NAudio::DestroyWave(uint32_t voiceHandle)

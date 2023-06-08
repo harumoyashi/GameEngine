@@ -42,7 +42,7 @@ private:
 	//オーディオ
 	NAudio* audio = nullptr;
 	static const uint32_t maxSoundData = 3;		//サウンドデータの最大数
-	uint32_t soundData[maxSoundData] = {};	//サウンドデータ格納用
+	uint32_t soundData_[maxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
 	std::unique_ptr<NDirectionalLight> directionalLight;
