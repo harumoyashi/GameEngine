@@ -23,11 +23,11 @@ private:
 	D3D12_RESOURCE_DESC resDesc{};		//リソース
 
 	//定数バッファ//
-	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans;
-	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor;
-	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial;
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
+	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
 
-	NMatrix4 matWorld;	//3D変換行列
+	NMatrix4 matWorld_;	//3D変換行列
 
 	// ライト
 	static NDirectionalLight* directionalLight;
@@ -80,7 +80,7 @@ public:
 	void SetSRVHeap();
 	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
 	//頂点バッファビューの設定コマンド
-	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView);
+	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView_);
 	//インデックスバッファビューの設定コマンド
 	void SetIB(D3D12_INDEX_BUFFER_VIEW ibView);
 	//定数バッファビュー(CBV)の設定コマンド
@@ -103,5 +103,5 @@ public:
 		NObj3d::circleShadow = circleShadow;
 	}
 
-	void SetMatWorld(NMatrix4 matWorld) { this->matWorld = matWorld; }
+	inline void SetMatWorld(NMatrix4 matWorld) { matWorld_ = matWorld; }
 };

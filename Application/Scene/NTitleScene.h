@@ -82,7 +82,7 @@ private:
 	};
 	
 	AssimpLoader loader;
-	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans;
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
 
 	std::unique_ptr<LevelData> levelData;
 

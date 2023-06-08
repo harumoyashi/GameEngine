@@ -1,31 +1,31 @@
 #include "NVertexBuff.h"
 
-NVertexBuff::NVertexBuff(NVertex* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertex* vertices_, uint32_t size)
 {
-	Init(vertices, size);
+	Init(vertices_, size);
 }
 
-NVertexBuff::NVertexBuff(NVertexPNU* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexPNU* vertices_, uint32_t size)
 {
-	Init(vertices, size);
+	Init(vertices_, size);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertex> vertices)
+NVertexBuff::NVertexBuff(std::vector<NVertex> vertices_)
 {
-	Init(vertices);
+	Init(vertices_);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertexPNU> vertices)
+NVertexBuff::NVertexBuff(std::vector<NVertexPNU> vertices_)
 {
-	Init(vertices);
+	Init(vertices_);
 }
 
-NVertexBuff::NVertexBuff(NVertexAssimp* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexAssimp* vertices_, uint32_t size)
 {
-	Init(vertices, size);
+	Init(vertices_, size);
 }
 
-void NVertexBuff::Init(NVertex* vertices, uint32_t size)
+void NVertexBuff::Init(NVertex* vertices_, uint32_t size)
 {
 	HRESULT result;
 
@@ -56,12 +56,12 @@ void NVertexBuff::Init(NVertex* vertices, uint32_t size)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertex* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertex* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap[i] = vertices[i];
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -76,7 +76,7 @@ void NVertexBuff::Init(NVertex* vertices, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
+void NVertexBuff::Init(NVertexPNU* vertices_, uint32_t size)
 {
 	HRESULT result;
 
@@ -107,12 +107,12 @@ void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertexPNU* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertexPNU* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap[i] = vertices[i];
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -127,7 +127,7 @@ void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertex> vertices)
+void NVertexBuff::Init(std::vector<NVertex> vertices_)
 {
 	HRESULT result;
 
@@ -135,7 +135,7 @@ void NVertexBuff::Init(std::vector<NVertex> vertices)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertex) * vertices.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertex) * vertices_.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -158,12 +158,12 @@ void NVertexBuff::Init(std::vector<NVertex> vertices)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertex* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertex* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices.size(); i++) {
-		vertMap[i] = vertices[i];
+	for (uint32_t i = 0; i < vertices_.size(); i++) {
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -178,7 +178,7 @@ void NVertexBuff::Init(std::vector<NVertex> vertices)
 	view.StrideInBytes = sizeof(NVertex);
 }
 
-void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
+void NVertexBuff::Init(std::vector<NVertexPNU> vertices_)
 {
 	HRESULT result;
 
@@ -186,7 +186,7 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexPNU) * vertices.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexPNU) * vertices_.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -209,12 +209,12 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertexPNU* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertexPNU* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices.size(); i++) {
-		vertMap[i] = vertices[i];
+	for (uint32_t i = 0; i < vertices_.size(); i++) {
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -229,7 +229,7 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 	view.StrideInBytes = sizeof(NVertexPNU);
 }
 
-void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
+void NVertexBuff::Init(NVertexAssimp* vertices_, uint32_t size)
 {
 	HRESULT result;
 
@@ -260,12 +260,12 @@ void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertexAssimp* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertexAssimp* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap[i] = vertices[i];
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -280,7 +280,7 @@ void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
+void NVertexBuff::Init(std::vector<NVertexAssimp> vertices_)
 {
 	HRESULT result;
 
@@ -288,7 +288,7 @@ void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexAssimp) * vertices.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexAssimp) * vertices_.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -311,12 +311,12 @@ void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	NVertexAssimp* vertMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap);
+	NVertexAssimp* vertMap_ = nullptr;
+	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices.size(); i++) {
-		vertMap[i] = vertices[i];
+	for (uint32_t i = 0; i < vertices_.size(); i++) {
+		vertMap_[i] = vertices_[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);

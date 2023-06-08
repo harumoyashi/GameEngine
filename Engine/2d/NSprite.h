@@ -16,40 +16,40 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	//頂点まわり//
-	uint32_t singleSizeVB;						//頂点バッファ1個当たりのサイズ
-	uint32_t sizeVB;							//頂点バッファ全体のサイズ
-	NVertexUV vertices[4]{};				//頂点代入用
-	D3D12_HEAP_PROPERTIES heapPropVert{};	//ヒープ
-	D3D12_RESOURCE_DESC resDescVert{};		//リソース
-	ComPtr<ID3D12Resource> vertBuff;		//頂点バッファ
-	NVertexUV* vertMap = nullptr;			//マップ用
-	D3D12_VERTEX_BUFFER_VIEW vbView{};		//頂点バッファビュー
+	uint32_t singleSizeVB_;						//頂点バッファ1個当たりのサイズ
+	uint32_t singleVB_;							//頂点バッファ全体のサイズ
+	NVertexUV vertices_[4]{};				//頂点代入用
+	D3D12_HEAP_PROPERTIES heapPropVert_{};	//ヒープ
+	D3D12_RESOURCE_DESC resDescVert_{};		//リソース
+	ComPtr<ID3D12Resource> vertBuff_;		//頂点バッファ
+	NVertexUV* vertMap_ = nullptr;			//マップ用
+	D3D12_VERTEX_BUFFER_VIEW vbView_{};		//頂点バッファビュー
 
 	//定数バッファまわり//
-	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans;	//2D変換行列
-	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor;	//色
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D変換行列
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;	//色
 
 	//行列//
-	NMatrix4 matWorld{};		//変換行列
-	NMatrix4 matProjection{};	//平行投影保管用
+	NMatrix4 matWorld_{};		//変換行列
+	NMatrix4 matProjection_{};	//平行投影保管用
 
 	//生成時の設定用//
-	NVector2 anchorPoint = { 0.5f,0.5f };	//アンカーポイント(0.0f~1.0fじゃないと画像から出る)
-	bool isFlipX = false;	//左右反転フラグ
-	bool isFlipY = false;	//上下反転フラグ
-	NVector2 texLeftTop = { 0,0 };			//テクスチャ左上座標
-	NVector2 texSize = { 100,100 };			//テクスチャ切り出しサイズ
+	NVector2 anchorPoint_ = { 0.5f,0.5f };	//アンカーポイント(0.0f~1.0fじゃないと画像から出る)
+	bool isFlipX_ = false;	//左右反転フラグ
+	bool isFlipY_ = false;	//上下反転フラグ
+	NVector2 texLeftTop_ = { 0,0 };			//テクスチャ左上座標
+	NVector2 texSize_ = { 100,100 };			//テクスチャ切り出しサイズ
 
-	NVector2 size = {};		//スプライトの大きさ
+	NVector2 size_ = {};		//スプライトの大きさ
 
 public:
 	//変換用//
-	float rotation = 0.0f;	//Z軸の回転角
-	NVector2 position = { 0.0f,0.0f };	//座標
-	bool isInvisible = false;	//非表示にするフラグ
+	float rotation_ = 0.0f;	//Z軸の回転角
+	NVector2 position_ = { 0.0f,0.0f };	//座標
+	bool isInvisible_ = false;	//非表示にするフラグ
 
-	std::string texHandle = "";	//テクスチャ指定用
-	NColor color;
+	std::string texHandle_ = "";	//テクスチャ指定用
+	NColor color_;
 
 public:
 	NSprite();
@@ -112,6 +112,6 @@ public:
 	//描画コマンド
 	void Draw();
 #pragma endregion
-	inline NVector2 GetTexSize() { return texSize; }
-	inline NVector2 GetSize() { return size; }
+	inline NVector2 GetTexSize() { return texSize_; }
+	inline NVector2 GetSize() { return size_; }
 };

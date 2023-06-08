@@ -30,9 +30,9 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU> vertices_, std::vector<ui
 		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
-		NVector3 p0 = vertices[index0].pos;
-		NVector3 p1 = vertices[index1].pos;
-		NVector3 p2 = vertices[index2].pos;
+		NVector3 p0 = vertices_[index0].pos;
+		NVector3 p1 = vertices_[index1].pos;
+		NVector3 p2 = vertices_[index2].pos;
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
 		NVector3 v1 = p1 - p0;
@@ -45,9 +45,9 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU> vertices_, std::vector<ui
 		normal = normal.Normalize();
 
 		//求めた法線を頂点データに代入
-		vertices[index0].normal = normal;
-		vertices[index1].normal = normal;
-		vertices[index2].normal = normal;
+		vertices_[index0].normal = normal;
+		vertices_[index1].normal = normal;
+		vertices_[index2].normal = normal;
 	}
 }
 
@@ -77,7 +77,7 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	return true;
 }
 
-void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<uint32_t> indices)
+void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices_, std::vector<uint32_t> indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
@@ -88,9 +88,9 @@ void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vect
 		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
-		NVector3 p0 = vertices[index0].pos;
-		NVector3 p1 = vertices[index1].pos;
-		NVector3 p2 = vertices[index2].pos;
+		NVector3 p0 = vertices_[index0].pos;
+		NVector3 p1 = vertices_[index1].pos;
+		NVector3 p2 = vertices_[index2].pos;
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
 		NVector3 v1 = p1 - p0;
@@ -103,9 +103,9 @@ void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vect
 		normal = normal.Normalize();
 
 		//求めた法線を頂点データに代入
-		vertices[index0].normal = normal;
-		vertices[index1].normal = normal;
-		vertices[index2].normal = normal;
+		vertices_[index0].normal = normal;
+		vertices_[index1].normal = normal;
+		vertices_[index2].normal = normal;
 	}
 }
 

@@ -42,9 +42,9 @@ public:
 	/// <summary>
 	/// 法線ベクトルを計算
 	/// </summary>
-	/// <param name="vertices">計算する頂点群</param>
+	/// <param name="vertices_">計算する頂点群</param>
 	/// <param name="indices">インデックスリスト（三角形、全て時計回りであること）</param>
-	static void CalcNormalVec(std::vector<NVertexPNU> vertices, std::vector<uint32_t> indices);
+	static void CalcNormalVec(std::vector<NVertexPNU> vertices_, std::vector<uint32_t> indices);
 };
 
 class NVertexAssimp
@@ -65,7 +65,7 @@ public:
 	/// <summary>
 	/// 法線ベクトルを計算
 	/// </summary>
-	/// <param name="vertices">計算する頂点群</param>
+	/// <param name="vertices_">計算する頂点群</param>
 	/// <param name="indices">インデックスリスト（三角形、全て時計回りであること）</param>
-	static void CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<uint32_t> indices);
+	static void CalcNormalVec(std::vector<NVertexAssimp> vertices_, std::vector<uint32_t> indices);
 };

@@ -9,7 +9,7 @@ using namespace std;
 void NModel::Create(const string modelname)
 {
 	LoadObjFile(modelname);
-	vertexBuff.Init(vertices);
+	vertexBuff.Init(vertices_);
 	indexBuff.Init(indices);
 }
 
@@ -110,7 +110,7 @@ void NModel::LoadObjFile(const string name)
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
-				vertices.emplace_back(vertex);
+				vertices_.emplace_back(vertex);
 
 				//インデックスデータの追加
 				indices.emplace_back((unsigned short)indices.size());

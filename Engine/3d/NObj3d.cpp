@@ -21,12 +21,12 @@ NObj3d::~NObj3d()
 bool NObj3d::Init()
 {
 	//定数バッファ
-	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
-	cbMaterial = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
-	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbTrans->Init();
-	cbMaterial->Init();
-	cbColor->Init();
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
+	cbMaterial_ = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbTrans_->Init();
+	cbMaterial_->Init();
+	cbColor_->Init();
 
 	return true;
 }
@@ -96,16 +96,16 @@ void NObj3d::UpdateMatrix()
 	NMatrix4 matTrans;	//平行移動行列
 	matTrans = matTrans.Translation(position);
 
-	matWorld = matWorld.Identity();	//単位行列代入
-	matWorld *= matScale;	//ワールド座標にスケーリングを反映
-	matWorld *= matRot;		//ワールド座標に回転を反映
-	matWorld *= matTrans;	//ワールド座標に平行移動を反映
+	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
+	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	//親オブジェクトがあれば
 	if (parent != nullptr)
 	{
 		//親オブジェクトのワールド行列をかける
-		matWorld *= parent->matWorld;
+		matWorld_ *= parent->matWorld_;
 	}
 
 	// 定数バッファへデータ転送
@@ -116,27 +116,27 @@ void NObj3d::TransferMatrix()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbTrans->constMap = nullptr;
-	result = cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+	cbTrans_->constMap = nullptr;
+	result = cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
 
-	cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	cbTrans->constMap->world = matWorld;
-	cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	cbTrans_->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	cbTrans_->constMap->world = matWorld_;
+	cbTrans_->constMap->cameraPos = NCamera::nowCamera->GetPos();
 
-	cbTrans->Unmap();
+	cbTrans_->Unmap();
 }
 
 void NObj3d::TransferColor()
 {
 	//値を書き込むと自動的に転送される
-	cbColor->constMap->color = color;
+	cbColor_->constMap->color = color;
 }
 
 void NObj3d::TransferMaterial()
 {
-	cbMaterial->constMap->ambient = model.material.ambient;
-	cbMaterial->constMap->diffuse = model.material.diffuse;
-	cbMaterial->constMap->specular = model.material.specular;
+	cbMaterial_->constMap->ambient = model.material.ambient;
+	cbMaterial_->constMap->diffuse = model.material.diffuse;
+	cbMaterial_->constMap->specular = model.material.specular;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -183,9 +183,9 @@ void NObj3d::SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
 }
 
-void NObj3d::SetVB(D3D12_VERTEX_BUFFER_VIEW vbView)
+void NObj3d::SetVB(D3D12_VERTEX_BUFFER_VIEW vbView_)
 {
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 }
 
 void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
@@ -196,11 +196,11 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 void NObj3d::SetCBV()
 {
 	//ルートパラメータ0番にマテリアルの定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial_->constBuff->GetGPUVirtualAddress());
 	//ルートパラメータ2番に色情報の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff->GetGPUVirtualAddress());
 	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff->GetGPUVirtualAddress());
 }
 
 void NObj3d::DrawCommand(uint32_t indexSize)

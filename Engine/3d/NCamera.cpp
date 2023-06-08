@@ -7,12 +7,12 @@ NCamera* NCamera::nowCamera = _nCamera.get();
 
 void NCamera::CreateMatView()
 {
-	matView = MathUtil::MatView(eye, target, up);
+	matView_ = MathUtil::MatView(eye, target, up);
 }
 
 void NCamera::ProjectiveProjection()
 {
-	matProjection = MathUtil::PerspectiveProjection(
+	matProjection_ = MathUtil::PerspectiveProjection(
 		MathUtil::Degree2Radian(45.0f),
 		(float)NWindows::win_width / NWindows::win_height,
 		0.1f, 1000.0f);

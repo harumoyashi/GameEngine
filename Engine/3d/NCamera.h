@@ -16,8 +16,8 @@ public:
 
 private:
 	//カメラ
-	NMatrix4 matProjection{};
-	NMatrix4 matView{};
+	NMatrix4 matProjection_{};
+	NMatrix4 matView_{};
 
 	//カメラ
 	NVector3 eye = { 0, 10.0f, -30.0f };	//視点座標
@@ -37,8 +37,8 @@ public:
 	void SetUp(NVector3 up) { this->up = up; }
 
 	//ゲッター
-	NMatrix4 GetMatProjection() { return matProjection; }
-	NMatrix4 GetMatView() { return matView; }
+	NMatrix4 GetMatProjection() { return matProjection_; }
+	NMatrix4 GetMatView() { return matView_; }
 	//eye座標取得
 	NVector3 GetPos() { return eye; }
 };

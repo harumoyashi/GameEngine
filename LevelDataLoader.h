@@ -12,7 +12,7 @@ struct LevelData
 		NVector3 trans;
 		NVector3 rot;
 		NVector3 scale;
-		NMatrix4 matWorld;
+		NMatrix4 matWorld_;
 	};
 
 	std::list<ObjectData> objects;

@@ -98,10 +98,10 @@ void NTitleScene::Init()
 	//vertexBuffers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto size = meshes[i].vertices.size();
+	//	auto size = meshes[i].vertices_.size();
 	//	auto stride = sizeof(NVertexAssimp);
-	//	auto vertices = meshes[i].vertices.data();
-	//	auto pVB = new NVertexBuff(vertices, (unsigned int)size);
+	//	auto vertices_ = meshes[i].vertices_.data();
+	//	auto pVB = new NVertexBuff(vertices_, (unsigned int)size);
 	//	/*if (!pVB->IsValid())
 	//	{
 	//		printf("頂点バッファの生成に失敗\n");
@@ -133,23 +133,23 @@ void NTitleScene::Init()
 	//auto fov = XMConvertToRadians(60);
 
 	//assimpの四角形//
-	//NVertexAssimp vertices[4] = {};
-	//vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
-	//vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
+	//NVertexAssimp vertices_[4] = {};
+	//vertices_[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
+	//vertices_[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
 
-	//vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
-	//vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
+	//vertices_[1].pos = NVector3(1.0f, 1.0f, 0.0f);
+	//vertices_[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-	//vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
-	//vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
+	//vertices_[2].pos = NVector3(1.0f, -1.0f, 0.0f);
+	//vertices_[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
 
-	//vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
-	//vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
+	//vertices_[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
+	//vertices_[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
 
 	//uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
 
 	//Mesh mesh = {}; // これまでの四角形を入れるためのメッシュ構造体
-	//mesh.vertices = std::vector<NVertexAssimp>(std::begin(vertices), std::end(vertices));
+	//mesh.vertices_ = std::vector<NVertexAssimp>(std::begin(vertices_), std::end(vertices_));
 	//mesh.indices = std::vector<uint32_t>(std::begin(indices), std::end(indices));
 	//meshes.clear(); // ちょっと無駄感あるが、一旦四角形で試したいのでAssimpLoaderで読み込んだモデルのメッシュを一旦クリア
 	//meshes.shrink_to_fit(); // 中身をゼロにする
@@ -159,9 +159,9 @@ void NTitleScene::Init()
 	//vertexBuffers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto size = sizeof(NVertexAssimp) * meshes[i].vertices.size();
-	//	auto vertices = meshes[i].vertices.data();
-	//	auto pVB = new NVertexBuff(vertices, (unsigned int)size);
+	//	auto size = sizeof(NVertexAssimp) * meshes[i].vertices_.size();
+	//	auto vertices_ = meshes[i].vertices_.data();
+	//	auto pVB = new NVertexBuff(vertices_, (unsigned int)size);
 
 	//	vertexBuffers.push_back(pVB);
 	//}
@@ -177,19 +177,19 @@ void NTitleScene::Init()
 	//	indexBuffers.push_back(pIB);
 	//}
 
-	//cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
-	//cbTrans->Init();
+	//cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
+	//cbTrans_->Init();
 
 	//// 定数バッファへデータ転送
-	//cbTrans->constMap = nullptr;
-	//cbTrans->constBuff->Map(0, nullptr, (void**)&cbTrans->constMap);
+	//cbTrans_->constMap = nullptr;
+	//cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
 
 	//NMatrix4 mat;
-	//cbTrans->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
-	//cbTrans->constMap->world = mat.Identity();
-	//cbTrans->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	//cbTrans_->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	//cbTrans_->constMap->world = mat.Identity();
+	//cbTrans_->constMap->cameraPos = NCamera::nowCamera->GetPos();
 
-	//cbTrans->Unmap();
+	//cbTrans_->Unmap();
 
 #pragma region オブジェクトの初期値設定
 
@@ -201,7 +201,7 @@ void NTitleScene::Init()
 	foreSprite[0]->CreateSprite("hamu", { 0,0 });
 	foreSprite[0]->SetPos(0, 0);
 	foreSprite[0]->SetSize(100, 100);
-	foreSprite[0]->color.SetColor255(255, 255, 255, 255);
+	foreSprite[0]->color_.SetColor255(255, 255, 255, 255);
 
 #pragma endregion
 	// ライト生成
@@ -299,7 +299,7 @@ void NTitleScene::Draw()
 	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto vbView_ = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 
 	//	// パイプラインステートとルートシグネチャの設定コマンド
@@ -307,11 +307,11 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff->GetGPUVirtualAddress());
 	//	//マテリアルとかカラーも送んなきゃいけないけど一旦後回し
 
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
 	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
@@ -320,15 +320,15 @@ void NTitleScene::Draw()
 	// メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto vbView = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto vbView_ = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
 
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans->constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff->GetGPUVirtualAddress());
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
 	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
@@ -378,7 +378,7 @@ void NTitleScene::SetObject(LevelData* levelData)
 		levelDataobj.back()->position = objectData.trans;
 		levelDataobj.back()->rotation = objectData.rot;
 		levelDataobj.back()->scale = objectData.scale;
-		//obj.back()->SetMatWorld(objectData.matWorld);
+		//obj.back()->SetMatWorld(objectData.matWorld_);
 	/*}*/
 	}
 }

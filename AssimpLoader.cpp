@@ -97,7 +97,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
     aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    dst.vertices.resize(src->mNumVertices);
+    dst.vertices_.resize(src->mNumVertices);
 
     for (auto i = 0u; i < src->mNumVertices; ++i)
     {
@@ -124,7 +124,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         vertex.tangent = NVector3(tangent->x, tangent->y, tangent->z);
         vertex.color = NColor(color->r, color->g, color->b, color->a);
 
-        dst.vertices[i] = vertex;
+        dst.vertices_[i] = vertex;
     }
 
     dst.indices.resize(src->mNumFaces * 3);
@@ -139,7 +139,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     }
 
     indexBuff.Init(dst.indices);
-    vertexBuff.Init(dst.vertices);
+    vertexBuff.Init(dst.vertices_);
 }
 
 void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)

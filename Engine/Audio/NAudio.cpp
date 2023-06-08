@@ -134,6 +134,7 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 
 void NAudio::Unload(SoundData* soundData) {
 	// バッファのメモリを解放
+	
 	delete[] soundData->pBuffer;
 
 	soundData->pBuffer = 0;

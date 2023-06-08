@@ -21,12 +21,12 @@ void NSprite::CreateSprite(std::string texHandle)
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans->Init();
-	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor->Init();
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
+	cbTrans_->Init();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbColor_->Init();
 	//平行投影を代入
-	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -34,7 +34,7 @@ void NSprite::CreateSprite(std::string texHandle)
 }
 
 void NSprite::CreateSprite(std::string texHandle,
-	NVector2 anchorPoint, bool isFlipX, bool isFlipY)
+	NVector2 anchorPoint_, bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//頂点
@@ -42,20 +42,20 @@ void NSprite::CreateSprite(std::string texHandle,
 	SetVertHeap();
 	SetVertResource();
 	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap[this->texHandle].texBuff);	//ここでテクスチャサイズに合わせてる
-	SetAncor(anchorPoint);
-	SetIsFlip(isFlipX, isFlipY);
+	MatchTexSize(NTextureManager::GetInstance()->textureMap[texHandle_].texBuff);	//ここでテクスチャサイズに合わせてる
+	SetAncor(anchorPoint_);
+	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange();
 	TransferVertex();
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans->Init();
-	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor->Init();
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
+	cbTrans_->Init();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbColor_->Init();
 	//平行投影を代入
-	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -63,7 +63,7 @@ void NSprite::CreateSprite(std::string texHandle,
 }
 
 void NSprite::CreateClipSprite(std::string texHandle,
-	NVector2 texLeftTop, NVector2 texSize, NVector2 anchorPoint, bool isFlipX, bool isFlipY)
+	NVector2 texLeftTop_, NVector2 texSize_, NVector2 anchorPoint_, bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//頂点
@@ -71,20 +71,20 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	SetVertHeap();
 	SetVertResource();
 	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap[texHandle].texBuff);	//ここでテクスチャサイズに合わせてる
-	SetAncor(anchorPoint);
-	SetIsFlip(isFlipX, isFlipY);
-	SetClipRange(texLeftTop, texSize);
+	MatchTexSize(NTextureManager::GetInstance()->textureMap[texHandle_].texBuff);	//ここでテクスチャサイズに合わせてる
+	SetAncor(anchorPoint_);
+	SetIsFlip(isFlipX_, isFlipY_);
+	SetClipRange(texLeftTop_, texSize_);
 	TransferVertex();
 	VertMaping();
 	CreateVertBuffView();
 	//定数バッファ
-	cbTrans = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans->Init();
-	cbColor = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor->Init();
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
+	cbTrans_->Init();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbColor_->Init();
 	//平行投影を代入
-	matProjection = cbTrans->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::win_width),
 		static_cast<float>(NWindows::win_height)
 	);
@@ -102,33 +102,33 @@ void NSprite::SetVert()
 	};
 
 	//設定したら他でも使える変数に代入
-	std::copy(std::begin(vert), std::end(vert), vertices);
+	std::copy(std::begin(vert), std::end(vert), vertices_);
 
 	//頂点バッファのサイズを代入
-	singleSizeVB = static_cast<uint32_t>(sizeof(vertices[0]));
-	sizeVB = static_cast<uint32_t>(sizeof(vertices));
+	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
+	singleVB_ = static_cast<uint32_t>(sizeof(vertices_));
 }
 
 void NSprite::SetVertHeap()
 {
 	//ヒープ設定
-	heapPropVert.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
-	heapPropVert.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-	heapPropVert.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+	heapPropVert_.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
+	heapPropVert_.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+	heapPropVert_.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
 }
 
 void NSprite::SetVertResource()
 {
 	//リソース設定
-	resDescVert.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDescVert.Width = sizeVB;			//頂点データ全体のサイズ
-	resDescVert.Height = 1;
-	resDescVert.DepthOrArraySize = 1;
-	resDescVert.MipLevels = 1;
-	resDescVert.Format = DXGI_FORMAT_UNKNOWN;
-	resDescVert.SampleDesc.Count = 1;
-	resDescVert.Flags = D3D12_RESOURCE_FLAG_NONE;
-	resDescVert.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+	resDescVert_.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+	resDescVert_.Width = singleVB_;			//頂点データ全体のサイズ
+	resDescVert_.Height = 1;
+	resDescVert_.DepthOrArraySize = 1;
+	resDescVert_.MipLevels = 1;
+	resDescVert_.Format = DXGI_FORMAT_UNKNOWN;
+	resDescVert_.SampleDesc.Count = 1;
+	resDescVert_.Flags = D3D12_RESOURCE_FLAG_NONE;
+	resDescVert_.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 }
 
 void NSprite::CreateVertBuff()
@@ -137,43 +137,43 @@ void NSprite::CreateVertBuff()
 
 	// 頂点バッファの生成
 	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapPropVert, // ヒープ設定
+		&heapPropVert_, // ヒープ設定
 		D3D12_HEAP_FLAG_NONE,
-		&resDescVert, // リソース設定
+		&resDescVert_, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&vertBuff));
+		IID_PPV_ARGS(&vertBuff_));
 	assert(SUCCEEDED(result));
 }
 
 void NSprite::MatchTexSize(ComPtr<ID3D12Resource> texBuff)
 {
-	resDescVert = texBuff->GetDesc();
-	size = { (float)resDescVert.Width,(float)resDescVert.Height };
+	resDescVert_ = texBuff->GetDesc();
+	size_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
 }
 
 void NSprite::SetAncor(NVector2 anchorPoint)
 {
-	this->anchorPoint = anchorPoint;
+	anchorPoint_ = anchorPoint;
 }
 
 void NSprite::SetIsFlip(bool isFlipX, bool isFlipY)
 {
-	this->isFlipX = isFlipX;
-	this->isFlipY = isFlipY;
+	isFlipX_ = isFlipX;
+	isFlipY_ = isFlipY;
 }
 
 void NSprite::SetClipRange(NVector2 texLeftTop, NVector2 texSize)
 {
-	this->texLeftTop = texLeftTop;
-	this->texSize = texSize;
-	size = texSize;
+	texLeftTop_ = texLeftTop;
+	texSize_ = texSize;
+	size_ = texSize;
 }
 
 void NSprite::SetClipRange()
 {
-	texLeftTop = { 0,0 };
-	texSize = size;
+	texLeftTop_ = { 0,0 };
+	texSize_ = size_;
 }
 
 void NSprite::VertMaping()
@@ -181,12 +181,12 @@ void NSprite::VertMaping()
 	HRESULT result;
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	// 全頂点に対して
-	std::copy(std::begin(vertices), std::end(vertices), vertMap);	//座標をコピー
+	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);	//座標をコピー
 	// 繋がりを解除
-	vertBuff->Unmap(0, nullptr);
+	vertBuff_->Unmap(0, nullptr);
 }
 
 void NSprite::CreateVertBuffView()
@@ -194,19 +194,19 @@ void NSprite::CreateVertBuffView()
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	vbView.SizeInBytes = sizeVB;
+	vbView_.SizeInBytes = singleVB_;
 	// 頂点1つ分のデータサイズ
-	vbView.StrideInBytes = singleSizeVB;
+	vbView_.StrideInBytes = singleSizeVB_;
 }
 
 void NSprite::SetTexHandle(std::string texHandle)
 {
-	this->texHandle = texHandle;
-	if (NTextureManager::GetInstance()->textureMap[texHandle].texBuff == nullptr)
+	texHandle_ = texHandle;
+	if (NTextureManager::GetInstance()->textureMap[texHandle_].texBuff == nullptr)
 	{
-		this->texHandle = "error";
+		texHandle_ = "error";
 	}
 }
 
@@ -214,18 +214,18 @@ void NSprite::Update()
 {
 	//ワールド行列
 	NMatrix4 matRot;	//回転行列
-	matRot = matRot.RotateZ(MathUtil::Degree2Radian(rotation));	//Z軸周りに回転
+	matRot = matRot.RotateZ(MathUtil::Degree2Radian(rotation_));	//Z軸周りに回転
 
 	NMatrix4 matTrans;	//平行移動行列
-	matTrans = matTrans.Translation({ position.x, position.y, 0 });
+	matTrans = matTrans.Translation({ position_.x, position_.y, 0 });
 
-	matWorld = matWorld.Identity();	//単位行列代入
-	matWorld *= matRot;		//ワールド座標に回転を反映
-	matWorld *= matTrans;	//ワールド座標に平行移動を反映
+	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	// 定数バッファへデータ転送
-	cbTrans->constMap->mat = matWorld * matProjection;
-	cbColor->constMap->color = color;
+	cbTrans_->constMap->mat = matWorld_ * matProjection_;
+	cbColor_->constMap->color = color_;
 }
 
 void NSprite::TransferVertex()
@@ -240,19 +240,19 @@ void NSprite::TransferVertex()
 	};
 
 	//アンカーポイント設定
-	float left = (0.0f - anchorPoint.x) * size.x;
-	float right = (1.0f - anchorPoint.x) * size.x;
-	float top = (0.0f - anchorPoint.y) * size.y;
-	float bottom = (1.0f - anchorPoint.y) * size.y;
+	float left = (0.0f - anchorPoint_.x) * size_.x;
+	float right = (1.0f - anchorPoint_.x) * size_.x;
+	float top = (0.0f - anchorPoint_.y) * size_.y;
+	float bottom = (1.0f - anchorPoint_.y) * size_.y;
 
 	//左右反転
-	if (isFlipX)
+	if (isFlipX_)
 	{
 		left = -left;
 		right = -right;
 	}
 	//上下反転
-	if (isFlipY)
+	if (isFlipY_)
 	{
 		top = -top;
 		bottom = -bottom;
@@ -264,13 +264,13 @@ void NSprite::TransferVertex()
 	vert[2].pos = { right,bottom,0.0f };	// 右下
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
-	resDescVert = NTextureManager::GetInstance()->textureMap[texHandle].texBuff->GetDesc();
+	resDescVert_ = NTextureManager::GetInstance()->textureMap[texHandle_].texBuff->GetDesc();
 
 	//テクスチャサイズをもとに切り取る部分のuvを計算
-	float tex_left = texLeftTop.x / resDescVert.Width;
-	float tex_right = (texLeftTop.x + texSize.x) / resDescVert.Width;
-	float tex_top = texLeftTop.y / resDescVert.Height;
-	float tex_bottom = (texLeftTop.y + texSize.y) / resDescVert.Height;
+	float tex_left = texLeftTop_.x / resDescVert_.Width;
+	float tex_right = (texLeftTop_.x + texSize_.x) / resDescVert_.Width;
+	float tex_top = texLeftTop_.y / resDescVert_.Height;
+	float tex_bottom = (texLeftTop_.y + texSize_.y) / resDescVert_.Height;
 
 	//計算したuvに合わせて設定しなおす
 	vert[0].uv = { tex_left ,tex_bottom };	// 左下
@@ -279,11 +279,11 @@ void NSprite::TransferVertex()
 	vert[3].uv = { tex_right,tex_top };	// 右上
 
 	//設定したら他でも使える変数に代入
-	std::copy(std::begin(vert), std::end(vert), vertices);
+	std::copy(std::begin(vert), std::end(vert), vertices_);
 
 	//頂点バッファのサイズを代入
-	singleSizeVB = static_cast<uint32_t>(sizeof(vertices[0]));
-	sizeVB = static_cast<uint32_t>(sizeof(vertices));
+	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
+	singleVB_ = static_cast<uint32_t>(sizeof(vertices_));
 
 	//頂点バッファへのデータ転送
 	VertMaping();
@@ -291,13 +291,13 @@ void NSprite::TransferVertex()
 
 void NSprite::SetSize(float x, float y)
 {
-	size = { x,y };
+	size_ = { x,y };
 	TransferVertex();
 }
 
 void NSprite::SetPos(float x, float y)
 {
-	position = { x,y };
+	position_ = { x,y };
 	Update();
 }
 
@@ -319,21 +319,21 @@ void NSprite::Draw()
 	CommonBeginDraw();
 
 	//非表示フラグ立ってたら描画せずに処理抜ける
-	if (isInvisible)
+	if (isInvisible_)
 	{
 		return;
 	}
 
 	//ハンドルを指定
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap[texHandle].gpuHandle;
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap[texHandle_].gpuHandle;
 
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 
 	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans->constBuff->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }
