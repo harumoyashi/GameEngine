@@ -80,7 +80,7 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<uint32_t> indices)
 {
 	assert(indices.size() % 3 == 0);
-	for (int i = 0; i < indices.size() / 3; i++)
+	for (uint32_t i = 0; i < indices.size() / 3; i++)
 	{//三角形1つごとに計算していく
 		//三角形のインデックスを取り出して、一時的な変数にいれる
 		uint32_t index0 = indices[i * 3 + 0];
