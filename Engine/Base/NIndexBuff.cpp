@@ -49,7 +49,7 @@ void NIndexBuff::Init(uint32_t* indices, uint32_t size)
 	// 全インデックスに対して
 	//for (uint32_t i = 0; i < size; i++)
 	//{
-	//	indexMap[i] = indices[i];	//インデックスをコピー
+	//	indexMap[i] = indices_[i];	//インデックスをコピー
 	//}
 	memcpy(indexMap, indices, size);
 	// 繋がりを解除

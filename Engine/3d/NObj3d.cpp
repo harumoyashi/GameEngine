@@ -119,9 +119,9 @@ void NObj3d::TransferMatrix()
 	cbTrans_->constMap = nullptr;
 	result = cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
 
-	cbTrans_->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	cbTrans_->constMap->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
 	cbTrans_->constMap->world = matWorld_;
-	cbTrans_->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	cbTrans_->constMap->cameraPos = NCamera::sNowCamera->GetPos();
 
 	cbTrans_->Unmap();
 }
@@ -134,9 +134,9 @@ void NObj3d::TransferColor()
 
 void NObj3d::TransferMaterial()
 {
-	cbMaterial_->constMap->ambient = model.material.ambient;
-	cbMaterial_->constMap->diffuse = model.material.diffuse;
-	cbMaterial_->constMap->specular = model.material.specular;
+	cbMaterial_->constMap->ambient = model.material_.ambient;
+	cbMaterial_->constMap->diffuse = model.material_.diffuse;
+	cbMaterial_->constMap->specular = model.material_.specular;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -155,15 +155,15 @@ void NObj3d::CommonBeginDraw()
 void NObj3d::Draw()
 {
 	SetCBV();
-	SetVB(model.vertexBuff.view);
-	SetIB(model.indexBuff.view);
-	SetSRVHeap(model.material.texture.gpuHandle);
+	SetVB(model.vertexBuff_.view);
+	SetIB(model.indexBuff_.view);
+	SetSRVHeap(model.material_.texture.gpuHandle);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
 	directionalLight->Draw(4);
 	pointLight->Draw(5);
 	spotLight->Draw(6);
 	circleShadow->Draw(7);
-	DrawCommand((uint32_t)model.indices.size());
+	DrawCommand((uint32_t)model.indices_.size());
 }
 
 void NObj3d::SetSRVHeap()
@@ -183,9 +183,9 @@ void NObj3d::SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
 }
 
-void NObj3d::SetVB(D3D12_VERTEX_BUFFER_VIEW vbView_)
+void NObj3d::SetVB(D3D12_VERTEX_BUFFER_VIEW vbView)
 {
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 }
 
 void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)

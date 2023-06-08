@@ -1,31 +1,31 @@
 #include "NVertexBuff.h"
 
-NVertexBuff::NVertexBuff(NVertex* vertices_, uint32_t size)
+NVertexBuff::NVertexBuff(NVertex* vertices, uint32_t size)
 {
-	Init(vertices_, size);
+	Init(vertices, size);
 }
 
-NVertexBuff::NVertexBuff(NVertexPNU* vertices_, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexPNU* vertices, uint32_t size)
 {
-	Init(vertices_, size);
+	Init(vertices, size);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertex> vertices_)
+NVertexBuff::NVertexBuff(std::vector<NVertex> vertices)
 {
-	Init(vertices_);
+	Init(vertices);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertexPNU> vertices_)
+NVertexBuff::NVertexBuff(std::vector<NVertexPNU> vertices)
 {
-	Init(vertices_);
+	Init(vertices);
 }
 
-NVertexBuff::NVertexBuff(NVertexAssimp* vertices_, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexAssimp* vertices, uint32_t size)
 {
-	Init(vertices_, size);
+	Init(vertices, size);
 }
 
-void NVertexBuff::Init(NVertex* vertices_, uint32_t size)
+void NVertexBuff::Init(NVertex* vertices, uint32_t size)
 {
 	HRESULT result;
 
@@ -61,7 +61,7 @@ void NVertexBuff::Init(NVertex* vertices_, uint32_t size)
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap_[i] = vertices_[i];
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -76,7 +76,7 @@ void NVertexBuff::Init(NVertex* vertices_, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(NVertexPNU* vertices_, uint32_t size)
+void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
 {
 	HRESULT result;
 
@@ -112,7 +112,7 @@ void NVertexBuff::Init(NVertexPNU* vertices_, uint32_t size)
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap_[i] = vertices_[i];
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -127,7 +127,7 @@ void NVertexBuff::Init(NVertexPNU* vertices_, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertex> vertices_)
+void NVertexBuff::Init(std::vector<NVertex> vertices)
 {
 	HRESULT result;
 
@@ -135,7 +135,7 @@ void NVertexBuff::Init(std::vector<NVertex> vertices_)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertex) * vertices_.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertex) * vertices.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -162,8 +162,8 @@ void NVertexBuff::Init(std::vector<NVertex> vertices_)
 	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap_[i] = vertices_[i];
+	for (uint32_t i = 0; i < vertices.size(); i++) {
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -178,7 +178,7 @@ void NVertexBuff::Init(std::vector<NVertex> vertices_)
 	view.StrideInBytes = sizeof(NVertex);
 }
 
-void NVertexBuff::Init(std::vector<NVertexPNU> vertices_)
+void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 {
 	HRESULT result;
 
@@ -186,7 +186,7 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices_)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexPNU) * vertices_.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexPNU) * vertices.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -213,8 +213,8 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices_)
 	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap_[i] = vertices_[i];
+	for (uint32_t i = 0; i < vertices.size(); i++) {
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -229,7 +229,7 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices_)
 	view.StrideInBytes = sizeof(NVertexPNU);
 }
 
-void NVertexBuff::Init(NVertexAssimp* vertices_, uint32_t size)
+void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
 {
 	HRESULT result;
 
@@ -265,7 +265,7 @@ void NVertexBuff::Init(NVertexAssimp* vertices_, uint32_t size)
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
-		vertMap_[i] = vertices_[i];
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);
@@ -280,7 +280,7 @@ void NVertexBuff::Init(NVertexAssimp* vertices_, uint32_t size)
 	view.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertexAssimp> vertices_)
+void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
 {
 	HRESULT result;
 
@@ -288,7 +288,7 @@ void NVertexBuff::Init(std::vector<NVertexAssimp> vertices_)
 	D3D12_HEAP_PROPERTIES heapProp{};
 	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUへの転送用
 
-	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexAssimp) * vertices_.size());
+	uint32_t dataSize = static_cast<uint32_t>(sizeof(NVertexAssimp) * vertices.size());
 
 	//頂点バッファリソース設定
 	D3D12_RESOURCE_DESC resDesc{};
@@ -315,8 +315,8 @@ void NVertexBuff::Init(std::vector<NVertexAssimp> vertices_)
 	result = buff->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
-	for (uint32_t i = 0; i < vertices_.size(); i++) {
-		vertMap_[i] = vertices_[i];
+	for (uint32_t i = 0; i < vertices.size(); i++) {
+		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
 	buff->Unmap(0, nullptr);

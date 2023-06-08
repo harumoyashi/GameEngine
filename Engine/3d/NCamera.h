@@ -11,8 +11,8 @@ using namespace DirectX;
 class NCamera
 {
 public:
-	static std::unique_ptr<NCamera> _nCamera;
-	static NCamera* nowCamera;
+	static std::unique_ptr<NCamera> sNCamera;
+	static NCamera* sNowCamera;
 
 private:
 	//カメラ
@@ -20,10 +20,10 @@ private:
 	NMatrix4 matView_{};
 
 	//カメラ
-	NVector3 eye = { 0, 10.0f, -30.0f };	//視点座標
-	NVector3 target = { 0, 0, 0 };	//注視点座標
-	NVector3 up = { 0, 1.0f, 0 };		//上方向ベクトル
-	float angle = 0.0f;				//カメラの回転角
+	NVector3 eye_ = { 0, 10.0f, -30.0f };	//視点座標
+	NVector3 target_ = { 0, 0, 0 };			//注視点座標
+	NVector3 up_ = { 0, 1.0f, 0 };			//上方向ベクトル
+	float angle_ = 0.0f;					//カメラの回転角
 
 public:
 	//ビュー変換行列作成
@@ -32,13 +32,13 @@ public:
 	void ProjectiveProjection();
 
 	//セッター
-	void SetEye(NVector3 eye) { this->eye = eye; }
-	void SetTarget(NVector3 target) { this->target = target; }
-	void SetUp(NVector3 up) { this->up = up; }
+	inline void SetEye(NVector3 eye) { eye_ = eye; }
+	inline void SetTarget(NVector3 target) { target_ = target; }
+	inline void SetUp(NVector3 up) { up_ = up; }
 
 	//ゲッター
-	NMatrix4 GetMatProjection() { return matProjection_; }
-	NMatrix4 GetMatView() { return matView_; }
+	inline NMatrix4 GetMatProjection() { return matProjection_; }
+	inline NMatrix4 GetMatView() { return matView_; }
 	//eye座標取得
-	NVector3 GetPos() { return eye; }
+	inline NVector3 GetPos() { return eye_; }
 };

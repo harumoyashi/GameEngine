@@ -10,7 +10,7 @@
 struct Mesh
 {
 	std::vector<NVertexAssimp> vertices_;
-	std::vector<uint32_t> indices;
+	std::vector<uint32_t> indices_;
 
 	std::wstring textureName;
 };
@@ -29,8 +29,8 @@ struct ImportSettings
 class AssimpLoader
 {
 public:
-	NVertexBuff vertexBuff;
-	NIndexBuff indexBuff;
+	NVertexBuff vertexBuff_;
+	NIndexBuff indexBuff_;
 
 	bool Load(ImportSettings setting); // ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
 

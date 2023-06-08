@@ -19,10 +19,10 @@ NTitleScene::NTitleScene()
 
 NTitleScene::~NTitleScene()
 {
-	for (size_t i = 0; i < vertexBuffers.size(); i++)
+	for (size_t i = 0; i < vertexBuff_ers.size(); i++)
 	{
-		delete vertexBuffers[i];
-		delete indexBuffers[i];
+		delete vertexBuff_ers[i];
+		delete indexBuff_ers[i];
 	}
 }
 
@@ -35,7 +35,7 @@ void NTitleScene::Init()
 #pragma region	カメラ初期化
 	camera.ProjectiveProjection();
 	camera.CreateMatView();
-	NCamera::nowCamera = &camera;
+	NCamera::sNowCamera = &camera;
 #pragma endregion
 #pragma region 描画初期化処理
 	//マテリアル(定数バッファ)
@@ -95,7 +95,7 @@ void NTitleScene::Init()
 	}*/
 
 	//// メッシュの数だけ頂点バッファを用意する
-	//vertexBuffers.reserve(meshes.size());
+	//vertexBuff_ers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
 	//	auto size = meshes[i].vertices_.size();
@@ -107,23 +107,23 @@ void NTitleScene::Init()
 	//		printf("頂点バッファの生成に失敗\n");
 	//	}*/
 
-	//	vertexBuffers.push_back(pVB);
+	//	vertexBuff_ers.push_back(pVB);
 	//}
 
 	//// メッシュの数だけインデックスバッファを用意する
-	//indexBuffers.reserve(meshes.size());
+	//indexBuff_ers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto size = sizeof(uint32_t) * meshes[i].indices.size();
-	//	auto indices = meshes[i].indices.data();
-	//	auto pIB = new NIndexBuff(indices, (unsigned int)size);
+	//	auto size = sizeof(uint32_t) * meshes[i].indices_.size();
+	//	auto indices_ = meshes[i].indices_.data();
+	//	auto pIB = new NIndexBuff(indices_, (unsigned int)size);
 	//	/*if (!pIB->IsValid())
 	//	{
 	//		printf("インデックスバッファの生成に失敗\n");
 	//		return false;
 	//	}*/
 
-	//	indexBuffers.push_back(pIB);
+	//	indexBuff_ers.push_back(pIB);
 	//}
 
 	//// モデルのサイズが違うので、ちゃんと映るようにこの辺の値を変えておく
@@ -133,48 +133,48 @@ void NTitleScene::Init()
 	//auto fov = XMConvertToRadians(60);
 
 	//assimpの四角形//
-	//NVertexAssimp vertices_[4] = {};
-	//vertices_[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
-	//vertices_[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
+	//NVertexAssimp vertices[4] = {};
+	//vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
+	//vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
 
-	//vertices_[1].pos = NVector3(1.0f, 1.0f, 0.0f);
-	//vertices_[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
+	//vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
+	//vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
 
-	//vertices_[2].pos = NVector3(1.0f, -1.0f, 0.0f);
-	//vertices_[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
+	//vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
 
-	//vertices_[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
-	//vertices_[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
+	//vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
 
 	//uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
 
 	//Mesh mesh = {}; // これまでの四角形を入れるためのメッシュ構造体
-	//mesh.vertices_ = std::vector<NVertexAssimp>(std::begin(vertices_), std::end(vertices_));
-	//mesh.indices = std::vector<uint32_t>(std::begin(indices), std::end(indices));
+	//mesh.vertices_ = std::vector<NVertexAssimp>(std::begin(vertices), std::end(vertices));
+	//mesh.indices_ = std::vector<uint32_t>(std::begin(indices), std::end(indices));
 	//meshes.clear(); // ちょっと無駄感あるが、一旦四角形で試したいのでAssimpLoaderで読み込んだモデルのメッシュを一旦クリア
 	//meshes.shrink_to_fit(); // 中身をゼロにする
 	//meshes.push_back(mesh);
 
 	//// メッシュの数だけ頂点バッファを用意する
-	//vertexBuffers.reserve(meshes.size());
+	//vertexBuff_ers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
 	//	auto size = sizeof(NVertexAssimp) * meshes[i].vertices_.size();
-	//	auto vertices_ = meshes[i].vertices_.data();
-	//	auto pVB = new NVertexBuff(vertices_, (unsigned int)size);
+	//	auto vertices = meshes[i].vertices_.data();
+	//	auto pVB = new NVertexBuff(vertices, (unsigned int)size);
 
-	//	vertexBuffers.push_back(pVB);
+	//	vertexBuff_ers.push_back(pVB);
 	//}
 
 	//// メッシュの数だけインデックスバッファを用意する
-	//indexBuffers.reserve(meshes.size());
+	//indexBuff_ers.reserve(meshes.size());
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto size = sizeof(uint32_t) * meshes[i].indices.size();
-	//	auto indices = meshes[i].indices.data();
+	//	auto size = sizeof(uint32_t) * meshes[i].indices_.size();
+	//	auto indices = meshes[i].indices_.data();
 	//	auto pIB = new NIndexBuff(indices, (unsigned int)size);
 
-	//	indexBuffers.push_back(pIB);
+	//	indexBuff_ers.push_back(pIB);
 	//}
 
 	//cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
@@ -185,9 +185,9 @@ void NTitleScene::Init()
 	//cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
 
 	//NMatrix4 mat;
-	//cbTrans_->constMap->viewproj = NCamera::nowCamera->GetMatView() * NCamera::nowCamera->GetMatProjection();
+	//cbTrans_->constMap->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
 	//cbTrans_->constMap->world = mat.Identity();
-	//cbTrans_->constMap->cameraPos = NCamera::nowCamera->GetPos();
+	//cbTrans_->constMap->cameraPos = NCamera::sNowCamera->GetPos();
 
 	//cbTrans_->Unmap();
 
@@ -245,7 +245,7 @@ void NTitleScene::Update()
 #pragma region 行列の計算
 	//ビュー行列の再生成
 	camera.CreateMatView();
-	NCamera::nowCamera = &camera;
+	NCamera::sNowCamera = &camera;
 
 	if (isCol)
 	{
@@ -299,8 +299,8 @@ void NTitleScene::Draw()
 	////メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto vbView_ = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
-	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto vbView_ = vertexBuff_ers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto ibView = indexBuff_ers[i]->view; // そのメッシュに対応する頂点バッファ
 
 	//	// パイプラインステートとルートシグネチャの設定コマンド
 	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
@@ -314,14 +314,14 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices_.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	//}
 
 	// メッシュの数だけインデックス分の描画を行う処理を回す
 	//for (size_t i = 0; i < meshes.size(); i++)
 	//{
-	//	auto vbView_ = vertexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
-	//	auto ibView = indexBuffers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto vbView_ = vertexBuff_ers[i]->view; // そのメッシュに対応する頂点バッファ
+	//	auto ibView = indexBuff_ers[i]->view; // そのメッシュに対応する頂点バッファ
 
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
@@ -331,7 +331,7 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 
-	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
+	//	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes[i].indices_.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	//}
 
 	//前景スプライト

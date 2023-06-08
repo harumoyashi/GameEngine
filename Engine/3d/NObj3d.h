@@ -80,7 +80,7 @@ public:
 	void SetSRVHeap();
 	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
 	//頂点バッファビューの設定コマンド
-	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView_);
+	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView);
 	//インデックスバッファビューの設定コマンド
 	void SetIB(D3D12_INDEX_BUFFER_VIEW ibView);
 	//定数バッファビュー(CBV)の設定コマンド

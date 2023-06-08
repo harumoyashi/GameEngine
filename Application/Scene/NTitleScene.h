@@ -30,7 +30,7 @@ class NTitleScene
 {
 private:
 	//オブジェクト
-	NMaterial material;				//マテリアル
+	NMaterial material_;				//マテリアル
 	static const uint32_t maxObj = 3;	//オブジェクト数
 	std::vector<std::unique_ptr<NObj3d>> obj;	//オブジェクト
 	std::vector<std::unique_ptr<NObj3d>> levelDataobj;	//レベルデータから読み込んだオブジェクト
@@ -69,8 +69,8 @@ private:
 	float color = 0.0f;
 
 	std::vector<Mesh> meshes; // メッシュの配列
-	std::vector<NVertexBuff*> vertexBuffers; // メッシュの数分の頂点バッファ
-	std::vector<NIndexBuff*> indexBuffers; // メッシュの数分のインデックスバッファ
+	std::vector<NVertexBuff*> vertexBuff_ers; // メッシュの数分の頂点バッファ
+	std::vector<NIndexBuff*> indexBuff_ers; // メッシュの数分のインデックスバッファ
 	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 
 	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体

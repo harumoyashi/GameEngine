@@ -127,19 +127,19 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         dst.vertices_[i] = vertex;
     }
 
-    dst.indices.resize(src->mNumFaces * 3);
+    dst.indices_.resize(src->mNumFaces * 3);
 
     for (auto i = 0u; i < src->mNumFaces; ++i)
     {
         const auto& face = src->mFaces[i];
 
-        dst.indices[i * 3 + 0] = face.mIndices[0];
-        dst.indices[i * 3 + 1] = face.mIndices[1];
-        dst.indices[i * 3 + 2] = face.mIndices[2];
+        dst.indices_[i * 3 + 0] = face.mIndices[0];
+        dst.indices_[i * 3 + 1] = face.mIndices[1];
+        dst.indices_[i * 3 + 2] = face.mIndices[2];
     }
 
-    indexBuff.Init(dst.indices);
-    vertexBuff.Init(dst.vertices_);
+    indexBuff_.Init(dst.indices_);
+    vertexBuff_.Init(dst.vertices_);
 }
 
 void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)

@@ -22,7 +22,7 @@ class NGameScene
 {
 private:
 	//オブジェクト
-	NMaterial material;				//マテリアル
+	NMaterial material_;				//マテリアル
 	static const uint32_t maxObj = 4;	//オブジェクト数
 	std::vector<std::unique_ptr<NObj3d>> obj;			//オブジェクト(定数バッファ)
 

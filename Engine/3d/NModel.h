@@ -13,14 +13,14 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:
-	std::string name;
-	NVertexBuff vertexBuff;
-	NIndexBuff indexBuff;
+	std::string name_;
+	NVertexBuff vertexBuff_;
+	NIndexBuff indexBuff_;
 
 	std::vector<NVertexPNU> vertices_;
-	std::vector<uint32_t> indices;
+	std::vector<uint32_t> indices_;
 
-	NMaterial material;
+	NMaterial material_;
 
 public:
 	void Create(const std::string modelname);

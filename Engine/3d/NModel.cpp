@@ -9,16 +9,15 @@ using namespace std;
 void NModel::Create(const string modelname)
 {
 	LoadObjFile(modelname);
-	vertexBuff.Init(vertices_);
-	indexBuff.Init(indices);
+	vertexBuff_.Init(vertices_);
+	indexBuff_.Init(indices_);
 }
 
-void NModel::LoadObjFile(const string name)
+void NModel::LoadObjFile(const string modelname)
 {
 	//ファイルストリーム
 	std::ifstream file;
 	//.objファイルを開く
-	const string modelname = name;
 	const string filename = modelname + ".obj";	//"triangle_mat.obj"
 	const string directoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/
 	file.open(directoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
@@ -49,7 +48,7 @@ void NModel::LoadObjFile(const string name)
 			string filename;
 			line_stream >> filename;
 			//マテリアル読み込み
-			material = NMtllib::Load(directoryPath,filename);
+			material_ = NMtllib::Load(directoryPath,filename);
 		}
 
 		//先頭文字列がvなら頂点座標
@@ -113,12 +112,12 @@ void NModel::LoadObjFile(const string name)
 				vertices_.emplace_back(vertex);
 
 				//インデックスデータの追加
-				indices.emplace_back((unsigned short)indices.size());
+				indices_.emplace_back((unsigned short)indices_.size());
 			}
 		}
 	}
 	//モデル名を登録して
-	this->name = name;
+	name_ = modelname;
 	//ファイル閉じる
 	file.close();
 }
