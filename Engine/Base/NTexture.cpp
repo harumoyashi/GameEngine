@@ -1,4 +1,5 @@
 #include "NTexture.h"
+#include "NVector4.h"
 
 NTextureManager* NTextureManager::GetInstance()
 {
@@ -27,7 +28,7 @@ NTexture NTextureManager::CreateErrorTexture()
 		//配列の要素数
 		const size_t imageDataCount = textureLen * textureLen;
 		//画像イメージデータ配列
-		std::vector<XMFLOAT4> imageData;
+		std::vector<NVector4> imageData;
 
 		//全ピクセルの色を初期化
 		for (size_t i = 0; i < imageDataCount; i++)
@@ -38,12 +39,10 @@ NTexture NTextureManager::CreateErrorTexture()
 			//左上と右下をピンクに
 			if ((x < textureLen / 2 && y < textureLen / 2)
 				|| (x >= textureLen / 2 && y >= textureLen / 2)) {
-				//imageData[i] = { 1, 0, 1, 1 };
-				imageData.emplace_back(XMFLOAT4(1, 0, 1, 1));
+				imageData.emplace_back(NVector4(1, 0, 1, 1));
 			}
 			else {	//それ以外は黒に
-				//imageData[i] = { 0, 0, 0, 1 };
-				imageData.emplace_back(XMFLOAT4(0, 0, 0, 1));
+				imageData.emplace_back(NVector4(0, 0, 0, 1));
 			}
 		}
 

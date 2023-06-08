@@ -5,6 +5,9 @@
 #include "NQuaternion.h"
 #include <stdint.h>
 
+const float PI = 3.141592654f;
+const float PI2 = PI * 2.0f;
+
 namespace MathUtil
 {
 	//ƒrƒ…[•ÏŠ·s—ñ¶¬

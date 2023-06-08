@@ -1,7 +1,5 @@
 #pragma once
 
-const float PI = 3.141592654f;
-
 class NVector3
 {
 public:
