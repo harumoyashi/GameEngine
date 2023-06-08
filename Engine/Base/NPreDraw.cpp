@@ -25,8 +25,8 @@ void NPreDraw::SetRenderTarget()
 void NPreDraw::ClearScreen()
 {
 	// 3.画面クリア R G B A
-	FLOAT clearColor[] = { 0.1f,0.25f,0.5f,0.0f }; // 青っぽい色
-	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+	std::vector<FLOAT> clearColor = { 0.1f,0.25f,0.5f,0.0f }; // 青っぽい色
+	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, clearColor.data(), 0, nullptr);
 	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
@@ -70,8 +70,8 @@ void NPreDraw::CmdListClose()
 
 void NPreDraw::ExecuteCmdList()
 {
-	ID3D12CommandList* commandLists[] = { NDX12::GetInstance()->GetCommandList()};
-	NDX12::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, commandLists);
+	std::vector<ID3D12CommandList*> commandLists = { NDX12::GetInstance()->GetCommandList()};
+	NDX12::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, commandLists.data());
 }
 
 void NPreDraw::BufferSwap()

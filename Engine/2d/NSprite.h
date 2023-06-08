@@ -18,7 +18,7 @@ private:
 	//頂点まわり//
 	uint32_t singleSizeVB;						//頂点バッファ1個当たりのサイズ
 	uint32_t sizeVB;							//頂点バッファ全体のサイズ
-	NVertexUV vertices[4]{};				//頂点代入用
+	std::array<NVertexUV,4> vertices{};			//頂点代入用
 	D3D12_HEAP_PROPERTIES heapPropVert{};	//ヒープ
 	D3D12_RESOURCE_DESC resDescVert{};		//リソース
 	ComPtr<ID3D12Resource> vertBuff;		//頂点バッファ

@@ -27,7 +27,7 @@ NTexture NTextureManager::CreateErrorTexture()
 		//配列の要素数
 		const size_t imageDataCount = textureLen * textureLen;
 		//画像イメージデータ配列
-		XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];	//※必ず後で解放する
+		std::vector<XMFLOAT4> imageData;
 
 		//全ピクセルの色を初期化
 		for (size_t i = 0; i < imageDataCount; i++)
@@ -38,10 +38,12 @@ NTexture NTextureManager::CreateErrorTexture()
 			//左上と右下をピンクに
 			if ((x < textureLen / 2 && y < textureLen / 2)
 				|| (x >= textureLen / 2 && y >= textureLen / 2)) {
-				imageData[i] = { 1, 0, 1, 1 };
+				//imageData[i] = { 1, 0, 1, 1 };
+				imageData.emplace_back(XMFLOAT4(1, 0, 1, 1));
 			}
 			else {	//それ以外は黒に
-				imageData[i] = { 0, 0, 0, 1 };
+				//imageData[i] = { 0, 0, 0, 1 };
+				imageData.emplace_back(XMFLOAT4(0, 0, 0, 1));
 			}
 		}
 
@@ -69,14 +71,10 @@ NTexture NTextureManager::CreateErrorTexture()
 		result = texture.texBuff->WriteToSubresource(
 			0,
 			nullptr,	//全領域へコピー
-			imageData,	//元データアドレス
+			imageData.data(),	//元データアドレス
 			sizeof(XMFLOAT4) * textureLen,	//1ラインサイズ
 			sizeof(XMFLOAT4) * imageDataCount	//全サイズ
 		);
-
-		//元データ解放
-		delete[] imageData;
-
 
 		//シェーダーリソースビュー設定
 		SetSRV();

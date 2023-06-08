@@ -93,7 +93,7 @@ void NSprite::CreateClipSprite(std::string texHandle,
 
 void NSprite::SetVert()
 {
-	NVertexUV vert[] = {
+	std::vector<NVertexUV> vert = {
 		//	x		y		z	 	u	v
 		{{   0.0f, 100.0f, 0.0f }, {0.0f,1.0f}},	// 左下
 		{{   0.0f,   0.0f, 0.0f }, {0.0f,0.0f}},	// 左上
@@ -231,7 +231,7 @@ void NSprite::Update()
 void NSprite::TransferVertex()
 {
 	//UVだけデフォルトで設定
-	NVertexUV vert[] = {
+	std::vector<NVertexUV> vert = {
 		//		u	v
 		{{}, {0.0f,1.0f}},	// 左下
 		{{}, {0.0f,0.0f}},	// 左上
@@ -310,8 +310,8 @@ void NSprite::CommonBeginDraw()
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
 
-	ID3D12DescriptorHeap* ppHeaps[] = { NDX12::GetInstance()->GetSRVHeap() };
-	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
+	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 }
 
 void NSprite::Draw()
