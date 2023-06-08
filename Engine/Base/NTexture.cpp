@@ -71,8 +71,8 @@ NTexture NTextureManager::CreateErrorTexture()
 			0,
 			nullptr,	//全領域へコピー
 			imageData.data(),	//元データアドレス
-			sizeof(XMFLOAT4) * textureLen,	//1ラインサイズ
-			sizeof(XMFLOAT4) * imageDataCount	//全サイズ
+			sizeof(NVector4) * textureLen,	//1ラインサイズ
+			sizeof(NVector4) * imageDataCount	//全サイズ
 		);
 
 		//シェーダーリソースビュー設定
