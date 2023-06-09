@@ -28,7 +28,7 @@ public:
 
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 	D3D12_HEAP_PROPERTIES texHeapProp{};	//ヒープ
 	D3D12_RESOURCE_DESC texResDesc{};		//リソース
 	static const size_t maxSRVCount = 2056;	//SRVの最大個数

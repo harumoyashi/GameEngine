@@ -10,7 +10,7 @@ public:
 
 	uint32_t bbIndex;
 	D3D12_RESOURCE_BARRIER barrierDesc{};		//リソースバリア
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle{};	//レンダーターゲットビューハンドル
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_{};	//レンダーターゲットビューハンドル
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle{};	//デスクリプタハンドル
 
 	D3D12_VIEWPORT viewport{};	//ビューポート

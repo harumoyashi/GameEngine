@@ -6,7 +6,7 @@ class NImGuiManager
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 private:
-	ComPtr<ID3D12DescriptorHeap> srvHeap_;
+	ComPtr<ID3D12DescriptorHeap> srvHeap__;
 
 public:
 	static NImGuiManager* GetInstance();

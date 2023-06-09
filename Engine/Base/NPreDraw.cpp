@@ -5,7 +5,7 @@ void NPreDraw::SetResBarrier()
 	// バックバッファの番号を取得(2つなので0番か1番)
 	bbIndex = NDX12::GetInstance()->GetSwapchain()->GetCurrentBackBufferIndex();
 	// 1.リソースバリアで書き込み可能に変更
-	barrierDesc.Transition.pResource = NDX12::GetInstance()->backBuffers[bbIndex].Get(); // バックバッファを指定
+	barrierDesc.Transition.pResource = NDX12::GetInstance()->backBuffers_[bbIndex].Get(); // バックバッファを指定
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // 表示状態から
 	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画状態へ
 	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
@@ -15,18 +15,18 @@ void NPreDraw::SetRenderTarget()
 {
 	// 2.描画先の変更
 	// レンダーターゲットビューのハンドルを取得
-	rtvHandle = NDX12::GetInstance()->GetRTVHeap()->GetCPUDescriptorHandleForHeapStart();
-	rtvHandle.ptr += bbIndex * NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(
+	rtvHandle_ = NDX12::GetInstance()->GetRTVHeap()->GetCPUDescriptorHandleForHeapStart();
+	rtvHandle_.ptr += bbIndex * NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(
 		NDX12::GetInstance()->GetRTVHeapDesc().Type);
 	dsvHandle = NDX12::GetInstance()->GetDSVHeap()->GetCPUDescriptorHandleForHeapStart();
-	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(1, &rtvHandle_, false, &dsvHandle);
 }
 
 void NPreDraw::ClearScreen()
 {
 	// 3.画面クリア R G B A
 	std::vector<FLOAT> clearColor = { 0.1f,0.25f,0.5f,0.0f }; // 青っぽい色
-	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, clearColor.data(), 0, nullptr);
+	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle_, clearColor.data(), 0, nullptr);
 	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 

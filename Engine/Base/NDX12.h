@@ -19,55 +19,55 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	//デバッグレイヤーをオンにするために使用されるインターフェイス
-	ComPtr<ID3D12Debug> debugController;
+	ComPtr<ID3D12Debug> debugController_;
 
 	//基本オブジェクトの生成
 	//受け皿になる変数生成
-	ComPtr<ID3D12Device> device;						//色々なもの作成するための仮想アダプタ	
-	ComPtr<IDXGIFactory6> dxgiFactory;					//アダプターの列挙状態の変化を検出できるようにするためのインターフェース	
-	ComPtr<IDXGISwapChain4> swapchain;					//ダブルバッファリングのために画面切り替え用のバッファー管理するやつ	
-	ComPtr<ID3D12CommandAllocator> commandAllocator;	//コマンドリストに格納する命令の為のメモリを管理するオブジェクト	
-	ComPtr<ID3D12GraphicsCommandList> commandList;		//命令を一時的に格納しとくやつ
-	ComPtr<ID3D12CommandQueue> commandQueue;			//GPUが実行するべき命令のリストを,指定した順序でGPUに転送するためのインターフェース
+	ComPtr<ID3D12Device> device_;						//色々なもの作成するための仮想アダプタ	
+	ComPtr<IDXGIFactory6> dxgiFactory_;					//アダプターの列挙状態の変化を検出できるようにするためのインターフェース	
+	ComPtr<IDXGISwapChain4> swapchain_;					//ダブルバッファリングのために画面切り替え用のバッファー管理するやつ	
+	ComPtr<ID3D12CommandAllocator> commandAllocator_;	//コマンドリストに格納する命令の為のメモリを管理するオブジェクト	
+	ComPtr<ID3D12GraphicsCommandList> commandList_;		//命令を一時的に格納しとくやつ
+	ComPtr<ID3D12CommandQueue> commandQueue_;			//GPUが実行するべき命令のリストを,指定した順序でGPUに転送するためのインターフェース
 
-	ComPtr<ID3D12DescriptorHeap> rtvHeap;
+	ComPtr<ID3D12DescriptorHeap> rtvHeap_;
 
-	std::vector< ComPtr<IDXGIAdapter4>> adapters;	//アダプターの列挙用
-	ComPtr<IDXGIAdapter4> tmpAdapter;				//ここに特定の名前を持つアダプターオブジェクトが入る
+	std::vector< ComPtr<IDXGIAdapter4>> adapters_;	//アダプターの列挙用
+	ComPtr<IDXGIAdapter4> tmpAdapter_;				//ここに特定の名前を持つアダプターオブジェクトが入る
 
-	D3D_FEATURE_LEVEL featureLevel;
+	D3D_FEATURE_LEVEL featureLevel_;
 
 	//コマンドキューの設定
-	D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
+	D3D12_COMMAND_QUEUE_DESC commandQueueDesc_{};
 
-	DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+	DXGI_SWAP_CHAIN_DESC1 swapchainDesc_{};
 
-	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 
-	ComPtr<ID3D12DescriptorHeap> srvHeap;
+	ComPtr<ID3D12DescriptorHeap> srvHeap_;
 
-	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
+	D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_{};
 
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;		//レンダーターゲットビューハンドル
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};	//レンダーターゲットビューの設定
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_;		//レンダーターゲットビューハンドル
+	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};	//レンダーターゲットビューの設定
 
-	D3D12_RESOURCE_DESC depthResourceDesc{};	//深度バッファリソース
-	D3D12_HEAP_PROPERTIES depthHeapProp{};		//ヒーププロパティ
-	D3D12_CLEAR_VALUE depthClearValue{};
-	ComPtr<ID3D12Resource> depthBuff;			//深度バッファ
-	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};	//デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> dsvHeap;
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	D3D12_RESOURCE_DESC depthResourceDesc_{};	//深度バッファリソース
+	D3D12_HEAP_PROPERTIES depthHeapProp_{};		//ヒーププロパティ
+	D3D12_CLEAR_VALUE depthClearValue_{};
+	ComPtr<ID3D12Resource> depthBuff_;			//深度バッファ
+	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc_{};	//デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> dsvHeap_;
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_ = {};
 
-	ComPtr<ID3D12Fence> fence;	//CPUとGPUの同期に使われるやつ
-	UINT64 fenceVal = 0;
+	ComPtr<ID3D12Fence> fence_;	//CPUとGPUの同期に使われるやつ
+	UINT64 fenceVal_ = 0;
 
-	//fps固定用
-	std::chrono::steady_clock::time_point reference;	//記録時間
-	const long long fps = 60;	//60FPS
+	//fps_固定用
+	std::chrono::steady_clock::time_point reference_;	//記録時間
+	const long long fps_ = 60;	//60FPS
 
 public:
-	std::vector<ComPtr<ID3D12Resource>> backBuffers;
+	std::vector<ComPtr<ID3D12Resource>> backBuffers_;
 
 public:
 	//シングルトンインスタンス取得
@@ -84,25 +84,25 @@ public:
 
 	//ゲッター//
 	//デバイス取得
-	inline ID3D12Device* GetDevice()const { return device.Get(); }
+	inline ID3D12Device* GetDevice()const { return device_.Get(); }
 	//スワップチェーン取得
-	inline IDXGISwapChain4* GetSwapchain()const { return swapchain.Get(); }
+	inline IDXGISwapChain4* GetSwapchain()const { return swapchain_.Get(); }
 	//コマンドアロケーター取得
-	inline ID3D12CommandAllocator* GetCommandAllocator()const { return commandAllocator.Get(); }
+	inline ID3D12CommandAllocator* GetCommandAllocator()const { return commandAllocator_.Get(); }
 	//コマンドリスト取得
-	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList.Get(); }
+	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 	//コマンドキュー取得
-	inline ID3D12CommandQueue* GetCommandQueue()const { return commandQueue.Get(); }
+	inline ID3D12CommandQueue* GetCommandQueue()const { return commandQueue_.Get(); }
 	//RTVヒープ取得
-	inline ID3D12DescriptorHeap* GetRTVHeap()const { return rtvHeap.Get(); }
+	inline ID3D12DescriptorHeap* GetRTVHeap()const { return rtvHeap_.Get(); }
 	//SRVヒープ取得
-	inline ID3D12DescriptorHeap* GetSRVHeap()const { return srvHeap.Get(); }
+	inline ID3D12DescriptorHeap* GetSRVHeap()const { return srvHeap_.Get(); }
 	//RTVヒープデスク取得
-	inline D3D12_DESCRIPTOR_HEAP_DESC GetRTVHeapDesc()const { return rtvHeapDesc; }
+	inline D3D12_DESCRIPTOR_HEAP_DESC GetRTVHeapDesc()const { return rtvHeapDesc_; }
 	//DSVヒープ取得
-	inline ID3D12DescriptorHeap* GetDSVHeap()const { return dsvHeap.Get(); }
+	inline ID3D12DescriptorHeap* GetDSVHeap()const { return dsvHeap_.Get(); }
 	//フェンス取得
-	inline ID3D12Fence* GetFence()const { return fence.Get(); }
+	inline ID3D12Fence* GetFence()const { return fence_.Get(); }
 
 private:
 	//アダプター選択
