@@ -13,11 +13,11 @@ public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 private:
-	static ComPtr<IDirectInputDevice8> keyboard;
-	static ComPtr<IDirectInput8> directInput;
+	static ComPtr<IDirectInputDevice8> sKeyboard;
+	static ComPtr<IDirectInput8> sDirectInput;
 
 	//振動
-	XINPUT_VIBRATION vibration;
+	XINPUT_VIBRATION vibration_;
 
 public:
 	NInput() {};
@@ -38,11 +38,11 @@ public:
 
 public:
 	//XINPUT_STATE 構造体のインスタンスを作成
-	XINPUT_STATE statePad{};
-	XINPUT_STATE prevPad{};
+	XINPUT_STATE statePad_{};
+	XINPUT_STATE prevPad_{};
 
 	//接続されてるか
-	bool isConnect = false;
+	bool isConnect_ = false;
 
 public:
 	//初期化
