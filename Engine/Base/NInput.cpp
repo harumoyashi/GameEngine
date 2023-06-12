@@ -25,7 +25,7 @@ NInput* NInput::GetInstance()
 	return &instance;
 }
 
-void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd)
+void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd_)
 {
 	HRESULT result;
 
@@ -46,7 +46,7 @@ void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd)
 		//DISCL_FOREGROUND：画面が手前にある場合のみ入力を受け付ける
 		//DISCL_NONEXCLUSIVE：デバイスをこのアプリだけで専有しない
 		//DISCL_NOWINKEY：Windowsキーを無効にする
-		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+		hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 

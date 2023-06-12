@@ -88,7 +88,7 @@ void NSceneManager::Draw()
 	}
 
 	NImGuiManager::GetInstance()->Draw();
-	NDX12::GetInstance()->PostDraw(preDraw->barrierDesc);
+	NDX12::GetInstance()->PostDraw(preDraw->barrierDesc_);
 }
 
 void NSceneManager::Finalize()

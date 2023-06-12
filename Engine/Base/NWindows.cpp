@@ -34,18 +34,18 @@ LRESULT NWindows::WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lpar
 //Windowクラスの設定
 void NWindows::Set()
 {
-	w.cbSize = sizeof(WNDCLASSEX);
-	w.lpfnWndProc = (WNDPROC)WindowProc;		//ウィンドウプロシージャを設定
-	w.lpszClassName = L"DX12Sample";			//アプリケーションクラス名
-	w.hInstance = GetModuleHandle(nullptr);		//ハンドルの取得
-	w.hCursor = LoadCursor(NULL, IDC_ARROW);	//カーソル指定
+	win_.cbSize = sizeof(WNDCLASSEX);
+	win_.lpfnWndProc = (WNDPROC)WindowProc;		//ウィンドウプロシージャを設定
+	win_.lpszClassName = L"DX12Sample";			//アプリケーションクラス名
+	win_.hInstance = GetModuleHandle(nullptr);		//ハンドルの取得
+	win_.hCursor = LoadCursor(NULL, IDC_ARROW);	//カーソル指定
 
-	RegisterClassEx(&w);	//アプリケーションクラス（ウィンドウクラスの指定をOSに伝える）
+	RegisterClassEx(&win_);	//アプリケーションクラス（ウィンドウクラスの指定をOSに伝える）
 
-	wrc = { 0,0,win_width,win_height };	//ウィンドウサイズを決める
+	wrc_ = { 0,0,sWin_width,sWin_height };	//ウィンドウサイズを決める
 
 	//関数を使ってウィンドウのサイズを補正する
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 
 	//システムタイマーの分解度を上げる
 	timeBeginPeriod(1);
@@ -61,17 +61,17 @@ void NWindows::DebugText(LPCSTR text)
 void NWindows::CreateWindowObj()
 {
 	//ウィンドウオブジェクトの生成
-	hwnd = CreateWindow(
-		w.lpszClassName,		//クラス名指定
+	hwnd_ = CreateWindow(
+		win_.lpszClassName,		//クラス名指定
 		L"DX12テスト",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//タイトルバーと境界線があるウィンドウ
 		CW_USEDEFAULT,			//表示x座標はOSにお任せ
 		CW_USEDEFAULT,			//表示y座標はOSにお任せ
-		wrc.right - wrc.left,	//ウィンドウ幅
-		wrc.bottom - wrc.top,	//ウィンドウ高
+		wrc_.right - wrc_.left,	//ウィンドウ幅
+		wrc_.bottom - wrc_.top,	//ウィンドウ高
 		nullptr,				//親ウィンドウハンドル
 		nullptr,				//メニューハンドル
-		w.hInstance,			//呼び出しアプリケーションハンドル
+		win_.hInstance,			//呼び出しアプリケーションハンドル
 		nullptr					//追加パラメーター
 	);
 }
@@ -79,19 +79,19 @@ void NWindows::CreateWindowObj()
 //ウィンドウ表示
 void NWindows::Display()
 {
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 bool NWindows::WindowMessage()
 {
-	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
+	if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
 	{
-		TranslateMessage(&msg);	//キー入力メッセージの処理
-		DispatchMessage(&msg);	//プロシージャにメッセージを送る
+		TranslateMessage(&msg_);	//キー入力メッセージの処理
+		DispatchMessage(&msg_);	//プロシージャにメッセージを送る
 	}
 
 	//アプリケーションが終わるときにmwssageがWM_QUITになる
-	if (msg.message == WM_QUIT)
+	if (msg_.message == WM_QUIT)
 	{
 		return true;	//終了メッセージが来たらループを抜ける
 	}
@@ -102,5 +102,5 @@ bool NWindows::WindowMessage()
 void NWindows::Finalize()
 {
 	//もうクラスは使わないので登録解除する
-	UnregisterClass(w.lpszClassName, w.hInstance);
+	UnregisterClass(win_.lpszClassName, win_.hInstance);
 }

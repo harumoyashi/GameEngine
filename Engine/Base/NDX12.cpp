@@ -37,9 +37,9 @@ void NDX12::Init(NWindows* win)
 	CreateFence();
 }
 
-void NDX12::PostDraw(D3D12_RESOURCE_BARRIER barrierDesc)
+void NDX12::PostDraw(D3D12_RESOURCE_BARRIER barrierDesc_)
 {
-	BarrierReset(barrierDesc);
+	BarrierReset(barrierDesc_);
 	CmdListClose();
 	ExecuteCmdList();
 	BufferSwap();
@@ -151,8 +151,8 @@ void NDX12::CreateSwapChain(NWindows* win)
 {
 	HRESULT result;
 
-	swapchainDesc_.Width = NWindows::win_width;
-	swapchainDesc_.Height = NWindows::win_height;
+	swapchainDesc_.Width = NWindows::sWin_width;
+	swapchainDesc_.Height = NWindows::sWin_height;
 	swapchainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 色情報の書式
 	swapchainDesc_.SampleDesc.Count = 1; // マルチサンプルしない
 	swapchainDesc_.BufferUsage = DXGI_USAGE_BACK_BUFFER; // バックバッファ用
@@ -223,8 +223,8 @@ void NDX12::SetDepthRes()
 {
 	//リソース設定
 	depthResourceDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc_.Width = NWindows::win_width;	//レンダーターゲットに合わせる
-	depthResourceDesc_.Height = NWindows::win_height;	//レンダーターゲットに合わせる
+	depthResourceDesc_.Width = NWindows::sWin_width;	//レンダーターゲットに合わせる
+	depthResourceDesc_.Height = NWindows::sWin_height;	//レンダーターゲットに合わせる
 	depthResourceDesc_.DepthOrArraySize = 1;
 	depthResourceDesc_.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	depthResourceDesc_.SampleDesc.Count = 1;
@@ -312,12 +312,12 @@ void NDX12::UpdateFixFPX(float divideFrameRate)
 	reference_ = std::chrono::steady_clock::now();
 }
 
-void NDX12::BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc)
+void NDX12::BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc_)
 {
 	// 5.リソースバリアを戻す
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//表示状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc);
+	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
+	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//表示状態へ
+	commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 void NDX12::CmdListClose()

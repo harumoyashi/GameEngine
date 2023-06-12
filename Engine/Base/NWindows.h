@@ -5,18 +5,18 @@
 class NWindows
 {
 public:
-	static const uint32_t win_width = 1280;
-	static const uint32_t win_height = 720;
+	static const uint32_t sWin_width = 1280;
+	static const uint32_t sWin_height = 720;
 
 private:
 	//ウィンドウクラスの生成＆登録
-	WNDCLASSEX w{};
+	WNDCLASSEX win_{};
 	//ウィンドウハンドルの生成
-	HWND hwnd;
+	HWND hwnd_;
 	//ウィンドウサイズ用の長方形の生成
-	RECT wrc;
+	RECT wrc_;
 	//メッセージ情報構造体の生成
-	MSG msg = {};
+	MSG msg_ = {};
 
 public:
 #pragma region 初期化
@@ -44,7 +44,7 @@ public:
 	void Finalize();
 #pragma endregion
 #pragma region ゲッター
-	inline HWND GetHwnd()const { return hwnd; }
-	inline HINSTANCE GetHInstance()const { return w.hInstance; }
+	inline HWND GetHwnd()const { return hwnd_; }
+	inline HINSTANCE GetHInstance()const { return win_.hInstance; }
 #pragma endregion
 };

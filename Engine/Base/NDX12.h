@@ -76,7 +76,7 @@ public:
 	//DirectX初期化
 	void Init(NWindows* win);
 	//描画後処理
-	void PostDraw(D3D12_RESOURCE_BARRIER barrierDesc);
+	void PostDraw(D3D12_RESOURCE_BARRIER barrierDesc_);
 
 	//FPS固定更新
 	//divideFrameRate:フレームレートを何分の1にするか
@@ -134,7 +134,7 @@ private:
 	void InitializeFixFPS();
 
 	//バリア解除
-	void BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc);
+	void BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc_);
 	//命令のクローズ
 	//もうコマンドリストに積むのおしまい
 	void CmdListClose();

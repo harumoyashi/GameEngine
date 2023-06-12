@@ -27,8 +27,8 @@ void NSprite::CreateSprite(std::string texHandle)
 	cbColor_->Init();
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::win_width),
-		static_cast<float>(NWindows::win_height)
+		static_cast<float>(NWindows::sWin_width),
+		static_cast<float>(NWindows::sWin_height)
 	);
 	Update();
 }
@@ -42,7 +42,7 @@ void NSprite::CreateSprite(std::string texHandle,
 	SetVertHeap();
 	SetVertResource();
 	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap[texHandle_].texBuff);	//ここでテクスチャサイズに合わせてる
+	MatchTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);	//ここでテクスチャサイズに合わせてる
 	SetAncor(anchorPoint_);
 	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange();
@@ -56,8 +56,8 @@ void NSprite::CreateSprite(std::string texHandle,
 	cbColor_->Init();
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::win_width),
-		static_cast<float>(NWindows::win_height)
+		static_cast<float>(NWindows::sWin_width),
+		static_cast<float>(NWindows::sWin_height)
 	);
 	Update();
 }
@@ -71,7 +71,7 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	SetVertHeap();
 	SetVertResource();
 	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap[texHandle_].texBuff);	//ここでテクスチャサイズに合わせてる
+	MatchTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);	//ここでテクスチャサイズに合わせてる
 	SetAncor(anchorPoint_);
 	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange(texLeftTop_, texSize_);
@@ -85,8 +85,8 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	cbColor_->Init();
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::win_width),
-		static_cast<float>(NWindows::win_height)
+		static_cast<float>(NWindows::sWin_width),
+		static_cast<float>(NWindows::sWin_height)
 	);
 	Update();
 }
@@ -146,9 +146,9 @@ void NSprite::CreateVertBuff()
 	assert(SUCCEEDED(result));
 }
 
-void NSprite::MatchTexSize(ComPtr<ID3D12Resource> texBuff)
+void NSprite::MatchTexSize(ComPtr<ID3D12Resource> texBuff_)
 {
-	resDescVert_ = texBuff->GetDesc();
+	resDescVert_ = texBuff_->GetDesc();
 	size_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
 }
 
@@ -204,7 +204,7 @@ void NSprite::CreateVertBuffView()
 void NSprite::SetTexHandle(std::string texHandle)
 {
 	texHandle_ = texHandle;
-	if (NTextureManager::GetInstance()->textureMap[texHandle_].texBuff == nullptr)
+	if (NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_ == nullptr)
 	{
 		texHandle_ = "error";
 	}
@@ -264,7 +264,7 @@ void NSprite::TransferVertex()
 	vert[2].pos = { right,bottom,0.0f };	// 右下
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
-	resDescVert_ = NTextureManager::GetInstance()->textureMap[texHandle_].texBuff->GetDesc();
+	resDescVert_ = NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc();
 
 	//テクスチャサイズをもとに切り取る部分のuvを計算
 	float tex_left = texLeftTop_.x / resDescVert_.Width;
@@ -325,7 +325,7 @@ void NSprite::Draw()
 	}
 
 	//ハンドルを指定
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap[texHandle_].gpuHandle;
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap_[texHandle_].gpuHandle_;
 
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);

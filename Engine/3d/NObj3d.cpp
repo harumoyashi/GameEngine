@@ -157,7 +157,7 @@ void NObj3d::Draw()
 	SetCBV();
 	SetVB(model.vertexBuff_.view);
 	SetIB(model.indexBuff_.view);
-	SetSRVHeap(model.material_.texture.gpuHandle);
+	SetSRVHeap(model.material_.texture.gpuHandle_);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
 	directionalLight->Draw(4);
 	pointLight->Draw(5);

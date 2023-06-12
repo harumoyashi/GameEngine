@@ -14,6 +14,6 @@ void NCamera::ProjectiveProjection()
 {
 	matProjection_ = MathUtil::PerspectiveProjection(
 		MathUtil::Degree2Radian(45.0f),
-		(float)NWindows::win_width / NWindows::win_height,
+		(float)NWindows::sWin_width / NWindows::sWin_height,
 		0.1f, 1000.0f);
 }

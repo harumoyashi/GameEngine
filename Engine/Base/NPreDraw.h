@@ -8,13 +8,13 @@ class NPreDraw
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	uint32_t bbIndex;
-	D3D12_RESOURCE_BARRIER barrierDesc{};		//リソースバリア
+	uint32_t bbIndex_;
+	D3D12_RESOURCE_BARRIER barrierDesc_{};		//リソースバリア
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_{};	//レンダーターゲットビューハンドル
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle{};	//デスクリプタハンドル
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_{};	//デスクリプタハンドル
 
-	D3D12_VIEWPORT viewport{};	//ビューポート
-	D3D12_RECT scissorRect{};	//シザー矩形
+	D3D12_VIEWPORT viewport_{};	//ビューポート
+	D3D12_RECT scissorRect_{};	//シザー矩形
 
 public:
 	//リソースバリアで書き込み可能に変更
