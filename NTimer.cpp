@@ -3,26 +3,26 @@
 
 void NTimer::Reset()
 {
-	timer = 0;
-	isTimeOut = false;
+	timer_ = 0;
+	isTimeOut_ = false;
 }
 
 void NTimer::Update()
 {
-	if (timer < maxTimer)
+	if (timer_ < maxTimer_)
 	{
-		timer++;
+		timer_++;
 	}
 	else
 	{
-		timer = maxTimer;
-		isTimeOut = true;
+		timer_ = maxTimer_;
+		isTimeOut_ = true;
 	}
 }
 
 void NTimer::SubTimer(const float& subTimer)
 {
-	timer -= subTimer;
+	timer_ -= subTimer;
 }
 
 float NTimer::GetNowTime(const TimeType& timeType)

@@ -11,12 +11,12 @@
 class NGame :public NFramework
 {
 private:
-	NWindows* win;
-	NDX12* dx12;
-	NAudio* audio;
-	PipeLineManager* pipeline;
-	NTextureManager* texManager;
-	NSceneManager* sceneMane;
+	NWindows* win_;
+	NDX12* dx12_;
+	NAudio* audio_;
+	PipeLineManager* pipeline_;
+	NTextureManager* texManager_;
+	NSceneManager* sceneMane_;
 
 public:
 	void Init() override;

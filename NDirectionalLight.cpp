@@ -51,10 +51,10 @@ void NDirectionalLight::TransferConstBuffer()
 	}
 }
 
-void NDirectionalLight::SetLightDir(const NVector3& lightdir_)
+void NDirectionalLight::SetLightDir(const NVector3& lightdir)
 {
 	//³‹K‰»‚µ‚ÄƒZƒbƒg
-	this->lightdir_ = lightdir_.Normalize();
+	lightdir_ = lightdir.Normalize();
 	isDirty_ = true;
 }
 

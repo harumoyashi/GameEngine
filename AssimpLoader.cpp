@@ -97,7 +97,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
     aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-    dst.vertices_.resize(src->mNumVertices);
+    dst.vertices.resize(src->mNumVertices);
 
     for (auto i = 0u; i < src->mNumVertices; ++i)
     {
@@ -124,22 +124,22 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         vertex.tangent = NVector3(tangent->x, tangent->y, tangent->z);
         vertex.color = NColor(color->r, color->g, color->b, color->a);
 
-        dst.vertices_[i] = vertex;
+        dst.vertices[i] = vertex;
     }
 
-    dst.indices_.resize(src->mNumFaces * 3);
+    dst.indices.resize(src->mNumFaces * 3);
 
     for (auto i = 0u; i < src->mNumFaces; ++i)
     {
         const auto& face = src->mFaces[i];
 
-        dst.indices_[i * 3 + 0] = face.mIndices[0];
-        dst.indices_[i * 3 + 1] = face.mIndices[1];
-        dst.indices_[i * 3 + 2] = face.mIndices[2];
+        dst.indices[i * 3 + 0] = face.mIndices[0];
+        dst.indices[i * 3 + 1] = face.mIndices[1];
+        dst.indices[i * 3 + 2] = face.mIndices[2];
     }
 
-    indexBuff_.Init(dst.indices_);
-    vertexBuff_.Init(dst.vertices_);
+    indexBuff_.Init(dst.indices);
+    vertexBuff_.Init(dst.vertices);
 }
 
 void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)

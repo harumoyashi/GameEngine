@@ -69,9 +69,9 @@ void NCircleShadow::SetDistanceCasterLight(const float& distanceCasterLight)
 	isDirty_ = true;
 }
 
-void NCircleShadow::SetAtten(const NVector3& atten_)
+void NCircleShadow::SetAtten(const NVector3& atten)
 {
-	this->atten_ = atten_;
+	atten_ = atten;
 	isDirty_ = true;
 }
 

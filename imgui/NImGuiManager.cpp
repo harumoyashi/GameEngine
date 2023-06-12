@@ -24,16 +24,16 @@ void NImGuiManager::Init()
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	//デスクリプタヒープ生成
 	HRESULT result;
-	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap__));
+	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&srvHeap_));
 	assert(SUCCEEDED(result));
 
 	ImGui_ImplWin32_Init(NWindows::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(NDX12::GetInstance()->GetDevice(),
 		(int)NDX12::GetInstance()->backBuffers_.size(),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
-		srvHeap__.Get(),
-		srvHeap__->GetCPUDescriptorHandleForHeapStart(),
-		srvHeap__->GetGPUDescriptorHandleForHeapStart()
+		srvHeap_.Get(),
+		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
+		srvHeap_->GetGPUDescriptorHandleForHeapStart()
 	);
 
 	ImGuiIO& io = ImGui::GetIO();
@@ -47,7 +47,7 @@ void NImGuiManager::Finalize()
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
-	srvHeap__.Reset();
+	srvHeap_.Reset();
 }
 
 void NImGuiManager::Begin()
@@ -65,7 +65,7 @@ void NImGuiManager::End()
 void NImGuiManager::Draw()
 {
 	//デスクリプタヒープの配列をセットするコマンド
-	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap__.Get()};
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap_.Get()};
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 	//描画コマンドを発行
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), NDX12::GetInstance()->GetCommandList());

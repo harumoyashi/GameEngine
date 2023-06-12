@@ -7,7 +7,7 @@ typedef std::string SoundHandle;
 class NAudioManager
 {
 private:
-	static std::map<SoundHandle, uint32_t> soundMap;	//サウンド群 
+	static std::map<SoundHandle, uint32_t> sSoundMap;	//サウンド群 
 
 public:
 	//全部の音ファイル読み込み

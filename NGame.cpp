@@ -5,33 +5,33 @@ void NGame::Init()
 	NFramework::Init();
 
 #pragma region WindowsAPI初期化
-	win = NWindows::GetInstance();
-	win->Set();
-	win->CreateWindowObj();
-	win->Display();
+	win_ = NWindows::GetInstance();
+	win_->Set();
+	win_->CreateWindowObj();
+	win_->Display();
 #pragma endregion
 #pragma region DirectX初期化
-	dx12 = NDX12::GetInstance();
-	dx12->Init(win);
+	dx12_ = NDX12::GetInstance();
+	dx12_->Init(win_);
 	//input初期化
-	NInput::KeyInit(win->GetHInstance(), win->GetHwnd());
+	NInput::KeyInit(win_->GetHInstance(), win_->GetHwnd());
 	NInput::GetInstance()->PadInit();
 	//グラフィックスパイプライン初期化
-	pipeline = PipeLineManager::GetInstance();
-	pipeline->Init();
+	pipeline_ = PipeLineManager::GetInstance();
+	pipeline_->Init();
 #pragma endregion
 #pragma region オーディオ初期化
-	audio = NAudio::GetInstance();
-	audio->Init();
+	audio_ = NAudio::GetInstance();
+	audio_->Init();
 	NAudioManager::AllLoad();
 #pragma endregion
 #pragma region テクスチャマネージャー初期化
-	texManager = NTextureManager::GetInstance();
-	texManager->Init();
+	texManager_ = NTextureManager::GetInstance();
+	texManager_->Init();
 #pragma endregion
 #pragma region ゲームシーン初期化
-	sceneMane = NSceneManager::GetInstance();
-	sceneMane->Init();
+	sceneMane_ = NSceneManager::GetInstance();
+	sceneMane_->Init();
 #pragma endregion
 }
 
@@ -39,26 +39,26 @@ void NGame::Update()
 {
 	NFramework::Update();
 #pragma region ウィンドウメッセージ処理
-	if (win->WindowMessage()) { NFramework::SetIsGameEnd(true); }
+	if (win_->WindowMessage()) { NFramework::SetIsGameEnd(true); }
 #pragma endregion
 #pragma region DirectX毎フレーム処理
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	sceneMane->Update();
+	sceneMane_->Update();
 #pragma endregion
 }
 
 void NGame::Draw()
 {
-	sceneMane->Draw();
+	sceneMane_->Draw();
 }
 
 void NGame::Finalize()
 {
 #pragma region 後始末
-	audio->Finalize();
-	win->Finalize();
-	sceneMane->Finalize();
+	audio_->Finalize();
+	win_->Finalize();
+	sceneMane_->Finalize();
 #pragma endregion
 	NFramework::Finalize();
 }

@@ -37,7 +37,7 @@ public: //メンバ関数
 	void TransferConstBuffer();
 
 	//ライトの方向をセット
-	void SetLightDir(const NVector3& lightdir_);
+	void SetLightDir(const NVector3& lightdir);
 	inline NVector3 GetLightDir() { return lightdir_; }
 	//ライトの色をセット
 	void SetLightColor(const NVector3& lightcolor);

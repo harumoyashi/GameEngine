@@ -48,10 +48,10 @@ public://メンバ関数
 	void SetCasterPos(const NVector3& casterPos);
 	inline const NVector3& GetCasterPos() { return casterPos_; }
 	//キャスターとライトの距離をセット
-	void SetDistanceCasterLight(const float& distanceCasterLight_);
+	void SetDistanceCasterLight(const float& distanceCasterLight);
 	inline const float& GetDistanceCasterLight() { return distanceCasterLight_; }
 	//減衰係数をセット
-	void SetAtten(const NVector3& atten_);
+	void SetAtten(const NVector3& atten);
 	inline const NVector3& GetAtten() { return atten_; }
 	//減衰角度をセット
 	void SetFactorAngle(const NVector2& factorAngle);
