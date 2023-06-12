@@ -4,7 +4,7 @@
 #include <cassert>
 #include "NTexture.h"
 
-NMaterial NMtllib::Load(const std::string& dir_ectoryPath, const std::string& filename)
+NMaterial NMtllib::Load(const std::string& directoryPath, const std::string& filename)
 {
     NMaterial material;
     material.texture = NTextureManager::GetInstance()->CreateErrorTexture();
@@ -12,7 +12,7 @@ NMaterial NMtllib::Load(const std::string& dir_ectoryPath, const std::string& fi
     //ファイルストリーム
     std::ifstream file;
     //マテリアル情報書いてるファイルを開く
-    file.open((dir_ectoryPath + filename));
+    file.open((directoryPath + filename));
     //ファイル開けなかったらエラー
     if (file.fail()) {
         assert(0);
@@ -59,7 +59,7 @@ NMaterial NMtllib::Load(const std::string& dir_ectoryPath, const std::string& fi
         if (key == "map_Kd") {
             //テクスチャのファイル名読み込み
             line_stream >> material.textureFilename;
-            std::string texFileName = (dir_ectoryPath + material.textureFilename);
+            std::string texFileName = (directoryPath + material.textureFilename);
             material.texture = NTextureManager::GetInstance()->LoadTexture(texFileName, material.textureFilename);
         }
     }

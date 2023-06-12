@@ -19,8 +19,8 @@ void NModel::LoadObjFile(const string modelname)
 	std::ifstream file;
 	//.objファイルを開く
 	const string filename = modelname + ".obj";	//"triangle_mat.obj"
-	const string dir_ectoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/
-	file.open(dir_ectoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
+	const string directoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/
+	file.open(directoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
 	//ファイルオープン失敗をチェック
 	if (file.fail())
 	{
@@ -48,7 +48,7 @@ void NModel::LoadObjFile(const string modelname)
 			string filename;
 			line_stream >> filename;
 			//マテリアル読み込み
-			material_ = NMtllib::Load(dir_ectoryPath,filename);
+			material_ = NMtllib::Load(directoryPath,filename);
 		}
 
 		//先頭文字列がvなら頂点座標

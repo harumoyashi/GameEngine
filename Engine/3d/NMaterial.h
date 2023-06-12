@@ -9,13 +9,8 @@
 #include <wrl.h>
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-class NMaterial
+struct NMaterial
 {
-private:
-	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
-	D3D12_RESOURCE_DESC resDesc_{};		//リソース
-
-public:
 	std::string name;	//マテリアル
 	NVector3 ambient;	//アンビエント影響度
 	NVector3 diffuse;	//ディフューズ影響度
@@ -24,7 +19,6 @@ public:
 	std::string textureFilename;	//テクスチャファイル名
 	NTexture texture;
 
-public:
 	//コンストラクタ
 	NMaterial();
 	~NMaterial();

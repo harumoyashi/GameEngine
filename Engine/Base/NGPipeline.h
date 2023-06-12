@@ -12,8 +12,8 @@ template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 struct PipelineSet
 {
-	ComPtr<ID3D12PipelineState> pipelineState;
-	NRootSignature rootSig;
+	ComPtr<ID3D12PipelineState> pipelineState_;
+	NRootSignature rootSig_;
 };
 
 enum class PipelineType
@@ -27,29 +27,29 @@ class NGPipeline
 {
 private:
 	//シェーダーリソースビュー//
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//設定構造体
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
 
 	//シェーダーまわり(頂点も含む)//
-	ComPtr<ID3DBlob> vsBlob;	// 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> vsBlob_;	// 頂点シェーダオブジェクト
 	ComPtr<ID3DBlob> psBlob;	// ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> errorBlob; // エラーオブジェクト
+	ComPtr<ID3DBlob> errorBlob_; // エラーオブジェクト
 
 	//頂点レイアウト//
-	D3D12_INPUT_ELEMENT_DESC vertLayout3d[3]{};		//必要な分だけ用意する
-	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite[2]{};	//必要な分だけ用意する
+	D3D12_INPUT_ELEMENT_DESC vertLayout3d_[3]{};		//必要な分だけ用意する
+	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2]{};	//必要な分だけ用意する
 
 	//パイプラインステート//
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
-	D3D12_RENDER_TARGET_BLEND_DESC blenddesc = {};
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
+	D3D12_RENDER_TARGET_BLEND_DESC blendDesc_ = {};
 
 	//テクスチャサンプラー//
-	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
+	D3D12_STATIC_SAMPLER_DESC samplerDesc_{};
 
-	NRootParam rootParams;	//ルートパラメータ
+	NRootParam rootParams_;	//ルートパラメータ
 
 public:
 	//参照するものたち
-	PipelineSet pipelineSet;			//パイプラインステートとルートシグネチャまとめたやつ
+	PipelineSet pipelineSet_;			//パイプラインステートとルートシグネチャまとめたやつ
 
 public:
 #pragma region シェーダーまわり
@@ -109,11 +109,11 @@ private:
 class PipeLineManager
 {
 private:
-	NGPipeline pipeline3d;
-	NGPipeline pipelineSprite;
+	NGPipeline pipeline3d_;
+	NGPipeline pipelineSprite_;
 
-	PipelineSet pipelineSet3d;
-	PipelineSet pipelineSetSprite;
+	PipelineSet pipelineSet3d_;
+	PipelineSet pipelineSetSprite_;
 
 public:
 	PipeLineManager();
@@ -122,6 +122,6 @@ public:
 	static PipeLineManager* GetInstance();
 	void Init();
 
-	PipelineSet GetPipelineSet3d() const { return pipelineSet3d; }
-	PipelineSet GetPipelineSetSprite() const { return pipelineSetSprite; }
+	PipelineSet GetPipelineSet3d() const { return pipelineSet3d_; }
+	PipelineSet GetPipelineSetSprite() const { return pipelineSetSprite_; }
 };

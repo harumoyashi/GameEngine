@@ -34,7 +34,7 @@ public:
 	static const size_t sMaxSRVCount = 2056;	//SRVの最大個数
 	ScratchImage mipChain_{};				//ミップマップ
 
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//設定構造体
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
 
 	std::map<TextureHandle, NTexture> textureMap_;	//テクスチャ群
 	ComPtr<ID3D12Resource> tb_;	//転送用のテクスチャバッファ

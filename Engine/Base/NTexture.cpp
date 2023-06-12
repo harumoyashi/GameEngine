@@ -218,10 +218,10 @@ void NTextureManager::TexBuffMaping(ID3D12Resource* texBuff)
 
 void NTextureManager::SetSRV()
 {
-	srvDesc.Format = texResDesc_.Format;		//RGBA float
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
-	srvDesc.Texture2D.MipLevels = texResDesc_.MipLevels;
+	srvDesc_.Format = texResDesc_.Format;		//RGBA float
+	srvDesc_.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
+	srvDesc_.Texture2D.MipLevels = texResDesc_.MipLevels;
 }
 
 NTexture NTextureManager::CreateSRV(NTexture tex)
@@ -235,7 +235,7 @@ NTexture NTextureManager::CreateSRV(NTexture tex)
 	tex.gpuHandle_.ptr += incrementSize * (uint32_t)textureMap_.size();
 
 	//ハンドルの指す位置にシェーダーリソースビュー作成
-	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texBuff_.Get(), &srvDesc, tex.cpuHandle_);
+	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texBuff_.Get(), &srvDesc_, tex.cpuHandle_);
 
 	return tex;
 }

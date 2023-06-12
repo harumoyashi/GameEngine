@@ -5,8 +5,8 @@
 class NRootParam
 {
 public:
-	std::vector<D3D12_ROOT_PARAMETER> entity = {};
-	D3D12_DESCRIPTOR_RANGE descriptorRange{};
+	std::vector<D3D12_ROOT_PARAMETER> entity_ = {};
+	D3D12_DESCRIPTOR_RANGE descriptorRange_{};
 
 public:
 	~NRootParam();

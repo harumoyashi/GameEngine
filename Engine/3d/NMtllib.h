@@ -5,5 +5,5 @@
 class NMtllib
 {
 public:
-	static NMaterial Load(const std::string& dir_ectoryPath, const std::string& filename);
+	static NMaterial Load(const std::string& directoryPath, const std::string& filename);
 };
