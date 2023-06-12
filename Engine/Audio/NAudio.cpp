@@ -111,8 +111,8 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 	}
 
 	// Dataチャンクのデータ部（波形データ）の読み込み
-	char* pBuffer = new char[data.size];
-	file.read(pBuffer, data.size);
+	std::vector<char> pBuffer(data.size);
+	file.read(pBuffer.data(), data.size);
 
 	// Waveファイルを閉じる
 	file.close();
@@ -121,7 +121,7 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 	SoundData& soundData = soundDatas_.at(handle);
 
 	soundData.wfex = format_.fmt;
-	soundData.pBuffer = reinterpret_cast<BYTE*>(pBuffer);
+	soundData.pBuffer = pBuffer;
 	soundData.bufferSize = data.size;
 	soundData.name = fileName;
 
@@ -132,11 +132,6 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 }
 
 void NAudio::Unload(SoundData* soundData) {
-	// バッファのメモリを解放
-	
-	delete[] soundData->pBuffer;
-
-	soundData->pBuffer = 0;
 	soundData->bufferSize = 0;
 	soundData->wfex = {};
 }
@@ -167,7 +162,7 @@ uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, float 
 
 	// 再生する波形データの設定
 	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = soundData.pBuffer;
+	buf.pAudioData = reinterpret_cast<BYTE*>(soundData.pBuffer.data());
 	buf.pContext = voice;
 	buf.AudioBytes = soundData.bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
