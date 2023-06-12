@@ -19,8 +19,8 @@ NAudio* NAudio::GetInstance() {
 	return &instance;
 }
 
-void NAudio::Init(const std::string& directoryPath) {
-	directoryPath_ = directoryPath;
+void NAudio::Init(const std::string& dir_ectoryPath) {
+	dir_ectoryPath_ = dir_ectoryPath;
 
 	HRESULT result;
 	IXAudio2MasteringVoice* masterVoice_;
@@ -64,7 +64,7 @@ uint32_t NAudio::LoadWave(const std::string& fileName) {
 	if (2 < fileName.size()) {
 		currentRelative = (fileName[0] == '.') && (fileName[1] == '/');
 	}
-	std::string fullpath = currentRelative ? fileName : directoryPath_ + fileName;
+	std::string fullpath = currentRelative ? fileName : dir_ectoryPath_ + fileName;
 
 	// ファイル入力ストリームのインスタンス
 	std::ifstream file;

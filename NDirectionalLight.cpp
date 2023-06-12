@@ -25,9 +25,9 @@ void NDirectionalLight::Initialize()
 void NDirectionalLight::Update()
 {
 	//値の更新があったときだけ定数バッファに転送する
-	if (isDirty) {
+	if (isDirty_) {
 		TransferConstBuffer();
-		isDirty = false;
+		isDirty_ = false;
 	}
 }
 
@@ -35,31 +35,31 @@ void NDirectionalLight::Draw(uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbLight->constBuff->GetGPUVirtualAddress());
+		cbLight->constBuff_->GetGPUVirtualAddress());
 }
 
 void NDirectionalLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbLight->constMap = nullptr;
-	result = cbLight->constBuff->Map(0, nullptr, (void**)&cbLight->constMap);
+	cbLight->constMap_ = nullptr;
+	result = cbLight->constBuff_->Map(0, nullptr, (void**)&cbLight->constMap_);
 	if (SUCCEEDED(result)) {
-		cbLight->constMap->dir = -lightdir;	//ライトの向きは逆向きで
-		cbLight->constMap->color = lightcolor;
-		cbLight->constBuff->Unmap(0, nullptr);
+		cbLight->constMap_->dir = -lightdir_;	//ライトの向きは逆向きで
+		cbLight->constMap_->color = lightcolor_;
+		cbLight->constBuff_->Unmap(0, nullptr);
 	}
 }
 
-void NDirectionalLight::SetLightDir(const NVector3& lightdir)
+void NDirectionalLight::SetLightDir(const NVector3& lightdir_)
 {
 	//正規化してセット
-	this->lightdir = lightdir.Normalize();
-	isDirty = true;
+	this->lightdir_ = lightdir_.Normalize();
+	isDirty_ = true;
 }
 
 void NDirectionalLight::SetLightColor(const NVector3& lightcolor)
 {
-	this->lightcolor = lightcolor;
-	isDirty = true;
+	lightcolor_ = lightcolor;
+	isDirty_ = true;
 }

@@ -12,8 +12,8 @@ template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 class NMaterial
 {
 private:
-	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
-	D3D12_RESOURCE_DESC resDesc{};		//リソース
+	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
+	D3D12_RESOURCE_DESC resDesc_{};		//リソース
 
 public:
 	std::string name;	//マテリアル

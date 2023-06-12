@@ -38,13 +38,13 @@ void NIndexBuff::Init(uint32_t* indices, uint32_t size)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	//インデックスバッファをマッピング
 	uint32_t* indexMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&indexMap);
+	result = buff_->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
 	// 全インデックスに対して
 	//for (uint32_t i = 0; i < size; i++)
@@ -53,14 +53,14 @@ void NIndexBuff::Init(uint32_t* indices, uint32_t size)
 	//}
 	memcpy(indexMap, indices, size);
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// GPU仮想アドレス
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	//インデックス1個分のサイズ
-	view.Format = DXGI_FORMAT_R32_UINT;
+	view_.Format = DXGI_FORMAT_R32_UINT;
 	// インデックスバッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 }
 
 void NIndexBuff::Init(std::vector<uint32_t> indices)
@@ -90,13 +90,13 @@ void NIndexBuff::Init(std::vector<uint32_t> indices)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	//インデックスバッファをマッピング
 	uint32_t* indexMap = nullptr;
-	result = buff->Map(0, nullptr, (void**)&indexMap);
+	result = buff_->Map(0, nullptr, (void**)&indexMap);
 	assert(SUCCEEDED(result));
 	// 全インデックスに対して
 	for (uint32_t i = 0; i < indices.size(); i++)
@@ -104,12 +104,12 @@ void NIndexBuff::Init(std::vector<uint32_t> indices)
 		indexMap[i] = indices[i];	//インデックスをコピー
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// GPU仮想アドレス
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	//インデックス1個分のサイズ
-	view.Format = DXGI_FORMAT_R32_UINT;
+	view_.Format = DXGI_FORMAT_R32_UINT;
 	// インデックスバッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 }

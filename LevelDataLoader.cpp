@@ -106,9 +106,9 @@ void LevelDataLoader::SetObject(LevelData* levelData, std::vector<std::unique_pt
 		obj.back()->Init();
 		//obj.back()->SetModel(model[0]);
 
-		obj.back()->position = objectData.trans;
-		obj.back()->rotation = objectData.rot;
-		obj.back()->scale = objectData.scale;
+		obj.back()->position_ = objectData.trans;
+		obj.back()->rotation_ = objectData.rot;
+		obj.back()->scale_ = objectData.scale;
 		//obj.back()->SetMatWorld(objectData.matWorld_);
 	/*}*/
 	}

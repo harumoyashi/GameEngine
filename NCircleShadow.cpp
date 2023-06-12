@@ -11,8 +11,8 @@ NCircleShadow::~NCircleShadow()
 
 void NCircleShadow::Initialize()
 {
-	cbCircleShadow = std::make_unique<NConstBuff<ConstBuffDataCircleShadow>>();
-	cbCircleShadow->Init();
+	cbCircleShadow_ = std::make_unique<NConstBuff<ConstBuffDataCircleShadow>>();
+	cbCircleShadow_->Init();
 
 	SetActive(true);
 	TransferConstBuffer();
@@ -21,9 +21,9 @@ void NCircleShadow::Initialize()
 void NCircleShadow::Update()
 {
 	//値の更新があったときだけ定数バッファに転送する
-	if (isDirty) {
+	if (isDirty_) {
 		TransferConstBuffer();
-		isDirty = false;
+		isDirty_ = false;
 	}
 }
 
@@ -31,53 +31,53 @@ void NCircleShadow::Draw(uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbCircleShadow->constBuff->GetGPUVirtualAddress());
+		cbCircleShadow_->constBuff_->GetGPUVirtualAddress());
 }
 
 void NCircleShadow::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbCircleShadow->constMap = nullptr;
-	result = cbCircleShadow->constBuff->Map(0, nullptr, (void**)&cbCircleShadow->constMap);
+	cbCircleShadow_->constMap_ = nullptr;
+	result = cbCircleShadow_->constBuff_->Map(0, nullptr, (void**)&cbCircleShadow_->constMap_);
 	if (SUCCEEDED(result)) {
-		cbCircleShadow->constMap->dir = -dir;	//ライトの向きは逆向きで
-		cbCircleShadow->constMap->pos = casterPos;
-		cbCircleShadow->constMap->disCasterLight = distanceCasterLight;
-		cbCircleShadow->constMap->atten = atten;
-		cbCircleShadow->constMap->factorAngleCos = factorAngleCos;
-		cbCircleShadow->constMap->active = isActive;
-		cbCircleShadow->constBuff->Unmap(0, nullptr);
+		cbCircleShadow_->constMap_->dir = -dir_;	//ライトの向きは逆向きで
+		cbCircleShadow_->constMap_->pos = casterPos_;
+		cbCircleShadow_->constMap_->disCasterLight = distanceCasterLight_;
+		cbCircleShadow_->constMap_->atten = atten_;
+		cbCircleShadow_->constMap_->factorAngleCos = factorAngleCos_;
+		cbCircleShadow_->constMap_->active = isActive_;
+		cbCircleShadow_->constBuff_->Unmap(0, nullptr);
 	}
 }
 
 void NCircleShadow::SetDir(const NVector3& dir)
 {
-	this->dir = dir.Normalize();
-	isDirty = true;
+	dir_ = dir.Normalize();
+	isDirty_ = true;
 }
 
 void NCircleShadow::SetCasterPos(const NVector3& casterPos)
 {
-	this->casterPos = casterPos;
-	isDirty = true;
+	casterPos_ = casterPos;
+	isDirty_ = true;
 }
 
 void NCircleShadow::SetDistanceCasterLight(const float& distanceCasterLight)
 {
-	this->distanceCasterLight = distanceCasterLight;
-	isDirty = true;
+	distanceCasterLight_ = distanceCasterLight;
+	isDirty_ = true;
 }
 
-void NCircleShadow::SetAtten(const NVector3& atten)
+void NCircleShadow::SetAtten(const NVector3& atten_)
 {
-	this->atten = atten;
-	isDirty = true;
+	this->atten_ = atten_;
+	isDirty_ = true;
 }
 
 void NCircleShadow::SetFactorAngle(const NVector2& factorAngle)
 {
-	this->factorAngleCos.x = cosf(MathUtil::Degree2Radian(factorAngle.x));
-	this->factorAngleCos.y = cosf(MathUtil::Degree2Radian(factorAngle.y));
-	isDirty = true;
+	factorAngleCos_.x = cosf(MathUtil::Degree2Radian(factorAngle.x));
+	factorAngleCos_.y = cosf(MathUtil::Degree2Radian(factorAngle.y));
+	isDirty_ = true;
 }

@@ -71,10 +71,10 @@ void NTitleScene::Init()
 	obj[2]->SetModel(model[1]);
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,2,0 };
-	obj[1]->position = { 2,0,0 };
-	obj[2]->position = { 0,0,0 };
-	obj[2]->scale = { 10,0.1f,10 };
+	obj[0]->position_ = { 0,2,0 };
+	obj[1]->position_ = { 2,0,0 };
+	obj[2]->position_ = { 0,0,0 };
+	obj[2]->scale_ = { 10,0.1f,10 };
 
 	//設定したのを適用
 	for (uint32_t i = 0; i < maxObj; i++)
@@ -82,10 +82,10 @@ void NTitleScene::Init()
 		obj[i]->Update();
 	}
 
-	sphere.pos = obj[0]->position;
-	sphere.radius = obj[0]->scale.x;
+	sphere.pos = obj[0]->position_;
+	sphere.radius = obj[0]->scale_.x;
 	plane.normal = { 0,1,0 };
-	plane.distance = obj[2]->position.Length();
+	plane.distance = obj[2]->position_.Length();
 #pragma endregion
 
 	//FBX読み込み
@@ -135,16 +135,16 @@ void NTitleScene::Init()
 	//assimpの四角形//
 	//NVertexAssimp vertices[4] = {};
 	//vertices[0].pos = NVector3(-1.0f, 1.0f, 0.0f);
-	//vertices[0].color = NColor(1.0f, 0.0f, 0.0f, 1.0f);
+	//vertices[0].color_ = NColor(1.0f, 0.0f, 0.0f, 1.0f);
 
 	//vertices[1].pos = NVector3(1.0f, 1.0f, 0.0f);
-	//vertices[1].color = NColor(0.0f, 1.0f, 0.0f, 1.0f);
+	//vertices[1].color_ = NColor(0.0f, 1.0f, 0.0f, 1.0f);
 
 	//vertices[2].pos = NVector3(1.0f, -1.0f, 0.0f);
-	//vertices[2].color = NColor(0.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[2].color_ = NColor(0.0f, 0.0f, 1.0f, 1.0f);
 
 	//vertices[3].pos = NVector3(-1.0f, -1.0f, 0.0f);
-	//vertices[3].color = NColor(1.0f, 0.0f, 1.0f, 1.0f);
+	//vertices[3].color_ = NColor(1.0f, 0.0f, 1.0f, 1.0f);
 
 	//uint32_t indices[] = { 0, 1, 2, 0, 2, 3 };
 
@@ -181,13 +181,13 @@ void NTitleScene::Init()
 	//cbTrans_->Init();
 
 	//// 定数バッファへデータ転送
-	//cbTrans_->constMap = nullptr;
-	//cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
+	//cbTrans_->constMap_ = nullptr;
+	//cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
 
 	//NMatrix4 mat;
-	//cbTrans_->constMap->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
-	//cbTrans_->constMap->world = mat.Identity();
-	//cbTrans_->constMap->cameraPos = NCamera::sNowCamera->GetPos();
+	//cbTrans_->constMap_->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
+	//cbTrans_->constMap_->world = mat.Identity();
+	//cbTrans_->constMap_->cameraPos = NCamera::sNowCamera->GetPos();
 
 	//cbTrans_->Unmap();
 
@@ -249,18 +249,18 @@ void NTitleScene::Update()
 
 	if (isCol)
 	{
-		obj[0]->color.SetColor255(255, 0, 0, 255);
+		obj[0]->color_.SetColor255(255, 0, 0, 255);
 	}
 	else
 	{
-		obj[0]->color.SetColor255(255, 255, 255, 255);
+		obj[0]->color_.SetColor255(255, 255, 255, 255);
 	}
-	obj[2]->color.SetColor255(255, 255, 255, 255);
+	obj[2]->color_.SetColor255(255, 255, 255, 255);
 
 	obj[0]->MoveKey();
 
-	sphere.pos = obj[0]->position;
-	plane.distance = obj[2]->position.Dot(plane.normal);
+	sphere.pos = obj[0]->position_;
+	plane.distance = obj[2]->position_.Dot(plane.normal);
 
 	for (auto& o : obj)
 	{
@@ -307,7 +307,7 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	//	//マテリアルとかカラーも送んなきゃいけないけど一旦後回し
 
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -326,7 +326,7 @@ void NTitleScene::Draw()
 	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet3d().rootSig.entity.Get());
 	//	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet3d().pipelineState.Get());
 	//	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
-	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff->GetGPUVirtualAddress());
+	//	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	//	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 	//	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
@@ -375,9 +375,9 @@ void NTitleScene::SetObject(LevelData* levelData)
 		levelDataobj.back()->Init();
 		levelDataobj.back()->SetModel(model[0]);
 
-		levelDataobj.back()->position = objectData.trans;
-		levelDataobj.back()->rotation = objectData.rot;
-		levelDataobj.back()->scale = objectData.scale;
+		levelDataobj.back()->position_ = objectData.trans;
+		levelDataobj.back()->rotation_ = objectData.rot;
+		levelDataobj.back()->scale_ = objectData.scale;
 		//obj.back()->SetMatWorld(objectData.matWorld_);
 	/*}*/
 	}

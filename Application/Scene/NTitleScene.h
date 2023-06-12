@@ -66,7 +66,7 @@ private:
 	NTimer timer;
 
 	bool flag = true;
-	float color = 0.0f;
+	float color_ = 0.0f;
 
 	std::vector<Mesh> meshes; // メッシュの配列
 	std::vector<NVertexBuff*> vertexBuff_ers; // メッシュの数分の頂点バッファ

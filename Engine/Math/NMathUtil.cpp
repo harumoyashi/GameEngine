@@ -9,14 +9,14 @@ NMatrix4 MathUtil::MatView(NVector3 eye, NVector3 target, NVector3 up)
 {
 	NMatrix4 mat;
 
-	NVector3 direction = target - eye;
-	direction = direction.Normalize();
+	NVector3 dir_ection = target - eye;
+	dir_ection = dir_ection.Normalize();
 
 	//外積使って向いてる方向に対しての右ベクトル求める
-	NVector3 rightVec = up.Cross(direction);
+	NVector3 rightVec = up.Cross(dir_ection);
 	rightVec = rightVec.Normalize();
 	//右ベクトルを使って上ベクトルも求める
-	NVector3 upVec = direction.Cross(rightVec);
+	NVector3 upVec = dir_ection.Cross(rightVec);
 	upVec = upVec.Normalize();
 
 	mat.m[0][0] = rightVec.x;
@@ -25,9 +25,9 @@ NMatrix4 MathUtil::MatView(NVector3 eye, NVector3 target, NVector3 up)
 	mat.m[1][0] = upVec.x;
 	mat.m[1][1] = upVec.y;
 	mat.m[1][2] = upVec.z;
-	mat.m[2][0] = direction.x;
-	mat.m[2][1] = direction.y;
-	mat.m[2][2] = direction.z;
+	mat.m[2][0] = dir_ection.x;
+	mat.m[2][1] = dir_ection.y;
+	mat.m[2][2] = dir_ection.z;
 	mat.m[3][0] = eye.x;
 	mat.m[3][1] = eye.y;
 	mat.m[3][2] = eye.z;

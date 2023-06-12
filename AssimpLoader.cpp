@@ -148,9 +148,9 @@ void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMater
     if (src->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
     {
         // テクスチャパスは相対パスで入っているので、ファイルの場所とくっつける
-        auto dir = GetDirectoryPath(filename);
+        auto dir_ = GetDirectoryPath(filename);
         auto file = std::string(path.C_Str());
-        dst.textureName = dir + ToWideString(file);
+        dst.textureName = dir_ + ToWideString(file);
     }
     else
     {

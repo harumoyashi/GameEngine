@@ -41,6 +41,6 @@ public:
 	//Vertex(assimp用)のvectorで頂点バッファを作る
 	void Init(std::vector<NVertexAssimp> vertices);
 
-	ComPtr<ID3D12Resource> buff = nullptr;
-	D3D12_VERTEX_BUFFER_VIEW view{};
+	ComPtr<ID3D12Resource> buff_ = nullptr;
+	D3D12_VERTEX_BUFFER_VIEW view_{};
 };

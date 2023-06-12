@@ -21,9 +21,9 @@ void NPointLight::Initialize()
 void NPointLight::Update()
 {
 	//値の更新があったときだけ定数バッファに転送する
-	if (isDirty) {
+	if (isDirty_) {
 		TransferConstBuffer();
-		isDirty = false;
+		isDirty_ = false;
 	}
 }
 
@@ -31,38 +31,38 @@ void NPointLight::Draw(uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbPointLight->constBuff->GetGPUVirtualAddress());
+		cbPointLight->constBuff_->GetGPUVirtualAddress());
 }
 
 void NPointLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbPointLight->constMap = nullptr;
-	result = cbPointLight->constBuff->Map(0, nullptr, (void**)&cbPointLight->constMap);
+	cbPointLight->constMap_ = nullptr;
+	result = cbPointLight->constBuff_->Map(0, nullptr, (void**)&cbPointLight->constMap_);
 	if (SUCCEEDED(result)) {
-		cbPointLight->constMap->pos = lightpos;
-		cbPointLight->constMap->color = lightcolor;
-		cbPointLight->constMap->atten = lightatten;
-		cbPointLight->constMap->active = isActive;
-		cbPointLight->constBuff->Unmap(0, nullptr);
+		cbPointLight->constMap_->pos = lightpos_;
+		cbPointLight->constMap_->color = lightcolor_;
+		cbPointLight->constMap_->atten = lightatten_;
+		cbPointLight->constMap_->active = isActive_;
+		cbPointLight->constBuff_->Unmap(0, nullptr);
 	}
 }
 
 void NPointLight::SetLightPos(const NVector3& lightpos)
 {
-	this->lightpos = lightpos;
-	isDirty = true;
+	lightpos_ = lightpos;
+	isDirty_ = true;
 }
 
 void NPointLight::SetLightColor(const NVector3& lightcolor)
 {
-	this->lightcolor = lightcolor;
-	isDirty = true;
+	lightcolor_ = lightcolor;
+	isDirty_ = true;
 }
 
 void NPointLight::SetLightAtten(const NVector3& lightatten)
 {
-	this->lightatten = lightatten;
-	isDirty = true;
+	lightatten_ = lightatten;
+	isDirty_ = true;
 }

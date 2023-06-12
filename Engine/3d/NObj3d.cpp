@@ -4,10 +4,10 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 
-NDirectionalLight* NObj3d::directionalLight = nullptr;
-NPointLight* NObj3d::pointLight = nullptr;
-NSpotLight* NObj3d::spotLight = nullptr;
-NCircleShadow* NObj3d::circleShadow = nullptr;
+NDirectionalLight* NObj3d::sDirectionalLight = nullptr;
+NPointLight* NObj3d::sPointLight = nullptr;
+NSpotLight* NObj3d::sSpotLight = nullptr;
+NCircleShadow* NObj3d::sCircleShadow = nullptr;
 
 NObj3d::NObj3d()
 {
@@ -47,7 +47,7 @@ NObj3d* NObj3d::Create()
 	}
 
 	float scale_val = 20;
-	obj3d->scale = { scale_val ,scale_val ,scale_val };
+	obj3d->scale_ = { scale_val ,scale_val ,scale_val };
 
 	return obj3d;
 }
@@ -64,37 +64,37 @@ void NObj3d::MoveKey()
 	//いずれかのキーを押したとき
 	if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
 	{
-		if (NInput::IsKey(DIK_W)) { position.y += 0.5f; }
-		else if (NInput::IsKey(DIK_S)) { position.y -= 0.5f; }
-		if (NInput::IsKey(DIK_D)) { position.x += 0.5f; }
-		else if (NInput::IsKey(DIK_A)) { position.x -= 0.5f; }
+		if (NInput::IsKey(DIK_W)) { position_.y += 0.5f; }
+		else if (NInput::IsKey(DIK_S)) { position_.y -= 0.5f; }
+		if (NInput::IsKey(DIK_D)) { position_.x += 0.5f; }
+		else if (NInput::IsKey(DIK_A)) { position_.x -= 0.5f; }
 	}
 
-	if (NInput::IsKey(DIK_Q)) { position.z += 0.5f; }
-	else if (NInput::IsKey(DIK_E)) { position.z -= 0.5f; }
+	if (NInput::IsKey(DIK_Q)) { position_.z += 0.5f; }
+	else if (NInput::IsKey(DIK_E)) { position_.z -= 0.5f; }
 
-	if (NInput::IsKey(DIK_U)) { rotation.y += 0.5f; }
-	else if (NInput::IsKey(DIK_I)) { rotation.y -= 0.5f; }
-	if (NInput::IsKey(DIK_J)) { rotation.x += 0.5f; }
-	else if (NInput::IsKey(DIK_K)) { rotation.x -= 0.5f; }
+	if (NInput::IsKey(DIK_U)) { rotation_.y += 0.5f; }
+	else if (NInput::IsKey(DIK_I)) { rotation_.y -= 0.5f; }
+	if (NInput::IsKey(DIK_J)) { rotation_.x += 0.5f; }
+	else if (NInput::IsKey(DIK_K)) { rotation_.x -= 0.5f; }
 }
 
 void NObj3d::UpdateMatrix()
 {
 	//ワールド行列
 	NMatrix4 matScale;	//スケーリング行列
-	matScale = matScale.Scale(scale);
+	matScale = matScale.Scale(scale_);
 
 	NMatrix4 matRot;		//回転行列
-	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rotation.z));
-	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rotation.x));
-	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rotation.y));
+	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rotation_.z));
+	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rotation_.x));
+	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rotation_.y));
 	matRot *= matZ;	//Z軸周りに回転してから
 	matRot *= matX;	//X軸周りに回転して
 	matRot *= matY;	//Y軸周りに回転
 
 	NMatrix4 matTrans;	//平行移動行列
-	matTrans = matTrans.Translation(position);
+	matTrans = matTrans.Translation(position_);
 
 	matWorld_ = matWorld_.Identity();	//単位行列代入
 	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
@@ -102,10 +102,10 @@ void NObj3d::UpdateMatrix()
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	//親オブジェクトがあれば
-	if (parent != nullptr)
+	if (parent_ != nullptr)
 	{
 		//親オブジェクトのワールド行列をかける
-		matWorld_ *= parent->matWorld_;
+		matWorld_ *= parent_->matWorld_;
 	}
 
 	// 定数バッファへデータ転送
@@ -116,12 +116,12 @@ void NObj3d::TransferMatrix()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbTrans_->constMap = nullptr;
-	result = cbTrans_->constBuff->Map(0, nullptr, (void**)&cbTrans_->constMap);
+	cbTrans_->constMap_ = nullptr;
+	result = cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
 
-	cbTrans_->constMap->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
-	cbTrans_->constMap->world = matWorld_;
-	cbTrans_->constMap->cameraPos = NCamera::sNowCamera->GetPos();
+	cbTrans_->constMap_->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
+	cbTrans_->constMap_->world = matWorld_;
+	cbTrans_->constMap_->cameraPos = NCamera::sNowCamera->GetPos();
 
 	cbTrans_->Unmap();
 }
@@ -129,14 +129,14 @@ void NObj3d::TransferMatrix()
 void NObj3d::TransferColor()
 {
 	//値を書き込むと自動的に転送される
-	cbColor_->constMap->color = color;
+	cbColor_->constMap_->color = color_;
 }
 
 void NObj3d::TransferMaterial()
 {
-	cbMaterial_->constMap->ambient = model.material_.ambient;
-	cbMaterial_->constMap->diffuse = model.material_.diffuse;
-	cbMaterial_->constMap->specular = model.material_.specular;
+	cbMaterial_->constMap_->ambient = model_.material_.ambient;
+	cbMaterial_->constMap_->diffuse = model_.material_.diffuse;
+	cbMaterial_->constMap_->specular = model_.material_.specular;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -155,15 +155,15 @@ void NObj3d::CommonBeginDraw()
 void NObj3d::Draw()
 {
 	SetCBV();
-	SetVB(model.vertexBuff_.view);
-	SetIB(model.indexBuff_.view);
-	SetSRVHeap(model.material_.texture.gpuHandle_);
+	SetVB(model_.vertexBuff_.view_);
+	SetIB(model_.indexBuff_.view_);
+	SetSRVHeap(model_.material_.texture.gpuHandle_);
 	//ライトの描画
-	directionalLight->Draw(4);
-	pointLight->Draw(5);
-	spotLight->Draw(6);
-	circleShadow->Draw(7);
-	DrawCommand((uint32_t)model.indices_.size());
+	sDirectionalLight->Draw(4);
+	sPointLight->Draw(5);
+	sSpotLight->Draw(6);
+	sCircleShadow->Draw(7);
+	DrawCommand((uint32_t)model_.indices_.size());
 }
 
 void NObj3d::SetSRVHeap()
@@ -172,7 +172,7 @@ void NObj3d::SetSRVHeap()
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NDX12::GetInstance()->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
 	//ハンドルを指定のとこまで進める
 	uint32_t incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	srvGpuHandle.ptr += incrementSize * (uint32_t)texNum;
+	srvGpuHandle.ptr += incrementSize * (uint32_t)texNum_;
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 }
@@ -196,11 +196,11 @@ void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
 void NObj3d::SetCBV()
 {
 	//ルートパラメータ0番にマテリアルの定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial_->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ2番に色情報の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 }
 
 void NObj3d::DrawCommand(uint32_t indexSize)

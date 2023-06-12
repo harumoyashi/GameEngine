@@ -92,7 +92,7 @@ public:
 
 	//初期化
 	//ディレクトリパスを指定しないと"Resources/sound/"になる
-	void Init(const std::string& directoryPath = "Resources/sound/");
+	void Init(const std::string& dir_ectoryPath = "Resources/sound/");
 
 	//終了処理
 	void Finalize();
@@ -142,7 +142,7 @@ private:
 	// std::unordered_map<uint32_t, IXAudio2SourceVoice*> voices_;
 	std::set<Voice*> voices_;
 	// サウンド格納ディレクトリ
-	std::string directoryPath_;
+	std::string dir_ectoryPath_;
 	// 次に使うサウンドデータの番号
 	uint32_t indexSoundData_ = 0u;
 	// 次に使う再生中データの番号

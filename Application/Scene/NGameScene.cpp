@@ -45,11 +45,11 @@ void NGameScene::Init()
 	obj[3]->SetModel(model[2]);
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,0,0 };
-	obj[1]->position = { 0,-2,0 };
-	obj[1]->scale = { 10,0.1f,10 };
-	obj[2]->position = { 2,0,0 };
-	obj[3]->position = { -2,3,0 };
+	obj[0]->position_ = { 0,0,0 };
+	obj[1]->position_ = { 0,-2,0 };
+	obj[1]->scale_ = { 10,0.1f,10 };
+	obj[2]->position_ = { 2,0,0 };
+	obj[3]->position_ = { -2,3,0 };
 	//設定したのを適用
 	for (uint32_t i = 0; i < maxObj; i++)
 	{

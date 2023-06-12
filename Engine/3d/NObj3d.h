@@ -19,8 +19,8 @@ class NObj3d
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
-	D3D12_RESOURCE_DESC resDesc{};		//リソース
+	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
+	D3D12_RESOURCE_DESC resDesc_{};		//リソース
 
 	//定数バッファ//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
@@ -30,22 +30,22 @@ private:
 	NMatrix4 matWorld_;	//3D変換行列
 
 	// ライト
-	static NDirectionalLight* directionalLight;
-	static NPointLight* pointLight;
-	static NSpotLight* spotLight;
-	static NCircleShadow* circleShadow;
+	static NDirectionalLight* sDirectionalLight;
+	static NPointLight* sPointLight;
+	static NSpotLight* sSpotLight;
+	static NCircleShadow* sCircleShadow;
 
 public:
-	NVector3 scale = { 1.0f,1.0f,1.0f };	//スケーリング倍率
-	NVector3 rotation = { 0.0f,0.0f,0.0f };	//回転角
-	NVector3 position = { 0.0f,0.0f,0.0f };	//座標
+	NVector3 scale_ = { 1.0f,1.0f,1.0f };	//スケーリング倍率
+	NVector3 rotation_ = { 0.0f,0.0f,0.0f };	//回転角
+	NVector3 position_ = { 0.0f,0.0f,0.0f };	//座標
 
-	NObj3d* parent = nullptr;	//親のポインタ
+	NObj3d* parent_ = nullptr;	//親のポインタ
 
-	uint32_t texNum = 0;	//テクスチャ指定用
+	uint32_t texNum_ = 0;	//テクスチャ指定用
 
-	NModel model;
-	NColor color;
+	NModel model_;
+	NColor color_;
 
 public:
 	NObj3d();
@@ -88,19 +88,19 @@ public:
 	//描画コマンド
 	void DrawCommand(uint32_t indexSize);
 #pragma endregion
-	inline void SetModel(NModel model) { this->model = model; }
+	inline void SetModel(NModel model) { model_ = model; }
 	//ライトのセット
 	static void SetNDirectionalLight(NDirectionalLight* directionalLight) {
-		NObj3d::directionalLight = directionalLight;
+		NObj3d::sDirectionalLight = directionalLight;
 	}
 	static void SetNPointLight(NPointLight* pointLight) {
-		NObj3d::pointLight = pointLight;
+		NObj3d::sPointLight = pointLight;
 	}
 	static void SetNSpotLight(NSpotLight* spotLight) {
-		NObj3d::spotLight = spotLight;
+		NObj3d::sSpotLight = spotLight;
 	}
 	static void SetNCircleShadow(NCircleShadow* circleShadow) {
-		NObj3d::circleShadow = circleShadow;
+		NObj3d::sCircleShadow = circleShadow;
 	}
 
 	inline void SetMatWorld(NMatrix4 matWorld) { matWorld_ = matWorld; }

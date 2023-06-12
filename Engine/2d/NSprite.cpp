@@ -26,7 +26,7 @@ void NSprite::CreateSprite(std::string texHandle)
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor_->Init();
 	//平行投影を代入
-	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::sWin_width),
 		static_cast<float>(NWindows::sWin_height)
 	);
@@ -55,7 +55,7 @@ void NSprite::CreateSprite(std::string texHandle,
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor_->Init();
 	//平行投影を代入
-	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::sWin_width),
 		static_cast<float>(NWindows::sWin_height)
 	);
@@ -84,7 +84,7 @@ void NSprite::CreateClipSprite(std::string texHandle,
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor_->Init();
 	//平行投影を代入
-	matProjection_ = cbTrans_->constMap->mat = MathUtil::ParallelProjection(
+	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::sWin_width),
 		static_cast<float>(NWindows::sWin_height)
 	);
@@ -224,8 +224,8 @@ void NSprite::Update()
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	// 定数バッファへデータ転送
-	cbTrans_->constMap->mat = matWorld_ * matProjection_;
-	cbColor_->constMap->color = color_;
+	cbTrans_->constMap_->mat = matWorld_ * matProjection_;
+	cbColor_->constMap_->color = color_;
 }
 
 void NSprite::TransferVertex()
@@ -333,7 +333,7 @@ void NSprite::Draw()
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
 
 	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }

@@ -21,9 +21,9 @@ void NSpotLight::Initialize()
 void NSpotLight::Update()
 {
 	//値の更新があったときだけ定数バッファに転送する
-	if (isDirty) {
+	if (isDirty_) {
 		TransferConstBuffer();
-		isDirty = false;
+		isDirty_ = false;
 	}
 }
 
@@ -31,53 +31,53 @@ void NSpotLight::Draw(uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbSpotLight->constBuff->GetGPUVirtualAddress());
+		cbSpotLight->constBuff_->GetGPUVirtualAddress());
 }
 
 void NSpotLight::TransferConstBuffer()
 {
 	HRESULT result;
 	// 定数バッファへデータ転送
-	cbSpotLight->constMap = nullptr;
-	result = cbSpotLight->constBuff->Map(0, nullptr, (void**)&cbSpotLight->constMap);
+	cbSpotLight->constMap_ = nullptr;
+	result = cbSpotLight->constBuff_->Map(0, nullptr, (void**)&cbSpotLight->constMap_);
 	if (SUCCEEDED(result)) {
-		cbSpotLight->constMap->dir = -lightdir;	//ライトの向きは逆向きで
-		cbSpotLight->constMap->color = lightcolor;
-		cbSpotLight->constMap->atten = lightatten;
-		cbSpotLight->constMap->factorAngleCos = lightFactorAngleCos;
-		cbSpotLight->constMap->active = isActive;
-		cbSpotLight->constBuff->Unmap(0, nullptr);
+		cbSpotLight->constMap_->dir = -lightdir_;	//ライトの向きは逆向きで
+		cbSpotLight->constMap_->color = lightcolor_;
+		cbSpotLight->constMap_->atten = lightatten_;
+		cbSpotLight->constMap_->factorAngleCos = lightFactorAngleCos_;
+		cbSpotLight->constMap_->active = isActive_;
+		cbSpotLight->constBuff_->Unmap(0, nullptr);
 	}
 }
 
 void NSpotLight::SetLightDir(const NVector3& lightdir)
 {
 	//正規化してセット
-	this->lightdir = lightdir.Normalize();
-	isDirty = true;
+	lightdir_ = lightdir.Normalize();
+	isDirty_ = true;
 }
 
 void NSpotLight::SetLightPos(const NVector3& lightpos)
 {
-	this->lightpos = lightpos;
-	isDirty = true;
+	lightpos_ = lightpos;
+	isDirty_ = true;
 }
 
 void NSpotLight::SetLightColor(const NVector3& lightcolor)
 {
-	this->lightcolor = lightcolor;
-	isDirty = true;
+	lightcolor_ = lightcolor;
+	isDirty_ = true;
 }
 
 void NSpotLight::SetLightAtten(const NVector3& lightatten)
 {
-	this->lightatten = lightatten;
-	isDirty = true;
+	lightatten_ = lightatten;
+	isDirty_ = true;
 }
 
 void NSpotLight::SetLightFactorAngle(const NVector2& lightFactorAngle)
 {
-	this->lightFactorAngleCos.x = cosf(MathUtil::Degree2Radian(lightFactorAngle.x));
-	this->lightFactorAngleCos.y = cosf(MathUtil::Degree2Radian(lightFactorAngle.y));
-	isDirty = true;
+	lightFactorAngleCos_.x = cosf(MathUtil::Degree2Radian(lightFactorAngle.x));
+	lightFactorAngleCos_.y = cosf(MathUtil::Degree2Radian(lightFactorAngle.y));
+	isDirty_ = true;
 }

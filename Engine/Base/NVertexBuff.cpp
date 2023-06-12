@@ -52,28 +52,28 @@ void NVertexBuff::Init(NVertex* vertices, uint32_t size)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertex* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = size;
+	view_.StrideInBytes = size;
 }
 
 void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
@@ -103,28 +103,28 @@ void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertexPNU* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = size;
+	view_.StrideInBytes = size;
 }
 
 void NVertexBuff::Init(std::vector<NVertex> vertices)
@@ -154,28 +154,28 @@ void NVertexBuff::Init(std::vector<NVertex> vertices)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertex* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < vertices.size(); i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = sizeof(NVertex);
+	view_.StrideInBytes = sizeof(NVertex);
 }
 
 void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
@@ -205,28 +205,28 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertexPNU* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < vertices.size(); i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = sizeof(NVertexPNU);
+	view_.StrideInBytes = sizeof(NVertexPNU);
 }
 
 void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
@@ -256,28 +256,28 @@ void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertexAssimp* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < size; i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = size;
+	view_.StrideInBytes = size;
 }
 
 void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
@@ -307,26 +307,26 @@ void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
 		&resDesc, // リソース設定
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
-		IID_PPV_ARGS(&buff));
+		IID_PPV_ARGS(&buff_));
 	assert(SUCCEEDED(result));
 
 	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
 	NVertexAssimp* vertMap_ = nullptr;
-	result = buff->Map(0, nullptr, (void**)&vertMap_);
+	result = buff_->Map(0, nullptr, (void**)&vertMap_);
 	assert(SUCCEEDED(result));
 	//全頂点に対して
 	for (uint32_t i = 0; i < vertices.size(); i++) {
 		vertMap_[i] = vertices[i];
 	}
 	// 繋がりを解除
-	buff->Unmap(0, nullptr);
+	buff_->Unmap(0, nullptr);
 
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	view.BufferLocation = buff->GetGPUVirtualAddress();
+	view_.BufferLocation = buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	view.SizeInBytes = dataSize;
+	view_.SizeInBytes = dataSize;
 	// 頂点1つ分のデータサイズ
-	view.StrideInBytes = sizeof(NVertexAssimp);
+	view_.StrideInBytes = sizeof(NVertexAssimp);
 }

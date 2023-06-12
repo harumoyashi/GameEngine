@@ -9,13 +9,13 @@
 class NDirectionalLight
 {
 private://静的メンバ変数
-	NVector3 lightdir = { 1,0,0 };	 // ライト光線方向
-	NVector3 lightcolor = { 1,1,1 }; // ライト色
+	NVector3 lightdir_ = { 1,0,0 };	 // ライト光線方向
+	NVector3 lightcolor_ = { 1,1,1 }; // ライト色
 
 	//ダーティフラグ
-	bool isDirty = false;
+	bool isDirty_ = false;
 	//有効フラグ
-	bool isActive = false;
+	bool isActive_ = false;
 
 public:
 	//定数バッファ
@@ -37,13 +37,13 @@ public: //メンバ関数
 	void TransferConstBuffer();
 
 	//ライトの方向をセット
-	void SetLightDir(const NVector3& lightdir);
-	inline NVector3 GetLightDir() { return lightdir; }
+	void SetLightDir(const NVector3& lightdir_);
+	inline NVector3 GetLightDir() { return lightdir_; }
 	//ライトの色をセット
 	void SetLightColor(const NVector3& lightcolor);
-	inline NVector3 GetLightColor() { return lightcolor; }
+	inline NVector3 GetLightColor() { return lightcolor_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { this->isActive = isActive; }
+	inline void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive; }
+	inline bool GetActive() { return isActive_; }
 };

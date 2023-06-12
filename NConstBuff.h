@@ -11,11 +11,11 @@ class NConstBuff
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
-	T* constMap;	// マッピング用
+	ComPtr<ID3D12Resource> constBuff_;		//定数バッファのGPUリソースのポインタ
+	T* constMap_;	// マッピング用
 
 public:
-	NConstBuff() :constMap(nullptr) {}
+	NConstBuff() :constMap_(nullptr) {}
 	~NConstBuff()
 	{
 
@@ -45,16 +45,16 @@ public:
 			&resDesc,	//リソース設定
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
-			IID_PPV_ARGS(&constBuff)
+			IID_PPV_ARGS(&constBuff_)
 		);
 		assert(SUCCEEDED(result));
 		
 		//定数バッファのマッピング
-		result = constBuff->Map(0, nullptr, (void**)&constMap);	//マッピング
+		result = constBuff_->Map(0, nullptr, (void**)&constMap_);	//マッピング
 		assert(SUCCEEDED(result));
 
-		constBuff->Unmap(0, nullptr);
+		constBuff_->Unmap(0, nullptr);
 	};
 
-	inline void Unmap(){ constBuff->Unmap(0, nullptr); }
+	inline void Unmap(){ constBuff_->Unmap(0, nullptr); }
 };
