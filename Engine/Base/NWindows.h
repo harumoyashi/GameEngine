@@ -24,7 +24,7 @@ public:
 	static NWindows* GetInstance();
 
 	//ウィンドウプロシージャ
-	static LRESULT WindowProc(const HWND& hwnd, const uint32_t msg, const WPARAM& wparam, const LPARAM& lparam);
+	static LRESULT WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam);
 	//Windowクラスの設定
 	void Set();
 	//コンソールへの文字出力
