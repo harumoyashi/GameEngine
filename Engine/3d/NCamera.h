@@ -32,9 +32,9 @@ public:
 	void ProjectiveProjection();
 
 	//セッター
-	inline void SetEye(NVector3 eye) { eye_ = eye; }
-	inline void SetTarget(NVector3 target) { target_ = target; }
-	inline void SetUp(NVector3 up) { up_ = up; }
+	inline void SetEye(const NVector3& eye) { eye_ = eye; }
+	inline void SetTarget(const NVector3& target) { target_ = target; }
+	inline void SetUp(const NVector3& up) { up_ = up; }
 
 	//ゲッター
 	inline NMatrix4 GetMatProjection() { return matProjection_; }

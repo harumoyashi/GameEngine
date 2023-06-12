@@ -177,18 +177,18 @@ void NObj3d::SetSRVHeap()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 }
 
-void NObj3d::SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle)
+void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
 }
 
-void NObj3d::SetVB(D3D12_VERTEX_BUFFER_VIEW vbView)
+void NObj3d::SetVB(const D3D12_VERTEX_BUFFER_VIEW& vbView)
 {
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
 }
 
-void NObj3d::SetIB(D3D12_INDEX_BUFFER_VIEW ibView)
+void NObj3d::SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView)
 {
 	NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&ibView);
 }
@@ -203,7 +203,7 @@ void NObj3d::SetCBV()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 }
 
-void NObj3d::DrawCommand(uint32_t indexSize)
+void NObj3d::DrawCommand(const uint32_t indexSize)
 {
 	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(indexSize, 1, 0, 0, 0); //インデックスを使って描画
 }

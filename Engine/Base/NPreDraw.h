@@ -29,7 +29,7 @@ public:
 	void SetScissorRect();
 
 	//バリア解除
-	void BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc);
+	void BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc);
 	//命令のクローズ
 	//もうコマンドリストに積むのおしまい
 	void CmdListClose();
@@ -38,7 +38,7 @@ public:
 	// 画面に表示するバッファをフリップ(裏表の入替え)
 	void BufferSwap();
 	// コマンドの実行完了を待つ
-	void CommandWait(UINT64 fenceVal);
+	void CommandWait(UINT64& fenceVal);
 	// キューをクリア
 	void ClearQueue();
 	// 再びコマンドリストを貯める準備

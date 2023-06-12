@@ -10,7 +10,7 @@ NSprite::~NSprite()
 {
 }
 
-void NSprite::CreateSprite(std::string texHandle)
+void NSprite::CreateSprite(const std::string& texHandle)
 {
 	SetTexHandle(texHandle);
 	//’¸“_
@@ -33,8 +33,8 @@ void NSprite::CreateSprite(std::string texHandle)
 	Update();
 }
 
-void NSprite::CreateSprite(std::string texHandle,
-	NVector2 anchorPoint_, bool isFlipX_, bool isFlipY_)
+void NSprite::CreateSprite(const std::string& texHandle,
+	const NVector2& anchorPoint_, const bool isFlipX_, const bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//’¸“_
@@ -62,8 +62,9 @@ void NSprite::CreateSprite(std::string texHandle,
 	Update();
 }
 
-void NSprite::CreateClipSprite(std::string texHandle,
-	NVector2 texLeftTop_, NVector2 texSize_, NVector2 anchorPoint_, bool isFlipX_, bool isFlipY_)
+void NSprite::CreateClipSprite(const std::string& texHandle,
+	const NVector2& texLeftTop_, const NVector2& texSize_, const NVector2& anchorPoint_,
+	const bool isFlipX_, const bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//’¸“_
@@ -146,13 +147,13 @@ void NSprite::CreateVertBuff()
 	assert(SUCCEEDED(result));
 }
 
-void NSprite::MatchTexSize(ComPtr<ID3D12Resource> texBuff_)
+void NSprite::MatchTexSize(const ComPtr<ID3D12Resource>& texBuff_)
 {
 	resDescVert_ = texBuff_->GetDesc();
 	size_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
 }
 
-void NSprite::SetAncor(NVector2 anchorPoint)
+void NSprite::SetAncor(const NVector2& anchorPoint)
 {
 	anchorPoint_ = anchorPoint;
 }
@@ -163,7 +164,7 @@ void NSprite::SetIsFlip(bool isFlipX, bool isFlipY)
 	isFlipY_ = isFlipY;
 }
 
-void NSprite::SetClipRange(NVector2 texLeftTop, NVector2 texSize)
+void NSprite::SetClipRange(const NVector2& texLeftTop, const NVector2& texSize)
 {
 	texLeftTop_ = texLeftTop;
 	texSize_ = texSize;
@@ -201,7 +202,7 @@ void NSprite::CreateVertBuffView()
 	vbView_.StrideInBytes = singleSizeVB_;
 }
 
-void NSprite::SetTexHandle(std::string texHandle)
+void NSprite::SetTexHandle(const std::string& texHandle)
 {
 	texHandle_ = texHandle;
 	if (NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_ == nullptr)
@@ -289,13 +290,13 @@ void NSprite::TransferVertex()
 	VertMaping();
 }
 
-void NSprite::SetSize(float x, float y)
+void NSprite::SetSize(const float x, const float y)
 {
 	size_ = { x,y };
 	TransferVertex();
 }
 
-void NSprite::SetPos(float x, float y)
+void NSprite::SetPos(const float x, const float y)
 {
 	position_ = { x,y };
 	Update();

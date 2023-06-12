@@ -52,7 +52,7 @@ void NPreDraw::SetScissorRect()
 	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
 }
 
-void NPreDraw::BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc)
+void NPreDraw::BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc)
 {
 	// 5.リソースバリアを戻す
 	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
@@ -82,7 +82,7 @@ void NPreDraw::BufferSwap()
 	assert(SUCCEEDED(result));
 }
 
-void NPreDraw::CommandWait(UINT64 fenceVal)
+void NPreDraw::CommandWait(UINT64& fenceVal)
 {
 	NDX12::GetInstance()->GetCommandQueue()->Signal(NDX12::GetInstance()->GetFence(), ++fenceVal);
 	if (NDX12::GetInstance()->GetFence()->GetCompletedValue() != fenceVal) {

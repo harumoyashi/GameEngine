@@ -3,7 +3,8 @@
 
 #pragma comment(lib,"winmm.lib")
 
-extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
+	const HWND& hwnd, const uint32_t msg, const WPARAM& wParam, const LPARAM& lParam);
 
 NWindows* NWindows::GetInstance()
 {
@@ -13,7 +14,8 @@ NWindows* NWindows::GetInstance()
 
 //ウィンドプロシージャ
 //面倒だけど書かなきゃいけない関数
-LRESULT NWindows::WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam)
+LRESULT NWindows::WindowProc(
+	const HWND& hwnd, const uint32_t msg, const WPARAM& wparam, const LPARAM& lparam)
 {
 	//ImGui用ウィンドウプロシージャ呼び出し
 	if (ImGui_ImplWin32_WndProcHandler(hwnd,msg,wparam,lparam))
@@ -52,9 +54,9 @@ void NWindows::Set()
 }
 
 //コンソールへの文字出力
-void NWindows::DebugText(LPCSTR text)
+void NWindows::DebugText(const std::string& text)
 {
-	OutputDebugStringA(text);
+	OutputDebugStringA(text.c_str());
 }
 
 //ウィンドウオブジェクトの生成

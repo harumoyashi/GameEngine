@@ -56,17 +56,17 @@ public:
 	~NSprite();
 #pragma region 初期化
 	//スプライト生成
-	void CreateSprite(std::string texHandle = "error");
+	void CreateSprite(const std::string& texHandle = "error");
 	//テクスチャサイズに合わせてスプライト生成
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
-	void CreateSprite(std::string texHandle,
-		NVector2 anchorPoint, bool isFlipX = false, bool isFlipY = false);
+	void CreateSprite(const std::string& texHandle,
+		const NVector2& anchorPoint, const bool isFlipX = false, const bool isFlipY = false);
 	//テクスチャを切り取ってスプライト生成(アニメーション、フォントなど)
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
-	void CreateClipSprite(std::string texHandle, NVector2 texLeftTop,
-		NVector2 texSize, NVector2 anchorPoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
+	void CreateClipSprite(const std::string& texHandle, const NVector2& texLeftTop,
+		const NVector2& texSize, const NVector2& anchorPoint = { 0.5f,0.5f }, const bool isFlipX = false, const bool isFlipY = false);
 
 private:
 	//頂点データ設定
@@ -78,13 +78,13 @@ private:
 	//バッファ作成
 	void CreateVertBuff();
 	//テクスチャサイズに合わせる
-	void MatchTexSize(ComPtr<ID3D12Resource> texBuff);
+	void MatchTexSize(const ComPtr<ID3D12Resource>& texBuff);
 	//アンカーポイント適用
-	void SetAncor(NVector2 anchorPoint);
+	void SetAncor(const NVector2& anchorPoint);
 	//上下左右反転フラグ適用
-	void SetIsFlip(bool isFlipX, bool isFlipY);
+	void SetIsFlip(const bool isFlipX, const bool isFlipY);
 	//切り抜き範囲適用
-	void SetClipRange(NVector2 texLeftTop, NVector2 texSize);
+	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
 	//切り抜かない場合テクスチャサイズに合わせる
 	void SetClipRange();
 	//マッピング
@@ -93,7 +93,7 @@ private:
 	void CreateVertBuffView();
 	
 	//テクスチャハンドルをセット
-	void SetTexHandle(std::string texHandle);
+	void SetTexHandle(const std::string& texHandle);
 #pragma endregion
 public:
 #pragma region 更新
@@ -102,9 +102,9 @@ public:
 	//頂点バッファ転送
 	void TransferVertex();
 	//サイズ指定
-	void SetSize(float x, float y);
+	void SetSize(const float x, const float y);
 	//座標指定
-	void SetPos(float x, float y);
+	void SetPos(const float x, const float y);
 #pragma endregion
 #pragma region 描画
 	//共通グラフィックスコマンド

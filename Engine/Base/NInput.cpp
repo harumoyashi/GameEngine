@@ -25,7 +25,7 @@ NInput* NInput::GetInstance()
 	return &instance;
 }
 
-void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd_)
+void NInput::KeyInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
 	HRESULT result;
 
@@ -46,7 +46,7 @@ void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd_)
 		//DISCL_FOREGROUND：画面が手前にある場合のみ入力を受け付ける
 		//DISCL_NONEXCLUSIVE：デバイスをこのアプリだけで専有しない
 		//DISCL_NOWINKEY：Windowsキーを無効にする
-		hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 
@@ -61,19 +61,19 @@ void NInput::KeyUpdate()
 }
 
 //押しっぱなし
-bool NInput::IsKey(uint8_t key)
+bool NInput::IsKey(const uint8_t key)
 {
 	return keys[key];
 }
 
 //押した瞬間
-bool NInput::IsKeyDown(uint8_t key)
+bool NInput::IsKeyDown(const uint8_t key)
 {
 	return keys[key] && !prev[key];
 }
 
 //離した瞬間
-bool NInput::IsKeyRelease(uint8_t key)
+bool NInput::IsKeyRelease(const uint8_t key)
 {
 	return !keys[key] && prev[key];
 }
@@ -111,22 +111,22 @@ void NInput::PadUpdate()
 	SetDeadZone();
 }
 
-bool NInput::IsButton(uint32_t button)
+bool NInput::IsButton(const uint32_t button)
 {
 	return statePad_.Gamepad.wButtons == button;
 }
 
-bool NInput::IsButtonDown(uint32_t button)
+bool NInput::IsButtonDown(const uint32_t button)
 {
 	return statePad_.Gamepad.wButtons == button && prevPad_.Gamepad.wButtons != button;
 }
 
-bool NInput::IsButtonRelease(uint32_t button)
+bool NInput::IsButtonRelease(const uint32_t button)
 {
 	return statePad_.Gamepad.wButtons != button && prevPad_.Gamepad.wButtons == button;
 }
 
-uint32_t NInput::GetTrigger(bool isLeft)
+uint32_t NInput::GetTrigger(const bool isLeft)
 {
 	if (isLeft)
 	{
@@ -159,7 +159,7 @@ void NInput::SetDeadZone()
 	}
 }
 
-NVector2 NInput::GetStick(bool isLeft)
+NVector2 NInput::GetStick(const bool isLeft)
 {
 	if (isLeft)
 	{
@@ -177,7 +177,7 @@ NVector2 NInput::GetStick(bool isLeft)
 	}
 }
 
-uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
+uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
 {
 	if (isLstick)
 	{
@@ -215,12 +215,13 @@ uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 	}
 }
 
-void NInput::Vibration(float leftVibrationPower, float rightVibrationPower)
+void NInput::Vibration(const float leftVibrationPower, const float rightVibrationPower)
 {
-	leftVibrationPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
-	rightVibrationPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
+	float lVibPower = leftVibrationPower, rVibPower = rightVibrationPower;
+	lVibPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
+	rVibPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
 
-	vibration_.wLeftMotorSpeed = (int)(leftVibrationPower * 65535.0f);
-	vibration_.wRightMotorSpeed = (int)(rightVibrationPower * 65535.0f);
+	vibration_.wLeftMotorSpeed = (int)(lVibPower * 65535.0f);
+	vibration_.wRightMotorSpeed = (int)(rVibPower * 65535.0f);
 	XInputSetState(0, &vibration_);
 }

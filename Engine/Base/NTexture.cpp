@@ -91,7 +91,7 @@ NTexture NTextureManager::CreateErrorTexture()
 	return textureMap_["error"];
 }
 
-NTexture NTextureManager::LoadTexture(const std::string pictureName, const std::string handle)
+NTexture NTextureManager::LoadTexture(const std::string& pictureName, const std::string& handle)
 {
 	if (textureMap_[handle].texBuff_ == nullptr)
 	{
@@ -123,7 +123,7 @@ NTexture NTextureManager::LoadTexture(const std::string pictureName, const std::
 	return textureMap_[handle];
 }
 
-bool NTextureManager::Load(const std::string pictureName)
+bool NTextureManager::Load(const std::string& pictureName)
 {
 	HRESULT result;
 	//ˆê‰ñ•Ê‚Ì•¶Žš—ñŒ^‚É•ÏŠ·‚µ‚Ä
@@ -224,7 +224,7 @@ void NTextureManager::SetSRV()
 	srvDesc_.Texture2D.MipLevels = texResDesc_.MipLevels;
 }
 
-NTexture NTextureManager::CreateSRV(NTexture tex)
+NTexture NTextureManager::CreateSRV(NTexture& tex)
 {
 	//SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ðŽæ“¾
 	tex.cpuHandle_ = NDX12::GetInstance()->GetSRVHeap()->GetCPUDescriptorHandleForHeapStart();

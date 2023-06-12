@@ -111,29 +111,29 @@ public:
 	//"roopNum" ループする回数。0だとループはせず一度だけ流れる
 	//0で無音、1がデフォルト音量。あまり大きくしすぎると音割れする
 	//return 再生ハンドル
-	uint32_t PlayWave(uint32_t soundDataHandle, const bool& loopFlag = false, float volume = 1.0f, const int& roopNum = 0);
+	uint32_t PlayWave(const uint32_t soundDataHandle, const bool loopFlag = false, const float volume = 1.0f, const int roopNum = 0);
 
 	//音声削除
 	//"voiceHandle" 再生ハンドル
-	void DestroyWave(uint32_t voiceHandle);
+	void DestroyWave(const uint32_t voiceHandle);
 
 	//音声一時停止
 	//"voiceHandle" 再生ハンドル
-	void StopWave(uint32_t voiceHandle);
+	void StopWave(const uint32_t voiceHandle);
 
 	//一時停止した音声を再生
 	//"voiceHandle" 再生ハンドル
-	void StartWave(uint32_t voiceHandle);
+	void StartWave(const uint32_t voiceHandle);
 
 	//音声再生中かどうか
 	//"voiceHandle" 再生ハンドル
-	bool IsPlaying(uint32_t voiceHandle);
+	bool IsPlaying(const uint32_t voiceHandle);
 
 	//音量設定
 	//"voiceHandle" 再生ハンドル
 	//"volume" ボリューム
 	//0で無音、1がデフォルト音量。あまり大きくしすぎると音割れする
-	void SetVolume(uint32_t voiceHandle, float volume);
+	void SetVolume(const uint32_t voiceHandle, const float volume);
 
 private:
 	// サウンドデータコンテナ

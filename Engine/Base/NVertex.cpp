@@ -19,7 +19,7 @@ bool NVertexPNU::operator==(const NVertexPNU& a) const
 	return true;
 }
 
-void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU> vertices, std::vector<uint32_t> indices)
+void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<uint32_t>& indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
@@ -77,7 +77,7 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	return true;
 }
 
-void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp> vertices, std::vector<uint32_t> indices)
+void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vector<uint32_t>& indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)

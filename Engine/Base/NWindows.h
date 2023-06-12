@@ -24,11 +24,11 @@ public:
 	static NWindows* GetInstance();
 
 	//ウィンドウプロシージャ
-	static LRESULT WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam);
+	static LRESULT WindowProc(const HWND& hwnd, const uint32_t msg, const WPARAM& wparam, const LPARAM& lparam);
 	//Windowクラスの設定
 	void Set();
 	//コンソールへの文字出力
-	void DebugText(LPCSTR text);
+	void DebugText(const std::string& text);
 	//ウィンドウオブジェクトの生成
 	void CreateWindowObj();
 	//ウィンドウ表示

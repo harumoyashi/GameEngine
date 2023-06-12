@@ -6,14 +6,14 @@
 #include <string>
 using namespace std;
 
-void NModel::Create(const string modelname)
+void NModel::Create(const string& modelname)
 {
 	LoadObjFile(modelname);
 	vertexBuff_.Init(vertices_);
 	indexBuff_.Init(indices_);
 }
 
-void NModel::LoadObjFile(const string modelname)
+void NModel::LoadObjFile(const string& modelname)
 {
 	//ファイルストリーム
 	std::ifstream file;

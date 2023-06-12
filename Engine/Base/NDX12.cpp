@@ -37,9 +37,9 @@ void NDX12::Init(NWindows* win)
 	CreateFence();
 }
 
-void NDX12::PostDraw(D3D12_RESOURCE_BARRIER barrierDesc_)
+void NDX12::PostDraw(D3D12_RESOURCE_BARRIER& barrierDesc)
 {
-	BarrierReset(barrierDesc_);
+	BarrierReset(barrierDesc);
 	CmdListClose();
 	ExecuteCmdList();
 	BufferSwap();
@@ -285,7 +285,7 @@ void NDX12::InitializeFixFPS()
 	reference_ = std::chrono::steady_clock::now();
 }
 
-void NDX12::UpdateFixFPX(float divideFrameRate)
+void NDX12::UpdateFixFPX(const float divideFrameRate)
 {
 	//1/60秒(1フレーム)ぴったりの時間
 	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / (60.0f / divideFrameRate)));
@@ -312,12 +312,12 @@ void NDX12::UpdateFixFPX(float divideFrameRate)
 	reference_ = std::chrono::steady_clock::now();
 }
 
-void NDX12::BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc_)
+void NDX12::BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc)
 {
 	// 5.リソースバリアを戻す
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//表示状態へ
-	commandList_->ResourceBarrier(1, &barrierDesc_);
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//描画状態から
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//表示状態へ
+	commandList_->ResourceBarrier(1, &barrierDesc);
 }
 
 void NDX12::CmdListClose()

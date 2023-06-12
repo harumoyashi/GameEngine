@@ -23,8 +23,8 @@ public:
 	NMaterial material_;
 
 public:
-	void Create(const std::string modelname);
+	void Create(const std::string& modelname);
 
 private:
-	void LoadObjFile(const std::string modelname);
+	void LoadObjFile(const std::string& modelname);
 };

@@ -136,7 +136,7 @@ void NAudio::Unload(SoundData* soundData) {
 	soundData->wfex = {};
 }
 
-uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, float volume, const int& roopNum) {
+uint32_t NAudio::PlayWave(const uint32_t soundDataHandle, const bool loopFlag, const float volume, const int roopNum) {
 	HRESULT result;
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 
@@ -187,7 +187,7 @@ uint32_t NAudio::PlayWave(uint32_t soundDataHandle, const bool& loopFlag, float 
 	return handle_;
 }
 
-void NAudio::DestroyWave(uint32_t voiceHandle)
+void NAudio::DestroyWave(const uint32_t voiceHandle)
 {
 	// 再生中リストから検索
 	auto it = std::find_if(
@@ -201,7 +201,7 @@ void NAudio::DestroyWave(uint32_t voiceHandle)
 	}
 }
 
-void NAudio::StopWave(uint32_t voiceHandle) {
+void NAudio::StopWave(const uint32_t voiceHandle) {
 
 	// 再生中リストから検索
 	auto it = std::find_if(
@@ -212,7 +212,7 @@ void NAudio::StopWave(uint32_t voiceHandle) {
 	}
 }
 
-void NAudio::StartWave(uint32_t voiceHandle)
+void NAudio::StartWave(const uint32_t voiceHandle)
 {
 	// 再生中リストから検索
 	auto it = std::find_if(
@@ -224,7 +224,7 @@ void NAudio::StartWave(uint32_t voiceHandle)
 	}
 }
 
-bool NAudio::IsPlaying(uint32_t voiceHandle) {
+bool NAudio::IsPlaying(const uint32_t voiceHandle) {
 	// 再生中リストから検索
 	auto it = std::find_if(
 		voices_.begin(), voices_.end(), [&](Voice* voice) { return voice->handle == voiceHandle; });
@@ -237,7 +237,7 @@ bool NAudio::IsPlaying(uint32_t voiceHandle) {
 	return false;
 }
 
-void NAudio::SetVolume(uint32_t voiceHandle, float volume) {
+void NAudio::SetVolume(const uint32_t voiceHandle, const float volume) {
 	// 再生中リストから検索
 	auto it = std::find_if(
 		voices_.begin(), voices_.end(), [&](Voice* voice) { return voice->handle == voiceHandle; });

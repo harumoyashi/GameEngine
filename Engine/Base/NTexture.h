@@ -52,11 +52,11 @@ public:
 	//テクスチャの読み込み
 	//indexを入れなかったら0番目に格納
 	//読み込むたびに書き変わるから、一回きりの時だけにして
-	NTexture LoadTexture(const std::string pictureName, const std::string handle = "");
+	NTexture LoadTexture(const std::string& pictureName, const std::string& handle = "");
 
 private:
 	//WICテクスチャのロード
-	bool Load(const std::string pictureName);
+	bool Load(const std::string& pictureName);
 	//ミップマップ生成
 	void CreateMipmap();
 
@@ -71,6 +71,6 @@ private:
 	//シェーダーリソースビュー設定
 	void SetSRV();
 	//シェーダーリソースビュー生成
-	NTexture CreateSRV(NTexture tex);
+	NTexture CreateSRV(NTexture& tex);
 };
 

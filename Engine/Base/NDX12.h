@@ -76,11 +76,11 @@ public:
 	//DirectX初期化
 	void Init(NWindows* win);
 	//描画後処理
-	void PostDraw(D3D12_RESOURCE_BARRIER barrierDesc_);
+	void PostDraw(D3D12_RESOURCE_BARRIER& barrierDesc);
 
 	//FPS固定更新
 	//divideFrameRate:フレームレートを何分の1にするか
-	void UpdateFixFPX(float divideFrameRate = 1.0f);
+	void UpdateFixFPX(const float divideFrameRate = 1.0f);
 
 	//ゲッター//
 	//デバイス取得
@@ -134,7 +134,7 @@ private:
 	void InitializeFixFPS();
 
 	//バリア解除
-	void BarrierReset(D3D12_RESOURCE_BARRIER barrierDesc_);
+	void BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc);
 	//命令のクローズ
 	//もうコマンドリストに積むのおしまい
 	void CmdListClose();

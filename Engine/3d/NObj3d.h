@@ -78,17 +78,17 @@ public:
 	//描画
 	void Draw();
 	void SetSRVHeap();
-	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
+	void SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle);
 	//頂点バッファビューの設定コマンド
-	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView);
+	void SetVB(const D3D12_VERTEX_BUFFER_VIEW& vbView);
 	//インデックスバッファビューの設定コマンド
-	void SetIB(D3D12_INDEX_BUFFER_VIEW ibView);
+	void SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView);
 	//定数バッファビュー(CBV)の設定コマンド
 	void SetCBV();
 	//描画コマンド
-	void DrawCommand(uint32_t indexSize);
+	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
-	inline void SetModel(NModel model) { model_ = model; }
+	inline void SetModel(const NModel& model) { model_ = model; }
 	//ライトのセット
 	static void SetNDirectionalLight(NDirectionalLight* directionalLight) {
 		NObj3d::sDirectionalLight = directionalLight;
@@ -103,5 +103,5 @@ public:
 		NObj3d::sCircleShadow = circleShadow;
 	}
 
-	inline void SetMatWorld(NMatrix4 matWorld) { matWorld_ = matWorld; }
+	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 };
