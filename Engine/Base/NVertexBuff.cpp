@@ -1,31 +1,31 @@
 #include "NVertexBuff.h"
 
-NVertexBuff::NVertexBuff(NVertex* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertex* vertices, const uint32_t size)
 {
 	Init(vertices, size);
 }
 
-NVertexBuff::NVertexBuff(NVertexPNU* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexPNU* vertices, const uint32_t size)
 {
 	Init(vertices, size);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertex> vertices)
+NVertexBuff::NVertexBuff(const std::vector<NVertex>& vertices)
 {
 	Init(vertices);
 }
 
-NVertexBuff::NVertexBuff(std::vector<NVertexPNU> vertices)
+NVertexBuff::NVertexBuff(const std::vector<NVertexPNU>& vertices)
 {
 	Init(vertices);
 }
 
-NVertexBuff::NVertexBuff(NVertexAssimp* vertices, uint32_t size)
+NVertexBuff::NVertexBuff(NVertexAssimp* vertices, const uint32_t size)
 {
 	Init(vertices, size);
 }
 
-void NVertexBuff::Init(NVertex* vertices, uint32_t size)
+void NVertexBuff::Init(NVertex* vertices, const uint32_t size)
 {
 	HRESULT result;
 
@@ -76,7 +76,7 @@ void NVertexBuff::Init(NVertex* vertices, uint32_t size)
 	view_.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
+void NVertexBuff::Init(NVertexPNU* vertices, const uint32_t size)
 {
 	HRESULT result;
 
@@ -127,7 +127,7 @@ void NVertexBuff::Init(NVertexPNU* vertices, uint32_t size)
 	view_.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertex> vertices)
+void NVertexBuff::Init(const std::vector<NVertex>& vertices)
 {
 	HRESULT result;
 
@@ -178,7 +178,7 @@ void NVertexBuff::Init(std::vector<NVertex> vertices)
 	view_.StrideInBytes = sizeof(NVertex);
 }
 
-void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
+void NVertexBuff::Init(const std::vector<NVertexPNU>& vertices)
 {
 	HRESULT result;
 
@@ -229,7 +229,7 @@ void NVertexBuff::Init(std::vector<NVertexPNU> vertices)
 	view_.StrideInBytes = sizeof(NVertexPNU);
 }
 
-void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
+void NVertexBuff::Init(NVertexAssimp* vertices, const uint32_t size)
 {
 	HRESULT result;
 
@@ -280,7 +280,7 @@ void NVertexBuff::Init(NVertexAssimp* vertices, uint32_t size)
 	view_.StrideInBytes = size;
 }
 
-void NVertexBuff::Init(std::vector<NVertexAssimp> vertices)
+void NVertexBuff::Init(const std::vector<NVertexAssimp>& vertices)
 {
 	HRESULT result;
 

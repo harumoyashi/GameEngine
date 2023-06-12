@@ -1,17 +1,17 @@
 #include "NIndexBuff.h"
 #include "NDX12.h"
 
-NIndexBuff::NIndexBuff(uint32_t* indices, uint32_t size)
+NIndexBuff::NIndexBuff(uint32_t* indices, const uint32_t size)
 {
 	Init(indices, size);
 }
 
-NIndexBuff::NIndexBuff(std::vector<uint32_t> indices)
+NIndexBuff::NIndexBuff(const std::vector<uint32_t>& indices)
 {
 	Init(indices);
 }
 
-void NIndexBuff::Init(uint32_t* indices, uint32_t size)
+void NIndexBuff::Init(uint32_t* indices, const uint32_t size)
 {
 	HRESULT result;
 
@@ -63,7 +63,7 @@ void NIndexBuff::Init(uint32_t* indices, uint32_t size)
 	view_.SizeInBytes = dataSize;
 }
 
-void NIndexBuff::Init(std::vector<uint32_t> indices)
+void NIndexBuff::Init(const std::vector<uint32_t>& indices)
 {
 	HRESULT result;
 

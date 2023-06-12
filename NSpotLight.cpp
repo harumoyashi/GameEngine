@@ -27,7 +27,7 @@ void NSpotLight::Update()
 	}
 }
 
-void NSpotLight::Draw(uint32_t rootParameterIndex)
+void NSpotLight::Draw(const uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,

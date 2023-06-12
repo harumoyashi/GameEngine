@@ -31,7 +31,7 @@ void NDirectionalLight::Update()
 	}
 }
 
-void NDirectionalLight::Draw(uint32_t rootParameterIndex)
+void NDirectionalLight::Draw(const uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,

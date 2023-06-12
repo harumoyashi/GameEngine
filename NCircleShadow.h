@@ -36,7 +36,7 @@ public://メンバ関数
 	void Update();
 	//描画
 	//rootParameterIndex = ルートパラメータの何番目にセットするか
-	void Draw(uint32_t rootParameterIndex);
+	void Draw(const uint32_t rootParameterIndex);
 
 	//定数バッファ転送
 	void TransferConstBuffer();
@@ -48,7 +48,7 @@ public://メンバ関数
 	void SetCasterPos(const NVector3& casterPos);
 	inline const NVector3& GetCasterPos() { return casterPos_; }
 	//キャスターとライトの距離をセット
-	void SetDistanceCasterLight(const float& distanceCasterLight);
+	void SetDistanceCasterLight(const float distanceCasterLight);
 	inline const float& GetDistanceCasterLight() { return distanceCasterLight_; }
 	//減衰係数をセット
 	void SetAtten(const NVector3& atten);
@@ -57,7 +57,7 @@ public://メンバ関数
 	void SetFactorAngle(const NVector2& factorAngle);
 	inline const NVector2& GetFactorAngle() { return factorAngleCos_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { isActive_ = isActive; }
+	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
 	inline bool GetActive() { return isActive_; }
 };

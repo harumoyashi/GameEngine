@@ -32,7 +32,7 @@ public://メンバ関数
 	void Update();
 	//描画
 	//rootParameterIndex = ルートパラメータの何番目にセットするか
-	void Draw(uint32_t rootParameterIndex);
+	void Draw(const uint32_t rootParameterIndex);
 
 	//定数バッファ転送
 	void TransferConstBuffer();
@@ -47,7 +47,7 @@ public://メンバ関数
 	void SetLightAtten(const NVector3& lightatten);
 	inline NVector3 GetLightAtten() { return lightatten_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { isActive_ = isActive; }
+	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
 	inline bool GetActive() { return isActive_; }
 };

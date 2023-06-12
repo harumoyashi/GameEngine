@@ -27,7 +27,7 @@ void NCircleShadow::Update()
 	}
 }
 
-void NCircleShadow::Draw(uint32_t rootParameterIndex)
+void NCircleShadow::Draw(const uint32_t rootParameterIndex)
 {
 	//定数バッファビューをセット
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
@@ -63,7 +63,7 @@ void NCircleShadow::SetCasterPos(const NVector3& casterPos)
 	isDirty_ = true;
 }
 
-void NCircleShadow::SetDistanceCasterLight(const float& distanceCasterLight)
+void NCircleShadow::SetDistanceCasterLight(const float distanceCasterLight)
 {
 	distanceCasterLight_ = distanceCasterLight;
 	isDirty_ = true;
