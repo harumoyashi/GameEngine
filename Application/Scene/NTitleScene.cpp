@@ -207,17 +207,17 @@ void NTitleScene::Init()
 	// ライト生成
 	directionalLight = std::make_unique<NDirectionalLight>();
 	directionalLight->Initialize();
-	/*pointLight = std::make_unique<NPointLight>();
+	pointLight = std::make_unique<NPointLight>();
 	pointLight->Initialize();
 	spotLight = std::make_unique<NSpotLight>();
 	spotLight->Initialize();
 	circleShadow = std::make_unique<NCircleShadow>();
-	circleShadow->Initialize();*/
+	circleShadow->Initialize();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetNDirectionalLight(directionalLight.get());
-	/*NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
 	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());*/
+	NObj3d::SetNCircleShadow(circleShadow.get());
 
 	timer.SetMaxTimer(10);
 }
@@ -238,9 +238,9 @@ void NTitleScene::Update()
 
 	//ライトたちの更新
 	directionalLight->Update();
-	/*pointLight->Update();
+	pointLight->Update();
 	spotLight->Update();
-	circleShadow->Update();*/
+	circleShadow->Update();
 
 #pragma region 行列の計算
 	//ビュー行列の再生成
@@ -344,14 +344,14 @@ void NTitleScene::Draw()
 void NTitleScene::Reset()
 {
 	directionalLight->Initialize();
-	/*pointLight->Initialize();
+	pointLight->Initialize();
 	spotLight->Initialize();
-	circleShadow->Initialize();*/
+	circleShadow->Initialize();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetNDirectionalLight(directionalLight.get());
-	/*NObj3d::SetNPointLight(pointLight.get());
+	NObj3d::SetNPointLight(pointLight.get());
 	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());*/
+	NObj3d::SetNCircleShadow(circleShadow.get());
 }
 
 void NTitleScene::Finalize()

@@ -18,14 +18,15 @@ public:
 	//0.0f~255.0fに直す
 	void Convert255();
 
-	const static NColor red;
-	const static NColor green;
-	const static NColor blue;
-	const static NColor yellow;
-	const static NColor pink;
-	const static NColor lightblue;
-	const static NColor white;
-	const static NColor black;
+	//定数には「k」をつける(ドイツ語のkonstant由来)
+	const static NColor kRed;
+	const static NColor kGreen;
+	const static NColor kBlue;
+	const static NColor kYellow;
+	const static NColor kPink;
+	const static NColor kLightblue;
+	const static NColor kWhite;
+	const static NColor kBlack;
 
 	NColor& operator++();
 
