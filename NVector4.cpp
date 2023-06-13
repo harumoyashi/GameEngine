@@ -5,7 +5,7 @@ NVector4::NVector4() :x(0), y(0), z(0), w(0)
 {
 }
 
-NVector4::NVector4(float x, float y, float z, float w) :x(x), y(y), z(z), w(w)
+NVector4::NVector4(const float x, const float y, const float z, const float w) :x(x), y(y), z(z), w(w)
 {
 }
 
@@ -99,7 +99,7 @@ NVector4& NVector4::operator/=(const NVector4& v)
 	return *this;
 }
 
-NVector4& NVector4::operator*=(float s)
+NVector4& NVector4::operator*=(const float s)
 {
 	x *= s;
 	y *= s;
@@ -109,7 +109,7 @@ NVector4& NVector4::operator*=(float s)
 	return *this;
 }
 
-NVector4& NVector4::operator/=(float s)
+NVector4& NVector4::operator/=(const float s)
 {
 	x /= s;
 	y /= s;
@@ -119,7 +119,7 @@ NVector4& NVector4::operator/=(float s)
 	return *this;
 }
 
-NVector4& NVector4::operator=(float num)
+NVector4& NVector4::operator=(const float num)
 {
 	x = num;
 	y = num;
@@ -141,18 +141,18 @@ const NVector4 operator-(const NVector4& v1, const NVector4& v2)
 	return temp -= v2;
 }
 
-const NVector4 operator*(const NVector4& v, float s)
+const NVector4 operator*(const NVector4& v, const float s)
 {
 	NVector4 temp(v);
 	return temp *= s;
 }
 
-const NVector4 operator*(float s, const NVector4& v)
+const NVector4 operator*(const float s, const NVector4& v)
 {
 	return v * s;
 }
 
-const NVector4 operator/(const NVector4& v, float s)
+const NVector4 operator/(const NVector4& v, const float s)
 {
 	NVector4 temp(v);
 	return temp /= s;

@@ -14,7 +14,8 @@ public:
 
 public:
 	//ルートシグネチャのシリアライズ(バイナリコード作成)
-	void SetRootSignature(ComPtr<ID3DBlob> errorBlob_, std::vector<D3D12_ROOT_PARAMETER> rootParams, D3D12_STATIC_SAMPLER_DESC samplerDesc);
+	void SetRootSignature(const ComPtr<ID3DBlob>& errorBlob_,
+		const std::vector<D3D12_ROOT_PARAMETER>& rootParams, const D3D12_STATIC_SAMPLER_DESC& samplerDesc);
 	//ルートシグネチャ生成
 	void CreateRootSignature();
 };

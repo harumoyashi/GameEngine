@@ -1,6 +1,7 @@
 #include "NRootSignature.h"
 
-void NRootSignature::SetRootSignature(ComPtr<ID3DBlob> errorBlob_, std::vector<D3D12_ROOT_PARAMETER> rootParams, D3D12_STATIC_SAMPLER_DESC samplerDesc)
+void NRootSignature::SetRootSignature(const ComPtr<ID3DBlob>& errorBlob_, 
+	const std::vector<D3D12_ROOT_PARAMETER>& rootParams, const D3D12_STATIC_SAMPLER_DESC& samplerDesc)
 {
 	HRESULT result;
 
@@ -10,8 +11,9 @@ void NRootSignature::SetRootSignature(ComPtr<ID3DBlob> errorBlob_, std::vector<D
 	rootSignatureDesc_.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc_.NumStaticSamplers = 1;
 
+	ComPtr<ID3DBlob> errorBlob = errorBlob_;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc_, D3D_ROOT_SIGNATURE_VERSION_1_0,
-		&rootSigBlob_, &errorBlob_);
+		&rootSigBlob_, &errorBlob);
 	assert(SUCCEEDED(result));
 }
 

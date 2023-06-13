@@ -5,7 +5,7 @@
 std::random_device seed;
 std::mt19937 engine(seed());
 
-NMatrix4 MathUtil::MatView(NVector3 eye, NVector3 target, NVector3 up)
+NMatrix4 MathUtil::MatView(const NVector3& eye, const NVector3& target, const NVector3& up)
 {
 	NMatrix4 mat;
 
@@ -36,7 +36,7 @@ NMatrix4 MathUtil::MatView(NVector3 eye, NVector3 target, NVector3 up)
 	return mat;
 }
 
-NMatrix4 MathUtil::ParallelProjection(float WIN_WIDTH, float WIN_HEIGHT)
+NMatrix4 MathUtil::ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT)
 {
 	return
 	{
@@ -47,7 +47,7 @@ NMatrix4 MathUtil::ParallelProjection(float WIN_WIDTH, float WIN_HEIGHT)
 	};
 }
 
-NMatrix4 MathUtil::PerspectiveProjection(float fov, float aspect, float nearZ, float farZ)
+NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, const float nearZ, const float farZ)
 {
 	// ’PˆÊs—ñ‚Å‰Šú‰»
 	NMatrix4 perspective = perspective.Zero();
@@ -66,17 +66,17 @@ NMatrix4 MathUtil::PerspectiveProjection(float fov, float aspect, float nearZ, f
 	return perspective;
 }
 
-float MathUtil::Degree2Radian(float degree)
+float MathUtil::Degree2Radian(const float degree)
 {
 	return degree * PI / 180;
 }
 
-float MathUtil::Radian2Degree(float radian)
+float MathUtil::Radian2Degree(const float radian)
 {
 	return radian * 180 / PI;
 }
 
-uint32_t MathUtil::Sign(uint32_t value)
+uint32_t MathUtil::Sign(const uint32_t value)
 {
 	if (value > 0)
 	{
@@ -92,7 +92,7 @@ uint32_t MathUtil::Sign(uint32_t value)
 	}
 }
 
-uint32_t MathUtil::Random(uint32_t min, uint32_t max)
+uint32_t MathUtil::Random(const uint32_t min, const uint32_t max)
 {
 	std::uniform_real_distribution<> dist1(min, max);
 

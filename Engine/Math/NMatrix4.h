@@ -48,9 +48,9 @@ public:
 	//拡縮行列の設定
 	NMatrix4 Scale(const NVector3& s);
 	//回転行列の設定
-	NMatrix4 RotateX(float angle);
-	NMatrix4 RotateY(float angle);
-	NMatrix4 RotateZ(float angle);
+	NMatrix4 RotateX(const float angle);
+	NMatrix4 RotateY(const float angle);
+	NMatrix4 RotateZ(const float angle);
 	//平行移動行列の作成
 	NMatrix4 Translation(const NVector3& t);
 	//座標変換（ベクトルと行列の掛け算）
@@ -63,5 +63,5 @@ public:
 	NVector3 ToEuler() const;
 };
 
-NVector3 operator*(const NVector3 v, const NMatrix4 m);
-NVector3& operator*=(NVector3& v, const NMatrix4 m);
+NVector3 operator*(const NVector3& v, const NMatrix4& m);
+NVector3& operator*=(NVector3& v, const NMatrix4& m);

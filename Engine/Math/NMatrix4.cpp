@@ -164,7 +164,7 @@ NMatrix4 NMatrix4::Scale(const NVector3& s)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateX(float angle)
+NMatrix4 NMatrix4::RotateX(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -177,7 +177,7 @@ NMatrix4 NMatrix4::RotateX(float angle)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateY(float angle)
+NMatrix4 NMatrix4::RotateY(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -190,7 +190,7 @@ NMatrix4 NMatrix4::RotateY(float angle)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateZ(float angle)
+NMatrix4 NMatrix4::RotateZ(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -266,7 +266,7 @@ const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
     return result *= m2;
 }
 
-NVector3 operator*(const NVector3 v, const NMatrix4 m)
+NVector3 operator*(const NVector3& v, const NMatrix4& m)
 {
     NVector3 result = v;
     result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0];
@@ -275,7 +275,7 @@ NVector3 operator*(const NVector3 v, const NMatrix4 m)
     return result;
 }
 
-NVector3& operator*=(NVector3& v, const NMatrix4 m)
+NVector3& operator*=(NVector3& v, const NMatrix4& m)
 {
     NVector3 result = v * m;
     v = result;

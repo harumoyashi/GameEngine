@@ -220,7 +220,7 @@ void NGPipeline::SetBlend()
 	pipelineDesc_.BlendState.RenderTarget[0] = blendDesc_;
 }
 
-void NGPipeline::SetInputLayout(bool is3d)
+void NGPipeline::SetInputLayout(const bool is3d)
 {
 	if (is3d)
 	{
@@ -242,7 +242,7 @@ void NGPipeline::SetTopology()
 	pipelineDesc_.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 }
 
-void NGPipeline::SetDepth(bool isDepth)
+void NGPipeline::SetDepth(const bool isDepth)
 {
 	if (isDepth)
 	{

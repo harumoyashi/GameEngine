@@ -72,15 +72,15 @@ public:
 	//シェーダーの設定(適用)
 	void SetShader();
 	//ラスタライザー設定
-	void SetRasterizer(bool isCull);
+	void SetRasterizer(const bool isCull);
 	//ブレンド設定
 	void SetBlend();
 	//入力レイアウトの設定
-	void SetInputLayout(bool is3d);
+	void SetInputLayout(const bool is3d);
 	//図形の形状設定
 	void SetTopology();
 	//デプスステンシル(深度)設定
-	void SetDepth(bool isDepth);
+	void SetDepth(const bool isDepth);
 	//レンダーターゲット設定
 	void SetRenderTarget();
 	//アンチエイリアシングのためのサンプル数設定
@@ -122,6 +122,6 @@ public:
 	static PipeLineManager* GetInstance();
 	void Init();
 
-	PipelineSet GetPipelineSet3d() const { return pipelineSet3d_; }
-	PipelineSet GetPipelineSetSprite() const { return pipelineSetSprite_; }
+	inline PipelineSet GetPipelineSet3d() const { return pipelineSet3d_; }
+	inline PipelineSet GetPipelineSetSprite() const { return pipelineSetSprite_; }
 };

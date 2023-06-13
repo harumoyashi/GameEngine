@@ -18,7 +18,7 @@ public:
 
 	//w’è‚µ‚½’l‚Å‚Ì¶¬
 	//‰ºè‚É’l‚¢‚¶‚è‚½‚­‚È‚¢
-	NQuaternion(float x, float y, float z, float w)
+	NQuaternion(const float x, const float y, const float z, const float w)
 		: x(x), y(y), z(z), w(w){}
 
 	//‘«‚µZ
