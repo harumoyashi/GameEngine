@@ -36,13 +36,13 @@ public:
 	//全ての値反転(共役や逆クォータニオンとは違う)
 	NQuaternion operator-() const;
 	//スカラー倍
-	NQuaternion operator*(const float& s) const;
+	NQuaternion operator*(const float s) const;
 	//スカラーで割る
-	NQuaternion operator/(const float& s) const;
+	NQuaternion operator/(const float s) const;
 	//値変更するタイプのスカラー倍
-	NQuaternion& operator*=(const float& s);
+	NQuaternion& operator*=(const float s);
 	//値変更するタイプのスカラーで割る
-	NQuaternion& operator/=(const float& s);
+	NQuaternion& operator/=(const float s);
 
 	//かけ合わせるクォータニオンを二つとも引数に入れての掛け算
 	NQuaternion Mul(const NQuaternion& lhs, const NQuaternion& rhs);
@@ -70,7 +70,7 @@ public:
 	/// <param name="axis">回転軸</param>
 	/// <param name="angle">角度(Radian)</param>
 	/// <returns>姿勢クォータニオン</returns>
-	static NQuaternion MakeAxisAngle(const NVector3& axis, const float& angle);
+	static NQuaternion MakeAxisAngle(const NVector3& axis, const float angle);
 
 	/// <summary>
 	/// 回転を設定する
@@ -78,7 +78,7 @@ public:
 	/// <param name="vec">回転軸</param>
 	/// <param name="angle">角度(Radian)</param>
 	/// <returns>姿勢クォータニオン</returns>
-	static void SetRota(const NVector3& vec, const float& angle);
+	static void SetRota(const NVector3& vec, const float angle);
 
 	/// <summary>
 	/// オイラー角で表された回転をクォータニオンで表す
@@ -104,7 +104,7 @@ public:
 	/// 球面線形補間
 	/// </summary>
 	/// <returns>クォータニオン</returns>
-	NQuaternion Slarp(const NQuaternion& q0, const NQuaternion& q1,float t);
+	NQuaternion Slarp(const NQuaternion& q0, const NQuaternion& q1,const float t);
 
 	/// <summary>
 	/// ベクトル1からベクトル2への回転を生成

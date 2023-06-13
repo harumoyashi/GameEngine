@@ -13,13 +13,13 @@ uint32_t NAudioManager::GetSound(const std::string& soundHandle)
     return sSoundMap[soundHandle];
 }
 
-void NAudioManager::LoadSound(const std::string& filename, const std::string soundHandle)
+void NAudioManager::LoadSound(const std::string& filename, const std::string& soundHandle)
 {
     uint32_t sound = NAudio::GetInstance()->LoadWave(filename);
     sSoundMap.insert(std::make_pair(soundHandle, sound));
 }
 
-void NAudioManager::Play(const std::string& soundHandle, const bool& isRoop, const float& volume, const int& roopNum)
+void NAudioManager::Play(const std::string& soundHandle, const bool isRoop, const float volume, const int roopNum)
 {
     uint32_t a = sSoundMap[soundHandle];
     NAudio::GetInstance()->PlayWave(sSoundMap[soundHandle],isRoop,volume,roopNum);

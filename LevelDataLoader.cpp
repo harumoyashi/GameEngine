@@ -90,7 +90,7 @@ void LevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 	}
 }
 
-void LevelDataLoader::SetObject(LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
+void LevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
 {
 	//レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects)

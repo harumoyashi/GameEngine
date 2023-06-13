@@ -20,7 +20,7 @@ void NTimer::Update()
 	}
 }
 
-void NTimer::SubTimer(const float& subTimer)
+void NTimer::SubTimer(const float subTimer)
 {
 	timer_ -= subTimer;
 }

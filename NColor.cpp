@@ -9,7 +9,7 @@ const NColor NColor::lightblue(0, 1.0f, 1.0f);
 const NColor NColor::white(1.0f, 1.0f, 1.0f);
 const NColor NColor::black(0, 0, 0);
 
-void NColor::SetColor255(uint32_t R, uint32_t G, uint32_t B, uint32_t A)
+void NColor::SetColor255(const uint32_t R, const uint32_t G, const uint32_t B, const uint32_t A)
 {
 	r = static_cast<float>(R);
 	g = static_cast<float>(G);
@@ -18,7 +18,7 @@ void NColor::SetColor255(uint32_t R, uint32_t G, uint32_t B, uint32_t A)
 	Convert01();
 }
 
-void NColor::SetColor(float R , float G, float B , float A )
+void NColor::SetColor(const float R , const float G, const float B , const float A )
 {
 	r = R;
 	g = G;
@@ -50,22 +50,22 @@ NColor& NColor::operator++()
 	return *this;
 }
 
-NColor NColor::operator+(float num) const
+NColor NColor::operator+(const float num) const
 {
 	return { r + num, g + num, b + num };
 }
 
-NColor NColor::operator-(float num) const
+NColor NColor::operator-(const float num) const
 {
 	return { r - num, g - num, b - num };
 }
 
-NColor NColor::operator*(float num) const
+NColor NColor::operator*(const float num) const
 {
 	return { r * num, g * num, b * num };
 }
 
-NColor NColor::operator/(float num) const
+NColor NColor::operator/(const float num) const
 {
 	return { r / num, g / num, b / num };
 }

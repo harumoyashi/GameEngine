@@ -7,12 +7,12 @@ public:
 	float r, g, b, a;
 
 	NColor() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
-	NColor(float r, float g, float b) : r(r), g(g), b(b), a(1.0f) {}
-	NColor(float r, float g, float b, float a) : r(r), g(g), b(b), a(a) {}
+	NColor(const float r, const float g, const float b) : r(r), g(g), b(b), a(1.0f) {}
+	NColor(const float r, const float g, const float b, const float a) : r(r), g(g), b(b), a(a) {}
 
 	//色情報変更(uint32_t型0~255)
-	void SetColor255(uint32_t R = 255, uint32_t G = 255, uint32_t B = 255, uint32_t A = 255);
-	void SetColor(float R = 1.0f, float G = 1.0f, float B = 1.0f, float A = 1.0f);
+	void SetColor255(const uint32_t R = 255, const uint32_t G = 255, const uint32_t B = 255, const uint32_t A = 255);
+	void SetColor(const float R = 1.0f, const float G = 1.0f, const float B = 1.0f, const float A = 1.0f);
 	//0.0f~1.0fに直す
 	void Convert01();
 	//0.0f~255.0fに直す
@@ -30,9 +30,9 @@ public:
 	NColor& operator++();
 
 	//単項演算子
-	NColor operator+(float num) const;
-	NColor operator-(float num) const;
-	NColor operator*(float num) const;
-	NColor operator/(float num) const;
+	NColor operator+(const float num) const;
+	NColor operator-(const float num) const;
+	NColor operator*(const float num) const;
+	NColor operator/(const float num) const;
 	NColor operator=(const NColor& col);
 };

@@ -32,9 +32,9 @@ public:
 	NVertexBuff vertexBuff_;
 	NIndexBuff indexBuff_;
 
-	bool Load(ImportSettings setting); // モデルをロードする
+	bool Load(const ImportSettings& setting); // モデルをロードする
 
 private:
-	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
+	void LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, const bool inverseV);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);
 };
