@@ -7,7 +7,7 @@ NMaterial::NMaterial()
 	ambient = { 0.3f,0.3f,0.3f };
 	diffuse = { 0.0f,0.0f,0.0f };
 	specular = { 0.0f,0.0f,0.0f };
-	alpha = 255.0f;
+	alpha = 1.0f;
 }
 
 NMaterial::~NMaterial()

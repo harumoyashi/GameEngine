@@ -3,7 +3,7 @@
 #include "NMathUtil.h"
 
 std::unique_ptr<NCamera> NCamera::sNCamera = std::make_unique<NCamera>();
-NCamera* NCamera::sNowCamera = sNCamera.get();
+NCamera* NCamera::sCurrentCamera = sNCamera.get();
 
 void NCamera::CreateMatView()
 {

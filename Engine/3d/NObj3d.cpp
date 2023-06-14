@@ -116,9 +116,9 @@ void NObj3d::TransferMatrix()
 	cbTrans_->constMap_ = nullptr;
 	result = cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
 
-	cbTrans_->constMap_->viewproj = NCamera::sNowCamera->GetMatView() * NCamera::sNowCamera->GetMatProjection();
+	cbTrans_->constMap_->viewproj = NCamera::sCurrentCamera->GetMatView() * NCamera::sCurrentCamera->GetMatProjection();
 	cbTrans_->constMap_->world = matWorld_;
-	cbTrans_->constMap_->cameraPos = NCamera::sNowCamera->GetPos();
+	cbTrans_->constMap_->cameraPos = NCamera::sCurrentCamera->GetPos();
 
 	cbTrans_->Unmap();
 }

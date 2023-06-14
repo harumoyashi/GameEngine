@@ -63,8 +63,8 @@ private:
 	float color_ = 0.0f;
 
 	std::vector<Mesh> meshes; // メッシュの配列
-	std::vector<NVertexBuff*> vertexBuff_ers; // メッシュの数分の頂点バッファ
-	std::vector<NIndexBuff*> indexBuff_ers; // メッシュの数分のインデックスバッファ
+	std::vector<NVertexBuff> vertexBuffers_; // メッシュの数分の頂点バッファ
+	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
 	const wchar_t* modelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 
 	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
@@ -77,6 +77,8 @@ private:
 	
 	AssimpLoader loader;
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
+	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
 
 	std::unique_ptr<LevelData> levelData;
 

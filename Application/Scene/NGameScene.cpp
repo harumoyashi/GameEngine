@@ -16,7 +16,7 @@ void NGameScene::Init()
 #pragma region	カメラ初期化
 	camera.ProjectiveProjection();
 	camera.CreateMatView();
-	NCamera::sNowCamera = &camera;
+	NCamera::sCurrentCamera = &camera;
 #pragma endregion
 #pragma region 描画初期化処理
 	//マテリアル(定数バッファ)
@@ -78,7 +78,7 @@ void NGameScene::Update()
 #pragma region 行列の計算
 	//ビュー行列の再生成
 	camera.CreateMatView();
-	NCamera::sNowCamera = &camera;
+	NCamera::sCurrentCamera = &camera;
 
 	obj[0]->MoveKey();
 	obj[3]->MoveKey();

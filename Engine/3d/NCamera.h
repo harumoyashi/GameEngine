@@ -12,7 +12,7 @@ class NCamera
 {
 public:
 	static std::unique_ptr<NCamera> sNCamera;
-	static NCamera* sNowCamera;
+	static NCamera* sCurrentCamera;
 
 private:
 	//ƒJƒƒ‰
