@@ -64,18 +64,15 @@ void NResultScene::Init()
 #pragma endregion
 	// ライト生成
 	directionalLight = std::make_unique<NDirectionalLight>();
-	directionalLight->Initialize();
+	directionalLight->Init();
 	pointLight = std::make_unique<NPointLight>();
-	pointLight->Initialize();
+	pointLight->Init();
 	spotLight = std::make_unique<NSpotLight>();
-	spotLight->Initialize();
+	spotLight->Init();
 	circleShadow = std::make_unique<NCircleShadow>();
-	circleShadow->Initialize();
+	circleShadow->Init();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
-	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	
 }
 
 void NResultScene::Update()
@@ -126,10 +123,7 @@ void NResultScene::Draw()
 void NResultScene::Reset()
 {
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
-	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	
 }
 
 void NResultScene::Finalize()

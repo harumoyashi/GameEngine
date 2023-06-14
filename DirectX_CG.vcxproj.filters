@@ -222,6 +222,9 @@
     <ClInclude Include="NVector4.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
+    <ClInclude Include="NLightGroup.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -351,6 +354,9 @@
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NVector4.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NLightGroup.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

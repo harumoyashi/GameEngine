@@ -26,7 +26,7 @@ public: //ƒƒ“ƒoŠÖ”
 	~NDirectionalLight();
 
 	//‰Šú‰»
-	void Initialize();
+	void Init();
 	//XV
 	void Update();
 	//•`‰æ

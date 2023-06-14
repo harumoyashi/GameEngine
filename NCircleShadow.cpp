@@ -9,12 +9,13 @@ NCircleShadow::~NCircleShadow()
 {
 }
 
-void NCircleShadow::Initialize()
+void NCircleShadow::Init()
 {
 	cbCircleShadow_ = std::make_unique<NConstBuff<ConstBuffDataCircleShadow>>();
 	cbCircleShadow_->Init();
 
 	SetActive(true);
+	SetFactorAngle({ 0.2f,0.5f });
 	TransferConstBuffer();
 }
 
@@ -29,9 +30,12 @@ void NCircleShadow::Update()
 
 void NCircleShadow::Draw(const uint32_t rootParameterIndex)
 {
-	//定数バッファビューをセット
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbCircleShadow_->constBuff_->GetGPUVirtualAddress());
+	if (isActive_)
+	{
+		//定数バッファビューをセット
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
+			cbCircleShadow_->constBuff_->GetGPUVirtualAddress());
+	}
 }
 
 void NCircleShadow::TransferConstBuffer()

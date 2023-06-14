@@ -4,10 +4,7 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 
-NDirectionalLight* NObj3d::sDirectionalLight = nullptr;
-NPointLight* NObj3d::sPointLight = nullptr;
-NSpotLight* NObj3d::sSpotLight = nullptr;
-NCircleShadow* NObj3d::sCircleShadow = nullptr;
+NLightGroup* NObj3d::sLightGroup = nullptr;
 
 NObj3d::NObj3d()
 {
@@ -159,10 +156,7 @@ void NObj3d::Draw()
 	SetIB(model_.indexBuff_.view_);
 	SetSRVHeap(model_.material_.texture.gpuHandle_);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
-	sDirectionalLight->Draw(4);
-	sPointLight->Draw(5);
-	sSpotLight->Draw(6);
-	sCircleShadow->Draw(7);
+	sLightGroup->Draw();
 	DrawCommand((uint32_t)model_.indices_.size());
 }
 

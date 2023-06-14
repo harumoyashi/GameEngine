@@ -130,6 +130,7 @@
     <ClInclude Include="Engine\Math\NVector3.h" />
     <ClInclude Include="NFramework.h" />
     <ClInclude Include="NGame.h" />
+    <ClInclude Include="NLightGroup.h" />
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="Engine\Base\NWindows.cpp" />
     <ClCompile Include="Engine\Math\NVector2.cpp" />
     <ClCompile Include="Engine\Math\NVector3.cpp" />
+    <ClCompile Include="NLightGroup.cpp" />
     <ClCompile Include="NPointLight.cpp" />
     <ClCompile Include="NResultScene.cpp" />
     <ClCompile Include="NSpotLight.cpp" />

@@ -5,10 +5,7 @@
 #include "NRootParam.h"
 #include "NGPipeline.h"
 #include "NMatrix4.h"
-#include "NDirectionalLight.h"
-#include "NPointLight.h"
-#include "NSpotLight.h"
-#include "NCircleShadow.h"
+#include "NLightGroup.h"
 #include "NConstBuff.h"
 
 #include<memory>
@@ -30,10 +27,7 @@ private:
 	NMatrix4 matWorld_;	//3D変換行列
 
 	// ライト
-	static NDirectionalLight* sDirectionalLight;
-	static NPointLight* sPointLight;
-	static NSpotLight* sSpotLight;
-	static NCircleShadow* sCircleShadow;
+	static NLightGroup* sLightGroup;
 
 public:
 	NVector3 scale_ = { 1.0f,1.0f,1.0f };	//スケーリング倍率
@@ -89,19 +83,8 @@ public:
 	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
 	inline void SetModel(const NModel& model) { model_ = model; }
-	//ライトのセット
-	static void SetNDirectionalLight(NDirectionalLight* directionalLight) {
-		NObj3d::sDirectionalLight = directionalLight;
-	}
-	static void SetNPointLight(NPointLight* pointLight) {
-		NObj3d::sPointLight = pointLight;
-	}
-	static void SetNSpotLight(NSpotLight* spotLight) {
-		NObj3d::sSpotLight = spotLight;
-	}
-	static void SetNCircleShadow(NCircleShadow* circleShadow) {
-		NObj3d::sCircleShadow = circleShadow;
-	}
 
 	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
+
+	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 };

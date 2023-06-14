@@ -9,7 +9,7 @@ NPointLight::~NPointLight()
 {
 }
 
-void NPointLight::Initialize()
+void NPointLight::Init()
 {
 	cbPointLight = std::make_unique<NConstBuff<ConstBuffDataPointLight>>();
 	cbPointLight->Init();
@@ -29,9 +29,12 @@ void NPointLight::Update()
 
 void NPointLight::Draw(const uint32_t rootParameterIndex)
 {
-	//定数バッファビューをセット
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbPointLight->constBuff_->GetGPUVirtualAddress());
+	if (isActive_)
+	{
+		//定数バッファビューをセット
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
+			cbPointLight->constBuff_->GetGPUVirtualAddress());
+	}
 }
 
 void NPointLight::TransferConstBuffer()

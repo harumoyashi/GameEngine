@@ -9,7 +9,7 @@ NSpotLight::~NSpotLight()
 {
 }
 
-void NSpotLight::Initialize()
+void NSpotLight::Init()
 {
 	cbSpotLight = std::make_unique<NConstBuff<ConstBuffDataSpotLight>>();
 	cbSpotLight->Init();
@@ -29,9 +29,12 @@ void NSpotLight::Update()
 
 void NSpotLight::Draw(const uint32_t rootParameterIndex)
 {
-	//定数バッファビューをセット
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
-		cbSpotLight->constBuff_->GetGPUVirtualAddress());
+	if (isActive_)
+	{
+		//定数バッファビューをセット
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(rootParameterIndex,
+			cbSpotLight->constBuff_->GetGPUVirtualAddress());
+	}
 }
 
 void NSpotLight::TransferConstBuffer()

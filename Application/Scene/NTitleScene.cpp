@@ -205,19 +205,10 @@ void NTitleScene::Init()
 
 #pragma endregion
 	// ライト生成
-	directionalLight = std::make_unique<NDirectionalLight>();
-	directionalLight->Initialize();
-	pointLight = std::make_unique<NPointLight>();
-	pointLight->Initialize();
-	spotLight = std::make_unique<NSpotLight>();
-	spotLight->Initialize();
-	circleShadow = std::make_unique<NCircleShadow>();
-	circleShadow->Initialize();
+	lightGroup_ = std::make_unique<NLightGroup>();
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
-	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	NObj3d::SetLightGroup(lightGroup_.get());
 
 	timer.SetMaxTimer(10);
 }
@@ -237,10 +228,8 @@ void NTitleScene::Update()
 	}
 
 	//ライトたちの更新
-	directionalLight->Update();
-	pointLight->Update();
-	spotLight->Update();
-	circleShadow->Update();
+	//lightGroup_.get()->sDirLights.SetLightColor({ 0,1.0f,0 });
+	lightGroup_->Update();
 
 #pragma region 行列の計算
 	//ビュー行列の再生成
@@ -343,15 +332,9 @@ void NTitleScene::Draw()
 
 void NTitleScene::Reset()
 {
-	directionalLight->Initialize();
-	pointLight->Initialize();
-	spotLight->Initialize();
-	circleShadow->Initialize();
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetNDirectionalLight(directionalLight.get());
-	NObj3d::SetNPointLight(pointLight.get());
-	NObj3d::SetNSpotLight(spotLight.get());
-	NObj3d::SetNCircleShadow(circleShadow.get());
+	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
 void NTitleScene::Finalize()

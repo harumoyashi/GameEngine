@@ -48,7 +48,7 @@ struct ConstBuffDataMaterial
 struct ConstBuffDataLight
 {
 	NVector3 dir;
-	float pad1;
+	uint32_t active;
 	NVector3 color;
 };
 

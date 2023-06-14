@@ -9,7 +9,7 @@ NDirectionalLight::~NDirectionalLight()
 {
 }
 
-void NDirectionalLight::Initialize()
+void NDirectionalLight::Init()
 {
 	cbLight = std::make_unique<NConstBuff<ConstBuffDataLight>>();
 	cbLight->Init();
@@ -17,7 +17,6 @@ void NDirectionalLight::Initialize()
 	SetActive(true);
 	SetLightColor({ 1.0f, 1.0f, 1.0f });
 	SetLightDir({ 0.0f, -1.0f, 0.0f });
-	
 
 	TransferConstBuffer();
 }
@@ -46,6 +45,7 @@ void NDirectionalLight::TransferConstBuffer()
 	result = cbLight->constBuff_->Map(0, nullptr, (void**)&cbLight->constMap_);
 	if (SUCCEEDED(result)) {
 		cbLight->constMap_->dir = -lightdir_;	//ƒ‰ƒCƒg‚ÌŒü‚«‚Í‹tŒü‚«‚Å
+		cbLight->constMap_->active = isActive_;
 		cbLight->constMap_->color = lightcolor_;
 		cbLight->constBuff_->Unmap(0, nullptr);
 	}

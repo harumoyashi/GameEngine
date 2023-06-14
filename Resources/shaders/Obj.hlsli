@@ -21,8 +21,8 @@ cbuffer cbuff2 : register(b2)
 struct DirLight
 {
     float3 lightv; //ライトへの方向の単位ベクトル
-    float3 lightcolor; //ライトの色(RGB)
     uint active;
+    float3 lightcolor; //ライトの色(RGB)
 };
 
 cbuffer cbuff3 : register(b3)

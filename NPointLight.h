@@ -27,7 +27,7 @@ public://ƒƒ“ƒoŠÖ”
 	~NPointLight();
 
 	//‰Šú‰»
-	void Initialize();
+	void Init();
 	//XV
 	void Update();
 	//•`‰æ

@@ -45,10 +45,7 @@ private:
 	uint32_t soundData_[maxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
-	std::unique_ptr<NDirectionalLight> directionalLight;
-	std::unique_ptr<NPointLight > pointLight;
-	std::unique_ptr<NSpotLight> spotLight;
-	std::unique_ptr<NCircleShadow> circleShadow;
+	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
 

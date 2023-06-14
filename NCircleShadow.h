@@ -31,7 +31,7 @@ public://ƒƒ“ƒoŠÖ”
 	~NCircleShadow();
 
 	//‰Šú‰»
-	void Initialize();
+	void Init();
 	//XV
 	void Update();
 	//•`‰æ
