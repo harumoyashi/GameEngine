@@ -134,6 +134,7 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->ambient = model_.material_.ambient;
 	cbMaterial_->constMap_->diffuse = model_.material_.diffuse;
 	cbMaterial_->constMap_->specular = model_.material_.specular;
+	cbMaterial_->constMap_->alpha = model_.material_.alpha;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -174,7 +175,14 @@ void NObj3d::SetSRVHeap()
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
+	if (gpuHandle.ptr==0)
+	{
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
+	}
+	else
+	{
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
+	}
 }
 
 void NObj3d::SetVB(const D3D12_VERTEX_BUFFER_VIEW& vbView)

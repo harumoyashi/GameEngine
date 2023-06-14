@@ -117,12 +117,12 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, c
             uv->y = 1 - uv->y;
         }
 
-        NVertexAssimp vertex = {};
+        NVertexPNU vertex = {};
         vertex.pos = NVector3(position->x, position->y, position->z);
         vertex.normal = NVector3(normal->x, normal->y, normal->z);
         vertex.uv = NVector2(uv->x, uv->y);
-        vertex.tangent = NVector3(tangent->x, tangent->y, tangent->z);
-        vertex.color = NColor(color->r, color->g, color->b, color->a);
+        //vertex.tangent = NVector3(tangent->x, tangent->y, tangent->z);
+        //vertex.color = NColor(color->r, color->g, color->b, color->a);
 
         dst.vertices[i] = vertex;
     }
