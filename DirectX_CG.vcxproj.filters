@@ -204,7 +204,7 @@
     <ClInclude Include="NFramework.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AssimpLoader.h">
+    <ClInclude Include="NAssimpLoader.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NConstBuff.h">
@@ -213,7 +213,7 @@
     <ClInclude Include="NConstBuffData.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="LevelDataLoader.h">
+    <ClInclude Include="NLevelDataLoader.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="External\json.hpp">
@@ -223,6 +223,9 @@
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="NLightGroup.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NAssimpModel.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -335,7 +338,7 @@
     <ClCompile Include="NFramework.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="AssimpLoader.cpp">
+    <ClCompile Include="NAssimpLoader.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NConstBuff.cpp">
@@ -350,13 +353,16 @@
     <ClCompile Include="NPointLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="LevelDataLoader.cpp">
+    <ClCompile Include="NLevelDataLoader.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NVector4.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NLightGroup.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NAssimpModel.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

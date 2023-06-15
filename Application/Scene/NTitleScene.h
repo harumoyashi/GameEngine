@@ -16,9 +16,9 @@
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NTimer.h"
-#include "AssimpLoader.h"
+#include "NAssimpLoader.h"
 #include "NConstBuff.h"
-#include "LevelDataLoader.h"
+#include "NLevelDataLoader.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -75,7 +75,7 @@ private:
 		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
 	};
 	
-	AssimpLoader loader;
+	NAssimpLoader loader;
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
 	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;

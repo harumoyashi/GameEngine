@@ -20,8 +20,8 @@ private:
 	NMatrix4 matView_{};
 
 	//カメラ
-	NVector3 eye_ = { 0, 100.0f, 300.0f };	//視点座標
-	NVector3 target_ = { 0, 100, 0 };			//注視点座標
+	NVector3 eye_ = { 0, 10.0f, -30.0f };	//視点座標
+	NVector3 target_ = { 0, 0, 0 };			//注視点座標
 	NVector3 up_ = { 0, 1.0f, 0 };			//上方向ベクトル
 	float angle_ = 0.0f;					//カメラの回転角
 

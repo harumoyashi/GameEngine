@@ -1,15 +1,15 @@
-#include "LevelDataLoader.h"
+#include "NLevelDataLoader.h"
 #include <string>
 #include <fstream>
 #include <assert.h>
 
-LevelDataLoader* LevelDataLoader::GetInstance()
+NLevelDataLoader* NLevelDataLoader::GetInstance()
 {
-	static LevelDataLoader instance;
+	static NLevelDataLoader instance;
 	return &instance;
 }
 
-std::unique_ptr<LevelData> LevelDataLoader::Load(const std::string& directoryPath, const std::string& filename)
+std::unique_ptr<LevelData> NLevelDataLoader::Load(const std::string& directoryPath, const std::string& filename)
 {
 	//連結してフルパスを見る
 	const std::string fullpath = directoryPath + filename;
@@ -58,7 +58,7 @@ std::unique_ptr<LevelData> LevelDataLoader::Load(const std::string& directoryPat
 	return levelData;
 }
 
-void LevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
+void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 {
 	assert(object.contains("type"));
 
@@ -90,7 +90,7 @@ void LevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 	}
 }
 
-void LevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
+void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
 {
 	//レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects)

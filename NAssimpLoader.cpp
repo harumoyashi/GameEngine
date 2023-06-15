@@ -3,7 +3,7 @@
 #include <assimp/postprocess.h>
 #include <d3dx12.h>
 #include <filesystem>
-#include "AssimpLoader.h"
+#include "NAssimpLoader.h"
 
 namespace fs = std::filesystem;
 
@@ -43,7 +43,7 @@ std::wstring ToWideString(const std::string& str)
     return wstr;
 }
 
-bool AssimpLoader::Load(const ImportSettings& settings)
+bool NAssimpLoader::Load(const ImportSettings& settings)
 {
     if (settings.filename == nullptr)
     {
@@ -92,7 +92,7 @@ bool AssimpLoader::Load(const ImportSettings& settings)
     return true;
 }
 
-void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, const bool inverseV)
+void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, const bool inverseV)
 {
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
     aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -142,7 +142,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, c
     vertexBuff_.Init(dst.vertices);
 }
 
-void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)
+void NAssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)
 {
     aiString path;
     if (src->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)

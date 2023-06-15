@@ -18,14 +18,14 @@ struct LevelData
 	std::map<ModelName, NModel> models;
 };
 
-class LevelDataLoader
+class NLevelDataLoader
 {
 private:
 
 
 public:
 	//シングルトンインスタンス取得
-	static LevelDataLoader* GetInstance();
+	static NLevelDataLoader* GetInstance();
 	std::unique_ptr<LevelData> Load(const std::string& directoryPath, const std::string& filename);
 	//走査
 	void Traversal(nlohmann::json& object, LevelData* levelData);
