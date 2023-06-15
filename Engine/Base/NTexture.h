@@ -72,5 +72,7 @@ private:
 	void SetSRV();
 	//シェーダーリソースビュー生成
 	NTexture CreateSRV(NTexture& tex);
+	//拡張子抽出
+	std::string GetExtension(const std::string& path);
 };
 

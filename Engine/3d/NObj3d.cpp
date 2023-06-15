@@ -125,7 +125,6 @@ void NObj3d::TransferMatrix()
 
 void NObj3d::TransferColor()
 {
-	//’l‚ð‘‚«ž‚Þ‚ÆŽ©“®“I‚É“]‘—‚³‚ê‚é
 	cbColor_->constMap_->color = color_;
 }
 

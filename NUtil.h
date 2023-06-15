@@ -1,0 +1,9 @@
+#pragma once
+#include <string>
+
+class NUtil
+{
+public:
+	//wstringŒ^‚ðstringŒ^‚É•ÏŠ·
+	static std::string ToUTF8(const std::wstring& value);
+};

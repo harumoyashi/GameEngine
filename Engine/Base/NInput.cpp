@@ -78,6 +78,15 @@ bool NInput::IsKeyRelease(const uint8_t key)
 	return !keys[key] && prev[key];
 }
 
+//---------こっからパッド------------//
+//XINPUT_STATE 構造体のインスタンスを作成
+XINPUT_STATE NInput::statePad_{};
+XINPUT_STATE NInput::prevPad_{};
+//接続されてるか
+bool NInput::isConnect_ = false;
+//振動
+XINPUT_VIBRATION NInput::vibration_{};
+
 void NInput::PadInit()
 {
 	ZeroMemory(&statePad_, sizeof(XINPUT_STATE));

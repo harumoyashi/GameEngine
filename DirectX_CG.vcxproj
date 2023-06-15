@@ -136,6 +136,7 @@
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
     <ClInclude Include="NTimer.h" />
+    <ClInclude Include="NUtil.h" />
     <ClInclude Include="NVector4.h" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +184,7 @@
     <ClCompile Include="NResultScene.cpp" />
     <ClCompile Include="NSpotLight.cpp" />
     <ClCompile Include="NTimer.cpp" />
+    <ClCompile Include="NUtil.cpp" />
     <ClCompile Include="NVector4.cpp" />
   </ItemGroup>
   <ItemGroup>

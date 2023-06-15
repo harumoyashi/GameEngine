@@ -16,9 +16,6 @@ private:
 	static ComPtr<IDirectInputDevice8> sKeyboard;
 	static ComPtr<IDirectInput8> sDirectInput;
 
-	//振動
-	XINPUT_VIBRATION vibration_;
-
 public:
 	NInput() {};
 	static NInput* GetInstance();
@@ -36,13 +33,16 @@ public:
 	//離した瞬間
 	static bool IsKeyRelease(const uint8_t key);
 
-public:
+private:
 	//XINPUT_STATE 構造体のインスタンスを作成
-	XINPUT_STATE statePad_{};
-	XINPUT_STATE prevPad_{};
+	static XINPUT_STATE statePad_;
+	static XINPUT_STATE prevPad_;
 
 	//接続されてるか
-	bool isConnect_ = false;
+	static bool isConnect_;
+
+	//振動
+	static XINPUT_VIBRATION vibration_;
 
 public:
 	//初期化
@@ -51,30 +51,33 @@ public:
 	void PadUpdate();
 
 	//押しっぱなし
-	bool IsButton(const uint32_t button);    //UINTはビット数指定したら型自由ぽい
+	static bool IsButton(const uint32_t button);    //UINTはビット数指定したら型自由ぽい
 	//押した瞬間
-	bool IsButtonDown(const uint32_t button);
+	static bool IsButtonDown(const uint32_t button);
 	//離した瞬間
-	bool IsButtonRelease(const uint32_t button);
+	static bool IsButtonRelease(const uint32_t button);
 
 	//トリガーの押し込み具合取得
 	//isLeft:右左どっち！
-	uint32_t GetTrigger(const bool isLeft = true);
+	static uint32_t GetTrigger(const bool isLeft = true);
 
 	//デッドゾーンの設定
-	void SetDeadZone();
+	static void SetDeadZone();
 
 	//スティックの傾き具合取得
 	//isLeft:右左どっち！
-	NVector2 GetStick(const bool isLeft = true);
+	static NVector2 GetStick(const bool isLeft = true);
 
 	//isVertical:垂直方向か
 	//isLstick:Lスティックか
 	//上、左はなら-1
 	//下、右なら+1が返ってくる
-	uint32_t StickTriggered(bool isVertical, const bool isLstick = true);
+	static uint32_t StickTriggered(bool isVertical, const bool isLstick = true);
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね
-	void Vibration(const float leftVibrationPower, const float rightVibrationPower);
+	static void Vibration(const float leftVibrationPower, const float rightVibrationPower);
+
+	//接続情報取得
+	inline static bool GetIsConnect() { return isConnect_; }
 };
