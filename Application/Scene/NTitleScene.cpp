@@ -49,7 +49,7 @@ void NTitleScene::Init()
 	// レベルデータからの読み込み
 	levelData = std::make_unique<LevelData>();
 	levelData = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
-	SetObject(levelData.get());
+	//SetObject(levelData.get());
 	NLevelDataLoader::GetInstance()->SetObject(levelData.get(), levelDataobj);
 	for (auto& lo : levelDataobj)
 	{
