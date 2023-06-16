@@ -106,6 +106,7 @@ void NAssimpModel::Draw()
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(
 			1, NTextureManager::GetInstance()->textureMap_[texName].gpuHandle_);
 
+		//ライト描画
 		sLightGroup->Draw();
 
 		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes_[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
