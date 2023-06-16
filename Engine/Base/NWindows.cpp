@@ -43,7 +43,7 @@ void NWindows::Set()
 
 	RegisterClassEx(&win_);	//アプリケーションクラス（ウィンドウクラスの指定をOSに伝える）
 
-	wrc_ = { 0,0,sWin_width,sWin_height };	//ウィンドウサイズを決める
+	wrc_ = { 0,0,kWin_width,kWin_height };	//ウィンドウサイズを決める
 
 	//関数を使ってウィンドウのサイズを補正する
 	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);

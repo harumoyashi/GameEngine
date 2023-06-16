@@ -151,8 +151,8 @@ void NDX12::CreateSwapChain(NWindows* win)
 {
 	HRESULT result;
 
-	swapchainDesc_.Width = NWindows::sWin_width;
-	swapchainDesc_.Height = NWindows::sWin_height;
+	swapchainDesc_.Width = NWindows::kWin_width;
+	swapchainDesc_.Height = NWindows::kWin_height;
 	swapchainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM; // 色情報の書式
 	swapchainDesc_.SampleDesc.Count = 1; // マルチサンプルしない
 	swapchainDesc_.BufferUsage = DXGI_USAGE_BACK_BUFFER; // バックバッファ用
@@ -223,8 +223,8 @@ void NDX12::SetDepthRes()
 {
 	//リソース設定
 	depthResourceDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-	depthResourceDesc_.Width = NWindows::sWin_width;	//レンダーターゲットに合わせる
-	depthResourceDesc_.Height = NWindows::sWin_height;	//レンダーターゲットに合わせる
+	depthResourceDesc_.Width = NWindows::kWin_width;	//レンダーターゲットに合わせる
+	depthResourceDesc_.Height = NWindows::kWin_height;	//レンダーターゲットに合わせる
 	depthResourceDesc_.DepthOrArraySize = 1;
 	depthResourceDesc_.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	depthResourceDesc_.SampleDesc.Count = 1;

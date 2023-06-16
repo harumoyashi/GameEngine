@@ -21,8 +21,8 @@ void NGame::Init()
 	pipeline_->Init();
 #pragma endregion
 #pragma region オーディオ初期化
-	audio_ = NAudio::GetInstance();
-	audio_->Init();
+	audio__ = NAudio::GetInstance();
+	audio__->Init();
 	NAudioManager::AllLoad();
 #pragma endregion
 #pragma region テクスチャマネージャー初期化
@@ -56,7 +56,7 @@ void NGame::Draw()
 void NGame::Finalize()
 {
 #pragma region 後始末
-	audio_->Finalize();
+	audio__->Finalize();
 	win_->Finalize();
 	sceneMane_->Finalize();
 #pragma endregion

@@ -62,9 +62,9 @@ private:
 	ComPtr<ID3D12Fence> fence_;	//CPUとGPUの同期に使われるやつ
 	UINT64 fenceVal_ = 0;
 
-	//fps_固定用
+	//kFPS固定用
 	std::chrono::steady_clock::time_point reference_;	//記録時間
-	const long long fps_ = 60;	//60FPS
+	const long long kFPS = 60;	//60FPS
 
 public:
 	std::vector<ComPtr<ID3D12Resource>> backBuffers_;

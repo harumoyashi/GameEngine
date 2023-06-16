@@ -13,7 +13,7 @@ class NGame :public NFramework
 private:
 	NWindows* win_;
 	NDX12* dx12_;
-	NAudio* audio_;
+	NAudio* audio__;
 	PipeLineManager* pipeline_;
 	NTextureManager* texManager_;
 	NSceneManager* sceneMane_;

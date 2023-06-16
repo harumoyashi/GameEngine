@@ -11,12 +11,12 @@ NResultScene* NResultScene::GetInstance()
 void NResultScene::Init()
 {
 #pragma region	オーディオ初期化
-	audio = NAudio::GetInstance();
+	audio_ = NAudio::GetInstance();
 #pragma endregion
 #pragma region	カメラ初期化
-	camera.ProjectiveProjection();
-	camera.CreateMatView();
-	NCamera::sCurrentCamera = &camera;
+	camera_.ProjectiveProjection();
+	camera_.CreateMatView();
+	NCamera::sCurrentCamera = &camera_;
 #pragma endregion
 #pragma region 描画初期化処理
 	//マテリアル(定数バッファ)
@@ -24,7 +24,7 @@ void NResultScene::Init()
 	//立方体情報
 
 	//モデル情報
-	for (size_t i = 0; i < maxModel; i++)
+	for (size_t i = 0; i < kMaxModel; i++)
 	{
 		model.emplace_back();
 	}
@@ -33,7 +33,7 @@ void NResultScene::Init()
 	model[2].Create("busterSword");
 
 	//オブジェクト
-	for (uint32_t i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
 		obj.emplace_back();
 		obj[i] = std::make_unique<NObj3d>();
@@ -51,7 +51,7 @@ void NResultScene::Init()
 	obj[2]->position_ = { 2,0,0 };
 	obj[3]->position_ = { -2,3,0 };
 	//設定したのを適用
-	for (uint32_t i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
 		obj[i]->Update();
 	}
@@ -83,13 +83,13 @@ void NResultScene::Update()
 	}
 #pragma region 行列の計算
 	//ビュー行列の再生成
-	camera.CreateMatView();
-	NCamera::sCurrentCamera = &camera;
+	camera_.CreateMatView();
+	NCamera::sCurrentCamera = &camera_;
 
 	obj[0]->MoveKey();
 	obj[3]->MoveKey();
 
-	for (size_t i = 0; i < maxObj; i++)
+	for (size_t i = 0; i < kMaxObj; i++)
 	{
 		obj[i]->Update();
 	}
@@ -108,7 +108,7 @@ void NResultScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (uint32_t i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
 		obj[i]->CommonBeginDraw();
 		obj[i]->Draw();

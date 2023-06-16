@@ -28,43 +28,40 @@ class NTitleScene
 private:
 	//オブジェクト
 	NMaterial material_;				//マテリアル
-	static const uint32_t maxObj = 3;	//オブジェクト数
-	std::vector<std::unique_ptr<NObj3d>> obj;	//オブジェクト
-	std::vector<std::unique_ptr<NObj3d>> levelDataobj;	//レベルデータから読み込んだオブジェクト
+	static const uint32_t kMaxObj = 3;	//オブジェクト数
+	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト
+	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
-	static const uint32_t maxModel = 2;	//モデル数
-	std::vector<NModel> model;	//モデル情報
+	static const uint32_t kMaxModel = 2;	//モデル数
+	std::vector<NModel> model_;	//モデル情報
 
-	NCollision::Sphere sphere;
-	NCollision::Plane plane;
-	bool isCol = false;
+	NCollision::Sphere sphere_;
+	NCollision::Plane plane_;
+	bool isCol_ = false;
 
 	//背景スプライト
-	static const uint32_t maxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite[maxBackSprite];	//背景スプライト
+	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
+	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
 
 	//前景スプライト
-	static const uint32_t maxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite[maxForeSprite];	//前景スプライト
+	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
+	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 
-	NCamera camera;	//カメラ
+	NCamera camera_;	//カメラ
 
 	//オーディオ
-	NAudio* audio = nullptr;
-	static const uint32_t maxSoundData = 3;		//サウンドデータの最大数
-	uint32_t soundData_[maxSoundData] = {};	//サウンドデータ格納用
+	NAudio* audio_ = nullptr;
+	static const uint32_t kMaxSoundData = 3;		//サウンドデータの最大数
+	uint32_t soundData_[kMaxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 
-	NTimer timer;
+	NTimer timer_;
 
-	bool flag = true;
-	float color_ = 0.0f;
+	std::unique_ptr<LevelData> levelData_;
 
-	std::unique_ptr<LevelData> levelData;
-
-	NAssimpModel assimpModel;
+	NAssimpModel assimpModel_;
 
 public:
 	//インスタンス取得

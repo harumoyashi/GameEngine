@@ -32,8 +32,8 @@ void NPreDraw::ClearScreen()
 
 void NPreDraw::SetViewport()
 {
-	viewport_.Width = NWindows::sWin_width;
-	viewport_.Height = NWindows::sWin_height;
+	viewport_.Width = NWindows::kWin_width;
+	viewport_.Height = NWindows::kWin_height;
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
 	viewport_.MinDepth = 0.0f;	//最小震度
@@ -45,9 +45,9 @@ void NPreDraw::SetViewport()
 void NPreDraw::SetScissorRect()
 {
 	scissorRect_.left = 0; // 切り抜き座標左
-	scissorRect_.right = scissorRect_.left + NWindows::sWin_width; // 切り抜き座標右
+	scissorRect_.right = scissorRect_.left + NWindows::kWin_width; // 切り抜き座標右
 	scissorRect_.top = 0; // 切り抜き座標上
-	scissorRect_.bottom = scissorRect_.top + NWindows::sWin_height; // 切り抜き座標下
+	scissorRect_.bottom = scissorRect_.top + NWindows::kWin_height; // 切り抜き座標下
 	// シザー矩形設定コマンドを、コマンドリストに積む
 	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
 }

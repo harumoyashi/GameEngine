@@ -14,7 +14,7 @@ cbuffer cbuff2 : register(b2)
 {
     matrix viewproj; // ビュープロジェクション行列
     matrix world; // ワールド行列
-    float3 cameraPos; // カメラ座標(ワールド座標)
+    float3 camera_Pos; // カメラ座標(ワールド座標)
 };
 
 //平行光源

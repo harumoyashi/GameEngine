@@ -5,8 +5,8 @@
 class NWindows
 {
 public:
-	static const uint32_t sWin_width = 1280;
-	static const uint32_t sWin_height = 720;
+	static const uint32_t kWin_width = 1280;
+	static const uint32_t kWin_height = 720;
 
 private:
 	//ウィンドウクラスの生成＆登録

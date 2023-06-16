@@ -27,8 +27,8 @@ void NSprite::CreateSprite(const std::string& texHandle)
 	cbColor_->Init();
 	//•½s“Š‰e‚ð‘ã“ü
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::sWin_width),
-		static_cast<float>(NWindows::sWin_height)
+		static_cast<float>(NWindows::kWin_width),
+		static_cast<float>(NWindows::kWin_height)
 	);
 	Update();
 }
@@ -56,8 +56,8 @@ void NSprite::CreateSprite(const std::string& texHandle,
 	cbColor_->Init();
 	//•½s“Š‰e‚ð‘ã“ü
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::sWin_width),
-		static_cast<float>(NWindows::sWin_height)
+		static_cast<float>(NWindows::kWin_width),
+		static_cast<float>(NWindows::kWin_height)
 	);
 	Update();
 }
@@ -86,8 +86,8 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 	cbColor_->Init();
 	//•½s“Š‰e‚ð‘ã“ü
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
-		static_cast<float>(NWindows::sWin_width),
-		static_cast<float>(NWindows::sWin_height)
+		static_cast<float>(NWindows::kWin_width),
+		static_cast<float>(NWindows::kWin_height)
 	);
 	Update();
 }

@@ -10,7 +10,7 @@ private:
 	std::vector<Mesh> meshes_; // メッシュの配列
 	std::vector<NVertexBuff> vertexBuffers_; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
-	const wchar_t* modelFile_ = L"Resources/FBX/Alicia_solid_Unity.FBX";
+	const wchar_t* kModelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
 
 
 	//いるかわからんけど仮で
@@ -20,7 +20,7 @@ private:
 
 	ImportSettings importSetting_ = // これ自体は自作の読み込み設定構造体
 	{
-		modelFile_,
+		kModelFile,
 		meshes_,
 		false,
 		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる

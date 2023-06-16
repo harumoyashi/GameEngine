@@ -31,7 +31,7 @@ public:
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 	D3D12_HEAP_PROPERTIES texHeapProp_{};	//ヒープ
 	D3D12_RESOURCE_DESC texResDesc_{};		//リソース
-	static const size_t sMaxSRVCount = 2056;	//SRVの最大個数
+	static const size_t kMaxSRVCount = 2056;	//SRVの最大個数
 	ScratchImage mipChain_{};				//ミップマップ
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
