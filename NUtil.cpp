@@ -1,6 +1,8 @@
 #include "NUtil.h"
 #include "NWindows.h"
 #include "stringapiset.h"
+#include <filesystem>
+namespace fs = std::filesystem;
 
 std::string NUtil::ToUTF8(const std::wstring& value)
 {
@@ -39,4 +41,10 @@ std::string NUtil::GetExtension(const std::string& path)
 	}
 
 	return ext;
+}
+
+std::wstring NUtil::ReplaceExtension(const std::wstring& origin, const char* ext)
+{
+	fs::path p = origin.c_str();
+	return p.replace_extension(ext).c_str();
 }

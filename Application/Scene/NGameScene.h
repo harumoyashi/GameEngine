@@ -24,18 +24,18 @@ private:
 	//オブジェクト
 	NMaterial material_;				//マテリアル
 	static const uint32_t kMaxObj = 4;	//オブジェクト数
-	std::vector<std::unique_ptr<NObj3d>> obj;			//オブジェクト(定数バッファ)
+	std::vector<std::unique_ptr<NObj3d>> obj_;			//オブジェクト(定数バッファ)
 
 	static const uint32_t kMaxModel = 3;	//モデル数
-	std::vector<NModel> model;	//モデル情報
+	std::vector<NModel> model_;	//モデル情報
 
 	//背景スプライト
 	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite[kMaxBackSprite];	//背景スプライト
+	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
 
 	//前景スプライト
 	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite[kMaxForeSprite];	//前景スプライト
+	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 
 	NCamera camera_;	//カメラ
 

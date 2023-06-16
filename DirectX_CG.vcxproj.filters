@@ -235,7 +235,7 @@
       <Filter>Engine\ヘッダー ファイル\Loader</Filter>
     </ClInclude>
     <ClInclude Include="NUtil.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -375,7 +375,7 @@
       <Filter>Engine\ソース ファイル\Loader</Filter>
     </ClCompile>
     <ClCompile Include="NUtil.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

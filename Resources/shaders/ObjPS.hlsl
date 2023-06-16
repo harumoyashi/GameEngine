@@ -11,7 +11,7 @@ float4 main(VSOutput input) : SV_TARGET
 	// 光沢度
     const float shininess = 4.0f;
 	// 頂点から視点への方向ベクトル
-    float3 eyedir = normalize(camera_Pos - input.worldpos.xyz);
+    float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	
 	// 環境反射光
     float3 ambient = m_ambient;

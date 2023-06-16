@@ -11,7 +11,7 @@ struct  ConstBuffDataTransform
 	//NMatrix4 mat;	//3D変換行列
 	NMatrix4 viewproj;	// ビュープロジェクション行列
 	NMatrix4 world;		// ワールド行列
-	NVector3 camera_Pos;	// カメラ座標(ワールド座標)
+	NVector3 cameraPos;	// カメラ座標(ワールド座標)
 };
 
 //2D変換行列

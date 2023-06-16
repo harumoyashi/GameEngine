@@ -26,34 +26,34 @@ void NResultScene::Init()
 	//モデル情報
 	for (size_t i = 0; i < kMaxModel; i++)
 	{
-		model.emplace_back();
+		model_.emplace_back();
 	}
-	model[0].Create("sphere");
-	model[1].Create("Cube");
-	model[2].Create("busterSword");
+	model_[0].Create("sphere");
+	model_[1].Create("Cube");
+	model_[2].Create("busterSword");
 
 	//オブジェクト
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj.emplace_back();
-		obj[i] = std::make_unique<NObj3d>();
-		obj[i]->Init();
+		obj_.emplace_back();
+		obj_[i] = std::make_unique<NObj3d>();
+		obj_[i]->Init();
 	}
-	obj[0]->SetModel(model[0]);
-	obj[1]->SetModel(model[1]);
-	obj[2]->SetModel(model[0]);
-	obj[3]->SetModel(model[2]);
+	obj_[0]->SetModel(model_[0]);
+	obj_[1]->SetModel(model_[1]);
+	obj_[2]->SetModel(model_[0]);
+	obj_[3]->SetModel(model_[2]);
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position_ = { 0,0,0 };
-	obj[1]->position_ = { 0,-2,0 };
-	obj[1]->scale_ = { 10,0.1f,10 };
-	obj[2]->position_ = { 2,0,0 };
-	obj[3]->position_ = { -2,3,0 };
+	obj_[0]->position_ = { 0,0,0 };
+	obj_[1]->position_ = { 0,-2,0 };
+	obj_[1]->scale_ = { 10,0.1f,10 };
+	obj_[2]->position_ = { 2,0,0 };
+	obj_[3]->position_ = { -2,3,0 };
 	//設定したのを適用
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i]->Update();
+		obj_[i]->Update();
 	}
 
 #pragma endregion
@@ -63,16 +63,10 @@ void NResultScene::Init()
 
 #pragma endregion
 	// ライト生成
-	directionalLight = std::make_unique<NDirectionalLight>();
-	directionalLight->Init();
-	pointLight = std::make_unique<NPointLight>();
-	pointLight->Init();
-	spotLight = std::make_unique<NSpotLight>();
-	spotLight->Init();
-	circleShadow = std::make_unique<NCircleShadow>();
-	circleShadow->Init();
+	lightGroup_ = std::make_unique<NLightGroup>();
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	
+	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
 void NResultScene::Update()
@@ -86,20 +80,17 @@ void NResultScene::Update()
 	camera_.CreateMatView();
 	NCamera::sCurrentCamera = &camera_;
 
-	obj[0]->MoveKey();
-	obj[3]->MoveKey();
+	obj_[0]->MoveKey();
+	obj_[3]->MoveKey();
 
 	for (size_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i]->Update();
+		obj_[i]->Update();
 	}
 #pragma endregion
 
 	//ライトたちの更新
-	directionalLight->Update();
-	pointLight->Update();
-	spotLight->Update();
-	circleShadow->Update();
+	lightGroup_->Update();
 }
 
 void NResultScene::Draw()
@@ -110,8 +101,8 @@ void NResultScene::Draw()
 	//3Dオブジェクト
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i]->CommonBeginDraw();
-		obj[i]->Draw();
+		obj_[i]->CommonBeginDraw();
+		obj_[i]->Draw();
 	}
 
 	//前景スプライト
@@ -122,8 +113,9 @@ void NResultScene::Draw()
 
 void NResultScene::Reset()
 {
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	
+	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
 void NResultScene::Finalize()

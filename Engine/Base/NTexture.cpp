@@ -132,6 +132,13 @@ bool NTextureManager::Load(const std::string& pictureName)
 
 	//拡張子を抽出してそれに応じた方で読み込み
 	std::string ext = NUtil::GetExtension(pictureName);
+	//.psdだった場合は.tgaに変更(同じフォルダ内に.psdと同じ名前の.tgaファイルがないとだめ)
+	if (ext == "psd")
+	{
+		wPictureName = NUtil::ReplaceExtension(wPictureName, "tga");
+		ext = "tga";
+	}
+
 	if (ext == "tga")
 	{
 		result = LoadFromTGAFile(

@@ -3,6 +3,8 @@
 #include "NGPipeline.h"
 #include "NUtil.h"
 
+NLightGroup* NAssimpModel::sLightGroup = nullptr;
+
 void NAssimpModel::Load()
 {
 	//model読み込み
@@ -14,7 +16,8 @@ void NAssimpModel::Load()
 	//テクスチャ読み込み
 	for (size_t i = 0; i < meshes_.size(); i++)
 	{
-		NTextureManager::GetInstance()->LoadTexture(NUtil::ToUTF8(meshes_[i].textureName), NUtil::ToUTF8(meshes_[i].textureName));
+		NTextureManager::GetInstance()->LoadTexture(
+			NUtil::ToUTF8(meshes_[i].textureName), NUtil::ToUTF8(meshes_[i].textureName));
 	}
 }
 
@@ -59,7 +62,7 @@ void NAssimpModel::Update()
 
 	cbTrans_->constMap_->viewproj = NCamera::sCurrentCamera->GetMatView() * NCamera::sCurrentCamera->GetMatProjection();
 	cbTrans_->constMap_->world = matWorld_;
-	cbTrans_->constMap_->camera_Pos = NCamera::sCurrentCamera->GetPos();
+	cbTrans_->constMap_->cameraPos = NCamera::sCurrentCamera->GetPos();
 
 	cbTrans_->Unmap();
 	
@@ -99,8 +102,11 @@ void NAssimpModel::Draw()
 
 		//指定のヒープにあるSRVをルートパラメータ1番に設定
 		std::string texName = NUtil::ToUTF8(meshes_[i].textureName);
+		NTexture tex = NTextureManager::GetInstance()->textureMap_[texName];
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(
-			1, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
+			1, NTextureManager::GetInstance()->textureMap_[texName].gpuHandle_);
+
+		sLightGroup->Draw();
 
 		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes_[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	}

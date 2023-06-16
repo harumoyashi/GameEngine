@@ -2,6 +2,7 @@
 #include "NAssimpLoader.h"
 #include "NConstBuff.h"
 #include "NMaterial.h"
+#include "NLightGroup.h"
 #include <memory>
 
 class NAssimpModel
@@ -17,6 +18,9 @@ private:
 	NMatrix4 matWorld_;		//3D変換行列
 	NMaterial material_;	//マテリアル
 	NColor color_;			//色
+
+	//ライトたち
+	static NLightGroup* sLightGroup;
 
 	ImportSettings importSetting_ = // これ自体は自作の読み込み設定構造体
 	{
@@ -40,4 +44,6 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+
+	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 };

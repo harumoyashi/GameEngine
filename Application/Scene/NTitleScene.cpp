@@ -42,20 +42,19 @@ void NTitleScene::Init()
 	{
 		model_.emplace_back();
 	}
-	model_[0].Create("sphere_");
+	model_[0].Create("sphere");
 	model_[1].Create("Cube");
 
 	//オブジェクト
 	// レベルデータからの読み込み
-	levelData = std::make_unique<LevelData>();
-	levelData = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
-	//SetObject(levelData.get());
-	NLevelDataLoader::GetInstance()->SetObject(levelData.get(), levelDataobj_);
+	levelData_ = std::make_unique<LevelData>();
+	levelData_ = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
+	//SetObject(levelData_.get());
+	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
 	for (auto& lo : levelDataobj_)
 	{
 		lo->SetModel(model_[0]);
 	}
-
 
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
@@ -103,10 +102,12 @@ void NTitleScene::Init()
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init();
+	lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+	NAssimpModel::SetLightGroup(lightGroup_.get());
 
-	timer.SetMaxTimer(10);
+	timer_.SetMaxTimer(10);
 }
 
 void NTitleScene::Update()
@@ -124,7 +125,7 @@ void NTitleScene::Update()
 	}
 
 	//ライトたちの更新
-	//lightGroup_.get()->sDirLights.SetLightColor({ 0,1.0f,0 });
+	//lightGroup_->sDirLights.SetLightColor({ 0,1.0f,0 });
 	lightGroup_->Update();
 
 #pragma region 行列の計算
@@ -196,8 +197,10 @@ void NTitleScene::Draw()
 void NTitleScene::Reset()
 {
 	lightGroup_->Init();
+	//lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+	NAssimpModel::SetLightGroup(lightGroup_.get());
 }
 
 void NTitleScene::Finalize()

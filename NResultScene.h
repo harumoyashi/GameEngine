@@ -24,23 +24,23 @@ private:
 	//オブジェクト
 	NMaterial material_;				//マテリアル
 	static const uint32_t kMaxObj = 3;	//オブジェクト数
-	std::vector<std::unique_ptr<NObj3d>> obj;			//オブジェクト(定数バッファ)
+	std::vector<std::unique_ptr<NObj3d>> obj_;			//オブジェクト(定数バッファ)
 
 	static const uint32_t kMaxModel = 2;	//モデル数
-	std::vector<NModel> model;	//モデル情報
+	std::vector<NModel> model_;	//モデル情報
 
-	NCollision::Sphere sphere;
-	NCollision::Plane plane;
-	bool isCol = false;
+	NCollision::Sphere sphere_;
+	NCollision::Plane plane_;
+	bool isCol_ = false;
 
 	//背景スプライト
 	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite[kMaxBackSprite];	//背景スプライト
+	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
 
 	//前景スプライト
 	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite[kMaxForeSprite];	//前景スプライト
-
+	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
+	
 	NCamera camera_;	//カメラ
 
 	//オーディオ
@@ -49,10 +49,7 @@ private:
 	uint32_t soundData_[kMaxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
-	std::unique_ptr<NDirectionalLight> directionalLight;
-	std::unique_ptr<NPointLight > pointLight;
-	std::unique_ptr<NSpotLight> spotLight;
-	std::unique_ptr<NCircleShadow> circleShadow;
+	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
 	//インスタンス取得
