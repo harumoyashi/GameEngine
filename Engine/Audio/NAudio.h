@@ -11,17 +11,26 @@
 #include <fstream>
 #include <wrl.h>
 
+#include <mfapi.h>
+#include <mfidl.h>
+#include <mfreadwrite.h>
+
+#pragma comment(lib, "Mf.lib")
+#pragma comment(lib, "mfplat.lib")
+#pragma comment(lib, "Mfreadwrite.lib")
+#pragma comment(lib, "mfuuid.lib")
+
 //音声データ
 struct SoundData
 {
 	//波形フォーマット
-	WAVEFORMATEX wfex;
+	WAVEFORMATEX wfex{};
 	//バッファの先頭アドレス
-	std::vector<char> pBuffer;
+	std::vector<BYTE> pBuffer{};
 	//バッファのサイズ
-	uint32_t bufferSize;
+	uint32_t bufferSize{};
 	//名前
-	std::string name;
+	std::string name{};
 };
 
 // 再生データ
@@ -68,6 +77,10 @@ private:
 	char* pBuffer_;
 	SoundData soundData_ = {};	//音声データ
 
+	// MediaFoundation
+	ComPtr<IMFSourceReader> mFSourceReader_;
+	ComPtr<IMFMediaType> mFMediaType_;
+
 	//オーディオコールバック
 	class XAudio2VoiceCallback : public IXAudio2VoiceCallback {
 	public:
@@ -100,6 +113,11 @@ public:
 	//"filename" = WAVファイル名
 	//return サウンドデータハンドル
 	uint32_t LoadWave(const std::string& filename);
+
+	//mp3音声読み込み
+	//"filename" = mp3ファイル名
+	//return サウンドデータハンドル
+	uint32_t LoadMP3(const std::string& filename);
 
 	//サウンドデータの解放
 	void Unload(SoundData* soundData);

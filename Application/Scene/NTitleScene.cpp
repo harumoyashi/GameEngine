@@ -25,7 +25,7 @@ void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
 	NAudio::GetInstance()->Init();
-	//NAudioManager::Play("WinSE",true,0.2f);
+	NAudioManager::Play("RetroBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	camera.SetEye({ 0.0f, 100.0f, 300.0f });

@@ -1,4 +1,5 @@
 #include "NAudioManager.h"
+#include "NUtil.h"
 
 std::map<SoundHandle, uint32_t> NAudioManager::sSoundMap;
 
@@ -6,6 +7,7 @@ void NAudioManager::AllLoad()
 {
     LoadSound("fanfare.wav", "WinSE");
     LoadSound("fever.wav", "Fever");
+    LoadSound("retrogamecenter3.mp3", "RetroBGM");
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)
@@ -15,8 +17,18 @@ uint32_t NAudioManager::GetSound(const std::string& soundHandle)
 
 void NAudioManager::LoadSound(const std::string& filename, const std::string& soundHandle)
 {
-    uint32_t sound = NAudio::GetInstance()->LoadWave(filename);
-    sSoundMap.insert(std::make_pair(soundHandle, sound));
+    //Šg’£Žq‚ð’Šo‚µ‚Ä‚»‚ê‚É‰ž‚¶‚½•û‚Å“Ç‚Ýž‚Ý
+    std::string ext = NUtil::GetExtension(filename);
+    if (ext == "wav")
+    {
+        uint32_t sound = NAudio::GetInstance()->LoadWave(filename);
+        sSoundMap.insert(std::make_pair(soundHandle, sound));
+    }
+    else if (ext == "mp3")
+    {
+        uint32_t sound = NAudio::GetInstance()->LoadMP3(filename);
+        sSoundMap.insert(std::make_pair(soundHandle, sound));
+    }
 }
 
 void NAudioManager::Play(const std::string& soundHandle, const bool isRoop, const float volume, const int roopNum)

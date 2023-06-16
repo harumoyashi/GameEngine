@@ -15,3 +15,28 @@ std::string NUtil::ToUTF8(const std::wstring& value)
 
     return result;
 }
+
+std::string NUtil::GetExtension(const std::string& path)
+{
+	std::string ext;
+	size_t pos1 = path.rfind('.');
+	if (pos1 != std::string::npos) {
+		ext = path.substr(pos1 + 1, path.size() - pos1);
+		std::string::iterator itr = ext.begin();
+		while (itr != ext.end()) {
+			*itr = tolower(*itr);
+			itr++;
+		}
+		itr = ext.end() - 1;
+		while (itr != ext.begin()) {
+			if (*itr == 0 || *itr == 32) {
+				ext.erase(itr--);
+			}
+			else {
+				itr--;
+			}
+		}
+	}
+
+	return ext;
+}

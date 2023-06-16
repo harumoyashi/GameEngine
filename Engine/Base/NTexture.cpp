@@ -1,5 +1,6 @@
 #include "NTexture.h"
 #include "NVector4.h"
+#include "NUtil.h"
 
 NTextureManager* NTextureManager::GetInstance()
 {
@@ -130,7 +131,7 @@ bool NTextureManager::Load(const std::string& pictureName)
 	std::wstring wPictureName(pictureName.begin(), pictureName.end());
 
 	//Šg’£Žq‚ð’Šo‚µ‚Ä‚»‚ê‚É‰ž‚¶‚½•û‚Å“Ç‚Ýž‚Ý
-	std::string ext = GetExtension(pictureName);
+	std::string ext = NUtil::GetExtension(pictureName);
 	if (ext == "tga")
 	{
 		result = LoadFromTGAFile(
@@ -249,31 +250,6 @@ NTexture NTextureManager::CreateSRV(NTexture& tex)
 	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texBuff_.Get(), &srvDesc_, tex.cpuHandle_);
 
 	return tex;
-}
-
-std::string NTextureManager::GetExtension(const std::string& path)
-{
-	std::string ext;
-	size_t pos1 = path.rfind('.');
-	if (pos1 != std::string::npos) {
-		ext = path.substr(pos1 + 1, path.size() - pos1);
-		std::string::iterator itr = ext.begin();
-		while (itr != ext.end()) {
-			*itr = tolower(*itr);
-			itr++;
-		}
-		itr = ext.end() - 1;
-		while (itr != ext.begin()) {
-			if (*itr == 0 || *itr == 32) {
-				ext.erase(itr--);
-			}
-			else {
-				itr--;
-			}
-		}
-	}
-
-	return ext;
 }
 
 NTexture::NTexture()
