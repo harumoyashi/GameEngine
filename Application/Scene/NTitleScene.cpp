@@ -75,6 +75,7 @@ void NTitleScene::Init()
 	plane_.distance = obj_[2]->position_.Length();
 #pragma endregion
 
+	assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
 	assimpModel_.Init();
 
 #pragma region オブジェクトの初期値設定

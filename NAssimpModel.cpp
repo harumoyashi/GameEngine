@@ -5,8 +5,10 @@
 
 NLightGroup* NAssimpModel::sLightGroup = nullptr;
 
-void NAssimpModel::Load()
+void NAssimpModel::Load(const wchar_t* filename)
 {
+	importSetting_.filename = filename;
+
 	//model読み込み
 	if (!loader_.Load(importSetting_))
 	{
@@ -23,8 +25,6 @@ void NAssimpModel::Load()
 
 void NAssimpModel::Init()
 {
-	Load();
-
 	// メッシュの数だけ頂点バッファを用意する
 	vertexBuffers_.reserve(meshes_.size());
 	for (size_t i = 0; i < meshes_.size(); i++)

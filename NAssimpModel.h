@@ -11,7 +11,7 @@ private:
 	std::vector<Mesh> meshes_; // メッシュの配列
 	std::vector<NVertexBuff> vertexBuffers_; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
-	const wchar_t* kModelFile = L"Resources/FBX/Alicia_solid_Unity.FBX";
+	const wchar_t* kModelFile;
 
 
 	//いるかわからんけど仮で
@@ -40,7 +40,7 @@ private:
 
 public:
 	//ファイルからメッシュ情報を読み取り、それに応じたバッファを生成する
-	void Load();
+	void Load(const wchar_t* filename);
 	void Init();
 	void Update();
 	void Draw();
