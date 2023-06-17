@@ -1,7 +1,7 @@
 #pragma once
 #include "NDX12.h"
 #include "NMaterial.h"
-#include "NModel.h"
+#include "NModelManager.h"
 #include "NRootParam.h"
 #include "NGPipeline.h"
 #include "NMatrix4.h"
@@ -38,7 +38,7 @@ public:
 
 	uint32_t texNum_ = 0;	//テクスチャ指定用
 
-	NModel model_;
+	Model model_;
 	NColor color_;
 
 public:
@@ -82,7 +82,7 @@ public:
 	//描画コマンド
 	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
-	inline void SetModel(const NModel& model) { model_ = model; }
+	void SetModel(const std::string& modelname);
 
 	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 

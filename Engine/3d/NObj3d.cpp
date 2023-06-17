@@ -130,10 +130,10 @@ void NObj3d::TransferColor()
 
 void NObj3d::TransferMaterial()
 {
-	cbMaterial_->constMap_->ambient = model_.material_.ambient;
-	cbMaterial_->constMap_->diffuse = model_.material_.diffuse;
-	cbMaterial_->constMap_->specular = model_.material_.specular;
-	cbMaterial_->constMap_->alpha = model_.material_.alpha;
+	cbMaterial_->constMap_->ambient = model_.material.ambient;
+	cbMaterial_->constMap_->diffuse = model_.material.diffuse;
+	cbMaterial_->constMap_->specular = model_.material.specular;
+	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -152,12 +152,12 @@ void NObj3d::CommonBeginDraw()
 void NObj3d::Draw()
 {
 	SetCBV();
-	SetVB(model_.vertexBuff_.view_);
-	SetIB(model_.indexBuff_.view_);
-	SetSRVHeap(model_.material_.texture.gpuHandle_);
+	SetVB(model_.vertexBuff.view_);
+	SetIB(model_.indexBuff.view_);
+	SetSRVHeap(model_.material.texture.gpuHandle_);
 	//ライトの描画
 	sLightGroup->Draw();
-	DrawCommand((uint32_t)model_.indices_.size());
+	DrawCommand((uint32_t)model_.indices.size());
 }
 
 void NObj3d::SetSRVHeap()
@@ -207,4 +207,9 @@ void NObj3d::SetCBV()
 void NObj3d::DrawCommand(const uint32_t indexSize)
 {
 	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(indexSize, 1, 0, 0, 0); //インデックスを使って描画
+}
+
+void NObj3d::SetModel(const std::string& modelname)
+{
+	model_ = NModelManager::GetModel(modelname);
 }

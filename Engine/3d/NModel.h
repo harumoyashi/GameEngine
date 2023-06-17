@@ -5,26 +5,21 @@
 #include "NConstBuff.h"
 #include "NMaterial.h"
 
-#include <wrl.h>
+struct Model
+{
+	std::string name;
+	NVertexBuff vertexBuff;
+	NIndexBuff indexBuff;
+
+	std::vector<NVertexPNU> vertices;
+	std::vector<uint32_t> indices;
+
+	NMaterial material;
+};
 
 class NModel
 {
-private:
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
 public:
-	std::string name_;
-	NVertexBuff vertexBuff_;
-	NIndexBuff indexBuff_;
-
-	std::vector<NVertexPNU> vertices_;
-	std::vector<uint32_t> indices_;
-
-	NMaterial material_;
-
-public:
-	void Create(const std::string& modelname);
-
-private:
-	void LoadObjFile(const std::string& modelname);
+	void Init();
+	void Finalize();
 };

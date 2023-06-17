@@ -11,7 +11,7 @@ NResultScene* NResultScene::GetInstance()
 void NResultScene::Init()
 {
 #pragma region	オーディオ初期化
-	audio_ = NAudio::GetInstance();
+	
 #pragma endregion
 #pragma region	カメラ初期化
 	camera_.ProjectiveProjection();
@@ -19,19 +19,6 @@ void NResultScene::Init()
 	NCamera::sCurrentCamera = &camera_;
 #pragma endregion
 #pragma region 描画初期化処理
-	//マテリアル(定数バッファ)
-
-	//立方体情報
-
-	//モデル情報
-	for (size_t i = 0; i < kMaxModel; i++)
-	{
-		model_.emplace_back();
-	}
-	model_[0].Create("sphere");
-	model_[1].Create("Cube");
-	model_[2].Create("busterSword");
-
 	//オブジェクト
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
@@ -39,10 +26,10 @@ void NResultScene::Init()
 		obj_[i] = std::make_unique<NObj3d>();
 		obj_[i]->Init();
 	}
-	obj_[0]->SetModel(model_[0]);
-	obj_[1]->SetModel(model_[1]);
-	obj_[2]->SetModel(model_[0]);
-	obj_[3]->SetModel(model_[2]);
+	obj_[0]->SetModel("sphere");
+	obj_[1]->SetModel("cube");
+	obj_[2]->SetModel("sphere");
+	obj_[3]->SetModel("busterSword");
 
 #pragma region オブジェクトの初期値設定
 	obj_[0]->position_ = { 0,0,0 };

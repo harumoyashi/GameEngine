@@ -2,6 +2,7 @@
 #include "NTitleScene.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "NModelManager.h"
 #include "imgui.h"
 #include "NInput.h"
 #include "NQuaternion.h"
@@ -28,23 +29,13 @@ void NTitleScene::Init()
 	//NAudioManager::Play("RetroBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.SetEye({ 0.0f, 100.0f, 300.0f });
-	camera_.SetTarget({ 0.0f, 100.0f, 0.0f });
+	camera_.SetEye({ 0.0f, 10.0f, 30.0f });
+	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
 	camera_.ProjectiveProjection();
 	camera_.CreateMatView();
 	NCamera::sCurrentCamera = &camera_;
 #pragma endregion
 #pragma region 描画初期化処理
-	//マテリアル(定数バッファ)
-
-	//モデル情報
-	for (size_t i = 0; i < kMaxModel; i++)
-	{
-		model_.emplace_back();
-	}
-	model_[0].Create("sphere");
-	model_[1].Create("Cube");
-
 	//オブジェクト
 	// レベルデータからの読み込み
 	levelData_ = std::make_unique<LevelData>();
@@ -53,7 +44,7 @@ void NTitleScene::Init()
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
 	for (auto& lo : levelDataobj_)
 	{
-		lo->SetModel(model_[0]);
+		lo->SetModel("sphere");
 	}
 
 	for (uint32_t i = 0; i < kMaxObj; i++)
@@ -62,9 +53,9 @@ void NTitleScene::Init()
 		obj_[i] = std::make_unique<NObj3d>();
 		obj_[i]->Init();
 	}
-	obj_[0]->SetModel(model_[0]);
-	obj_[1]->SetModel(model_[0]);
-	obj_[2]->SetModel(model_[1]);
+	obj_[0]->SetModel("sphere");
+	obj_[1]->SetModel("sphere");
+	obj_[2]->SetModel("cube");
 
 #pragma region オブジェクトの初期値設定
 	obj_[0]->position_ = { 0,2,0 };
@@ -102,7 +93,7 @@ void NTitleScene::Init()
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init();
-	lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
+	//lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	NAssimpModel::SetLightGroup(lightGroup_.get());
@@ -125,7 +116,6 @@ void NTitleScene::Update()
 	}
 
 	//ライトたちの更新
-	//lightGroup_->sDirLights.SetLightColor({ 0,1.0f,0 });
 	lightGroup_->Update();
 
 #pragma region 行列の計算
@@ -172,17 +162,17 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	/*for (size_t i = 0; i < obj_.size(); i++)
+	for (size_t i = 0; i < obj_.size(); i++)
 	{
 		obj_[i]->CommonBeginDraw();
 		obj_[i]->Draw();
-	}*/
+	}
 
-	//for (size_t i = 0; i < levelDataobj_.size(); i++)
-	//{
-	//	levelDataobj_[i]->CommonBeginDraw();
-	//	levelDataobj_[i]->Draw();
-	//}
+	for (size_t i = 0; i < levelDataobj_.size(); i++)
+	{
+		levelDataobj_[i]->CommonBeginDraw();
+		levelDataobj_[i]->Draw();
+	}
 
 	//assimpモデル描画//
 	assimpModel_.Draw();
@@ -222,7 +212,7 @@ void NTitleScene::SetObject(LevelData* levelData)
 		levelDataobj_.emplace_back();
 		levelDataobj_.back() = std::make_unique<NObj3d>();
 		levelDataobj_.back()->Init();
-		levelDataobj_.back()->SetModel(model_[0]);
+		levelDataobj_.back()->SetModel("sphere");
 
 		levelDataobj_.back()->position_ = objectData.trans;
 		levelDataobj_.back()->rotation_ = objectData.rot;

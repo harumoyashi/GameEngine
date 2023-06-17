@@ -10,8 +10,6 @@
 #include "NTexture.h"
 #include "NSprite.h"
 #include "NPreDraw.h"
-#include "NModel.h"
-#include "NAudio.h"
 #include "NCamera.h"
 #include "NCollision.h"
 #include "NLightGroup.h"
@@ -32,9 +30,6 @@ private:
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト
 	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
-	static const uint32_t kMaxModel = 2;	//モデル数
-	std::vector<NModel> model_;	//モデル情報
-
 	NCollision::Sphere sphere_;
 	NCollision::Plane plane_;
 	bool isCol_ = false;
@@ -48,11 +43,6 @@ private:
 	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 
 	NCamera camera_;	//カメラ
-
-	//オーディオ
-	NAudio* audio_ = nullptr;
-	static const uint32_t kMaxSoundData = 3;		//サウンドデータの最大数
-	uint32_t soundData_[kMaxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;

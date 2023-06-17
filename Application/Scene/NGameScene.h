@@ -41,8 +41,6 @@ private:
 
 	//オーディオ
 	NAudio* audio_ = nullptr;
-	static const uint32_t kMaxSoundData = 3;		//サウンドデータの最大数
-	uint32_t soundData_[kMaxSoundData] = {};	//サウンドデータ格納用
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;

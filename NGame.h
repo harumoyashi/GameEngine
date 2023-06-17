@@ -6,6 +6,7 @@
 #include "NTexture.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "NModelManager.h"
 #include "NFramework.h"
 
 class NGame :public NFramework
@@ -13,7 +14,7 @@ class NGame :public NFramework
 private:
 	NWindows* win_;
 	NDX12* dx12_;
-	NAudio* audio__;
+	NAudio* audio_;
 	PipeLineManager* pipeline_;
 	NTextureManager* texManager_;
 	NSceneManager* sceneMane_;
