@@ -37,8 +37,8 @@ public:
 	inline void SetUp(const NVector3& up) { up_ = up; }
 
 	//ゲッター
-	inline NMatrix4 GetMatProjection() { return matProjection_; }
-	inline NMatrix4 GetMatView() { return matView_; }
+	inline const NMatrix4& GetMatProjection()const { return matProjection_; }
+	inline const NMatrix4& GetMatView()const { return matView_; }
 	//eye座標取得
-	inline NVector3 GetPos() { return eye_; }
+	inline const NVector3& GetPos()const { return eye_; }
 };

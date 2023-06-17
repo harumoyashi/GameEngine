@@ -15,8 +15,6 @@ void NModelManager::AllLoad()
 {
 	LoadModel("sphere", "sphere");
 	LoadModel("Cube", "cube");
-	LoadModel("Cube", "cube");
-	LoadModel("Cube", "cube");
 	LoadModel("busterSword", "busterSword");
 	LoadModel("boss_model", "boss_model");
 }

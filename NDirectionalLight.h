@@ -38,12 +38,12 @@ public: //メンバ関数
 
 	//ライトの方向をセット
 	void SetLightDir(const NVector3& lightdir);
-	inline NVector3 GetLightDir() { return lightdir_; }
+	inline const NVector3& GetLightDir()const { return lightdir_; }
 	//ライトの色をセット
 	void SetLightColor(const NVector3& lightcolor);
-	inline NVector3 GetLightColor() { return lightcolor_; }
+	inline const NVector3& GetLightColor()const { return lightcolor_; }
 	//有効フラグをセット
 	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive_; }
+	inline const bool GetActive()const { return isActive_; }
 };

@@ -42,21 +42,21 @@ public://メンバ関数
 	void TransferConstBuffer();
 
 	void SetLightDir(const NVector3& lightdir);
-	inline const NVector3& GetLightDir() { return lightdir_; }
+	inline const NVector3& GetLightDir()const { return lightdir_; }
 	//ライトの座標をセット
 	void SetLightPos(const NVector3& lightpos);
-	inline const NVector3& GetLightPos() { return lightpos_; }
+	inline const NVector3& GetLightPos()const { return lightpos_; }
 	//ライトの色をセット
 	void SetLightColor(const NVector3& lightcolor);
-	inline const NVector3& GetLightColor() { return lightcolor_; }
+	inline const NVector3& GetLightColor()const { return lightcolor_; }
 	//ライトの減衰係数をセット
 	void SetLightAtten(const NVector3& lightatten);
-	inline const NVector3& GetLightAtten() { return lightatten_; }
+	inline const NVector3& GetLightAtten()const { return lightatten_; }
 	//ライトの減衰角度をセット
 	void SetLightFactorAngle(const NVector2& lightFactorAngle);
-	inline const NVector2& GetLightFactorAngle() { return lightFactorAngleCos_; }
+	inline const NVector2& GetLightFactorAngle()const { return lightFactorAngleCos_; }
 	//有効フラグをセット
 	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive_; }
+	inline const bool GetActive()const { return isActive_; }
 };

@@ -122,6 +122,6 @@ public:
 	static PipeLineManager* GetInstance();
 	void Init();
 
-	inline PipelineSet GetPipelineSet3d() const { return pipelineSet3d_; }
-	inline PipelineSet GetPipelineSetSprite() const { return pipelineSetSprite_; }
+	inline const PipelineSet& GetPipelineSet3d() const { return pipelineSet3d_; }
+	inline const PipelineSet& GetPipelineSetSprite() const { return pipelineSetSprite_; }
 };

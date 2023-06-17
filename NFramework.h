@@ -16,7 +16,7 @@ public:
 	void Run();
 
 	//ゲーム終了フラグ取得
-	virtual inline bool GetIsGameEnd() { return isGameEnd_; }
+	virtual inline const bool GetIsGameEnd()const { return isGameEnd_; }
 	//ゲーム終了フラグ設定
 	virtual inline void SetIsGameEnd(const bool flag) { isGameEnd_ = flag; }
 };
