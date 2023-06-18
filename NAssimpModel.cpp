@@ -65,7 +65,7 @@ void NAssimpModel::Update()
 	cbTrans_->constMap_->cameraPos = NCamera::sCurrentCamera->GetPos();
 
 	cbTrans_->Unmap();
-	
+
 	//マテリアル情報転送
 	cbMaterial_->constMap_->ambient = material_.ambient;
 	cbMaterial_->constMap_->diffuse = material_.diffuse;
@@ -102,9 +102,17 @@ void NAssimpModel::Draw()
 
 		//指定のヒープにあるSRVをルートパラメータ1番に設定
 		std::string texName = NUtil::ToUTF8(meshes_[i].textureName);
-		NTexture tex = NTextureManager::GetInstance()->textureMap_[texName];
+		NTexture tex;
+		if (texName == "")
+		{
+			tex = NTextureManager::GetInstance()->textureMap_["white"];
+		}
+		else
+		{
+			tex = NTextureManager::GetInstance()->textureMap_[texName];
+		}
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(
-			1, NTextureManager::GetInstance()->textureMap_[texName].gpuHandle_);
+			1, tex.gpuHandle_);
 
 		//ライト描画
 		sLightGroup->Draw();

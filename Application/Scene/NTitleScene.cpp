@@ -29,7 +29,7 @@ void NTitleScene::Init()
 	//NAudioManager::Play("RetroBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.SetEye({ 0.0f, 10.0f, 30.0f });
+	camera_.SetEye({ 0.0f, 100.0f, 600.0f });
 	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
 	camera_.ProjectiveProjection();
 	camera_.CreateMatView();
@@ -75,7 +75,8 @@ void NTitleScene::Init()
 	plane_.distance = obj_[2]->position_.Length();
 #pragma endregion
 
-	assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
+	//assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
+	assimpModel_.Load(L"Resources/Tripping.fbx");
 	assimpModel_.Init();
 
 #pragma region オブジェクトの初期値設定
