@@ -12,6 +12,30 @@ class NInput
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
+public:
+	struct MouseMove {
+		LONG lX;
+		LONG lY;
+		LONG lZ;
+	};
+
+private:
+	static ComPtr<IDirectInputDevice8> sDevMouse;
+	static DIMOUSESTATE2 sStateMouse;
+	static DIMOUSESTATE2 sPrevMouse;
+
+public:
+	//mouse初期化
+	static void MouseInit(const HINSTANCE& hInstance, const HWND& hwnd);
+	//mouse更新
+	static void MouseUpdate();
+
+	/// <summary>
+	/// マウス移動量を取得
+	/// </summary>
+	/// <returns>マウス移動量</returns>
+	MouseMove GetMouseMove();
+
 private:
 	static ComPtr<IDirectInputDevice8> sKeyboard;
 	static ComPtr<IDirectInput8> sDirectInput;
@@ -20,9 +44,9 @@ public:
 	NInput() {};
 	static NInput* GetInstance();
 
-	//input初期化
+	//key初期化
 	static void KeyInit(const HINSTANCE& hInstance, const HWND& hwnd);
-	//input更新
+	//key更新
 	static void KeyUpdate();
 
 	//キーボード入力処理用 (返り値0,1)
@@ -35,19 +59,19 @@ public:
 
 private:
 	//XINPUT_STATE 構造体のインスタンスを作成
-	static XINPUT_STATE statePad_;
-	static XINPUT_STATE prevPad_;
+	static XINPUT_STATE sStatePad;
+	static XINPUT_STATE sPrevPad;
 
 	//接続されてるか
-	static bool isConnect_;
+	static bool sIsConnect;
 
 	//振動
-	static XINPUT_VIBRATION vibration_;
+	static XINPUT_VIBRATION sVibration;
 
 public:
-	//初期化
+	//pad初期化
 	void PadInit();
-	//更新
+	//pad更新
 	void PadUpdate();
 
 	//押しっぱなし
@@ -79,5 +103,5 @@ public:
 	static void Vibration(const float leftVibrationPower, const float rightVibrationPower);
 
 	//接続情報取得
-	inline static bool GetIsConnect() { return isConnect_; }
+	inline static bool GetIsConnect() { return sIsConnect; }
 };

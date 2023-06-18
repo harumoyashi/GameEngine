@@ -9,21 +9,26 @@
 
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-// DirectInputの初期化
-ComPtr<IDirectInputDevice8> NInput::sKeyboard;
-ComPtr<IDirectInput8> NInput::sDirectInput;
-
-// 全キーの入力状態を取得する
-static BYTE keys[256] = {};
-
-// 全キーの1F前の入力状態を取得する
-static BYTE prev[256] = {};
-
 NInput* NInput::GetInstance()
 {
 	static NInput instance;
 	return &instance;
 }
+
+//---------こっからマウス------------//
+ComPtr<IDirectInputDevice8> NInput::sDevMouse;
+DIMOUSESTATE2 NInput::sStateMouse;
+DIMOUSESTATE2 NInput::sPrevMouse;
+
+
+
+//---------こっからキーボード------------//
+ComPtr<IDirectInputDevice8> NInput::sKeyboard;
+ComPtr<IDirectInput8> NInput::sDirectInput;
+// 全キーの入力状態を取得する
+static BYTE keys[256] = {};
+// 全キーの1F前の入力状態を取得する
+static BYTE prev[256] = {};
 
 void NInput::KeyInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
@@ -80,91 +85,91 @@ bool NInput::IsKeyRelease(const uint8_t key)
 
 //---------こっからパッド------------//
 //XINPUT_STATE 構造体のインスタンスを作成
-XINPUT_STATE NInput::statePad_{};
-XINPUT_STATE NInput::prevPad_{};
+XINPUT_STATE NInput::sStatePad{};
+XINPUT_STATE NInput::sPrevPad{};
 //接続されてるか
-bool NInput::isConnect_ = false;
+bool NInput::sIsConnect = false;
 //振動
-XINPUT_VIBRATION NInput::vibration_{};
+XINPUT_VIBRATION NInput::sVibration{};
 
 void NInput::PadInit()
 {
-	ZeroMemory(&statePad_, sizeof(XINPUT_STATE));
+	ZeroMemory(&sStatePad, sizeof(XINPUT_STATE));
 
 	DWORD result;
-	result = XInputGetState(0, &statePad_);
+	result = XInputGetState(0, &sStatePad);
 
 	if (result == ERROR_SUCCESS)
 	{
-		isConnect_ = true;
+		sIsConnect = true;
 	}
 	else
 	{
-		isConnect_ = false;
+		sIsConnect = false;
 	}
 }
 
 void NInput::PadUpdate()
 {
-	prevPad_ = statePad_;
+	sPrevPad = sStatePad;
 	DWORD result;
-	result = XInputGetState(0, &statePad_);
+	result = XInputGetState(0, &sStatePad);
 	if (result == ERROR_SUCCESS)
 	{
-		isConnect_ = true;
+		sIsConnect = true;
 	}
 	else
 	{
-		isConnect_ = false;
+		sIsConnect = false;
 	}
 	SetDeadZone();
 }
 
 bool NInput::IsButton(const uint32_t button)
 {
-	return statePad_.Gamepad.wButtons == button;
+	return sStatePad.Gamepad.wButtons == button;
 }
 
 bool NInput::IsButtonDown(const uint32_t button)
 {
-	return statePad_.Gamepad.wButtons == button && prevPad_.Gamepad.wButtons != button;
+	return sStatePad.Gamepad.wButtons == button && sPrevPad.Gamepad.wButtons != button;
 }
 
 bool NInput::IsButtonRelease(const uint32_t button)
 {
-	return statePad_.Gamepad.wButtons != button && prevPad_.Gamepad.wButtons == button;
+	return sStatePad.Gamepad.wButtons != button && sPrevPad.Gamepad.wButtons == button;
 }
 
 uint32_t NInput::GetTrigger(const bool isLeft)
 {
 	if (isLeft)
 	{
-		return prevPad_.Gamepad.bLeftTrigger < 128 && statePad_.Gamepad.bLeftTrigger >= 128;
+		return sPrevPad.Gamepad.bLeftTrigger < 128 && sStatePad.Gamepad.bLeftTrigger >= 128;
 	}
 	else
 	{
-		return prevPad_.Gamepad.bRightTrigger < 128 && statePad_.Gamepad.bRightTrigger >= 128;
+		return sPrevPad.Gamepad.bRightTrigger < 128 && sStatePad.Gamepad.bRightTrigger >= 128;
 	}
 }
 
 void NInput::SetDeadZone()
 {
-	if ((statePad_.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		statePad_.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(statePad_.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			statePad_.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	if ((sStatePad.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		sStatePad.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(sStatePad.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			sStatePad.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
 	{
-		statePad_.Gamepad.sThumbLX = 0;
-		statePad_.Gamepad.sThumbLY = 0;
+		sStatePad.Gamepad.sThumbLX = 0;
+		sStatePad.Gamepad.sThumbLY = 0;
 	}
 
-	if ((statePad_.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		statePad_.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(statePad_.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			statePad_.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((sStatePad.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		sStatePad.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+		(sStatePad.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+			sStatePad.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
 	{
-		statePad_.Gamepad.sThumbRX = 0;
-		statePad_.Gamepad.sThumbRY = 0;
+		sStatePad.Gamepad.sThumbRX = 0;
+		sStatePad.Gamepad.sThumbRY = 0;
 	}
 }
 
@@ -172,15 +177,15 @@ NVector2 NInput::GetStick(const bool isLeft)
 {
 	if (isLeft)
 	{
-		SHORT x = statePad_.Gamepad.sThumbLX;
-		SHORT y = statePad_.Gamepad.sThumbLY;
+		SHORT x = sStatePad.Gamepad.sThumbLX;
+		SHORT y = sStatePad.Gamepad.sThumbLY;
 
 		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
 	else
 	{
-		SHORT x = statePad_.Gamepad.sThumbRX;
-		SHORT y = statePad_.Gamepad.sThumbRY;
+		SHORT x = sStatePad.Gamepad.sThumbRX;
+		SHORT y = sStatePad.Gamepad.sThumbRY;
 
 		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
@@ -192,34 +197,34 @@ uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
 	{
 		if (isVertical)
 		{
-			return (statePad_.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-				prevPad_.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
-				(statePad_.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-					prevPad_.Gamepad.sThumbLY <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+			return (sStatePad.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbLY <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 		}
 		else
 		{
-			return (statePad_.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-				prevPad_.Gamepad.sThumbLX <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
-				(statePad_.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-					prevPad_.Gamepad.sThumbLX >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+			return (sStatePad.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbLX <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbLX >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
 		}
 	}
 	else
 	{
 		if (isVertical)
 		{
-			return (statePad_.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-				prevPad_.Gamepad.sThumbRY >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
-				(statePad_.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-					prevPad_.Gamepad.sThumbRY <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+			return (sStatePad.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbRY >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbRY <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 		}
 		else
 		{
-			return (statePad_.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-				prevPad_.Gamepad.sThumbRX <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
-				(statePad_.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-					prevPad_.Gamepad.sThumbRX >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+			return (sStatePad.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbRX <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbRX >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
 		}
 	}
 }
@@ -230,7 +235,7 @@ void NInput::Vibration(const float leftVibrationPower, const float rightVibratio
 	lVibPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
 	rVibPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
 
-	vibration_.wLeftMotorSpeed = (int)(lVibPower * 65535.0f);
-	vibration_.wRightMotorSpeed = (int)(rVibPower * 65535.0f);
-	XInputSetState(0, &vibration_);
+	sVibration.wLeftMotorSpeed = (int)(lVibPower * 65535.0f);
+	sVibration.wRightMotorSpeed = (int)(rVibPower * 65535.0f);
+	XInputSetState(0, &sVibration);
 }
