@@ -48,7 +48,7 @@ void NCamera::DebugCameraMove()
 	{
 		if (NInput::GetMouseMove().x != 0 || NInput::GetMouseMove().y != 0)
 		{
-			const float moveSpeed = 5.5f;
+			const float moveSpeed = 0.005f;
 			sCurrentCamera->rot_.x += NInput::GetMouseMove().y * moveSpeed;
 			sCurrentCamera->rot_.y += NInput::GetMouseMove().x * moveSpeed;
 		}
