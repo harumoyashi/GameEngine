@@ -4,6 +4,7 @@
 #include <Xinput.h>
 #include <stdint.h>
 #include "NVector2.h"
+#include "NVector3.h"
 
 #include <wrl.h>
 
@@ -12,14 +13,20 @@ class NInput
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public:
+private:
 	struct MouseMove {
 		LONG lX;
 		LONG lY;
-		LONG lZ;
+		LONG lZ;	//ここはマウスホイール
 	};
 
-private:
+	enum MouseButton
+	{
+		MouseLeft,
+		MouseRight,
+		MouseMiddle,
+	};
+
 	static ComPtr<IDirectInputDevice8> sDevMouse;
 	static DIMOUSESTATE2 sStateMouse;
 	static DIMOUSESTATE2 sPrevMouse;
@@ -30,11 +37,25 @@ public:
 	//mouse更新
 	static void MouseUpdate();
 
+	// マウスのボタン押下をチェック
+	// 指定したボタンが押されてるかチェック
+	bool PushMouse(const MouseButton button = MouseLeft);
+
+	// マウスのトリガーをチェック
+	// 指定したボタンが押されてるかチェック
+	bool TriggerMouse(const MouseButton button = MouseLeft);
+
 	/// <summary>
 	/// マウス移動量を取得
 	/// </summary>
 	/// <returns>マウス移動量</returns>
-	MouseMove GetMouseMove();
+	static NVector3 GetMouseMove(const bool isNowState);
+
+	//マウスの移動量を反映
+	static void SetMouseMove(NVector2& mouseVec);
+
+	//マウスホイールの移動量を反映
+	static void SetWheelMove(float wheelMove);
 
 private:
 	static ComPtr<IDirectInputDevice8> sKeyboard;

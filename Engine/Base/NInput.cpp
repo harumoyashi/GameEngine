@@ -20,7 +20,84 @@ ComPtr<IDirectInputDevice8> NInput::sDevMouse;
 DIMOUSESTATE2 NInput::sStateMouse;
 DIMOUSESTATE2 NInput::sPrevMouse;
 
+void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
+{
+	HRESULT result = S_FALSE;
 
+	// マウスデバイスの生成
+	result = sDirectInput->CreateDevice(GUID_SysMouse, &sDevMouse, NULL);
+	assert(SUCCEEDED(result));
+
+	// 入力データ形式のセット
+	result = sDevMouse->SetDataFormat(&c_dfDIMouse2); // 標準形式
+	assert(SUCCEEDED(result));
+
+	// 排他制御レベルのセット
+	result =
+		sDevMouse->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(result));
+}
+
+void NInput::MouseUpdate()
+{
+	sDevMouse->Acquire(); // マウス動作開始
+
+	// 前回の入力を保存
+	sPrevMouse = sStateMouse;
+
+	// マウスの入力
+	sDevMouse->GetDeviceState(sizeof(sStateMouse), &sStateMouse);
+}
+
+bool NInput::PushMouse(const MouseButton button)
+{
+	// 0でなければ押している
+	if (sStateMouse.rgbButtons[button]) {
+		return true;
+	}
+
+	// 押していない
+	return false;
+}
+
+bool NInput::TriggerMouse(const MouseButton button)
+{
+	// 前回が0で、今回が0でなければトリガー
+	if (!sPrevMouse.rgbButtons[button] && sStateMouse.rgbButtons[button]) {
+		return true;
+	}
+
+	// トリガーでない
+	return false;
+}
+
+NVector3 NInput::GetMouseMove(const bool isNowState) {
+	NVector3 tmp;
+	if (isNowState)
+	{
+		tmp.x = (float)sStateMouse.lX;
+		tmp.y = (float)sStateMouse.lY;
+		tmp.z = (float)sStateMouse.lZ;
+	}
+	else
+	{
+		tmp.x = (float)sPrevMouse.lX;
+		tmp.y = (float)sPrevMouse.lY;
+		tmp.z = (float)sPrevMouse.lZ;
+	}
+	return tmp;
+}
+
+void NInput::SetMouseMove(NVector2& mouseVec)
+{
+	sStateMouse.lX = (LONG)mouseVec.x;
+	sStateMouse.lY = (LONG)mouseVec.y;
+}
+
+void NInput::SetWheelMove(float wheelMove)
+{
+	sStateMouse.lZ = (LONG)wheelMove;
+}
 
 //---------こっからキーボード------------//
 ComPtr<IDirectInputDevice8> NInput::sKeyboard;
