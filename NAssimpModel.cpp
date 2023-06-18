@@ -100,9 +100,10 @@ void NAssimpModel::Draw()
 		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuffers_[i].view_);
 		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBuffers_[i].view_);
 
-		//指定のヒープにあるSRVをルートパラメータ1番に設定
+		//テクスチャの名前取得
 		std::string texName = NUtil::ToUTF8(meshes_[i].textureName);
 		NTexture tex;
+		//何もテクスチャないなら真っ白で描画
 		if (texName == "")
 		{
 			tex = NTextureManager::GetInstance()->textureMap_["white"];
@@ -111,8 +112,9 @@ void NAssimpModel::Draw()
 		{
 			tex = NTextureManager::GetInstance()->textureMap_[texName];
 		}
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(
-			1, tex.gpuHandle_);
+
+		//指定のヒープにあるSRVをルートパラメータ1番に設定
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, tex.gpuHandle_);
 
 		//ライト描画
 		sLightGroup->Draw();
