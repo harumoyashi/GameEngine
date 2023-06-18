@@ -13,7 +13,7 @@ public:
 
 	//ƒƒ“ƒo•Ï”
 	float Length() const;						//ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
-	NVector3 Normalize() const;						//³‹K‰»‚ğ‚·‚é
+	NVector3 Normalize() const;					//³‹K‰»‚ğ‚·‚é
 	float Dot(const NVector3& v) const;			//“àÏ‚ğ‹‚ß‚é
 	NVector3 Cross(const NVector3& v) const;	//ŠOÏ‚ğ‹‚ß‚é
 

@@ -14,6 +14,7 @@ void NGame::Init()
 	dx12_ = NDX12::GetInstance();
 	dx12_->Init(win_);
 	//input初期化
+	NInput::MouseInit(win_->GetHInstance(), win_->GetHwnd());
 	NInput::KeyInit(win_->GetHInstance(), win_->GetHwnd());
 	NInput::GetInstance()->PadInit();
 	//グラフィックスパイプライン初期化
@@ -45,6 +46,7 @@ void NGame::Update()
 	if (win_->WindowMessage()) { NFramework::SetIsGameEnd(true); }
 #pragma endregion
 #pragma region DirectX毎フレーム処理
+	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
 	sceneMane_->Update();

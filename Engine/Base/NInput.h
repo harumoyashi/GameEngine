@@ -19,7 +19,11 @@ private:
 		LONG lY;
 		LONG lZ;	//ここはマウスホイール
 	};
+	static ComPtr<IDirectInputDevice8> sDevMouse;
+	static DIMOUSESTATE2 sStateMouse;
+	static DIMOUSESTATE2 sPrevMouse;
 
+public:
 	enum MouseButton
 	{
 		MouseLeft,
@@ -27,11 +31,6 @@ private:
 		MouseMiddle,
 	};
 
-	static ComPtr<IDirectInputDevice8> sDevMouse;
-	static DIMOUSESTATE2 sStateMouse;
-	static DIMOUSESTATE2 sPrevMouse;
-
-public:
 	//mouse初期化
 	static void MouseInit(const HINSTANCE& hInstance, const HWND& hwnd);
 	//mouse更新
@@ -39,17 +38,17 @@ public:
 
 	// マウスのボタン押下をチェック
 	// 指定したボタンが押されてるかチェック
-	bool PushMouse(const MouseButton button = MouseLeft);
+	static bool PushMouse(const MouseButton button = MouseLeft);
 
 	// マウスのトリガーをチェック
 	// 指定したボタンが押されてるかチェック
-	bool TriggerMouse(const MouseButton button = MouseLeft);
+	static bool TriggerMouse(const MouseButton button = MouseLeft);
 
 	/// <summary>
 	/// マウス移動量を取得
 	/// </summary>
 	/// <returns>マウス移動量</returns>
-	static NVector3 GetMouseMove(const bool isNowState);
+	static NVector3 GetMouseMove(const bool isNowState = true);
 
 	//マウスの移動量を反映
 	static void SetMouseMove(NVector2& mouseVec);

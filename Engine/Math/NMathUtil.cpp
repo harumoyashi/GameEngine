@@ -5,7 +5,7 @@
 std::random_device seed;
 std::mt19937 engine(seed());
 
-NMatrix4 MathUtil::MatView(const NVector3& eye, const NVector3& target, const NVector3& up)
+NMatrix4 MathUtil::MatView(const NVector3& eye, const NVector3& target, const NVector3& up, const NVector3& rot)
 {
 	NMatrix4 mat;
 
@@ -31,6 +31,18 @@ NMatrix4 MathUtil::MatView(const NVector3& eye, const NVector3& target, const NV
 	mat.m[3][0] = eye.x;
 	mat.m[3][1] = eye.y;
 	mat.m[3][2] = eye.z;
+
+
+	NMatrix4 matRot;		//‰ñ“]s—ñ
+	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rot.z));
+	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rot.x));
+	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rot.y));
+	matRot *= matZ;	//Z²ü‚è‚É‰ñ“]‚µ‚Ä‚©‚ç
+	matRot *= matX;	//X²ü‚è‚É‰ñ“]‚µ‚Ä
+	matRot *= matY;	//Y²ü‚è‚É‰ñ“]
+
+	//‰ñ“]‚³‚¹‚Ä‚©‚ç•Ô‚·
+	mat *= matRot;
 
 	mat = -mat;
 	return mat;

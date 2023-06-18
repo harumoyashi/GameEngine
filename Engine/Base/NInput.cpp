@@ -24,6 +24,12 @@ void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
 	HRESULT result = S_FALSE;
 
+	// DirectInputの初期化
+	result = DirectInput8Create(
+		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
+		(void**)&sDirectInput, nullptr);
+	assert(SUCCEEDED(result));
+
 	// マウスデバイスの生成
 	result = sDirectInput->CreateDevice(GUID_SysMouse, &sDevMouse, NULL);
 	assert(SUCCEEDED(result));

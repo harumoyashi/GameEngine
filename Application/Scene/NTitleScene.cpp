@@ -29,10 +29,10 @@ void NTitleScene::Init()
 	//NAudioManager::Play("RetroBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.SetEye({ 0.0f, 100.0f, 600.0f });
+	camera_.Reset();
+	camera_.SetEye({ 0.0f, 10.0f, 30.0f });
 	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
-	camera_.ProjectiveProjection();
-	camera_.CreateMatView();
+	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
 #pragma endregion
 #pragma region 描画初期化処理
@@ -122,7 +122,8 @@ void NTitleScene::Update()
 
 #pragma region 行列の計算
 	//ビュー行列の再生成
-	camera_.CreateMatView();
+	camera_.DebugCameraMove();
+	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
 
 	if (isCol_)
@@ -152,6 +153,10 @@ void NTitleScene::Update()
 
 	isCol_ = NCollision::Sphere2PlaneCol(sphere_, plane_);
 
+	//マウス入力確かめる用
+	/*foreSprite_[0]->position_.x += NInput::GetMouseMove().x;
+	foreSprite_[0]->position_.y += NInput::GetMouseMove().y;
+	foreSprite_[0]->isInvisible_ = NInput::PushMouse(NInput::MouseMiddle);*/
 	foreSprite_[0]->Update();
 
 	assimpModel_.Update();
@@ -177,7 +182,7 @@ void NTitleScene::Draw()
 	}
 
 	//assimpモデル描画//
-	assimpModel_.Draw();
+	//assimpModel_.Draw();
 
 	//前景スプライト
 	foreSprite_[0]->Draw();

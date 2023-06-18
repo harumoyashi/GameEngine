@@ -11,7 +11,7 @@ const float PI2 = PI * 2.0f;
 namespace MathUtil
 {
 	//ビュー変換行列生成
-	NMatrix4 MatView(const NVector3& eye, const NVector3& target, const NVector3& up);
+	NMatrix4 MatView(const NVector3& eye, const NVector3& target, const NVector3& up, const NVector3& rot);
 	//平行投影変換行列生成
 	NMatrix4 ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT);
 	//透視投影変換行列生成
