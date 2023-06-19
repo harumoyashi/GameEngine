@@ -35,18 +35,20 @@ public:
 	void Reset();
 	void Update();
 	//デバッグカメラ用の移動処理
-	void DebugCameraMove();
+	void DebugCameraUpdate();
 
 	//ビュー変換行列作成
 	void CreateMatView();
 	//射影投影変換//
 	void ProjectiveProjection();
 
+	//デバッグカメラモード切り替え
+	void ChangeIsDebugCamera();
+
 	//セッター
 	inline void SetEye(const NVector3& eye) { eye_ = eye; }
 	inline void SetTarget(const NVector3& target) { target_ = target; }
 	inline void SetUp(const NVector3& up) { up_ = up; }
-	inline void SetIsDebugCamera(const bool isDebug) { isDebugCamera_ = isDebug; }
 	void SetNearFar(const float nearZ, const float farZ);
 
 	//ゲッター

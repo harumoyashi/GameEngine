@@ -5,47 +5,37 @@
 std::random_device seed;
 std::mt19937 engine(seed());
 
-NMatrix4 MathUtil::MatView(const NVector3& eye, const NVector3& target, const NVector3& up, const NVector3& rot)
+NMatrix4 MathUtil::MatViewLockTo(const NVector3& eye, const NVector3& front, const NVector3& up)
 {
 	NMatrix4 mat;
 
-	NVector3 direction = target - eye;
-	direction = direction.Normalize();
-
 	//外積使って向いてる方向に対しての右ベクトル求める
-	NVector3 rightVec = up.Cross(direction);
+	NVector3 rightVec = up.Cross(front);
 	rightVec = rightVec.Normalize();
-	//右ベクトルを使って上ベクトルも求める
-	NVector3 upVec = direction.Cross(rightVec);
-	upVec = upVec.Normalize();
-
+	
 	mat.m[0][0] = rightVec.x;
 	mat.m[0][1] = rightVec.y;
 	mat.m[0][2] = rightVec.z;
-	mat.m[1][0] = upVec.x;
-	mat.m[1][1] = upVec.y;
-	mat.m[1][2] = upVec.z;
-	mat.m[2][0] = direction.x;
-	mat.m[2][1] = direction.y;
-	mat.m[2][2] = direction.z;
+	mat.m[1][0] = up.x;
+	mat.m[1][1] = up.y;
+	mat.m[1][2] = up.z;
+	mat.m[2][0] = front.x;
+	mat.m[2][1] = front.y;
+	mat.m[2][2] = front.z;
 	mat.m[3][0] = eye.x;
 	mat.m[3][1] = eye.y;
 	mat.m[3][2] = eye.z;
 
 	mat = -mat;
-
-	//NMatrix4 matRot;		//回転行列
-	//NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rot.z));
-	//NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rot.x));
-	//NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rot.y));
-	//matRot *= matZ;	//Z軸周りに回転してから
-	//matRot *= matX;	//X軸周りに回転して
-	//matRot *= matY;	//Y軸周りに回転
-
-	////回転させてから返す
-	//mat *= matRot;
-
 	return mat;
+}
+
+NMatrix4 MathUtil::MatViewLockAt(const NVector3& eye, const NVector3& target, const NVector3& up)
+{
+	NVector3 direction = target - eye;
+	direction = direction.Normalize();
+
+	return MatViewLockTo(eye, direction, up);
 }
 
 NMatrix4 MathUtil::ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT)

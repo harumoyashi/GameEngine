@@ -30,7 +30,7 @@ void NTitleScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	camera_.Reset();
-	camera_.SetEye({ 0.0f, 10.0f, 30.0f });
+	camera_.SetEye({ 0.0f, 10.0f, -30.0f });
 	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
 	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
@@ -121,8 +121,11 @@ void NTitleScene::Update()
 	lightGroup_->Update();
 
 #pragma region 行列の計算
-	//ビュー行列の再生成
-	camera_.DebugCameraMove();
+	//右クリックしたらカメラモード切り替わる
+	if (NInput::TriggerMouse(NInput::MouseRight))
+	{
+		camera_.ChangeIsDebugCamera();
+	}
 	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
 
@@ -182,7 +185,7 @@ void NTitleScene::Draw()
 	}
 
 	//assimpモデル描画//
-	//assimpModel_.Draw();
+	assimpModel_.Draw();
 
 	//前景スプライト
 	foreSprite_[0]->Draw();
