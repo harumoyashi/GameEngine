@@ -172,7 +172,7 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (size_t i = 0; i < obj_.size(); i++)
+	/*for (size_t i = 0; i < obj_.size(); i++)
 	{
 		obj_[i]->CommonBeginDraw();
 		obj_[i]->Draw();
@@ -182,7 +182,7 @@ void NTitleScene::Draw()
 	{
 		levelDataobj_[i]->CommonBeginDraw();
 		levelDataobj_[i]->Draw();
-	}
+	}*/
 
 	//assimpモデル描画//
 	assimpModel_.Draw();

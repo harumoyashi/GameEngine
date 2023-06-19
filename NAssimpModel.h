@@ -8,7 +8,8 @@
 class NAssimpModel
 {
 private:
-	std::vector<Mesh> meshes_; // メッシュの配列
+	std::vector<Mesh> meshes_;	// メッシュの配列
+	//std::vector<Bone> bones_;	// ボーンの配列
 	std::vector<NVertexBuff> vertexBuffers_; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
 	const wchar_t* kModelFile;
@@ -26,6 +27,7 @@ private:
 	{
 		kModelFile,
 		meshes_,
+		//bones_,
 		false,
 		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
 	};
@@ -37,6 +39,10 @@ private:
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
 	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
+
+public:
+	//ボーンインデックスの最大数
+	static const uint32_t MAX_BONE_INDICES = 4;
 
 public:
 	//ファイルからメッシュ情報を読み取り、それに応じたバッファを生成する

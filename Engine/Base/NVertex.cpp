@@ -65,11 +65,11 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	{
 		return false;
 	}
-	if (tangent.x != a.tangent.x || tangent.y != a.tangent.y || tangent.z != a.tangent.z)
+	if (boneIndex != a.boneIndex)
 	{
 		return false;
 	}
-	if (color.r != a.color.r || color.g != a.color.g || color.b != a.color.b || color.a != a.color.a)
+	if (boneWeight != a.boneWeight)
 	{
 		return false;
 	}

@@ -53,12 +53,12 @@ public:
 	NVector3 pos = { 0, 0, 0 };
 	NVector3 normal = { 0, 0, 1 };
 	NVector2 uv = { 0, 0 };
-	NVector3 tangent = { 0, 0, 1 };	//ê⁄ãÛä‘
-	NColor color = { 255,255,255,255 };
+	std::vector<uint32_t> boneIndex{ 4 };
+	std::vector<float> boneWeight{4};
 
 	NVertexAssimp(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 },
-		NVector3 tangent = { 0,0,1 }, NColor color = { 255,255,255,255 })
-		: pos(pos), normal(normal), uv(uv),tangent(tangent),color(color) {}
+		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
+		: pos(pos), normal(normal), uv(uv), boneIndex(boneIndex), boneWeight(boneWeight) {}
 
 	bool operator==(const NVertexAssimp& a) const;
 
