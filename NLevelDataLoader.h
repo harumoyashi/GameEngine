@@ -1,6 +1,7 @@
 #pragma once
 #include "json.hpp"
 #include <NObj3d.h>
+#include <NCamera.h>
 
 typedef std::string ModelName;
 
@@ -14,6 +15,7 @@ struct LevelData
 		NVector3 scale;
 	};
 
+	NCamera camera;
 	std::list<ObjectData> objects;
 	std::map<ModelName, NModel> models;
 };
@@ -30,7 +32,12 @@ public:
 	//走査
 	void Traversal(nlohmann::json& object, LevelData* levelData);
 
+	void TraversalCamera(nlohmann::json& camera, LevelData* levelData);
+
 	//レベルエディタから出力された読み込み済オブジェクトを配置していく
 	void SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj);
+
+	//カメラを設定する
+	NCamera SetCamera(const LevelData* levelData);
 };
 

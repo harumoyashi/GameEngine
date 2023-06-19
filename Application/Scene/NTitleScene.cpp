@@ -30,7 +30,7 @@ void NTitleScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	camera_.Reset();
-	camera_.SetEye({ 0.0f, 10.0f, -30.0f });
+	camera_.SetEye({ 0.0f, 10.0f, -300.0f });
 	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
 	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
@@ -42,6 +42,7 @@ void NTitleScene::Init()
 	levelData_ = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
 	//SetObject(levelData_.get());
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
+	camera_ = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
 	for (auto& lo : levelDataobj_)
 	{
 		lo->SetModel("sphere");
@@ -205,29 +206,4 @@ void NTitleScene::Reset()
 
 void NTitleScene::Finalize()
 {
-}
-
-void NTitleScene::SetObject(LevelData* levelData)
-{
-	//レベルデータからオブジェクトを生成、配置
-	for (auto& objectData : levelData->objects)
-	{
-		/*NModel* model_ = nullptr;
-		decltype(levelData->models)::iterator it = levelData->models.find(objectData.filename);
-		if (it != levelData->models.end())
-		{*/
-		/*model_ = &it->second;*/
-		//モデルを指定して3Dオブジェクトを生成
-		//配列に登録してく
-		levelDataobj_.emplace_back();
-		levelDataobj_.back() = std::make_unique<NObj3d>();
-		levelDataobj_.back()->Init();
-		levelDataobj_.back()->SetModel("sphere");
-
-		levelDataobj_.back()->position_ = objectData.trans;
-		levelDataobj_.back()->rotation_ = objectData.rot;
-		levelDataobj_.back()->scale_ = objectData.scale;
-		//obj_.back()->SetMatWorld(objectData.matWorld_);
-	/*}*/
-	}
 }

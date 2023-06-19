@@ -88,9 +88,23 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 		objectData.rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
 		objectData.scale = { (float)transform["scaling"][1],(float)transform["scaling"][2],(float)transform["scaling"][0] };
 	}
+	else if (type.compare("CAMERA") == 0)
+	{
+		nlohmann::json& transform = object["transform"];
+		//ファイル名
+		NVector3 eye = { (float)transform["translation"][1],(float)transform["translation"][2],-(float)transform["translation"][0] };
+		NVector3 rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
+		levelData->camera.Reset();
+		levelData->camera.sNCamera->SetEye(eye);
+		levelData->camera.sNCamera->SetRot(rot);
+	}
 }
 
-void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj)
+void NLevelDataLoader::TraversalCamera(nlohmann::json& camera, LevelData* levelData)
+{
+}
+
+void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>>& obj)
 {
 	//レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects)
@@ -109,6 +123,13 @@ void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::un
 		obj.back()->position_ = objectData.trans;
 		obj.back()->rotation_ = objectData.rot;
 		obj.back()->scale_ = objectData.scale;
-	/*}*/
+		/*}*/
 	}
+
+	NCamera::sCurrentCamera = levelData->camera.sNCamera.get();
+}
+
+NCamera NLevelDataLoader::SetCamera(const LevelData* levelData)
+{
+	return *levelData->camera.sNCamera.get();
 }

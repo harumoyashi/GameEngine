@@ -65,7 +65,4 @@ public:
 	void Draw();
 	void Reset();
 	void Finalize();
-
-	//レベルエディタから出力された読み込み済オブジェクトを配置していく
-	void SetObject(LevelData* levelData);
 };

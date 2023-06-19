@@ -49,6 +49,7 @@ public:
 	inline void SetEye(const NVector3& eye) { eye_ = eye; }
 	inline void SetTarget(const NVector3& target) { target_ = target; }
 	inline void SetUp(const NVector3& up) { up_ = up; }
+	inline void SetRot(const NVector3& rot) { rot_ = rot; }
 	void SetNearFar(const float nearZ, const float farZ);
 
 	//ÉQÉbÉ^Å[
