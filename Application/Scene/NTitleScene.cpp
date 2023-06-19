@@ -42,6 +42,7 @@ void NTitleScene::Init()
 	levelData_ = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
 	//SetObject(levelData_.get());
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
+	//レベルデータにあるカメラをここで適用してるから上で設定してるの使いたかったら消して
 	camera_ = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
 	for (auto& lo : levelDataobj_)
 	{
