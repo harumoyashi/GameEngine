@@ -288,9 +288,12 @@ void NDX12::InitializeFixFPS()
 void NDX12::UpdateFixFPX(const float divideFrameRate)
 {
 	//1/60秒(1フレーム)ぴったりの時間
-	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / (60.0f / divideFrameRate)));
+	const std::chrono::microseconds kMinTime(uint64_t(1000000.0f / (kFPS / divideFrameRate)));
 	//1/60秒よりちょっとだけ短い時間
-	const std::chrono::microseconds kMinCheckTime(uint64_t(1000000.0f / (65.0f / divideFrameRate)));
+	const std::chrono::microseconds kMinCheckTime(uint64_t(1000000.0f / (kFPS + 5.0f / divideFrameRate)));
+
+	//デルタタイム記録
+	deltaTime_ = (1000000.0f / (kFPS / divideFrameRate));
 
 	//現在の時間を取得する
 	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();

@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClInclude Include="NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="NEasing.h" />
     <ClInclude Include="NLevelDataLoader.h" />
     <ClInclude Include="NAssimpModel.h" />
     <ClInclude Include="NConstBuffData.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="NGame.h" />
     <ClInclude Include="NLightGroup.h" />
     <ClInclude Include="NModelManager.h" />
+    <ClInclude Include="NParticle2D.h" />
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
@@ -143,6 +145,7 @@
   <ItemGroup>
     <ClCompile Include="NAssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
+    <ClCompile Include="NEasing.cpp" />
     <ClCompile Include="NLevelDataLoader.cpp" />
     <ClCompile Include="NAssimpModel.cpp" />
     <ClCompile Include="NAudioManager.cpp" />
@@ -182,6 +185,7 @@
     <ClCompile Include="Engine\Math\NVector3.cpp" />
     <ClCompile Include="NLightGroup.cpp" />
     <ClCompile Include="NModelManager.cpp" />
+    <ClCompile Include="NParticle2D.cpp" />
     <ClCompile Include="NPointLight.cpp" />
     <ClCompile Include="NResultScene.cpp" />
     <ClCompile Include="NSpotLight.cpp" />

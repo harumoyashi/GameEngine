@@ -12,12 +12,12 @@ class NTimer
 {
 private:
 	float timer_;		//タイマー
-	float maxTimer_;	//タイマーの最大値
+	float maxTime_r_;	//タイマーの最大値
 	bool isTimeOut_;	//タイマーが最大値に達したかフラグ
 
 public:
-	NTimer() : timer_(0), maxTimer_(0), isTimeOut_(false){}
-	NTimer(const float maxTimer) : timer_(0), maxTimer_(maxTimer), isTimeOut_(false) {}
+	NTimer() : timer_(0), maxTime_r_(0), isTimeOut_(false){}
+	NTimer(const float maxTime_r) : timer_(0), maxTime_r_(maxTime_r), isTimeOut_(false) {}
 
 	//タイマーリセット
 	void Reset();
@@ -28,15 +28,15 @@ public:
 
 	//セッター
 	inline void SetTimer(const float timer) { timer_ = timer; }
-	inline void SetMaxTimer(const float maxTimer) { maxTimer_ = maxTimer; }
+	inline void SetMaxTimer(const float maxTime_r) { maxTime_r_ = maxTime_r; }
 	inline void SetisTimeOut(const bool isTimeOut) { isTimeOut_ = isTimeOut; }
 
 	//ゲッター
 	inline const bool GetisTimeOut()const { return isTimeOut_; }
-	inline const float GetMaxTimer()const { return (float)maxTimer_; }
+	inline const float GetMaxTimer()const { return (float)maxTime_r_; }
 	inline const float GetTimer()const { return (float)timer_; }
 	//タイマーの進み具合を取得
-	inline const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
+	inline const float GetTimeRate()const { return (float)timer_ / (float)maxTime_r_; }
 	//システムが開始されてからの時間を取得
 	float GetNowTime(const TimeType& timeType);
 };

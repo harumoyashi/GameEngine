@@ -100,3 +100,13 @@ uint32_t MathUtil::Random(const uint32_t min, const uint32_t max)
 
 	return (uint32_t)dist1(engine);
 }
+
+NVector2 MathUtil::CircleMotion(NVector2 CenterPoint, float radius, float angle)
+{
+	NVector2 position;
+
+	position.x = CenterPoint.x + radius * cosf(angle);
+	position.y = CenterPoint.y + radius * sinf(angle);
+
+	return position;
+}

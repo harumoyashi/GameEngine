@@ -39,4 +39,7 @@ namespace MathUtil
 		// ‚Ç‚¿‚ç‚É‚à“–‚Ä‚Í‚Ü‚ç‚È‚©‚Á‚½‚ç’l‚ð‚»‚Ì‚Ü‚Ü•Ô‚·
 		return static_cast<Type>(value);
 	}
+
+	//‰~‰^“®
+	NVector2 CircleMotion(NVector2 CenterPoint, float radius, float angle);
 }

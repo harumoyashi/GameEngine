@@ -63,8 +63,9 @@ private:
 	UINT64 fenceVal_ = 0;
 
 	//FPS固定用
+	float deltaTime_;				//1Fでの経過時間
 	std::chrono::steady_clock::time_point reference_;	//記録時間
-	const long long kFPS = 60;	//60FPS
+	const float kFPS = 60.0f;	//60FPS
 
 public:
 	std::vector<ComPtr<ID3D12Resource>> backBuffers_;
@@ -103,6 +104,9 @@ public:
 	inline ID3D12DescriptorHeap* GetDSVHeap()const { return dsvHeap_.Get(); }
 	//フェンス取得
 	inline ID3D12Fence* GetFence()const { return fence_.Get(); }
+
+	//デルタタイム取得
+	inline float GetDelta()const { return deltaTime_; }
 
 private:
 	//アダプター選択
