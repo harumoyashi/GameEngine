@@ -176,43 +176,44 @@ float NEasing::InOutBack(float start, float end, float timeRate)
 void NEasing::easeTimer::Reset()
 {
 	nowTime_ = 0.0f;
-	end = false;
+	end_ = false;
 	reverseend_ = false;
 
-	run = false;
+	run_ = false;
 	reverse_ = false;
 }
 
 void NEasing::easeTimer::Start()
 {
 	nowTime_ = 0.0f;
-	end = false;
+	end_ = false;
 	reverseend_ = false;
 
-	run = true;
+	run_ = true;
 	reverse_ = false;
 }
 
 void NEasing::easeTimer::ReverseStart()
-	end = false;
+{
+	end_ = false;
 	reverseend_ = false;
 
-	run = false;
+	run_ = false;
 	reverse_ = true;
 }
 
 void NEasing::easeTimer::Update()
 {
-	if (run) {
+	if (run_) {
 		nowTime_ += NDX12::GetInstance()->GetDelta();
 	}
 	if (reverse_) {
 		nowTime_ -= NDX12::GetInstance()->GetDelta();
 	}
 	// 経過時間が経過しきったらフラグを折る
-	if (GetTimeRate() >= 1.0f && run) {
-		run = false;
-		end = true;
+	if (GetTimeRate() >= 1.0f && run_) {
+		run_ = false;
+		end_ = true;
 	}
 	//中途半端なところで止まっちゃうけど、とりあえず0.1以下になったら止める
 	if (GetTimeRate() <= 0.001f && reverse_) {
@@ -224,7 +225,7 @@ void NEasing::easeTimer::Update()
 
 float NEasing::easeTimer::GetTimeRate()
 {
-	float timeRate;
+	float timeRate = 0.0f;
 	timeRate = MathUtil::Clamp(timeRate,nowTime_ / maxTime_, 1.0f);
 	return timeRate;
 }

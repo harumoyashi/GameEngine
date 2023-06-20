@@ -9,13 +9,13 @@ void NTimer::Reset()
 
 void NTimer::Update()
 {
-	if (timer_ < maxTime_r_)
+	if (timer_ < maxTimer_)
 	{
 		timer_++;
 	}
 	else
 	{
-		timer_ = maxTime_r_;
+		timer_ = maxTimer_;
 		isTimeOut_ = true;
 	}
 }

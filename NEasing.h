@@ -38,9 +38,9 @@ namespace NEasing
 	{
 	private:
 		//進行中フラグ
-		bool run = false;
+		bool run_ = false;
 		//進行終了フラグ
-		bool end = false;
+		bool end_ = false;
 		//後退中フラグ
 		bool reverse_ = false;
 		//後退終了フラグ
@@ -56,13 +56,13 @@ namespace NEasing
 		float maxTime_ = 1.0f;		// 何秒かけて移動するか
 
 		//タイマーが進んでるかフラグ取得
-		inline bool GetRun()const { return run; };
+		inline bool GetRun()const { return run_; };
 		//一度でも進行されたらtrueになるフラグ取得
-		inline bool GetStarted()const { return run || end; };
+		inline bool GetStarted()const { return run_ || end_; };
 		//タイマーが進み切ったかフラグ取得
-		inline bool GetEnd()const { return end; };
+		inline bool GetEnd()const { return end_; };
 		//進み切ったかフラグを設定
-		inline void SetEnd(bool end) { this->end = end; };
+		inline void SetEnd(bool end) { end_ = end; };
 
 		//タイマーが戻ってるかフラグ取得
 		inline bool GetReverse()const { return reverse_; };
