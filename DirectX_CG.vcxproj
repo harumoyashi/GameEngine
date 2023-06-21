@@ -136,6 +136,7 @@
     <ClInclude Include="NModelManager.h" />
     <ClInclude Include="NParticle2D.h" />
     <ClInclude Include="NPointLight.h" />
+    <ClInclude Include="NPostEffect.h" />
     <ClInclude Include="NResultScene.h" />
     <ClInclude Include="NSpotLight.h" />
     <ClInclude Include="NTimer.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="NModelManager.cpp" />
     <ClCompile Include="NParticle2D.cpp" />
     <ClCompile Include="NPointLight.cpp" />
+    <ClCompile Include="NPostEffect.cpp" />
     <ClCompile Include="NResultScene.cpp" />
     <ClCompile Include="NSpotLight.cpp" />
     <ClCompile Include="NTimer.cpp" />
@@ -196,6 +198,8 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\shaders\Basic.hlsli" />
+    <None Include="Resources\shaders\GaussianBlur.hlsli" />
+    <None Include="Resources\shaders\Glitch.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
   </ItemGroup>
@@ -213,6 +217,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GlitchPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GlitchVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

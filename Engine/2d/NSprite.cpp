@@ -3,7 +3,11 @@
 
 NSprite::NSprite()
 {
-	
+	//定数バッファ
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
+	cbTrans_->Init();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbColor_->Init();
 }
 
 NSprite::~NSprite()
@@ -18,13 +22,8 @@ void NSprite::CreateSprite(const std::string& texHandle)
 	SetVertHeap();
 	SetVertResource();
 	CreateVertBuff();
-	VertMaping();
 	CreateVertBuffView();
-	//定数バッファ
-	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans_->Init();
-	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor_->Init();
+	
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -47,13 +46,8 @@ void NSprite::CreateSprite(const std::string& texHandle,
 	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange();
 	TransferVertex();
-	VertMaping();
 	CreateVertBuffView();
-	//定数バッファ
-	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans_->Init();
-	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor_->Init();
+	
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -77,13 +71,8 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange(texLeftTop_, texSize_);
 	TransferVertex();
-	VertMaping();
 	CreateVertBuffView();
-	//定数バッファ
-	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
-	cbTrans_->Init();
-	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbColor_->Init();
+	
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -103,7 +92,7 @@ void NSprite::SetVert()
 	};
 
 	//設定したら他でも使える変数に代入
-	std::copy(std::begin(vert), std::end(vert), vertices_);
+	vertices_ = vert;
 
 	//頂点バッファのサイズを代入
 	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
@@ -134,17 +123,7 @@ void NSprite::SetVertResource()
 
 void NSprite::CreateVertBuff()
 {
-	HRESULT result;
-
-	// 頂点バッファの生成
-	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-		&heapPropVert_, // ヒープ設定
-		D3D12_HEAP_FLAG_NONE,
-		&resDescVert_, // リソース設定
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&vertBuff_));
-	assert(SUCCEEDED(result));
+	vertexBuff_.Init(vertices_);
 }
 
 void NSprite::MatchTexSize(const ComPtr<ID3D12Resource>& texBuff_)
@@ -177,29 +156,16 @@ void NSprite::SetClipRange()
 	texSize_ = size_;
 }
 
-void NSprite::VertMaping()
-{
-	HRESULT result;
-
-	// GPU上のバッファに対応した仮想メモリ(メインメモリ上)を取得
-	result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
-	assert(SUCCEEDED(result));
-	// 全頂点に対して
-	std::copy(std::begin(vertices_), std::end(vertices_), vertMap_);	//座標をコピー
-	// 繋がりを解除
-	vertBuff_->Unmap(0, nullptr);
-}
-
 void NSprite::CreateVertBuffView()
 {
 	// 頂点バッファビューの作成
 	// GPU仮想アドレス
 	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+	vertexBuff_.view_.BufferLocation = vertexBuff_.buff_->GetGPUVirtualAddress();
 	// 頂点バッファのサイズ
-	vbView_.SizeInBytes = singleVB_;
+	vertexBuff_.view_.SizeInBytes = singleVB_;
 	// 頂点1つ分のデータサイズ
-	vbView_.StrideInBytes = singleSizeVB_;
+	vertexBuff_.view_.StrideInBytes = singleSizeVB_;
 }
 
 void NSprite::SetTexHandle(const std::string& texHandle)
@@ -280,14 +246,14 @@ void NSprite::TransferVertex()
 	vert[3].uv = { tex_right,tex_top };	// 右上
 
 	//設定したら他でも使える変数に代入
-	std::copy(std::begin(vert), std::end(vert), vertices_);
+	vertices_ = vert;
 
 	//頂点バッファのサイズを代入
 	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
 	singleVB_ = static_cast<uint32_t>(sizeof(vertices_));
 
 	//頂点バッファへのデータ転送
-	VertMaping();
+	vertexBuff_.Init(vert);
 }
 
 void NSprite::SetSize(const float x, const float y)
@@ -331,7 +297,7 @@ void NSprite::Draw()
 	//指定のヒープにあるSRVをルートパラメータ1番に設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView_);
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuff_.view_);
 
 	//ルートパラメータ0番に定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());

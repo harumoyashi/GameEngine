@@ -162,7 +162,7 @@ void NTitleScene::Update()
 	/*foreSprite_[0]->position_.x += NInput::GetMouseMove().x;
 	foreSprite_[0]->position_.y += NInput::GetMouseMove().y;
 	foreSprite_[0]->isInvisible_ = NInput::PushMouse(NInput::MouseMiddle);*/
-	foreSprite_[0]->Update();
+	//foreSprite_[0]->Update();
 
 	assimpModel_.Update();
 #pragma endregion
@@ -190,7 +190,7 @@ void NTitleScene::Draw()
 	assimpModel_.Draw();
 
 	//前景スプライト
-	foreSprite_[0]->Draw();
+	//foreSprite_[0]->Draw();
 
 	// 4.描画コマンドここまで
 #pragma endregion

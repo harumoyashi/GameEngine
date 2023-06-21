@@ -6,24 +6,24 @@
 #include "NColor.h"
 #include "NConstBuff.h"
 #include "NVertex.h"
+#include "NVertexBuff.h"
 
 #include <d3dx12.h>
 #include <wrl.h>
 
 class NSprite
 {
-private:
+protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	//頂点まわり//
 	uint32_t singleSizeVB_;						//頂点バッファ1個当たりのサイズ
 	uint32_t singleVB_;							//頂点バッファ全体のサイズ
-	NVertexUV vertices_[4]{};				//頂点代入用
+	std::vector<NVertexUV> vertices_{4};		//頂点代入用
 	D3D12_HEAP_PROPERTIES heapPropVert_{};	//ヒープ
 	D3D12_RESOURCE_DESC resDescVert_{};		//リソース
-	ComPtr<ID3D12Resource> vertBuff_;		//頂点バッファ
+	NVertexBuff vertexBuff_;
 	NVertexUV* vertMap_ = nullptr;			//マップ用
-	D3D12_VERTEX_BUFFER_VIEW vbView_{};		//頂点バッファビュー
 
 	//定数バッファまわり//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D変換行列
@@ -87,8 +87,6 @@ private:
 	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
 	//切り抜かない場合テクスチャサイズに合わせる
 	void SetClipRange();
-	//マッピング
-	void VertMaping();
 	//頂点バッファビュー作成
 	void CreateVertBuffView();
 	

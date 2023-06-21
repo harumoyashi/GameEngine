@@ -6,7 +6,7 @@
 #include "NTexture.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
-#include "NModelManager.h"
+#include "NPostEffect.h"
 #include "NFramework.h"
 
 class NGame :public NFramework
@@ -18,6 +18,7 @@ private:
 	PipeLineManager* pipeline_;
 	NTextureManager* texManager_;
 	NSceneManager* sceneMane_;
+	std::unique_ptr<NPostEffect> postEffect;
 
 public:
 	void Init() override;

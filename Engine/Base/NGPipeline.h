@@ -112,8 +112,12 @@ private:
 	NGPipeline pipeline3d_;
 	NGPipeline pipelineSprite_;
 
+	NGPipeline pipelineGaussian_;
+
 	PipelineSet pipelineSet3d_;
 	PipelineSet pipelineSetSprite_;
+
+	PipelineSet pipelineSetGaussian_;
 
 public:
 	PipeLineManager();

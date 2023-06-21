@@ -37,6 +37,11 @@ void NGame::Init()
 	sceneMane_ = NSceneManager::GetInstance();
 	sceneMane_->Init();
 #pragma endregion
+#pragma region ポストエフェクト初期化
+	postEffect = std::make_unique<NPostEffect>();
+	postEffect->CreateSprite();
+	//postEffect->Init();
+#pragma endregion
 }
 
 void NGame::Update()
@@ -49,12 +54,15 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
+	postEffect->Update();
 	sceneMane_->Update();
 #pragma endregion
 }
 
 void NGame::Draw()
 {
+	sceneMane_->PreDraw();
+	postEffect->Draw();
 	sceneMane_->Draw();
 }
 
