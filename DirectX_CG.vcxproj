@@ -45,7 +45,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\DirectXTex;$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)imgui;$(ProjectDir)packages/Assimp_native_4.1_v142.4.1.0/build/native/include</IncludePath>
+    <IncludePath>$(SolutionDir)External\DirectXTex;$(WindowsSDK_IncludePath);$(VC_IncludePath);$(SolutionDir)imgui;$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include</IncludePath>
     <OutDir>$(SolutionDir)..\Generated\Outputs\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)..\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
