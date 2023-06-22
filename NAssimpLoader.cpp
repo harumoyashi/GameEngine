@@ -6,6 +6,9 @@
 #include "NAssimpLoader.h"
 #include "NUtil.h"
 
+#pragma comment(lib, "assimp-vc142-mtd.lib")
+#pragma comment(lib, "assimp-vc142-mt.lib")
+
 namespace fs = std::filesystem;
 
 //ディレクトリパスのみにする
