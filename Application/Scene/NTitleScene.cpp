@@ -44,10 +44,10 @@ void NTitleScene::Init()
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
 	//レベルデータにあるカメラをここで適用してるから上で設定してるの使いたかったら消して
 	camera_ = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
-	for (auto& lo : levelDataobj_)
+	/*for (auto& lo : levelDataobj_)
 	{
 		lo->SetModel("sphere");
-	}
+	}*/
 
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
@@ -174,11 +174,11 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (size_t i = 0; i < obj_.size(); i++)
+	/*for (size_t i = 0; i < obj_.size(); i++)
 	{
 		obj_[i]->CommonBeginDraw();
 		obj_[i]->Draw();
-	}
+	}*/
 
 	for (size_t i = 0; i < levelDataobj_.size(); i++)
 	{
@@ -187,7 +187,7 @@ void NTitleScene::Draw()
 	}
 
 	//assimpモデル描画//
-	assimpModel_.Draw();
+	//assimpModel_.Draw();
 
 	//前景スプライト
 	//foreSprite_[0]->Draw();

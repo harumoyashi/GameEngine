@@ -109,21 +109,15 @@ void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::un
 	//レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData->objects)
 	{
-		/*NModel* model = nullptr;
-		decltype(levelData->models)::iterator it = levelData->models.find(objectData.filename);
-		if (it != levelData->models.end())
-		{*/
-		/*model = &it->second;*/
 		//モデルを指定して3Dオブジェクトを生成(できてない)
 		//配列に登録してく
 		obj.emplace_back(std::make_unique<NObj3d>());
 		obj.back()->Init();
-		//obj.back()->SetModel(model[0]);
+		obj.back()->SetModel(objectData.filename);
 
 		obj.back()->position_ = objectData.trans;
 		obj.back()->rotation_ = objectData.rot;
 		obj.back()->scale_ = objectData.scale;
-		/*}*/
 	}
 
 	NCamera::sCurrentCamera = levelData->camera.sNCamera.get();
