@@ -78,6 +78,9 @@ StyleCopReport.xml
 *.inc
 *.obj
 *.iobj
+*.nupkg
+*.targets
+*.dll
 *.pch
 *.pdb
 *.ipdb
