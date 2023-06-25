@@ -9,6 +9,9 @@
 #include "NIndexBuff.h"
 #include "NMatrix4.h"
 
+#include <assimp/IOStream.hpp>
+#include <assimp/IOSystem.hpp>
+
 struct Mesh
 {
 	std::vector<NVertexPNU> vertices;
