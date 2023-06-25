@@ -5,18 +5,18 @@
 class Bullet
 {
 private:
-	std::unique_ptr<NObj3d> obj;	//弾のオブジェクト
-	float moveAngle;				//移動用角度
-	float moveSpeed;				//移動スピード
+	std::unique_ptr<NObj3d> obj_;	//弾のオブジェクト
+	float moveAngle_;				//移動用角度
+	float moveSpeed_;				//移動スピード
 
 private:
-	bool isActive;				//有効フラグ
-	float collisionRadius;		//コライダーの半径
-	SphereCollider collider;	//弾の当たり判定
+	bool isActive_;				//有効フラグ
+	float collisionRadius_;		//コライダーの半径
+	SphereCollider collider_;	//弾の当たり判定
 
-	float damage;				//与えるダメージ量
+	float damage_;				//与えるダメージ量
 
-	bool isCanGenerate;			//弾生成できるフラグ
+	bool isCanGenerate_;		//弾生成できるフラグ
 
 public:
 	Bullet();
@@ -29,36 +29,36 @@ public:
 public:
 	// ゲッター //
 	//コライダー取得
-	inline const SphereCollider& GetBulletCollider()const { return collider; }
+	inline const SphereCollider& GetBulletCollider()const { return collider_; }
 	//有効フラグ取得
-	inline bool GetisActive()const { return isActive; }
+	inline bool GetisActive()const { return isActive_; }
 	//弾生成できるフラグ取得
-	inline bool GetisCanGenerate()const { return isCanGenerate; }
+	inline bool GetisCanGenerate_()const { return isCanGenerate_; }
 	//移動スピード取得
-	inline float GetMoveSpeed()const { return moveSpeed; }
+	inline float GetMoveSpeed()const { return moveSpeed_; }
 	//与えるダメージ量取得
-	inline float GetDamage()const { return damage; }
+	inline float GetDamage()const { return damage_; }
 	//座標取得
-	inline NVector3& GetPos()const { return obj->position_; }
+	inline NVector3& GetPos()const { return obj_->position_; }
 	//大きさ取得
-	inline NVector3& GetScale()const { return obj->scale_; }
+	inline NVector3& GetScale()const { return obj_->scale_; }
 	//移動用角度取得
-	inline float GetMoveAngle()const { return moveAngle; }
+	inline float GetMoveAngle()const { return moveAngle_; }
 
 public:
 	// セッター //
 	//有効フラグ設定
-	inline void SetisActive(const bool& isActive) { this->isActive = isActive; }
+	inline void SetisActive(const bool isActive) { isActive_ = isActive; }
 	//弾生成できるフラグ設定
-	inline void SetisCanGenerate(const bool& isCanGenerate) { this->isCanGenerate = isCanGenerate; }
+	inline void SetisCanGenerate_(const bool isCanGenerate) { isCanGenerate_ = isCanGenerate; }
 	//与えるダメージ量設定
-	inline void SetDamage(const float& damage) { this->damage = damage; }
+	inline void SetDamage(const float damage) { damage_ = damage; }
 	//大きさ設定
-	inline void SetScale(const float& scale) { obj->scale_ = scale; collisionRadius = scale; }
+	inline void SetScale(const float scale) { obj_->scale_ = scale; collisionRadius_ = scale; }
 	//移動スピード設定
-	inline void SetMoveSpeed(const float& moveSpeed) { this->moveSpeed = moveSpeed; }
+	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
 	//色設定
-	inline void SetColor(const NColor& color) { obj->color_ = color; }
+	inline void SetColor(const NColor& color) { obj_->color_ = color; }
 	//コライダーの半径設定
-	inline void SetColRadius(const float& radius) { collisionRadius = collisionRadius * radius; }
+	inline void SetColRadius(const float radius) { collisionRadius_ = collisionRadius_ * radius; }
 };
