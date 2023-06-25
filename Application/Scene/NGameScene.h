@@ -15,6 +15,8 @@
 #include "NCamera.h"
 #include "NAudio.h"
 
+#include "Player.h"
+
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
@@ -22,12 +24,7 @@ class NGameScene
 {
 private:
 	//オブジェクト
-	NMaterial material_;				//マテリアル
-	static const uint32_t kMaxObj = 4;	//オブジェクト数
-	std::vector<std::unique_ptr<NObj3d>> obj_;			//オブジェクト(定数バッファ)
-
-	static const uint32_t kMaxModel = 3;	//モデル数
-	std::vector<NModel> model_;	//モデル情報
+	Player player;
 
 	//背景スプライト
 	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数

@@ -63,13 +63,13 @@ void Emitter2D::DrawGraph()
 {
 	for (auto& p : particles_)
 	{
-		//SpDS::DrawRotaGraph((int)p.pos.x, (int)p.pos.y, p.scale.x, p.scale.y, p.rot, p.key, Anchor::Center, p.color);
+		//SpDS::DrawRotaGraph((uint32_t)p.pos.x, (uint32_t)p.pos.y, p.scale.x, p.scale.y, p.rot, p.key, Anchor::Center, p.color);
 	}
 }
 
-void Emitter2D::Add(int addNum, int life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo, NVector2 accel, float minRot, float maxRot, NColor color)
+void Emitter2D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo, NVector2 accel, float minRot, float maxRot, NColor color)
 {
-	for (int i = 0; i < addNum; i++)
+	for (uint32_t i = 0; i < addNum; i++)
 	{
 		//指定した最大数超えてたら生成しない
 		if (particles_.size() >= maxCount_)
@@ -112,7 +112,7 @@ void Emitter2D::Add(int addNum, int life, float minScale, float maxScale, NVecto
 	}
 }
 
-void Emitter2D::SetScale(NVector2 scale)
+void Emitter2D::SetScale(NVector2& scale)
 {
 	scale_ = scale;
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管

@@ -20,28 +20,10 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_.emplace_back();
-		obj_[i] = std::make_unique<NObj3d>();
-		obj_[i]->Init();
-	}
-	obj_[0]->SetModel("sphere");
-	obj_[1]->SetModel("cube");
-	obj_[2]->SetModel("sphere");
-	obj_[3]->SetModel("busterSword");
+	
 
 #pragma region オブジェクトの初期値設定
-	obj_[0]->position_ = { 0,0,0 };
-	obj_[1]->position_ = { 0,-2,0 };
-	obj_[1]->scale_ = { 10,0.1f,10 };
-	obj_[2]->position_ = { 2,0,0 };
-	obj_[3]->position_ = { -2,3,0 };
-	//設定したのを適用
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->Update();
-	}
+	
 
 #pragma endregion
 	//背景スプライト生成
@@ -67,13 +49,6 @@ void NGameScene::Update()
 	camera_.CreateMatView();
 	NCamera::sCurrentCamera = &camera_;
 
-	obj_[0]->MoveKey();
-	obj_[3]->MoveKey();
-
-	for (size_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->Update();
-	}
 #pragma endregion
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -85,11 +60,7 @@ void NGameScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	for (size_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->CommonBeginDraw();
-		obj_[i]->Draw();
-	}
+	NObj3d::CommonBeginDraw();
 	
 	//前景スプライト
 

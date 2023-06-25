@@ -237,9 +237,6 @@
     <ClInclude Include="NUtil.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NModelManager.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="NParticle2D.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
@@ -247,6 +244,18 @@
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NPostEffect.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NModelManager.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NCollider.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -400,6 +409,15 @@
     </ClCompile>
     <ClCompile Include="NModelManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NCollider.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

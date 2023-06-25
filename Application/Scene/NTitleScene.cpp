@@ -71,7 +71,7 @@ void NTitleScene::Init()
 		obj_[i]->Update();
 	}
 
-	sphere_.pos = obj_[0]->position_;
+	sphere_.centerPos = obj_[0]->position_;
 	sphere_.radius = obj_[0]->scale_.x;
 	plane_.normal = { 0,1,0 };
 	plane_.distance = obj_[2]->position_.Length();
@@ -143,7 +143,7 @@ void NTitleScene::Update()
 
 	obj_[0]->MoveKey();
 
-	sphere_.pos = obj_[0]->position_;
+	sphere_.centerPos = obj_[0]->position_;
 	plane_.distance = obj_[2]->position_.Dot(plane_.normal);
 
 	for (auto& o : obj_)
@@ -174,15 +174,14 @@ void NTitleScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
-	/*for (size_t i = 0; i < obj_.size(); i++)
+	NObj3d::CommonBeginDraw();
+	for (size_t i = 0; i < obj_.size(); i++)
 	{
-		obj_[i]->CommonBeginDraw();
 		obj_[i]->Draw();
-	}*/
+	}
 
 	for (size_t i = 0; i < levelDataobj_.size(); i++)
 	{
-		levelDataobj_[i]->CommonBeginDraw();
 		levelDataobj_[i]->Draw();
 	}
 

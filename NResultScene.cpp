@@ -86,9 +86,9 @@ void NResultScene::Draw()
 	//背景スプライト
 
 	//3Dオブジェクト
+	NObj3d::CommonBeginDraw();
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj_[i]->CommonBeginDraw();
 		obj_[i]->Draw();
 	}
 

@@ -6,12 +6,12 @@
 #include "NAssimpLoader.h"
 #include "NUtil.h"
 
-#ifdef DEBUG
-#pragma comment(lib, "assimp-vc142-mtd.lib")
-#endif // DEBUG
-#ifdef RELEASE
-#pragma comment(lib, "assimp-vc142-mt.lib")
-#endif
+//#ifdef DEBUG
+//#pragma comment(lib, "assimp-vc142-mtd.lib")
+//#endif // DEBUG
+//#ifdef RELEASE
+//#pragma comment(lib, "assimp-vc142-mt.lib")
+//#endif
 
 namespace fs = std::filesystem;
 

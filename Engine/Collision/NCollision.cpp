@@ -1,10 +1,23 @@
 #include "NCollision.h"
 
-bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1)
+bool NCollision::CircleCol(const CircleCollider& c0, const CircleCollider& c1)
 {
-	float distX = (s0.pos.x - s1.pos.x) * (s0.pos.x - s1.pos.x);
-	float distY = (s0.pos.y - s1.pos.y) * (s0.pos.y - s1.pos.y);
-	float distZ = (s0.pos.z - s1.pos.z) * (s0.pos.z - s1.pos.z);
+	float distX = (c0.centerPos.x - c1.centerPos.x) * (c0.centerPos.x - c1.centerPos.x);
+	float distY = (c0.centerPos.y - c1.centerPos.y) * (c0.centerPos.y - c1.centerPos.y);
+	float distR = (c0.radius + c1.radius) * (c0.radius + c1.radius);
+
+	if (distX + distY <= distR)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1)
+{
+	float distX = (s0.centerPos.x - s1.centerPos.x) * (s0.centerPos.x - s1.centerPos.x);
+	float distY = (s0.centerPos.y - s1.centerPos.y) * (s0.centerPos.y - s1.centerPos.y);
+	float distZ = (s0.centerPos.z - s1.centerPos.z) * (s0.centerPos.z - s1.centerPos.z);
 	float distR = (s0.radius + s1.radius) * (s0.radius + s1.radius);
 
 	if (distX + distY + distZ <= distR)
@@ -14,10 +27,10 @@ bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1)
 	return false;
 }
 
-bool NCollision::Sphere2PlaneCol(const Sphere& sphere, const Plane& plane/*, NVector3 inter*/)
+bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollider& plane/*, NVector3 inter*/)
 {
 	//座標系の原点から球の中心座標への距離
-	float distV = sphere.pos.Dot(plane.normal);
+	float distV = sphere.centerPos.Dot(plane.normal);
 
 	//平面の原点距離を減算することで、平面と球の中心との距離を出す
 	float dist = distV - plane.distance;

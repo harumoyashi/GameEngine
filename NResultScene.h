@@ -25,8 +25,6 @@ private:
 	static const uint32_t kMaxObj = 3;	//オブジェクト数
 	std::vector<std::unique_ptr<NObj3d>> obj_;			//オブジェクト(定数バッファ)
 
-	NCollision::Sphere sphere_;
-	NCollision::Plane plane_;
 	bool isCol_ = false;
 
 	//背景スプライト

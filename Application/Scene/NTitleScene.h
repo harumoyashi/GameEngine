@@ -30,8 +30,8 @@ private:
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト
 	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
-	NCollision::Sphere sphere_;
-	NCollision::Plane plane_;
+	SphereCollider sphere_;
+	PlaneCollider plane_;
 	bool isCol_ = false;
 
 	//背景スプライト
