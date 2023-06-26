@@ -7,9 +7,8 @@
 
 typedef std::string TextureHandle;
 
-class NTexture
+struct NTexture
 {
-public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	ComPtr<ID3D12Resource> texBuff_;

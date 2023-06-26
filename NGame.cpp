@@ -39,9 +39,9 @@ void NGame::Init()
 #pragma endregion
 #pragma region ポストエフェクト初期化
 	postEffect = std::make_unique<NPostEffect>();
-	postEffect->CreateSprite();
-	postEffect->SetPos(200,300);
-	//postEffect->Init();
+	postEffect->Init();
+	//postEffect->CreateSprite();
+	//postEffect->SetPos(200,300);
 #pragma endregion
 }
 
