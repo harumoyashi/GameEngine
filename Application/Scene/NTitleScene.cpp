@@ -20,6 +20,7 @@ NTitleScene::NTitleScene()
 
 NTitleScene::~NTitleScene()
 {
+
 }
 
 void NTitleScene::Init()
