@@ -69,24 +69,14 @@ public:
 		const NVector2& texSize, const NVector2& anchorPoint = { 0.5f,0.5f }, const bool isFlipX = false, const bool isFlipY = false);
 
 private:
-	//頂点データ設定
-	void SetVert();
-	//頂点用ヒープ設定
-	void SetVertHeap();
-	//頂点用リソース設定
-	void SetVertResource();
-	//バッファ作成
-	void CreateVertBuff();
-	//テクスチャサイズに合わせる
-	void MatchTexSize(const ComPtr<ID3D12Resource>& texBuff);
+	//テクスチャサイズを取得して設定
+	void SetTexSize(const ComPtr<ID3D12Resource>& texBuff);
 	//アンカーポイント適用
 	void SetAncor(const NVector2& anchorPoint);
 	//上下左右反転フラグ適用
 	void SetIsFlip(const bool isFlipX, const bool isFlipY);
 	//切り抜き範囲適用
 	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
-	//頂点バッファビュー作成
-	void CreateVertBuffView();
 	
 	//テクスチャハンドルをセット
 	void SetTexHandle(const std::string& texHandle);
