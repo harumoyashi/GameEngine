@@ -3,11 +3,50 @@
 #include "NVector4.h"
 #include "NMathUtil.h"
 
+const float NPostEffect::kClearColor[4] = { 0.25f,0.5f,0.1f,0.0f };
+
 NPostEffect::NPostEffect()
 {
 }
 
 void NPostEffect::Init()
+{
+	CreateTexture();
+	CreateRTV();
+	CreateDepthBuff();
+	CreateDSV();
+}
+
+void NPostEffect::Draw()
+{
+	//描画前処理
+	PreDrawScene();
+
+	// パイプラインステートとルートシグネチャの設定コマンド
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSetPostEffect().pipelineState_.Get());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSetPostEffect().rootSig_.entity_.Get());
+
+	// プリミティブ形状の設定コマンド
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
+
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { descHeapSRV_.Get() };
+	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+
+	//ポストエフェクト用に作ったSRVをルートパラメータ1番に設定
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, descHeapSRV_->GetGPUDescriptorHandleForHeapStart());
+
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuff_.view_);
+
+	//ルートパラメータ0番に定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
+
+	//描画後処理
+	PostDrawScene();
+}
+
+void NPostEffect::CreateTexture()
 {
 	HRESULT result;
 
@@ -27,12 +66,15 @@ void NPostEffect::Init()
 	texHeapProp.VisibleNodeMask = 0;
 
 	//テクスチャバッファの生成
+	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R32G32B32A32_FLOAT, kClearColor);
+
 	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
 		&texHeapProp,
 		D3D12_HEAP_FLAG_NONE,
 		&texresDesc,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		nullptr, IID_PPV_ARGS(&texBuff_)
+		&clearValue,
+		IID_PPV_ARGS(&texBuff_)
 	);
 	assert(SUCCEEDED(result));
 
@@ -66,7 +108,7 @@ void NPostEffect::Init()
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	srvDescHeapDesc.NumDescriptors = 1;
 	//SRV用デスクリプタヒープを生成
-	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV));
+	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV_));
 	assert(SUCCEEDED(result));
 
 	//SRV設定
@@ -80,7 +122,7 @@ void NPostEffect::Init()
 	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
 		texBuff_.Get(),
 		&srvDesc,
-		descHeapSRV->GetCPUDescriptorHandleForHeapStart()
+		descHeapSRV_->GetCPUDescriptorHandleForHeapStart()
 	);
 
 	// ---------------------------頂点関連----------------------------- //
@@ -122,25 +164,131 @@ void NPostEffect::Init()
 	Update();
 }
 
-void NPostEffect::Draw()
+void NPostEffect::CreateRTV()
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSetSprite().pipelineState_.Get());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSetSprite().rootSig_.entity_.Get());
+	HRESULT result;
 
-	// プリミティブ形状の設定コマンド
-	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
+	//RTV用デスクリプタヒープ設定
+	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
+	rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	rtvDescHeapDesc.NumDescriptors = 1;
+	//RTV用デスクリプタヒープを生成
+	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV_));
+	assert(SUCCEEDED(result));
 
-	std::vector<ID3D12DescriptorHeap*> ppHeaps = { descHeapSRV.Get() };
-	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+	//レンダーターゲットビューの設定
+	D3D12_RENDER_TARGET_VIEW_DESC renderTargetViewDesc{};
+	//シェーダーの計算結果をSRGBに変換して書き込む
+	renderTargetViewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	//ポストエフェクト用に作ったSRVをルートパラメータ1番に設定
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
+	//デスクリプタヒープにRTV作成
+	NDX12::GetInstance()->GetDevice()->CreateRenderTargetView(
+		texBuff_.Get(),
+		&renderTargetViewDesc,
+		descHeapRTV_->GetCPUDescriptorHandleForHeapStart()
+	);
+}
 
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuff_.view_);
+void NPostEffect::CreateDepthBuff()
+{
+	HRESULT result;
 
-	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
+	//リソース設定
+	D3D12_RESOURCE_DESC depthResDesc{};
+	depthResDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+	depthResDesc.Width = NWindows::kWin_width;	//レンダーターゲットに合わせる
+	depthResDesc.Height = NWindows::kWin_height;	//レンダーターゲットに合わせる
+	depthResDesc.DepthOrArraySize = 1;
+	depthResDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+	depthResDesc.SampleDesc.Count = 1;
+	depthResDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;	//デプスステンシル
+
+	//深度値用ヒーププロパティ
+	D3D12_HEAP_PROPERTIES depthHeapProp{};
+	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
+	//深度値のクリア設定
+	D3D12_CLEAR_VALUE depthClearValue{};
+	depthClearValue.DepthStencil.Depth = 1.0f;	//深度値1.0f(最大値)でクリア
+	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+
+	//深度バッファ生成
+	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
+		&depthHeapProp,
+		D3D12_HEAP_FLAG_NONE,
+		&depthResDesc,
+		D3D12_RESOURCE_STATE_DEPTH_WRITE,	//深度値書き込みに使用
+		&depthClearValue,
+		IID_PPV_ARGS(&depthBuff_)
+	);
+	assert(SUCCEEDED(result));
+}
+
+void NPostEffect::CreateDSV()
+{
+	HRESULT result;
+
+	//DSV用デスクリプタヒープ設定
+	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
+	dsvHeapDesc.NumDescriptors = 1;	//深度ビューは1つ
+	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//デプスステンシルビュー
+	//DSV用デスクリプタヒープ作成
+	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&descHeapDSV_));
+	assert(SUCCEEDED(result));
+
+	//デスクリプタヒープにDSV作成
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
+	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	NDX12::GetInstance()->GetDevice()->CreateDepthStencilView(
+		depthBuff_.Get(),
+		&dsvDesc, descHeapDSV_->GetCPUDescriptorHandleForHeapStart()
+	);
+}
+
+void NPostEffect::PreDrawScene()
+{
+	// ------------------リソースバリアを描画可能に変更----------------------- //
+	D3D12_RESOURCE_BARRIER barrierDesc{};
+	barrierDesc.Transition.pResource = texBuff_.Get();
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//シェーダーリソースから
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;				//描画可能へ
+	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
+
+	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle =
+		descHeapRTV_->GetCPUDescriptorHandleForHeapStart();
+	//デプスステンシルビュー用デスクリプタヒープのハンドルを取得
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle =
+		descHeapDSV_->GetCPUDescriptorHandleForHeapStart();
+	//レンダーテクスチャをレンダーターゲットに指定
+	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+
+	// -----------------------その他もろもろ-------------------------- //
+	//ビューポートの設定
+	CD3DX12_VIEWPORT viewport(0.0f, 0.0f,
+		NWindows::kWin_width, NWindows::kWin_height);
+
+	NDX12::GetInstance()->GetCommandList()->RSSetViewports(1,&viewport);
+
+	//シザリング矩形の設定
+	CD3DX12_RECT rect(0, 0,
+		NWindows::kWin_width, NWindows::kWin_height);
+
+	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1,&rect);
+
+	//全画面クリア
+	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, kClearColor, 0, nullptr);
+	//深度バッファのクリア
+	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+}
+
+void NPostEffect::PostDrawScene()
+{
+	//リソースバリアを変更(描画可能からシェーダーリソースに)
+	D3D12_RESOURCE_BARRIER barrierDesc{};
+	barrierDesc.Transition.pResource = texBuff_.Get();
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//描画可能から
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//シェーダーリソースへ
+	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
 }

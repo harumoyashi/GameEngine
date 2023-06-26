@@ -82,7 +82,7 @@ public:
 	//デプスステンシル(深度)設定
 	void SetDepth(const bool isDepth);
 	//レンダーターゲット設定
-	void SetRenderTarget();
+	void SetRenderTarget(const bool isR8);
 	//アンチエイリアシングのためのサンプル数設定
 	void SetAntiAliasing();
 	//パイプラインにルートシグネチャをセット
@@ -99,6 +99,8 @@ public:
 	PipelineSet CreatePipeline3d();
 	//スプライト用パイプライン生成
 	PipelineSet CreatePipelineSprite();
+	//ポストエフェクト用パイプライン生成
+	PipelineSet CreatePipelinePostEffect();
 #pragma endregion
 
 private:
@@ -111,11 +113,13 @@ class PipeLineManager
 private:
 	NGPipeline pipeline3d_;
 	NGPipeline pipelineSprite_;
+	NGPipeline pipelinePostEffect_;
 
 	NGPipeline pipelineGaussian_;
 
 	PipelineSet pipelineSet3d_;
 	PipelineSet pipelineSetSprite_;
+	PipelineSet pipelineSetPostEffect_;
 
 	PipelineSet pipelineSetGaussian_;
 
@@ -128,4 +132,5 @@ public:
 
 	inline const PipelineSet& GetPipelineSet3d() const { return pipelineSet3d_; }
 	inline const PipelineSet& GetPipelineSetSprite() const { return pipelineSetSprite_; }
+	inline const PipelineSet& GetPipelineSetPostEffect() const { return pipelineSetPostEffect_; }
 };

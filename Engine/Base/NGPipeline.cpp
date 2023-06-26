@@ -257,10 +257,17 @@ void NGPipeline::SetDepth(const bool isDepth)
 	pipelineDesc_.DSVFormat = DXGI_FORMAT_D32_FLOAT;								//深度値フォーマット
 }
 
-void NGPipeline::SetRenderTarget()
+void NGPipeline::SetRenderTarget(const bool isR8)
 {
-	pipelineDesc_.NumRenderTargets = 1;								//描画対象は1つ
-	pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	pipelineDesc_.NumRenderTargets = 2;								//描画対象は1つ
+	if (isR8)
+	{
+		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	}
+	else
+	{
+		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	}
 }
 
 void NGPipeline::SetAntiAliasing()
@@ -316,7 +323,7 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetBlend();
 	SetInputLayout(true);
 	SetTopology();
-	SetRenderTarget();
+	SetRenderTarget(true);
 	SetAntiAliasing();
 	SetDepth(true);
 
@@ -347,7 +354,38 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	SetBlend();
 	SetInputLayout(false);
 	SetTopology();
-	SetRenderTarget();
+	SetRenderTarget(true);
+	SetAntiAliasing();
+	SetDepth(false);
+
+	//テクスチャサンプラーの設定
+	SetTexSampler();
+
+	//ルートシグネチャ
+	SetRootSignature();
+
+	//パイプラインステート生成
+	CreatePS();
+
+	return pipelineSet_;
+}
+
+PipelineSet NGPipeline::CreatePipelinePostEffect()
+{
+	//シェーダー
+	LoadVertShaderSprite();
+	LoadPixelShaderSprite();
+
+	//頂点レイアウト設定
+	SetVertLayoutSprite();
+
+	//パイプラインステート
+	SetShader();
+	SetRasterizer(false);
+	SetBlend();
+	SetInputLayout(false);
+	SetTopology();
+	SetRenderTarget(false);
 	SetAntiAliasing();
 	SetDepth(false);
 
@@ -381,4 +419,5 @@ void PipeLineManager::Init()
 {
 	pipelineSet3d_ = pipeline3d_.CreatePipeline3d();
 	pipelineSetSprite_ = pipelineSprite_.CreatePipelineSprite();
+	pipelineSetPostEffect_ = pipelinePostEffect_.CreatePipelinePostEffect();
 }
