@@ -40,7 +40,7 @@ protected:
 	NVector2 texLeftTop_ = { 0,0 };			//テクスチャ左上座標
 	NVector2 texSize_ = { 100,100 };			//テクスチャ切り出しサイズ
 
-	NVector2 size_ = {};		//スプライトの大きさ
+	NVector2 size_ = { 100,100 };		//スプライトの大きさ
 
 public:
 	//変換用//
@@ -85,8 +85,6 @@ private:
 	void SetIsFlip(const bool isFlipX, const bool isFlipY);
 	//切り抜き範囲適用
 	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
-	//切り抜かない場合テクスチャサイズに合わせる
-	void SetClipRange();
 	//頂点バッファビュー作成
 	void CreateVertBuffView();
 	

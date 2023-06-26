@@ -23,6 +23,9 @@ void NSprite::CreateSprite(const std::string& texHandle)
 	SetVertResource();
 	CreateVertBuff();
 	CreateVertBuffView();
+	texSize_.x = (float)NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc().Width;
+	texSize_.y = (float)NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc().Height;
+	//TransferVertex();
 	
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
@@ -44,9 +47,10 @@ void NSprite::CreateSprite(const std::string& texHandle,
 	MatchTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);	//ここでテクスチャサイズに合わせてる
 	SetAncor(anchorPoint_);
 	SetIsFlip(isFlipX_, isFlipY_);
-	SetClipRange();
 	TransferVertex();
 	CreateVertBuffView();
+	texSize_.x = (float)NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc().Width;
+	texSize_.y = (float)NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc().Height;
 	
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
@@ -148,12 +152,6 @@ void NSprite::SetClipRange(const NVector2& texLeftTop, const NVector2& texSize)
 	texLeftTop_ = texLeftTop;
 	texSize_ = texSize;
 	size_ = texSize;
-}
-
-void NSprite::SetClipRange()
-{
-	texLeftTop_ = { 0,0 };
-	texSize_ = size_;
 }
 
 void NSprite::CreateVertBuffView()
@@ -259,6 +257,7 @@ void NSprite::TransferVertex()
 void NSprite::SetSize(const float x, const float y)
 {
 	size_ = { x,y };
+	//texSize_ = size_;
 	TransferVertex();
 }
 
