@@ -259,7 +259,7 @@ void NGPipeline::SetDepth(const bool isDepth)
 
 void NGPipeline::SetRenderTarget(const bool isR8)
 {
-	pipelineDesc_.NumRenderTargets = 2;								//•`‰æ‘ÎÛ‚Í1‚Â
+	pipelineDesc_.NumRenderTargets = 1;								//•`‰æ‘ÎÛ‚Í1‚Â
 	if (isR8)
 	{
 		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255w’è‚ÌRGBA
