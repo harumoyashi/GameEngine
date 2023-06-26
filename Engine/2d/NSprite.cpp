@@ -18,12 +18,9 @@ void NSprite::CreateSprite(const std::string& texHandle)
 {
 	SetTexHandle(texHandle);
 	//頂点
-	SetVert();
-	SetVertHeap();
-	SetVertResource();
-	CreateVertBuff();
-	CreateVertBuffView();
-	
+	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
+	TransferVertex();
+
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -37,17 +34,11 @@ void NSprite::CreateSprite(const std::string& texHandle,
 {
 	SetTexHandle(texHandle);
 	//頂点
-	SetVert();
-	SetVertHeap();
-	SetVertResource();
-	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);	//ここでテクスチャサイズに合わせてる
+	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
 	SetAncor(anchorPoint_);
 	SetIsFlip(isFlipX_, isFlipY_);
-	SetClipRange();
 	TransferVertex();
-	CreateVertBuffView();
-	
+
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -62,17 +53,12 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 {
 	SetTexHandle(texHandle);
 	//頂点
-	SetVert();
-	SetVertHeap();
-	SetVertResource();
-	CreateVertBuff();
-	MatchTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);	//ここでテクスチャサイズに合わせてる
+	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
 	SetAncor(anchorPoint_);
 	SetIsFlip(isFlipX_, isFlipY_);
 	SetClipRange(texLeftTop_, texSize_);
 	TransferVertex();
-	CreateVertBuffView();
-	
+
 	//平行投影を代入
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
@@ -81,55 +67,12 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 	Update();
 }
 
-void NSprite::SetVert()
+void NSprite::SetTexSize(const ComPtr<ID3D12Resource>& texBuff)
 {
-	std::vector<NVertexUV> vert = {
-		//	x		y		z	 	u	v
-		{{   0.0f, 100.0f, 0.0f }, {0.0f,1.0f}},	// 左下
-		{{   0.0f,   0.0f, 0.0f }, {0.0f,0.0f}},	// 左上
-		{{ 100.0f, 100.0f, 0.0f }, {1.0f,1.0f}},	// 右下
-		{{ 100.0f,   0.0f, 0.0f }, {1.0f,0.0f}},	// 右上
-	};
-
-	//設定したら他でも使える変数に代入
-	vertices_ = vert;
-
-	//頂点バッファのサイズを代入
-	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
-	singleVB_ = static_cast<uint32_t>(sizeof(vertices_));
-}
-
-void NSprite::SetVertHeap()
-{
-	//ヒープ設定
-	heapPropVert_.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
-	heapPropVert_.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-	heapPropVert_.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-}
-
-void NSprite::SetVertResource()
-{
-	//リソース設定
-	resDescVert_.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	resDescVert_.Width = singleVB_;			//頂点データ全体のサイズ
-	resDescVert_.Height = 1;
-	resDescVert_.DepthOrArraySize = 1;
-	resDescVert_.MipLevels = 1;
-	resDescVert_.Format = DXGI_FORMAT_UNKNOWN;
-	resDescVert_.SampleDesc.Count = 1;
-	resDescVert_.Flags = D3D12_RESOURCE_FLAG_NONE;
-	resDescVert_.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-}
-
-void NSprite::CreateVertBuff()
-{
-	vertexBuff_.Init(vertices_);
-}
-
-void NSprite::MatchTexSize(const ComPtr<ID3D12Resource>& texBuff_)
-{
-	resDescVert_ = texBuff_->GetDesc();
-	size_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
+	resDescVert_ = texBuff->GetDesc();
+	texSize_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
+	//テクスチャのサイズとスプライトのサイズ一緒に
+	size_ = texSize_;
 }
 
 void NSprite::SetAncor(const NVector2& anchorPoint)
@@ -148,24 +91,6 @@ void NSprite::SetClipRange(const NVector2& texLeftTop, const NVector2& texSize)
 	texLeftTop_ = texLeftTop;
 	texSize_ = texSize;
 	size_ = texSize;
-}
-
-void NSprite::SetClipRange()
-{
-	texLeftTop_ = { 0,0 };
-	texSize_ = size_;
-}
-
-void NSprite::CreateVertBuffView()
-{
-	// 頂点バッファビューの作成
-	// GPU仮想アドレス
-	//これ渡すことで、GPU側がどのデータ見ればいいかわかるようになる
-	vertexBuff_.view_.BufferLocation = vertexBuff_.buff_->GetGPUVirtualAddress();
-	// 頂点バッファのサイズ
-	vertexBuff_.view_.SizeInBytes = singleVB_;
-	// 頂点1つ分のデータサイズ
-	vertexBuff_.view_.StrideInBytes = singleSizeVB_;
 }
 
 void NSprite::SetTexHandle(const std::string& texHandle)
@@ -259,6 +184,7 @@ void NSprite::TransferVertex()
 void NSprite::SetSize(const float x, const float y)
 {
 	size_ = { x,y };
+	//texSize_ = size_;
 	TransferVertex();
 }
 
