@@ -209,8 +209,6 @@ void NSprite::CommonBeginDraw()
 
 void NSprite::Draw()
 {
-	CommonBeginDraw();
-
 	//”ñ•\¦ƒtƒ‰ƒO—§‚Á‚Ä‚½‚ç•`‰æ‚¹‚¸‚Éˆ—”²‚¯‚é
 	if (isInvisible_)
 	{

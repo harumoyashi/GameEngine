@@ -172,6 +172,7 @@ void NTitleScene::Draw()
 {
 #pragma region グラフィックスコマンド
 	//背景スプライト
+	NSprite::CommonBeginDraw();
 
 	//3Dオブジェクト
 	NObj3d::CommonBeginDraw();
@@ -189,7 +190,8 @@ void NTitleScene::Draw()
 	//assimpModel_.Draw();
 
 	//前景スプライト
-	//foreSprite_[0]->Draw();
+	NSprite::CommonBeginDraw();
+	foreSprite_[0]->Draw();
 
 	// 4.描画コマンドここまで
 #pragma endregion

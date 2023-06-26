@@ -58,11 +58,13 @@ void NGameScene::Draw()
 {
 #pragma region グラフィックスコマンド
 	//背景スプライト
+	NSprite::CommonBeginDraw();
 
 	//3Dオブジェクト
 	NObj3d::CommonBeginDraw();
 	
 	//前景スプライト
+	NSprite::CommonBeginDraw();
 
 	// 4.描画コマンドここまで
 #pragma endregion

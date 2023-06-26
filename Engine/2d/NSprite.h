@@ -94,7 +94,7 @@ public:
 #pragma endregion
 #pragma region 描画
 	//共通グラフィックスコマンド
-	void CommonBeginDraw();
+	static void CommonBeginDraw();
 	//描画コマンド
 	void Draw();
 #pragma endregion
