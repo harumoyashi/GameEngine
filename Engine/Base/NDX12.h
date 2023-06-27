@@ -62,6 +62,13 @@ private:
 	ComPtr<ID3D12Fence> fence_;	//CPUとGPUの同期に使われるやつ
 	UINT64 fenceVal_ = 0;
 
+	uint32_t bbIndex_;
+	D3D12_RESOURCE_BARRIER barrierDesc_{};		//リソースバリア
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_{};	//デスクリプタハンドル
+
+	D3D12_VIEWPORT viewport_{};	//ビューポート
+	D3D12_RECT scissorRect_{};	//シザー矩形
+
 	//FPS固定用
 	float deltaTime_;				//1Fでの経過時間
 	std::chrono::steady_clock::time_point reference_;	//記録時間
@@ -76,8 +83,10 @@ public:
 
 	//DirectX初期化
 	void Init(NWindows* win);
+	// 描画前処理
+	void PreDraw();
 	//描画後処理
-	void PostDraw(D3D12_RESOURCE_BARRIER& barrierDesc);
+	void PostDraw();
 
 	//FPS固定更新
 	//divideFrameRate:フレームレートを何分の1にするか
@@ -138,7 +147,7 @@ private:
 	void InitializeFixFPS();
 
 	//バリア解除
-	void BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc);
+	void BarrierReset();
 	//命令のクローズ
 	//もうコマンドリストに積むのおしまい
 	void CmdListClose();
@@ -152,5 +161,17 @@ private:
 	void ClearQueue();
 	// 再びコマンドリストを貯める準備
 	void CmdListReset();
+
+	// -------------------------PreDraw---------------------------- //
+	//リソースバリアで書き込み可能に変更
+	void SetResBarrier();
+	//描画先の変更
+	void SetRenderTarget();
+	//画面クリアRGBA
+	void ClearScreen();
+	//ビューポート設定
+	void SetViewport();
+	//シザー矩形設定
+	void SetScissorRect();
 };
 

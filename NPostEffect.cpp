@@ -19,9 +19,6 @@ void NPostEffect::Init()
 
 void NPostEffect::Draw()
 {
-	//描画前処理
-	PreDrawScene();
-
 	// パイプラインステートとルートシグネチャの設定コマンド
 	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSetSprite().pipelineState_.Get());
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSetSprite().rootSig_.entity_.Get());
@@ -41,9 +38,6 @@ void NPostEffect::Draw()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
-
-	//描画後処理
-	PostDrawScene();
 }
 
 void NPostEffect::CreateTexture()
@@ -52,7 +46,7 @@ void NPostEffect::CreateTexture()
 
 	//テクスチャリソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-		DXGI_FORMAT_R32G32B32A32_FLOAT,
+		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		(UINT)NWindows::kWin_width,
 		(UINT)NWindows::kWin_height,
 		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
@@ -66,7 +60,7 @@ void NPostEffect::CreateTexture()
 	texHeapProp.VisibleNodeMask = 0;
 
 	//テクスチャバッファの生成
-	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R32G32B32A32_FLOAT, kClearColor);
+	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kClearColor);
 
 	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
 		&texHeapProp,
@@ -113,7 +107,7 @@ void NPostEffect::CreateTexture()
 
 	//SRV設定
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
@@ -142,16 +136,21 @@ void NPostEffect::CreateTexture()
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
 	//テクスチャサイズをもとに切り取る部分のuvを計算
-	float tex_left = texLeftTop_.x / texresDesc.Width;
-	float tex_right = (texLeftTop_.x + texSize_.x) / texresDesc.Width;
-	float tex_top = texLeftTop_.y / texresDesc.Height;
-	float tex_bottom = (texLeftTop_.y + texSize_.y) / texresDesc.Height;
+	float tex_left = texLeftTop_.x / 800;
+	float tex_right = (texLeftTop_.x + texSize_.x) / 800;
+	float tex_top = texLeftTop_.y / 800;
+	float tex_bottom = (texLeftTop_.y + texSize_.y) / 800;
 
 	//計算したuvに合わせて設定
-	vert[0].uv = { tex_left ,tex_bottom };	// 左下
-	vert[1].uv = { tex_left ,tex_top };	// 左上
-	vert[2].uv = { tex_right,tex_bottom };	// 右下
-	vert[3].uv = { tex_right,tex_top };	// 右上
+	//vert[0].uv = { tex_left ,tex_bottom };	// 左下
+	//vert[1].uv = { tex_left ,tex_top };	// 左上
+	//vert[2].uv = { tex_right,tex_bottom };	// 右下
+	//vert[3].uv = { tex_right,tex_top };	// 右上
+
+	vert[0].uv = { 0 ,1 };	// 左下
+	vert[1].uv = { 0 ,0 };	// 左上
+	vert[2].uv = { 1,1 };	// 右下
+	vert[3].uv = { 1,0 };	// 右上
 
 	//頂点バッファへのデータ転送
 	vertexBuff_.Init(vert);
@@ -179,7 +178,7 @@ void NPostEffect::CreateRTV()
 	//レンダーターゲットビューの設定
 	D3D12_RENDER_TARGET_VIEW_DESC renderTargetViewDesc{};
 	//シェーダーの計算結果をSRGBに変換して書き込む
-	renderTargetViewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	//デスクリプタヒープにRTV作成
@@ -248,11 +247,11 @@ void NPostEffect::CreateDSV()
 
 void NPostEffect::PreDrawScene()
 {
-	// ------------------リソースバリアを描画可能に変更----------------------- //
+	// ------------------リソースバリアを書き込み専用状態に変更----------------------- //
 	D3D12_RESOURCE_BARRIER barrierDesc{};
 	barrierDesc.Transition.pResource = texBuff_.Get();
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//シェーダーリソースから
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;				//描画可能へ
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態から
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;				//書き込み専用状態へ
 	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
@@ -285,10 +284,10 @@ void NPostEffect::PreDrawScene()
 
 void NPostEffect::PostDrawScene()
 {
-	//リソースバリアを変更(描画可能からシェーダーリソースに)
+	//リソースバリアを変更(書き込み専用状態から読み取り専用状態に)
 	D3D12_RESOURCE_BARRIER barrierDesc{};
 	barrierDesc.Transition.pResource = texBuff_.Get();
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//描画可能から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//シェーダーリソースへ
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//書き込み専用状態から
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態へ
 	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
 }

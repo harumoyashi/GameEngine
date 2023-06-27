@@ -62,9 +62,13 @@ void NGame::Update()
 
 void NGame::Draw()
 {
-	sceneMane_->PreDraw();
-	postEffect->Draw();
-	sceneMane_->Draw();
+	postEffect->PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
+	sceneMane_->Draw();					//レンダーテクスチャにゲームシーンの描画
+	postEffect->PostDrawScene();		//読み込み専用状態にして終了
+
+	NDX12::GetInstance()->PreDraw();	//バックバッファの入れ替え
+	postEffect->Draw();					//バックバッファにポストエフェクトの描画
+	NDX12::GetInstance()->PostDraw();	//バックバッファのに描画したのを表示に
 }
 
 void NGame::Finalize()

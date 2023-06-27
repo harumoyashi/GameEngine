@@ -65,20 +65,6 @@ void NSceneManager::Update()
 	NImGuiManager::GetInstance()->End();
 }
 
-void NSceneManager::PreDraw()
-{
-#pragma region 描画前処理
-	preDraw = std::make_unique<NPreDraw>();
-
-	preDraw->SetResBarrier();
-	preDraw->SetRenderTarget();
-	preDraw->ClearScreen();
-
-	preDraw->SetViewport();
-	preDraw->SetScissorRect();
-#pragma endregion
-}
-
 void NSceneManager::Draw()
 {
 	//タイトルシーンの描画処理
@@ -91,7 +77,6 @@ void NSceneManager::Draw()
 	}
 
 	NImGuiManager::GetInstance()->Draw();
-	NDX12::GetInstance()->PostDraw(preDraw->barrierDesc_);
 }
 
 void NSceneManager::Finalize()

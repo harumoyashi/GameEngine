@@ -9,7 +9,6 @@
 #include "NObj3d.h"
 #include "NTexture.h"
 #include "NSprite.h"
-#include "NPreDraw.h"
 #include "NCamera.h"
 #include "NCollision.h"
 #include "NLightGroup.h"

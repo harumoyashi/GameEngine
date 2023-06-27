@@ -19,9 +19,6 @@ private:
 	static bool isSceneChange;	//シーンの初期化フラグ
 
 public:
-	std::unique_ptr<NPreDraw> preDraw;
-
-public:
 	//インスタンス取得
 	static NSceneManager* GetInstance();
 
@@ -30,7 +27,6 @@ public:
 	//更新
 	void Update();
 	//描画
-	void PreDraw();
 	void Draw();
 	//終了処理
 	void Finalize();

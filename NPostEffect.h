@@ -1,6 +1,5 @@
 #pragma once
 #include "NSprite.h"
-#include "NPreDraw.h"
 
 class NPostEffect :
     public NSprite
