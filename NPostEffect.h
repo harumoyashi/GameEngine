@@ -6,7 +6,7 @@ class NPostEffect :
 {
 private:
     //テクスチャバッファ
-    ComPtr<ID3D12Resource> texBuff_;
+    ComPtr<ID3D12Resource> texBuff_[2];
     //SRV用デスクリプタヒープ
     ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
 

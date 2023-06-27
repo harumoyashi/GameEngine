@@ -62,39 +62,42 @@ void NPostEffect::CreateTexture()
 	//テクスチャバッファの生成
 	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kClearColor);
 
-	result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-		&texHeapProp,
-		D3D12_HEAP_FLAG_NONE,
-		&texresDesc,
-		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		&clearValue,
-		IID_PPV_ARGS(&texBuff_)
-	);
-	assert(SUCCEEDED(result));
-
-	//------------------------------テクスチャ生成--------------------------------//
-	//一辺のピクセル数
-	const uint32_t rowPitch = sizeof(NVector4) * NWindows::kWin_width;
-	const uint32_t depthPitch = rowPitch * NWindows::kWin_height;
-	//配列の要素数
-	const uint32_t imageDataCount = NWindows::kWin_width * NWindows::kWin_height;
-	//画像イメージデータ配列
-	std::vector<NVector4> imageData;
-
-	//全ピクセルの色を初期化
-	for (size_t i = 0; i < imageDataCount; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
-		imageData.emplace_back(NVector4(1, 0, 1, 1));
-	}
+		result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
+			&texHeapProp,
+			D3D12_HEAP_FLAG_NONE,
+			&texresDesc,
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			&clearValue,
+			IID_PPV_ARGS(&texBuff_[i])
+		);
+		assert(SUCCEEDED(result));
 
-	//テクスチャバッファにデータ転送
-	result = texBuff_->WriteToSubresource(
-		0,
-		nullptr,	//全領域へコピー
-		imageData.data(),	//元データアドレス
-		rowPitch,	//1ラインサイズ
-		depthPitch	//全サイズ
-	);
+		//------------------------------テクスチャ生成--------------------------------//
+		//一辺のピクセル数
+		const uint32_t rowPitch = sizeof(NVector4) * NWindows::kWin_width;
+		const uint32_t depthPitch = rowPitch * NWindows::kWin_height;
+		//配列の要素数
+		const uint32_t imageDataCount = NWindows::kWin_width * NWindows::kWin_height;
+		//画像イメージデータ配列
+		std::vector<NVector4> imageData;
+
+		//全ピクセルの色を初期化
+		for (size_t j = 0; j < imageDataCount; j++)
+		{
+			imageData.emplace_back(NVector4(1, 0, 1, 1));
+		}
+
+		//テクスチャバッファにデータ転送
+		result = texBuff_[i]->WriteToSubresource(
+			0,
+			nullptr,	//全領域へコピー
+			imageData.data(),	//元データアドレス
+			rowPitch,	//1ラインサイズ
+			depthPitch	//全サイズ
+		);
+	}
 
 	//SRV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
@@ -114,7 +117,7 @@ void NPostEffect::CreateTexture()
 
 	//デスクリプタヒープにSRV作成
 	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
-		texBuff_.Get(),
+		texBuff_[0].Get(),
 		&srvDesc,
 		descHeapSRV_->GetCPUDescriptorHandleForHeapStart()
 	);
@@ -170,7 +173,7 @@ void NPostEffect::CreateRTV()
 	//RTV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 	rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDescHeapDesc.NumDescriptors = 1;
+	rtvDescHeapDesc.NumDescriptors = 2;
 	//RTV用デスクリプタヒープを生成
 	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV_));
 	assert(SUCCEEDED(result));
@@ -182,11 +185,19 @@ void NPostEffect::CreateRTV()
 	renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
 	//デスクリプタヒープにRTV作成
-	NDX12::GetInstance()->GetDevice()->CreateRenderTargetView(
-		texBuff_.Get(),
-		&renderTargetViewDesc,
-		descHeapRTV_->GetCPUDescriptorHandleForHeapStart()
-	);
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		CD3DX12_CPU_DESCRIPTOR_HANDLE cpuHandle(
+			CD3DX12_CPU_DESCRIPTOR_HANDLE(
+				descHeapRTV_->GetCPUDescriptorHandleForHeapStart(), i,
+				NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
+
+		NDX12::GetInstance()->GetDevice()->CreateRenderTargetView(
+			texBuff_[i].Get(),
+			nullptr,
+			cpuHandle
+		);
+	}
 }
 
 void NPostEffect::CreateDepthBuff()
@@ -249,10 +260,13 @@ void NPostEffect::PreDrawScene()
 {
 	// ------------------リソースバリアを書き込み専用状態に変更----------------------- //
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = texBuff_.Get();
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;				//書き込み専用状態へ
-	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		barrierDesc.Transition.pResource = texBuff_[i].Get();
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態から
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;				//書き込み専用状態へ
+		NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
+	}
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle =
@@ -268,13 +282,13 @@ void NPostEffect::PreDrawScene()
 	CD3DX12_VIEWPORT viewport(0.0f, 0.0f,
 		NWindows::kWin_width, NWindows::kWin_height);
 
-	NDX12::GetInstance()->GetCommandList()->RSSetViewports(1,&viewport);
+	NDX12::GetInstance()->GetCommandList()->RSSetViewports(1, &viewport);
 
 	//シザリング矩形の設定
 	CD3DX12_RECT rect(0, 0,
 		NWindows::kWin_width, NWindows::kWin_height);
 
-	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1,&rect);
+	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1, &rect);
 
 	//全画面クリア
 	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, kClearColor, 0, nullptr);
@@ -286,8 +300,11 @@ void NPostEffect::PostDrawScene()
 {
 	//リソースバリアを変更(書き込み専用状態から読み取り専用状態に)
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	barrierDesc.Transition.pResource = texBuff_.Get();
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//書き込み専用状態から
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態へ
-	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		barrierDesc.Transition.pResource = texBuff_[i].Get();
+		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//書き込み専用状態から
+		barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態へ
+		NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
+	}
 }
