@@ -136,10 +136,10 @@ void NPostEffect::CreateTexture()
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
 	//テクスチャサイズをもとに切り取る部分のuvを計算
-	float tex_left = texLeftTop_.x / 800;
-	float tex_right = (texLeftTop_.x + texSize_.x) / 800;
-	float tex_top = texLeftTop_.y / 800;
-	float tex_bottom = (texLeftTop_.y + texSize_.y) / 800;
+	float tex_left = texLeftTop_.x / texresDesc.Width;
+	float tex_right = (texLeftTop_.x + texSize_.x) / texresDesc.Width;
+	float tex_top = texLeftTop_.y / texresDesc.Height;
+	float tex_bottom = (texLeftTop_.y + texSize_.y) / texresDesc.Height;
 
 	//計算したuvに合わせて設定
 	//vert[0].uv = { tex_left ,tex_bottom };	// 左下
