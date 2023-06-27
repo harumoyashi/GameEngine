@@ -37,6 +37,7 @@ private:
 	//頂点レイアウト//
 	D3D12_INPUT_ELEMENT_DESC vertLayout3d_[3]{};		//必要な分だけ用意する
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2]{};	//必要な分だけ用意する
+	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2]{};	//必要な分だけ用意する
 
 	//パイプラインステート//
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
@@ -61,12 +62,18 @@ public:
 	void LoadVertShaderSprite();
 	//スプライト用ピクセルシェーダの読み込みとコンパイル
 	void LoadPixelShaderSprite();
+	//ポストエフェクト用頂点シェーダーの読み込みとコンパイル
+	void LoadVertShaderPostEffect();
+	//ポストエフェクト用ピクセルシェーダの読み込みとコンパイル
+	void LoadPixelShaderPostEffect();
 #pragma endregion
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
 	void SetVertLayout3d();
 	//スプライト用頂点レイアウト設定
 	void SetVertLayoutSprite();
+	//ポストエフェクト用頂点レイアウト設定
+	void SetVertLayoutPostEffect();
 #pragma endregion
 #pragma region パイプラインステートまわり
 	//シェーダーの設定(適用)
@@ -77,12 +84,13 @@ public:
 	void SetBlend();
 	//入力レイアウトの設定
 	void SetInputLayout(const bool is3d);
+	void SetInputLayoutPostEffect();
 	//図形の形状設定
 	void SetTopology();
 	//デプスステンシル(深度)設定
 	void SetDepth(const bool isDepth);
 	//レンダーターゲット設定
-	void SetRenderTarget(const bool isR8);
+	void SetRenderTarget();
 	//アンチエイリアシングのためのサンプル数設定
 	void SetAntiAliasing();
 	//パイプラインにルートシグネチャをセット

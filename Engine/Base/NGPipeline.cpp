@@ -118,6 +118,64 @@ void NGPipeline::LoadPixelShaderSprite()
 	}
 }
 
+void NGPipeline::LoadVertShaderPostEffect()
+{
+	HRESULT result;
+
+	// 頂点シェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/GaussianBlurVS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&vsBlob_, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
+void NGPipeline::LoadPixelShaderPostEffect()
+{
+	HRESULT result;
+
+	// ピクセルシェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/GaussianBlurPS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&psBlob, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
 void NGPipeline::SetVertLayout3d()
 {
 	// 頂点レイアウト
@@ -163,6 +221,29 @@ void NGPipeline::SetVertLayoutSprite()
 	//座標以外に色、テクスチャUVなどを渡す場合はさらに続ける
 	//UV
 	vertLayoutSprite_[1] = {
+		"TEXCOORD",0,
+		DXGI_FORMAT_R32G32_FLOAT,0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
+}
+
+void NGPipeline::SetVertLayoutPostEffect()
+{
+	// 頂点レイアウト
+	//座標
+	vertLayoutPostEffect_[0] = {
+	"SV_POSITION",									//セマンティック名
+	0,												//同名のセマンティックがあるとき使うインデックス
+	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
+	0,												//入力スロットインデックス
+	D3D12_APPEND_ALIGNED_ELEMENT,					//データのオフセット地(左のは自動設定)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//入力データ種別
+	0												//一度に描画するインスタンス数(0でよい)
+	};// (1行で書いたほうが見やすい)
+	//座標以外に色、テクスチャUVなどを渡す場合はさらに続ける
+	//UV
+	vertLayoutPostEffect_[1] = {
 		"TEXCOORD",0,
 		DXGI_FORMAT_R32G32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
@@ -234,6 +315,12 @@ void NGPipeline::SetInputLayout(const bool is3d)
 	}
 }
 
+void NGPipeline::SetInputLayoutPostEffect()
+{
+	pipelineDesc_.InputLayout.pInputElementDescs = vertLayoutPostEffect_;
+	pipelineDesc_.InputLayout.NumElements = _countof(vertLayoutPostEffect_);
+}
+
 void NGPipeline::SetTopology()
 {
 	//トライアングルストリップを切り離すかどうか
@@ -253,21 +340,14 @@ void NGPipeline::SetDepth(const bool isDepth)
 		pipelineDesc_.DepthStencilState.DepthEnable = false;						//深度テストするか
 	}
 	pipelineDesc_.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
-	pipelineDesc_.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;		//小さければ合格
+	pipelineDesc_.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;			//小さければ合格
 	pipelineDesc_.DSVFormat = DXGI_FORMAT_D32_FLOAT;								//深度値フォーマット
 }
 
-void NGPipeline::SetRenderTarget(const bool isR8)
+void NGPipeline::SetRenderTarget()
 {
 	pipelineDesc_.NumRenderTargets = 1;								//描画対象は1つ
-	if (isR8)
-	{
-		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
-	}
-	else
-	{
-		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	}
+	pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
 }
 
 void NGPipeline::SetAntiAliasing()
@@ -297,8 +377,8 @@ void NGPipeline::CreatePS()
 
 void NGPipeline::SetTexSampler()
 {
-	samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//横繰り返し（タイリング）
-	samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//縦繰り返し（タイリング）
+	samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//横繰り返ししない（タイリング）
+	samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//縦繰り返ししない（タイリング）
 	samplerDesc_.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//奥行繰り返し（タイリング）
 	samplerDesc_.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ボーダーの時は黒
 	samplerDesc_.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//全てリニア補間
@@ -323,7 +403,7 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetBlend();
 	SetInputLayout(true);
 	SetTopology();
-	SetRenderTarget(true);
+	SetRenderTarget();
 	SetAntiAliasing();
 	SetDepth(true);
 
@@ -354,7 +434,7 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	SetBlend();
 	SetInputLayout(false);
 	SetTopology();
-	SetRenderTarget(true);
+	SetRenderTarget();
 	SetAntiAliasing();
 	SetDepth(false);
 
@@ -373,19 +453,19 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 PipelineSet NGPipeline::CreatePipelinePostEffect()
 {
 	//シェーダー
-	LoadVertShaderSprite();
-	LoadPixelShaderSprite();
+	LoadVertShaderPostEffect();
+	LoadPixelShaderPostEffect();
 
 	//頂点レイアウト設定
-	SetVertLayoutSprite();
+	SetVertLayoutPostEffect();
 
 	//パイプラインステート
 	SetShader();
 	SetRasterizer(false);
 	SetBlend();
-	SetInputLayout(false);
+	SetInputLayoutPostEffect();
 	SetTopology();
-	SetRenderTarget(false);
+	SetRenderTarget();
 	SetAntiAliasing();
 	SetDepth(false);
 

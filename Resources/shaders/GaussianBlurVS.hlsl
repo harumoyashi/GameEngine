@@ -1,14 +1,14 @@
-//#include "GaussianBlur.hlsli"
+#include "GaussianBlur.hlsli"
 
-//VSOutput main(float4 pos : SV_POSITION, float2 uv : TEXCOORD)
-//{
-//    VSOutput output; //ピクセルシェーダーに渡す値
-//    output.svpos = pos; //座標に行列を乗算
-//    output.uv = uv;
-//    return output;
-//}
-
-float4 main(float4 pos : POSITION) : SV_POSITION
+VSOutput main(float3 pos : SV_POSITION, float2 uv : TEXCOORD)
 {
-    return pos;
+    VSOutput output; //ピクセルシェーダーに渡す値
+    output.svpos = mul(mat, float4(pos, 1));
+    output.uv = uv;
+    return output;
 }
+
+//float4 main(float4 pos : POSITION) : SV_POSITION
+//{
+//    return pos;
+//}

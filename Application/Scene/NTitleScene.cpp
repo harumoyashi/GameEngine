@@ -191,7 +191,7 @@ void NTitleScene::Draw()
 
 	//前景スプライト
 	NSprite::CommonBeginDraw();
-	//foreSprite_[0]->Draw();
+	foreSprite_[0]->Draw();
 
 	// 4.描画コマンドここまで
 #pragma endregion
