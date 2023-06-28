@@ -4,7 +4,7 @@
 #include "NMathUtil.h"
 #include "NInput.h"
 
-const float NPostEffect::kClearColor[4] = { 0.25f,0.5f,0.1f,0.0f };
+const float NPostEffect::kClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
 
 NPostEffect::NPostEffect()
 {
