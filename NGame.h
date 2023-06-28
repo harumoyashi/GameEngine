@@ -18,7 +18,8 @@ private:
 	PipeLineManager* pipeline_;
 	NTextureManager* texManager_;
 	NSceneManager* sceneMane_;
-	std::unique_ptr<NPostEffect> postEffect;
+	std::unique_ptr<NPostEffect> postEffect_;
+	bool isPostEffect_;	//ポストエフェクト適用するか
 
 public:
 	void Init() override;

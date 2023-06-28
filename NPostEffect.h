@@ -4,7 +4,7 @@
 class NPostEffect :
     public NSprite
 {
-private:
+protected:
     //テクスチャバッファ
     ComPtr<ID3D12Resource> texBuff_[2];
     //SRV用デスクリプタヒープ
@@ -20,13 +20,14 @@ private:
     //画面クリアカラー
     static const float kClearColor[4];
 
-    //ポストエフェクト用のパイプライン
-    PipelineSet pipeline;
+    //パイプラインの名前
+    std::string pipelineName_;
 
 public:
     NPostEffect();
+    virtual ~NPostEffect() = default;
 
-    void Init();
+    virtual void Init();
     void TexChange();
     void Draw();
 

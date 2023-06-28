@@ -1,6 +1,4 @@
 #include "NSceneManager.h"
-#include "NImGuiManager.h"
-#include "imgui.h"
 #pragma region staticメンバ変数初期化
 //シーンの初期化
 uint32_t NSceneManager::scene = TITLESCENE;
@@ -15,9 +13,6 @@ NSceneManager* NSceneManager::GetInstance()
 
 void NSceneManager::Init()
 {
-#pragma region ImGui初期化
-	NImGuiManager::GetInstance()->Init();
-#pragma endregion
 	titleScene->Init();
 	gameScene->Init();
 	if (scene == TITLESCENE)
@@ -32,7 +27,6 @@ void NSceneManager::Init()
 
 void NSceneManager::Update()
 {
-	NImGuiManager::GetInstance()->Begin();
 	//タイトルシーンの更新処理
 	if (scene == TITLESCENE) {
 		titleScene->Update();
@@ -62,7 +56,6 @@ void NSceneManager::Update()
 	ImGui::Text("yoyoyo");
 	ImGui::End();
 	ImGui::ShowDemoWindow();*/
-	NImGuiManager::GetInstance()->End();
 }
 
 void NSceneManager::Draw()
@@ -75,13 +68,10 @@ void NSceneManager::Draw()
 	else if (scene == GAMESCENE) {
 		gameScene->Draw();
 	}
-
-	NImGuiManager::GetInstance()->Draw();
 }
 
 void NSceneManager::Finalize()
 {
-	NImGuiManager::GetInstance()->Finalize();
 }
 
 void NSceneManager::SetScene(uint32_t selectScene)

@@ -28,7 +28,17 @@ float4 main(VSOutput input) : SV_TARGET
     }
     blurCol.rgb = blurCol.rgb / totalWeight; //かけた「重み」分、結果から割る
     
-    return blurCol;
+    float4 invCol = tex1.Sample(smp, input.uv);
+    invCol = float4((1 - invCol.rgb), 1);
+    
+    //10分割して、しましまになるように
+    float4 color = blurCol;
+    if (fmod(input.uv.y, 0.1f) < 0.05f)
+    {
+        color = invCol;
+    }
+    
+    return color;
 }
 
 //float4 main(VSOutput input) : SV_TARGET

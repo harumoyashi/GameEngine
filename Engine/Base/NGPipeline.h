@@ -66,6 +66,10 @@ public:
 	void LoadVertShaderPostEffect();
 	//ポストエフェクト用ピクセルシェーダの読み込みとコンパイル
 	void LoadPixelShaderPostEffect();
+	//ガウシアンブラー用頂点シェーダーの読み込みとコンパイル
+	void LoadVertShaderGaussian();
+	//ガウシアンブラー用ピクセルシェーダの読み込みとコンパイル
+	void LoadPixelShaderGaussian();
 #pragma endregion
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
@@ -112,6 +116,8 @@ public:
 	PipelineSet CreatePipelineSprite();
 	//ポストエフェクト用パイプライン生成
 	PipelineSet CreatePipelinePostEffect();
+	//ガウシアンブラー用パイプライン生成
+	PipelineSet CreatePipelineGaussian();
 #pragma endregion
 
 private:
@@ -141,7 +147,5 @@ public:
 	static PipeLineManager* GetInstance();
 	void Init();
 
-	inline const PipelineSet& GetPipelineSet3d() const { return pipelineSet3d_; }
-	inline const PipelineSet& GetPipelineSetSprite() const { return pipelineSetSprite_; }
-	inline const PipelineSet& GetPipelineSetPostEffect() const { return pipelineSetPostEffect_; }
+	const PipelineSet& GetPipelineSet(std::string name) const;
 };

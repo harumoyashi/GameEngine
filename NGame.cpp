@@ -1,4 +1,8 @@
 #include "NGame.h"
+#include "NImGuiManager.h"
+#include "imgui.h"
+
+#include "GaussianBlur.h"
 
 void NGame::Init()
 {
@@ -38,15 +42,57 @@ void NGame::Init()
 	sceneMane_->Init();
 #pragma endregion
 #pragma region ポストエフェクト初期化
-	postEffect = std::make_unique<NPostEffect>();
-	postEffect->Init();
-	//postEffect->CreateSprite();
-	//postEffect->SetPos(200,300);
+	postEffect_ = std::make_unique<NPostEffect>();
+	postEffect_->Init();
 #pragma endregion
+#pragma region ImGui初期化
+	NImGuiManager::GetInstance()->Init();
+#pragma endregion
+	isPostEffect_ = true;
 }
 
 void NGame::Update()
 {
+	NImGuiManager::GetInstance()->Begin();
+	//ImGui::ShowDemoWindow();
+
+	ImGui::Begin("PostEffectType");
+	static int postEffectNum;
+	const char* items[] = {"CG4","NoEffect","GaussianBlur"};
+	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
+	{
+		switch (postEffectNum)
+		{
+		case 0:
+			isPostEffect_ = true;
+
+			postEffect_ = std::make_unique<NPostEffect>();
+			postEffect_->Init();
+
+			break;
+
+		case 1:
+			isPostEffect_ = false;
+
+			break;
+
+		case 2:
+			isPostEffect_ = true;
+
+			postEffect_ = std::make_unique<GaussianBlur>();
+			postEffect_->Init();
+
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	ImGui::End();
+
+	NImGuiManager::GetInstance()->End();
+
 	NFramework::Update();
 #pragma region ウィンドウメッセージ処理
 	if (win_->WindowMessage()) { NFramework::SetIsGameEnd(true); }
@@ -55,21 +101,35 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	//postEffect->TexChange();
-	postEffect->Update();
+	//postEffect_->TexChange();
+	if (isPostEffect_)
+	{
+		postEffect_->Update();
+	}
 	sceneMane_->Update();
 #pragma endregion
 }
 
 void NGame::Draw()
 {
-	postEffect->PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
-	sceneMane_->Draw();					//レンダーテクスチャにゲームシーンの描画
-	postEffect->PostDrawScene();		//読み込み専用状態にして終了
+	if (isPostEffect_)
+	{
+		postEffect_->PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
+		sceneMane_->Draw();						//レンダーテクスチャにゲームシーンの描画
+		postEffect_->PostDrawScene();			//読み込み専用状態にして終了
 
-	NDX12::GetInstance()->PreDraw();	//バックバッファの入れ替え
-	postEffect->Draw();					//バックバッファにポストエフェクトの描画
-	NDX12::GetInstance()->PostDraw();	//バックバッファのに描画したのを表示に
+		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
+		postEffect_->Draw();					//バックバッファにポストエフェクトの描画
+		NImGuiManager::GetInstance()->Draw();	//ImGui描画
+		NDX12::GetInstance()->PostDraw();		//バックバッファのに描画したのを表示に
+	}
+	else
+	{
+		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
+		sceneMane_->Draw();						//ゲームシーンの描画
+		NImGuiManager::GetInstance()->Draw();	//ImGui描画
+		NDX12::GetInstance()->PostDraw();		//バックバッファのに描画したのを表示に
+	}
 }
 
 void NGame::Finalize()
@@ -78,6 +138,7 @@ void NGame::Finalize()
 	audio_->Finalize();
 	win_->Finalize();
 	sceneMane_->Finalize();
+	NImGuiManager::GetInstance()->Finalize();
 #pragma endregion
 	NFramework::Finalize();
 }
