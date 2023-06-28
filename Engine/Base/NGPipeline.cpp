@@ -348,18 +348,13 @@ void NGPipeline::SetDepth(const bool isDepth)
 	pipelineDesc_.DSVFormat = DXGI_FORMAT_D32_FLOAT;								//深度値フォーマット
 }
 
-void NGPipeline::SetRenderTarget(const bool is3d)
+void NGPipeline::SetRenderTarget(const uint32_t RTNum)
 {
-	if (is3d)
+	pipelineDesc_.NumRenderTargets = RTNum;								//描画対象は2つ
+
+	for (uint32_t i = 0; i < RTNum; i++)
 	{
-		pipelineDesc_.NumRenderTargets = 2;								//描画対象は2つ
-		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
-		pipelineDesc_.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
-	}
-	else
-	{
-		pipelineDesc_.NumRenderTargets = 1;								//描画対象は2つ
-		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+		pipelineDesc_.RTVFormats[i] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
 	}
 }
 
@@ -369,10 +364,10 @@ void NGPipeline::SetAntiAliasing()
 	pipelineDesc_.SampleDesc.Quality = 0;	//最低クオリティ
 }
 
-void NGPipeline::SetRootSignature()
+void NGPipeline::SetRootSignature(const uint32_t texNum, const uint32_t constantNum)
 {
-	rootParams_.SetDescRange();
-	rootParams_.SetRootParam();
+	rootParams_.SetDescRange(texNum);
+	rootParams_.SetRootParam(texNum, constantNum);
 
 	pipelineSet_.rootSig_.SetRootSignature(errorBlob_, rootParams_.entity_, samplerDesc_);
 	pipelineSet_.rootSig_.CreateRootSignature();
@@ -416,7 +411,7 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetBlend(true);
 	SetInputLayout(true);
 	SetTopology();
-	SetRenderTarget(true);
+	SetRenderTarget(2);
 	SetAntiAliasing();
 	SetDepth(true);
 
@@ -424,7 +419,8 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	SetRootSignature();
+	//テクスチャ1個、行列、マテリアル、色、光源4つ
+	SetRootSignature(1, 7);
 
 	//パイプラインステート生成
 	CreatePS();
@@ -447,7 +443,7 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	SetBlend(false);
 	SetInputLayout(false);
 	SetTopology();
-	SetRenderTarget(false);
+	SetRenderTarget(2);
 	SetAntiAliasing();
 	SetDepth(false);
 
@@ -455,7 +451,8 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	SetRootSignature();
+	//テクスチャ1個、行列、マテリアル、色
+	SetRootSignature(1, 3);
 
 	//パイプラインステート生成
 	CreatePS();
@@ -478,7 +475,7 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	SetBlend(false);
 	SetInputLayoutPostEffect();
 	SetTopology();
-	SetRenderTarget(false);
+	SetRenderTarget(1);
 	SetAntiAliasing();
 	SetDepth(false);
 
@@ -486,7 +483,8 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	SetRootSignature();
+	//テクスチャ2個、行列、マテリアル、色
+	SetRootSignature(2, 3);
 
 	//パイプラインステート生成
 	CreatePS();

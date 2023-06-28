@@ -20,6 +20,9 @@ private:
     //画面クリアカラー
     static const float kClearColor[4];
 
+    //ポストエフェクト用のパイプライン
+    PipelineSet pipeline;
+
 public:
     NPostEffect();
 

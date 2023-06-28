@@ -218,13 +218,13 @@ void NSprite::Draw()
 	//ハンドルを指定
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap_[texHandle_].gpuHandle_;
 
-	//指定のヒープにあるSRVをルートパラメータ1番に設定
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+	//指定のヒープにあるSRVをルートパラメータ0番に設定
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, srvGpuHandle);
 
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuff_.view_);
 
-	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	//ルートパラメータに定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }

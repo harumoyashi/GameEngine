@@ -16,6 +16,7 @@ void NPostEffect::Init()
 	CreateRTV();
 	CreateDepthBuff();
 	CreateDSV();
+	pipeline = PipeLineManager::GetInstance()->GetPipelineSetPostEffect();
 }
 
 void NPostEffect::TexChange()
@@ -45,8 +46,8 @@ void NPostEffect::TexChange()
 void NPostEffect::Draw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSetPostEffect().pipelineState_.Get());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSetPostEffect().rootSig_.entity_.Get());
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(pipeline.pipelineState_.Get());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(pipeline.rootSig_.entity_.Get());
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
@@ -55,13 +56,25 @@ void NPostEffect::Draw()
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 
 	//ポストエフェクト用に作ったSRVをルートパラメータ1番に設定
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, descHeapSRV_->GetGPUDescriptorHandleForHeapStart());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, 
+		CD3DX12_GPU_DESCRIPTOR_HANDLE(
+			descHeapSRV_->GetGPUDescriptorHandleForHeapStart(),0,
+			NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)
+		)
+	);
+
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1,
+		CD3DX12_GPU_DESCRIPTOR_HANDLE(
+			descHeapSRV_->GetGPUDescriptorHandleForHeapStart(), 1,
+			NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)
+		)
+	);
 
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuff_.view_);
 
-	//ルートパラメータ0番に定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbTrans_->constBuff_->GetGPUVirtualAddress());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
+	//ルートパラメータに定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbColor_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }
 
@@ -128,7 +141,7 @@ void NPostEffect::CreateTexture()
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
 	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	srvDescHeapDesc.NumDescriptors = 1;
+	srvDescHeapDesc.NumDescriptors = 2;
 	//SRV用デスクリプタヒープを生成
 	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV_));
 	assert(SUCCEEDED(result));
@@ -141,11 +154,17 @@ void NPostEffect::CreateTexture()
 	srvDesc.Texture2D.MipLevels = 1;
 
 	//デスクリプタヒープにSRV作成
-	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
-		texBuff_[0].Get(),
-		&srvDesc,
-		descHeapSRV_->GetCPUDescriptorHandleForHeapStart()
-	);
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
+			texBuff_[i].Get(),
+			&srvDesc,
+			CD3DX12_CPU_DESCRIPTOR_HANDLE(
+			descHeapSRV_->GetCPUDescriptorHandleForHeapStart(),i,
+				NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)
+			)
+		);
+	}
 
 	// ---------------------------頂点関連----------------------------- //
 	//頂点情報格納用

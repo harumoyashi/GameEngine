@@ -90,8 +90,8 @@ void NAssimpModel::Draw()
 		std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 		NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 
-		//ルートパラメータ0番にマテリアルの定数バッファを渡す
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial_->constBuff_->GetGPUVirtualAddress());
+		//ルートパラメータ1番にマテリアルの定数バッファを渡す
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbMaterial_->constBuff_->GetGPUVirtualAddress());
 		//ルートパラメータ2番に色情報の定数バッファを渡す
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
@@ -113,8 +113,8 @@ void NAssimpModel::Draw()
 			tex = NTextureManager::GetInstance()->textureMap_[texName];
 		}
 
-		//指定のヒープにあるSRVをルートパラメータ1番に設定
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, tex.gpuHandle_);
+		//指定のヒープにあるSRVをルートパラメータ0番に設定
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, tex.gpuHandle_);
 
 		//ライト描画
 		sLightGroup->Draw();

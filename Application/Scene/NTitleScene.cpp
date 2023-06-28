@@ -78,8 +78,8 @@ void NTitleScene::Init()
 #pragma endregion
 
 	//assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
-	assimpModel_.Load(L"Resources/Tripping.fbx");
-	assimpModel_.Init();
+	//assimpModel_.Load(L"Resources/Tripping.fbx");
+	//assimpModel_.Init();
 
 #pragma region オブジェクトの初期値設定
 
@@ -164,7 +164,7 @@ void NTitleScene::Update()
 	foreSprite_[0]->isInvisible_ = NInput::PushMouse(NInput::MouseMiddle);*/
 	//foreSprite_[0]->Update();
 
-	assimpModel_.Update();
+	//assimpModel_.Update();
 #pragma endregion
 }
 

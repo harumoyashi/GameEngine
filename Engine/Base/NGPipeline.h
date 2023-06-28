@@ -90,11 +90,14 @@ public:
 	//デプスステンシル(深度)設定
 	void SetDepth(const bool isDepth);
 	//レンダーターゲット設定
-	void SetRenderTarget(const bool is3d);
+	//RTNum->何個レンダーターゲット適用するか
+	void SetRenderTarget(const uint32_t RTNum);
 	//アンチエイリアシングのためのサンプル数設定
 	void SetAntiAliasing();
 	//パイプラインにルートシグネチャをセット
-	void SetRootSignature();
+	//texNum->テクスチャレジスタの数
+	//constantNum->定数レジスタの数
+	void SetRootSignature(const uint32_t texNum, const uint32_t constantNum);
 	//グラフィックスパイプラインステートオブジェクトの生成
 	void CreatePS();
 #pragma endregion

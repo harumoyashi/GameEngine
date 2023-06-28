@@ -173,14 +173,14 @@ void NObj3d::SetSRVHeap()
 
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
-	//指定のヒープにあるSRVをルートパラメータ1番に設定
+	//指定のヒープにあるSRVをルートパラメータ0番に設定
 	if (gpuHandle.ptr==0)
 	{
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
 	}
 	else
 	{
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, gpuHandle);
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, gpuHandle);
 	}
 }
 
@@ -196,8 +196,8 @@ void NObj3d::SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView)
 
 void NObj3d::SetCBV()
 {
-	//ルートパラメータ0番にマテリアルの定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, cbMaterial_->constBuff_->GetGPUVirtualAddress());
+	//ルートパラメータ1番にマテリアルの定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbMaterial_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ2番に色情報の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ3番に3D変換行列の定数バッファを渡す

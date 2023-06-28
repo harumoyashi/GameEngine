@@ -55,7 +55,7 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	postEffect->TexChange();
+	//postEffect->TexChange();
 	postEffect->Update();
 	sceneMane_->Update();
 #pragma endregion
