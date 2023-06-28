@@ -6,6 +6,12 @@ Player::Player()
 	obj_->SetModel("cat");
 }
 
+Player* Player::GetInstance()
+{
+	static Player instance;
+	return &instance;
+}
+
 void Player::Init()
 {
 	obj_->position_ = {};

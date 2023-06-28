@@ -2,6 +2,8 @@
 #include "NGameScene.h"
 #include "NSceneManager.h"
 
+#include "Player.h"
+
 NGameScene* NGameScene::GetInstance()
 {
 	static NGameScene instance;
@@ -20,7 +22,7 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-	
+	Player::GetInstance()->Init();
 
 #pragma region オブジェクトの初期値設定
 	
@@ -44,12 +46,18 @@ void NGameScene::Update()
 	{
 		NSceneManager::SetScene(TITLESCENE);
 	}
-#pragma region 行列の計算
+#pragma region カメラ
 	//ビュー行列の再生成
-	camera_.CreateMatView();
+	//右クリックしたらカメラモード切り替わる
+	if (NInput::TriggerMouse(NInput::MouseRight))
+	{
+		camera_.ChangeIsDebugCamera();
+	}
+	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
-
 #pragma endregion
+	Player::GetInstance()->Update();
+
 	//ライトたちの更新
 	lightGroup_->Update();
 }
@@ -62,6 +70,7 @@ void NGameScene::Draw()
 
 	//3Dオブジェクト
 	NObj3d::CommonBeginDraw();
+	Player::GetInstance()->Draw();
 	
 	//前景スプライト
 	NSprite::CommonBeginDraw();

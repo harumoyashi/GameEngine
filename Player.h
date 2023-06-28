@@ -30,6 +30,8 @@ private:
 
 public:
 	Player();
+	static Player* GetInstance();
+
 	//‰Šú‰»
 	void Init();
 	//XV

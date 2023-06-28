@@ -49,7 +49,7 @@ void NGame::Init()
 #pragma region ImGui‰Šú‰»
 	NImGuiManager::GetInstance()->Init();
 #pragma endregion
-	isPostEffect_ = true;
+	isPostEffect_ = false;
 }
 
 void NGame::Update()
@@ -59,25 +59,17 @@ void NGame::Update()
 
 	ImGui::Begin("PostEffectType");
 	static int postEffectNum;
-	const char* items[] = {"CG4","NoEffect","GaussianBlur","RadianBlur" };
+	const char* items[] = {"NoEffect","GaussianBlur","RadianBlur","CG4" };
 	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
 	{
 		switch (postEffectNum)
 		{
 		case 0:
-			isPostEffect_ = true;
-
-			postEffect_ = std::make_unique<NPostEffect>();
-			postEffect_->Init();
-
+			isPostEffect_ = false;
+			
 			break;
 
 		case 1:
-			isPostEffect_ = false;
-
-			break;
-
-		case 2:
 			isPostEffect_ = true;
 
 			postEffect_ = std::make_unique<GaussianBlur>();
@@ -85,10 +77,18 @@ void NGame::Update()
 
 			break;
 
-		case 3:
+		case 2:
 			isPostEffect_ = true;
 
 			postEffect_ = std::make_unique<RadialBlur>();
+			postEffect_->Init();
+
+			break;
+
+		case 3:
+			isPostEffect_ = true;
+
+			postEffect_ = std::make_unique<NPostEffect>();
 			postEffect_->Init();
 
 			break;

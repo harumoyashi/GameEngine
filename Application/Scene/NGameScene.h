@@ -14,8 +14,6 @@
 #include "NCamera.h"
 #include "NAudio.h"
 
-#include "Player.h"
-
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
@@ -23,7 +21,6 @@ class NGameScene
 {
 private:
 	//オブジェクト
-	Player player;
 
 	//背景スプライト
 	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数

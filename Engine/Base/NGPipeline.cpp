@@ -599,8 +599,8 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	//テクスチャ2個、行列、マテリアル、色
-	SetRootSignature(2, 3);
+	//テクスチャ2個、行列、色
+	SetRootSignature(2, 2);
 
 	//パイプラインステート生成
 	CreatePS();
@@ -631,8 +631,8 @@ PipelineSet NGPipeline::CreatePipelineGaussian()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	//テクスチャ2個、行列、マテリアル、色
-	SetRootSignature(2, 3);
+	//テクスチャ2個、行列、色
+	SetRootSignature(2, 2);
 
 	//パイプラインステート生成
 	CreatePS();
@@ -663,8 +663,8 @@ PipelineSet NGPipeline::CreatePipelineRadial()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	//テクスチャ2個、行列、マテリアル、色
-	SetRootSignature(2, 3);
+	//テクスチャ2個、行列、色
+	SetRootSignature(2, 2);
 
 	//パイプラインステート生成
 	CreatePS();

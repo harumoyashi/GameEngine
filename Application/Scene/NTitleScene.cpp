@@ -43,11 +43,7 @@ void NTitleScene::Init()
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
 	//レベルデータにあるカメラをここで適用してるから上で設定してるの使いたかったら消して
 	camera_ = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
-	/*for (auto& lo : levelDataobj_)
-	{
-		lo->SetModel("sphere");
-	}*/
-
+	
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
 		obj_.emplace_back();
@@ -78,7 +74,8 @@ void NTitleScene::Init()
 
 	//assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
 	//assimpModel_.Load(L"Resources/Tripping.fbx");
-	//assimpModel_.Init();
+	assimpModel_.Load(L"Resources/Cat_fixed.fbx");
+	assimpModel_.Init();
 
 #pragma region オブジェクトの初期値設定
 
@@ -161,7 +158,7 @@ void NTitleScene::Update()
 	foreSprite_[0]->isInvisible_ = NInput::PushMouse(NInput::MouseMiddle);*/
 	//foreSprite_[0]->Update();
 
-	//assimpModel_.Update();
+	assimpModel_.Update();
 #pragma endregion
 }
 
@@ -184,7 +181,7 @@ void NTitleScene::Draw()
 	}
 
 	//assimpモデル描画//
-	//assimpModel_.Draw();
+	assimpModel_.Draw();
 
 	//前景スプライト
 	NSprite::CommonBeginDraw();
