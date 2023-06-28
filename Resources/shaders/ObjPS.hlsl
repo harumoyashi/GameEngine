@@ -9,7 +9,7 @@ struct PSOutput
     float4 target1 : SV_TARGET1;
 };
 
-float4 main(VSOutput input) : SV_TARGET
+PSOutput main(VSOutput input) : SV_TARGET
 {
     PSOutput output;
     
@@ -131,6 +131,6 @@ float4 main(VSOutput input) : SV_TARGET
     float4 color = shadecolor * texcolor * m_color;
     output.target0 = color;
     output.target1 = color;
-    return color;
+    return output;
     //return shadecolor * texcolor * m_color;
 }
