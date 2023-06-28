@@ -2,6 +2,7 @@
 #include "NWindows.h"
 #include "NVector4.h"
 #include "NMathUtil.h"
+#include "NInput.h"
 
 const float NPostEffect::kClearColor[4] = { 0.25f,0.5f,0.1f,0.0f };
 
@@ -15,6 +16,30 @@ void NPostEffect::Init()
 	CreateRTV();
 	CreateDepthBuff();
 	CreateDSV();
+}
+
+void NPostEffect::TexChange()
+{
+	//SRV設定
+	if (NInput::GetInstance()->IsKeyDown(DIK_0))
+	{
+		//テクスチャ番号を01で切り替え
+		static uint32_t texNum = 0;
+		texNum = (texNum + 1) % 2;
+
+		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
+		srvDesc.Texture2D.MipLevels = 1;
+
+		//デスクリプタヒープにSRV作成
+		NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
+			texBuff_[texNum].Get(),
+			&srvDesc,
+			descHeapSRV_->GetCPUDescriptorHandleForHeapStart()
+		);
+	}
 }
 
 void NPostEffect::Draw()
@@ -269,29 +294,46 @@ void NPostEffect::PreDrawScene()
 	}
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle =
-		descHeapRTV_->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[2];
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		rtvHandle[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(
+			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(),
+			NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)
+		);
+	}
 	//デプスステンシルビュー用デスクリプタヒープのハンドルを取得
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle =
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart();
 	//レンダーテクスチャをレンダーターゲットに指定
-	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(2, rtvHandle, false, &dsvHandle);
 
 	// -----------------------その他もろもろ-------------------------- //
 	//ビューポートの設定
-	CD3DX12_VIEWPORT viewport(0.0f, 0.0f,
-		NWindows::kWin_width, NWindows::kWin_height);
+	CD3DX12_VIEWPORT viewport[2];
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		viewport[i] = CD3DX12_VIEWPORT(0.0f, 0.0f,
+			NWindows::kWin_width, NWindows::kWin_height);
+	}
 
-	NDX12::GetInstance()->GetCommandList()->RSSetViewports(1, &viewport);
+	NDX12::GetInstance()->GetCommandList()->RSSetViewports(2, viewport);
 
 	//シザリング矩形の設定
-	CD3DX12_RECT rect(0, 0,
-		NWindows::kWin_width, NWindows::kWin_height);
+	CD3DX12_RECT rect[2];
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		rect[i] = CD3DX12_RECT(0, 0,
+			NWindows::kWin_width, NWindows::kWin_height);
+	}
 
-	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1, &rect);
+	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(2, rect);
 
 	//全画面クリア
-	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle, kClearColor, 0, nullptr);
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle[i], kClearColor, 0, nullptr);
+	}
 	//深度バッファのクリア
 	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }

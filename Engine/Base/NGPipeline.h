@@ -81,7 +81,7 @@ public:
 	//ラスタライザー設定
 	void SetRasterizer(const bool isCull);
 	//ブレンド設定
-	void SetBlend();
+	void SetBlend(const bool is3d);
 	//入力レイアウトの設定
 	void SetInputLayout(const bool is3d);
 	void SetInputLayoutPostEffect();
@@ -90,7 +90,7 @@ public:
 	//デプスステンシル(深度)設定
 	void SetDepth(const bool isDepth);
 	//レンダーターゲット設定
-	void SetRenderTarget();
+	void SetRenderTarget(const bool is3d);
 	//アンチエイリアシングのためのサンプル数設定
 	void SetAntiAliasing();
 	//パイプラインにルートシグネチャをセット

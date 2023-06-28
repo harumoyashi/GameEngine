@@ -278,7 +278,7 @@ void NGPipeline::SetRasterizer(bool isCull)
 	pipelineDesc_.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 }
 
-void NGPipeline::SetBlend()
+void NGPipeline::SetBlend(const bool is3d)
 {
 	pipelineDesc_.BlendState.AlphaToCoverageEnable = false;			//網羅率考慮してブレンドするか
 	pipelineDesc_.BlendState.IndependentBlendEnable = false;			//それぞれのレンダーターゲットに別々のブレンドするか
@@ -299,6 +299,10 @@ void NGPipeline::SetBlend()
 
 	//設定したブレンドを適用
 	pipelineDesc_.BlendState.RenderTarget[0] = blendDesc_;
+	if (is3d)
+	{
+		pipelineDesc_.BlendState.RenderTarget[1] = blendDesc_;
+	}
 }
 
 void NGPipeline::SetInputLayout(const bool is3d)
@@ -344,10 +348,19 @@ void NGPipeline::SetDepth(const bool isDepth)
 	pipelineDesc_.DSVFormat = DXGI_FORMAT_D32_FLOAT;								//深度値フォーマット
 }
 
-void NGPipeline::SetRenderTarget()
+void NGPipeline::SetRenderTarget(const bool is3d)
 {
-	pipelineDesc_.NumRenderTargets = 1;								//描画対象は1つ
-	pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	if (is3d)
+	{
+		pipelineDesc_.NumRenderTargets = 2;								//描画対象は2つ
+		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+		pipelineDesc_.RTVFormats[1] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	}
+	else
+	{
+		pipelineDesc_.NumRenderTargets = 1;								//描画対象は2つ
+		pipelineDesc_.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
+	}
 }
 
 void NGPipeline::SetAntiAliasing()
@@ -400,10 +413,10 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	//パイプラインステート
 	SetShader();
 	SetRasterizer(true);
-	SetBlend();
+	SetBlend(true);
 	SetInputLayout(true);
 	SetTopology();
-	SetRenderTarget();
+	SetRenderTarget(true);
 	SetAntiAliasing();
 	SetDepth(true);
 
@@ -431,10 +444,10 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	//パイプラインステート
 	SetShader();
 	SetRasterizer(false);
-	SetBlend();
+	SetBlend(false);
 	SetInputLayout(false);
 	SetTopology();
-	SetRenderTarget();
+	SetRenderTarget(false);
 	SetAntiAliasing();
 	SetDepth(false);
 
@@ -462,10 +475,10 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	//パイプラインステート
 	SetShader();
 	SetRasterizer(false);
-	SetBlend();
+	SetBlend(true);
 	SetInputLayoutPostEffect();
 	SetTopology();
-	SetRenderTarget();
+	SetRenderTarget(true);
 	SetAntiAliasing();
 	SetDepth(false);
 

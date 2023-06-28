@@ -24,6 +24,7 @@ public:
     NPostEffect();
 
     void Init();
+    void TexChange();
     void Draw();
 
     //テクスチャ生成
