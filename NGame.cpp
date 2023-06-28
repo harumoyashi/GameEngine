@@ -3,6 +3,7 @@
 #include "imgui.h"
 
 #include "GaussianBlur.h"
+#include "RadialBlur.h"
 
 void NGame::Init()
 {
@@ -58,7 +59,7 @@ void NGame::Update()
 
 	ImGui::Begin("PostEffectType");
 	static int postEffectNum;
-	const char* items[] = {"CG4","NoEffect","GaussianBlur"};
+	const char* items[] = {"CG4","NoEffect","GaussianBlur","RadianBlur" };
 	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
 	{
 		switch (postEffectNum)
@@ -80,6 +81,14 @@ void NGame::Update()
 			isPostEffect_ = true;
 
 			postEffect_ = std::make_unique<GaussianBlur>();
+			postEffect_->Init();
+
+			break;
+
+		case 3:
+			isPostEffect_ = true;
+
+			postEffect_ = std::make_unique<RadialBlur>();
 			postEffect_->Init();
 
 			break;

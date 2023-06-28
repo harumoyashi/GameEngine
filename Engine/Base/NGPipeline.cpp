@@ -234,6 +234,64 @@ void NGPipeline::LoadPixelShaderGaussian()
 	}
 }
 
+void NGPipeline::LoadVertShaderRadial()
+{
+	HRESULT result;
+
+	// 頂点シェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/RadialBlurVS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&vsBlob_, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
+void NGPipeline::LoadPixelShaderRadial()
+{
+	HRESULT result;
+
+	// ピクセルシェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/RadialBlurPS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&psBlob, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
 void NGPipeline::SetVertLayout3d()
 {
 	// 頂点レイアウト
@@ -582,6 +640,38 @@ PipelineSet NGPipeline::CreatePipelineGaussian()
 	return pipelineSet_;
 }
 
+PipelineSet NGPipeline::CreatePipelineRadial()
+{
+	//シェーダー
+	LoadVertShaderRadial();
+	LoadPixelShaderRadial();
+
+	//頂点レイアウト設定
+	SetVertLayoutPostEffect();
+
+	//パイプラインステート
+	SetShader();
+	SetRasterizer(false);
+	SetBlend(false);
+	SetInputLayoutPostEffect();
+	SetTopology();
+	SetRenderTarget(1);
+	SetAntiAliasing();
+	SetDepth(false);
+
+	//テクスチャサンプラーの設定
+	SetTexSampler();
+
+	//ルートシグネチャ
+	//テクスチャ2個、行列、マテリアル、色
+	SetRootSignature(2, 3);
+
+	//パイプラインステート生成
+	CreatePS();
+
+	return pipelineSet_;
+}
+
 PipeLineManager::PipeLineManager()
 {
 }
@@ -602,6 +692,7 @@ void PipeLineManager::Init()
 	pipelineSetSprite_ = pipelineSprite_.CreatePipelineSprite();
 	pipelineSetPostEffect_ = pipelinePostEffect_.CreatePipelinePostEffect();
 	pipelineSetGaussian_ = pipelineGaussian_.CreatePipelineGaussian();
+	pipelineSetRadial_ = pipelineRadial_.CreatePipelineRadial();
 }
 
 const PipelineSet& PipeLineManager::GetPipelineSet(std::string name) const
@@ -621,6 +712,10 @@ const PipelineSet& PipeLineManager::GetPipelineSet(std::string name) const
 	else if (name == "Gaussian")
 	{
 		return pipelineSetGaussian_;
+	}
+	else if (name == "Radial")
+	{
+		return pipelineSetRadial_;
 	}
 
 	//もし該当する名前がなければ異常終了

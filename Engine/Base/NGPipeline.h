@@ -70,6 +70,10 @@ public:
 	void LoadVertShaderGaussian();
 	//ガウシアンブラー用ピクセルシェーダの読み込みとコンパイル
 	void LoadPixelShaderGaussian();
+	//ラジアルブラー用頂点シェーダーの読み込みとコンパイル
+	void LoadVertShaderRadial();
+	//ラジアルブラー用ピクセルシェーダの読み込みとコンパイル
+	void LoadPixelShaderRadial();
 #pragma endregion
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
@@ -118,6 +122,8 @@ public:
 	PipelineSet CreatePipelinePostEffect();
 	//ガウシアンブラー用パイプライン生成
 	PipelineSet CreatePipelineGaussian();
+	//ラジアルブラー用パイプライン生成
+	PipelineSet CreatePipelineRadial();
 #pragma endregion
 
 private:
@@ -132,13 +138,15 @@ private:
 	NGPipeline pipelineSprite_;
 	NGPipeline pipelinePostEffect_;
 
-	NGPipeline pipelineGaussian_;
+	NGPipeline pipelineGaussian_;	//ガウシアンブラー用
+	NGPipeline pipelineRadial_;		//ラジアルブラー用
 
 	PipelineSet pipelineSet3d_;
 	PipelineSet pipelineSetSprite_;
 	PipelineSet pipelineSetPostEffect_;
 
-	PipelineSet pipelineSetGaussian_;
+	PipelineSet pipelineSetGaussian_;	//ガウシアンブラー用
+	PipelineSet pipelineSetRadial_;		//ラジアルブラー用
 
 public:
 	PipeLineManager();
