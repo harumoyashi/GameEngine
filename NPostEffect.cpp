@@ -298,7 +298,7 @@ void NPostEffect::PreDrawScene()
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		rtvHandle[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(
-			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(),
+			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(),i,
 			NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)
 		);
 	}
@@ -306,7 +306,7 @@ void NPostEffect::PreDrawScene()
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle =
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart();
 	//レンダーテクスチャをレンダーターゲットに指定
-	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(2, rtvHandle, false, &dsvHandle);
+	NDX12::GetInstance()->GetCommandList()->OMSetRenderTargets(2, rtvHandle, true, &dsvHandle);
 
 	// -----------------------その他もろもろ-------------------------- //
 	//ビューポートの設定
