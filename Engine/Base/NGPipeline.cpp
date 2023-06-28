@@ -475,10 +475,10 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	//パイプラインステート
 	SetShader();
 	SetRasterizer(false);
-	SetBlend(true);
+	SetBlend(false);
 	SetInputLayoutPostEffect();
 	SetTopology();
-	SetRenderTarget(true);
+	SetRenderTarget(false);
 	SetAntiAliasing();
 	SetDepth(false);
 
