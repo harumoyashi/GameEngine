@@ -101,6 +101,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="IScene.h" />
     <ClInclude Include="NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="NCollider.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="IScene.cpp" />
     <ClCompile Include="NAssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
     <ClCompile Include="NCollider.cpp" />

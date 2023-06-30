@@ -1,6 +1,7 @@
 #include "NDX12.h"
 #include "NResultScene.h"
 #include "NSceneManager.h"
+#include "NTitleScene.h"
 
 NResultScene* NResultScene::GetInstance()
 {
@@ -58,14 +59,11 @@ void NResultScene::Init()
 
 void NResultScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-	{
-		NSceneManager::SetScene(TITLESCENE);
-	}
-#pragma region 行列の計算
+#pragma region カメラ
 	//ビュー行列の再生成
 	camera_.CreateMatView();
 	NCamera::sCurrentCamera = &camera_;
+#pragma endregion
 
 	obj_[0]->MoveKey();
 	obj_[3]->MoveKey();
@@ -74,10 +72,15 @@ void NResultScene::Update()
 	{
 		obj_[i]->Update();
 	}
-#pragma endregion
 
 	//ライトたちの更新
 	lightGroup_->Update();
+
+	//シーン切り替え
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+	{
+		NSceneManager::ChangeScene<NTitleScene>();
+	}
 }
 
 void NResultScene::Draw()

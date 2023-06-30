@@ -41,6 +41,7 @@ struct ConstBuffDataMaterial
 	NVector3 diffuse;	// ディフューズ係数
 	float pad2;
 	NVector3 specular;	// スペキュラー係数
+	float pad3;
 	float alpha;	// アルファ
 };
 
@@ -48,8 +49,9 @@ struct ConstBuffDataMaterial
 struct ConstBuffDataLight
 {
 	NVector3 dir;
-	uint32_t active;
+	float pad1;
 	NVector3 color;
+	uint32_t active;
 };
 
 //ポイントライト
@@ -75,8 +77,8 @@ struct ConstBuffDataSpotLight
 	NVector3 atten;
 	float pad4;
 	NVector2 factorAngleCos;
-	uint32_t active;
 	float pad5;
+	uint32_t active;
 };
 
 //丸影
@@ -89,5 +91,6 @@ struct ConstBuffDataCircleShadow
 	NVector3 atten;
 	float pad2;
 	NVector2 factorAngleCos;
+	float pad3;
 	uint32_t active;
 };

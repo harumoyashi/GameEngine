@@ -535,8 +535,8 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetTexSampler();
 
 	//ルートシグネチャ
-	//テクスチャ1個、行列、マテリアル、色、光源4つ
-	SetRootSignature(1, 7);
+	//テクスチャ1個、行列、マテリアル、色、光源
+	SetRootSignature(1, 4);
 
 	//パイプラインステート生成
 	CreatePS();

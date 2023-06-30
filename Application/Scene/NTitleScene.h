@@ -2,6 +2,7 @@
 #include <vector>
 #include <wrl.h>
 
+#include "IScene.h"
 #include "NRootParam.h"
 #include "NMaterial.h"
 #include "NGPipeline.h"
@@ -20,7 +21,8 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-class NTitleScene
+class NTitleScene:
+	public IScene
 {
 private:
 	//オブジェクト
@@ -59,9 +61,13 @@ public:
 	NTitleScene();
 	~NTitleScene();
 
-	void Init();
-	void Update();
-	void Draw();
-	void Reset();
-	void Finalize();
+	void LoadResources();
+	void Init() override;
+	void Update() override;
+	//背景スプライト
+	void DrawBackSprite()override;
+	//3Dオブジェクト
+	void Draw3D() override;
+	//前景スプライト
+	void DrawForeSprite() override;
 };

@@ -1,5 +1,6 @@
 #include "NDX12.h"
 #include "NTitleScene.h"
+#include "NGameScene.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
 #include "NModelManager.h"
@@ -18,6 +19,10 @@ NTitleScene::NTitleScene()
 }
 
 NTitleScene::~NTitleScene()
+{
+}
+
+void NTitleScene::LoadResources()
 {
 }
 
@@ -92,8 +97,9 @@ void NTitleScene::Init()
 #pragma endregion
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init();
-	//lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
+	lightGroup_->Init(true,true,false,false);
+	//lightGroup_->SetDirLightColor({1,0,0});
+	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	NAssimpModel::SetLightGroup(lightGroup_.get());
@@ -103,11 +109,6 @@ void NTitleScene::Init()
 
 void NTitleScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-	{
-		NSceneManager::SetScene(GAMESCENE);
-	}
-
 	if (NInput::IsKeyDown(DIK_RETURN))
 	{
 		NAudioManager::Play("WinSE", false, 0.5f);
@@ -116,7 +117,7 @@ void NTitleScene::Update()
 	//ライトたちの更新
 	lightGroup_->Update();
 
-#pragma region 行列の計算
+#pragma region カメラ
 	//右クリックしたらカメラモード切り替わる
 	if (NInput::TriggerMouse(NInput::MouseRight))
 	{
@@ -124,7 +125,7 @@ void NTitleScene::Update()
 	}
 	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
-
+#pragma endregion
 	if (isCol_)
 	{
 		obj_[0]->color_.SetColor255(255, 0, 0, 255);
@@ -152,24 +153,24 @@ void NTitleScene::Update()
 
 	isCol_ = NCollision::Sphere2PlaneCol(sphere_, plane_);
 
-	//マウス入力確かめる用
-	/*foreSprite_[0]->position_.x += NInput::GetMouseMove().x;
-	foreSprite_[0]->position_.y += NInput::GetMouseMove().y;
-	foreSprite_[0]->isInvisible_ = NInput::PushMouse(NInput::MouseMiddle);*/
 	//foreSprite_[0]->Update();
 
 	assimpModel_.Update();
-#pragma endregion
+
+	//シーン切り替え
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+	{
+		NSceneManager::ChangeScene<NGameScene>();
+	}
+
 }
 
-void NTitleScene::Draw()
+void NTitleScene::DrawBackSprite()
 {
-#pragma region グラフィックスコマンド
-	//背景スプライト
-	NSprite::CommonBeginDraw();
+}
 
-	//3Dオブジェクト
-	NObj3d::CommonBeginDraw();
+void NTitleScene::Draw3D()
+{
 	for (size_t i = 0; i < obj_.size(); i++)
 	{
 		obj_[i]->Draw();
@@ -182,24 +183,9 @@ void NTitleScene::Draw()
 
 	//assimpモデル描画//
 	assimpModel_.Draw();
+}
 
-	//前景スプライト
-	NSprite::CommonBeginDraw();
+void NTitleScene::DrawForeSprite()
+{
 	foreSprite_[0]->Draw();
-
-	// 4.描画コマンドここまで
-#pragma endregion
-}
-
-void NTitleScene::Reset()
-{
-	lightGroup_->Init();
-	//lightGroup_.get()->sDirLights.SetLightColor({1,0,0});
-	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup_.get());
-	NAssimpModel::SetLightGroup(lightGroup_.get());
-}
-
-void NTitleScene::Finalize()
-{
 }

@@ -146,7 +146,6 @@ void NGame::Finalize()
 #pragma region ŒãŽn––
 	audio_->Finalize();
 	win_->Finalize();
-	sceneMane_->Finalize();
 	NImGuiManager::GetInstance()->Finalize();
 #pragma endregion
 	NFramework::Finalize();

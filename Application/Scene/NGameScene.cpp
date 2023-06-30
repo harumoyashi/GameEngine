@@ -1,6 +1,7 @@
 #include "NDX12.h"
 #include "NGameScene.h"
 #include "NSceneManager.h"
+#include "NTitleScene.h"
 
 #include "Player.h"
 
@@ -8,6 +9,10 @@ NGameScene* NGameScene::GetInstance()
 {
 	static NGameScene instance;
 	return &instance;
+}
+
+void NGameScene::LoadResources()
+{
 }
 
 void NGameScene::Init()
@@ -42,10 +47,6 @@ void NGameScene::Init()
 
 void NGameScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-	{
-		NSceneManager::SetScene(TITLESCENE);
-	}
 #pragma region カメラ
 	//ビュー行列の再生成
 	//右クリックしたらカメラモード切り替わる
@@ -60,32 +61,23 @@ void NGameScene::Update()
 
 	//ライトたちの更新
 	lightGroup_->Update();
+
+	//シーン切り替え
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+	{
+		NSceneManager::ChangeScene<NTitleScene>();
+	}
 }
 
-void NGameScene::Draw()
+void NGameScene::DrawBackSprite()
 {
-#pragma region グラフィックスコマンド
-	//背景スプライト
-	NSprite::CommonBeginDraw();
+}
 
-	//3Dオブジェクト
-	NObj3d::CommonBeginDraw();
+void NGameScene::Draw3D()
+{
 	Player::GetInstance()->Draw();
-	
-	//前景スプライト
-	NSprite::CommonBeginDraw();
-
-	// 4.描画コマンドここまで
-#pragma endregion
 }
 
-void NGameScene::Reset()
-{
-	lightGroup_->Init();
-	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup_.get());
-}
-
-void NGameScene::Finalize()
+void NGameScene::DrawForeSprite()
 {
 }

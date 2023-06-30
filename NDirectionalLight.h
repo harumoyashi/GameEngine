@@ -27,14 +27,6 @@ public: //メンバ関数
 
 	//初期化
 	void Init();
-	//更新
-	void Update();
-	//描画
-	//rootParameterIndex = ルートパラメータの何番目にセットするか
-	void Draw(const uint32_t rootParameterIndex);
-
-	//定数バッファ転送
-	void TransferConstBuffer();
 
 	//ライトの方向をセット
 	void SetLightDir(const NVector3& lightdir);

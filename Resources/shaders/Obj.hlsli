@@ -17,18 +17,19 @@ cbuffer cbuff2 : register(b2)
     float3 cameraPos; // カメラ座標(ワールド座標)
 };
 
+//平行光源の数
+static const int DIRLIGHT_NUM = 3;
+
 //平行光源
 struct DirLight
 {
     float3 lightv; //ライトへの方向の単位ベクトル
-    uint active;
     float3 lightcolor; //ライトの色(RGB)
+    uint active;
 };
 
-cbuffer cbuff3 : register(b3)
-{
-    DirLight dirLight;
-};
+//点光源の数
+static const int POINTLIGHT_NUM = 3;
 
 //点光源
 struct PointLight
@@ -39,10 +40,8 @@ struct PointLight
     uint active;
 };
 
-cbuffer cbuff4 : register(b4)
-{
-    PointLight pointLight;
-};
+//スポットライトの数
+static const int SPOTLIGHT_NUM = 3;
 
 //スポットライト
 struct SpotLight
@@ -55,10 +54,8 @@ struct SpotLight
     uint active;
 };
 
-cbuffer cbuff5 : register(b5)
-{
-    SpotLight spotLight;
-};
+//丸影の数
+static const int CIRCLESHADOW_NUM = 1;
 
 //丸影
 struct CircleShadow
@@ -71,9 +68,13 @@ struct CircleShadow
     uint active;
 };
 
-cbuffer cbuff6 : register(b6)
+cbuffer cbuff3 : register(b3)
 {
-    CircleShadow circleShadow;
+    float3 ambientColor;
+    DirLight dirLights[DIRLIGHT_NUM];
+    PointLight pointLights[POINTLIGHT_NUM];
+    SpotLight spotLights[SPOTLIGHT_NUM];
+    CircleShadow circleShadows[CIRCLESHADOW_NUM];
 };
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体

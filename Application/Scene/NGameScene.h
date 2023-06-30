@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <wrl.h>
 
+#include "IScene.h"
 #include "NRootParam.h"
 #include "NMaterial.h"
 #include "NGPipeline.h"
@@ -17,7 +18,8 @@
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
 
-class NGameScene
+class NGameScene:
+	public IScene
 {
 private:
 	//オブジェクト
@@ -45,15 +47,15 @@ public:
 	//インスタンス取得
 	static NGameScene* GetInstance();
 
-	//初期化
-	void Init();
-	//更新
-	void Update();
-	//描画
-	void Draw();
-	void Reset();
-	//終了処理
-	void Finalize();
+	void LoadResources();
+	void Init() override;
+	void Update() override;
+	//背景スプライト
+	void DrawBackSprite()override;
+	//3Dオブジェクト
+	void Draw3D() override;
+	//前景スプライト
+	void DrawForeSprite() override;
 
 private:
 

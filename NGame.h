@@ -6,6 +6,7 @@
 #include "NTexture.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "NModelManager.h"
 #include "NPostEffect.h"
 #include "NFramework.h"
 
