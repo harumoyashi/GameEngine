@@ -61,10 +61,11 @@ void Player::Draw()
 
 void Player::Move()
 {
+	isMove_ = false;
+
 	//スティック移動
 	moveVelo_ = NInput::GetStick();
 
-	isMove_ = false;
 	if (moveVelo_.Length() > 0.0f)	//入力されてたら
 	{
 		isMove_ = true;
@@ -96,12 +97,12 @@ void Player::Move()
 
 void Player::Shot()
 {
-	if (lineLevel)
+	if (lineLevel > 0)
 	{
 		BulletFactory::GetInstance()->Create(IBullet::BulletType::LineBullet,obj_->position_);
 	}
 
-	if (sideLevel)
+	if (sideLevel > 0)
 	{
 		BulletFactory::GetInstance()->Create(IBullet::BulletType::SideBullet, obj_->position_);
 	}
