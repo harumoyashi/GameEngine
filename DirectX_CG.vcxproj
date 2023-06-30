@@ -100,8 +100,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletFactory.h" />
+    <ClInclude Include="IBullet.h" />
+    <ClInclude Include="BulletManager.h" />
     <ClInclude Include="IScene.h" />
+    <ClInclude Include="LineBullet.h" />
     <ClInclude Include="NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="NCameraManager.h" />
@@ -158,10 +161,14 @@
     <ClInclude Include="NVector4.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RadialBlur.h" />
+    <ClInclude Include="SideBullet.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletFactory.cpp" />
+    <ClCompile Include="IBullet.cpp" />
+    <ClCompile Include="BulletManager.cpp" />
     <ClCompile Include="IScene.cpp" />
+    <ClCompile Include="LineBullet.cpp" />
     <ClCompile Include="NAssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
     <ClCompile Include="NCameraManager.cpp" />
@@ -217,6 +224,7 @@
     <ClCompile Include="NVector4.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RadialBlur.cpp" />
+    <ClCompile Include="SideBullet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

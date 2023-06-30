@@ -87,4 +87,7 @@ public:
 	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 
 	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+
+	//êFê›íË
+	//inline void SetColor(const NColor& color) { color_ = color; }
 };

@@ -5,6 +5,7 @@
 #include "NCameraManager.h"
 
 #include "Player.h"
+#include "BulletManager.h"
 
 NGameScene* NGameScene::GetInstance()
 {
@@ -28,6 +29,7 @@ void NGameScene::Init()
 #pragma region 描画初期化処理
 	//オブジェクト
 	Player::GetInstance()->Init();
+	BulletManager::GetInstance()->Init();
 
 #pragma region オブジェクトの初期値設定
 	
@@ -58,11 +60,12 @@ void NGameScene::Update()
 #pragma region プレイヤー
 	Player::GetInstance()->Update();
 	//プレイヤーが動いてないときは他のものも動けなくする
-	if (Player::GetInstance()->GetMoveVelo().Length() < 0.0f)
+	if (Player::GetInstance()->GetIsMove() == false)
 	{
 		isMoveUpdate_ = false;
 	}
 #pragma endregion
+	BulletManager::GetInstance()->Update();
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -80,6 +83,7 @@ void NGameScene::DrawBackSprite()
 
 void NGameScene::Draw3D()
 {
+	BulletManager::GetInstance()->Draw();
 	Player::GetInstance()->Draw();
 }
 

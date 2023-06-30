@@ -94,6 +94,18 @@
     <Filter Include="Engine\ヘッダー ファイル\Loader">
       <UniqueIdentifier>{6ddd6382-3c4a-4b24-9f9d-201e8db70eaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソース ファイル\PostEffect">
+      <UniqueIdentifier>{0ddfd0fd-44d7-44eb-b835-599d691a3233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\PostEffect">
+      <UniqueIdentifier>{7b6b524d-34c7-4302-b6e4-890b6d33de02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Chara">
+      <UniqueIdentifier>{d6e83c9e-3c49-4d5f-a92f-589cdec909b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Bullet">
+      <UniqueIdentifier>{588afa0f-66d5-4842-9a44-608e56bea8bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -237,38 +249,50 @@
     <ClInclude Include="NUtil.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NParticle2D.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NEasing.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NPostEffect.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Application\ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="NModelManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NCollider.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="GaussianBlur.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NPostEffect.h">
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="RadialBlur.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
     <ClInclude Include="IScene.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Application\ソースファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="NCameraManager.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NCollider.h">
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticle2D.h">
+      <Filter>Engine\ヘッダー ファイル\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="NEasing.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="IBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="LineBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SideBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -410,29 +434,8 @@
     <ClCompile Include="NUtil.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NParticle2D.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NPostEffect.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NModelManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Application\ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GaussianBlur.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="RadialBlur.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="IScene.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="NEasing.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
@@ -440,8 +443,41 @@
     <ClCompile Include="NCollider.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NPostEffect.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="RadialBlur.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Application\ソースファイル\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="NCameraManager.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticle2D.cpp">
+      <Filter>Engine\ソース ファイル\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="IBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="LineBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFactory.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SideBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

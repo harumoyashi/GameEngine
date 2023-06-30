@@ -3,8 +3,6 @@
 #include "NTimer.h"
 #include "NCollider.h"
 
-#include "Bullet.h"
-
 class Player
 {
 private:
@@ -17,7 +15,7 @@ private:
 	float collisionRadius_;	//コライダーの半径
 
 	//------------------------ 移動関連 ------------------------//
-	bool isCanMove_;			//動けるかフラグ
+	bool isMove_;				//動いてるかフラグ
 	NVector2 moveVelo_;			//移動量
 	float moveSpeed_ = 0.5f;	//移動速度
 
@@ -29,10 +27,10 @@ private:
 	NTimer godmodeTimer_;	//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
-	std::list<std::unique_ptr<Bullet>> bullets_;	//弾ども
-	//NTimer shotTimer_;		//弾撃つ時間
-	NTimer shotCoolTimer_;		//弾撃つまでの時間
-	bool isCanShot_;			//撃てるかフラグ
+	uint32_t lineLevel;		//通常弾のレベル
+	uint32_t sideLevel;		//横方向に出る弾のレベル
+	uint32_t wideLevel;		//左右に角度つけて出る弾のレベル
+	uint32_t roketLevel;	//ロケット弾のレベル
 
 public:
 	Player();
@@ -47,6 +45,8 @@ public:
 
 	//移動処理
 	void Move();
+	//射撃
+	void Shot();
 
 	// ゲッター //
 	//座標取得
@@ -55,14 +55,12 @@ public:
 	inline NVector3 GetScale() { return obj_->scale_; }
 	//コライダーの半径取得
 	inline float GetCollisionRadius() { return collisionRadius_; }
-	//弾ども取得
-	inline std::list<std::unique_ptr<Bullet>>* GetBullets() { return &bullets_; }
 	//無敵状態取得
-	inline bool GetisGodmode() { return isGodmode_; }
+	inline bool GetIsGodmode() { return isGodmode_; }
 	//生きてるかフラグ取得
-	inline bool GetisAlive() { return isAlive_; }
+	inline bool GetIsAlive() { return isAlive_; }
 	//動けるかフラグ取得
-	inline bool GetisCanMove() { return isCanMove_; }
+	inline bool GetIsMove() { return isMove_; }
 	//コライダー取得
 	inline const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
@@ -74,9 +72,9 @@ public:
 	//大きさ設定
 	inline void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
 	//無敵状態設定
-	inline void SetisGodmode(const bool& isGodmode) { isGodmode_ = isGodmode; }
+	inline void SetIsGodmode(const bool& isGodmode) { isGodmode_ = isGodmode; }
 	//コライダーの半径設定
 	inline void SetCollisionRadius(const float& collisionRadius) { collisionRadius_ = collisionRadius; }
 	//動けるかフラグ設定
-	inline void SetisCanMove(const bool& isCanMove) { isCanMove_ = isCanMove; }
+	inline void SetIsMove(const bool& isMove) { isMove_ = isMove; }
 };

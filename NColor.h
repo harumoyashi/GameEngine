@@ -13,6 +13,7 @@ public:
 	//Fî•ñ•ÏX(uint32_tŒ^0~255)
 	void SetColor255(const uint32_t R = 255, const uint32_t G = 255, const uint32_t B = 255, const uint32_t A = 255);
 	void SetColor(const float R = 1.0f, const float G = 1.0f, const float B = 1.0f, const float A = 1.0f);
+	void SetColor(const NColor& col);
 	//0.0f~1.0f‚É’¼‚·
 	void Convert01();
 	//0.0f~255.0f‚É’¼‚·

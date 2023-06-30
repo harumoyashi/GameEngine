@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "NInput.h"
+#include "BulletFactory.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -23,8 +24,6 @@ void Player::Init()
 
 	collisionRadius_ = obj_->scale_.x;
 
-	bullets_.clear();
-
 	isAlive_ = true;
 	isGodmode_ = false;
 	isDraw_ = true;
@@ -32,28 +31,28 @@ void Player::Init()
 	godmodeTimer_.Reset();
 	godmodeTimer_.SetMaxTimer(120.0f);
 
-	//shotTimer_.SetMaxTimer(10);
-	shotCoolTimer_.SetMaxTimer(10);
+	isMove_ = false;
 
-	isCanShot_ = false;
-
-	isCanMove_ = true;
+	//’e‚ÌƒŒƒxƒ‹‚½‚¿
+	lineLevel = 1;
+	sideLevel = 0;
+	wideLevel = 0;
+	roketLevel = 0;
 }
 
 void Player::Update()
 {
 	Move();
+	if (isMove_)			//“ü—Í‚³‚ê‚Ä‚½‚ç
+	{
+		Shot();
+	}
 
 	obj_->Update();
 }
 
 void Player::Draw()
 {
-	for (const auto& bullet : bullets_)
-	{
-		bullet->Draw();
-	}
-
 	if (isDraw_)
 	{
 		obj_->Draw();
@@ -65,12 +64,18 @@ void Player::Move()
 	//ƒXƒeƒBƒbƒNˆÚ“®
 	moveVelo_ = NInput::GetStick();
 
+	isMove_ = false;
+	if (moveVelo_.Length() > 0.0f)	//“ü—Í‚³‚ê‚Ä‚½‚ç
+	{
+		isMove_ = true;
+	}
+
 	//ˆÚ“®—Ê‚ð‰ÁŽZ
 	obj_->position_.x += moveVelo_.x * moveSpeed_;
 	obj_->position_.z += moveVelo_.y * moveSpeed_;
 
 	//ˆÚ“®•ûŒü‚É‡‚í‚¹‚Ä‰ñ“]
-	if (moveVelo_.Length() > 0.0f)	//“ü—Í‚³‚ê‚Ä‚½‚ç
+	if (isMove_)			//“ü—Í‚³‚ê‚Ä‚½‚ç
 	{
 		moveVelo_.Normalize();
 		angle_ = MathUtil::Radian2Degree(acosf(moveVelo_.Dot({ 0,1 })));
@@ -87,4 +92,27 @@ void Player::Move()
 	ImGui::Text("rot:%f", obj_->rotation_.y);
 	ImGui::End();
 #endif
+}
+
+void Player::Shot()
+{
+	if (lineLevel)
+	{
+		BulletFactory::GetInstance()->Create(IBullet::BulletType::LineBullet,obj_->position_);
+	}
+
+	if (sideLevel)
+	{
+		BulletFactory::GetInstance()->Create(IBullet::BulletType::SideBullet, obj_->position_);
+	}
+
+	/*if (wideLevel)
+	{
+
+	}
+
+	if (roketLevel)
+	{
+
+	}*/
 }

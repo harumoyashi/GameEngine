@@ -25,6 +25,7 @@ bool NObj3d::Init()
 	cbMaterial_->Init();
 	cbColor_->Init();
 
+	color_ = NColor::kWhite;
 	return true;
 }
 

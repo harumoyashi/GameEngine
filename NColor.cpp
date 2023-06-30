@@ -26,6 +26,14 @@ void NColor::SetColor(const float R , const float G, const float B , const float
 	a = A;
 }
 
+void NColor::SetColor(const NColor& col)
+{
+	r = col.r;
+	g = col.g;
+	b = col.b;
+	a = col.a;
+}
+
 void NColor::Convert01()
 {
 	r /= 255.0f;

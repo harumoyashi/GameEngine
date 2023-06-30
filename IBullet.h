@@ -1,25 +1,35 @@
 #pragma once
 #include "NObj3d.h"
 #include "NCollider.h"
+#include "NTimer.h"
 
-class Bullet
+class IBullet
 {
-private:
+public:
+	enum class BulletType
+	{
+		LineBullet,
+		SideBullet,
+		WideBullet,
+		Roket,
+	};
+
+protected:
 	std::unique_ptr<NObj3d> obj_;	//弾のオブジェクト
+	NVector2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
-private:
-	bool isActive_;				//有効フラグ
+	bool isAlive_;				//生存フラグ
 	float collisionRadius_;		//コライダーの半径
 	SphereCollider collider_;	//弾の当たり判定
 
+	NTimer lifeTimer_;			//生存時間
+
 	float damage_;				//与えるダメージ量
 
-	bool isCanGenerate_;		//弾生成できるフラグ
-
 public:
-	Bullet();
+	IBullet();
 	//生成
 	void Generate(const NVector3& pos);
 	//更新
@@ -29,11 +39,9 @@ public:
 public:
 	// ゲッター //
 	//コライダー取得
-	inline const SphereCollider& GetBulletCollider()const { return collider_; }
-	//有効フラグ取得
-	inline bool GetisActive()const { return isActive_; }
-	//弾生成できるフラグ取得
-	inline bool GetisCanGenerate_()const { return isCanGenerate_; }
+	inline const SphereCollider& GetIBulletCollider()const { return collider_; }
+	//生存フラグ取得
+	inline bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
 	inline float GetMoveSpeed()const { return moveSpeed_; }
 	//与えるダメージ量取得
@@ -47,18 +55,18 @@ public:
 
 public:
 	// セッター //
-	//有効フラグ設定
-	inline void SetisActive(const bool isActive) { isActive_ = isActive; }
-	//弾生成できるフラグ設定
-	inline void SetisCanGenerate_(const bool isCanGenerate) { isCanGenerate_ = isCanGenerate; }
+	//生存フラグ設定
+	inline void SetisAlive(const bool isAlive) { isAlive_ = isAlive; }
 	//与えるダメージ量設定
 	inline void SetDamage(const float damage) { damage_ = damage; }
 	//大きさ設定
 	inline void SetScale(const float scale) { obj_->scale_ = scale; collisionRadius_ = scale; }
+	//移動角度設定
+	inline void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
 	//移動スピード設定
 	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
-	//色設定
-	inline void SetColor(const NColor& color) { obj_->color_ = color; }
+	//生存時間設定
+	inline void SetLifeTimer(const float lifeTimer) { lifeTimer_ = lifeTimer; }
 	//コライダーの半径設定
 	inline void SetColRadius(const float radius) { collisionRadius_ = collisionRadius_ * radius; }
 };
