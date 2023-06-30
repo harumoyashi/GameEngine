@@ -1,4 +1,8 @@
 #include "Player.h"
+#include "NInput.h"
+
+#include "NImGuiManager.h"
+#include "imgui.h"
 
 Player::Player()
 {
@@ -38,6 +42,8 @@ void Player::Init()
 
 void Player::Update()
 {
+	Move();
+
 	obj_->Update();
 }
 
@@ -52,4 +58,31 @@ void Player::Draw()
 	{
 		obj_->Draw();
 	}
+}
+
+void Player::Move()
+{
+	//スティック移動
+	moveVelo_ = NInput::GetStick();
+
+	//移動量を加算
+	obj_->position_.x += moveVelo_.x * moveSpeed_;
+	obj_->position_.z += moveVelo_.y * moveSpeed_;
+
+	//移動方向に合わせて回転
+	if (moveVelo_.Length() > 0.0f)	//入力されてたら
+	{
+		moveVelo_.Normalize();
+		angle_ = MathUtil::Radian2Degree(acosf(moveVelo_.Dot({ 0,1 })));
+		if (moveVelo_.x < 0)
+		{
+			angle_ = -angle_;
+		}
+
+		obj_->rotation_.y = angle_;
+	}
+
+	ImGui::Begin("Rot");
+	ImGui::Text("rot:%f", obj_->rotation_.y);
+	ImGui::End();
 }

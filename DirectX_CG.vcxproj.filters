@@ -410,9 +410,6 @@
     <ClCompile Include="NParticle2D.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="NEasing.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NPostEffect.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
@@ -425,9 +422,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="NCollider.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GaussianBlur.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
@@ -436,6 +430,12 @@
     </ClCompile>
     <ClCompile Include="IScene.cpp">
       <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NEasing.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NCollider.cpp">
+      <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

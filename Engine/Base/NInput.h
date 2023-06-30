@@ -108,7 +108,7 @@ public:
 	//デッドゾーンの設定
 	static void SetDeadZone();
 
-	//スティックの傾き具合取得
+	//スティックの傾き具合取得(0.0f~1.0f)
 	//isLeft:右左どっち！
 	static NVector2 GetStick(const bool isLeft = true);
 

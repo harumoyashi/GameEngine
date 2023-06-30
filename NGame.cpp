@@ -100,7 +100,6 @@ void NGame::Update()
 	
 	ImGui::End();
 
-	NImGuiManager::GetInstance()->End();
 
 	NFramework::Update();
 #pragma region ウィンドウメッセージ処理
@@ -117,6 +116,7 @@ void NGame::Update()
 	}
 	sceneMane_->Update();
 #pragma endregion
+	NImGuiManager::GetInstance()->End();
 }
 
 void NGame::Draw()

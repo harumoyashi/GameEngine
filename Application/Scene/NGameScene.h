@@ -24,13 +24,11 @@ class NGameScene:
 private:
 	//オブジェクト
 
+
 	//背景スプライト
-	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
+	
 
 	//前景スプライト
-	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 
 	NCamera camera_;	//カメラ
 
@@ -39,6 +37,9 @@ private:
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
+
+	//動きの更新管理フラグ
+	bool isMoveUpdate_ = true;
 
 public:
 

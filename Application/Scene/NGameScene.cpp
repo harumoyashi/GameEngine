@@ -43,6 +43,9 @@ void NGameScene::Init()
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+
+	//タイマーストップフラグ初期化
+	isMoveUpdate_ = true;
 }
 
 void NGameScene::Update()
@@ -57,7 +60,16 @@ void NGameScene::Update()
 	camera_.Update();
 	NCamera::sCurrentCamera = &camera_;
 #pragma endregion
+	//基本動ける
+	isMoveUpdate_ = true;
+#pragma region プレイヤー
 	Player::GetInstance()->Update();
+	//プレイヤーが動いてないときは他のものも動けなくする
+	if (Player::GetInstance()->GetMoveVelo().Length() < 0.0f)
+	{
+		isMoveUpdate_ = false;
+	}
+#pragma endregion
 
 	//ライトたちの更新
 	lightGroup_->Update();

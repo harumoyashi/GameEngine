@@ -12,17 +12,23 @@ private:
 	SphereCollider collider_;	//プレイヤーの当たり判定
 
 	bool isAlive_;		//生きてるかフラグ
-	bool isCanMove_;	//動けるかフラグ
 	bool isDraw_;		//描画するかフラグ
 
 	float collisionRadius_;	//コライダーの半径
 
-	// ダメージ関連
+	//------------------------ 移動関連 ------------------------//
+	bool isCanMove_;			//動けるかフラグ
+	NVector2 moveVelo_;			//移動量
+	float moveSpeed_ = 0.5f;	//移動速度
+
+	float angle_;				//回転角度
+
+	//------------------------ ダメージ関連 ------------------------//
 	bool isGodmode_;		//無敵状態か
 	bool isFlashing_;		//チカチカさせるため用
 	NTimer godmodeTimer_;	//無敵時間
 
-	//弾関連//
+	//------------------------ 弾関連 ------------------------//
 	std::list<std::unique_ptr<Bullet>> bullets_;	//弾ども
 	//NTimer shotTimer_;		//弾撃つ時間
 	NTimer shotCoolTimer_;		//弾撃つまでの時間
@@ -38,6 +44,9 @@ public:
 	void Update();
 	//描画
 	void Draw();
+
+	//移動処理
+	void Move();
 
 	// ゲッター //
 	//座標取得
@@ -56,6 +65,8 @@ public:
 	inline bool GetisCanMove() { return isCanMove_; }
 	//コライダー取得
 	inline const SphereCollider& GetPlayerCollider()const { return collider_; }
+	//移動量取得
+	inline NVector2 GetMoveVelo() { return moveVelo_; }
 
 	// セッター //
 	//座標設定

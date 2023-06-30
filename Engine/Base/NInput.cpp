@@ -44,6 +44,7 @@ void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
 	assert(SUCCEEDED(result));
 }
 
+
 void NInput::MouseUpdate()
 {
 	sDevMouse->Acquire(); // マウス動作開始
@@ -55,6 +56,8 @@ void NInput::MouseUpdate()
 	sDevMouse->GetDeviceState(sizeof(sStateMouse), &sStateMouse);
 }
 
+// マウスのボタン押下をチェック
+// 指定したボタンが押されてるかチェック
 bool NInput::PushMouse(const MouseButton button)
 {
 	// 0でなければ押している
@@ -66,6 +69,8 @@ bool NInput::PushMouse(const MouseButton button)
 	return false;
 }
 
+// マウスのトリガーをチェック
+// 指定したボタンが押されてるかチェック
 bool NInput::TriggerMouse(const MouseButton button)
 {
 	// 前回が0で、今回が0でなければトリガー
@@ -77,6 +82,10 @@ bool NInput::TriggerMouse(const MouseButton button)
 	return false;
 }
 
+/// <summary>
+/// マウス移動量を取得
+/// </summary>
+/// <returns>マウス移動量</returns>
 NVector3 NInput::GetMouseMove(const bool isNowState) {
 	NVector3 tmp;
 	if (isNowState)
@@ -94,12 +103,14 @@ NVector3 NInput::GetMouseMove(const bool isNowState) {
 	return tmp;
 }
 
+//マウスの移動量を反映
 void NInput::SetMouseMove(NVector2& mouseVec)
 {
 	sStateMouse.lX = (LONG)mouseVec.x;
 	sStateMouse.lY = (LONG)mouseVec.y;
 }
 
+//マウスホイールの移動量を反映
 void NInput::SetWheelMove(float wheelMove)
 {
 	sStateMouse.lZ = (LONG)wheelMove;
@@ -208,21 +219,26 @@ void NInput::PadUpdate()
 	SetDeadZone();
 }
 
+//押しっぱなし
 bool NInput::IsButton(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons == button;
 }
 
+//押した瞬間
 bool NInput::IsButtonDown(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons == button && sPrevPad.Gamepad.wButtons != button;
 }
 
+//離した瞬間
 bool NInput::IsButtonRelease(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons != button && sPrevPad.Gamepad.wButtons == button;
 }
 
+//トリガーの押し込み具合取得
+//isLeft:右左どっち！
 uint32_t NInput::GetTrigger(const bool isLeft)
 {
 	if (isLeft)
@@ -235,6 +251,7 @@ uint32_t NInput::GetTrigger(const bool isLeft)
 	}
 }
 
+//デッドゾーンの設定
 void NInput::SetDeadZone()
 {
 	if ((sStatePad.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
@@ -256,6 +273,8 @@ void NInput::SetDeadZone()
 	}
 }
 
+//スティックの傾き具合取得(0.0f~1.0f)
+//isLeft:右左どっち！
 NVector2 NInput::GetStick(const bool isLeft)
 {
 	if (isLeft)
@@ -274,6 +293,10 @@ NVector2 NInput::GetStick(const bool isLeft)
 	}
 }
 
+//isVertical:垂直方向か
+//isLstick:Lスティックか
+//上、左はなら-1
+//下、右なら+1が返ってくる
 uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
 {
 	if (isLstick)
@@ -312,6 +335,8 @@ uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
 	}
 }
 
+//コントローラーの振動を設定
+//パワーは0.0f~1.0fで入力してね
 void NInput::Vibration(const float leftVibrationPower, const float rightVibrationPower)
 {
 	float lVibPower = leftVibrationPower, rVibPower = rightVibrationPower;
