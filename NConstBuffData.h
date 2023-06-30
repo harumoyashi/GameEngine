@@ -77,8 +77,8 @@ struct ConstBuffDataSpotLight
 	NVector3 atten;
 	float pad4;
 	NVector2 factorAngleCos;
-	float pad5;
 	uint32_t active;
+	float pad5;
 };
 
 //ŠÛ‰e
@@ -91,6 +91,6 @@ struct ConstBuffDataCircleShadow
 	NVector3 atten;
 	float pad2;
 	NVector2 factorAngleCos;
-	float pad3;
 	uint32_t active;
+	float pad3;
 };

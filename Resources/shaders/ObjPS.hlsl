@@ -42,7 +42,6 @@ PSOutput main(VSOutput input) : SV_TARGET
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // ‘S‚Ä‰ÁŽZ‚·‚é
             shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
-            //shadecolor.a = m_color.a;
         }
     }
     
@@ -70,7 +69,6 @@ PSOutput main(VSOutput input) : SV_TARGET
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // ‘S‚Ä‰ÁŽZ‚·‚é
             shadecolor.rgb += atten * (diffuse + specular) * pointLights[j].lightcolor;
-            //shadecolor.a = m_color.a;
         }
     }
     
@@ -105,7 +103,6 @@ PSOutput main(VSOutput input) : SV_TARGET
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        // ‘S‚Ä‰ÁŽZ‚·‚é
             shadecolor.rgb += atten * (diffuse + specular) * spotLights[k].lightcolor;
-            //shadecolor.a = m_color.a;
         }
     }
     

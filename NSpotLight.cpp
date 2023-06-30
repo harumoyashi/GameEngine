@@ -15,6 +15,8 @@ void NSpotLight::Init()
 	cbSpotLight->Init();
 
 	SetActive(true);
+	lightdir_ = { 1,0,0 };
+	lightpos_ = { 0,3,0 };
 }
 
 void NSpotLight::SetLightDir(const NVector3& lightdir)

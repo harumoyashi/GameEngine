@@ -15,10 +15,10 @@ public:
 	std::unique_ptr<NConstBuff<ConstBuffDataSpotLight>> cbSpotLight;
 
 private://静的メンバ変数
-	NVector3 lightdir_ = { 1,0,0 };	// ライト方向
+	NVector3 lightdir_ = { 0,-1,0 };	// ライト方向
 	NVector3 lightpos_ = { 0,10,0 };	// ライト座標(ワールド)
 	NVector3 lightcolor_ = { 1,1,1 };	// ライト色
-	NVector3 lightatten_ = { 1,1,1 };	// ライト距離減衰係数
+	NVector3 lightatten_ = { 0,0,0 };	// ライト距離減衰係数
 	NVector2 lightFactorAngleCos_ = { 0.5f,0.2f };	// ライト減衰角度
 
 	//ダーティフラグ
