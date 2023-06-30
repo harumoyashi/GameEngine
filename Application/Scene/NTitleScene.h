@@ -10,7 +10,6 @@
 #include "NObj3d.h"
 #include "NTexture.h"
 #include "NSprite.h"
-#include "NCamera.h"
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NTimer.h"
@@ -42,8 +41,6 @@ private:
 	//前景スプライト
 	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
 	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
-
-	NCamera camera_;	//カメラ
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;

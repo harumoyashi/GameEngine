@@ -12,7 +12,6 @@
 #include "NTexture.h"
 #include "NSprite.h"
 #include "NModel.h"
-#include "NCamera.h"
 #include "NAudio.h"
 
 #pragma comment(lib,"d3d12.lib")
@@ -29,8 +28,6 @@ private:
 	
 
 	//前景スプライト
-
-	NCamera camera_;	//カメラ
 
 	//オーディオ
 	NAudio* audio_ = nullptr;

@@ -2,6 +2,7 @@
 #include "NResultScene.h"
 #include "NSceneManager.h"
 #include "NTitleScene.h"
+#include "NCameraManager.h"
 
 NResultScene* NResultScene::GetInstance()
 {
@@ -15,9 +16,8 @@ void NResultScene::Init()
 	
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.ProjectiveProjection();
-	camera_.CreateMatView();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Init();
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
@@ -60,9 +60,7 @@ void NResultScene::Init()
 void NResultScene::Update()
 {
 #pragma region カメラ
-	//ビュー行列の再生成
-	camera_.CreateMatView();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Update();
 #pragma endregion
 
 	obj_[0]->MoveKey();

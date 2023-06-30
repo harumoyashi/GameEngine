@@ -7,6 +7,7 @@
 #include "NInput.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
+#include "NCameraManager.h"
 
 NTitleScene* NTitleScene::GetInstance()
 {
@@ -33,21 +34,19 @@ void NTitleScene::Init()
 	//NAudioManager::Play("RetroBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.Reset();
-	camera_.SetEye({ 0.0f, 10.0f, -300.0f });
-	camera_.SetTarget({ 0.0f, 10.0f, 0.0f });
-	camera_.Update();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Init();
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-	// レベルデータからの読み込み
+	//レベルデータからの読み込み
 	levelData_ = std::make_unique<LevelData>();
 	levelData_ = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
 	//SetObject(levelData_.get());
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
-	//レベルデータにあるカメラをここで適用してるから上で設定してるの使いたかったら消して
-	camera_ = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
+	//レベルデータにあるカメラをデバッグカメラ情報に適用
+	NCamera camera = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
+	NCameraManager::GetInstance()->SetDebugCamera(camera);
 	
 	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
@@ -118,13 +117,7 @@ void NTitleScene::Update()
 	lightGroup_->Update();
 
 #pragma region カメラ
-	//右クリックしたらカメラモード切り替わる
-	if (NInput::TriggerMouse(NInput::MouseRight))
-	{
-		camera_.ChangeIsDebugCamera();
-	}
-	camera_.Update();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Update();
 #pragma endregion
 	if (isCol_)
 	{

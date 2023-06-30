@@ -173,7 +173,7 @@ float NEasing::InOutBack(float start, float end, float timeRate)
 	return start + dif;
 }
 
-void NEasing::easeTimer::Reset()
+void NEasing::EaseTimer::Reset()
 {
 	nowTime_ = 0.0f;
 	end_ = false;
@@ -183,7 +183,7 @@ void NEasing::easeTimer::Reset()
 	reverse_ = false;
 }
 
-void NEasing::easeTimer::Start()
+void NEasing::EaseTimer::Start()
 {
 	nowTime_ = 0.0f;
 	end_ = false;
@@ -193,7 +193,7 @@ void NEasing::easeTimer::Start()
 	reverse_ = false;
 }
 
-void NEasing::easeTimer::ReverseStart()
+void NEasing::EaseTimer::ReverseStart()
 {
 	end_ = false;
 	reverseend_ = false;
@@ -202,7 +202,7 @@ void NEasing::easeTimer::ReverseStart()
 	reverse_ = true;
 }
 
-void NEasing::easeTimer::Update()
+void NEasing::EaseTimer::Update()
 {
 	if (run_) {
 		nowTime_ += NDX12::GetInstance()->GetDelta();
@@ -223,7 +223,7 @@ void NEasing::easeTimer::Update()
 	}
 }
 
-float NEasing::easeTimer::GetTimeRate()
+float NEasing::EaseTimer::GetTimeRate()
 {
 	float timeRate = 0.0f;
 	timeRate = MathUtil::Clamp(timeRate,nowTime_ / maxTime_, 1.0f);

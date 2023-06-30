@@ -82,7 +82,9 @@ void Player::Move()
 		obj_->rotation_.y = angle_;
 	}
 
+#ifdef _DEBUG
 	ImGui::Begin("Rot");
 	ImGui::Text("rot:%f", obj_->rotation_.y);
 	ImGui::End();
+#endif
 }

@@ -10,7 +10,6 @@
 #include "NTexture.h"
 #include "NSprite.h"
 #include "NAudio.h"
-#include "NCamera.h"
 #include "NCollision.h"
 
 #pragma comment(lib,"d3d12.lib")
@@ -34,8 +33,6 @@ private:
 	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
 	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 	
-	NCamera camera_;	//カメラ
-
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 

@@ -2,6 +2,7 @@
 #include "NGameScene.h"
 #include "NSceneManager.h"
 #include "NTitleScene.h"
+#include "NCameraManager.h"
 
 #include "Player.h"
 
@@ -21,9 +22,8 @@ void NGameScene::Init()
 	audio_ = NAudio::GetInstance();
 #pragma endregion
 #pragma region	カメラ初期化
-	camera_.ProjectiveProjection();
-	camera_.CreateMatView();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Init();
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
@@ -51,14 +51,7 @@ void NGameScene::Init()
 void NGameScene::Update()
 {
 #pragma region カメラ
-	//ビュー行列の再生成
-	//右クリックしたらカメラモード切り替わる
-	if (NInput::TriggerMouse(NInput::MouseRight))
-	{
-		camera_.ChangeIsDebugCamera();
-	}
-	camera_.Update();
-	NCamera::sCurrentCamera = &camera_;
+	NCameraManager::GetInstance()->Update();
 #pragma endregion
 	//基本動ける
 	isMoveUpdate_ = true;

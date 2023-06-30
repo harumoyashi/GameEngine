@@ -34,7 +34,7 @@ namespace NEasing
 	float InOutBack(float start, float end, float timeRate);
 
 	//イージング用のタイマー
-	class easeTimer
+	class EaseTimer
 	{
 	private:
 		//進行中フラグ
@@ -48,7 +48,7 @@ namespace NEasing
 
 	public:
 		//コンストラクタ
-		easeTimer(float maxTime = 1.0f) {
+		EaseTimer(float maxTime = 1.0f) {
 			maxTime_ = maxTime;
 		}
 

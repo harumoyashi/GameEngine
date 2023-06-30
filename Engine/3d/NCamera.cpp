@@ -4,10 +4,13 @@
 #include "NInput.h"
 #include "NVector4.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 std::unique_ptr<NCamera> NCamera::sNCamera = std::make_unique<NCamera>();
 NCamera* NCamera::sCurrentCamera = sNCamera.get();
 
-void NCamera::Reset()
+void NCamera::Init()
 {
 	eye_ = { 0, 10.0f, -30.0f };	//視点座標
 	target_ = { 0, 0, 0 };			//注視点座標
@@ -16,25 +19,22 @@ void NCamera::Reset()
 	nearZ_ = 0.1f;
 	farZ_ = 1000.0f;
 
-	//デバッグカメラか否か
-	isDebugCamera_ = false;
-	distance = 20.0f;
-
 	CreateMatView();
 	ProjectiveProjection();
 }
 
 void NCamera::Update()
 {
-	if (isDebugCamera_ == true)
-	{
-		DebugCameraUpdate();
-	}
-	else
-	{
-		CreateMatView();
-		ProjectiveProjection();
-	}
+	CreateMatView();
+	ProjectiveProjection();
+
+#ifdef _DEBUG
+	ImGui::Begin("Camera");
+	ImGui::Text("eye:%f,%f,%f", eye_.x, eye_.y, eye_.z);
+	ImGui::Text("target:%f,%f,%f", target_.x, target_.y, target_.z);
+	ImGui::Text("up:%f,%f,%f", up_.x, up_.y, up_.z);
+	ImGui::End();
+#endif // DEBUG
 }
 
 void NCamera::DebugCameraUpdate()
@@ -86,6 +86,14 @@ void NCamera::DebugCameraUpdate()
 
 	matView_ = MathUtil::MatViewLockTo(eye_, frontVec, up_);
 	ProjectiveProjection();
+
+#ifdef _DEBUG
+	ImGui::Begin("Camera");
+	ImGui::Text("eye:%f,%f,%f", eye_.x, eye_.y, eye_.z);
+	ImGui::Text("target:%f,%f,%f", target_.x, target_.y, target_.z);
+	ImGui::Text("up:%f,%f,%f", up_.x, up_.y, up_.z);
+	ImGui::End();
+#endif // DEBUG
 }
 
 void NCamera::CreateMatView()
@@ -96,21 +104,9 @@ void NCamera::CreateMatView()
 void NCamera::ProjectiveProjection()
 {
 	matProjection_ = MathUtil::PerspectiveProjection(
-		MathUtil::Degree2Radian(45.0f),
+		MathUtil::Degree2Radian(fov_),
 		(float)NWindows::kWin_width / NWindows::kWin_height,
 		nearZ_, farZ_);
-}
-
-void NCamera::ChangeIsDebugCamera()
-{
-	if (isDebugCamera_)
-	{
-		isDebugCamera_ = false;
-	}
-	else
-	{
-		isDebugCamera_ = true;
-	}
 }
 
 void NCamera::SetNearFar(const float nearZ, const float farZ)

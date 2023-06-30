@@ -32,7 +32,7 @@ class Emitter2D
 		uint32_t num_frame = 0;
 
 		//イージング用タイマー
-		NEasing::easeTimer timer = 1.0f;
+		NEasing::EaseTimer timer = 1.0f;
 
 		//距離
 		float radius = 0;
@@ -56,7 +56,7 @@ private:
 	//拡縮用倍率
 	float scaling_;
 	//拡縮用タイマー
-	NEasing::easeTimer scalingTimer_ = 1.0f;
+	NEasing::EaseTimer scalingTimer_ = 1.0f;
 	//パーティクル出すタイミング用タイマー
 	uint32_t particleTimer_ = 0;
 	//何フレームに一回パーティクル追加するか

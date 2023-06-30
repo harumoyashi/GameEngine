@@ -26,36 +26,38 @@ private:
 	NVector3 rot_ = { 0,0,0 };				//カメラの回転角
 	float nearZ_ = 0.1f;
 	float farZ_ = 1000.0f;
+	float fov_ = 45.0f;
 
-	//デバッグカメラか否か
-	bool isDebugCamera_ = false;
-	float distance = 20.0f;
-
-public:
-	void Reset();
-	void Update();
-	//デバッグカメラ用の移動処理
-	void DebugCameraUpdate();
-
+private:
 	//ビュー変換行列作成
 	void CreateMatView();
 	//射影投影変換//
 	void ProjectiveProjection();
 
-	//デバッグカメラモード切り替え
-	void ChangeIsDebugCamera();
+public:
+	void Init();
+	void Update();
+	//デバッグカメラ用の移動処理
+	void DebugCameraUpdate();
 
 	//セッター
 	inline void SetEye(const NVector3& eye) { eye_ = eye; }
 	inline void SetTarget(const NVector3& target) { target_ = target; }
-	inline void SetUp(const NVector3& up) { up_ = up; }
+	inline void SetUpVec(const NVector3& up) { up_ = up; }
 	inline void SetRot(const NVector3& rot) { rot_ = rot; }
+	inline void SetMatView(const NMatrix4& mat) { matView_ = mat; }
 	void SetNearFar(const float nearZ, const float farZ);
+	void SetFov(const float fov) { fov_ = fov; }
 
 	//ゲッター
 	inline const NMatrix4& GetMatProjection()const { return matProjection_; }
 	inline const NMatrix4& GetMatView()const { return matView_; }
-	inline const bool GetIsCamera()const { return isDebugCamera_; }
 	//eye座標取得
 	inline const NVector3& GetPos()const { return eye_; }
+	//注視点座標取得
+	inline const NVector3& GetTarget()const { return target_; }
+	//上ベクトル取得
+	inline const NVector3& GetUpVec()const { return up_; }
+
+	inline const float GetFov()const { return fov_; }
 };

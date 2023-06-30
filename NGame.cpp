@@ -57,6 +57,7 @@ void NGame::Update()
 	NImGuiManager::GetInstance()->Begin();
 	//ImGui::ShowDemoWindow();
 
+#ifdef _DEBUG
 	ImGui::Begin("PostEffectType");
 	static int postEffectNum;
 	const char* items[] = {"NoEffect","GaussianBlur","RadianBlur","CG4" };
@@ -99,7 +100,7 @@ void NGame::Update()
 	}
 	
 	ImGui::End();
-
+#endif // DEBUG
 
 	NFramework::Update();
 #pragma region ウィンドウメッセージ処理

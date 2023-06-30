@@ -94,7 +94,7 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 		//ƒtƒ@ƒCƒ‹–¼
 		NVector3 eye = { (float)transform["translation"][1],(float)transform["translation"][2],-(float)transform["translation"][0] };
 		NVector3 rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
-		levelData->camera.Reset();
+		levelData->camera.Init();
 		levelData->camera.sNCamera->SetEye(eye);
 		levelData->camera.sNCamera->SetRot(rot);
 	}

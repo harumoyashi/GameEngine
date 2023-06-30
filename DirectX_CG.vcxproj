@@ -104,6 +104,7 @@
     <ClInclude Include="IScene.h" />
     <ClInclude Include="NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="NCameraManager.h" />
     <ClInclude Include="NCollider.h" />
     <ClInclude Include="NEasing.h" />
     <ClInclude Include="NLevelDataLoader.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="NAssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
+    <ClCompile Include="NCameraManager.cpp" />
     <ClCompile Include="NCollider.cpp" />
     <ClCompile Include="NEasing.cpp" />
     <ClCompile Include="NLevelDataLoader.cpp" />
