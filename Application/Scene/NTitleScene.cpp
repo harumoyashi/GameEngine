@@ -97,8 +97,8 @@ void NTitleScene::Init()
 #pragma endregion
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init(true,false,true,false);
-	lightGroup_->SetSpotLightColor({0,0,1});
+	lightGroup_->Init(true,false,false,false);
+	//lightGroup_->SetSpotLightColor({0,0,1});
 	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());

@@ -15,7 +15,7 @@ void NSpotLight::Init()
 	cbSpotLight->Init();
 
 	SetActive(true);
-	lightdir_ = { 1,0,0 };
+	lightdir_ = { 0,-1,0 };
 	lightpos_ = { 0,3,0 };
 }
 
