@@ -151,11 +151,15 @@ void NTitleScene::Update()
 	assimpModel_.Update();
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
 		NSceneManager::ChangeScene<NGameScene>();
 	}
 
+}
+
+void NTitleScene::DrawBack3D()
+{
 }
 
 void NTitleScene::DrawBackSprite()

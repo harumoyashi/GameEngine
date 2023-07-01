@@ -17,7 +17,7 @@ private:
 	//------------------------ 移動関連 ------------------------//
 	bool isMove_;				//動いてるかフラグ
 	NVector2 moveVelo_;			//移動量
-	float moveSpeed_ = 0.5f;	//移動速度
+	float moveSpeed_;			//移動速度
 
 	float angle_;				//回転角度
 

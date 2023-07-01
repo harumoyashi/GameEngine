@@ -74,19 +74,24 @@ void NGameScene::Update()
 	lightGroup_->Update();
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
 		NSceneManager::ChangeScene<NTitleScene>();
 	}
 }
 
+void NGameScene::DrawBack3D()
+{
+	Field::GetInstance()->DrawObj();
+}
+
 void NGameScene::DrawBackSprite()
 {
+	Field::GetInstance()->DrawSprite();
 }
 
 void NGameScene::Draw3D()
 {
-	Field::GetInstance()->Draw();
 	BulletManager::GetInstance()->Draw();
 	Player::GetInstance()->Draw();
 }

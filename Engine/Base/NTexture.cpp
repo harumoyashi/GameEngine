@@ -16,6 +16,7 @@ void NTextureManager::Init()
 	LoadTexture("Resources/itiro_kimegao.png", "itiro");
 	LoadTexture("Resources/hamutaro.jpg", "hamu");
 	LoadTexture("Resources/mario.jpg", "mario");
+	LoadTexture("Resources/start.png", "start");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

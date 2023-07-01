@@ -29,6 +29,8 @@ void Player::Init()
 	isGodmode_ = false;
 	isDraw_ = true;
 
+	moveSpeed_ = 0.05f;
+
 	godmodeTimer_.Reset();
 	godmodeTimer_.SetMaxTimer(120.0f);
 
@@ -66,6 +68,8 @@ void Player::Move()
 
 	//スティック移動
 	moveVelo_ = NInput::GetStick();
+	moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
+	moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
 
 	if (moveVelo_.Length() > 0.0f)	//入力されてたら
 	{

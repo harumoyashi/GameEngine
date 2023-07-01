@@ -61,6 +61,8 @@ public:
 	void LoadResources();
 	void Init() override;
 	void Update() override;
+	//背景3Dオブジェクト
+	void DrawBack3D()override;
 	//背景スプライト
 	void DrawBackSprite()override;
 	//3Dオブジェクト

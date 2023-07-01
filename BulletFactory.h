@@ -8,8 +8,8 @@
 class BulletFactory
 {
 private:
-	LineBullet line_;
-	SideBullet side_;
+	LineBullet line_;	//í èÌíe
+	SideBullet side_;	//ÉTÉCÉhíe
 
 public:
 	static BulletFactory* GetInstance();

@@ -32,11 +32,12 @@ void NSceneManager::Init()
 void NSceneManager::Update()
 {
 	currentScene_->Update();
-
 }
 
 void NSceneManager::Draw()
 {
+	NObj3d::CommonBeginDraw();
+	currentScene_->DrawBack3D();
 	NSprite::CommonBeginDraw();
 	currentScene_->DrawBackSprite();
 	NObj3d::CommonBeginDraw();
