@@ -106,6 +106,9 @@
     <Filter Include="Application\ソースファイル\Bullet">
       <UniqueIdentifier>{588afa0f-66d5-4842-9a44-608e56bea8bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\ソースファイル\Field">
+      <UniqueIdentifier>{7c59b157-9882-4c9b-9f09-e11146a5b6f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -294,6 +297,9 @@
     <ClInclude Include="SideBullet.h">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -478,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="SideBullet.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Application\ソースファイル\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

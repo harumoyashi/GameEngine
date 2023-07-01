@@ -21,6 +21,7 @@ void Player::Init()
 {
 	obj_->position_ = {};
 	obj_->scale_ = 1.0f;
+	obj_->color_.SetColor255(240, 30, 20, 255);	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
 
 	collisionRadius_ = obj_->scale_.x;
 
@@ -34,10 +35,10 @@ void Player::Init()
 	isMove_ = false;
 
 	//’e‚ÌƒŒƒxƒ‹‚½‚¿
-	lineLevel = 1;
-	sideLevel = 0;
-	wideLevel = 0;
-	roketLevel = 0;
+	lineLevel_ = 1;
+	sideLevel_ = 0;
+	wideLevel_ = 0;
+	roketLevel_ = 0;
 }
 
 void Player::Update()
@@ -97,14 +98,20 @@ void Player::Move()
 
 void Player::Shot()
 {
-	if (lineLevel > 0)
+	BulletFactory::GetInstance()->Update();
+
+	if (lineLevel_ > 0)
 	{
-		BulletFactory::GetInstance()->Create(IBullet::BulletType::LineBullet,obj_->position_);
+		BulletFactory::GetInstance()->
+			Create(IBullet::BulletType::LineBullet,
+				obj_->position_ + NVector3(0, obj_->scale_.y, 0), lineLevel_);
 	}
 
-	if (sideLevel > 0)
+	if (sideLevel_ > 0)
 	{
-		BulletFactory::GetInstance()->Create(IBullet::BulletType::SideBullet, obj_->position_);
+		BulletFactory::GetInstance()->
+			Create(IBullet::BulletType::SideBullet,
+				obj_->position_ + NVector3(0, obj_->scale_.y, 0), sideLevel_);
 	}
 
 	/*if (wideLevel)

@@ -24,7 +24,7 @@ protected:
 	float collisionRadius_;		//コライダーの半径
 	SphereCollider collider_;	//弾の当たり判定
 
-	NTimer lifeTimer_;			//生存時間
+	NTimer lifeTimer_;			//生存時間(フレーム数なので注意)
 
 	float damage_;				//与えるダメージ量
 

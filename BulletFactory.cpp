@@ -1,6 +1,4 @@
 #include "BulletFactory.h"
-#include "LineBullet.h"
-#include "SideBullet.h"
 
 BulletFactory* BulletFactory::GetInstance()
 {
@@ -8,17 +6,30 @@ BulletFactory* BulletFactory::GetInstance()
 	return &instance;
 }
 
-void BulletFactory::Create(IBullet::BulletType type, NVector3 pos)
+void BulletFactory::Update()
 {
-	BulletManager::GetInstance()->bullets_.emplace_back();
+	line_.LineUpdate();
+	//side_.Update();
+}
+
+void BulletFactory::Create(IBullet::BulletType type, NVector3 pos, uint32_t level)
+{
 	switch (type)
 	{
 	case IBullet::BulletType::LineBullet:
-		BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
-		BulletManager::GetInstance()->bullets_.back()->Generate(pos);
+		if (line_.GetIsCanShot())
+		{
+			BulletManager::GetInstance()->bullets_.emplace_back();
+			line_.SetLevel(level);
+			BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
+			BulletManager::GetInstance()->bullets_.back()->Generate(pos);
+			line_.SetIsCanShot(false);
+			line_.ReSetShotCoolTimer();
+		}
 
 		break;
 	case IBullet::BulletType::SideBullet:
+		BulletManager::GetInstance()->bullets_.emplace_back();
 		BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
 		BulletManager::GetInstance()->bullets_.back()->Generate(pos);
 

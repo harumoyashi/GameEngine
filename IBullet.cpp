@@ -2,7 +2,7 @@
 
 IBullet::IBullet() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(1.0f),
-	isAlive_(true), collisionRadius_(1.0f), lifeTimer_(50.0f), damage_(1)
+	isAlive_(true), collisionRadius_(1.0f), lifeTimer_(120.0f), damage_(1)
 {
 }
 

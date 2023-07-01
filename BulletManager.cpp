@@ -1,5 +1,8 @@
 #include "BulletManager.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 BulletManager* BulletManager::GetInstance()
 {
 	static BulletManager instance;
@@ -27,6 +30,14 @@ void BulletManager::Update()
 	{
 		bullet->Update();
 	}
+
+
+#ifdef _DEBUG
+	float bulNum = (float)bullets_.size();
+	ImGui::Begin("Bullets");
+	ImGui::Text("num:%f", bulNum);
+	ImGui::End();
+#endif
 }
 
 void BulletManager::Draw()

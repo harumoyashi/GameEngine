@@ -27,10 +27,10 @@ private:
 	NTimer godmodeTimer_;	//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
-	uint32_t lineLevel;		//通常弾のレベル
-	uint32_t sideLevel;		//横方向に出る弾のレベル
-	uint32_t wideLevel;		//左右に角度つけて出る弾のレベル
-	uint32_t roketLevel;	//ロケット弾のレベル
+	uint32_t lineLevel_;		//通常弾のレベル
+	uint32_t sideLevel_;		//横方向に出る弾のレベル
+	uint32_t wideLevel_;		//左右に角度つけて出る弾のレベル
+	uint32_t roketLevel_;		//ロケット弾のレベル
 
 public:
 	Player();
