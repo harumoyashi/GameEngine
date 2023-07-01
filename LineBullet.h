@@ -15,6 +15,7 @@ private:
 public:
 	LineBullet();
 
+	//通常弾専用アップデート
 	void LineUpdate();
 
 	//弾撃つまでの時間をリセット

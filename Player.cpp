@@ -36,7 +36,7 @@ void Player::Init()
 
 	//’e‚ÌƒŒƒxƒ‹‚½‚¿
 	lineLevel_ = 1;
-	sideLevel_ = 0;
+	sideLevel_ = 1;
 	wideLevel_ = 0;
 	roketLevel_ = 0;
 }

@@ -6,7 +6,7 @@ IBullet::IBullet() :
 {
 }
 
-void IBullet::Generate(const NVector3& pos)
+void IBullet::Generate(const NVector3& pos, const float moveAngle)
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel("Sphere");
@@ -15,6 +15,8 @@ void IBullet::Generate(const NVector3& pos)
 	obj_->color_ = NColor::kWhite;
 	collider_.centerPos = obj_->position_;
 	collider_.radius = collisionRadius_;
+
+	moveAngle_ = moveAngle;
 }
 
 void IBullet::Update()

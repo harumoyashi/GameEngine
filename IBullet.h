@@ -31,7 +31,7 @@ protected:
 public:
 	IBullet();
 	//¶¬
-	void Generate(const NVector3& pos);
+	void Generate(const NVector3& pos,const float moveAngle = 0.0f);
 	//XV
 	void Update();
 	//•`‰æ

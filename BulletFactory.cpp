@@ -9,7 +9,7 @@ BulletFactory* BulletFactory::GetInstance()
 void BulletFactory::Update()
 {
 	line_.LineUpdate();
-	//side_.Update();
+	side_.SideUpdate();
 }
 
 void BulletFactory::Create(IBullet::BulletType type, NVector3 pos, uint32_t level)
@@ -29,9 +29,17 @@ void BulletFactory::Create(IBullet::BulletType type, NVector3 pos, uint32_t leve
 
 		break;
 	case IBullet::BulletType::SideBullet:
-		BulletManager::GetInstance()->bullets_.emplace_back();
-		BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
-		BulletManager::GetInstance()->bullets_.back()->Generate(pos);
+		if (side_.GetIsCanShot())
+		{
+			for (size_t i = 0; i < side_.GetAllAtOnceNum(); i++)
+			{
+				BulletManager::GetInstance()->bullets_.emplace_back();
+				BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
+				BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(90.0f + 180.0f * i));
+			}
+			side_.SetIsCanShot(false);
+			side_.ReSetShotCoolTimer();
+		}
 
 		break;
 	default:

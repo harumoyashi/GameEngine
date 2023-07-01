@@ -2,7 +2,7 @@
 
 LineBullet::LineBullet()
 {
-    shotCoolTimer_ = 10.0f;      //’eŒ‚‚Â‚Ü‚Å‚ÌŽžŠÔ
+    shotCoolTimer_ = 8.0f;      //’eŒ‚‚Â‚Ü‚Å‚ÌŽžŠÔ
     isCanShot_ = true;			//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
     level_ = 1;                 //’e‚Ì‹­‰»ƒŒƒxƒ‹
     
