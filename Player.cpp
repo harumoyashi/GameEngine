@@ -68,6 +68,7 @@ void Player::Move()
 
 	//スティック移動
 	moveVelo_ = NInput::GetStick();
+	//イージング的な感じにして速度の可変明確に
 	moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
 	moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
 
