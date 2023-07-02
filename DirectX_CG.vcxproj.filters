@@ -136,6 +136,12 @@
     <Filter Include="リソース ファイル\sprite\sprite">
       <UniqueIdentifier>{141bdbc4-5a10-4709-b996-8cc5447d7a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{47bced0b-9cb1-4565-945b-4ef7b5f87b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\Particle">
+      <UniqueIdentifier>{3984eb9b-64a2-4e07-80a2-9c1331354d23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -300,9 +306,6 @@
     <ClInclude Include="NCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="NParticle2D.h">
-      <Filter>Engine\ヘッダー ファイル\2D</Filter>
-    </ClInclude>
     <ClInclude Include="NEasing.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -329,6 +332,12 @@
     </ClInclude>
     <ClInclude Include="Wave.h">
       <Filter>Application\ソースファイル\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticle3D.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticle2D.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -494,9 +503,6 @@
     <ClCompile Include="NCameraManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NParticle2D.cpp">
-      <Filter>Engine\ソース ファイル\2D</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Application\ソースファイル\Chara</Filter>
     </ClCompile>
@@ -520,6 +526,12 @@
     </ClCompile>
     <ClCompile Include="Wave.cpp">
       <Filter>Application\ソースファイル\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticle3D.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticle2D.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

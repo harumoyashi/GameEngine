@@ -160,6 +160,7 @@
     <ClInclude Include="NTimer.h" />
     <ClInclude Include="NUtil.h" />
     <ClInclude Include="NVector4.h" />
+    <ClInclude Include="NParticle3D.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RadialBlur.h" />
     <ClInclude Include="SideBullet.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="NTimer.cpp" />
     <ClCompile Include="NUtil.cpp" />
     <ClCompile Include="NVector4.cpp" />
+    <ClCompile Include="NParticle3D.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RadialBlur.cpp" />
     <ClCompile Include="SideBullet.cpp" />

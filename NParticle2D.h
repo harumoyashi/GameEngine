@@ -6,7 +6,7 @@
 
 class Emitter2D
 {
-	//ポータルに吸い込まれてく粒子1粒
+	//粒子1粒
 	struct Particle2D
 	{
 		//座標
