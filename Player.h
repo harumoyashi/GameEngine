@@ -50,21 +50,23 @@ public:
 
 	// ゲッター //
 	//座標取得
-	inline NVector3 GetPos() { return obj_->position_; }
+	inline NVector3 GetPos()const { return obj_->position_; }
+	//前方座標取得
+	inline float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
 	//大きさ取得
-	inline NVector3 GetScale() { return obj_->scale_; }
+	inline NVector3 GetScale()const { return obj_->scale_; }
 	//コライダーの半径取得
-	inline float GetCollisionRadius() { return collisionRadius_; }
+	inline float GetCollisionRadius()const { return collisionRadius_; }
 	//無敵状態取得
-	inline bool GetIsGodmode() { return isGodmode_; }
+	inline bool GetIsGodmode()const { return isGodmode_; }
 	//生きてるかフラグ取得
-	inline bool GetIsAlive() { return isAlive_; }
+	inline bool GetIsAlive()const { return isAlive_; }
 	//動けるかフラグ取得
-	inline bool GetIsMove() { return isMove_; }
+	inline bool GetIsMove()const { return isMove_; }
 	//コライダー取得
 	inline const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
-	inline NVector2 GetMoveVelo() { return moveVelo_; }
+	inline NVector2 GetMoveVelo()const { return moveVelo_; }
 
 	// セッター //
 	//座標設定
@@ -72,9 +74,11 @@ public:
 	//大きさ設定
 	inline void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
 	//無敵状態設定
-	inline void SetIsGodmode(const bool& isGodmode) { isGodmode_ = isGodmode; }
+	inline void SetIsGodmode(const bool isGodmode) { isGodmode_ = isGodmode; }
+	//生きてるかフラグ設定
+	inline void SetIsAlive(const bool isAlive) { isAlive_ = isAlive; }
 	//コライダーの半径設定
-	inline void SetCollisionRadius(const float& collisionRadius) { collisionRadius_ = collisionRadius; }
+	inline void SetCollisionRadius(const float collisionRadius) { collisionRadius_ = collisionRadius; }
 	//動けるかフラグ設定
-	inline void SetIsMove(const bool& isMove) { isMove_ = isMove; }
+	inline void SetIsMove(const bool isMove) { isMove_ = isMove; }
 };

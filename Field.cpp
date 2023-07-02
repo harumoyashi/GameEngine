@@ -9,8 +9,8 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePos_ = kStartPos;
-	isStart = false;
+	linePosZ_ = kStartPosZ;
+	isStart_ = false;
 	startOffset_ = 5.0f;
 
 #pragma region オブジェクトの生成
@@ -33,12 +33,12 @@ void Field::Init()
 
 	obj_[(uint32_t)ObjType::Line]->SetModel("plane");
 	obj_[(uint32_t)ObjType::Line]->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
-	obj_[(uint32_t)ObjType::Line]->position_ = { 0,0, linePos_ };
+	obj_[(uint32_t)ObjType::Line]->position_ = { 0,0, linePosZ_ };
 
 	obj_[(uint32_t)ObjType::Start]->SetModel("plane");
 	obj_[(uint32_t)ObjType::Start]->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
-	obj_[(uint32_t)ObjType::Start]->scale_ = { 3.0f,1.0f,0.5f };	//縦横比6:1
-	obj_[(uint32_t)ObjType::Start]->position_ = { startOffset_,0, linePos_ - 1.0f };
+	obj_[(uint32_t)ObjType::Start]->scale_ = { 1.5f,1.0f,0.25f };	//縦横比6:1
+	obj_[(uint32_t)ObjType::Start]->position_ = { startOffset_,0, linePosZ_ - 0.5f };
 #pragma endregion
 }
 
@@ -51,21 +51,21 @@ void Field::Update()
 	}
 
 	obj_[(uint32_t)ObjType::Line]->position_ =
-	{ Player::GetInstance()->GetPos().x + slidePos_,0, linePos_ };
+	{ Player::GetInstance()->GetPos().x + slidePos_,0, linePosZ_ };
 	if (slideTimer_.GetEnd() == false)
 	{
 		obj_[(uint32_t)ObjType::Start]->position_ =
-		{ Player::GetInstance()->GetPos().x + startOffset_ + slidePos_,0, linePos_ - 1.0f };
+		{ Player::GetInstance()->GetPos().x + startOffset_ + slidePos_,0, linePosZ_ - 0.5f };
 	}
 
 	//線を超えたらスタートした判定trueに
-	if (kStartPos <= Player::GetInstance()->GetPos().z)
+	if (kStartPosZ <= Player::GetInstance()->GetPos().z)
 	{
-		isStart = true;
+		isStart_ = true;
 	}
 
 	//スタートしたなら
-	if (isStart)
+	if (isStart_)
 	{
 		if (slideTimer_.GetStarted() == false)
 		{
@@ -87,7 +87,7 @@ void Field::Update()
 	}
 }
 
-void Field::DrawObj()
+void Field::Draw()
 {
 	//床だけタイリングする
 	NObj3d::CommonBeginDraw(true);
@@ -98,8 +98,4 @@ void Field::DrawObj()
 	{
 		obj->Draw();
 	}
-}
-
-void Field::DrawSprite()
-{
 }

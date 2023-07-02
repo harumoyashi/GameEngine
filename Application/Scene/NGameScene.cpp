@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "BulletManager.h"
 #include "Field.h"
+#include "Wave.h"
 
 NGameScene* NGameScene::GetInstance()
 {
@@ -32,6 +33,7 @@ void NGameScene::Init()
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
+	Wave::GetInstance()->Init();
 
 #pragma region オブジェクトの初期値設定
 	
@@ -60,6 +62,12 @@ void NGameScene::Update()
 #pragma endregion
 	BulletManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
+	Wave::GetInstance()->Update();
+
+	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+	{
+		Player::GetInstance()->SetIsAlive(false);
+	}
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -73,12 +81,12 @@ void NGameScene::Update()
 
 void NGameScene::DrawBack3D()
 {
-	Field::GetInstance()->DrawObj();
+	Field::GetInstance()->Draw();
+	Wave::GetInstance()->Draw();
 }
 
 void NGameScene::DrawBackSprite()
 {
-	Field::GetInstance()->DrawSprite();
 }
 
 void NGameScene::Draw3D()

@@ -45,17 +45,23 @@ void Player::Init()
 
 void Player::Update()
 {
-	Move();
+	if (isAlive_)
+	{
+		Move();
 		Shot();
+	}
 
 	obj_->Update();
 }
 
 void Player::Draw()
 {
-	if (isDraw_)
+	if (isAlive_)	//‚Ù‚ñ‚Æ‚Íˆá‚¤‚¯‚Çˆê’U‚í‚©‚è‚â‚·‚¢‚Ì‚Å
 	{
-		obj_->Draw();
+		if (isDraw_)
+		{
+			obj_->Draw();
+		}
 	}
 }
 
