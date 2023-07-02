@@ -9,7 +9,8 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePos_ = -startPos_ * NWindows::kWin_height;
+	linePos_ = -kStartPos * NWindows::kWin_height;
+	isStart = false;
 #pragma region オブジェクトの生成,設定
 	obj_ = std::make_unique<NObj3d>();
 	obj_->Init();
@@ -37,7 +38,7 @@ void Field::Init()
 
 void Field::Update()
 {
-	linePos_ = -startPos_ * NWindows::kWin_height +
+	linePos_ = -kStartPos * NWindows::kWin_height +
 		Player::GetInstance()->GetPos().z * NWindows::kWin_height +
 		NWindows::kWin_height / 2.0f;
 
@@ -47,8 +48,34 @@ void Field::Update()
 	{
 		sprite->Update();
 	}
-	sprites_[(uint32_t)SpriteType::Line]->SetPos(0, linePos_);
-	sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f, linePos_ + 10.0f);
+
+	sprites_[(uint32_t)SpriteType::Line]->SetPos(0 + slidePos_, linePos_);
+	sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f + slidePos_, linePos_ + 10.0f);
+
+	//線を超えたらスタートした判定trueに
+	if (kStartPos <= Player::GetInstance()->GetPos().z)
+	{
+		isStart = true;
+	}
+
+	//スタートしたなら
+	if (isStart)
+	{
+		if (slideTimer_.GetStarted() == false)
+		{
+			slideTimer_.Start();
+		}
+
+		slideTimer_.Update();
+
+		if (slideTimer_.GetEnd())
+		{
+			//画面外まで行ったならスプライト消す
+			sprites_.erase(sprites_.begin() + (uint32_t)SpriteType::Start);
+		}
+		//画面左外までぶっ飛ばす
+		slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::kWin_width, slideTimer_.GetTimeRate());
+	}
 }
 
 void Field::DrawObj()

@@ -131,7 +131,6 @@ void Emitter2D::StartScalingTimer(bool isRun)
 	}
 	else
 	{
-
 		scalingTimer_.ReverseStart();	//設定と同時にタイマーもスタート
 	}
 }

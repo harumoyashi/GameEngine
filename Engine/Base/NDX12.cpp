@@ -293,7 +293,8 @@ void NDX12::UpdateFixFPX(const float divideFrameRate)
 	const std::chrono::microseconds kMinCheckTime(uint64_t(1000000.0f / (kFPS + 5.0f / divideFrameRate)));
 
 	//デルタタイム記録
-	deltaTime_ = (1000000.0f / (kFPS / divideFrameRate));
+	//1秒 / (fps / フレーム数)
+	deltaTime_ = 1.0f / (kFPS / divideFrameRate);
 
 	//現在の時間を取得する
 	std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
