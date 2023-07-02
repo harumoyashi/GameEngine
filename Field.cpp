@@ -12,7 +12,7 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePosZ_ = startPosZ_;
+	linePosZ_ = kStartPosZ;
 	isStart_ = false;
 	startOffset_ = 5.0f;
 
@@ -62,7 +62,7 @@ void Field::Update()
 	}
 
 	//線を超えたらスタートした判定trueに
-	if (startPosZ_ <= Player::GetInstance()->GetPos().z)
+	if (linePosZ_ <= Player::GetInstance()->GetPos().z)
 	{
 		isStart_ = true;
 	}
@@ -90,9 +90,10 @@ void Field::Update()
 	}
 
 	//リリースでもいじりたいからifdefで囲ってない
-	/*ImGui::Begin("FieldParameter");
-	ImGui::SliderFloat("StartPosZ", &startPosZ_, 0.0f, 100.0f);
-	ImGui::End();*/
+	ImGui::Begin("FieldParameter");
+	//1F~180Fまでの間にとどめる
+	ImGui::SliderFloat("LinePosZ_", &linePosZ_, 1.0f, 180.0f);
+	ImGui::End();
 }
 
 void Field::Draw()
