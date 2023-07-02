@@ -74,6 +74,10 @@ public:
 	void LoadVertShaderRadial();
 	//ラジアルブラー用ピクセルシェーダの読み込みとコンパイル
 	void LoadPixelShaderRadial();
+	//タイル用頂点シェーダーの読み込みとコンパイル
+	void LoadVertShaderTile();
+	//タイル用ピクセルシェーダの読み込みとコンパイル
+	void LoadPixelShaderTile();
 #pragma endregion
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
@@ -111,7 +115,7 @@ public:
 #pragma endregion
 #pragma region テクスチャサンプラー
 	//テクスチャサンプラー設定
-	void SetTexSampler();
+	void SetTexSampler(const bool isTiling);
 #pragma endregion
 #pragma region パイプライン生成
 	//3Dオブジェクト用パイプライン生成
@@ -124,6 +128,8 @@ public:
 	PipelineSet CreatePipelineGaussian();
 	//ラジアルブラー用パイプライン生成
 	PipelineSet CreatePipelineRadial();
+	//タイル用パイプライン生成
+	PipelineSet CreatePipelineTile();
 #pragma endregion
 
 private:
@@ -134,6 +140,7 @@ private:
 class PipeLineManager
 {
 private:
+	// パイプライン //
 	NGPipeline pipeline3d_;
 	NGPipeline pipelineSprite_;
 	NGPipeline pipelinePostEffect_;
@@ -141,12 +148,17 @@ private:
 	NGPipeline pipelineGaussian_;	//ガウシアンブラー用
 	NGPipeline pipelineRadial_;		//ラジアルブラー用
 
+	NGPipeline pipelineTile_;		//タイル用
+
+	// パイプラインセット //
 	PipelineSet pipelineSet3d_;
 	PipelineSet pipelineSetSprite_;
 	PipelineSet pipelineSetPostEffect_;
 
 	PipelineSet pipelineSetGaussian_;	//ガウシアンブラー用
 	PipelineSet pipelineSetRadial_;		//ラジアルブラー用
+
+	PipelineSet pipelineSetTile_;		//タイル用
 
 public:
 	PipeLineManager();

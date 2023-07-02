@@ -259,6 +259,19 @@ NVector3 NMatrix4::ToEuler() const
     return euler;
 }
 
+NVector3 NMatrix4::GetScale()
+{
+    NVector3 scale = {};
+
+    float x = sqrtf(powf(m[0][0], 2) + powf(m[0][1], 2) + powf(m[0][2], 2));
+    float y = sqrtf(powf(m[1][0], 2) + powf(m[1][1], 2) + powf(m[1][2], 2));
+    float z = sqrtf(powf(m[2][0], 2) + powf(m[2][1], 2) + powf(m[2][2], 2));
+
+    scale = { x,y,z };
+
+    return scale;
+}
+
 const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
 {
     NMatrix4 result = m1;

@@ -108,6 +108,8 @@ void NObj3d::UpdateMatrix()
 
 	// 定数バッファへデータ転送
 	TransferMatrix();
+
+	NVector3 s = matWorld_.GetScale();
 }
 
 void NObj3d::TransferMatrix()
@@ -137,11 +139,20 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
-void NObj3d::CommonBeginDraw()
+void NObj3d::CommonBeginDraw(const bool isTiling)
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("3d").pipelineState_.Get());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("3d").rootSig_.entity_.Get());
+	if (isTiling)
+	{
+		// パイプラインステートとルートシグネチャの設定コマンド
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("Tile").pipelineState_.Get());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("Tile").rootSig_.entity_.Get());
+	}
+	else
+	{
+		// パイプラインステートとルートシグネチャの設定コマンド
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("3d").pipelineState_.Get());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("3d").rootSig_.entity_.Get());
+	}
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

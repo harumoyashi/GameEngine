@@ -17,6 +17,7 @@ void NTextureManager::Init()
 	LoadTexture("Resources/hamutaro.jpg", "hamu");
 	LoadTexture("Resources/mario.jpg", "mario");
 	LoadTexture("Resources/start.png", "start");
+	LoadTexture("Resources/timerocker_tile.png", "tile");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

@@ -68,7 +68,7 @@ public:
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
-	static void CommonBeginDraw();
+	static void CommonBeginDraw(const bool isTiling = false);
 	//描画
 	void Draw();
 	void SetSRVHeap();

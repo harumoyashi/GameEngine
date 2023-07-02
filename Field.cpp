@@ -15,9 +15,11 @@ void Field::Init()
 	obj_ = std::make_unique<NObj3d>();
 	obj_->Init();
 	obj_->SetModel("cube");
+	obj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
 	obj_->color_.SetColor255(5, 5, 5, 255);
-	obj_->scale_ = { 100.0f,0.1f,5000.0f };
-	obj_->position_ = { 0,1.0f,obj_->scale_.z - 100.0f };
+	obj_->scale_ = { 100.0f,0.01f,5000.0f };
+	obj_->position_ = { 0,0.0f,obj_->scale_.z - 100.0f };
+	obj_->UpdateMatrix();
 #pragma endregion
 #pragma region スプライトの生成
 	for (uint32_t i = 0; i < (uint32_t)SpriteType::MaxSize; i++)
@@ -86,7 +88,10 @@ void Field::Update()
 
 void Field::DrawObj()
 {
+	//これだけタイリングする
+	NObj3d::CommonBeginDraw(true);
 	obj_->Draw();
+	NObj3d::CommonBeginDraw(false);
 }
 
 void Field::DrawSprite()

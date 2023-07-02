@@ -292,6 +292,64 @@ void NGPipeline::LoadPixelShaderRadial()
 	}
 }
 
+void NGPipeline::LoadVertShaderTile()
+{
+	HRESULT result;
+
+	// 頂点シェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/TileVS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&vsBlob_, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
+void NGPipeline::LoadPixelShaderTile()
+{
+	HRESULT result;
+
+	// ピクセルシェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		L"Resources/shaders/TilePS.hlsl", // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&psBlob, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
 void NGPipeline::SetVertLayout3d()
 {
 	// 頂点レイアウト
@@ -499,10 +557,18 @@ void NGPipeline::CreatePS()
 	assert(SUCCEEDED(result));
 }
 
-void NGPipeline::SetTexSampler()
+void NGPipeline::SetTexSampler(const bool isTiling)
 {
-	samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//横繰り返ししない（タイリング）
-	samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//縦繰り返ししない（タイリング）
+	if (isTiling)
+	{
+		samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//横繰り返しする（タイリング）
+		samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//縦繰り返しする（タイリング）
+	}
+	else
+	{
+		samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//横繰り返ししない（タイリングなし）
+		samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;					//縦繰り返ししない（タイリングなし）
+	}
 	samplerDesc_.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;					//奥行繰り返し（タイリング）
 	samplerDesc_.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ボーダーの時は黒
 	samplerDesc_.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;					//全てリニア補間
@@ -532,7 +598,7 @@ PipelineSet NGPipeline::CreatePipeline3d()
 	SetDepth(true);
 
 	//テクスチャサンプラーの設定
-	SetTexSampler();
+	SetTexSampler(false);
 
 	//ルートシグネチャ
 	//テクスチャ1個、行列、マテリアル、色、光源
@@ -564,7 +630,7 @@ PipelineSet NGPipeline::CreatePipelineSprite()
 	SetDepth(false);
 
 	//テクスチャサンプラーの設定
-	SetTexSampler();
+	SetTexSampler(false);
 
 	//ルートシグネチャ
 	//テクスチャ1個、行列、マテリアル、色
@@ -596,7 +662,7 @@ PipelineSet NGPipeline::CreatePipelinePostEffect()
 	SetDepth(false);
 
 	//テクスチャサンプラーの設定
-	SetTexSampler();
+	SetTexSampler(false);
 
 	//ルートシグネチャ
 	//テクスチャ2個、行列、色
@@ -628,7 +694,7 @@ PipelineSet NGPipeline::CreatePipelineGaussian()
 	SetDepth(false);
 
 	//テクスチャサンプラーの設定
-	SetTexSampler();
+	SetTexSampler(false);
 
 	//ルートシグネチャ
 	//テクスチャ2個、行列、色
@@ -660,11 +726,43 @@ PipelineSet NGPipeline::CreatePipelineRadial()
 	SetDepth(false);
 
 	//テクスチャサンプラーの設定
-	SetTexSampler();
+	SetTexSampler(false);
 
 	//ルートシグネチャ
 	//テクスチャ2個、行列、色
 	SetRootSignature(2, 2);
+
+	//パイプラインステート生成
+	CreatePS();
+
+	return pipelineSet_;
+}
+
+PipelineSet NGPipeline::CreatePipelineTile()
+{
+	//シェーダー
+	LoadVertShaderTile();
+	LoadPixelShaderTile();
+
+	//頂点レイアウト設定
+	SetVertLayout3d();
+
+	//パイプラインステート
+	SetShader();
+	SetRasterizer(true);
+	SetBlend(true);
+	SetInputLayout(true);
+	SetTopology();
+	SetRenderTarget(2);
+	SetAntiAliasing();
+	SetDepth(true);
+
+	//テクスチャサンプラーの設定
+	SetTexSampler(true);
+
+	//ルートシグネチャ
+	//テクスチャ1個、行列、マテリアル、色、光源
+	SetRootSignature(1, 4);
 
 	//パイプラインステート生成
 	CreatePS();
@@ -693,6 +791,7 @@ void PipeLineManager::Init()
 	pipelineSetPostEffect_ = pipelinePostEffect_.CreatePipelinePostEffect();
 	pipelineSetGaussian_ = pipelineGaussian_.CreatePipelineGaussian();
 	pipelineSetRadial_ = pipelineRadial_.CreatePipelineRadial();
+	pipelineSetTile_ = pipelineTile_.CreatePipelineTile();
 }
 
 const PipelineSet& PipeLineManager::GetPipelineSet(std::string name) const
@@ -716,6 +815,10 @@ const PipelineSet& PipeLineManager::GetPipelineSet(std::string name) const
 	else if (name == "Radial")
 	{
 		return pipelineSetRadial_;
+	}
+	else if (name == "Tile")
+	{
+		return pipelineSetTile_;
 	}
 
 	//もし該当する名前がなければ異常終了

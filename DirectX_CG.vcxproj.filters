@@ -109,6 +109,33 @@
     <Filter Include="Application\ソースファイル\Field">
       <UniqueIdentifier>{7c59b157-9882-4c9b-9f09-e11146a5b6f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\obj">
+      <UniqueIdentifier>{8ff55fe5-176d-44f8-9ba2-185f3da2bbe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\sprite">
+      <UniqueIdentifier>{cc60bcea-6d9b-461e-ac04-0544fe1b9872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect">
+      <UniqueIdentifier>{ca48c12f-4a6d-41f2-8e62-e435e8cdf6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\CG4">
+      <UniqueIdentifier>{58c26aaf-30c2-4394-9bb3-19e91521be0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\Gaussian">
+      <UniqueIdentifier>{1596664a-5d66-4dbf-80df-c4885d265d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\Radial">
+      <UniqueIdentifier>{52375eaa-d5bb-4020-a8df-ae8e0e208565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\obj\obj">
+      <UniqueIdentifier>{c0f97d3d-19b3-488e-a565-762dadf75518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\obj\Tile">
+      <UniqueIdentifier>{9a82e3f0-22aa-41f0-b5da-c1f47280c920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\sprite\sprite">
+      <UniqueIdentifier>{141bdbc4-5a10-4709-b996-8cc5447d7a96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -493,21 +520,24 @@
     <None Include="Resources\shaders\Basic.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resources\shaders\Sprite.hlsli">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="Resources\shaders\Obj.hlsli">
-      <Filter>リソース ファイル</Filter>
-    </None>
     <None Include="packages.config" />
-    <None Include="Resources\shaders\GaussianBlur.hlsli">
-      <Filter>リソース ファイル</Filter>
-    </None>
     <None Include="Resources\shaders\CG4.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
+    </None>
+    <None Include="Resources\shaders\GaussianBlur.hlsli">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
     </None>
     <None Include="Resources\shaders\RadialBlur.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
+    </None>
+    <None Include="Resources\shaders\Obj.hlsli">
+      <Filter>リソース ファイル\obj\obj</Filter>
+    </None>
+    <None Include="Resources\shaders\Tile.hlsli">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </None>
+    <None Include="Resources\shaders\Sprite.hlsli">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -517,35 +547,41 @@
     <FxCompile Include="Resources\shaders\BasicVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\ObjVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\ObjPS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\shaders\CG4PS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\CG4VS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\RadialBlurPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\RadialBlurVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ObjVS.hlsl">
+      <Filter>リソース ファイル\obj\obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ObjPS.hlsl">
+      <Filter>リソース ファイル\obj\obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\TilePS.hlsl">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\TileVS.hlsl">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
