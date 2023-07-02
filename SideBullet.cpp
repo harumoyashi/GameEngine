@@ -1,4 +1,8 @@
 #include "SideBullet.h"
+#include "Player.h"
+
+#include "NImGuiManager.h"
+#include "imgui.h"
 
 SideBullet::SideBullet()
 {
@@ -11,9 +15,18 @@ SideBullet::SideBullet()
 
 void SideBullet::SideUpdate()
 {
-    shotCoolTimer_.Update();
+    SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+
+    shotCoolTimer_.Update(elapseSpeed_);
     if (shotCoolTimer_.GetisTimeOut())
     {
         isCanShot_ = true;
     }
+
+#ifdef _DEBUG
+    ImGui::Begin("SideBullet");
+    ImGui::Text("elapseSpeed:%f", elapseSpeed_);
+    ImGui::Text("shotCoolTimer:%f", shotCoolTimer_.GetTimeRate());
+    ImGui::End();
+#endif
 }

@@ -30,6 +30,7 @@ public:
 	inline uint32_t GetLevel() const { return level_; }
 	//一度に撃つ弾の数取得	
 	inline uint32_t GetAllAtOnceNum() const { return allAtOnceNum_; }
+	inline float GetShotCoolTimer() const { return shotCoolTimer_.GetTimeRate(); }
 
 	// セッター //
 	//撃てるかフラグ設定

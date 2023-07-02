@@ -1,8 +1,9 @@
 #include "IBullet.h"
+#include "Player.h"
 
 IBullet::IBullet() :
-	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(1.0f),
-	isAlive_(true), collisionRadius_(1.0f), lifeTimer_(120.0f), damage_(1)
+	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(1.0f), isAlive_(true),
+	collisionRadius_(1.0f), lifeTimer_(120.0f), damage_(1), elapseSpeed_(0.0f)
 {
 }
 
@@ -21,16 +22,18 @@ void IBullet::Generate(const NVector3& pos, const float moveAngle)
 
 void IBullet::Update()
 {
+	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+
 	//¶‘¶ŽžŠÔ‰ß‚¬‚½‚çŽ€‚ñ‚¾”»’è‚É
-	lifeTimer_.Update();
+	lifeTimer_.Update(elapseSpeed_);
 	if (lifeTimer_.GetisTimeOut())
 	{
 		isAlive_ = false;
 	}
 
 	//’e‚ÌˆÚ“®
-	moveVelo_.x = sinf(moveAngle_) * moveSpeed_;
-	moveVelo_.y = cosf(moveAngle_) * moveSpeed_;
+	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
+	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;

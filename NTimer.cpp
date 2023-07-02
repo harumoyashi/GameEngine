@@ -7,11 +7,11 @@ void NTimer::Reset()
 	isTimeOut_ = false;
 }
 
-void NTimer::Update()
+void NTimer::Update(const float elapseTimer)
 {
 	if (timer_ < maxTimer_)
 	{
-		timer_++;
+		timer_ += 1.0f * elapseTimer;
 	}
 	else
 	{

@@ -50,7 +50,10 @@ void Field::Update()
 	}
 
 	sprites_[(uint32_t)SpriteType::Line]->SetPos(0 + slidePos_, linePos_);
-	sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f + slidePos_, linePos_ + 10.0f);
+	if (slideTimer_.GetEnd() == false)
+	{
+		sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f + slidePos_, linePos_ + 10.0f);
+	}
 
 	//線を超えたらスタートした判定trueに
 	if (kStartPos <= Player::GetInstance()->GetPos().z)
@@ -71,7 +74,10 @@ void Field::Update()
 		if (slideTimer_.GetEnd())
 		{
 			//画面外まで行ったならスプライト消す
-			sprites_.erase(sprites_.begin() + (uint32_t)SpriteType::Start);
+			if (sprites_.size() == (uint32_t)SpriteType::MaxSize)
+			{
+				sprites_.erase(sprites_.begin() + (uint32_t)SpriteType::Start);
+			}
 		}
 		//画面左外までぶっ飛ばす
 		slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::kWin_width, slideTimer_.GetTimeRate());

@@ -46,10 +46,7 @@ void Player::Init()
 void Player::Update()
 {
 	Move();
-	if (isMove_)			//“ü—Í‚³‚ê‚Ä‚½‚ç
-	{
 		Shot();
-	}
 
 	obj_->Update();
 }
@@ -84,9 +81,10 @@ void Player::Move()
 	//ˆÚ“®•ûŒü‚É‡‚í‚¹‚Ä‰ñ“]
 	if (isMove_)			//“ü—Í‚³‚ê‚Ä‚½‚ç
 	{
-		moveVelo_.Normalize();
-		angle_ = MathUtil::Radian2Degree(acosf(moveVelo_.Dot({ 0,1 })));
-		if (moveVelo_.x < 0)
+		NVector2 velo = moveVelo_;	//moveVelo_‚Ì’l‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤‚ÉŠi”[
+		velo.Normalize();
+		angle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
+		if (velo.x < 0)
 		{
 			angle_ = -angle_;
 		}

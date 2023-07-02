@@ -28,6 +28,8 @@ protected:
 
 	float damage_;				//与えるダメージ量
 
+	float elapseSpeed_;			//経過時間のスピード(スローモーション用)
+
 public:
 	IBullet();
 	//生成
@@ -69,4 +71,6 @@ public:
 	inline void SetLifeTimer(const float lifeTimer) { lifeTimer_ = lifeTimer; }
 	//コライダーの半径設定
 	inline void SetColRadius(const float radius) { collisionRadius_ = collisionRadius_ * radius; }
+	//経過時間スピード設定
+	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

@@ -1,4 +1,5 @@
 #include "LineBullet.h"
+#include "Player.h"
 
 LineBullet::LineBullet()
 {
@@ -12,7 +13,9 @@ LineBullet::LineBullet()
 
 void LineBullet::LineUpdate()
 {
-    shotCoolTimer_.Update();
+    SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+
+    shotCoolTimer_.Update(elapseSpeed_);
     if (shotCoolTimer_.GetisTimeOut())
     {
         isCanShot_ = true;

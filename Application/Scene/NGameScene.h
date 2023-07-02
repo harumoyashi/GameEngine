@@ -35,9 +35,6 @@ private:
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 
-	//動きの更新管理フラグ
-	bool isMoveUpdate_ = true;
-
 public:
 
 
