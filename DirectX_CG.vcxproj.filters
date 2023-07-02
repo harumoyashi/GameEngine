@@ -142,6 +142,12 @@
     <Filter Include="Engine\ソース ファイル\Particle">
       <UniqueIdentifier>{3984eb9b-64a2-4e07-80a2-9c1331354d23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\Particle">
+      <UniqueIdentifier>{89bea174-3bbf-4dbc-96dd-3f6c40295a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Particle\particle3D">
+      <UniqueIdentifier>{4da9e5ac-e4eb-4d0d-83bb-214849aa6ff9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -557,6 +563,9 @@
     <None Include="Resources\shaders\Sprite.hlsli">
       <Filter>リソース ファイル\sprite\sprite</Filter>
     </None>
+    <None Include="Resources\shaders\Particle3D.hlsli">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BasicPS.hlsl">
@@ -600,6 +609,15 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
       <Filter>リソース ファイル\sprite\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DGS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DPS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DVS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
