@@ -1,6 +1,9 @@
 #include "Wave.h"
 #include "Field.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 Wave* Wave::GetInstance()
 {
 	static Wave instance;
@@ -33,13 +36,16 @@ void Wave::Init()
 void Wave::Update()
 {
 	//スタートしてたら動くように
-	if (Field::GetInstance()->GetIsStart())
+	if (Field::GetInstance()->GetIsStart() == false)
 	{
-		moveSpeed_ = 0.02f;
+		moveSpeed_ = 0.0f;
 	}
 	else
 	{
-		moveSpeed_ = 0.0f;
+		//リリースでもいじりたいからifdefで囲ってない
+		ImGui::Begin("WaveParameter");
+		ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.02f, 0.05f);
+		ImGui::End();
 	}
 
 	posZ_ += moveSpeed_;

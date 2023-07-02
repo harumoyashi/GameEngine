@@ -1,6 +1,9 @@
 #include "Field.h"
 #include "Player.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 Field* Field::GetInstance()
 {
 	static Field instance;
@@ -9,7 +12,7 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePosZ_ = kStartPosZ;
+	linePosZ_ = startPosZ_;
 	isStart_ = false;
 	startOffset_ = 5.0f;
 
@@ -59,7 +62,7 @@ void Field::Update()
 	}
 
 	//線を超えたらスタートした判定trueに
-	if (kStartPosZ <= Player::GetInstance()->GetPos().z)
+	if (startPosZ_ <= Player::GetInstance()->GetPos().z)
 	{
 		isStart_ = true;
 	}
@@ -85,6 +88,11 @@ void Field::Update()
 		//画面左外までぶっ飛ばす
 		slidePos_ = NEasing::InQuad(0.0f, -fieldObj_->scale_.x, slideTimer_.GetTimeRate());
 	}
+
+	//リリースでもいじりたいからifdefで囲ってない
+	ImGui::Begin("FieldParameter");
+	ImGui::SliderFloat("StartPosZ", &startPosZ_, 0.0f, 100.0f);
+	ImGui::End();
 }
 
 void Field::Draw()

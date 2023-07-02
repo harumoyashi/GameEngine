@@ -98,11 +98,15 @@ void Player::Move()
 		obj_->rotation_.y = angle_;
 	}
 
-#ifdef _DEBUG
-	ImGui::Begin("Rot");
-	ImGui::Text("rot:%f", obj_->rotation_.y);
+	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+	static int lineLv = 1, sideLv = 1;
+	ImGui::Begin("PlayerParameter");
+	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
+	ImGui::SliderInt("LineLevel", &lineLv, 0, 5);
+	ImGui::SliderInt("SideLevel", &sideLv, 0, 5);
 	ImGui::End();
-#endif
+	lineLevel_ = lineLv;
+	sideLevel_ = sideLv;
 }
 
 void Player::Shot()

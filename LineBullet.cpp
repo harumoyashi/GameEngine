@@ -1,6 +1,9 @@
 #include "LineBullet.h"
 #include "Player.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 LineBullet::LineBullet()
 {
     shotCoolTimer_ = 5.0f;      //’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
@@ -20,4 +23,12 @@ void LineBullet::LineUpdate()
     {
         isCanShot_ = true;
     }
+
+    //ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+    static float coolTimer = 5.0f;
+    ImGui::Begin("LineBulletParameter");
+    //1F~60F‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
+    ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 1.0f, 60.0f);
+    ImGui::End();
+    shotCoolTimer_.SetMaxTimer(coolTimer);
 }

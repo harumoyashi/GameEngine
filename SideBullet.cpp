@@ -23,10 +23,11 @@ void SideBullet::SideUpdate()
         isCanShot_ = true;
     }
 
-#ifdef _DEBUG
-    ImGui::Begin("SideBullet");
-    ImGui::Text("elapseSpeed:%f", elapseSpeed_);
-    ImGui::Text("shotCoolTimer:%f", shotCoolTimer_.GetTimeRate());
+    //ÉäÉäÅ[ÉXÇ≈Ç‡Ç¢Ç∂ÇËÇΩÇ¢Ç©ÇÁifdefÇ≈àÕÇ¡ÇƒÇ»Ç¢
+    static float coolTimer = 60.0f;
+    ImGui::Begin("SideBulletParameter");
+    //1F~180FÇ‹Ç≈ÇÃä‘Ç…Ç∆Ç«ÇﬂÇÈ
+    ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 1.0f, 180.0f);
     ImGui::End();
-#endif
+    shotCoolTimer_.SetMaxTimer(coolTimer);
 }
