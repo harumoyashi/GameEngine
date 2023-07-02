@@ -163,6 +163,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RadialBlur.h" />
     <ClInclude Include="SideBullet.h" />
+    <ClInclude Include="Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BulletFactory.cpp" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RadialBlur.cpp" />
     <ClCompile Include="SideBullet.cpp" />
+    <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

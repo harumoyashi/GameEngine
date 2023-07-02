@@ -3,7 +3,7 @@
 
 void NCameraManager::NormalCameraInit()
 {
-	length_ = 50.0f;
+	length_ = 10.0f;
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
@@ -88,7 +88,7 @@ void NCameraManager::Init()
 {
 	NCamera::sCurrentCamera->Init();
 
-	length_ = 50.0f;
+	length_ = 10.0f;
 
 	nowCameraType_ = (uint32_t)CameraType::Normal;
 	isChange_ = false;

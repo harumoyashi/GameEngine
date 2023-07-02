@@ -20,7 +20,7 @@ Player* Player::GetInstance()
 void Player::Init()
 {
 	obj_->position_ = {};
-	obj_->scale_ = 1.0f;
+	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
 
 	collisionRadius_ = obj_->scale_.x;

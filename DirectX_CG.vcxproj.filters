@@ -327,6 +327,9 @@
     <ClInclude Include="Field.h">
       <Filter>Application\ソースファイル\Field</Filter>
     </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -513,6 +516,9 @@
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Field.cpp">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
       <Filter>Application\ソースファイル\Field</Filter>
     </ClCompile>
   </ItemGroup>

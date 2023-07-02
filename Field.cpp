@@ -9,52 +9,53 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePos_ = -kStartPos * NWindows::kWin_height;
+	linePos_ = kStartPos;
 	isStart = false;
-#pragma region オブジェクトの生成,設定
-	obj_ = std::make_unique<NObj3d>();
-	obj_->Init();
-	obj_->SetModel("cube");
-	obj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
-	obj_->color_.SetColor255(5, 5, 5, 255);
-	obj_->scale_ = { 100.0f,0.01f,5000.0f };
-	obj_->position_ = { 0,0.0f,obj_->scale_.z - 100.0f };
-	obj_->UpdateMatrix();
-#pragma endregion
-#pragma region スプライトの生成
-	for (uint32_t i = 0; i < (uint32_t)SpriteType::MaxSize; i++)
+	startOffset_ = 5.0f;
+
+#pragma region オブジェクトの生成
+	fieldObj_ = std::make_unique<NObj3d>();
+	fieldObj_->Init();
+
+	for (uint32_t i = 0; i < (uint32_t)ObjType::MaxSize; i++)
 	{
-		sprites_.emplace_back();
-		sprites_.back() = std::make_unique<NSprite>();
+		obj_.emplace_back();
+		obj_.back() = std::make_unique<NObj3d>();
+		obj_.back()->Init();
 	}
 #pragma endregion
-#pragma region 各スプライトの設定
-	sprites_[(uint32_t)SpriteType::Line]->CreateSprite("white", { 0.f,0.f });
-	sprites_[(uint32_t)SpriteType::Line]->SetSize(NWindows::kWin_width, 10.0f);
-	sprites_[(uint32_t)SpriteType::Line]->SetPos(0, linePos_);
+#pragma region 各オブジェクトの設定
+	fieldObj_->SetModel("plane");
+	fieldObj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
+	fieldObj_->color_.SetColor255(5, 5, 5, 255);
+	fieldObj_->scale_ = { 100.0f,0.01f,5000.0f };
+	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
 
-	sprites_[(uint32_t)SpriteType::Start]->CreateSprite("start", { 0.f,0.f });
-	sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f, linePos_ + 10.0f);
+	obj_[(uint32_t)ObjType::Line]->SetModel("plane");
+	obj_[(uint32_t)ObjType::Line]->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
+	obj_[(uint32_t)ObjType::Line]->position_ = { 0,0, linePos_ };
+
+	obj_[(uint32_t)ObjType::Start]->SetModel("plane");
+	obj_[(uint32_t)ObjType::Start]->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
+	obj_[(uint32_t)ObjType::Start]->scale_ = { 3.0f,1.0f,0.5f };	//縦横比6:1
+	obj_[(uint32_t)ObjType::Start]->position_ = { startOffset_,0, linePos_ - 1.0f };
 #pragma endregion
 }
 
 void Field::Update()
 {
-	linePos_ = -kStartPos * NWindows::kWin_height +
-		Player::GetInstance()->GetPos().z * NWindows::kWin_height +
-		NWindows::kWin_height / 2.0f;
-
-	obj_->Update();
-
-	for (auto& sprite : sprites_)
+	fieldObj_->Update();
+	for (auto& obj : obj_)
 	{
-		sprite->Update();
+		obj->Update();
 	}
 
-	sprites_[(uint32_t)SpriteType::Line]->SetPos(0 + slidePos_, linePos_);
+	obj_[(uint32_t)ObjType::Line]->position_ =
+	{ Player::GetInstance()->GetPos().x + slidePos_,0, linePos_ };
 	if (slideTimer_.GetEnd() == false)
 	{
-		sprites_[(uint32_t)SpriteType::Start]->SetPos(1000.0f + slidePos_, linePos_ + 10.0f);
+		obj_[(uint32_t)ObjType::Start]->position_ =
+		{ Player::GetInstance()->GetPos().x + startOffset_ + slidePos_,0, linePos_ - 1.0f };
 	}
 
 	//線を超えたらスタートした判定trueに
@@ -76,28 +77,29 @@ void Field::Update()
 		if (slideTimer_.GetEnd())
 		{
 			//画面外まで行ったならスプライト消す
-			if (sprites_.size() == (uint32_t)SpriteType::MaxSize)
+			if (obj_.size() == (uint32_t)ObjType::MaxSize)
 			{
-				sprites_.erase(sprites_.begin() + (uint32_t)SpriteType::Start);
+				obj_.erase(obj_.begin() + (uint32_t)ObjType::Start);
 			}
 		}
 		//画面左外までぶっ飛ばす
-		slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::kWin_width, slideTimer_.GetTimeRate());
+		slidePos_ = NEasing::InQuad(0.0f, -fieldObj_->scale_.x, slideTimer_.GetTimeRate());
 	}
 }
 
 void Field::DrawObj()
 {
-	//これだけタイリングする
+	//床だけタイリングする
 	NObj3d::CommonBeginDraw(true);
-	obj_->Draw();
+	fieldObj_->Draw();
 	NObj3d::CommonBeginDraw(false);
+
+	for (auto& obj : obj_)
+	{
+		obj->Draw();
+	}
 }
 
 void Field::DrawSprite()
 {
-	for (auto& sprite : sprites_)
-	{
-		sprite->Draw();
-	}
 }

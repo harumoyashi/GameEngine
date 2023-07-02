@@ -14,7 +14,8 @@ PSOutput main(VSOutput input) : SV_TARGET
     PSOutput output;
     
 	// テクスチャマッピング
-    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x, input.scale.z));
+    float tileDivid = 0.5f; //タイルの間隔
+    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / tileDivid, input.scale.z / tileDivid));
     
 	// 光沢度
     const float shininess = 4.0f;
