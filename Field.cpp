@@ -90,9 +90,9 @@ void Field::Update()
 	}
 
 	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
-	ImGui::Begin("FieldParameter");
+	/*ImGui::Begin("FieldParameter");
 	ImGui::SliderFloat("StartPosZ", &startPosZ_, 0.0f, 100.0f);
-	ImGui::End();
+	ImGui::End();*/
 }
 
 void Field::Draw()
