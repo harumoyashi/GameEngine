@@ -18,6 +18,8 @@ private:
 	std::map<std::string, NShader> shaderMap_;
 
 public:
+	static NShader* GetInstance();
+
 	//パスに合わせた頂点シェーダーの読み込み
 	void LoadVS(std::string vsPath);
 	//パスに合わせたピクセルシェーダーの読み込み
@@ -26,9 +28,7 @@ public:
 	void LoadGS(std::string gsPath);
 
 	//シェーダーを生成してマップに登録
-	void CreateShader(std::string id);
-	//パスに合わせた頂点シェーダーの読み込みしてマップに登録
-	void LoadShader(std::string id, std::string path,const bool isLoadGS);
+	void CreateShader(std::string id, std::string path, const bool isLoadGS);
 	//指定したidのシェーダーを取得
 	NShader* GetShader(std::string id);
 };

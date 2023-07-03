@@ -4,16 +4,83 @@
 #include "NTexture.h"
 #include "NRootSignature.h"
 #include "NRootParam.h"
+#include "NShader.h"
 #include <d3dx12.h>
 
 #include <wrl.h>
 
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
+struct PipelineDesc
+{
+	struct Shader {
+		NShader* shader;
+	} shader;
+
+	struct Blend {
+		//網羅率考慮してブレンドするか
+		bool isAlphaToCoverage = false;
+		//それぞれのレンダーターゲットに別々のブレンドするか
+		bool isIndependentBlend = false;
+		//マスク値：RBGA全てのチャンネルを描画
+		UINT8 RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+		//ブレンドを有効にするかフラグ
+		bool isBlend = true;
+
+		struct BlendDesc {
+			D3D12_BLEND_OP BlendOpAlpha = D3D12_BLEND_OP_ADD;
+			D3D12_BLEND SrcBlendAlpha = D3D12_BLEND_ONE;
+			D3D12_BLEND DestBlendAlpha = D3D12_BLEND_ZERO;
+
+			D3D12_BLEND_OP BlendOp = D3D12_BLEND_OP_ADD;
+			D3D12_BLEND SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			D3D12_BLEND DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		};
+	} blend;
+
+	struct Render {
+		//トライアングルストリップを切り離すかどうか
+		D3D12_INDEX_BUFFER_STRIP_CUT_VALUE IBStripCutValue =
+			D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;		//カットなし
+		//トポロジー指定
+		D3D12_PRIMITIVE_TOPOLOGY_TYPE PrimitiveTopologyType =
+			D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+
+		//-------------------- サンプルマスク --------------------//
+		UINT SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
+		//-------------------- ラスタライザ --------------------//
+		bool isCull = false;								//カリングするかフラグ
+		D3D12_CULL_MODE CullMode = D3D12_CULL_MODE_NONE;	// 背面カリングしない
+		// ポリゴン内塗りつぶし(D3D12_FILL_MODE_WIREFRAMEにするとワイヤーフレームに)
+		D3D12_FILL_MODE FillMode = D3D12_FILL_MODE_SOLID;
+		// 深度クリッピングを有効に
+		bool isDepthClip = true;
+
+		//レンダーターゲット数
+		UINT NumRenderTargets = 1;	//描画対象1つ(マルチレンダーターゲットやるなら増やす)
+		//レンダーターゲット数によって増えるのでvectorに
+		std::vector<DXGI_FORMAT> RTVFormat{ DXGI_FORMAT_R8G8B8A8_UNORM };	//0~255指定のRGBA
+		//アンチエイリアシングのためのサンプル数
+		DXGI_SAMPLE_DESC SampleDesc = DXGI_SAMPLE_DESC{
+			1,	//1ピクセルにつき1回サンプリング
+			0	//最低クオリティ
+		};
+
+		//ここの設計から
+		D3D12_INPUT_LAYOUT_DESC InputLayout;
+		//頂点レイアウト//
+		D3D12_INPUT_ELEMENT_DESC vertLayout3d_[3]{};			//必要な分だけ用意する
+		D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2]{};		//必要な分だけ用意する
+		D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2]{};	//必要な分だけ用意する
+	} render;
+
+	NRootSignature rootSig_;
+};
+
 struct PipelineSet
 {
 	ComPtr<ID3D12PipelineState> pipelineState_;
-	NRootSignature rootSig_;
+	
 };
 
 enum class PipelineType
@@ -51,32 +118,6 @@ public:
 	PipelineSet pipelineSet_;			//パイプラインステートとルートシグネチャまとめたやつ
 
 public:
-#pragma region シェーダーまわり
-	//3Dオブジェクト用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShader3d();
-	//3Dオブジェクト用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShader3d();
-	//スプライト用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShaderSprite();
-	//スプライト用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShaderSprite();
-	//ポストエフェクト用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShaderPostEffect();
-	//ポストエフェクト用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShaderPostEffect();
-	//ガウシアンブラー用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShaderGaussian();
-	//ガウシアンブラー用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShaderGaussian();
-	//ラジアルブラー用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShaderRadial();
-	//ラジアルブラー用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShaderRadial();
-	//タイル用頂点シェーダーの読み込みとコンパイル
-	void LoadVertShaderTile();
-	//タイル用ピクセルシェーダの読み込みとコンパイル
-	void LoadPixelShaderTile();
-#pragma endregion
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
 	void SetVertLayout3d();

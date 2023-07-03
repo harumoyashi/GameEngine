@@ -1,5 +1,4 @@
 #include "NGPipeline.h"
-#include "NShader.h"
 
 void NGPipeline::SetVertLayout3d()
 {
@@ -106,7 +105,7 @@ void NGPipeline::SetRasterizer(bool isCull)
 void NGPipeline::SetBlend(const bool is3d)
 {
 	pipelineDesc_.BlendState.AlphaToCoverageEnable = false;			//網羅率考慮してブレンドするか
-	pipelineDesc_.BlendState.IndependentBlendEnable = false;			//それぞれのレンダーターゲットに別々のブレンドするか
+	pipelineDesc_.BlendState.IndependentBlendEnable = false;		//それぞれのレンダーターゲットに別々のブレンドするか
 
 	//レンダーターゲットのブレンド設定
 	blendDesc_.BlendEnable = true;					//ブレンドを有効にする

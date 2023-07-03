@@ -4,6 +4,12 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
+NShader* NShader::GetInstance()
+{
+	static NShader instance;
+	return &instance;
+}
+
 void NShader::LoadVS(std::string vsPath)
 {
 	HRESULT result;
@@ -103,13 +109,9 @@ void NShader::LoadGS(std::string gsPath)
 	}
 }
 
-void NShader::CreateShader(std::string id)
+void NShader::CreateShader(std::string id, std::string path, const bool isLoadGS)
 {
 	shaderMap_[id] = NShader();
-}
-
-void NShader::LoadShader(std::string id, std::string path, const bool isLoadGS)
-{
 	shaderMap_[id].LoadVS(path);
 	shaderMap_[id].LoadPS(path);
 	if (isLoadGS)
