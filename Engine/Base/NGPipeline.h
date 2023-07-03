@@ -159,11 +159,8 @@ private:
 	PipelineSet pipelineSetTile_;		//ƒ^ƒCƒ‹—p
 
 public:
-	PipeLineManager();
-	~PipeLineManager();
-
 	static PipeLineManager* GetInstance();
-	void Init();
+	void CreateAll();
 
 	const PipelineSet& GetPipelineSet(std::string name) const;
 };

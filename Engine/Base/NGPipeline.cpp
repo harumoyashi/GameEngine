@@ -1,4 +1,5 @@
 #include "NGPipeline.h"
+#include "NShader.h"
 
 void NGPipeline::SetVertLayout3d()
 {
@@ -432,6 +433,28 @@ PipeLineManager* PipeLineManager::GetInstance()
 {
 	static PipeLineManager instance;
 	return &instance;
+}
+
+void PipeLineManager::CreateAll()
+{
+#pragma region デフォルト3D
+	NShader::GetInstance()->CreateShader("3d","Obj",false);
+#pragma endregion
+#pragma region デフォルト2D
+	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+#pragma endregion
+#pragma region ポストエフェクト
+	NShader::GetInstance()->CreateShader("PostEffect", "CG4", false);
+#pragma endregion
+#pragma region ガウシアンブラー
+	NShader::GetInstance()->CreateShader("Gaussian", "GaussianBlur", false);
+#pragma endregion
+#pragma region ラジアルブラー
+	NShader::GetInstance()->CreateShader("Radial", "RadialBlur", false);
+#pragma endregion
+#pragma region パーティクル3D
+	NShader::GetInstance()->CreateShader("Particle3d", "Particle3D", true);
+#pragma endregion
 }
 
 void PipeLineManager::Init()
