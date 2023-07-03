@@ -104,6 +104,7 @@
     <ClInclude Include="Field.h" />
     <ClInclude Include="IBullet.h" />
     <ClInclude Include="BulletManager.h" />
+    <ClInclude Include="IEnemy.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="LineBullet.h" />
     <ClInclude Include="NAssimpLoader.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IBullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
+    <ClCompile Include="IEnemy.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="LineBullet.cpp" />
     <ClCompile Include="NAssimpLoader.cpp" />

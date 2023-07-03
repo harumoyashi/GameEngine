@@ -38,6 +38,7 @@ public:
 	void Update();
 	//描画
 	void Draw();
+
 public:
 	// ゲッター //
 	//コライダー取得
@@ -55,7 +56,6 @@ public:
 	//移動用角度取得
 	inline float GetMoveAngle()const { return moveAngle_; }
 
-public:
 	// セッター //
 	//生存フラグ設定
 	inline void SetisAlive(const bool isAlive) { isAlive_ = isAlive; }

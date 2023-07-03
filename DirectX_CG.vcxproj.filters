@@ -345,6 +345,9 @@
     <ClInclude Include="NParticle2D.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="IEnemy.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -538,6 +541,9 @@
     </ClCompile>
     <ClCompile Include="NParticle2D.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnemy.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
