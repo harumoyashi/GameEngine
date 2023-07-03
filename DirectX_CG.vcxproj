@@ -157,6 +157,7 @@
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NPostEffect.h" />
     <ClInclude Include="NResultScene.h" />
+    <ClInclude Include="NShader.h" />
     <ClInclude Include="NSpotLight.h" />
     <ClInclude Include="NTimer.h" />
     <ClInclude Include="NUtil.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="NPointLight.cpp" />
     <ClCompile Include="NPostEffect.cpp" />
     <ClCompile Include="NResultScene.cpp" />
+    <ClCompile Include="NShader.cpp" />
     <ClCompile Include="NSpotLight.cpp" />
     <ClCompile Include="NTimer.cpp" />
     <ClCompile Include="NUtil.cpp" />

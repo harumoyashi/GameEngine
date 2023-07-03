@@ -30,9 +30,7 @@ private:
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
 
 	//シェーダーまわり(頂点も含む)//
-	ComPtr<ID3DBlob> vsBlob_;	// 頂点シェーダオブジェクト
-	ComPtr<ID3DBlob> psBlob;	// ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> errorBlob_; // エラーオブジェクト
+	
 
 	//頂点レイアウト//
 	D3D12_INPUT_ELEMENT_DESC vertLayout3d_[3]{};		//必要な分だけ用意する

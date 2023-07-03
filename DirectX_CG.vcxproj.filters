@@ -346,6 +346,9 @@
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
     <ClInclude Include="IEnemy.h">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="NShader.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -543,6 +546,9 @@
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
     <ClCompile Include="IEnemy.cpp">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="NShader.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
