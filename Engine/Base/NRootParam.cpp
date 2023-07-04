@@ -5,8 +5,9 @@ NRootParam::~NRootParam()
 	entity_.clear();
 }
 
-void NRootParam::SetDescRange(const uint32_t texNum)
+void NRootParam::SetRootParam(const uint32_t texNum, const uint32_t constantNum)
 {
+	//デスクリプタレンジの設定
 	for (uint32_t i = 0; i < texNum; i++)
 	{
 		descriptorRange_.emplace_back();
@@ -15,10 +16,7 @@ void NRootParam::SetDescRange(const uint32_t texNum)
 		descriptorRange_.back().BaseShaderRegister = i;	//テクスチャレジスタ番号
 		descriptorRange_.back().OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 	}
-}
 
-void NRootParam::SetRootParam(const uint32_t texNum, const uint32_t constantNum)
-{
 	D3D12_ROOT_PARAMETER rootParam{};
 
 	for (uint32_t i = 0; i < texNum; i++)

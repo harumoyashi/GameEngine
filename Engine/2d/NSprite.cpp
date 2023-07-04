@@ -198,7 +198,7 @@ void NSprite::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
 	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("Sprite").pipelineState_.Get());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("Sprite").rootSig_.entity_.Get());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("Sprite").rootSig.entity_.Get());
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ

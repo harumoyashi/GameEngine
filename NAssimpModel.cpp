@@ -82,7 +82,7 @@ void NAssimpModel::Draw()
 	{
 		// パイプラインステートとルートシグネチャの設定コマンド
 		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("3d").pipelineState_.Get());
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("3d").rootSig_.entity_.Get());
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("3d").rootSig.entity_.Get());
 
 		// プリミティブ形状の設定コマンド
 		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

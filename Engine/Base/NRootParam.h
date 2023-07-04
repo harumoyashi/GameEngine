@@ -11,8 +11,7 @@ private:
 
 public:
 	~NRootParam();
-	//デスクリプタレンジの設定
-	void SetDescRange(const uint32_t texNum);
+	//ルートパラメーターの設定
 	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);
 };
 

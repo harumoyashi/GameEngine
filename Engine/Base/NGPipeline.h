@@ -81,82 +81,50 @@ struct PipelineDesc
 		DXGI_FORMAT DSVFormat = DXGI_FORMAT_D32_FLOAT;						//深度値フォーマット
 	} depth;
 
-	NRootSignature rootSig_;
+	NRootSignature rootSig;
 };
 
 class NGPipeline
 {
+private:
+	//パイプラインデスク
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC psDesc_{};
+	//パイプラインステート
+	ComPtr<ID3D12PipelineState> pso_ = nullptr;
+
 public:
+	//頂点レイアウトたち(必要な分だけ用意する)
+	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];
+
+public:
+	//パイプライン生成、指定したIDで登録
 	static void Create(PipelineDesc desc, std::string id);
+	//指定したIDのパイプラインデスクを取得
 	static D3D12_GRAPHICS_PIPELINE_STATE_DESC* GetDesc(std::string id);
+	//指定したIDのパイプラインステートを取得
 	static ID3D12PipelineState* GetState(std::string id);
+	//指定したIDのパイプラインを取得
 	static NGPipeline* GetGPipeline(std::string id);
 
 	NGPipeline() {};
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC psDesc_{};
-	ComPtr<ID3D12PipelineState> pso_ = nullptr;
 
 private:
+	//パイプライン生成
 	void Create();
-
-private:
 	//パイプラインデスクの設定
 	void SetDesc(PipelineDesc desc);
-
-private:
-	//シェーダーリソースビュー//
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
-
-	//パイプラインステート//
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
-	D3D12_RENDER_TARGET_BLEND_DESC blendDesc_ = {};
-
-	//テクスチャサンプラー//
-	D3D12_STATIC_SAMPLER_DESC samplerDesc_{};
-
-	NRootParam rootParams_;	//ルートパラメータ
-
-public:
-
 
 public:
 #pragma region 頂点レイアウトまわり
 	//3Dオブジェクト用頂点レイアウト設定
-	void SetVertLayout3d();
+	void SetVertLayoutObj();
 	//スプライト用頂点レイアウト設定
 	void SetVertLayoutSprite();
 	//ポストエフェクト用頂点レイアウト設定
 	void SetVertLayoutPostEffect();
-#pragma endregion
-#pragma region パイプラインステートまわり
-	//シェーダーの設定(適用)
-	void SetShader();
-	//ラスタライザー設定
-	void SetRasterizer(const bool isCull);
-	//ブレンド設定
-	void SetBlend(const bool is3d);
-	//入力レイアウトの設定
-	void SetInputLayout(const bool is3d);
-	void SetInputLayoutPostEffect();
-	//図形の形状設定
-	void SetTopology();
-	//デプスステンシル(深度)設定
-	void SetDepth(const bool isDepth);
-	//レンダーターゲット設定
-	//RTNum->何個レンダーターゲット適用するか
-	void SetRenderTarget(const uint32_t RTNum);
-	//アンチエイリアシングのためのサンプル数設定
-	void SetAntiAliasing();
-	//パイプラインにルートシグネチャをセット
-	//texNum->テクスチャレジスタの数
-	//constantNum->定数レジスタの数
-	void SetRootSignature(const uint32_t texNum, const uint32_t constantNum);
-	//グラフィックスパイプラインステートオブジェクトの生成
-	void CreatePS();
-#pragma endregion
-#pragma region テクスチャサンプラー
-	//テクスチャサンプラー設定
-	void SetTexSampler(const bool isTiling);
+
 #pragma endregion
 #pragma region パイプライン生成
 	//3Dオブジェクト用パイプライン生成
@@ -172,9 +140,6 @@ public:
 	//タイル用パイプライン生成
 	PipelineSet CreatePipelineTile();
 #pragma endregion
-
-private:
-
 };
 
 
@@ -197,5 +162,6 @@ namespace BlendUtil
 		Inv,	//反転
 	};
 
+	//指定したブレンドモードのブレンド情報を取得
 	static PipelineDesc::Blend::BlendDesc GetBlendMode(BlendMode blendMode);
 };
