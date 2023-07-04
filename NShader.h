@@ -31,4 +31,8 @@ public:
 	void CreateShader(std::string id, std::string path, const bool isLoadGS);
 	//指定したidのシェーダーを取得
 	NShader* GetShader(std::string id);
+
+	ID3DBlob* GetVSBlob() { return vsBlob_.Get(); }
+	ID3DBlob* GetPSBlob() { return psBlob_.Get(); }
+	ID3DBlob* GetGSBlob() { return gsBlob_.Get(); }
 };

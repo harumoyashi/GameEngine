@@ -1,5 +1,115 @@
 #include "NGPipeline.h"
 
+std::map<std::string, NGPipeline> psoMap;	//パイプラインステートのマップ
+
+void NGPipeline::Create(PipelineDesc desc, std::string id)
+{
+	psoMap[id] = NGPipeline();
+	NGPipeline* ptr = &psoMap[id];
+	ptr->SetDesc(desc);
+	ptr->Create();
+}
+
+D3D12_GRAPHICS_PIPELINE_STATE_DESC* NGPipeline::GetDesc(std::string id)
+{
+	return &psoMap[id].psDesc_;
+}
+
+ID3D12PipelineState* NGPipeline::GetState(std::string id)
+{
+	return psoMap[id].pso_.Get();
+}
+
+NGPipeline* NGPipeline::GetGPipeline(std::string id)
+{
+	return &psoMap[id];
+}
+
+void NGPipeline::Create()
+{
+	NDX12::GetInstance()->GetDevice()->
+		CreateGraphicsPipelineState(&psDesc_, IID_PPV_ARGS(&pso_));
+}
+
+void NGPipeline::SetDesc(PipelineDesc desc)
+{
+	//-------------------------------- シェーダーの設定 --------------------------------//
+	pipelineDesc_.VS.pShaderBytecode = desc.shader.pShader->GetVSBlob()->GetBufferPointer();
+	pipelineDesc_.VS.BytecodeLength = desc.shader.pShader->GetVSBlob()->GetBufferSize();
+	pipelineDesc_.PS.pShaderBytecode = desc.shader.pShader->GetPSBlob()->GetBufferPointer();
+	pipelineDesc_.PS.BytecodeLength = desc.shader.pShader->GetPSBlob()->GetBufferSize();
+	if (desc.shader.pShader->GetGSBlob() != nullptr)	//ジオメトリシェーダーがあるなら
+	{
+		psDesc_.GS.pShaderBytecode = desc.shader.pShader->GetGSBlob()->GetBufferPointer();
+		psDesc_.GS.BytecodeLength = desc.shader.pShader->GetGSBlob()->GetBufferSize();
+	}
+
+	//-------------------------------- 図形の形状設定 --------------------------------//
+	//トライアングルストリップを切り離すかどうか
+	psDesc_.IBStripCutValue = desc.render.IBStripCutValue;
+	//トポロジー指定
+	psDesc_.PrimitiveTopologyType = desc.render.PrimitiveTopologyType;
+
+	//-------------------------------- ラスタライザの設定 --------------------------------//
+	// サンプルマスクの設定
+	psDesc_.SampleMask = desc.render.SampleMask;
+	// ラスタライザの設定
+	psDesc_.RasterizerState.CullMode = desc.render.CullMode;
+
+	// ポリゴン内塗りつぶしするか
+	psDesc_.RasterizerState.FillMode = desc.render.FillMode;
+	// 深度クリッピングを有効にするか
+	psDesc_.RasterizerState.DepthClipEnable = desc.render.isDepthClip;
+
+	//-------------------------------- レンダーターゲット回りの設定 --------------------------------//
+	psDesc_.NumRenderTargets = desc.render.NumRenderTargets;
+	for (uint32_t i = 0; i < (uint32_t)psDesc_.NumRenderTargets; i++)
+	{
+		psDesc_.RTVFormats[i] = desc.render.RTVFormat;
+	}
+
+	//-------------------------------- サンプリング情報の設定 --------------------------------//
+	psDesc_.SampleDesc = desc.render.SampleDesc;
+
+	//-------------------------------- 頂点レイアウトの設定 --------------------------------//
+	psDesc_.InputLayout = desc.render.InputLayout;
+
+	//-------------------------------- ブレンドデスクの設定 --------------------------------//
+	psDesc_.BlendState.AlphaToCoverageEnable = desc.blend.isAlphaToCoverage;		//網羅率考慮してブレンドするか
+	psDesc_.BlendState.IndependentBlendEnable = desc.blend.isIndependentBlend;		//それぞれのレンダーターゲットに別々のブレンドするか
+
+	//レンダーターゲットのブレンド設定
+	psDesc_.BlendState.RenderTarget->BlendEnable = desc.blend.isBlend;				//ブレンドを有効にするか
+	psDesc_.BlendState.RenderTarget->LogicOpEnable = desc.blend.isLogicOp;			//論理演算するか
+	psDesc_.BlendState.RenderTarget->RenderTargetWriteMask =
+		desc.blend.RenderTargetWriteMask;											//マスク値
+
+	//指定してたブレンド情報を設定
+	psDesc_.BlendState.RenderTarget->BlendOpAlpha = desc.blend.blendDesc.BlendOpAlpha;
+	psDesc_.BlendState.RenderTarget->SrcBlendAlpha = desc.blend.blendDesc.SrcBlendAlpha;
+	psDesc_.BlendState.RenderTarget->DestBlendAlpha = desc.blend.blendDesc.DestBlendAlpha;
+
+	psDesc_.BlendState.RenderTarget->BlendOp = desc.blend.blendDesc.BlendOp;
+	psDesc_.BlendState.RenderTarget->SrcBlend = desc.blend.blendDesc.SrcBlend;
+	psDesc_.BlendState.RenderTarget->DestBlend = desc.blend.blendDesc.DestBlend;
+
+	//設定したブレンドを適用(レンダーターゲットの数だけ)
+	//レンダーターゲットごとにブレンドモード変えれるようにしたいな～(願望)
+	for (uint32_t i = 0; i < (uint32_t)psDesc_.NumRenderTargets; i++)
+	{
+		psDesc_.BlendState.RenderTarget[i] = blendDesc_;
+	}
+
+	//-------------------------------- 深度情報の設定 --------------------------------//
+	psDesc_.DepthStencilState.DepthEnable = desc.depth.isDepth;
+	psDesc_.DepthStencilState.DepthWriteMask = desc.depth.DepthWriteMask;
+	psDesc_.DepthStencilState.DepthFunc = desc.depth.DepthFunc;
+	psDesc_.DSVFormat = desc.depth.DSVFormat;
+
+	//-------------------------------- ルートシグネチャの設定　--------------------------------//
+	psDesc_.pRootSignature = desc.rootSig_.entity_.Get();
+}
+
 void NGPipeline::SetVertLayout3d()
 {
 	// 頂点レイアウト
@@ -437,7 +547,7 @@ PipeLineManager* PipeLineManager::GetInstance()
 void PipeLineManager::CreateAll()
 {
 #pragma region デフォルト3D
-	NShader::GetInstance()->CreateShader("3d","Obj",false);
+	NShader::GetInstance()->CreateShader("3d", "Obj", false);
 #pragma endregion
 #pragma region デフォルト2D
 	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
@@ -497,4 +607,44 @@ const PipelineSet& PipeLineManager::GetPipelineSet(std::string name) const
 	std::exit(EXIT_FAILURE);
 	//一応返り値設定
 	return pipelineSet3d_;
+}
+
+PipelineDesc::Blend::BlendDesc BlendUtil::GetBlendMode(BlendMode blendMode)
+{
+	PipelineDesc::Blend::BlendDesc desc;
+	switch (blendMode)
+	{
+	case BlendUtil::BlendMode::Alpha:
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
+		desc.SrcBlend = D3D12_BLEND_SRC_ALPHA;				//ソースのアルファ値
+		desc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;			//1.0f-ソースのアルファ値
+		break;
+
+	case BlendUtil::BlendMode::Add:
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
+		desc.SrcBlend = D3D12_BLEND_ONE;					//ソースの値を100%使う
+		desc.DestBlend = D3D12_BLEND_ONE;					//デストの値を100%使う
+		break;
+
+	case BlendUtil::BlendMode::Sub:
+		desc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;			//減算
+		desc.SrcBlend = D3D12_BLEND_ONE;					//ソースの値を100%使う
+		desc.DestBlend = D3D12_BLEND_ONE;					//デストの値を100%使う
+
+		desc.BlendOpAlpha = D3D12_BLEND_OP_REV_SUBTRACT;	//減算
+		desc.SrcBlendAlpha = D3D12_BLEND_ONE;				//ソースの値を100%使う
+		desc.DestBlendAlpha = D3D12_BLEND_ONE;				//デストの値を100%使う
+		break;
+
+	case BlendUtil::BlendMode::Inv:
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
+		desc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;			//色反転(1-RGB)
+		desc.DestBlend = D3D12_BLEND_ZERO;					//デストの値を0%使う
+		break;
+
+	default:
+		break;
+	}
+
+	return desc;
 }
