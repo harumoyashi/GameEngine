@@ -34,10 +34,10 @@ void NGPipeline::Create()
 void NGPipeline::SetDesc(PipelineDesc desc)
 {
 	//-------------------------------- シェーダーの設定 --------------------------------//
-	pipelineDesc_.VS.pShaderBytecode = desc.shader.pShader->GetVSBlob()->GetBufferPointer();
-	pipelineDesc_.VS.BytecodeLength = desc.shader.pShader->GetVSBlob()->GetBufferSize();
-	pipelineDesc_.PS.pShaderBytecode = desc.shader.pShader->GetPSBlob()->GetBufferPointer();
-	pipelineDesc_.PS.BytecodeLength = desc.shader.pShader->GetPSBlob()->GetBufferSize();
+	psDesc_.VS.pShaderBytecode = desc.shader.pShader->GetVSBlob()->GetBufferPointer();
+	psDesc_.VS.BytecodeLength = desc.shader.pShader->GetVSBlob()->GetBufferSize();
+	psDesc_.PS.pShaderBytecode = desc.shader.pShader->GetPSBlob()->GetBufferPointer();
+	psDesc_.PS.BytecodeLength = desc.shader.pShader->GetPSBlob()->GetBufferSize();
 	if (desc.shader.pShader->GetGSBlob() != nullptr)	//ジオメトリシェーダーがあるなら
 	{
 		psDesc_.GS.pShaderBytecode = desc.shader.pShader->GetGSBlob()->GetBufferPointer();
@@ -54,12 +54,12 @@ void NGPipeline::SetDesc(PipelineDesc desc)
 	// サンプルマスクの設定
 	psDesc_.SampleMask = desc.render.SampleMask;
 	// ラスタライザの設定
-	psDesc_.RasterizerState.CullMode = desc.render.CullMode;
+	psDesc_.RasterizerState.CullMode = desc.render.RasterizerState.CullMode;
 
 	// ポリゴン内塗りつぶしするか
-	psDesc_.RasterizerState.FillMode = desc.render.FillMode;
+	psDesc_.RasterizerState.FillMode = desc.render.RasterizerState.FillMode;
 	// 深度クリッピングを有効にするか
-	psDesc_.RasterizerState.DepthClipEnable = desc.render.isDepthClip;
+	psDesc_.RasterizerState.DepthClipEnable = desc.render.RasterizerState.DepthClipEnable;
 
 	//-------------------------------- レンダーターゲット回りの設定 --------------------------------//
 	psDesc_.NumRenderTargets = desc.render.NumRenderTargets;
@@ -79,35 +79,36 @@ void NGPipeline::SetDesc(PipelineDesc desc)
 	psDesc_.BlendState.IndependentBlendEnable = desc.blend.isIndependentBlend;		//それぞれのレンダーターゲットに別々のブレンドするか
 
 	//レンダーターゲットのブレンド設定
-	psDesc_.BlendState.RenderTarget->BlendEnable = desc.blend.isBlend;				//ブレンドを有効にするか
-	psDesc_.BlendState.RenderTarget->LogicOpEnable = desc.blend.isLogicOp;			//論理演算するか
-	psDesc_.BlendState.RenderTarget->RenderTargetWriteMask =
+	D3D12_RENDER_TARGET_BLEND_DESC& blendDesc = psDesc_.BlendState.RenderTarget[0];
+	blendDesc.BlendEnable = desc.blend.isBlend;				//ブレンドを有効にするか
+	blendDesc.LogicOpEnable = desc.blend.isLogicOp;			//論理演算するか
+	blendDesc.RenderTargetWriteMask =
 		desc.blend.RenderTargetWriteMask;											//マスク値
 
 	//指定してたブレンド情報を設定
-	psDesc_.BlendState.RenderTarget->BlendOpAlpha = desc.blend.blendDesc.BlendOpAlpha;
-	psDesc_.BlendState.RenderTarget->SrcBlendAlpha = desc.blend.blendDesc.SrcBlendAlpha;
-	psDesc_.BlendState.RenderTarget->DestBlendAlpha = desc.blend.blendDesc.DestBlendAlpha;
+	blendDesc.BlendOpAlpha = desc.blend.blendDesc.BlendOpAlpha;
+	blendDesc.SrcBlendAlpha = desc.blend.blendDesc.SrcBlendAlpha;
+	blendDesc.DestBlendAlpha = desc.blend.blendDesc.DestBlendAlpha;
 
-	psDesc_.BlendState.RenderTarget->BlendOp = desc.blend.blendDesc.BlendOp;
-	psDesc_.BlendState.RenderTarget->SrcBlend = desc.blend.blendDesc.SrcBlend;
-	psDesc_.BlendState.RenderTarget->DestBlend = desc.blend.blendDesc.DestBlend;
+	blendDesc.BlendOp = desc.blend.blendDesc.BlendOp;
+	blendDesc.SrcBlend = desc.blend.blendDesc.SrcBlend;
+	blendDesc.DestBlend = desc.blend.blendDesc.DestBlend;
 
 	//設定したブレンドを適用(レンダーターゲットの数だけ)
 	//レンダーターゲットごとにブレンドモード変えれるようにしたいな～(願望)
 	for (uint32_t i = 0; i < (uint32_t)psDesc_.NumRenderTargets; i++)
 	{
-		psDesc_.BlendState.RenderTarget[i] = blendDesc_;
+		psDesc_.BlendState.RenderTarget[i] = blendDesc;
 	}
 
 	//-------------------------------- 深度情報の設定 --------------------------------//
-	psDesc_.DepthStencilState.DepthEnable = desc.depth.isDepth;
-	psDesc_.DepthStencilState.DepthWriteMask = desc.depth.DepthWriteMask;
-	psDesc_.DepthStencilState.DepthFunc = desc.depth.DepthFunc;
+	psDesc_.DepthStencilState.DepthEnable = desc.depth.DepthStencilState.DepthEnable;
+	psDesc_.DepthStencilState.DepthWriteMask = desc.depth.DepthStencilState.DepthWriteMask;
+	psDesc_.DepthStencilState.DepthFunc = desc.depth.DepthStencilState.DepthFunc;
 	psDesc_.DSVFormat = desc.depth.DSVFormat;
 
 	//-------------------------------- ルートシグネチャの設定　--------------------------------//
-	psDesc_.pRootSignature = desc.rootSig.entity_.Get();
+	psDesc_.pRootSignature = desc.rootSig.GetRootSignature();
 }
 
 void NGPipeline::SetVertLayoutObj()
@@ -167,7 +168,7 @@ void NGPipeline::SetVertLayoutPostEffect()
 	// 頂点レイアウト
 	//座標
 	vertLayoutPostEffect_[0] = {
-	"SV_POSITION",									//セマンティック名
+	"POSITION",										//セマンティック名
 	0,												//同名のセマンティックがあるとき使うインデックス
 	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
 	0,												//入力スロットインデックス
@@ -185,140 +186,34 @@ void NGPipeline::SetVertLayoutPostEffect()
 	};
 }
 
-PipelineSet NGPipeline::CreatePipelinePostEffect()
+void NGPipeline::SetVertLayoutParticle()
 {
-	//シェーダー
-	LoadVertShaderPostEffect();
-	LoadPixelShaderPostEffect();
-
-	//頂点レイアウト設定
-	SetVertLayoutPostEffect();
-
-	//パイプラインステート
-	SetShader();
-	SetRasterizer(false);
-	SetBlend(false);
-	SetInputLayoutPostEffect();
-	SetTopology();
-	SetRenderTarget(1);
-	SetAntiAliasing();
-	SetDepth(false);
-
-	//テクスチャサンプラーの設定
-	SetTexSampler(false);
-
-	//ルートシグネチャ
-	//テクスチャ2個、行列、色
-	SetRootSignature(2, 2);
-
-	//パイプラインステート生成
-	CreatePS();
-
-	return pipelineSet_;
-}
-
-PipelineSet NGPipeline::CreatePipelineGaussian()
-{
-	//シェーダー
-	LoadVertShaderGaussian();
-	LoadPixelShaderGaussian();
-
-	//頂点レイアウト設定
-	SetVertLayoutPostEffect();
-
-	//パイプラインステート
-	SetShader();
-	SetRasterizer(false);
-	SetBlend(false);
-	SetInputLayoutPostEffect();
-	SetTopology();
-	SetRenderTarget(1);
-	SetAntiAliasing();
-	SetDepth(false);
-
-	//テクスチャサンプラーの設定
-	SetTexSampler(false);
-
-	//ルートシグネチャ
-	//テクスチャ2個、行列、色
-	SetRootSignature(2, 2);
-
-	//パイプラインステート生成
-	CreatePS();
-
-	return pipelineSet_;
-}
-
-PipelineSet NGPipeline::CreatePipelineRadial()
-{
-	//シェーダー
-	LoadVertShaderRadial();
-	LoadPixelShaderRadial();
-
-	//頂点レイアウト設定
-	SetVertLayoutPostEffect();
-
-	//パイプラインステート
-	SetShader();
-	SetRasterizer(false);
-	SetBlend(false);
-	SetInputLayoutPostEffect();
-	SetTopology();
-	SetRenderTarget(1);
-	SetAntiAliasing();
-	SetDepth(false);
-
-	//テクスチャサンプラーの設定
-	SetTexSampler(false);
-
-	//ルートシグネチャ
-	//テクスチャ2個、行列、色
-	SetRootSignature(2, 2);
-
-	//パイプラインステート生成
-	CreatePS();
-
-	return pipelineSet_;
-}
-
-PipelineSet NGPipeline::CreatePipelineTile()
-{
-	//シェーダー
-	LoadVertShaderTile();
-	LoadPixelShaderTile();
-
-	//頂点レイアウト設定
-	SetVertLayout3d();
-
-	//パイプラインステート
-	SetShader();
-	SetRasterizer(true);
-	SetBlend(true);
-	SetInputLayout(true);
-	SetTopology();
-	SetRenderTarget(2);
-	SetAntiAliasing();
-	SetDepth(true);
-
-	//テクスチャサンプラーの設定
-	SetTexSampler(true);
-
-	//ルートシグネチャ
-	//テクスチャ1個、行列、マテリアル、色、光源
-	SetRootSignature(1, 4);
-
-	//パイプラインステート生成
-	CreatePS();
-
-	return pipelineSet_;
-}
-
-PipeLineManager::PipeLineManager()
-{
-}
-
-PipeLineManager::~PipeLineManager()
-{
+	// 頂点レイアウト
+	//座標
+	vertLayoutParticle_[0] = {
+	"POSITION",										//セマンティック名
+	0,												//同名のセマンティックがあるとき使うインデックス
+	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
+	0,												//入力スロットインデックス
+	D3D12_APPEND_ALIGNED_ELEMENT,					//データのオフセット地(左のは自動設定)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//入力データ種別
+	0												//一度に描画するインスタンス数(0でよい)
+	};// (1行で書いたほうが見やすい)
+	//座標以外に色、テクスチャUVなどを渡す場合はさらに続ける
+	//大きさ
+	vertLayoutParticle_[1] = {
+		"TEXCOORD", 0,	//SCALEだと思うんだけど、ここTEXCOORDにしろって言われて謎
+		DXGI_FORMAT_R32_FLOAT, 0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
+	};
+	//UV
+	vertLayoutParticle_[2] = {
+		"COLOR",0,
+		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
 }
 
 PipeLineManager* PipeLineManager::GetInstance()
@@ -329,86 +224,230 @@ PipeLineManager* PipeLineManager::GetInstance()
 
 void PipeLineManager::CreateAll()
 {
+	NGPipeline pipeLine;		//頂点レイアウト設定用
+	pipeLine.SetVertLayoutObj();
+	pipeLine.SetVertLayoutSprite();
+	pipeLine.SetVertLayoutPostEffect();
+	pipeLine.SetVertLayoutParticle();
 #pragma region デフォルト3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("obj", "Obj", false);
+	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objDesc;
-	NGPipeline objPipeLine;
 	//頂点レイアウト設定
-	objPipeLine.SetVertLayoutObj();
-	objDesc.render.InputLayout.pInputElementDescs = objPipeLine.vertLayoutObj_;
-	objDesc.render.InputLayout.NumElements = _countof(objPipeLine.vertLayoutObj_);
+	objDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
+	objDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
 	//ルートシグネチャ設定
-	NRootSignature rootSig;
-	rootSig.SetSamplerDesc(false);
+	NRootSignature rootSigObj;
+	rootSigObj.SetSamplerDesc(false);
 	//テクスチャ1個、行列、マテリアル、色、光源
-	rootSig.GetRootParam().SetRootParam(1,4);
-	rootSig.Create();
-	objDesc.rootSig = rootSig;
+	rootSigObj.SetRootParam(1,4);
+	rootSigObj.Create();
+	objDesc.rootSig = rootSigObj;
 
 	//シェーダー設定
-	objDesc.shader.pShader = NShader::GetInstance()->GetShader("obj");
+	objDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
 
 	//カリング設定
-	objDesc.render.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	objDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
 	//レンダーターゲット数設定
 	objDesc.render.NumRenderTargets = 2;
 
+	objDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
 	//深度テストする
-	objDesc.depth.isDepth = true;
+	objDesc.depth.DepthStencilState.DepthEnable = true;
 
 	//パイプライン生成
-	NGPipeline::Create(objDesc, "obj");
+	NGPipeline::Create(objDesc, "Obj");
+#pragma endregion
+#pragma region タイリング3D(背景オブジェクトとかに使う)
+	//シェーダー生成
+	NShader::GetInstance()->CreateShader("Tile", "Tile", false);
+
+	PipelineDesc tileDesc;
+	//頂点レイアウト設定
+	tileDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
+	tileDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigTile;
+	rootSigTile.SetSamplerDesc(true);
+	//テクスチャ1個、行列、マテリアル、色、光源
+	rootSigTile.SetRootParam(1, 4);
+	rootSigTile.Create();
+	tileDesc.rootSig = rootSigTile;
+
+	//シェーダー設定
+	tileDesc.shader.pShader = NShader::GetInstance()->GetShader("Tile");
+
+	//カリング設定
+	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	//レンダーターゲット数設定
+	tileDesc.render.NumRenderTargets = 2;
+
+	tileDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
+	//深度テストする
+	tileDesc.depth.DepthStencilState.DepthEnable = true;
+	
+	//パイプライン生成
+	NGPipeline::Create(tileDesc, "TileObj");
 #pragma endregion
 #pragma region デフォルト2D
 	//シェーダー生成
 	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteDesc;
-	NGPipeline spritePipeLine;
 	//頂点レイアウト設定
-	spriteDesc.render.InputLayout.pInputElementDescs = spritePipeLine.vertLayoutSprite_;
-	spriteDesc.render.InputLayout.NumElements = _countof(spritePipeLine.vertLayoutSprite_);
+	spriteDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
+	spriteDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
 	//ルートシグネチャ設定
-	NRootSignature rootSig;
-	rootSig.SetSamplerDesc(false);
+	NRootSignature rootSigSprite;
+	rootSigSprite.SetSamplerDesc(true);
 	//テクスチャ1個、行列、マテリアル、色
-	rootSig.GetRootParam().SetRootParam(1, 3);
-	rootSig.Create();
-	spriteDesc.rootSig = rootSig;
+	rootSigSprite.SetRootParam(1, 3);
+	rootSigSprite.Create();
+	spriteDesc.rootSig = rootSigSprite;
 
 	//シェーダー設定
-	spriteDesc.shader.pShader = NShader::GetInstance()->GetShader("sprite");
+	spriteDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
 
 	//深度情報設定
-	spriteDesc.depth.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	spriteDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
 	//深度テストしない
-	spriteDesc.depth.isDepth = false;
+	spriteDesc.depth.DepthStencilState.DepthEnable = false;
+
+	//レンダーターゲット数設定
+	spriteDesc.render.NumRenderTargets = 2;
 
 	//カリング設定
-	spriteDesc.render.CullMode = D3D12_CULL_MODE_NONE;
+	spriteDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
 	//パイプライン生成
-	NGPipeline::Create(spriteDesc, "sprite");
+	NGPipeline::Create(spriteDesc, "Sprite");
 #pragma endregion
 #pragma region ポストエフェクト
 	//シェーダー生成
 	NShader::GetInstance()->CreateShader("PostEffect", "CG4", false);
+
+	PipelineDesc postEffectDesc;
+	//頂点レイアウト設定
+	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
+	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigPostEffect;
+	rootSigPostEffect.SetSamplerDesc(false);
+	//テクスチャ2個、行列、色
+	rootSigPostEffect.SetRootParam(2, 2);
+	rootSigPostEffect.Create();
+	postEffectDesc.rootSig = rootSigPostEffect;
+
+	//シェーダー設定
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+
+	//深度情報設定
+	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	//深度テストしない
+	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
+
+	//レンダーターゲット数設定
+	postEffectDesc.render.NumRenderTargets = 2;
+
+	//カリング設定
+	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//パイプライン生成
+	NGPipeline::Create(postEffectDesc, "PostEffect");
 #pragma endregion
 #pragma region ガウシアンブラー
 	//シェーダー生成
 	NShader::GetInstance()->CreateShader("Gaussian", "GaussianBlur", false);
+
+	//頂点レイアウト設定
+	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
+	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
+
+	//ルートシグネチャ設定
+	postEffectDesc.rootSig = rootSigPostEffect;
+
+	//シェーダー設定
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+
+	//深度情報設定
+	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	//深度テストしない
+	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
+
+	//カリング設定
+	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//パイプライン生成
+	NGPipeline::Create(postEffectDesc, "Gaussian");
 #pragma endregion
 #pragma region ラジアルブラー
 	//シェーダー生成
 	NShader::GetInstance()->CreateShader("Radial", "RadialBlur", false);
+
+	//頂点レイアウト設定
+	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
+	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
+
+	//ルートシグネチャ設定
+	postEffectDesc.rootSig = rootSigPostEffect;
+
+	//シェーダー設定
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+
+	//深度情報設定
+	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	//深度テストしない
+	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
+
+	//カリング設定
+	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//パイプライン生成
+	NGPipeline::Create(postEffectDesc, "Radial");
 #pragma endregion
 #pragma region パーティクル3D
 	//シェーダー生成
 	NShader::GetInstance()->CreateShader("Particle3d", "Particle3D", true);
+
+	PipelineDesc particleDesc;
+	//頂点レイアウト設定
+	particleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
+	particleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutParticle_);
+
+	particleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+
+	particleDesc.blend.blendDesc = BlendUtil::GetBlendMode(BlendUtil::BlendMode::Add);
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigParticle;
+	rootSigParticle.SetSamplerDesc(false);
+	//テクスチャ2個、行列
+	rootSigParticle.SetRootParam(2, 1);
+	rootSigParticle.Create();
+	particleDesc.rootSig = rootSigParticle;
+
+	//シェーダー設定
+	particleDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
+
+	//深度情報設定
+	particleDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
+	particleDesc.depth.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み不可
+	//深度テストしない
+	particleDesc.depth.DepthStencilState.DepthEnable = false;
+
+	//カリング設定
+	particleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//パイプライン生成
+	NGPipeline::Create(particleDesc, "Particle3d");
 #pragma endregion
 }
 

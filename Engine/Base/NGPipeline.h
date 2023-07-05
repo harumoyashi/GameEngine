@@ -52,11 +52,19 @@ struct PipelineDesc
 		//-------------------- サンプルマスク --------------------//
 		UINT SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
 		//-------------------- ラスタライザ --------------------//
-		D3D12_CULL_MODE CullMode = D3D12_CULL_MODE_NONE;	// 背面カリングしない
-		// ポリゴン内塗りつぶし(D3D12_FILL_MODE_WIREFRAMEにするとワイヤーフレームに)
-		D3D12_FILL_MODE FillMode = D3D12_FILL_MODE_SOLID;
-		// 深度クリッピングを有効に
-		bool isDepthClip = true;
+		D3D12_RASTERIZER_DESC RasterizerState = D3D12_RASTERIZER_DESC{
+			D3D12_FILL_MODE_SOLID,	// ポリゴン内塗りつぶし(D3D12_FILL_MODE_WIREFRAMEにするとワイヤーフレームに)
+			D3D12_CULL_MODE_NONE,	// 背面カリングしない
+			0,
+			0,
+			0.f,
+			0.f,
+			true,					// 深度クリッピングを有効に
+			0,
+			0,
+			0,
+			D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF
+		};
 
 		//レンダーターゲット数
 		UINT NumRenderTargets = 1;	//描画対象1つ(マルチレンダーターゲットやるなら増やす)
@@ -69,16 +77,23 @@ struct PipelineDesc
 		};
 
 		//ここはパイプラインマネージャー側で設定する
-		D3D12_INPUT_LAYOUT_DESC InputLayout;
+		D3D12_INPUT_LAYOUT_DESC InputLayout{};
 	} render;
 
 	struct Depth {
 		//-------------------- デプスステンシルステート --------------------//
-		bool isDepth = true;	//深度テストするか
-		D3D12_DEPTH_WRITE_MASK DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;	//書き込み許可
-		D3D12_COMPARISON_FUNC DepthFunc = D3D12_COMPARISON_FUNC_LESS;		//小さければ合格
+		D3D12_DEPTH_STENCIL_DESC DepthStencilState = D3D12_DEPTH_STENCIL_DESC{
+			true,							//深度テストするか
+			D3D12_DEPTH_WRITE_MASK_ALL,		//書き込み許可
+			D3D12_COMPARISON_FUNC_LESS,		//小さければ合格
+			false,
+			0,
+			0,
+			D3D12_DEPTH_STENCILOP_DESC{},
+			D3D12_DEPTH_STENCILOP_DESC{}
+		};
 
-		DXGI_FORMAT DSVFormat = DXGI_FORMAT_D32_FLOAT;						//深度値フォーマット
+		DXGI_FORMAT DSVFormat = DXGI_FORMAT_D32_FLOAT;	//深度値フォーマット
 	} depth;
 
 	NRootSignature rootSig;
@@ -86,7 +101,7 @@ struct PipelineDesc
 
 class NGPipeline
 {
-private:
+public:
 	//パイプラインデスク
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psDesc_{};
 	//パイプラインステート
@@ -97,6 +112,7 @@ public:
 	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutParticle_[3];
 
 public:
 	//パイプライン生成、指定したIDで登録
@@ -124,21 +140,8 @@ public:
 	void SetVertLayoutSprite();
 	//ポストエフェクト用頂点レイアウト設定
 	void SetVertLayoutPostEffect();
-
-#pragma endregion
-#pragma region パイプライン生成
-	//3Dオブジェクト用パイプライン生成
-	PipelineSet CreatePipeline3d();
-	//スプライト用パイプライン生成
-	PipelineSet CreatePipelineSprite();
-	//ポストエフェクト用パイプライン生成
-	PipelineSet CreatePipelinePostEffect();
-	//ガウシアンブラー用パイプライン生成
-	PipelineSet CreatePipelineGaussian();
-	//ラジアルブラー用パイプライン生成
-	PipelineSet CreatePipelineRadial();
-	//タイル用パイプライン生成
-	PipelineSet CreatePipelineTile();
+	//3Dパーティクル用頂点レイアウト設定
+	void SetVertLayoutParticle();
 #pragma endregion
 };
 

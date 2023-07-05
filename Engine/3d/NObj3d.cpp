@@ -144,14 +144,14 @@ void NObj3d::CommonBeginDraw(const bool isTiling)
 	if (isTiling)
 	{
 		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("Tile").pipelineState_.Get());
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("Tile").rootSig.entity_.Get());
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObj"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObj")->pRootSignature);
 	}
 	else
 	{
 		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("3d").pipelineState_.Get());
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("3d").rootSig.entity_.Get());
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
 	}
 
 	// プリミティブ形状の設定コマンド

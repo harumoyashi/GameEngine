@@ -10,10 +10,10 @@ class NShader
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<ID3DBlob> vsBlob_;	// 頂点シェーダオブジェクト
-	ComPtr<ID3DBlob> psBlob_;	// ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> gsBlob_;	// ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> errorBlob_; // エラーオブジェクト
+	ComPtr<ID3DBlob> vsBlob_;		// 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob_;		// ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> gsBlob_;		// ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob_;	// エラーオブジェクト
 
 	std::map<std::string, NShader> shaderMap_;
 

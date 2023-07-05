@@ -14,7 +14,8 @@ private:
 	
 	D3D12_STATIC_SAMPLER_DESC samplerDesc_{};		//テクスチャサンプラー
 
-	NRootParam rootParams_;							//ルートパラメータ
+	std::vector<D3D12_ROOT_PARAMETER> rootParam_;			//ルートパラメータ
+	std::vector<D3D12_DESCRIPTOR_RANGE> descriptorRange_{};	//デスクリプタレンジ
 
 public:
 	//ルートシグネチャの生成
@@ -24,6 +25,8 @@ public:
 	void SetSamplerDesc(const bool isTiling);
 
 	//ルートパラメータ取得
-	NRootParam GetRootParam()const { return rootParams_; }
+	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);
+	//ルートシグネチャ取得
+	ID3D12RootSignature* GetRootSignature()const { return entity_.Get(); }
 };
 

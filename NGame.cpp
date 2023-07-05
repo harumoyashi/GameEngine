@@ -24,7 +24,7 @@ void NGame::Init()
 	NInput::GetInstance()->PadInit();
 	//グラフィックスパイプライン初期化
 	pipeline_ = PipeLineManager::GetInstance();
-	pipeline_->Init();
+	pipeline_->CreateAll();
 #pragma endregion
 #pragma region オーディオ初期化
 	audio_ = NAudio::GetInstance();

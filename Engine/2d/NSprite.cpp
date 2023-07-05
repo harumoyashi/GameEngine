@@ -197,8 +197,8 @@ void NSprite::SetPos(const float x, const float y)
 void NSprite::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(PipeLineManager::GetInstance()->GetPipelineSet("Sprite").pipelineState_.Get());
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(PipeLineManager::GetInstance()->GetPipelineSet("Sprite").rootSig.entity_.Get());
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Sprite"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Sprite")->pRootSignature);
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
