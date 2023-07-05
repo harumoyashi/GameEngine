@@ -6,6 +6,11 @@
 
 #pragma comment(lib, "xAudio2.lib")
 
+#pragma comment(lib, "Mf.lib")
+#pragma comment(lib, "mfplat.lib")
+#pragma comment(lib, "Mfreadwrite.lib")
+#pragma comment(lib, "mfuuid.lib")
+
 void NAudio::XAudio2VoiceCallback::OnBufferEnd(THIS_ void* pBufferContext) {
 
 	Voice* voice = reinterpret_cast<Voice*>(pBufferContext);

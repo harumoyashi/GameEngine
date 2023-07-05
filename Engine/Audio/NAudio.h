@@ -1,8 +1,6 @@
 #pragma once
 #include <xAudio2.h>
 
-#pragma comment(lib,"xAudio2.lib")
-
 #include <array>
 #include <cstdint>
 #include <set>
@@ -14,11 +12,6 @@
 #include <mfapi.h>
 #include <mfidl.h>
 #include <mfreadwrite.h>
-
-#pragma comment(lib, "Mf.lib")
-#pragma comment(lib, "mfplat.lib")
-#pragma comment(lib, "Mfreadwrite.lib")
-#pragma comment(lib, "mfuuid.lib")
 
 //âπê∫ÉfÅ[É^
 struct SoundData

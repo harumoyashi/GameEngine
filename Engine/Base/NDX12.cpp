@@ -1,6 +1,9 @@
 #include "NDX12.h"
 #include <thread>
 
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+
 NDX12* NDX12::GetInstance()
 {
 	static NDX12 instance;

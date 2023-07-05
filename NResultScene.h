@@ -12,9 +12,6 @@
 #include "NAudio.h"
 #include "NCollision.h"
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-
 class NResultScene
 {
 private:

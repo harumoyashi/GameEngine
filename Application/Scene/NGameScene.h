@@ -14,9 +14,6 @@
 #include "NModel.h"
 #include "NAudio.h"
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-
 class NGameScene:
 	public IScene
 {
