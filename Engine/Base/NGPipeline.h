@@ -38,6 +38,17 @@ struct PipelineDesc
 			D3D12_BLEND_OP BlendOp = D3D12_BLEND_OP_ADD;
 			D3D12_BLEND SrcBlend = D3D12_BLEND_SRC_ALPHA;
 			D3D12_BLEND DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+
+			enum class BlendMode
+			{
+				Alpha,	//αブレンド
+				Add,	//加算
+				Sub,	//減算
+				Inv,	//反転
+			};
+
+			//指定したブレンドモードのブレンド情報を取得
+			static PipelineDesc::Blend::BlendDesc GetBlendMode(BlendMode blendMode);
 		}blendDesc;
 	} blend;
 
@@ -152,19 +163,4 @@ public:
 	static PipeLineManager* GetInstance();
 	//パイプライン全種つくる
 	void CreateAll();
-};
-
-//ブレンドモードを扱いやすくする用
-namespace BlendUtil
-{
-	enum class BlendMode
-	{
-		Alpha,	//αブレンド
-		Add,	//加算
-		Sub,	//減算
-		Inv,	//反転
-	};
-
-	//指定したブレンドモードのブレンド情報を取得
-	static PipelineDesc::Blend::BlendDesc GetBlendMode(BlendMode blendMode);
 };

@@ -6,8 +6,6 @@
 #include "NVector3.h"
 #include "NMatrix4.h"
 
-using namespace DirectX;
-
 class NCamera
 {
 public:

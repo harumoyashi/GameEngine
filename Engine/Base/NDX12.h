@@ -9,7 +9,6 @@
 
 #include <DirectXMath.h>
 #include <chrono>
-using namespace DirectX;
 
 #include "NInput.h"
 

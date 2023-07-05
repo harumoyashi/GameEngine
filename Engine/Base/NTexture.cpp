@@ -151,7 +151,7 @@ bool NTextureManager::Load(const std::string& pictureName)
 	{
 		result = LoadFromWICFile(
 			wPictureName.c_str(),	//ここで文字型に
-			WIC_FLAGS_NONE,
+			DirectX::WIC_FLAGS_NONE,
 			&metadata_, scratchImg_);
 	}
 
@@ -168,7 +168,7 @@ void NTextureManager::CreateMipmap()
 
 	result = GenerateMipMaps(
 		scratchImg_.GetImages(), scratchImg_.GetImageCount(), scratchImg_.GetMetadata(),
-		TEX_FILTER_DEFAULT, 0, mipChain_);
+		DirectX::TEX_FILTER_DEFAULT, 0, mipChain_);
 	if (SUCCEEDED(result))
 	{
 		scratchImg_ = std::move(mipChain_);
@@ -176,7 +176,7 @@ void NTextureManager::CreateMipmap()
 	}
 
 	//読み込んだディフューズテクスチャをSRGBとして扱う
-	metadata_.format = MakeSRGB(metadata_.format);
+	metadata_.format = DirectX::MakeSRGB(metadata_.format);
 }
 
 void NTextureManager::SetTBHeap()
@@ -224,7 +224,7 @@ void NTextureManager::TexBuffMaping(ID3D12Resource* texBuff)
 	for (size_t i = 0; i < metadata_.mipLevels; i++)
 	{
 		//ミップマップレベルを指定してイメージを取得
-		const Image* img = scratchImg_.GetImage(i, 0, 0);
+		const DirectX::Image* img = scratchImg_.GetImage(i, 0, 0);
 		//テクスチャバッファにデータ転送
 		result = texBuff->WriteToSubresource(
 			(uint32_t)i,

@@ -6,12 +6,10 @@
 #include "NAssimpLoader.h"
 #include "NUtil.h"
 
-namespace fs = std::filesystem;
-
 //ディレクトリパスのみにする
 std::wstring GetDirectoryPath(const std::wstring& origin)
 {
-	fs::path p = origin.c_str();
+	std::filesystem::path p = origin.c_str();
 	return p.remove_filename().c_str();
 }
 
@@ -144,22 +142,22 @@ void NAssimpLoader::LoadBone(Bone& dst, const aiMesh* src)
 		aiBone* bone = src->mBones[i];
 		
 
-		dst.offsetMatrix.m[0][0] = (float)bone->mOffsetMatrix.a1;
-		dst.offsetMatrix.m[0][1] = (float)bone->mOffsetMatrix.a2;
-		dst.offsetMatrix.m[0][2] = (float)bone->mOffsetMatrix.a3;
-		dst.offsetMatrix.m[0][3] = (float)bone->mOffsetMatrix.a4;
-		dst.offsetMatrix.m[1][0] = (float)bone->mOffsetMatrix.b1;
-		dst.offsetMatrix.m[1][1] = (float)bone->mOffsetMatrix.b2;
-		dst.offsetMatrix.m[1][2] = (float)bone->mOffsetMatrix.b3;
-		dst.offsetMatrix.m[1][3] = (float)bone->mOffsetMatrix.b4;
-		dst.offsetMatrix.m[2][0] = (float)bone->mOffsetMatrix.c1;
-		dst.offsetMatrix.m[2][1] = (float)bone->mOffsetMatrix.c2;
-		dst.offsetMatrix.m[2][2] = (float)bone->mOffsetMatrix.c3;
-		dst.offsetMatrix.m[2][3] = (float)bone->mOffsetMatrix.c4;
-		dst.offsetMatrix.m[3][0] = (float)bone->mOffsetMatrix.d1;
-		dst.offsetMatrix.m[3][1] = (float)bone->mOffsetMatrix.d2;
-		dst.offsetMatrix.m[3][2] = (float)bone->mOffsetMatrix.d3;
-		dst.offsetMatrix.m[3][3] = (float)bone->mOffsetMatrix.d4;
+		dst.ofstd::filesystemetMatrix.m[0][0] = (float)bone->mOfstd::filesystemetMatrix.a1;
+		dst.ofstd::filesystemetMatrix.m[0][1] = (float)bone->mOfstd::filesystemetMatrix.a2;
+		dst.ofstd::filesystemetMatrix.m[0][2] = (float)bone->mOfstd::filesystemetMatrix.a3;
+		dst.ofstd::filesystemetMatrix.m[0][3] = (float)bone->mOfstd::filesystemetMatrix.a4;
+		dst.ofstd::filesystemetMatrix.m[1][0] = (float)bone->mOfstd::filesystemetMatrix.b1;
+		dst.ofstd::filesystemetMatrix.m[1][1] = (float)bone->mOfstd::filesystemetMatrix.b2;
+		dst.ofstd::filesystemetMatrix.m[1][2] = (float)bone->mOfstd::filesystemetMatrix.b3;
+		dst.ofstd::filesystemetMatrix.m[1][3] = (float)bone->mOfstd::filesystemetMatrix.b4;
+		dst.ofstd::filesystemetMatrix.m[2][0] = (float)bone->mOfstd::filesystemetMatrix.c1;
+		dst.ofstd::filesystemetMatrix.m[2][1] = (float)bone->mOfstd::filesystemetMatrix.c2;
+		dst.ofstd::filesystemetMatrix.m[2][2] = (float)bone->mOfstd::filesystemetMatrix.c3;
+		dst.ofstd::filesystemetMatrix.m[2][3] = (float)bone->mOfstd::filesystemetMatrix.c4;
+		dst.ofstd::filesystemetMatrix.m[3][0] = (float)bone->mOfstd::filesystemetMatrix.d1;
+		dst.ofstd::filesystemetMatrix.m[3][1] = (float)bone->mOfstd::filesystemetMatrix.d2;
+		dst.ofstd::filesystemetMatrix.m[3][2] = (float)bone->mOfstd::filesystemetMatrix.d3;
+		dst.ofstd::filesystemetMatrix.m[3][3] = (float)bone->mOfstd::filesystemetMatrix.d4;
 	}
 
 	dst.indices.resize(src->mNumFaces * 3);

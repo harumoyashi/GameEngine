@@ -25,13 +25,13 @@ class NTextureManager
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	TexMetadata metadata_{};
-	ScratchImage scratchImg_{};
+	DirectX::TexMetadata metadata_{};
+	DirectX::ScratchImage scratchImg_{};
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 	D3D12_HEAP_PROPERTIES texHeapProp_{};	//ヒープ
 	D3D12_RESOURCE_DESC texResDesc_{};		//リソース
 	static const size_t kMaxSRVCount = 2056;	//SRVの最大個数
-	ScratchImage mipChain_{};				//ミップマップ
+	DirectX::ScratchImage mipChain_{};				//ミップマップ
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
 

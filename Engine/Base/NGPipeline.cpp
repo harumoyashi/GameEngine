@@ -2,6 +2,8 @@
 
 std::map<std::string, NGPipeline> psoMap;	//パイプラインステートのマップ
 
+using bDesc = PipelineDesc::Blend::BlendDesc;	//長すぎるから省略
+
 void NGPipeline::Create(PipelineDesc desc, std::string id)
 {
 	psoMap[id] = NGPipeline();
@@ -424,7 +426,8 @@ void PipeLineManager::CreateAll()
 
 	particleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 
-	particleDesc.blend.blendDesc = BlendUtil::GetBlendMode(BlendUtil::BlendMode::Add);
+	particleDesc.blend.blendDesc = 
+		bDesc::GetBlendMode(bDesc::BlendMode::Add);
 
 	//ルートシグネチャ設定
 	NRootSignature rootSigParticle;
@@ -451,24 +454,24 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 }
 
-PipelineDesc::Blend::BlendDesc BlendUtil::GetBlendMode(BlendMode blendMode)
+bDesc bDesc::GetBlendMode(BlendMode blendMode)
 {
-	PipelineDesc::Blend::BlendDesc desc;
+	bDesc desc;
 	switch (blendMode)
 	{
-	case BlendUtil::BlendMode::Alpha:
+	case BlendMode::Alpha:
 		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
 		desc.SrcBlend = D3D12_BLEND_SRC_ALPHA;				//ソースのアルファ値
 		desc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;			//1.0f-ソースのアルファ値
 		break;
 
-	case BlendUtil::BlendMode::Add:
+	case BlendMode::Add:
 		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
 		desc.SrcBlend = D3D12_BLEND_ONE;					//ソースの値を100%使う
 		desc.DestBlend = D3D12_BLEND_ONE;					//デストの値を100%使う
 		break;
 
-	case BlendUtil::BlendMode::Sub:
+	case BlendMode::Sub:
 		desc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;			//減算
 		desc.SrcBlend = D3D12_BLEND_ONE;					//ソースの値を100%使う
 		desc.DestBlend = D3D12_BLEND_ONE;					//デストの値を100%使う
@@ -478,7 +481,7 @@ PipelineDesc::Blend::BlendDesc BlendUtil::GetBlendMode(BlendMode blendMode)
 		desc.DestBlendAlpha = D3D12_BLEND_ONE;				//デストの値を100%使う
 		break;
 
-	case BlendUtil::BlendMode::Inv:
+	case BlendMode::Inv:
 		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
 		desc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;			//色反転(1-RGB)
 		desc.DestBlend = D3D12_BLEND_ZERO;					//デストの値を0%使う

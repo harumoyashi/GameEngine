@@ -4,7 +4,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-using namespace std;
 
 std::map<ModelHandle, uint32_t> NModelManager::sModelMap{};
 
@@ -44,8 +43,8 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 	//ファイルストリーム
 	std::ifstream file;
 	//.objファイルを開く
-	const string filename = modelname + ".obj";	//"triangle_mat.obj"
-	const string directoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/
+	const std::string filename = modelname + ".obj";	//"triangle_mat.obj"
+	const std::string directoryPath = "Resources/" + modelname + "/";	//"Resources/triangle_mat/
 	file.open(directoryPath + filename);	//"Resources/triangle_mat/triangle_mat.obj"
 	//ファイルオープン失敗をチェック
 	if (file.fail())
@@ -53,28 +52,28 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		assert(0);
 	}
 
-	vector<NVector3>positions;	//頂点座標
-	vector<NVector3>normals;	//法線ベクトル
-	vector<NVector2>texcoords;	//テクスチャUV
+	std::vector<NVector3>positions;	//頂点座標
+	std::vector<NVector3>normals;	//法線ベクトル
+	std::vector<NVector2>texcoords;	//テクスチャUV
 	modelDatas_.emplace_back();
 	// 書き込むモデルデータの参照
 	Model& modelData = modelDatas_.at(handle);
 	//1行ずつ読み込む
-	string line;
+	std::string line;
 	while (getline(file, line))
 	{
 		//1行分の文字列をストリームに変換して解析しやすくする
 		std::istringstream line_stream(line);
 
 		//半角スペース区切りで行の先頭文字列を取得
-		string key;
+		std::string key;
 		getline(line_stream, key, ' ');
 
 		//先頭文字列がmtllibならマテリアル
 		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
-			string filename;
+			std::string filename;
 			line_stream >> filename;
 			//マテリアル読み込み
 			modelData.material = NMtllib::Load(directoryPath, filename);
@@ -121,16 +120,16 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		if (key == "f")
 		{
 			//半角スペース区切りで行の続きを読み込む
-			string index_string;
+			std::string index_string;
 			while (getline(line_stream, index_string, ' '))
 			{
 				//頂点インデックス1行分の文字列をストリームに変換して解析しやすくする
-				std::istringstream index_stream(index_string);
+				std::stringstream index_stream(index_string);
 				unsigned short indexPosition, indexNormal, indexTexcoord;
 				index_stream >> indexPosition;
-				index_stream.seekg(1, ios_base::cur);	//スラッシュを飛ばす
+				index_stream.seekg(1, std::ios_base::cur);	//スラッシュを飛ばす
 				index_stream >> indexTexcoord;
-				index_stream.seekg(1, ios_base::cur);	//スラッシュを飛ばす
+				index_stream.seekg(1, std::ios_base::cur);	//スラッシュを飛ばす
 				index_stream >> indexNormal;
 
 				//頂点データに追加
