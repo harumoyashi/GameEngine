@@ -129,11 +129,11 @@ bool NVertexParticle::operator==(const NVertexParticle& a) const
 	{
 		return false;
 	}
-	else if (scale.x != a.scale.x|| scale.y != a.scale.y|| scale.z != a.scale.z)
+	else if (color != a.color)
 	{
 		return false;
 	}
-	else if (color != a.color)
+	else if (scale != a.scale)
 	{
 		return false;
 	}

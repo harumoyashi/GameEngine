@@ -46,13 +46,17 @@ void IEmitter3D::Update()
 		particles_[i].frame++;
 
 		//スケールの線形補間
-		particles_[i].scale.x = NEasing::lerp(particles_[i].startScale.x, particles_[i].endScale.x, particles_[i].timer.GetTimeRate());
-		particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
-
-		//particles_[i].rot;
-
+		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].timer.GetTimeRate());
+		//particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
+		
 		//加速度を速度に加算
 		particles_[i].velo += particles_[i].accel;
+
+		//初期のランダム角度をもとに回す
+		if (isRotation_)
+		{
+			particles_[i].rot += particles_[i].rot;
+		}
 
 		//重力加算
 		if (isGravity_)
@@ -72,10 +76,10 @@ void IEmitter3D::Update()
 
 		//座標
 		vertex.pos = particles_[i].pos;
-		//スケール
-		vertex.scale = particles_[i].scale;
 		//色
 		vertex.color = particles_[i].color;
+		//スケール
+		vertex.scale = particles_[i].scale;
 
 		vertices_.at(i) = vertex;
 	}
@@ -152,7 +156,7 @@ void IEmitter3D::TransferMatrix()
 	cbTrans_->Unmap();
 }
 
-void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minScale, NVector3 maxScale,
+void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
 	NVector3 minVelo, NVector3 maxVelo, NVector3 accel, NVector3 minRot, NVector3 maxRot)
 {
 	for (uint32_t i = 0; i < addNum; i++)
@@ -173,9 +177,9 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minS
 		float pZ = MathUtil::Randomf(-scale_.z, scale_.z);
 		NVector3 randomPos(pX, pY, pZ);
 		//引数の範囲から大きさランダムで決定
-		float sX = MathUtil::Randomf(minScale.x, maxScale.x);
-		float sY = MathUtil::Randomf(minScale.y, maxScale.y);
-		float sZ = MathUtil::Randomf(minScale.z, maxScale.z);
+		float sX = MathUtil::Randomf(minScale, maxScale);
+		float sY = MathUtil::Randomf(minScale, maxScale);
+		float sZ = MathUtil::Randomf(minScale, maxScale);
 		NVector3 randomScale(sX, sY, sZ);
 		//引数の範囲から飛ばす方向ランダムで決定
 		float vX = MathUtil::Randomf(minVelo.x, maxVelo.x);
@@ -183,9 +187,9 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minS
 		float vZ = MathUtil::Randomf(minVelo.z, maxVelo.z);
 		NVector3 randomVelo(vX, vY, vZ);
 		//引数の範囲から回転をランダムで決定
-		float rX = MathUtil::Randomf(minRot.x, maxRot.x);
-		float rY = MathUtil::Randomf(minRot.y, maxRot.y);
-		float rZ = MathUtil::Randomf(minRot.z, maxRot.z);
+		float rX = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.x, maxRot.x));
+		float rY = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.y, maxRot.y));
+		float rZ = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.z, maxRot.z));
 		NVector3 randomRot(rX, rY, rZ);
 
 		//決まった座標にエミッター自体の座標を足して正しい位置に
@@ -195,9 +199,9 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minS
 		p.velo = randomVelo;
 		p.accel = accel;
 		p.num_frame = life;
-		p.scale = randomScale;
-		p.startScale = randomScale;
-		p.endScale = { 0,0,0 };
+		p.scale = sX;
+		p.startScale = p.scale;
+		p.endScale = 0.0f;
 		p.color = color;
 		//イージング用のタイマーを設定、開始
 		p.timer.maxTime_ = (float)life / 60.0f;

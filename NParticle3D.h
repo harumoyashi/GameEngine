@@ -14,9 +14,9 @@ class IEmitter3D
 		//座標
 		NVector3 pos;
 		//大きさ
-		NVector3 scale;
-		NVector3 startScale;	//開始時の大きさ
-		NVector3 endScale;		//終了時の大きさ
+		float scale;
+		float startScale;	//開始時の大きさ
+		float endScale;		//終了時の大きさ
 		//角度
 		NVector3 rot;
 		//速度
@@ -72,12 +72,13 @@ private:
 	//何フレームに一回パーティクル追加するか
 	uint32_t addInterval_;
 
-	const uint32_t maxParticle_ = 256;	//最大数
+	const uint32_t maxParticle_ = 256;		//最大数
 	std::vector<Particle3D> particles_;		//パーティクル配列
 
 	bool isActive_ = false;					//有効にするかフラグ
 
 	bool isGravity_ = false;				//重力の影響受けるかフラグ
+	bool isRotation_ = false;				//回すかフラグ
 
 	NTexture texture_;						//テクスチャ(使うかわからん)
 
@@ -86,9 +87,10 @@ public:
 	virtual ~IEmitter3D() = default;
 
 	//初期化
-	void Init();
+	//このままの処理を呼びたいなら継承先でこれを呼ぶ
+	virtual void Init();
 	//更新
-	//このままの処理を呼びたいなら継承先のUpdate()でこれを呼ぶ
+	//このままの処理を呼びたいなら継承先でこれを呼ぶ
 	virtual void Update();
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
@@ -101,8 +103,8 @@ public:
 	void TransferMatrix();
 
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
-	virtual void Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minScale, NVector3 maxScale,
-		NVector3 minVelo, NVector3 maxVelo,NVector3 accel = { 0,0,0 }, NVector3 minRot = {}, NVector3 maxRot = {});
+	virtual void Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
+		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {});
 	//パーティクル全消し
 	inline void ClearParticles() { particles_.clear(); }
 
@@ -131,6 +133,8 @@ public:
 	inline void SetIsActive(bool isActive) { isActive_ = isActive; }
 	//重力フラグ設定
 	inline void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
+	//回転フラグ設定
+	inline void SetIsRotation(bool isRotation) { isRotation_ = isRotation; }
 
 	//拡縮用タイマーが切り替わる時間設定(秒)
 	void SetScalingTimer(float timer);

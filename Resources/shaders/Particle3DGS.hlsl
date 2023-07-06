@@ -95,8 +95,8 @@ void main(
         
         //ƒrƒ…[AË‰e•ÏŠ·
         element.svpos = mul(mat,element.svpos);
-        element.uv = uv_array[i];
         element.color = input[0].color;
+        element.uv = uv_array[i];
         //element.color = (0.0f, 0.0f, 0.0f, 1.0f);
         output.Append(element);      
     }

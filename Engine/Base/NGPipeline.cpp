@@ -202,19 +202,19 @@ void NGPipeline::SetVertLayoutParticle()
 	0												//一度に描画するインスタンス数(0でよい)
 	};// (1行で書いたほうが見やすい)
 	//座標以外に色、テクスチャUVなどを渡す場合はさらに続ける
-	//大きさ
+	//色
 	vertLayoutParticle_[1] = {
-		"TEXCOORD", 0,	//SCALEだと思うんだけど、ここTEXCOORDにしろって言われて謎
-		DXGI_FORMAT_R32_FLOAT, 0,
-		D3D12_APPEND_ALIGNED_ELEMENT,
-		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
-	};
-	//UV
-	vertLayoutParticle_[2] = {
 		"COLOR",0,
 		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
+	//大きさ
+	vertLayoutParticle_[2] = {
+		"TEXCOORD", 0,
+		DXGI_FORMAT_R32_FLOAT, 0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 	};
 }
 
@@ -426,8 +426,8 @@ void PipeLineManager::CreateAll()
 
 	particleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 
-	particleDesc.blend.blendDesc = 
-		bDesc::GetBlendMode(bDesc::BlendMode::Add);
+	//particleDesc.blend.blendDesc = 
+	//	bDesc::GetBlendMode(bDesc::BlendMode::Add);
 
 	//ルートシグネチャ設定
 	NRootSignature rootSigParticle;

@@ -1,6 +1,6 @@
 #include "Particle3D.hlsli"
 
-VSOutput main(float4 pos : POSITION, float scale : TEXCOORD, float4 color : COLOR)
+VSOutput main(float4 pos : POSITION, float4 color : COLOR, float scale : TEXCOORD)
 {
 	VSOutput output; // ピクセルシェーダーに渡す値
 	output.pos = pos;

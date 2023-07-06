@@ -54,11 +54,11 @@ class NVertexParticle
 {
 public:
 	NVector3 pos = { 0, 0, 0 };
-	NVector3 scale = { 0, 0, 0 };
 	NColor color = NColor::kWhite;
+	float scale = 0.0f;
 
-	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NVector3 scale = { 0, 0, 0 }, NColor color = NColor::kWhite)
-		: pos(pos), scale(scale), color(color) {}
+	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NColor color = NColor::kWhite, float scale = 0.0f )
+		: pos(pos), color(color), scale(scale) {}
 
 	bool operator==(const NVertexParticle& a) const;
 };
@@ -71,7 +71,7 @@ public:
 	NVector3 normal = { 0, 0, 1 };
 	NVector2 uv = { 0, 0 };
 	std::vector<uint32_t> boneIndex{ 4 };
-	std::vector<float> boneWeight{4};
+	std::vector<float> boneWeight{ 4 };
 
 	NVertexAssimp(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 },
 		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
