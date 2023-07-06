@@ -41,7 +41,7 @@ void NTitleScene::Init()
 	//オブジェクト
 	//レベルデータからの読み込み
 	levelData_ = std::make_unique<LevelData>();
-	levelData_ = NLevelDataLoader::GetInstance()->Load("C:/Users/K021G1126/source/repos/GE3/directX_CG/", "levelEditor.json");
+	levelData_ = NLevelDataLoader::GetInstance()->Load("levelEditor.json");
 	//SetObject(levelData_.get());
 	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
 	//レベルデータにあるカメラをデバッグカメラ情報に適用

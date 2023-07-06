@@ -9,10 +9,10 @@ NLevelDataLoader* NLevelDataLoader::GetInstance()
 	return &instance;
 }
 
-std::unique_ptr<LevelData> NLevelDataLoader::Load(const std::string& directoryPath, const std::string& filename)
+std::unique_ptr<LevelData> NLevelDataLoader::Load(const std::string& filename)
 {
 	//連結してフルパスを見る
-	const std::string fullpath = directoryPath + filename;
+	const std::string fullpath = filename;
 
 	//ファイルストリーム
 	std::ifstream file;

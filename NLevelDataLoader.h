@@ -28,7 +28,7 @@ private:
 public:
 	//シングルトンインスタンス取得
 	static NLevelDataLoader* GetInstance();
-	std::unique_ptr<LevelData> Load(const std::string& directoryPath, const std::string& filename);
+	std::unique_ptr<LevelData> Load(const std::string& filename);
 	//走査
 	void Traversal(nlohmann::json& object, LevelData* levelData);
 
