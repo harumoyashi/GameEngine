@@ -71,6 +71,9 @@ void Emitter3D::Draw()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ2番に色情報の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
+
+	////SRVの設定
+	//NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, gpuHandle);
 }
 
 void Emitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo, NVector3 accel, float minRot, float maxRot, NColor color)
