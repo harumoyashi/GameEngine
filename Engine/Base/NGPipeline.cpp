@@ -440,6 +440,8 @@ void PipeLineManager::CreateAll()
 	//シェーダー設定
 	particleDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
 
+	particleDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+
 	//深度情報設定
 	particleDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
 	particleDesc.depth.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み不可

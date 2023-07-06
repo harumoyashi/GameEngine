@@ -26,6 +26,7 @@ namespace MathUtil
 	uint32_t Sign(const uint32_t value);
 	//ランダムな値を返す
 	uint32_t Random(const uint32_t min, const uint32_t max);
+	float Randomf(const float min, const float max);
 	//最小、最大値設定
 	template <typename Type>
 	Type Clamp(const Type value, const Type min, const Type max)

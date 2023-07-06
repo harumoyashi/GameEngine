@@ -182,6 +182,10 @@ void NTitleScene::Draw3D()
 	assimpModel_.Draw();
 }
 
+void NTitleScene::DrawParticle()
+{
+}
+
 void NTitleScene::DrawForeSprite()
 {
 	foreSprite_[0]->Draw();

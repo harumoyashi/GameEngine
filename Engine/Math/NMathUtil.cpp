@@ -101,6 +101,13 @@ uint32_t MathUtil::Random(const uint32_t min, const uint32_t max)
 	return (uint32_t)dist1(engine);
 }
 
+float MathUtil::Randomf(const float min, const float max)
+{
+	std::uniform_real_distribution<> dist1(min, max);
+
+	return (float)dist1(engine);
+}
+
 NVector2 MathUtil::CircleMotion(NVector2 CenterPoint, float radius, float angle)
 {
 	NVector2 position;

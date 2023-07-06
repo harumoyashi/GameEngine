@@ -160,6 +160,7 @@
     <ClInclude Include="NModelManager.h" />
     <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="NParticle2D.h" />
+    <ClInclude Include="NParticleManager.h" />
     <ClInclude Include="NPointLight.h" />
     <ClInclude Include="NPostEffect.h" />
     <ClInclude Include="NResultScene.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RadialBlur.h" />
     <ClInclude Include="SideBullet.h" />
+    <ClInclude Include="SimpleParticle.h" />
     <ClInclude Include="Wave.h" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +230,7 @@
     <ClCompile Include="NModelManager.cpp" />
     <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="NParticle2D.cpp" />
+    <ClCompile Include="NParticleManager.cpp" />
     <ClCompile Include="NPointLight.cpp" />
     <ClCompile Include="NPostEffect.cpp" />
     <ClCompile Include="NResultScene.cpp" />
@@ -240,6 +243,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RadialBlur.cpp" />
     <ClCompile Include="SideBullet.cpp" />
+    <ClCompile Include="SimpleParticle.cpp" />
     <ClCompile Include="Wave.cpp" />
   </ItemGroup>
   <ItemGroup>

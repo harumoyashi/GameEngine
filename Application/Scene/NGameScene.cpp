@@ -3,6 +3,7 @@
 #include "NSceneManager.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
+#include "NParticleManager.h"
 
 #include "Player.h"
 #include "BulletManager.h"
@@ -36,7 +37,7 @@ void NGameScene::Init()
 	Wave::GetInstance()->Init();
 
 #pragma region オブジェクトの初期値設定
-	
+
 
 #pragma endregion
 	//背景スプライト生成
@@ -49,6 +50,8 @@ void NGameScene::Init()
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+
+	NParticleManager::GetInstance()->Init();
 }
 
 void NGameScene::Update()
@@ -58,7 +61,7 @@ void NGameScene::Update()
 #pragma endregion
 #pragma region プレイヤー
 	Player::GetInstance()->Update();
-	
+
 #pragma endregion
 	BulletManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
@@ -67,7 +70,10 @@ void NGameScene::Update()
 	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 	{
 		Player::GetInstance()->SetIsAlive(false);
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
 	}
+
+	NParticleManager::GetInstance()->Update();
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -93,6 +99,11 @@ void NGameScene::Draw3D()
 {
 	BulletManager::GetInstance()->Draw();
 	Player::GetInstance()->Draw();
+}
+
+void NGameScene::DrawParticle()
+{
+	NParticleManager::GetInstance()->Draw();
 }
 
 void NGameScene::DrawForeSprite()

@@ -1,5 +1,6 @@
 #include "NParticle3D.h"
 #include "NGPipeLine.h"
+#include "NCamera.h"
 #include "NMathUtil.h"
 
 IEmitter3D::IEmitter3D()
@@ -14,7 +15,9 @@ IEmitter3D::IEmitter3D()
 	scaling_ = 0;
 	texture_ = NTextureManager::GetInstance()->textureMap_["white"];	//とりま真っ白なテクスチャ割り当てとく
 
+	//更新処理でサイズが変わっちゃうから、あらかじめ最大数分作る
 	vertices_.resize(maxParticle_);
+	//それによってバッファの初期化をする
 	vertexBuff_.Init(vertices_);
 }
 
@@ -22,7 +25,7 @@ void IEmitter3D::Init()
 {
 }
 
-void IEmitter3D::Update(bool isGravity)
+void IEmitter3D::Update()
 {
 	//寿命が尽きたパーティクルを全削除
 	for (size_t i = 0; i < particles_.size(); i++)
@@ -46,11 +49,13 @@ void IEmitter3D::Update(bool isGravity)
 		particles_[i].scale.x = NEasing::lerp(particles_[i].startScale.x, particles_[i].endScale.x, particles_[i].timer.GetTimeRate());
 		particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
 
+		//particles_[i].rot;
+
 		//加速度を速度に加算
 		particles_[i].velo += particles_[i].accel;
 
 		//重力加算
-		if (isGravity)
+		if (isGravity_)
 		{
 			particles_[i].velo.y += particles_[i].gravity;
 		}
@@ -77,13 +82,15 @@ void IEmitter3D::Update(bool isGravity)
 
 	//毎回頂点数が変わるので初期化しなおす
 	vertexBuff_.TransferBuffer(vertices_);
+
+	UpdateMatrix();
 }
 
 void IEmitter3D::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle")->pRootSignature);
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3d"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3d")->pRootSignature);
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); // 点
@@ -95,16 +102,58 @@ void IEmitter3D::CommonBeginDraw()
 void IEmitter3D::Draw()
 {
 	//ルートパラメータ1番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
+
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuff_.GetView());
 
 	//SRVの設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture_.gpuHandle_);
 
 	// 描画コマンド
-	NDX12::GetInstance()->GetCommandList()->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()),1,0,0);
+	NDX12::GetInstance()->GetCommandList()->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
 }
 
-void IEmitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo, NVector3 accel, float minRot, float maxRot, NColor color)
+void IEmitter3D::UpdateMatrix()
+{
+	//ワールド行列
+	NMatrix4 matScale;	//スケーリング行列
+	matScale = matScale.Scale(scale_);
+
+	NMatrix4 matRot;		//回転行列
+	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rot_.z));
+	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rot_.x));
+	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rot_.y));
+	matRot *= matZ;	//Z軸周りに回転してから
+	matRot *= matX;	//X軸周りに回転して
+	matRot *= matY;	//Y軸周りに回転
+
+	NMatrix4 matTrans;	//平行移動行列
+	matTrans = matTrans.Translation(pos_);
+
+	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
+	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
+
+	// 定数バッファへデータ転送
+	TransferMatrix();
+}
+
+void IEmitter3D::TransferMatrix()
+{
+	// 定数バッファへデータ転送
+	cbTrans_->constMap_ = nullptr;
+	cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
+
+	cbTrans_->constMap_->viewproj = NCamera::sCurrentCamera->GetMatView() * NCamera::sCurrentCamera->GetMatProjection();
+	cbTrans_->constMap_->world = matWorld_;
+	cbTrans_->constMap_->cameraPos = NCamera::sCurrentCamera->GetPos();
+
+	cbTrans_->Unmap();
+}
+
+void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minScale, NVector3 maxScale,
+	NVector3 minVelo, NVector3 maxVelo, NVector3 accel, NVector3 minRot, NVector3 maxRot)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -119,26 +168,31 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxSc
 		//追加した要素の参照
 		Particle3D& p = particles_.back();
 		//エミッターの中からランダムで座標を決定
-		float x = (float)MathUtil::Random((uint32_t)-scale_.x, (uint32_t)scale_.x);
-		float y = (float)MathUtil::Random((uint32_t)-scale_.y, (uint32_t)scale_.y);
-		float z = (float)MathUtil::Random((uint32_t)-scale_.z, (uint32_t)scale_.z);
-		NVector3 randomPos(x, y, z);
+		float pX = MathUtil::Randomf(-scale_.x, scale_.x);
+		float pY = MathUtil::Randomf(-scale_.y, scale_.y);
+		float pZ = MathUtil::Randomf(-scale_.z, scale_.z);
+		NVector3 randomPos(pX, pY, pZ);
 		//引数の範囲から大きさランダムで決定
-		float scale_ = (float)MathUtil::Random((uint32_t)minScale, (uint32_t)maxScale);
-		NVector3 randomScale(scale_, scale_, scale_);
+		float sX = MathUtil::Randomf(minScale.x, maxScale.x);
+		float sY = MathUtil::Randomf(minScale.y, maxScale.y);
+		float sZ = MathUtil::Randomf(minScale.z, maxScale.z);
+		NVector3 randomScale(sX, sY, sZ);
 		//引数の範囲から飛ばす方向ランダムで決定
-		NVector3 velo = {
-			(float)MathUtil::Random((uint32_t)minVelo.x,(uint32_t)maxVelo.x),
-			(float)MathUtil::Random((uint32_t)minVelo.y,(uint32_t)maxVelo.y),
-			(float)MathUtil::Random((uint32_t)minVelo.z,(uint32_t)maxVelo.z) };
+		float vX = MathUtil::Randomf(minVelo.x, maxVelo.x);
+		float vY = MathUtil::Randomf(minVelo.y, maxVelo.y);
+		float vZ = MathUtil::Randomf(minVelo.z, maxVelo.z);
+		NVector3 randomVelo(vX, vY, vZ);
 		//引数の範囲から回転をランダムで決定
-		float rot = (float)MathUtil::Random((uint32_t)minRot, (uint32_t)maxRot);
+		float rX = MathUtil::Randomf(minRot.x, maxRot.x);
+		float rY = MathUtil::Randomf(minRot.y, maxRot.y);
+		float rZ = MathUtil::Randomf(minRot.z, maxRot.z);
+		NVector3 randomRot(rX, rY, rZ);
 
 		//決まった座標にエミッター自体の座標を足して正しい位置に
 		p.pos = randomPos + pos_;
 		//飛んでく方向に合わせて回転
-		p.rot = rot;
-		p.velo = velo;
+		p.rot = randomRot;
+		p.velo = randomVelo;
 		p.accel = accel;
 		p.num_frame = life;
 		p.scale = randomScale;

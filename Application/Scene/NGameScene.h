@@ -14,6 +14,8 @@
 #include "NModel.h"
 #include "NAudio.h"
 
+#include "SimpleParticle.h"
+
 class NGameScene:
 	public IScene
 {
@@ -25,6 +27,7 @@ private:
 	
 
 	//前景スプライト
+
 
 	//オーディオ
 	NAudio* audio_ = nullptr;
@@ -48,6 +51,8 @@ public:
 	void DrawBackSprite()override;
 	//3Dオブジェクト
 	void Draw3D() override;
+	//パーティクル
+	void DrawParticle() override;
 	//前景スプライト
 	void DrawForeSprite() override;
 

@@ -64,6 +64,8 @@ public:
 	void DrawBackSprite()override;
 	//3Dオブジェクト
 	void Draw3D() override;
+	//パーティクル
+	void DrawParticle() override;
 	//前景スプライト
 	void DrawForeSprite() override;
 };

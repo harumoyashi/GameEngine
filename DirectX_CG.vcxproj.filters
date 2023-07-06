@@ -189,12 +189,6 @@
     <ClInclude Include="Engine\3d\NModel.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NCamera.h">
-      <Filter>Engine\ヘッダー ファイル\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Audio\NAudio.h">
-      <Filter>Engine\ヘッダー ファイル\Basic</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Base\NDX12.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
@@ -291,9 +285,6 @@
     <ClInclude Include="NUtil.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NModelManager.h">
-      <Filter>Engine\ヘッダー ファイル\Util</Filter>
-    </ClInclude>
     <ClInclude Include="GaussianBlur.h">
       <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
@@ -348,8 +339,23 @@
     <ClInclude Include="IEnemy.h">
       <Filter>Application\ソースファイル\Chara</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Audio\NAudio.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\NCamera.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NModelManager.h">
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
+    </ClInclude>
     <ClInclude Include="NShader.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleParticle.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticleManager.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -391,12 +397,6 @@
     </ClCompile>
     <ClCompile Include="Engine\3d\NModel.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\3d\NCamera.cpp">
-      <Filter>Engine\ソース ファイル\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Audio\NAudio.cpp">
-      <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Base\NDX12.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
@@ -491,9 +491,6 @@
     <ClCompile Include="NUtil.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NModelManager.cpp">
-      <Filter>Engine\ソース ファイル\Util</Filter>
-    </ClCompile>
     <ClCompile Include="NEasing.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
@@ -511,9 +508,6 @@
     </ClCompile>
     <ClCompile Include="IScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="NCameraManager.cpp">
-      <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Application\ソースファイル\Chara</Filter>
@@ -548,8 +542,26 @@
     <ClCompile Include="IEnemy.cpp">
       <Filter>Application\ソースファイル\Chara</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Audio\NAudio.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\NCamera.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NCameraManager.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NModelManager.cpp">
+      <Filter>Engine\ソース ファイル\3D</Filter>
+    </ClCompile>
     <ClCompile Include="NShader.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\PipeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticleManager.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleParticle.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

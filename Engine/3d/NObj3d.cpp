@@ -108,8 +108,6 @@ void NObj3d::UpdateMatrix()
 
 	// 定数バッファへデータ転送
 	TransferMatrix();
-
-	NVector3 s = matWorld_.GetScale();
 }
 
 void NObj3d::TransferMatrix()

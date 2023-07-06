@@ -4,6 +4,7 @@
 #include "NGameScene.h"
 #include "NSprite.h"
 #include "NObj3d.h"
+#include "NParticle3D.h"
 
 #pragma region staticƒƒ“ƒo•Ï”‰Šú‰»
 
@@ -42,6 +43,8 @@ void NSceneManager::Draw()
 	currentScene_->DrawBackSprite();
 	NObj3d::CommonBeginDraw();
 	currentScene_->Draw3D();
+	IEmitter3D::CommonBeginDraw();
+	currentScene_->DrawParticle();
 	NSprite::CommonBeginDraw();
 	currentScene_->DrawForeSprite();
 }

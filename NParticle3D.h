@@ -18,7 +18,7 @@ class IEmitter3D
 		NVector3 startScale;	//開始時の大きさ
 		NVector3 endScale;		//終了時の大きさ
 		//角度
-		float rot = 0;
+		NVector3 rot;
 		//速度
 		NVector3 velo;
 		//加速度
@@ -36,12 +36,12 @@ class IEmitter3D
 		//イージング用タイマー
 		NEasing::EaseTimer timer = 1.0f;
 
-		//距離
+		//エミッター座標からの距離
 		float radius = 0;
 		float startRadius = 0;	//開始時の距離
 
 		//画像
-		TextureHandle key;
+		//TextureHandle key;
 	};
 
 private:
@@ -54,9 +54,9 @@ private:
 	NMatrix4 matWorld_;	//3D変換行列
 
 	//座標
-	NVector3 pos_;
+	NVector3 pos_{};
 	//角度
-	float rot_ = 0.0f;
+	NVector3 rot_{};
 	//大きさ
 	NVector3 scale_{ 1.f,1.f,1.f };
 	float minScale_;	//エミッターの最小サイズ(比率)
@@ -77,6 +77,8 @@ private:
 
 	bool isActive_ = false;					//有効にするかフラグ
 
+	bool isGravity_ = false;				//重力の影響受けるかフラグ
+
 	NTexture texture_;						//テクスチャ(使うかわからん)
 
 public:
@@ -86,15 +88,21 @@ public:
 	//初期化
 	void Init();
 	//更新
-	void Update(bool isGravity = false);
+	//このままの処理を呼びたいなら継承先のUpdate()でこれを呼ぶ
+	virtual void Update();
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
 	//描画
 	void Draw();
 
+	//ワールド行列の合成
+	void UpdateMatrix();
+	//定数バッファへ送信
+	void TransferMatrix();
+
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
-	virtual void Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo,
-		NVector3 accel = { 0,0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
+	virtual void Add(uint32_t addNum, uint32_t life, NColor color, NVector3 minScale, NVector3 maxScale,
+		NVector3 minVelo, NVector3 maxVelo,NVector3 accel = { 0,0,0 }, NVector3 minRot = {}, NVector3 maxRot = {});
 	//パーティクル全消し
 	inline void ClearParticles() { particles_.clear(); }
 
@@ -121,6 +129,8 @@ public:
 
 	//有効フラグ設定
 	inline void SetIsActive(bool isActive) { isActive_ = isActive; }
+	//重力フラグ設定
+	inline void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
 
 	//拡縮用タイマーが切り替わる時間設定(秒)
 	void SetScalingTimer(float timer);
