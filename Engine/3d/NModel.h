@@ -7,14 +7,14 @@
 
 struct Model
 {
-	std::string name;
-	NVertexBuff vertexBuff;
-	NIndexBuff indexBuff;
+	std::string name;						//モデル名
+	NVertexBuff<NVertexPNU> vertexBuff;		//頂点バッファ
+	NIndexBuff indexBuff;					//インデックスバッファ
 
-	std::vector<NVertexPNU> vertices;
-	std::vector<uint32_t> indices;
+	std::vector<NVertexPNU> vertices;		//頂点群
+	std::vector<uint32_t> indices;			//インデックス群
 
-	NMaterial material;
+	NMaterial material;						//マテリアル
 };
 
 class NModel

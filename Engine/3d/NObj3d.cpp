@@ -164,7 +164,7 @@ void NObj3d::CommonBeginDraw(const bool isTiling)
 void NObj3d::Draw()
 {
 	SetCBV();
-	SetVB(model_.vertexBuff.view_);
+	SetVB(model_.vertexBuff.GetView());
 	SetIB(model_.indexBuff.view_);
 	SetSRVHeap(model_.material.texture.gpuHandle_);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
@@ -196,9 +196,9 @@ void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 	}
 }
 
-void NObj3d::SetVB(const D3D12_VERTEX_BUFFER_VIEW& vbView)
+void NObj3d::SetVB(const D3D12_VERTEX_BUFFER_VIEW* vbView)
 {
-	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vbView);
+	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vbView);
 }
 
 void NObj3d::SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView)

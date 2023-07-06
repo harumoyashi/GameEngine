@@ -3,9 +3,10 @@
 #include <NColor.h>
 #include <NTexture.h>
 #include <NConstBuff.h>
+#include <NVertexBuff.h>
 #include <NEasing.h>
 
-class Emitter3D
+class IEmitter3D
 {
 	//粒子1粒
 	struct Particle3D
@@ -46,7 +47,9 @@ class Emitter3D
 private:
 	//定数バッファ//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;	//3D変換行列
-	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;		//色情報
+
+	std::vector<NVertexParticle>vertices_;		//頂点群
+	NVertexBuff<NVertexParticle> vertexBuff_;	//頂点バッファ
 
 	NMatrix4 matWorld_;	//3D変換行列
 
@@ -69,13 +72,17 @@ private:
 	//何フレームに一回パーティクル追加するか
 	uint32_t addInterval_;
 
-	static const uint32_t maxCount_ = 256;	//最大数
-	std::vector<Particle3D> particles_;	//パーティクル配列
+	const uint32_t maxParticle_ = 256;	//最大数
+	std::vector<Particle3D> particles_;		//パーティクル配列
 
-	bool isActive_ = false;
+	bool isActive_ = false;					//有効にするかフラグ
+
+	NTexture texture_;						//テクスチャ(使うかわからん)
 
 public:
-	Emitter3D();
+	IEmitter3D();
+	virtual ~IEmitter3D() = default;
+
 	//初期化
 	void Init();
 	//更新
@@ -85,8 +92,8 @@ public:
 	//描画
 	void Draw();
 
-	//パーティクル追加
-	void Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo,
+	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
+	virtual void Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo,
 		NVector3 accel = { 0,0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
 	//パーティクル全消し
 	inline void ClearParticles() { particles_.clear(); }

@@ -2,19 +2,27 @@
 #include "NGPipeLine.h"
 #include "NMathUtil.h"
 
-Emitter3D::Emitter3D()
+IEmitter3D::IEmitter3D()
 {
+	//定数バッファ
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
+	cbTrans_->Init();
+
 	addInterval_ = 0;
 	maxScale_ = 0;
 	minScale_ = 0;
 	scaling_ = 0;
+	texture_ = NTextureManager::GetInstance()->textureMap_["white"];	//とりま真っ白なテクスチャ割り当てとく
+
+	vertices_.resize(maxParticle_);
+	vertexBuff_.Init(vertices_);
 }
 
-void Emitter3D::Init()
+void IEmitter3D::Init()
 {
 }
 
-void Emitter3D::Update(bool isGravity)
+void IEmitter3D::Update(bool isGravity)
 {
 	//寿命が尽きたパーティクルを全削除
 	for (size_t i = 0; i < particles_.size(); i++)
@@ -50,9 +58,28 @@ void Emitter3D::Update(bool isGravity)
 		//速度による移動
 		particles_[i].pos += particles_[i].velo;
 	}
+
+	//頂点バッファへデータ転送
+	//パーティクルの情報を1つずつ反映
+	for (size_t i = 0; i < particles_.size(); i++)
+	{
+		NVertexParticle vertex;
+
+		//座標
+		vertex.pos = particles_[i].pos;
+		//スケール
+		vertex.scale = particles_[i].scale;
+		//色
+		vertex.color = particles_[i].color;
+
+		vertices_.at(i) = vertex;
+	}
+
+	//毎回頂点数が変わるので初期化しなおす
+	vertexBuff_.TransferBuffer(vertices_);
 }
 
-void Emitter3D::CommonBeginDraw()
+void IEmitter3D::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
 	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle"));
@@ -65,23 +92,24 @@ void Emitter3D::CommonBeginDraw()
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 }
 
-void Emitter3D::Draw()
+void IEmitter3D::Draw()
 {
 	//ルートパラメータ1番に3D変換行列の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
-	//ルートパラメータ2番に色情報の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 
-	////SRVの設定
-	//NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, gpuHandle);
+	//SRVの設定
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture_.gpuHandle_);
+
+	// 描画コマンド
+	NDX12::GetInstance()->GetCommandList()->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()),1,0,0);
 }
 
-void Emitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo, NVector3 accel, float minRot, float maxRot, NColor color)
+void IEmitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo, NVector3 accel, float minRot, float maxRot, NColor color)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
 		//指定した最大数超えてたら生成しない
-		if (particles_.size() >= maxCount_)
+		if (particles_.size() >= maxParticle_)
 		{
 			return;
 		}
@@ -123,18 +151,18 @@ void Emitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxSca
 	}
 }
 
-void Emitter3D::SetScale(NVector3& scale)
+void IEmitter3D::SetScale(NVector3& scale)
 {
 	scale_ = scale;
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管
 }
 
-void Emitter3D::SetScalingTimer(float timer)
+void IEmitter3D::SetScalingTimer(float timer)
 {
 	scalingTimer_.maxTime_ = timer;
 }
 
-void Emitter3D::StartScalingTimer(bool isRun)
+void IEmitter3D::StartScalingTimer(bool isRun)
 {
 	if (isRun)
 	{

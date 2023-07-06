@@ -10,7 +10,7 @@ class NAssimpModel
 private:
 	std::vector<Mesh> meshes_;	// メッシュの配列
 	//std::vector<Bone> bones_;	// ボーンの配列
-	std::vector<NVertexBuff> vertexBuffers_; // メッシュの数分の頂点バッファ
+	std::vector<NVertexBuff<NVertexPNU>> vertexBuffers_; // メッシュの数分の頂点バッファ
 	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
 	const wchar_t* kModelFile;
 

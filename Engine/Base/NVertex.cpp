@@ -122,3 +122,21 @@ bool NVertexUV::operator==(const NVertexUV& a) const
 
 	return true;
 }
+
+bool NVertexParticle::operator==(const NVertexParticle& a) const
+{
+	if (pos.x != a.pos.x || pos.y != a.pos.y || pos.z != a.pos.z)
+	{
+		return false;
+	}
+	else if (scale.x != a.scale.x|| scale.y != a.scale.y|| scale.z != a.scale.z)
+	{
+		return false;
+	}
+	else if (color != a.color)
+	{
+		return false;
+	}
+
+	return true;
+}

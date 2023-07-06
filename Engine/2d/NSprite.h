@@ -22,8 +22,7 @@ protected:
 	std::vector<NVertexUV> vertices_{ 4 };		//頂点代入用
 	D3D12_HEAP_PROPERTIES heapPropVert_{};	//ヒープ
 	D3D12_RESOURCE_DESC resDescVert_{};		//リソース
-	NVertexBuff vertexBuff_;
-	NVertexUV* vertMap_ = nullptr;			//マップ用
+	NVertexBuff<NVertexUV> vertexBuff_;		//頂点バッファ
 
 	//定数バッファまわり//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D変換行列

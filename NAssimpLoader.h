@@ -91,7 +91,7 @@ struct ImportSettings
 class NAssimpLoader
 {
 public:
-	NVertexBuff vertexBuff_;
+	NVertexBuff<NVertexPNU> vertexBuff_;
 	NIndexBuff indexBuff_;
 
 	bool Load(const ImportSettings& setting); // ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é

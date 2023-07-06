@@ -29,7 +29,8 @@ void NAssimpModel::Init()
 	vertexBuffers_.reserve(meshes_.size());
 	for (size_t i = 0; i < meshes_.size(); i++)
 	{
-		NVertexBuff pVB = NVertexBuff(meshes_[i].vertices);
+		NVertexBuff<NVertexPNU> pVB;
+		pVB.Init(meshes_[i].vertices);
 
 		vertexBuffers_.emplace_back(pVB);
 	}
@@ -97,7 +98,7 @@ void NAssimpModel::Draw()
 		//ルートパラメータ2番に3D変換行列の定数バッファを渡す
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 
-		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBuffers_[i].view_);
+		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffers_[i].GetView());
 		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBuffers_[i].view_);
 
 		//テクスチャの名前取得

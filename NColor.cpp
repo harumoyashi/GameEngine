@@ -83,3 +83,21 @@ NColor NColor::operator=(const NColor& col)
 	r = col.r, g = col.g, b = col.b, a = col.a;
 	return *this;
 }
+
+bool NColor::operator==(const NColor& col) const
+{
+	if (r != col.r || g != col.g || b != col.b || a != col.a)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool NColor::operator!=(const NColor& col) const
+{
+	if (r != col.r || g != col.g || b != col.b || a != col.a)
+	{
+		return true;
+	}
+	return false;
+}

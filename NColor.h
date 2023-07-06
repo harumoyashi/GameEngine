@@ -37,4 +37,6 @@ public:
 	NColor operator*(const float num) const;
 	NColor operator/(const float num) const;
 	NColor operator=(const NColor& col);
+	bool operator==(const NColor& col) const;
+	bool operator!=(const NColor& col) const;
 };

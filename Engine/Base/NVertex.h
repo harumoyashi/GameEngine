@@ -15,6 +15,7 @@ public:
 		: pos(pos) {}
 };
 
+//position,uv‚Ì2—v‘f
 class NVertexUV
 {
 public:
@@ -27,6 +28,7 @@ public:
 	bool operator==(const NVertexUV& a) const;
 };
 
+//position,normal,uv‚Ì3—v‘f
 class NVertexPNU
 {
 public:
@@ -47,6 +49,21 @@ public:
 	static void CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<uint32_t>& indices);
 };
 
+//position,scale,color‚Ì3—v‘f
+class NVertexParticle
+{
+public:
+	NVector3 pos = { 0, 0, 0 };
+	NVector3 scale = { 0, 0, 0 };
+	NColor color = NColor::kWhite;
+
+	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NVector3 scale = { 0, 0, 0 }, NColor color = NColor::kWhite)
+		: pos(pos), scale(scale), color(color) {}
+
+	bool operator==(const NVertexParticle& a) const;
+};
+
+//position,normal,uv,boneIndex,boneWeight‚Ì5—v‘f
 class NVertexAssimp
 {
 public:
