@@ -1,4 +1,5 @@
 #include "NParticle3D.h"
+#include "NGPipeLine.h"
 #include "NMathUtil.h"
 
 Emitter3D::Emitter3D()
@@ -51,14 +52,25 @@ void Emitter3D::Update(bool isGravity)
 	}
 }
 
+void Emitter3D::CommonBeginDraw()
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle")->pRootSignature);
+
+	// プリミティブ形状の設定コマンド
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); // 点
+
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
+	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+}
+
 void Emitter3D::Draw()
 {
-	//ルートパラメータ1番にマテリアルの定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbMaterial_->constBuff_->GetGPUVirtualAddress());
+	//ルートパラメータ1番に3D変換行列の定数バッファを渡す
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ2番に色情報の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
-	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 }
 
 void Emitter3D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector3 minVelo, NVector3 maxVelo, NVector3 accel, float minRot, float maxRot, NColor color)

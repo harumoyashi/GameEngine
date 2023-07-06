@@ -47,7 +47,6 @@ private:
 	//定数バッファ//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;	//3D変換行列
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;		//色情報
-	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;	//マテリアル
 
 	NMatrix4 matWorld_;	//3D変換行列
 
@@ -81,6 +80,8 @@ public:
 	void Init();
 	//更新
 	void Update(bool isGravity = false);
+	//共通グラフィックスコマンド
+	static void CommonBeginDraw();
 	//描画
 	void Draw();
 
