@@ -57,6 +57,7 @@ void IEmitter3D::Update()
 		{
 			particles_[i].rot += particles_[i].plusRot;
 
+			//ˆê‰ñ“]‚µ‚½‚ç0‚É–ß‚µ‚Ä‚ ‚°‚é
 			if (abs(particles_[i].rot.x) >= PI2)
 			{
 				particles_[i].rot.x = 0.0f;
