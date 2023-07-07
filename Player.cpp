@@ -69,11 +69,27 @@ void Player::Move()
 {
 	isMove_ = false;
 
-	//スティック移動
-	moveVelo_ = NInput::GetStick();
-	//イージング的な感じにして速度の可変明確に
-	moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
-	moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
+	//パッド接続されてるなら
+	if (NInput::GetIsConnect())
+	{
+		//スティック移動
+		moveVelo_ = NInput::GetStick();
+		//イージング的な感じにして速度の可変明確に
+		moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
+		moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
+	}
+	else
+	{
+		moveVelo_ = {0,0};
+		//いずれかのキーを押したとき
+		if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
+		{
+			if (NInput::IsKey(DIK_W)) { moveVelo_.y = +1.0f; }
+			else if (NInput::IsKey(DIK_S)) { moveVelo_.y = -1.0f; }
+			if (NInput::IsKey(DIK_D)) { moveVelo_.x = +1.0f; }
+			else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
+		}
+	}
 
 	if (moveVelo_.Length() > 0.0f)	//入力されてたら
 	{

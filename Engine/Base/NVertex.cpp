@@ -129,6 +129,10 @@ bool NVertexParticle::operator==(const NVertexParticle& a) const
 	{
 		return false;
 	}
+	else if (rot.x != a.rot.x || rot.y != a.rot.y || rot.z != a.rot.z)
+	{
+		return false;
+	}
 	else if (color != a.color)
 	{
 		return false;

@@ -123,7 +123,7 @@ public:
 	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];
-	D3D12_INPUT_ELEMENT_DESC vertLayoutParticle_[3];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutParticle_[4];
 
 public:
 	//パイプライン生成、指定したIDで登録

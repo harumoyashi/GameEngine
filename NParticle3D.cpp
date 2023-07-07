@@ -76,6 +76,8 @@ void IEmitter3D::Update()
 
 		//座標
 		vertex.pos = particles_[i].pos;
+		//回転
+		vertex.rot = particles_[i].rot;
 		//色
 		vertex.color = particles_[i].color;
 		//スケール
@@ -187,9 +189,9 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScal
 		float vZ = MathUtil::Randomf(minVelo.z, maxVelo.z);
 		NVector3 randomVelo(vX, vY, vZ);
 		//引数の範囲から回転をランダムで決定
-		float rX = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.x, maxRot.x));
-		float rY = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.y, maxRot.y));
-		float rZ = MathUtil::Radian2Degree(MathUtil::Randomf(minRot.z, maxRot.z));
+		float rX = MathUtil::Randomf(minRot.x, maxRot.x);
+		float rY = MathUtil::Randomf(minRot.y, maxRot.y);
+		float rZ = MathUtil::Randomf(minRot.z, maxRot.z);
 		NVector3 randomRot(rX, rY, rZ);
 
 		//決まった座標にエミッター自体の座標を足して正しい位置に

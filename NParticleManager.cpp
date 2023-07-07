@@ -24,5 +24,6 @@ void NParticleManager::Draw()
 void NParticleManager::PlayerDeadEffect(const NVector3& pos, const NColor& color)
 {
 	playerDeadParticle_.SetPos(pos.x,pos.y,pos.z);
-	playerDeadParticle_.Add(50, 200, color,1.0f, 5.0f, { -1,-1,-1 }, { 1,1,1 });
+	playerDeadParticle_.SetIsRotation(true);
+	playerDeadParticle_.Add(20, 200, color,0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 },{0,0,0},{-1,-1,-1},{1,1,1});
 }

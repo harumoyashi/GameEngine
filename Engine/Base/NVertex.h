@@ -54,11 +54,13 @@ class NVertexParticle
 {
 public:
 	NVector3 pos = { 0, 0, 0 };
+	NVector3 rot = { 0, 0, 0 };
 	NColor color = NColor::kWhite;
 	float scale = 0.0f;
 
-	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NColor color = NColor::kWhite, float scale = 0.0f )
-		: pos(pos), color(color), scale(scale) {}
+	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NVector3 rot = { 0, 0, 0 },
+		NColor color = NColor::kWhite, float scale = 0.0f)
+		: pos(pos), rot(rot), color(color), scale(scale) {}
 
 	bool operator==(const NVertexParticle& a) const;
 };
