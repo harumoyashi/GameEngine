@@ -48,14 +48,29 @@ void IEmitter3D::Update()
 		//スケールの線形補間
 		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].timer.GetTimeRate());
 		//particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
-		
+
 		//加速度を速度に加算
 		particles_[i].velo += particles_[i].accel;
 
 		//初期のランダム角度をもとに回す
 		if (isRotation_)
 		{
-			particles_[i].rot += particles_[i].rot;
+			particles_[i].rot += particles_[i].plusRot;
+
+			if (abs(particles_[i].rot.x) >= PI2)
+			{
+				particles_[i].rot.x = 0.0f;
+			}
+
+			if (abs(particles_[i].rot.y) >= PI2)
+			{
+				particles_[i].rot.y = 0.0f;
+			}
+
+			if (abs(particles_[i].rot.z) >= PI2)
+			{
+				particles_[i].rot.z = 0.0f;
+			}
 		}
 
 		//重力加算
@@ -198,6 +213,7 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScal
 		p.pos = randomPos + pos_;
 		//飛んでく方向に合わせて回転
 		p.rot = randomRot;
+		p.plusRot = p.rot;
 		p.velo = randomVelo;
 		p.accel = accel;
 		p.num_frame = life;

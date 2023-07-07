@@ -19,6 +19,7 @@ class IEmitter3D
 		float endScale;		//終了時の大きさ
 		//角度
 		NVector3 rot;
+		NVector3 plusRot;	//更新処理で回転させるときに使う用
 		//速度
 		NVector3 velo;
 		//加速度
