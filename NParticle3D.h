@@ -5,6 +5,7 @@
 #include <NConstBuff.h>
 #include <NVertexBuff.h>
 #include <NEasing.h>
+#include <NTimer.h>
 
 class IEmitter3D
 {
@@ -29,13 +30,11 @@ class IEmitter3D
 
 		//色
 		NColor color;
-		//現在フレーム
-		uint32_t frame = 0;
-		//終了フレーム
-		uint32_t num_frame = 0;
+		//生存時間(フレーム数)
+		NTimer aliveTimer;
 
 		//イージング用タイマー
-		NEasing::EaseTimer timer = 1.0f;
+		NEasing::EaseTimer easeTimer = 1.0f;
 
 		//エミッター座標からの距離
 		float radius = 0;
@@ -72,6 +71,9 @@ private:
 	uint32_t particleTimer_ = 0;
 	//何フレームに一回パーティクル追加するか
 	uint32_t addInterval_;
+
+	//経過時間のスピード(スローモーション用)
+	float elapseSpeed_;
 
 	const uint32_t maxParticle_ = 256;		//最大数
 	std::vector<Particle3D> particles_;		//パーティクル配列
@@ -142,4 +144,7 @@ public:
 	//拡縮用タイマー開始
 	//isRun:true = プラスされてく,false:マイナスされてく
 	void StartScalingTimer(bool isRun = true);
+
+	//経過時間スピード設定
+	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

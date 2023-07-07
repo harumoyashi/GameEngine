@@ -10,13 +10,13 @@ private:
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
-	bool isAlive_;				//生存フラグ
-	uint32_t maxHP_;			//最大体力
-	uint32_t hp_;				//現在の体力
-	float collisionRadius_;		//コライダーの半径
-	SphereCollider collider_;	//弾の当たり判定
+	bool isAlive_;					//生存フラグ
+	uint32_t maxHP_;				//最大体力
+	uint32_t hp_;					//現在の体力
+	float collisionRadius_;			//コライダーの半径
+	SphereCollider collider_;		//弾の当たり判定
 
-	float elapseSpeed_;			//経過時間のスピード(スローモーション用)
+	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
 public:
 	// ゲッター //

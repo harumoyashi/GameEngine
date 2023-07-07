@@ -73,6 +73,11 @@ void NGameScene::Update()
 		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
 	}
 
+	if (NInput::IsKeyDown(DIK_0))
+	{
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+	}
+
 	NParticleManager::GetInstance()->Update();
 
 	//ライトたちの更新

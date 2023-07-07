@@ -3,6 +3,8 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 
+#include "Player.h"
+
 IEmitter3D::IEmitter3D()
 {
 	//定数バッファ
@@ -27,10 +29,12 @@ void IEmitter3D::Init()
 
 void IEmitter3D::Update()
 {
+	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+
 	//寿命が尽きたパーティクルを全削除
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		if (particles_[i].frame >= particles_[i].num_frame)
+		if (particles_[i].aliveTimer.GetisTimeOut())
 		{
 			particles_.erase(particles_.begin() + i);
 			i = (size_t)-1;
@@ -40,14 +44,13 @@ void IEmitter3D::Update()
 	//全パーティクル更新
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		particles_[i].timer.Update();
-
-		//経過フレームをカウント
-		particles_[i].frame++;
+		//生存時間とイージング用タイマーの更新
+		particles_[i].aliveTimer.Update(elapseSpeed_);
+		particles_[i].easeTimer.Update(elapseSpeed_);
 
 		//スケールの線形補間
-		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].timer.GetTimeRate());
-		//particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
+		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].easeTimer.GetTimeRate());
+		//particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].easeTimer.GetTimeRate());
 
 		//加速度を速度に加算
 		particles_[i].velo += particles_[i].accel;
@@ -55,7 +58,7 @@ void IEmitter3D::Update()
 		//初期のランダム角度をもとに回す
 		if (isRotation_)
 		{
-			particles_[i].rot += particles_[i].plusRot;
+			particles_[i].rot += particles_[i].plusRot * elapseSpeed_;
 
 			//一回転したら0に戻してあげる
 			if (abs(particles_[i].rot.x) >= PI2)
@@ -77,11 +80,11 @@ void IEmitter3D::Update()
 		//重力加算
 		if (isGravity_)
 		{
-			particles_[i].velo.y += particles_[i].gravity;
+			particles_[i].velo.y += particles_[i].gravity * elapseSpeed_;
 		}
 
 		//速度による移動
-		particles_[i].pos += particles_[i].velo;
+		particles_[i].pos += particles_[i].velo * elapseSpeed_;
 	}
 
 	//頂点バッファへデータ転送
@@ -217,14 +220,14 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScal
 		p.plusRot = p.rot;
 		p.velo = randomVelo;
 		p.accel = accel;
-		p.num_frame = life;
+		p.aliveTimer = (float)life;
 		p.scale = sX;
 		p.startScale = p.scale;
 		p.endScale = 0.0f;
 		p.color = color;
 		//イージング用のタイマーを設定、開始
-		p.timer.maxTime_ = (float)life / 60.0f;
-		p.timer.Start();
+		p.easeTimer.maxTime_ = (float)life / 60.0f;
+		p.easeTimer.Start();
 	}
 }
 
@@ -234,9 +237,9 @@ void IEmitter3D::SetScale(NVector3& scale)
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管
 }
 
-void IEmitter3D::SetScalingTimer(float timer)
+void IEmitter3D::SetScalingTimer(float easeTimer)
 {
-	scalingTimer_.maxTime_ = timer;
+	scalingTimer_.maxTime_ = easeTimer;
 }
 
 void IEmitter3D::StartScalingTimer(bool isRun)

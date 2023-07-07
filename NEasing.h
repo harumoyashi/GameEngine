@@ -80,7 +80,7 @@ namespace NEasing
 		//呼び出したらタイマーが後退
 		void ReverseStart();
 		//経過時間を更新
-		void Update();
+		void Update(const float elapseTimer = 1.0f);
 
 		//現在が最大秒数のうちどの割合かを(0.0f～1.0f)の値で返す
 		float GetTimeRate();

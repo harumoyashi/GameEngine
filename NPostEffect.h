@@ -28,7 +28,6 @@ public:
     virtual ~NPostEffect() = default;
 
     virtual void Init();
-    void TexChange();
     void Draw();
 
     //テクスチャ生成

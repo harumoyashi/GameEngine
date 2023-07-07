@@ -202,13 +202,13 @@ void NEasing::EaseTimer::ReverseStart()
 	reverse_ = true;
 }
 
-void NEasing::EaseTimer::Update()
+void NEasing::EaseTimer::Update(const float elapseTimer)
 {
 	if (run_) {
-		nowTime_ += NDX12::GetInstance()->GetDelta();
+		nowTime_ += NDX12::GetInstance()->GetDelta() * elapseTimer;
 	}
 	if (reverse_) {
-		nowTime_ -= NDX12::GetInstance()->GetDelta();
+		nowTime_ -= NDX12::GetInstance()->GetDelta() * elapseTimer;
 	}
 	// 経過時間が経過しきったらフラグを折る
 	if (GetTimeRate() >= 1.0f && run_) {

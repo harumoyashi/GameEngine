@@ -19,30 +19,6 @@ void NPostEffect::Init()
 	pipelineName_ = "PostEffect";
 }
 
-void NPostEffect::TexChange()
-{
-	//SRV設定
-	if (NInput::GetInstance()->IsKeyDown(DIK_0))
-	{
-		//テクスチャ番号を01で切り替え
-		static uint32_t texNum = 0;
-		texNum = (texNum + 1) % 2;
-
-		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
-		srvDesc.Texture2D.MipLevels = 1;
-
-		//デスクリプタヒープにSRV作成
-		NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
-			texBuff_[texNum].Get(),
-			&srvDesc,
-			descHeapSRV_->GetCPUDescriptorHandleForHeapStart()
-		);
-	}
-}
-
 void NPostEffect::Draw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
