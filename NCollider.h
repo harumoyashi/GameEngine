@@ -1,6 +1,7 @@
 #pragma once
 #include "NVector2.h"
 #include "NVector3.h"
+#include "NObj3d.h"
 
 //円コライダー//
 struct CircleCollider
@@ -18,8 +19,14 @@ struct SphereCollider
 	NVector3 centerPos;
 	float radius;
 
+	std::unique_ptr<NObj3d> obj_;	//オブジェクト
+
 	SphereCollider();
 	SphereCollider(const NVector3& centerPos, const float radius);
+
+	void Init();
+	void Update();
+	void Draw();
 };
 
 //レイコライダー//

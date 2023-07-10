@@ -20,6 +20,26 @@ SphereCollider::SphereCollider(const NVector3& centerPos, const float radius) :
 {
 }
 
+void SphereCollider::Init()
+{
+	obj_ = move(std::make_unique<NObj3d>());
+	obj_->SetModel("sphere");
+	
+	obj_->position_ = centerPos;
+	obj_->scale_ = { radius,radius,radius };
+}
+
+void SphereCollider::Update()
+{
+	obj_->position_ = centerPos;
+	obj_->Update();
+}
+
+void SphereCollider::Draw()
+{
+	obj_->Draw();
+}
+
 ReyCollider::ReyCollider() :
 	startPos(0, 0, 0), dirVec(0, 0, 1)
 {

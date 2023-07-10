@@ -20,6 +20,8 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	collider_.radius = obj_->scale_.x;
 
 	moveAngle_ = moveAngle;
+
+	collider_.Init();
 }
 
 void IEnemy::Update()
@@ -45,11 +47,13 @@ void IEnemy::Update()
 	collider_.centerPos = obj_->position_;
 	collider_.radius = collisionRadius_;
 
+	collider_.Update();
 	obj_->Update();
 }
 
 void IEnemy::Draw()
 {
+	collider_.Draw();
 	obj_->Draw();
 }
 

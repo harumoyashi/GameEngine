@@ -74,7 +74,7 @@ void Field::Update()
 		if (slideTimer_.GetStarted() == false)
 		{
 			slideTimer_.Start();
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, { 7,0,8 });
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10,0,8));
 		}
 
 		slideTimer_.Update();

@@ -7,6 +7,9 @@ class EnemyFactory
 private:
 	Wolf wolf;
 
+	bool isCollision = false;
+	uint32_t wolfSideNum = 10;
+
 public:
 	static EnemyFactory* GetInstance();
 
