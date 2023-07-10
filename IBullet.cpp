@@ -22,6 +22,7 @@ void IBullet::Generate(const NVector3& pos, const float moveAngle)
 
 void IBullet::Update()
 {
+	//Œo‰ßŽžŠÔ‚ð“K—p
 	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
 
 	//¶‘¶ŽžŠÔ‰ß‚¬‚½‚çŽ€‚ñ‚¾”»’è‚É
@@ -35,6 +36,7 @@ void IBullet::Update()
 	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 
+	//ˆÚ“®
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
 

@@ -263,8 +263,6 @@ void PipeLineManager::CreateAll()
 	//レンダーターゲット数設定
 	objDesc.render.NumRenderTargets = 2;
 
-	objDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-
 	//深度テストする
 	objDesc.depth.DepthStencilState.DepthEnable = true;
 
@@ -296,8 +294,6 @@ void PipeLineManager::CreateAll()
 	//レンダーターゲット数設定
 	tileDesc.render.NumRenderTargets = 2;
 
-	tileDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-
 	//深度テストする
 	tileDesc.depth.DepthStencilState.DepthEnable = true;
 	
@@ -316,8 +312,8 @@ void PipeLineManager::CreateAll()
 	//ルートシグネチャ設定
 	NRootSignature rootSigSprite;
 	rootSigSprite.SetSamplerDesc(true);
-	//テクスチャ1個、行列、マテリアル、色
-	rootSigSprite.SetRootParam(1, 3);
+	//テクスチャ1個、行列、色
+	rootSigSprite.SetRootParam(1, 2);
 	rootSigSprite.Create();
 	spriteDesc.rootSig = rootSigSprite;
 
@@ -446,8 +442,6 @@ void PipeLineManager::CreateAll()
 
 	//シェーダー設定
 	particleDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
-
-	particleDesc.render.RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 
 	//深度情報設定
 	particleDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;

@@ -80,7 +80,7 @@ struct PipelineDesc
 		//レンダーターゲット数
 		UINT NumRenderTargets = 1;	//描画対象1つ(マルチレンダーターゲットやるなら増やす)
 		//レンダーターゲット数によって増やす可能性あり
-		DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM;	//0~255指定のRGBA
+		DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255指定のRGBA
 		//アンチエイリアシングのためのサンプル数
 		DXGI_SAMPLE_DESC SampleDesc = DXGI_SAMPLE_DESC{
 			1,	//1ピクセルにつき1回サンプリング

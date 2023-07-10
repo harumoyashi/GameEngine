@@ -19,7 +19,7 @@ private:
 	NVector2 moveVelo_;			//移動量
 	float moveSpeed_;			//移動速度
 
-	float angle_;				//回転角度
+	float moveAngle_;				//回転角度
 
 	//------------------------ ダメージ関連 ------------------------//
 	bool isGodmode_;		//無敵状態か

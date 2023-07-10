@@ -148,6 +148,9 @@
     <Filter Include="リソース ファイル\Particle\particle3D">
       <UniqueIdentifier>{4da9e5ac-e4eb-4d0d-83bb-214849aa6ff9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\ソースファイル\Chara\Enemy">
+      <UniqueIdentifier>{7a044dd6-7778-4440-a96a-92c6b0939acd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -336,9 +339,6 @@
     <ClInclude Include="NParticle2D.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="IEnemy.h">
-      <Filter>Application\ソースファイル\Chara</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Audio\NAudio.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -356,6 +356,18 @@
     </ClInclude>
     <ClInclude Include="NParticleManager.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnemy.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -539,9 +551,6 @@
     <ClCompile Include="NParticle2D.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="IEnemy.cpp">
-      <Filter>Application\ソースファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Audio\NAudio.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
@@ -562,6 +571,18 @@
     </ClCompile>
     <ClCompile Include="SimpleParticle.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnemy.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

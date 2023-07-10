@@ -32,6 +32,7 @@ protected:
 
 public:
 	IBullet();
+	virtual ~IBullet() = default;
 	//ê∂ê¨
 	void Generate(const NVector3& pos,const float moveAngle = 0.0f);
 	//çXêV

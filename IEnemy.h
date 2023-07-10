@@ -4,8 +4,15 @@
 
 class IEnemy
 {
-private:
-	std::unique_ptr<NObj3d> obj_;	//弾のオブジェクト
+public:
+	//ここのタイプに応じてファクトリーで配置して生成する
+	enum class EnemyType
+	{
+		WolfSide,	//横からくる狼たち
+	};
+
+protected:
+	std::unique_ptr<NObj3d> obj_;	//オブジェクト
 	NVector2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
@@ -14,11 +21,33 @@ private:
 	uint32_t maxHP_;				//最大体力
 	uint32_t hp_;					//現在の体力
 	float collisionRadius_;			//コライダーの半径
-	SphereCollider collider_;		//弾の当たり判定
+	SphereCollider collider_;		//当たり判定
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
+	//アイテム持たせる
+
+	//コイン(ゲージ)持たせる
+
+
 public:
+	IEnemy();
+	virtual ~IEnemy() = default;
+
+	//初期化
+	//pos:配置する座標
+	//moveAngle:移動する角度
+	//modelname:モデルの名前(ID)
+	void Generate(const NVector3& pos, const float moveAngle, const std::string& modelname);
+	//更新
+	void Update();
+	//描画
+	void Draw();
+
+	//---------------------------- 継承するやつら ----------------------------//
+	//移動
+	virtual void Move();
+
 	// ゲッター //
 	//コライダー取得
 	inline const SphereCollider& GetIBulletCollider()const { return collider_; }

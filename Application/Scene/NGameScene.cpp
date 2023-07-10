@@ -7,6 +7,7 @@
 
 #include "Player.h"
 #include "BulletManager.h"
+#include "EnemyManager.h"
 #include "Field.h"
 #include "Wave.h"
 
@@ -33,6 +34,7 @@ void NGameScene::Init()
 	//オブジェクト
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
+	EnemyManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
 
@@ -64,6 +66,7 @@ void NGameScene::Update()
 
 #pragma endregion
 	BulletManager::GetInstance()->Update();
+	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
 	Wave::GetInstance()->Update();
 
@@ -103,6 +106,7 @@ void NGameScene::DrawBackSprite()
 void NGameScene::Draw3D()
 {
 	BulletManager::GetInstance()->Draw();
+	EnemyManager::GetInstance()->Draw();
 	Player::GetInstance()->Draw();
 }
 

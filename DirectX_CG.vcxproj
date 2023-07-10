@@ -107,6 +107,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BulletFactory.h" />
+    <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="IBullet.h" />
     <ClInclude Include="BulletManager.h" />
@@ -175,9 +177,12 @@
     <ClInclude Include="SideBullet.h" />
     <ClInclude Include="SimpleParticle.h" />
     <ClInclude Include="Wave.h" />
+    <ClInclude Include="Wolf.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BulletFactory.cpp" />
+    <ClCompile Include="EnemyFactory.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="IBullet.cpp" />
     <ClCompile Include="BulletManager.cpp" />
@@ -245,6 +250,7 @@
     <ClCompile Include="SideBullet.cpp" />
     <ClCompile Include="SimpleParticle.cpp" />
     <ClCompile Include="Wave.cpp" />
+    <ClCompile Include="Wolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

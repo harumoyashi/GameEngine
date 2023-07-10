@@ -1,5 +1,6 @@
 #include "Field.h"
 #include "Player.h"
+#include "EnemyFactory.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -73,6 +74,7 @@ void Field::Update()
 		if (slideTimer_.GetStarted() == false)
 		{
 			slideTimer_.Start();
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, { 7,0,8 });
 		}
 
 		slideTimer_.Update();
@@ -87,6 +89,10 @@ void Field::Update()
 		}
 		//‰æ–Ê¶ŠO‚Ü‚Å‚Ô‚Á”ò‚Î‚·
 		slidePos_ = NEasing::InQuad(0.0f, -fieldObj_->scale_.x, slideTimer_.GetTimeRate());
+
+
+		//------------------------------------- “G‚Ì¶¬ˆ— -------------------------------------//
+		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide,{7,0,8});
 	}
 
 	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢

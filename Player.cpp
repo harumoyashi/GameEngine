@@ -105,13 +105,13 @@ void Player::Move()
 	{
 		NVector2 velo = moveVelo_;	//moveVelo_‚Ì’l‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤‚ÉŠi”[
 		velo.Normalize();
-		angle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
+		moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
 		if (velo.x < 0)
 		{
-			angle_ = -angle_;
+			moveAngle_ = -moveAngle_;
 		}
 
-		obj_->rotation_.y = angle_;
+		obj_->rotation_.y = moveAngle_;
 	}
 
 	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
