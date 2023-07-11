@@ -29,7 +29,7 @@ void IEmitter3D::Init()
 
 void IEmitter3D::Update()
 {
-	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
 	//寿命が尽きたパーティクルを全削除
 	for (size_t i = 0; i < particles_.size(); i++)

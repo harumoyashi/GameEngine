@@ -50,6 +50,10 @@ void Player::Update()
 		Move();
 		Shot();
 	}
+	else
+	{
+		elapseSpeed_ = 1.0f;	//Ž€‚ñ‚¾‚çŒo‰ßŽžŠÔ’Êí‚É
+	}
 
 	obj_->Update();
 }
@@ -95,6 +99,8 @@ void Player::Move()
 	{
 		isMove_ = true;
 	}
+
+	elapseSpeed_ = moveVelo_.Length();	//ˆÚ“®—Ê‚É‚æ‚Á‚ÄŒo‰ßŽžŠÔ•Ï‰»
 
 	//ˆÚ“®—Ê‚ð‰ÁŽZ
 	obj_->position_.x += moveVelo_.x * moveSpeed_;

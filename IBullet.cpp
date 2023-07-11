@@ -23,7 +23,7 @@ void IBullet::Generate(const NVector3& pos, const float moveAngle)
 void IBullet::Update()
 {
 	//Œo‰ßŠÔ‚ğ“K—p
-	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
 	//¶‘¶ŠÔ‰ß‚¬‚½‚ç€‚ñ‚¾”»’è‚É
 	lifeTimer_.Update(elapseSpeed_);

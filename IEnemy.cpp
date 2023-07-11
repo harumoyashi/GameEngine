@@ -27,7 +27,7 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 void IEnemy::Update()
 {
 	//Œo‰ßŽžŠÔ‚ð“K—p
-	SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
 	//ˆÚ“®
 	Move();

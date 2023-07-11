@@ -3,6 +3,7 @@
 #include "NTexture.h"
 #include "NCamera.h"
 #include "NMathUtil.h"
+#include "NBaseCollider.h"
 
 NLightGroup* NObj3d::sLightGroup = nullptr;
 

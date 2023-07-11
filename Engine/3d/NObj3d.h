@@ -12,6 +12,8 @@
 #include<memory>
 #include <wrl.h>
 
+class NBaseCollider;
+
 class NObj3d
 {
 private:
@@ -47,7 +49,7 @@ public:
 
 public:
 	NObj3d();
-	virtual ~NObj3d() = default;
+	virtual ~NObj3d();
 #pragma region ‰Šú‰»‚Ü‚í‚è
 	//‰Šú‰»
 	virtual bool Init();

@@ -16,7 +16,7 @@ LineBullet::LineBullet()
 
 void LineBullet::LineUpdate()
 {
-    SetElapseSpeed(Player::GetInstance()->GetMoveVelo().Length());
+    SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
     shotCoolTimer_.Update(elapseSpeed_);
     if (shotCoolTimer_.GetisTimeOut())

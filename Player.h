@@ -19,7 +19,9 @@ private:
 	NVector2 moveVelo_;			//移動量
 	float moveSpeed_;			//移動速度
 
-	float moveAngle_;				//回転角度
+	float moveAngle_;			//回転角度
+
+	float elapseSpeed_;			//経過時間(こいつが全てに影響を及ぼす)
 
 	//------------------------ ダメージ関連 ------------------------//
 	bool isGodmode_;		//無敵状態か
@@ -67,6 +69,8 @@ public:
 	inline const Sphere& GetPlayerCollider()const { return collider_; }
 	//移動量取得
 	inline NVector2 GetMoveVelo()const { return moveVelo_; }
+	//経過時間取得
+	inline float GetElapseSpeed()const { return elapseSpeed_; }
 
 	// セッター //
 	//座標設定
