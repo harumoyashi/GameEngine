@@ -3,31 +3,33 @@
 #include "NVector3.h"
 #include "NMatrix4.h"
 #include "NQuaternion.h"
+#include <stdint.h>
+
+const float PI = 3.141592654f;
+const float PI2 = PI * 2.0f;
 
 namespace MathUtil
 {
 	//ビュー変換行列生成
-	NMatrix4 MatView(NVector3 eye, NVector3 target, NVector3 up);
+	NMatrix4 MatViewLockTo(const NVector3& eye, const NVector3& front, const NVector3& up);
+	NMatrix4 MatViewLockAt(const NVector3& eye, const NVector3& target, const NVector3& up);
 	//平行投影変換行列生成
-	NMatrix4 ParallelProjection(float WIN_WIDTH, float WIN_HEIGHT);
+	NMatrix4 ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT);
 	//透視投影変換行列生成
-	NMatrix4 PerspectiveProjection(float fov, float aspect, float nearZ, float farZ);
+	NMatrix4 PerspectiveProjection(const float fov, const float aspect, const  float nearZ, const float farZ);
 
 	//度数法→ラジアン
-	float Degree2Radian(float degree);
+	float Degree2Radian(const float degree);
 	//度数法→ラジアン
-	float Radian2Degree(float radian);
+	float Radian2Degree(const float radian);
 	//符号返す
-	int Sign(int value);
-	//符号返す
-	float Sign(float value);
+	uint32_t Sign(const uint32_t value);
 	//ランダムな値を返す
-	int Random(int min,int max);
-	//ランダムな値を返す
-	float Random(float min,float max);
+	uint32_t Random(const uint32_t min, const uint32_t max);
+	float Randomf(const float min, const float max);
 	//最小、最大値設定
 	template <typename Type>
-	Type Clamp(Type value, Type min, Type max)
+	Type Clamp(const Type value, const Type min, const Type max)
 	{
 		// 値が最大値を上回っていたら最大値を返す
 		if (value >= max) return max;
@@ -38,4 +40,7 @@ namespace MathUtil
 		// どちらにも当てはまらなかったら値をそのまま返す
 		return static_cast<Type>(value);
 	}
+
+	//円運動
+	NVector2 CircleMotion(NVector2 CenterPoint, float radius, float angle);
 }

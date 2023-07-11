@@ -1,6 +1,8 @@
 #include "NDX12.h"
 #include "NResultScene.h"
 #include "NSceneManager.h"
+#include "NTitleScene.h"
+#include "NCameraManager.h"
 
 NResultScene* NResultScene::GetInstance()
 {
@@ -11,48 +13,35 @@ NResultScene* NResultScene::GetInstance()
 void NResultScene::Init()
 {
 #pragma region	オーディオ初期化
-	audio = NAudio::GetInstance();
+	
 #pragma endregion
 #pragma region	カメラ初期化
-	camera.ProjectiveProjection();
-	camera.CreateMatView();
-	NCamera::nowCamera = &camera;
+	NCameraManager::GetInstance()->Init();
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 #pragma endregion
 #pragma region 描画初期化処理
-	//マテリアル(定数バッファ)
-
-	//立方体情報
-
-	//モデル情報
-	for (int i = 0; i < maxModel; i++)
-	{
-		model[i] = std::make_unique<NModel>();
-	}
-	model[0]->Create("sphere");
-	model[1]->Create("Cube");
-	model[2]->Create("busterSword");
-
 	//オブジェクト
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i] = std::make_unique<NObj3d>();
-		obj[i]->Init();
+		obj_.emplace_back();
+		obj_[i] = std::make_unique<NObj3d>();
+		obj_[i]->Init();
 	}
-	obj[0]->SetModel(model[0].get());
-	obj[1]->SetModel(model[1].get());
-	obj[2]->SetModel(model[0].get());
-	obj[3]->SetModel(model[2].get());
+	obj_[0]->SetModel("sphere");
+	obj_[1]->SetModel("cube");
+	obj_[2]->SetModel("sphere");
+	obj_[3]->SetModel("busterSword");
 
 #pragma region オブジェクトの初期値設定
-	obj[0]->position = { 0,0,0 };
-	obj[1]->position = { 0,-2,0 };
-	obj[1]->scale = { 10,0.1f,10 };
-	obj[2]->position = { 2,0,0 };
-	obj[3]->position = { -2,3,0 };
+	obj_[0]->position_ = { 0,0,0 };
+	obj_[1]->position_ = { 0,-2,0 };
+	obj_[1]->scale_ = { 10,0.1f,10 };
+	obj_[2]->position_ = { 2,0,0 };
+	obj_[3]->position_ = { -2,3,0 };
 	//設定したのを適用
-	for (int i = 0; i < maxObj; i++)
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i]->UpdateMatrix();
+		obj_[i]->Update();
 	}
 
 #pragma endregion
@@ -62,56 +51,51 @@ void NResultScene::Init()
 
 #pragma endregion
 	// ライト生成
-	lightGroup = std::make_unique<NLightGroup>();
-	lightGroup = lightGroup->Create();
+	lightGroup_ = std::make_unique<NLightGroup>();
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, false);
-	lightGroup->SetDirLightActive(1, false);
-	lightGroup->SetDirLightActive(2, false);
-
-	lightGroup->SetSpotLightActive(0, true);
-	lightGroup->SetSpotLightActive(1, false);
-	lightGroup->SetSpotLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, false);
+	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
 void NResultScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-	{
-		NSceneManager::SetScene(TITLESCENE);
-	}
-#pragma region 行列の計算
-	//ビュー行列の再生成
-	camera.CreateMatView();
-	NCamera::nowCamera = &camera;
-
-	obj[0]->MoveKey();
-	obj[3]->MoveKey();
-
-	for (size_t i = 0; i < maxObj; i++)
-	{
-		obj[i]->UpdateMatrix();
-	}
+#pragma region カメラ
+	NCameraManager::GetInstance()->Update();
 #pragma endregion
+
+	obj_[0]->MoveKey();
+	obj_[3]->MoveKey();
+
+	for (size_t i = 0; i < kMaxObj; i++)
+	{
+		obj_[i]->Update();
+	}
+
+	//ライトたちの更新
+	lightGroup_->Update();
+
+	//シーン切り替え
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
+	{
+		NSceneManager::ChangeScene<NTitleScene>();
+	}
 }
 
 void NResultScene::Draw()
 {
 #pragma region グラフィックスコマンド
 	//背景スプライト
+	NSprite::CommonBeginDraw();
 
 	//3Dオブジェクト
-	for (int i = 0; i < maxObj; i++)
+	NObj3d::CommonBeginDraw();
+	for (uint32_t i = 0; i < kMaxObj; i++)
 	{
-		obj[i]->CommonBeginDraw();
-		obj[i]->Draw();
+		obj_[i]->Draw();
 	}
 
 	//前景スプライト
+	NSprite::CommonBeginDraw();
 
 	// 4.描画コマンドここまで
 #pragma endregion
@@ -119,18 +103,9 @@ void NResultScene::Draw()
 
 void NResultScene::Reset()
 {
+	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup.get());
-
-	lightGroup->SetDirLightActive(0, false);
-	lightGroup->SetDirLightActive(1, false);
-	lightGroup->SetDirLightActive(2, false);
-
-	lightGroup->SetSpotLightActive(0, true);
-	lightGroup->SetSpotLightActive(1, false);
-	lightGroup->SetSpotLightActive(2, false);
-
-	lightGroup->SetCircleShadowActive(0, false);
+	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
 void NResultScene::Finalize()

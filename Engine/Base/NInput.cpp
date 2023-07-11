@@ -9,40 +9,139 @@
 
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-// DirectInputの初期化
-ComPtr<IDirectInputDevice8> NInput::keyboard;
-ComPtr<IDirectInput8> NInput::directInput;
-
-// 全キーの入力状態を取得する
-static BYTE keys[256] = {};
-
-// 全キーの1F前の入力状態を取得する
-static BYTE prev[256] = {};
-
 NInput* NInput::GetInstance()
 {
 	static NInput instance;
 	return &instance;
 }
 
-void NInput::KeyInit(HINSTANCE hInstance, HWND hwnd)
+//---------こっからマウス------------//
+ComPtr<IDirectInputDevice8> NInput::sDevMouse;
+DIMOUSESTATE2 NInput::sStateMouse;
+DIMOUSESTATE2 NInput::sPrevMouse;
+
+void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
+{
+	HRESULT result = S_FALSE;
+
+	// DirectInputの初期化
+	result = DirectInput8Create(
+		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
+		(void**)&sDirectInput, nullptr);
+	assert(SUCCEEDED(result));
+
+	// マウスデバイスの生成
+	result = sDirectInput->CreateDevice(GUID_SysMouse, &sDevMouse, NULL);
+	assert(SUCCEEDED(result));
+
+	// 入力データ形式のセット
+	result = sDevMouse->SetDataFormat(&c_dfDIMouse2); // 標準形式
+	assert(SUCCEEDED(result));
+
+	// 排他制御レベルのセット
+	result =
+		sDevMouse->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(result));
+}
+
+
+void NInput::MouseUpdate()
+{
+	sDevMouse->Acquire(); // マウス動作開始
+
+	// 前回の入力を保存
+	sPrevMouse = sStateMouse;
+
+	// マウスの入力
+	sDevMouse->GetDeviceState(sizeof(sStateMouse), &sStateMouse);
+}
+
+// マウスのボタン押下をチェック
+// 指定したボタンが押されてるかチェック
+bool NInput::PushMouse(const MouseButton button)
+{
+	// 0でなければ押している
+	if (sStateMouse.rgbButtons[button]) {
+		return true;
+	}
+
+	// 押していない
+	return false;
+}
+
+// マウスのトリガーをチェック
+// 指定したボタンが押されてるかチェック
+bool NInput::TriggerMouse(const MouseButton button)
+{
+	// 前回が0で、今回が0でなければトリガー
+	if (!sPrevMouse.rgbButtons[button] && sStateMouse.rgbButtons[button]) {
+		return true;
+	}
+
+	// トリガーでない
+	return false;
+}
+
+/// <summary>
+/// マウス移動量を取得
+/// </summary>
+/// <returns>マウス移動量</returns>
+NVector3 NInput::GetMouseMove(const bool isNowState) {
+	NVector3 tmp;
+	if (isNowState)
+	{
+		tmp.x = (float)sStateMouse.lX;
+		tmp.y = (float)sStateMouse.lY;
+		tmp.z = (float)sStateMouse.lZ;
+	}
+	else
+	{
+		tmp.x = (float)sPrevMouse.lX;
+		tmp.y = (float)sPrevMouse.lY;
+		tmp.z = (float)sPrevMouse.lZ;
+	}
+	return tmp;
+}
+
+//マウスの移動量を反映
+void NInput::SetMouseMove(NVector2& mouseVec)
+{
+	sStateMouse.lX = (LONG)mouseVec.x;
+	sStateMouse.lY = (LONG)mouseVec.y;
+}
+
+//マウスホイールの移動量を反映
+void NInput::SetWheelMove(float wheelMove)
+{
+	sStateMouse.lZ = (LONG)wheelMove;
+}
+
+//---------こっからキーボード------------//
+ComPtr<IDirectInputDevice8> NInput::sKeyboard;
+ComPtr<IDirectInput8> NInput::sDirectInput;
+// 全キーの入力状態を取得する
+static BYTE keys[256] = {};
+// 全キーの1F前の入力状態を取得する
+static BYTE prev[256] = {};
+
+void NInput::KeyInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
 	HRESULT result;
 
 	// DirectInputの初期化
 	result = DirectInput8Create(
 		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
-		(void**)&directInput, nullptr);
+		(void**)&sDirectInput, nullptr);
 	assert(SUCCEEDED(result));
 	// キーボードデバイスの生成
-	result = directInput->CreateDevice(GUID_SysKeyboard, &keyboard, NULL);
+	result = sDirectInput->CreateDevice(GUID_SysKeyboard, &sKeyboard, NULL);
 	assert(SUCCEEDED(result));
 	// 入力データ形式のセット
-	result = keyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
+	result = sKeyboard->SetDataFormat(&c_dfDIKeyboard); // 標準形式
 	assert(SUCCEEDED(result));
 
 	// 排他制御レベルのセット
-	result = keyboard->SetCooperativeLevel(
+	result = sKeyboard->SetCooperativeLevel(
 		//DISCL_FOREGROUND：画面が手前にある場合のみ入力を受け付ける
 		//DISCL_NONEXCLUSIVE：デバイスをこのアプリだけで専有しない
 		//DISCL_NOWINKEY：Windowsキーを無効にする
@@ -56,161 +155,195 @@ void NInput::KeyUpdate()
 	memcpy(prev, keys, sizeof(keys));
 
 	//現在のキー情報の取得開始
-	keyboard->Acquire();
-	keyboard->GetDeviceState(sizeof(keys), keys);
+	sKeyboard->Acquire();
+	sKeyboard->GetDeviceState(sizeof(keys), keys);
 }
 
 //押しっぱなし
-bool NInput::IsKey(UINT8 key)
+bool NInput::IsKey(const uint8_t key)
 {
 	return keys[key];
 }
 
 //押した瞬間
-bool NInput::IsKeyDown(UINT8 key)
+bool NInput::IsKeyDown(const uint8_t key)
 {
 	return keys[key] && !prev[key];
 }
 
 //離した瞬間
-bool NInput::IsKeyRelease(UINT8 key)
+bool NInput::IsKeyRelease(const uint8_t key)
 {
 	return !keys[key] && prev[key];
 }
 
+//---------こっからパッド------------//
+//XINPUT_STATE 構造体のインスタンスを作成
+XINPUT_STATE NInput::sStatePad{};
+XINPUT_STATE NInput::sPrevPad{};
+//接続されてるか
+bool NInput::sIsConnect = false;
+//振動
+XINPUT_VIBRATION NInput::sVibration{};
+
 void NInput::PadInit()
 {
-	ZeroMemory(&statePad, sizeof(XINPUT_STATE));
+	ZeroMemory(&sStatePad, sizeof(XINPUT_STATE));
 
 	DWORD result;
-	result = XInputGetState(0, &statePad);
+	result = XInputGetState(0, &sStatePad);
 
 	if (result == ERROR_SUCCESS)
 	{
-		isConnect = true;
+		sIsConnect = true;
 	}
 	else
 	{
-		isConnect = false;
+		sIsConnect = false;
 	}
 }
 
 void NInput::PadUpdate()
 {
-	prevPad = statePad;
+	sPrevPad = sStatePad;
 	DWORD result;
-	result = XInputGetState(0, &statePad);
+	result = XInputGetState(0, &sStatePad);
 	if (result == ERROR_SUCCESS)
 	{
-		isConnect = true;
+		sIsConnect = true;
 	}
 	else
 	{
-		isConnect = false;
+		sIsConnect = false;
 	}
 	SetDeadZone();
 }
 
-bool NInput::IsButton(UINT button)
+//押しっぱなし
+bool NInput::IsButton(const uint32_t button)
 {
-	return statePad.Gamepad.wButtons == button;
+	return sStatePad.Gamepad.wButtons == button;
 }
 
-bool NInput::IsButtonDown(UINT button)
+//押した瞬間
+bool NInput::IsButtonDown(const uint32_t button)
 {
-	return statePad.Gamepad.wButtons == button && prevPad.Gamepad.wButtons != button;
+	return sStatePad.Gamepad.wButtons == button && sPrevPad.Gamepad.wButtons != button;
 }
 
-bool NInput::IsButtonRelease(UINT button)
+//離した瞬間
+bool NInput::IsButtonRelease(const uint32_t button)
 {
-	return statePad.Gamepad.wButtons != button && prevPad.Gamepad.wButtons == button;
+	return sStatePad.Gamepad.wButtons != button && sPrevPad.Gamepad.wButtons == button;
 }
 
-int NInput::GetTrigger(bool isLeft)
+//トリガーの押し込み具合取得
+//isLeft:右左どっち！
+uint32_t NInput::GetTrigger(const bool isLeft)
 {
 	if (isLeft)
 	{
-		return prevPad.Gamepad.bLeftTrigger < 128 && statePad.Gamepad.bLeftTrigger >= 128;
+		return sPrevPad.Gamepad.bLeftTrigger < 128 && sStatePad.Gamepad.bLeftTrigger >= 128;
 	}
 	else
 	{
-		return prevPad.Gamepad.bRightTrigger < 128 && statePad.Gamepad.bRightTrigger >= 128;
+		return sPrevPad.Gamepad.bRightTrigger < 128 && sStatePad.Gamepad.bRightTrigger >= 128;
 	}
 }
 
+//デッドゾーンの設定
 void NInput::SetDeadZone()
 {
-	if ((statePad.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-		statePad.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
-		(statePad.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			statePad.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+	if ((sStatePad.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		sStatePad.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+		(sStatePad.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			sStatePad.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
 	{
-		statePad.Gamepad.sThumbLX = 0;
-		statePad.Gamepad.sThumbLY = 0;
+		sStatePad.Gamepad.sThumbLX = 0;
+		sStatePad.Gamepad.sThumbLY = 0;
 	}
 
-	if ((statePad.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-		statePad.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
-		(statePad.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			statePad.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+	if ((sStatePad.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		sStatePad.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+		(sStatePad.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+			sStatePad.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
 	{
-		statePad.Gamepad.sThumbRX = 0;
-		statePad.Gamepad.sThumbRY = 0;
+		sStatePad.Gamepad.sThumbRX = 0;
+		sStatePad.Gamepad.sThumbRY = 0;
 	}
 }
 
-NVector2 NInput::GetStick(bool isLeft)
+//スティックの傾き具合取得(0.0f~1.0f)
+//isLeft:右左どっち！
+NVector2 NInput::GetStick(const bool isLeft)
 {
 	if (isLeft)
 	{
-		SHORT x = statePad.Gamepad.sThumbLX;
-		SHORT y = statePad.Gamepad.sThumbLY;
+		SHORT x = sStatePad.Gamepad.sThumbLX;
+		SHORT y = sStatePad.Gamepad.sThumbLY;
 
 		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
 	else
 	{
-		SHORT x = statePad.Gamepad.sThumbRX;
-		SHORT y = statePad.Gamepad.sThumbRY;
+		SHORT x = sStatePad.Gamepad.sThumbRX;
+		SHORT y = sStatePad.Gamepad.sThumbRY;
 
 		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
 }
 
-bool NInput::IsStickUp(bool isLeft)
+//isVertical:垂直方向か
+//isLstick:Lスティックか
+//上、左はなら-1
+//下、右なら+1が返ってくる
+uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
 {
-	if (isLeft)
+	if (isLstick)
 	{
-		return prevPad.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE&&
-			statePad.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
+		if (isVertical)
+		{
+			return (sStatePad.Gamepad.sThumbLY < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbLY >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbLY <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		}
+		else
+		{
+			return (sStatePad.Gamepad.sThumbLX > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbLX <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbLX < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbLX >= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
+		}
 	}
 	else
 	{
-		return prevPad.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE&&
-			statePad.Gamepad.sThumbRY >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
+		if (isVertical)
+		{
+			return (sStatePad.Gamepad.sThumbRY < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbRY >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbRY <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		}
+		else
+		{
+			return (sStatePad.Gamepad.sThumbRX > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+				sPrevPad.Gamepad.sThumbRX <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) -
+				(sStatePad.Gamepad.sThumbRX < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+					sPrevPad.Gamepad.sThumbRX >= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
+		}
 	}
 }
 
-bool NInput::IsStickDown(bool isLeft)
+//コントローラーの振動を設定
+//パワーは0.0f~1.0fで入力してね
+void NInput::Vibration(const float leftVibrationPower, const float rightVibrationPower)
 {
-	if (isLeft)
-	{
-		return prevPad.Gamepad.sThumbLY > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
-			statePad.Gamepad.sThumbLY <= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-	}
-	else
-	{
-		return prevPad.Gamepad.sThumbRY > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
-			statePad.Gamepad.sThumbRY <= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-	}
-}
+	float lVibPower = leftVibrationPower, rVibPower = rightVibrationPower;
+	lVibPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
+	rVibPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
 
-void NInput::Vibration(float leftVibrationPower, float rightVibrationPower)
-{
-	leftVibrationPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
-	rightVibrationPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
-
-	vibration.wLeftMotorSpeed = (int)(leftVibrationPower * 65535.0f);
-	vibration.wRightMotorSpeed = (int)(rightVibrationPower * 65535.0f);
-	XInputSetState(0, &vibration);
+	sVibration.wLeftMotorSpeed = (int)(lVibPower * 65535.0f);
+	sVibration.wRightMotorSpeed = (int)(rVibPower * 65535.0f);
+	XInputSetState(0, &sVibration);
 }

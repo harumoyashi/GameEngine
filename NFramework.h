@@ -3,7 +3,7 @@ class NFramework
 {
 private:
 	//ゲーム終了フラグ
-	bool isGameEnd = false;
+	bool isGameEnd_ = false;
 
 public:
 	virtual ~NFramework() = default;
@@ -16,7 +16,7 @@ public:
 	void Run();
 
 	//ゲーム終了フラグ取得
-	virtual inline bool GetIsGameEnd() { return isGameEnd; }
+	virtual inline const bool GetIsGameEnd()const { return isGameEnd_; }
 	//ゲーム終了フラグ設定
-	virtual inline void SetIsGameEnd(bool flag) { isGameEnd = flag; }
+	virtual inline void SetIsGameEnd(const bool flag) { isGameEnd_ = flag; }
 };

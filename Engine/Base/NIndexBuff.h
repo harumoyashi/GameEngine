@@ -11,15 +11,15 @@ public:
 	NIndexBuff() {};	//既定のコンストラクタ
 
 	//インデックスの配列とその大きさで頂点バッファを作る
-	NIndexBuff(unsigned int* list, unsigned int size);
+	NIndexBuff(uint32_t* list, const uint32_t size);
 	//インデックスの配列とvectorで頂点バッファを作る
-	NIndexBuff(std::vector<unsigned int> list);
+	NIndexBuff(const std::vector<uint32_t>& list);
 
 	//インデックスの配列とその大きさで頂点バッファを作る
-	void Init(unsigned int* list, unsigned int size);
+	void Init(uint32_t* list, const uint32_t size);
 	//インデックスの配列とvectorで頂点バッファを作る
-	void Init(std::vector<unsigned int> list);
+	void Init(const std::vector<uint32_t>& list);
 
-	ComPtr<ID3D12Resource> buff = nullptr;
-	D3D12_INDEX_BUFFER_VIEW view{};
+	ComPtr<ID3D12Resource> buff_ = nullptr;
+	D3D12_INDEX_BUFFER_VIEW view_{};
 };

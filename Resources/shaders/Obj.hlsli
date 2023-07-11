@@ -3,11 +3,14 @@ cbuffer cbuff0 : register(b0)
     float3 m_ambient : packoffset(c0);  // アンビエント係数
     float3 m_diffuse : packoffset(c1);  // ディフューズ係数
     float3 m_specular : packoffset(c2); // スペキュラー係数
-    float m_alpha : packoffset(c2.w);   // アルファ
-    float3 m_color : packoffset(c3);    // 色
 }
 
 cbuffer cbuff1 : register(b1)
+{
+    float4 m_color;
+}
+
+cbuffer cbuff2 : register(b2)
 {
     matrix viewproj; // ビュープロジェクション行列
     matrix world; // ワールド行列
@@ -17,6 +20,7 @@ cbuffer cbuff1 : register(b1)
 //平行光源の数
 static const int DIRLIGHT_NUM = 3;
 
+//平行光源
 struct DirLight
 {
     float3 lightv; //ライトへの方向の単位ベクトル
@@ -27,6 +31,7 @@ struct DirLight
 //点光源の数
 static const int POINTLIGHT_NUM = 3;
 
+//点光源
 struct PointLight
 {
     float3 lightpos; //ライト座標
@@ -38,6 +43,7 @@ struct PointLight
 //スポットライトの数
 static const int SPOTLIGHT_NUM = 3;
 
+//スポットライト
 struct SpotLight
 {
     float3 lightv; //ライトの光線方向の逆ベクトル
@@ -51,6 +57,7 @@ struct SpotLight
 //丸影の数
 static const int CIRCLESHADOW_NUM = 1;
 
+//丸影
 struct CircleShadow
 {
     float3 dir; //投影方向の逆ベクトル
@@ -61,7 +68,7 @@ struct CircleShadow
     uint active;
 };
 
-cbuffer cbuff2 : register(b2)
+cbuffer cbuff3 : register(b3)
 {
     float3 ambientColor;
     DirLight dirLights[DIRLIGHT_NUM];

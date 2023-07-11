@@ -88,6 +88,69 @@
     <Filter Include="Engine\ソース ファイル\Util">
       <UniqueIdentifier>{046cd6df-1f79-47bd-90b6-63817f1681cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソース ファイル\Loader">
+      <UniqueIdentifier>{52bb7ba3-d0b4-46d4-8a46-0c0b6d39ca3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\Loader">
+      <UniqueIdentifier>{6ddd6382-3c4a-4b24-9f9d-201e8db70eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\PostEffect">
+      <UniqueIdentifier>{0ddfd0fd-44d7-44eb-b835-599d691a3233}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\PostEffect">
+      <UniqueIdentifier>{7b6b524d-34c7-4302-b6e4-890b6d33de02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Chara">
+      <UniqueIdentifier>{d6e83c9e-3c49-4d5f-a92f-589cdec909b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Bullet">
+      <UniqueIdentifier>{588afa0f-66d5-4842-9a44-608e56bea8bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Field">
+      <UniqueIdentifier>{7c59b157-9882-4c9b-9f09-e11146a5b6f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\obj">
+      <UniqueIdentifier>{8ff55fe5-176d-44f8-9ba2-185f3da2bbe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\sprite">
+      <UniqueIdentifier>{cc60bcea-6d9b-461e-ac04-0544fe1b9872}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect">
+      <UniqueIdentifier>{ca48c12f-4a6d-41f2-8e62-e435e8cdf6a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\CG4">
+      <UniqueIdentifier>{58c26aaf-30c2-4394-9bb3-19e91521be0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\Gaussian">
+      <UniqueIdentifier>{1596664a-5d66-4dbf-80df-c4885d265d22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\postEffect\Radial">
+      <UniqueIdentifier>{52375eaa-d5bb-4020-a8df-ae8e0e208565}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\obj\obj">
+      <UniqueIdentifier>{c0f97d3d-19b3-488e-a565-762dadf75518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\obj\Tile">
+      <UniqueIdentifier>{9a82e3f0-22aa-41f0-b5da-c1f47280c920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\sprite\sprite">
+      <UniqueIdentifier>{141bdbc4-5a10-4709-b996-8cc5447d7a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{47bced0b-9cb1-4565-945b-4ef7b5f87b25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\Particle">
+      <UniqueIdentifier>{3984eb9b-64a2-4e07-80a2-9c1331354d23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Particle">
+      <UniqueIdentifier>{89bea174-3bbf-4dbc-96dd-3f6c40295a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\Particle\particle3D">
+      <UniqueIdentifier>{4da9e5ac-e4eb-4d0d-83bb-214849aa6ff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ソースファイル\Chara\Enemy">
+      <UniqueIdentifier>{7a044dd6-7778-4440-a96a-92c6b0939acd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -129,12 +192,6 @@
     <ClInclude Include="Engine\3d\NModel.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NCamera.h">
-      <Filter>Engine\ヘッダー ファイル\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Audio\NAudio.h">
-      <Filter>Engine\ヘッダー ファイル\Basic</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Base\NDX12.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
@@ -171,9 +228,6 @@
     <ClInclude Include="Engine\Math\NMathUtil.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="NLightGroup.h">
-      <Filter>Engine\ヘッダー ファイル\Light</Filter>
-    </ClInclude>
     <ClInclude Include="NDirectionalLight.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
@@ -205,6 +259,126 @@
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="NFramework.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NConstBuff.h">
+      <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="NConstBuffData.h">
+      <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="External\json.hpp">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NVector4.h">
+      <Filter>Engine\ヘッダー ファイル\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="NLightGroup.h">
+      <Filter>Engine\ヘッダー ファイル\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="NAssimpModel.h">
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NAssimpLoader.h">
+      <Filter>Engine\ヘッダー ファイル\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="NLevelDataLoader.h">
+      <Filter>Engine\ヘッダー ファイル\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="NUtil.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="NPostEffect.h">
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="RadialBlur.h">
+      <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Application\ソースファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="NCameraManager.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NCollider.h">
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NEasing.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClInclude>
+    <ClInclude Include="IBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="LineBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SideBullet.h">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticle3D.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticle2D.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Audio\NAudio.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3d\NCamera.h">
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="NModelManager.h">
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="NShader.h">
+      <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleParticle.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="NParticleManager.h">
+      <Filter>Engine\ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnemy.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="NBaseCollider.h">
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NCollisionInfo.h">
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="NCollisionManager.h">
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -248,12 +422,6 @@
     <ClCompile Include="Engine\3d\NModel.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NCamera.cpp">
-      <Filter>Engine\ソース ファイル\3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Audio\NAudio.cpp">
-      <Filter>Engine\ソース ファイル\Basic</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Base\NDX12.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
@@ -293,9 +461,6 @@
     <ClCompile Include="Engine\Math\NMathUtil.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NLightGroup.cpp">
-      <Filter>Engine\ソース ファイル\Light</Filter>
-    </ClCompile>
     <ClCompile Include="NDirectionalLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
@@ -320,16 +485,155 @@
     <ClCompile Include="NFramework.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="NConstBuff.cpp">
+      <Filter>Engine\ソース ファイル\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="NSpotLight.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NCircleShadow.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NPointLight.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NVector4.cpp">
+      <Filter>Engine\ソース ファイル\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="NLightGroup.cpp">
+      <Filter>Engine\ソース ファイル\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="NAssimpModel.cpp">
+      <Filter>Engine\ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NAssimpLoader.cpp">
+      <Filter>Engine\ソース ファイル\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="NLevelDataLoader.cpp">
+      <Filter>Engine\ソース ファイル\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="NUtil.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NEasing.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NCollider.cpp">
+      <Filter>Engine\ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="NPostEffect.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="RadialBlur.cpp">
+      <Filter>Engine\ソース ファイル\PostEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>Application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Application\ソースファイル\Chara</Filter>
+    </ClCompile>
+    <ClCompile Include="IBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManager.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="LineBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletFactory.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SideBullet.cpp">
+      <Filter>Application\ソースファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Application\ソースファイル\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticle3D.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticle2D.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Audio\NAudio.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\3d\NCamera.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NCameraManager.cpp">
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="NModelManager.cpp">
+      <Filter>Engine\ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="NShader.cpp">
+      <Filter>Engine\ソース ファイル\PipeLine</Filter>
+    </ClCompile>
+    <ClCompile Include="NParticleManager.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleParticle.cpp">
+      <Filter>Engine\ソース ファイル\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnemy.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NBaseCollider.cpp">
+      <Filter>Engine\ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NCollisionInfo.cpp">
+      <Filter>Engine\ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="NCollisionManager.cpp">
+      <Filter>Engine\ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
       <Filter>リソース ファイル</Filter>
     </None>
-    <None Include="Resources\shaders\Sprite.hlsli">
-      <Filter>リソース ファイル</Filter>
+    <None Include="packages.config" />
+    <None Include="Resources\shaders\CG4.hlsli">
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
+    </None>
+    <None Include="Resources\shaders\GaussianBlur.hlsli">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
+    </None>
+    <None Include="Resources\shaders\RadialBlur.hlsli">
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
     </None>
     <None Include="Resources\shaders\Obj.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\obj\obj</Filter>
+    </None>
+    <None Include="Resources\shaders\Tile.hlsli">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </None>
+    <None Include="Resources\shaders\Sprite.hlsli">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
+    </None>
+    <None Include="Resources\shaders\Particle3D.hlsli">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -339,17 +643,50 @@
     <FxCompile Include="Resources\shaders\BasicVS.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="Resources\shaders\CG4PS.hlsl">
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="Resources\shaders\CG4VS.hlsl">
+      <Filter>リソース ファイル\postEffect\CG4</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl">
+      <Filter>リソース ファイル\postEffect\Gaussian</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\RadialBlurPS.hlsl">
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\RadialBlurVS.hlsl">
+      <Filter>リソース ファイル\postEffect\Radial</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\obj\obj</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\obj\obj</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\TilePS.hlsl">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\TileVS.hlsl">
+      <Filter>リソース ファイル\obj\Tile</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpritePS.hlsl">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
+      <Filter>リソース ファイル\sprite\sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DGS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DPS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\Particle3DVS.hlsl">
+      <Filter>リソース ファイル\Particle\particle3D</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -6,56 +6,49 @@
 #include "NVector3.h"
 #include "NVector2.h"
 #include "NMathUtil.h"
+#include "NConstBuff.h"
 
 class NSpotLight
 {
-public://サブクラス
-	//定数バッファ用データ構造体
-	struct ConstBufferData
-	{
-		NVector3 lightv;
-		float pad1;	//パディング
-		NVector3 lightPos;
-		float pad2;	//パディング
-		NVector3 lightcolor;	//ライトの色
-		float pad3;	//パディング
-		NVector3 lightatten;
-		float pad4;	//パディング
-		NVector2 lightfactoranglecos;
-		unsigned int isActive = false;	//有効フラグ
-		float pad5;	//パディング
-	};
+public:
+	//定数バッファ
+	std::unique_ptr<NConstBuff<ConstBuffDataSpotLight>> cbSpotLight;
 
 private://静的メンバ変数
-	NVector3 lightdir = { 1,0,0 };	// ライト方向
-	NVector3 lightpos = { 0,0,0 };		// ライト座標(ワールド)
-	NVector3 lightcolor = { 1,1,1 };	// ライト色
-	NVector3 lightatten = { 1,1,1 };	// ライト距離減衰係数
-	NVector2 lightFactorAngleCos = { 0.5f,0.2f };	// ライト減衰角度
+	NVector3 lightdir_ = { 0,-1,0 };	// ライト方向
+	NVector3 lightpos_ = { 0,10,0 };	// ライト座標(ワールド)
+	NVector3 lightcolor_ = { 1,1,1 };	// ライト色
+	NVector3 lightatten_ = { 0,0,0 };	// ライト距離減衰係数
+	NVector2 lightFactorAngleCos_ = { 0.5f,0.2f };	// ライト減衰角度
 
+	//ダーティフラグ
+	bool isDirty_ = false;
 	//有効フラグ
-	bool isActive = false;
+	bool isActive_ = false;
 
 public://メンバ関数
-	inline void SetLightDir(const NVector3& lightdir) { this->lightdir = lightdir.Normalize(); }
-	inline const NVector3& GetLightDir() { return lightdir; }
+	NSpotLight();
+	~NSpotLight();
+
+	//初期化
+	void Init();
+
+	void SetLightDir(const NVector3& lightdir);
+	inline const NVector3& GetLightDir()const { return lightdir_; }
 	//ライトの座標をセット
-	inline void SetLightPos(const NVector3& lightpos) { this->lightpos = lightpos; }
-	inline const NVector3& GetLightPos() { return lightpos; }
+	void SetLightPos(const NVector3& lightpos);
+	inline const NVector3& GetLightPos()const { return lightpos_; }
 	//ライトの色をセット
-	inline void SetLightColor(const NVector3& lightcolor) { this->lightcolor = lightcolor; }
-	inline const NVector3& GetLightColor() { return lightcolor; }
+	void SetLightColor(const NVector3& lightcolor);
+	inline const NVector3& GetLightColor()const { return lightcolor_; }
 	//ライトの減衰係数をセット
-	inline void SetLightAtten(const NVector3& lightatten) { this->lightatten = lightatten; }
-	inline const NVector3& GetLightAtten() { return lightatten; }
+	void SetLightAtten(const NVector3& lightatten);
+	inline const NVector3& GetLightAtten()const { return lightatten_; }
 	//ライトの減衰角度をセット
-	inline void SetLightFactorAngle(const NVector2& lightFactorAngle) {
-		this->lightFactorAngleCos.x = cosf(MathUtil::Degree2Radian(lightFactorAngle.x));
-		this->lightFactorAngleCos.y = cosf(MathUtil::Degree2Radian(lightFactorAngle.y));
-	}
-	inline const NVector2& GetLightFactorAngle() { return lightFactorAngleCos; }
+	void SetLightFactorAngle(const NVector2& lightFactorAngle);
+	inline const NVector2& GetLightFactorAngle()const { return lightFactorAngleCos_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { this->isActive = isActive; }
+	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive; }
+	inline const bool GetActive()const { return isActive_; }
 };

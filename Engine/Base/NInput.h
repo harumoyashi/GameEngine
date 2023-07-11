@@ -2,7 +2,9 @@
 #define DIRECTINPUT_VERSION 0x0800 // DirectInputのバージョン指定
 #include <dinput.h>
 #include <Xinput.h>
+#include <stdint.h>
 #include "NVector2.h"
+#include "NVector3.h"
 
 #include <wrl.h>
 
@@ -12,69 +14,114 @@ public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 private:
-	static ComPtr<IDirectInputDevice8> keyboard;
-	static ComPtr<IDirectInput8> directInput;
+	struct MouseMove {
+		LONG lX;
+		LONG lY;
+		LONG lZ;	//ここはマウスホイール
+	};
+	static ComPtr<IDirectInputDevice8> sDevMouse;
+	static DIMOUSESTATE2 sStateMouse;
+	static DIMOUSESTATE2 sPrevMouse;
 
-	//振動
-	XINPUT_VIBRATION vibration;
+public:
+	enum MouseButton
+	{
+		MouseLeft,
+		MouseRight,
+		MouseMiddle,
+	};
+
+	//mouse初期化
+	static void MouseInit(const HINSTANCE& hInstance, const HWND& hwnd);
+	//mouse更新
+	static void MouseUpdate();
+
+	// マウスのボタン押下をチェック
+	// 指定したボタンが押されてるかチェック
+	static bool PushMouse(const MouseButton button = MouseLeft);
+
+	// マウスのトリガーをチェック
+	// 指定したボタンが押されてるかチェック
+	static bool TriggerMouse(const MouseButton button = MouseLeft);
+
+	/// <summary>
+	/// マウス移動量を取得
+	/// </summary>
+	/// <returns>マウス移動量</returns>
+	static NVector3 GetMouseMove(const bool isNowState = true);
+
+	//マウスの移動量を反映
+	static void SetMouseMove(NVector2& mouseVec);
+
+	//マウスホイールの移動量を反映
+	static void SetWheelMove(float wheelMove);
+
+private:
+	static ComPtr<IDirectInputDevice8> sKeyboard;
+	static ComPtr<IDirectInput8> sDirectInput;
 
 public:
 	NInput() {};
 	static NInput* GetInstance();
 
-	//input初期化
-	static void KeyInit(HINSTANCE hInstance, HWND hwnd);
-	//input更新
+	//key初期化
+	static void KeyInit(const HINSTANCE& hInstance, const HWND& hwnd);
+	//key更新
 	static void KeyUpdate();
 
 	//キーボード入力処理用 (返り値0,1)
 	//押しっぱなし
-	static bool IsKey(UINT8 key);	//UINTはビット数指定したら型自由ぽい
+	static bool IsKey(const uint8_t key);	//UINTはビット数指定したら型自由ぽい
 	//押した瞬間
-	static bool IsKeyDown(UINT8 key);
+	static bool IsKeyDown(const uint8_t key);
 	//離した瞬間
-	static bool IsKeyRelease(UINT8 key);
+	static bool IsKeyRelease(const uint8_t key);
 
-public:
+private:
 	//XINPUT_STATE 構造体のインスタンスを作成
-	XINPUT_STATE statePad{};
-	XINPUT_STATE prevPad{};
+	static XINPUT_STATE sStatePad;
+	static XINPUT_STATE sPrevPad;
 
 	//接続されてるか
-	bool isConnect = false;
+	static bool sIsConnect;
+
+	//振動
+	static XINPUT_VIBRATION sVibration;
 
 public:
-	//初期化
+	//pad初期化
 	void PadInit();
-	//更新
+	//pad更新
 	void PadUpdate();
 
 	//押しっぱなし
-	bool IsButton(UINT button);    //UINTはビット数指定したら型自由ぽい
+	static bool IsButton(const uint32_t button);    //UINTはビット数指定したら型自由ぽい
 	//押した瞬間
-	bool IsButtonDown(UINT button);
+	static bool IsButtonDown(const uint32_t button);
 	//離した瞬間
-	bool IsButtonRelease(UINT button);
+	static bool IsButtonRelease(const uint32_t button);
 
 	//トリガーの押し込み具合取得
 	//isLeft:右左どっち！
-	int GetTrigger(bool isLeft = true);
+	static uint32_t GetTrigger(const bool isLeft = true);
 
 	//デッドゾーンの設定
-	void SetDeadZone();
+	static void SetDeadZone();
 
-	//スティックの傾き具合取得
+	//スティックの傾き具合取得(0.0f~1.0f)
 	//isLeft:右左どっち！
-	NVector2 GetStick(bool isLeft = true);
+	static NVector2 GetStick(const bool isLeft = true);
 
-	//スティックを上に倒した瞬間か
-	//isLeft:右左どっち！
-	bool IsStickUp(bool isLeft = true);
-	//スティックを下に倒した瞬間か
-	//isLeft:右左どっち！
-	bool IsStickDown(bool isLeft = true);
+	//isVertical:垂直方向か
+	//isLstick:Lスティックか
+	//上、左はなら-1
+	//下、右なら+1が返ってくる
+	static uint32_t StickTriggered(bool isVertical, const bool isLstick = true);
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね
-	void Vibration(float leftVibrationPower, float rightVibrationPower);
+	static void Vibration(const float leftVibrationPower, const float rightVibrationPower);
+
+	//接続情報取得
+	inline static bool GetIsConnect() { return sIsConnect; }
 };

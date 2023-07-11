@@ -6,54 +6,50 @@
 #include "NVector3.h"
 #include "NVector2.h"
 #include "NMathUtil.h"
+#include "NConstBuff.h"
 
 class NCircleShadow
 {
 public://サブクラス
 	//定数バッファ用データ構造体
-	struct ConstBufferData
-	{
-		NVector3 dir;
-		float pad1;	//パディング
-		NVector3 casterPos;
-		float distanceCasterLight;
-		NVector3 atten;
-		float pad2;	//パディング
-		NVector2 factoranglecos;
-		unsigned int isActive;	//有効フラグ
-		float pad3;	//パディング
-	};
+	std::unique_ptr<NConstBuff<ConstBuffDataCircleShadow>> cbCircleShadow_;
 
 private://静的メンバ変数
-	NVector3 dir = { 1,0,0 };			// 方向
-	float distanceCasterLight = 100.0f;	// キャスターとライトの距離
-	NVector3 casterPos = { 0,0,0 };		// キャスター座標(ワールド)
-	NVector3 atten = { 0.5f,0.6f,0 };			// 距離減衰係数
-	NVector2 factorAngleCos = { 0.2f,0.5f };	// 減衰角度
+	NVector3 dir_ = { 1,0,0 };			// 方向
+	float distanceCasterLight_ = 100.0f;	// キャスターとライトの距離
+	NVector3 casterPos_ = { 0,0,0 };		// キャスター座標(ワールド)
+	NVector3 atten_ = { 0.5f,0.6f,0 };			// 距離減衰係数
+	NVector2 factorAngleCos_ = { 0.2f,0.5f };	// 減衰角度
 
+	//ダーティフラグ
+	bool isDirty_ = false;
 	//有効フラグ
-	bool isActive = false;
+	bool isActive_ = false;
 
 public://メンバ関数
-	inline void SetDir(const NVector3& dir) { this->dir = dir.Normalize(); }
-	inline const NVector3& GetDir() { return dir; }
+	NCircleShadow();
+	~NCircleShadow();
+
+	//初期化
+	void Init();
+
+	//影の方向をセット
+	void SetDir(const NVector3& dir);
+	inline const NVector3& GetDir()const { return dir_; }
 	//座標をセット
-	inline void SetCasterPos(const NVector3& casterPos) { this->casterPos = casterPos; }
-	inline const NVector3& GetCasterPos() { return casterPos; }
+	void SetCasterPos(const NVector3& casterPos);
+	inline const NVector3& GetCasterPos()const { return casterPos_; }
 	//キャスターとライトの距離をセット
-	inline void SetDistanceCasterLight(const float& distanceCasterLight) { this->distanceCasterLight = distanceCasterLight; }
-	inline const float& GetDistanceCasterLight() { return distanceCasterLight; }
+	void SetDistanceCasterLight(const float distanceCasterLight);
+	inline const float GetDistanceCasterLight()const { return distanceCasterLight_; }
 	//減衰係数をセット
-	inline void SetAtten(const NVector3& atten) { this->atten = atten; }
-	inline const NVector3& GetAtten() { return atten; }
+	void SetAtten(const NVector3& atten);
+	inline const NVector3& GetAtten()const { return atten_; }
 	//減衰角度をセット
-	inline void SetFactorAngle(const NVector2& factorAngle) {
-		this->factorAngleCos.x = cosf(MathUtil::Degree2Radian(factorAngle.x));
-		this->factorAngleCos.y = cosf(MathUtil::Degree2Radian(factorAngle.y));
-	}
-	inline const NVector2& GetFactorAngle() { return factorAngleCos; }
+	void SetFactorAngle(const NVector2& factorAngle);
+	inline const NVector2& GetFactorAngle()const { return factorAngleCos_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { this->isActive = isActive; }
+	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive; }
+	inline const bool GetActive()const { return isActive_; }
 };

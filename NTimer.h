@@ -11,32 +11,33 @@ enum class TimeType
 class NTimer
 {
 private:
-	int timer;		//タイマー
-	int maxTimer;	//タイマーの最大値
-	bool isTimeOut;	//タイマーが最大値に達したかフラグ
+	float timer_;		//タイマー
+	float maxTimer_;	//タイマーの最大値
+	bool isTimeOut_;	//タイマーが最大値に達したかフラグ
 
 public:
-	NTimer() : timer(0), maxTimer(0), isTimeOut(false){}
-	NTimer(const int& maxTimer) : timer(0), maxTimer(maxTimer), isTimeOut(false) {}
+	NTimer() : timer_(0), maxTimer_(0), isTimeOut_(false){}
+	NTimer(const float maxTimer) : timer_(0), maxTimer_(maxTimer), isTimeOut_(false) {}
 
 	//タイマーリセット
 	void Reset();
 	//更新(タイマー足されてく)
-	void Update();
+	//elapseTimer:経過時間。タイマー加算量に影響する。スローモーション用
+	void Update(const float elapseTimer = 1.0f);
 	//指定した値分タイマーを減らしてく
-	void SubTimer(const float& subTimer);
+	void SubTimer(const float subTimer);
 
 	//セッター
-	inline void SetTimer(const int& timer) { this->timer = timer; }
-	inline void SetMaxTimer(const int& maxTimer) { this->maxTimer = maxTimer; }
-	inline void SetisTimeOut(const bool& isTimeOut) { this->isTimeOut = isTimeOut; }
+	inline void SetTimer(const float timer) { timer_ = timer; }
+	inline void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
+	inline void SetisTimeOut(const bool isTimeOut) { isTimeOut_ = isTimeOut; }
 
 	//ゲッター
-	inline bool GetisTimeOut() { return isTimeOut; }
-	inline float GetMaxTimer() { return (float)maxTimer; }
-	inline float GetTimer() { return (float)timer; }
+	inline const bool GetisTimeOut()const { return isTimeOut_; }
+	inline const float GetMaxTimer()const { return (float)maxTimer_; }
+	inline const float GetTimer()const { return (float)timer_; }
 	//タイマーの進み具合を取得
-	inline float GetTimeRate() { return (float)timer / (float)maxTimer; }
+	inline const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
 	//システムが開始されてからの時間を取得
-	unsigned long GetNowTime(const TimeType& timeType);
+	float GetNowTime(const TimeType& timeType);
 };

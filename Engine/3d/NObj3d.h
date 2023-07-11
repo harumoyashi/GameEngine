@@ -1,97 +1,109 @@
 #pragma once
 #include "NDX12.h"
 #include "NMaterial.h"
-#include "NModel.h"
+#include "NModelManager.h"
 #include "NRootParam.h"
 #include "NGPipeline.h"
 #include "NMatrix4.h"
 #include "NLightGroup.h"
+#include "NConstBuff.h"
+#include "NCollisionInfo.h"
 
 #include<memory>
 #include <wrl.h>
 
-//定数バッファ用データ構造体（3D変換行列）
-struct  ConstBufferDataTransform
-{
-	//NMatrix4 mat;	//3D変換行列
-	NMatrix4 viewproj;	// ビュープロジェクション行列
-	NMatrix4 world;		// ワールド行列
-	NVector3 cameraPos;	// カメラ座標(ワールド座標)
-};
+class NBaseCollider;
 
 class NObj3d
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	D3D12_HEAP_PROPERTIES heapProp{};	//ヒープ
-	D3D12_RESOURCE_DESC resDesc{};		//リソース
+	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
+	D3D12_RESOURCE_DESC resDesc_{};		//リソース
 
-	ConstBufferDataTransform* constMapTransform;	//3D変換行列
-	ComPtr<ID3D12Resource> constBuff;		//定数バッファのGPUリソースのポインタ
+	//定数バッファ//
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
+	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
 
-	NMatrix4 matWorld;	//3D変換行列
+	NMatrix4 matWorld_;	//3D変換行列
 
 	// ライト
-	static NLightGroup* lightGroup;
+	static NLightGroup* sLightGroup;
 
 public:
-	NVector3 scale = { 1.0f,1.0f,1.0f };	//スケーリング倍率
-	NVector3 rotation = { 0.0f,0.0f,0.0f };	//回転角
-	NVector3 position = { 0.0f,0.0f,0.0f };	//座標
+	NVector3 scale_ = { 1.0f,1.0f,1.0f };		//スケーリング倍率
+	NVector3 rotation_ = { 0.0f,0.0f,0.0f };	//回転角
+	NVector3 position_ = { 0.0f,0.0f,0.0f };	//座標
 
-	NObj3d* parent = nullptr;	//親のポインタ
+	NObj3d* parent_ = nullptr;	//親のポインタ
 
-	int texNum = 0;	//テクスチャ指定用
+	uint32_t texNum_ = 0;		//テクスチャ指定用
 
-	NModel* model;
+	Model model_;				//モデル
+	NColor color_;				//色
+
+	std::string objName_;		//デバッグ用に名前つける
+	NBaseCollider* collider_;	//コライダー
 
 public:
-	~NObj3d();
+	NObj3d();
+	virtual ~NObj3d();
 #pragma region 初期化まわり
 	//初期化
-	bool Init();
+	virtual bool Init();
 
 	NObj3d* Create();
 
-	//ヒープ設定
-	void SetCBHeap();
-	//リソース設定
-	void SetCBResource();
-	//定数バッファの生成
-	void CreateCB();
-	//定数バッファのマッピング
-	void MappingCB();
 #pragma endregion
 #pragma region 更新まわり
+	//更新
+	virtual void Update();
 	//キーボード操作
 	void MoveKey();
 	//ワールド行列の合成
 	void UpdateMatrix();
 	//定数バッファへ送信
 	void TransferMatrix();
+	//色情報転送
+	void TransferColor();
+	//光情報転送
+	void TransferMaterial();
+
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
-	void CommonBeginDraw();
+	static void CommonBeginDraw(const bool isTiling = false);
 	//描画
-	void Draw();
-	//定数バッファビュー(CRV)の設定コマンド(マテリアル)
-	void SetMaterialCBV(NMaterial material);
+	virtual void Draw();
 	void SetSRVHeap();
-	void SetSRVHeap(D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle);
+	void SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle);
 	//頂点バッファビューの設定コマンド
-	void SetVB(D3D12_VERTEX_BUFFER_VIEW vbView);
+	void SetVB(const D3D12_VERTEX_BUFFER_VIEW* vbView);
 	//インデックスバッファビューの設定コマンド
-	void SetIB(D3D12_INDEX_BUFFER_VIEW ibView);
-	//定数バッファビュー(CRV)の設定コマンド(3D変換行列)
-	void SetMatCBV();
+	void SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView);
+	//定数バッファビュー(CBV)の設定コマンド
+	void SetCBV();
 	//描画コマンド
-	void DrawCommand(UINT indexSize);
+	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
-	inline void SetModel(NModel* model) { this->model = model; }
-	//ライトのセット
-	static void SetLightGroup(NLightGroup* lightGroup) {
-		NObj3d::lightGroup = lightGroup;
-	}
+
+	//衝突時コールバック関数
+	virtual void OnCollision(const NCollisionInfo& info) {}
+
+	// ゲッター //
+	//ワールド行列取得
+	const NMatrix4& GetMatWorld() { return matWorld_; }
+
+	// セッター //
+	//モデルの設定
+	void SetModel(const std::string& modelname);
+	//ワールド行列設定
+	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
+	//ライトを設定
+	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+
+	//コライダーの設定
+	void SetCollider(NBaseCollider* collider);
 };

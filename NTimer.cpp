@@ -3,40 +3,40 @@
 
 void NTimer::Reset()
 {
-	timer = 0;
-	isTimeOut = false;
+	timer_ = 0;
+	isTimeOut_ = false;
 }
 
-void NTimer::Update()
+void NTimer::Update(const float elapseTimer)
 {
-	if (timer < maxTimer)
+	if (timer_ < maxTimer_)
 	{
-		timer++;
+		timer_ += 1.0f * elapseTimer;
 	}
 	else
 	{
-		timer = maxTimer;
-		isTimeOut = true;
+		timer_ = maxTimer_;
+		isTimeOut_ = true;
 	}
 }
 
-void NTimer::SubTimer(const float& subTimer)
+void NTimer::SubTimer(const float subTimer)
 {
-	timer -= subTimer;
+	timer_ -= subTimer;
 }
 
-unsigned long NTimer::GetNowTime(const TimeType& timeType)
+float NTimer::GetNowTime(const TimeType& timeType)
 {
 	switch (timeType)
 	{
 	case TimeType::MilliSecond:
-		return GetTickCount64();
+		return (float)GetTickCount64();
 		break;
 	case TimeType::Second:
-		return (GetTickCount64() / 1000) % 60;
+		return (float)((GetTickCount64() / 1000) % 60);
 		break;
 	case TimeType::Minute:
-		return (GetTickCount64() / 60000) % 60;
+		return (float)((GetTickCount64() / 60000) % 60);
 		break;
 	}
 

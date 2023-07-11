@@ -4,58 +4,38 @@
 #include <assert.h>
 #include <wrl.h>
 #include "NVector3.h"
+#include "NConstBuff.h"
 
 class NDirectionalLight
 {
-public://サブクラス
-	//定数バッファ用データ構造体
-	struct ConstBufferData
-	{
-		NVector3 lightv;		//ライトへの方向を表すベクトル
-		float pad1;		//パディング
-		NVector3 lightcolor;	//ライトの色
-		bool isActive = false;	//有効フラグ
-	};
-
 private://静的メンバ変数
-	NVector3 lightdir = { 1,0,0 };	 // ライト光線方向
-	NVector3 lightcolor = { 1,1,1 }; // ライト色
+	NVector3 lightdir_ = { 1,0,0 };	 // ライト光線方向
+	NVector3 lightcolor_ = { 1,1,1 }; // ライト色
 
 	//ダーティフラグ
-	bool isDirty = false;
+	bool isDirty_ = false;
 	//有効フラグ
-	bool isActive = false;
+	bool isActive_ = false;
 
-public://静的メンバ関数
-	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+public:
 	//定数バッファ
-	ComPtr<ID3D12Resource> constBuff;
-
-	static NDirectionalLight* Creare();
+	std::unique_ptr<NConstBuff<ConstBuffDataLight>> cbLight;
 
 public: //メンバ関数
+	NDirectionalLight();
+	~NDirectionalLight();
 
 	//初期化
-	void Initialize();
-
-	//更新
-	void Update();
-
-	//描画
-	//rootParameterIndex = ルートパラメータの何番目にセットするか
-	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex);
-
-	//定数バッファ転送
-	void TransferConstBuffer();
+	void Init();
 
 	//ライトの方向をセット
 	void SetLightDir(const NVector3& lightdir);
-	inline NVector3 GetLightDir() { return lightdir; }
+	inline const NVector3& GetLightDir()const { return lightdir_; }
 	//ライトの色をセット
 	void SetLightColor(const NVector3& lightcolor);
-	inline NVector3 GetLightColor() { return lightcolor; }
+	inline const NVector3& GetLightColor()const { return lightcolor_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { this->isActive = isActive; }
+	inline void SetActive(const bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive() { return isActive; }
+	inline const bool GetActive()const { return isActive_; }
 };

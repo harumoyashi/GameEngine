@@ -1,28 +1,17 @@
 #pragma once
 #include <DirectXMath.h>
-using namespace DirectX;
 
-#include "NVector2.h"
-#include "NVector3.h"
+#include "NCollider.h"
 
 class NCollision
 {
 public:
-	struct Sphere
-	{
-		NVector3 pos = { 0.0f,0.0f,0.0f };	//À•W
-		float radius = 1.0f;	//‹…‚Ì”¼Œa
-	};
-
-	struct Plane
-	{
-		NVector3 normal = { 0.0f,1.0f,0.0f };	//–@ü
-		float distance = 0.0f;	//Œ´“_‚©‚ç‚Ì‹——£
-	};
+	//‰~“¯m‚Ì“–‚½‚è”»’è
+	static bool CircleCol(const Circle& c0, const Circle& c1);
 
 	//‹…“¯m‚Ì“–‚½‚è”»’è
-	//col:“–‚½‚è”»’èQÆ‚·‚é‚â‚Â
 	static bool SphereCol(const Sphere& s0, const Sphere& s1);
-
+	
+	//‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	static bool Sphere2PlaneCol(const Sphere& sphere,const Plane& plane/*,NVector3 inter*/);
 };

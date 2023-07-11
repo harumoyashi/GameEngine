@@ -5,7 +5,7 @@ NVector3::NVector3():x(0),y(0),z(0) {
 
 }
 
-NVector3::NVector3(float x, float y, float z) :x(x), y(y), z(z) {
+NVector3::NVector3(const float x, const float y, const float z) :x(x), y(y), z(z) {
 
 }
 
@@ -101,7 +101,7 @@ NVector3& NVector3::operator/=(const NVector3& v)
 	return *this;
 }
 
-NVector3& NVector3::operator*=(float s)
+NVector3& NVector3::operator*=(const float s)
 {
 	x *= s;
 	y *= s;
@@ -109,7 +109,7 @@ NVector3& NVector3::operator*=(float s)
 	return *this;
 }
 
-NVector3& NVector3::operator/=(float s)
+NVector3& NVector3::operator/=(const float s)
 {
 	x /= s;
 	y /= s;
@@ -117,7 +117,7 @@ NVector3& NVector3::operator/=(float s)
 	return *this;
 }
 
-NVector3& NVector3::operator=(float num)
+NVector3& NVector3::operator=(const float num)
 {
 	x = num;
 	y = num;
@@ -140,18 +140,18 @@ const NVector3 operator-(const NVector3& v1, const NVector3& v2)
 	return temp -= v2;
 }
 
-const NVector3 operator*(const NVector3& v, float s)
+const NVector3 operator*(const NVector3& v, const float s)
 {
 	NVector3 temp(v);
 	return temp *= s;
 }
 
-const NVector3 operator*(float s, const NVector3& v)
+const NVector3 operator*(const float s, const NVector3& v)
 {
 	return v * s;
 }
 
-const NVector3 operator/(const NVector3& v, float s)
+const NVector3 operator/(const NVector3& v, const float s)
 {
 	NVector3 temp(v);
 	return temp /= s;

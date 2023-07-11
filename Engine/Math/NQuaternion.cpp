@@ -50,17 +50,17 @@ NQuaternion NQuaternion::operator-() const
 	return NQuaternion{ -x,-y,-z,-w };
 }
 
-NQuaternion NQuaternion::operator*(const float& s) const
+NQuaternion NQuaternion::operator*(const float s) const
 {
 	return NQuaternion(x * s, y * s, z * s, w * s);
 }
 
-NQuaternion NQuaternion::operator/(const float& s) const
+NQuaternion NQuaternion::operator/(const float s) const
 {
 	return NQuaternion(x / s, y / s, z / s, w / s);
 }
 
-NQuaternion& NQuaternion::operator*=(const float& s)
+NQuaternion& NQuaternion::operator*=(const float s)
 {
 	NQuaternion result = *this;
 	result = result * s;
@@ -68,7 +68,7 @@ NQuaternion& NQuaternion::operator*=(const float& s)
 	return *this;
 }
 
-NQuaternion& NQuaternion::operator/=(const float& s)
+NQuaternion& NQuaternion::operator/=(const float s)
 {
 	NQuaternion result = *this;
 	result = result / s;
@@ -157,7 +157,7 @@ NQuaternion NQuaternion::Inverse(const NQuaternion& q)
 	return result;
 }
 
-NQuaternion NQuaternion::MakeAxisAngle(const NVector3& axis, const float& angle)
+NQuaternion NQuaternion::MakeAxisAngle(const NVector3& axis, const float angle)
 {
 	NQuaternion q(
 		axis.x * sinf(angle / 2.0f),
@@ -224,7 +224,7 @@ NVector3 NQuaternion::RotateVector(const NVector3& vector, const NQuaternion& qu
 	return vector * mat;
 }
 
-NQuaternion NQuaternion::Slarp(const NQuaternion& q0, const NQuaternion& q1, float t)
+NQuaternion NQuaternion::Slarp(const NQuaternion& q0, const NQuaternion& q1, const float t)
 {
 	float dot = Dot(q0, q1);
 	NQuaternion q = q0;

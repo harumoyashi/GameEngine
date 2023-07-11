@@ -2,6 +2,7 @@
 #include <vector>
 #include <wrl.h>
 
+#include "IScene.h"
 #include "NRootParam.h"
 #include "NMaterial.h"
 #include "NGPipeline.h"
@@ -9,61 +10,62 @@
 #include "NObj3d.h"
 #include "NTexture.h"
 #include "NSprite.h"
-#include "NPreDraw.h"
-#include "NModel.h"
-#include "NAudio.h"
-#include "NCamera.h"
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NTimer.h"
+#include "NAssimpModel.h"
+#include "NConstBuff.h"
+#include "NLevelDataLoader.h"
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-
-class NTitleScene
+class NTitleScene:
+	public IScene
 {
 private:
 	//オブジェクト
-	NMaterial material;				//マテリアル
-	static const int maxObj = 3;	//オブジェクト数
-	std::array<std::unique_ptr<NObj3d>, maxObj> obj;			//オブジェクト(定数バッファ)
+	NMaterial material_;				//マテリアル
+	static const uint32_t kMaxObj = 3;	//オブジェクト数
+	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト
+	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
-	static const int maxModel = 2;	//モデル数
-	std::array<std::unique_ptr<NModel>, maxModel> model;	//モデル情報
-
-	NCollision::Sphere sphere;
-	NCollision::Plane plane;
-	bool isCol = false;
+	Sphere sphere_;
+	Plane plane_;
+	bool isCol_ = false;
 
 	//背景スプライト
-	static const int maxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite[maxBackSprite];	//背景スプライト
+	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
+	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
 
 	//前景スプライト
-	static const int maxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite[maxForeSprite];	//前景スプライト
+	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
+	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
 
-	NCamera camera;	//カメラ
+	//ライトたち
+	std::unique_ptr<NLightGroup> lightGroup_;
 
-	//オーディオ
-	NAudio* audio = nullptr;
-	static const int maxSoundData = 3;		//サウンドデータの最大数
-	uint32_t soundData[maxSoundData] = {};	//サウンドデータ格納用
+	NTimer timer_;
 
-	std::unique_ptr<NLightGroup> lightGroup;
+	std::unique_ptr<LevelData> levelData_;
 
-	NTimer timer;
-
-	bool flag = true;
-	float color = 0.0f;
+	NAssimpModel assimpModel_;
 
 public:
 	//インスタンス取得
 	static NTitleScene* GetInstance();
 
-	void Init();
-	void Update();
-	void Draw();
-	void Reset();
-	void Finalize();
+	NTitleScene();
+	~NTitleScene();
+
+	void LoadResources();
+	void Init() override;
+	void Update() override;
+	//背景3Dオブジェクト
+	void DrawBack3D()override;
+	//背景スプライト
+	void DrawBackSprite()override;
+	//3Dオブジェクト
+	void Draw3D() override;
+	//パーティクル
+	void DrawParticle() override;
+	//前景スプライト
+	void DrawForeSprite() override;
 };

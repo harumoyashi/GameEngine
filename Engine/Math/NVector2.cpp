@@ -3,7 +3,7 @@
 
 NVector2::NVector2() :x(0), y(0) {}
 
-NVector2::NVector2(float x, float y) : x(x), y(y) {}
+NVector2::NVector2(const float x, const float y) : x(x), y(y) {}
 
 float NVector2::Length() const
 {
@@ -54,14 +54,14 @@ NVector2& NVector2::operator-=(const NVector2& v)
 	return *this;
 }
 
-NVector2& NVector2::operator*=(float s)
+NVector2& NVector2::operator*=(const float s)
 {
 	x *= s;
 	y *= s;
 	return *this;
 }
 
-NVector2& NVector2::operator/=(float s)
+NVector2& NVector2::operator/=(const float s)
 {
 	x /= s;
 	y /= s;
@@ -82,18 +82,18 @@ const NVector2 operator-(const NVector2& v1, const NVector2& v2)
 	return temp -= v2;
 }
 
-const NVector2 operator*(const NVector2& v, float s)
+const NVector2 operator*(const NVector2& v, const float s)
 {
 	NVector2 temp(v);
 	return temp *= s;
 }
 
-const NVector2 operator*(float s, const NVector2& v)
+const NVector2 operator*(const float s, const NVector2& v)
 {
 	return v * s;
 }
 
-const NVector2 operator/(const NVector2& v, float s)
+const NVector2 operator/(const NVector2& v, const float s)
 {
 	NVector2 temp(v);
 	return temp /= s;

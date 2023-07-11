@@ -1,11 +1,23 @@
 #include "NSceneManager.h"
-#include "NImGuiManager.h"
-#include "imgui.h"
+
+#include "NTitleScene.h"
+#include "NGameScene.h"
+#include "NSprite.h"
+#include "NObj3d.h"
+#include "NParticle3D.h"
+
 #pragma region staticメンバ変数初期化
-//シーンの初期化
-int NSceneManager::scene = TITLESCENE;
+
 //シーン変更フラグの初期化
-bool NSceneManager::isSceneChange = false;
+bool NSceneManager::sIsSceneChange = false;
+std::unique_ptr<IScene> NSceneManager::currentScene_;
+std::unique_ptr<IScene> NSceneManager::nextScene_;
+
+NSceneManager::NSceneManager()
+{
+	currentScene_ = std::move(std::make_unique<NGameScene>());
+}
+
 #pragma region
 NSceneManager* NSceneManager::GetInstance()
 {
@@ -15,98 +27,24 @@ NSceneManager* NSceneManager::GetInstance()
 
 void NSceneManager::Init()
 {
-#pragma region ImGui初期化
-	NImGuiManager::GetInstance()->Init();
-#pragma endregion
-	titleScene->Init();
-	gameScene->Init();
-	if (scene == TITLESCENE)
-	{
-		titleScene->Reset();
-	}
-	else if (scene == GAMESCENE)
-	{
-		gameScene->Reset();
-	}
+	currentScene_->Init();
 }
 
 void NSceneManager::Update()
 {
-	NImGuiManager::GetInstance()->Begin();
-	//タイトルシーンの更新処理
-	if (scene == TITLESCENE) {
-		titleScene->Update();
-	}
-	//ゲームシーンの更新処理
-	else if (scene == GAMESCENE) {
-		gameScene->Update();
-	}
-
-	//シーン変更がされたら
-	if (isSceneChange == true) {
-		//タイトルシーンだったら
-		if (scene == TITLESCENE) {
-			//リセット
-			titleScene->Reset();
-		}
-		//ゲームシーンなら
-		else if (scene == GAMESCENE) {
-			//リセット
-			gameScene->Reset();
-		}
-		//シーン変更フラグOFFにする
-		isSceneChange = false;
-	}
-
-	/*ImGui::Begin("maru");
-	ImGui::Text("yoyoyo");
-	ImGui::End();
-	ImGui::ShowDemoWindow();*/
-	NImGuiManager::GetInstance()->End();
+	currentScene_->Update();
 }
 
 void NSceneManager::Draw()
 {
-#pragma region 描画前処理
-	NPreDraw* preDraw = nullptr;
-	preDraw = new NPreDraw();
-
-	preDraw->SetResBarrier();
-	preDraw->SetRenderTarget();
-	preDraw->ClearScreen();
-
-	preDraw->SetViewport();
-	preDraw->SetScissorRect();
-#pragma endregion
-	//タイトルシーンの描画処理
-	if (scene == TITLESCENE) {
-		titleScene->Draw();
-	}
-	//ゲームシーンの描画処理
-	else if (scene == GAMESCENE) {
-		gameScene->Draw();
-	}
-
-	NImGuiManager::GetInstance()->Draw();
-	NDX12::GetInstance()->PostDraw(preDraw->barrierDesc);
-}
-
-void NSceneManager::Finalize()
-{
-	NImGuiManager::GetInstance()->Finalize();
-}
-
-void NSceneManager::SetScene(int selectScene)
-{
-	// --シーンを変更-- //
-	scene = selectScene;
-
-	// --シーン変更フラグをONに-- //
-	isSceneChange = true;
-}
-
-NSceneManager::NSceneManager()
-{
-	titleScene = titleScene->GetInstance();
-	gameScene = gameScene->GetInstance();
+	NObj3d::CommonBeginDraw();
+	currentScene_->DrawBack3D();
+	NSprite::CommonBeginDraw();
+	currentScene_->DrawBackSprite();
+	NObj3d::CommonBeginDraw();
+	currentScene_->Draw3D();
+	IEmitter3D::CommonBeginDraw();
+	currentScene_->DrawParticle();
+	NSprite::CommonBeginDraw();
+	currentScene_->DrawForeSprite();
 }

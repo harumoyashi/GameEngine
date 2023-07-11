@@ -1,0 +1,227 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Cube",
+            "transform": {
+                "translation": [
+                    2.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "cube",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "ICO球",
+                    "transform": {
+                        "translation": [
+                            -2.0,
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    },
+                    "file_name": "sphere"
+                }
+            ]
+        },
+        {
+            "type": "LIGHT",
+            "name": "Light",
+            "transform": {
+                "translation": [
+                    4.076245307922363,
+                    1.0054539442062378,
+                    5.903861999511719
+                ],
+                "rotation": [
+                    37.261043548583984,
+                    3.1637072563171387,
+                    106.93630981445312
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    1.0
+                ]
+            }
+        },
+        {
+            "type": "CAMERA",
+            "name": "Camera",
+            "transform": {
+                "translation": [
+                    15.325690269470215,
+                    -18.694364547729492,
+                    8.0
+                ],
+                "rotation": [
+                    63.559303283691406,
+                    -2.664711473698844e-06,
+                    46.69194793701172
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": ""
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.0,
+                    2.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "sphere",
+            "children": [
+                {
+                    "type": "MESH",
+                    "name": "ICO球.002",
+                    "transform": {
+                        "translation": [
+                            0.0,
+                            0.0,
+                            -2.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.003",
+            "transform": {
+                "translation": [
+                    -3.0,
+                    -2.0,
+                    2.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "busterSword"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.004",
+            "transform": {
+                "translation": [
+                    -4.0,
+                    4.0,
+                    3.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "boss"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.005",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    -2.0,
+                    -3.0
+                ],
+                "rotation": [
+                    135.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    0.9999999403953552,
+                    0.9999999403953552
+                ]
+            },
+            "file_name": "busterSword"
+        },
+        {
+            "type": "MESH",
+            "name": "ICO球.006",
+            "transform": {
+                "translation": [
+                    10.433244705200195,
+                    -10.147939682006836,
+                    5.0
+                ],
+                "rotation": [
+                    90.00001525878906,
+                    -1.4654536926173023e-06,
+                    45.000003814697266
+                ],
+                "scaling": [
+                    0.9999999403953552,
+                    1.0,
+                    0.9999999403953552
+                ]
+            },
+            "file_name": "busterSword"
+        }
+    ]
+}

@@ -6,7 +6,6 @@
 
 NMaterial NMtllib::Load(const std::string& directoryPath, const std::string& filename)
 {
-    NMtllib data;
     NMaterial material;
     material.texture = NTextureManager::GetInstance()->CreateErrorTexture();
 
@@ -66,7 +65,5 @@ NMaterial NMtllib::Load(const std::string& directoryPath, const std::string& fil
     }
     file.close();
 
-    //最後にちゃんと読み込んだ情報シェーダーに流して
-    material.TransferLight();
     return material;
 }

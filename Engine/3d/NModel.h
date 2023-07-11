@@ -2,28 +2,24 @@
 #include "NDX12.h"
 #include "NVertexBuff.h"
 #include "NIndexBuff.h"
+#include "NConstBuff.h"
 #include "NMaterial.h"
 
-#include <wrl.h>
+struct Model
+{
+	std::string name;						//モデル名
+	NVertexBuff<NVertexPNU> vertexBuff;		//頂点バッファ
+	NIndexBuff indexBuff;					//インデックスバッファ
+
+	std::vector<NVertexPNU> vertices;		//頂点群
+	std::vector<uint32_t> indices;			//インデックス群
+
+	NMaterial material;						//マテリアル
+};
 
 class NModel
 {
-private:
-	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-
 public:
-	std::string name;
-	NVertexBuff vertexBuff;
-	NIndexBuff indexBuff;
-
-	std::vector<NVertexPNU> vertices;
-	std::vector<UINT> indices;
-
-	NMaterial material;
-
-public:
-	void Create(const std::string modelname);
-
-private:
-	void LoadObjFile(const std::string modelname);
+	void Init();
+	void Finalize();
 };

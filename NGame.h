@@ -6,17 +6,21 @@
 #include "NTexture.h"
 #include "NSceneManager.h"
 #include "NAudioManager.h"
+#include "NModelManager.h"
+#include "NPostEffect.h"
 #include "NFramework.h"
 
 class NGame :public NFramework
 {
 private:
-	NWindows* win;
-	NDX12* dx12;
-	NAudio* audio;
-	PipeLineManager* pipeline;
-	NTextureManager* texManager;
-	NSceneManager* sceneMane;
+	NWindows* win_;
+	NDX12* dx12_;
+	NAudio* audio_;
+	PipeLineManager* pipeline_;
+	NTextureManager* texManager_;
+	NSceneManager* sceneMane_;
+	std::unique_ptr<NPostEffect> postEffect_;
+	bool isPostEffect_;	//ポストエフェクト適用するか
 
 public:
 	void Init() override;

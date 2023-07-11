@@ -1,6 +1,7 @@
 #pragma once
-#include "NTitleScene.h"
-#include "NGameScene.h"
+#include "IScene.h"
+#include <memory>
+#include <wrl.h>
 
 enum Scene {
 	TITLESCENE,
@@ -12,14 +13,10 @@ class NSceneManager
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	NTitleScene* titleScene;
-	NGameScene* gameScene;	//ゲームシーン
+	static std::unique_ptr<IScene> currentScene_;
+	static std::unique_ptr<IScene> nextScene_;
 
-	static int scene;		//現在のシーン
-	static bool isSceneChange;	//シーンの初期化フラグ
-
-public:
-
+	static bool sIsSceneChange;	//シーンの初期化フラグ
 
 public:
 	//インスタンス取得
@@ -31,10 +28,14 @@ public:
 	void Update();
 	//描画
 	void Draw();
-	//終了処理
-	void Finalize();
 	//シーンの変更
-	static void SetScene(int selectScene);
+	template<typename T>
+	static void ChangeScene()
+	{
+		std::unique_ptr<IScene> nextScene = std::make_unique<T>();
+		nextScene->Init();
+		currentScene_ = std::move(nextScene);
+	}
 
 	NSceneManager();
 

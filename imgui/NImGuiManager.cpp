@@ -29,7 +29,7 @@ void NImGuiManager::Init()
 
 	ImGui_ImplWin32_Init(NWindows::GetInstance()->GetHwnd());
 	ImGui_ImplDX12_Init(NDX12::GetInstance()->GetDevice(),
-		NDX12::GetInstance()->backBuffers.size(),
+		(int)NDX12::GetInstance()->backBuffers_.size(),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		srvHeap_.Get(),
 		srvHeap_->GetCPUDescriptorHandleForHeapStart(),
@@ -65,8 +65,8 @@ void NImGuiManager::End()
 void NImGuiManager::Draw()
 {
 	//デスクリプタヒープの配列をセットするコマンド
-	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap_.Get()};
-	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap_.Get()};
+	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 	//描画コマンドを発行
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), NDX12::GetInstance()->GetCommandList());
 }

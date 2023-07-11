@@ -7,8 +7,8 @@ NMatrix4 NMatrix4::operator-() const
     NMatrix4 result;
     float mat[4][8] = { 0 };
 
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             mat[i][j] = m[i][j];
         }
     }
@@ -18,12 +18,12 @@ NMatrix4 NMatrix4::operator-() const
     mat[2][6] = 1;
     mat[3][7] = 1;
 
-    for (int n = 0; n < 4; n++) {
+    for (size_t n = 0; n < 4; n++) {
         //Å‘å‚Ìâ‘Î’l‚ð’Tõ‚·‚é(‚Æ‚è‚ ‚¦‚¸‘ÎÛ¬•ª‚ðÅ‘å‚Æ‰¼’è‚µ‚Ä‚¨‚­)
         float max = abs(mat[n][n]);
-        int maxIndex = n;
+        size_t maxIndex = n;
 
-        for (int i = n + 1; i < 4; i++) {
+        for (size_t i = n + 1; i < 4; i++) {
             if (abs(mat[i][n]) > max) {
                 max = abs(mat[i][n]);
                 maxIndex = i;
@@ -37,7 +37,7 @@ NMatrix4 NMatrix4::operator-() const
 
         //“ü‚ê‘Ö‚¦
         if (n != maxIndex) {
-            for (int i = 0; i < 8; i++) {
+            for (size_t i = 0; i < 8; i++) {
                 float f = mat[maxIndex][i];
                 mat[maxIndex][i] = mat[n][i];
                 mat[n][i] = f;
@@ -48,26 +48,26 @@ NMatrix4 NMatrix4::operator-() const
         float mul = 1 / mat[n][n];
 
         //Š|‚¯‚é
-        for (int i = 0; i < 8; i++) {
+        for (size_t i = 0; i < 8; i++) {
             mat[n][i] *= mul;
         }
 
         //‘¼‘S•”0‚É‚·‚é
-        for (int i = 0; i < 4; i++) {
+        for (size_t i = 0; i < 4; i++) {
             if (n == i) {
                 continue;
             }
 
             float mul = -mat[i][n];
 
-            for (int j = 0; j < 8; j++) {
+            for (size_t j = 0; j < 8; j++) {
                 mat[i][j] += mat[n][j] * mul;
             }
         }
     }
 
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             result.m[i][j] = mat[i][j + 4];
         }
     }
@@ -84,8 +84,8 @@ NMatrix4 NMatrix4::operator+(const NMatrix4& m) const
 
 NMatrix4& NMatrix4::operator+=(const NMatrix4& m)
 {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             this->m[i][j] += m.m[i][j];
         }
     }
@@ -101,8 +101,8 @@ NMatrix4 NMatrix4::operator-(const NMatrix4& m) const
 
 NMatrix4& NMatrix4::operator-=(const NMatrix4& m)
 {
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    for (size_t i = 0; i < 4; i++) {
+        for (size_t j = 0; j < 4; j++) {
             this->m[i][j] -= m.m[i][j];
         }
     }
@@ -120,12 +120,12 @@ NMatrix4& NMatrix4::operator*=(const NMatrix4& m)
 {
     NMatrix4 result = *this;
 
-    for (int i = 0; i < 4; i++)
+    for (size_t i = 0; i < 4; i++)
     {
-        for (int j = 0; j < 4; j++)
+        for (size_t j = 0; j < 4; j++)
         {
             float f = 0;
-            for (int k = 0; k < 4; k++)
+            for (size_t k = 0; k < 4; k++)
             {
                 f += result.m[i][k] * m.m[k][j];
             }
@@ -164,7 +164,7 @@ NMatrix4 NMatrix4::Scale(const NVector3& s)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateX(float angle)
+NMatrix4 NMatrix4::RotateX(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -177,7 +177,7 @@ NMatrix4 NMatrix4::RotateX(float angle)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateY(float angle)
+NMatrix4 NMatrix4::RotateY(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -190,7 +190,7 @@ NMatrix4 NMatrix4::RotateY(float angle)
     return result;
 }
 
-NMatrix4 NMatrix4::RotateZ(float angle)
+NMatrix4 NMatrix4::RotateZ(const float angle)
 {
     float sin = std::sin(angle);
     float cos = std::cos(angle);
@@ -259,6 +259,19 @@ NVector3 NMatrix4::ToEuler() const
     return euler;
 }
 
+NVector3 NMatrix4::GetScale()
+{
+    NVector3 scale = {};
+
+    float x = sqrtf(powf(m[0][0], 2) + powf(m[0][1], 2) + powf(m[0][2], 2));
+    float y = sqrtf(powf(m[1][0], 2) + powf(m[1][1], 2) + powf(m[1][2], 2));
+    float z = sqrtf(powf(m[2][0], 2) + powf(m[2][1], 2) + powf(m[2][2], 2));
+
+    scale = { x,y,z };
+
+    return scale;
+}
+
 const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
 {
     NMatrix4 result = m1;
@@ -266,7 +279,7 @@ const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
     return result *= m2;
 }
 
-NVector3 operator*(const NVector3 v, const NMatrix4 m)
+NVector3 operator*(const NVector3& v, const NMatrix4& m)
 {
     NVector3 result = v;
     result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0];
@@ -275,7 +288,7 @@ NVector3 operator*(const NVector3 v, const NMatrix4 m)
     return result;
 }
 
-NVector3& operator*=(NVector3& v, const NMatrix4 m)
+NVector3& operator*=(NVector3& v, const NMatrix4& m)
 {
     NVector3 result = v * m;
     v = result;
