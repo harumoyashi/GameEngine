@@ -1,6 +1,6 @@
 #include "NCollision.h"
 
-bool NCollision::CircleCol(const Circle& c0, const Circle& c1)
+bool NCollision::CircleCol(const Circle& c0, const Circle& c1, const NVector2& inter)
 {
 	float distX = (c0.centerPos.x - c1.centerPos.x) * (c0.centerPos.x - c1.centerPos.x);
 	float distY = (c0.centerPos.y - c1.centerPos.y) * (c0.centerPos.y - c1.centerPos.y);
@@ -13,7 +13,7 @@ bool NCollision::CircleCol(const Circle& c0, const Circle& c1)
 	return false;
 }
 
-bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1)
+bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1, const NVector3& inter)
 {
 	float distX = (s0.centerPos.x - s1.centerPos.x) * (s0.centerPos.x - s1.centerPos.x);
 	float distY = (s0.centerPos.y - s1.centerPos.y) * (s0.centerPos.y - s1.centerPos.y);
@@ -27,7 +27,7 @@ bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1)
 	return false;
 }
 
-bool NCollision::Sphere2PlaneCol(const Sphere& sphere, const Plane& plane/*, NVector3 inter*/)
+bool NCollision::Sphere2PlaneCol(const Sphere& sphere, const Plane& plane, NVector3 inter)
 {
 	//座標系の原点から球の中心座標への距離
 	float distV = sphere.centerPos.Dot(plane.normal);
