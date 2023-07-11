@@ -3,7 +3,8 @@
 #include "NTimer.h"
 #include "NCollider.h"
 
-class Player
+class Player:
+	public NObj3d
 {
 private:
 	std::unique_ptr<NObj3d> obj_;
@@ -12,7 +13,7 @@ private:
 	bool isAlive_;		//生きてるかフラグ
 	bool isDraw_;		//描画するかフラグ
 
-	float collisionRadius_;	//コライダーの半径
+	float colliderRadius_;	//コライダーの半径
 
 	//------------------------ 移動関連 ------------------------//
 	bool isMove_;				//動いてるかフラグ
@@ -39,7 +40,7 @@ public:
 	static Player* GetInstance();
 
 	//初期化
-	void Init();
+	bool Init()override;
 	//更新
 	void Update();
 	//描画
@@ -49,6 +50,8 @@ public:
 	void Move();
 	//射撃
 	void Shot();
+	//何かに当たった時の処理
+	void OnCollision(const NCollisionInfo& info)override;
 
 	// ゲッター //
 	//座標取得
@@ -58,7 +61,7 @@ public:
 	//大きさ取得
 	inline NVector3 GetScale()const { return obj_->scale_; }
 	//コライダーの半径取得
-	inline float GetCollisionRadius()const { return collisionRadius_; }
+	inline float GetColliderRadius()const { return colliderRadius_; }
 	//無敵状態取得
 	inline bool GetIsGodmode()const { return isGodmode_; }
 	//生きてるかフラグ取得
@@ -82,7 +85,7 @@ public:
 	//生きてるかフラグ設定
 	inline void SetIsAlive(const bool isAlive) { isAlive_ = isAlive; }
 	//コライダーの半径設定
-	inline void SetCollisionRadius(const float collisionRadius) { collisionRadius_ = collisionRadius; }
+	inline void SetColliderRadius(const float colliderRadius) { colliderRadius_ = colliderRadius; }
 	//動けるかフラグ設定
 	inline void SetIsMove(const bool isMove) { isMove_ = isMove; }
 };

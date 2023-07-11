@@ -118,7 +118,7 @@ void NAssimpModel::Draw()
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, tex.gpuHandle_);
 
 		//ライト描画
-		sLightGroup->Draw();
+		sLightGroup->Draw(4);
 
 		NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced((UINT)meshes_[i].indices.size(), 1, 0, 0, 0); // インデックスの数分描画する
 	}

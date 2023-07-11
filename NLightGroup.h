@@ -45,7 +45,8 @@ public://静的メンバ関数
 	void Init(const bool isDirLights = true, const bool isPointLights = false,
 		const bool isSpotLights = false, const bool isCircleShadows = false);
 	void Update();
-	void Draw();
+	//rootParamIndex:ルートパラメータの何番目か
+	void Draw(const uint32_t rootParamIndex);
 
 	void TransferConstBuffer();
 

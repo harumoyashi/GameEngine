@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "NInput.h"
 #include "BulletFactory.h"
+#include "SphereCollider.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -17,13 +18,14 @@ Player* Player::GetInstance()
 	return &instance;
 }
 
-void Player::Init()
+bool Player::Init()
 {
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
 
-	collisionRadius_ = obj_->scale_.x;
+	colliderRadius_ = obj_->scale_.x;
+	obj_->SetCollider(new SphereCollider(obj_->position_, colliderRadius_));
 
 	isAlive_ = true;
 	isGodmode_ = false;
@@ -41,6 +43,8 @@ void Player::Init()
 	sideLevel_ = 1;
 	wideLevel_ = 0;
 	roketLevel_ = 0;
+
+	return true;
 }
 
 void Player::Update()
@@ -52,7 +56,7 @@ void Player::Update()
 	}
 	else
 	{
-		elapseSpeed_ = 1.0f;	//死んだら経過時間通常に
+		elapseSpeed_ = 0.01f;	//死んだらスローモーションに
 	}
 
 	obj_->Update();
@@ -158,4 +162,9 @@ void Player::Shot()
 	{
 
 	}*/
+}
+
+void Player::OnCollision(const NCollisionInfo& info)
+{
+	isAlive_ = false;
 }

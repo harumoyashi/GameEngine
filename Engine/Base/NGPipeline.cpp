@@ -435,8 +435,8 @@ void PipeLineManager::CreateAll()
 	//ルートシグネチャ設定
 	NRootSignature rootSigParticle;
 	rootSigParticle.SetSamplerDesc(false);
-	//テクスチャ2個、行列
-	rootSigParticle.SetRootParam(2, 1);
+	//テクスチャ2個、行列、光源
+	rootSigParticle.SetRootParam(2, 2);
 	rootSigParticle.Create();
 	particleDesc.rootSig = rootSigParticle;
 

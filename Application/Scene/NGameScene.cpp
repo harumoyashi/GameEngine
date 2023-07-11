@@ -4,6 +4,7 @@
 #include "NTitleScene.h"
 #include "NCameraManager.h"
 #include "NParticleManager.h"
+#include "NCollisionManager.h"
 
 #include "Player.h"
 #include "BulletManager.h"
@@ -54,6 +55,7 @@ void NGameScene::Init()
 	NObj3d::SetLightGroup(lightGroup_.get());
 
 	NParticleManager::GetInstance()->Init();
+	IEmitter3D::SetLightGroup(lightGroup_.get());
 }
 
 void NGameScene::Update()
@@ -69,13 +71,6 @@ void NGameScene::Update()
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
 	Wave::GetInstance()->Update();
-
-	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
-	{
-		Player::GetInstance()->SetIsAlive(false);
-		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
-	}
-
 	if (NInput::IsKeyDown(DIK_0))
 	{
 		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
@@ -85,6 +80,14 @@ void NGameScene::Update()
 
 	//ライトたちの更新
 	lightGroup_->Update();
+
+	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+	{
+		Player::GetInstance()->SetIsAlive(false);
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+	}
+
+	NCollisionManager::GetInstance()->CheckAllCollision();
 
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))

@@ -77,10 +77,11 @@ void NLightGroup::Update()
 	}
 }
 
-void NLightGroup::Draw()
+void NLightGroup::Draw(const uint32_t rootParamIndex)
 {
 	//定数バッファビューをセット
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4,
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(
+		(UINT)rootParamIndex,
 		cbLight_->constBuff_->GetGPUVirtualAddress());
 }
 

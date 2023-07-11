@@ -4,6 +4,7 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 #include "NBaseCollider.h"
+#include "NCollisionManager.h"
 
 NLightGroup* NObj3d::sLightGroup = nullptr;
 
@@ -16,6 +17,7 @@ NObj3d::~NObj3d()
 {
 	if (collider_)
 	{
+		NCollisionManager::GetInstance()->RemoveCollider(collider_);
 		delete collider_;
 	}
 }
@@ -177,7 +179,7 @@ void NObj3d::Draw()
 	SetIB(model_.indexBuff.view_);
 	SetSRVHeap(model_.material.texture.gpuHandle_);
 	//ライトの描画
-	sLightGroup->Draw();
+	sLightGroup->Draw(4);
 	DrawCommand((uint32_t)model_.indices.size());
 }
 
@@ -238,5 +240,10 @@ void NObj3d::SetModel(const std::string& modelname)
 void NObj3d::SetCollider(NBaseCollider* collider)
 {
 	collider->SetObj(this);
+	//コライダーを更新しておく
+	collider->Update();
+	//コライダー代入
 	collider_ = collider;
+	//コリジョンマネージャーに登録
+	NCollisionManager::GetInstance()->AddCollider(collider_);
 }

@@ -259,7 +259,20 @@ NVector3 NMatrix4::ToEuler() const
     return euler;
 }
 
-NVector3 NMatrix4::GetScale()
+NVector3 NMatrix4::GetWorldPos() const
+{
+    NVector3 pos = {};
+
+    float x = m[3][0];
+    float y = m[3][1];
+    float z = m[3][2];
+                        
+    pos = { x,y,z };    
+
+    return pos;
+}
+
+NVector3 NMatrix4::GetScale() const
 {
     NVector3 scale = {};
 

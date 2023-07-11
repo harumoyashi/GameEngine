@@ -13,7 +13,7 @@ public:
 	SphereCollider(NVector3 offset = NVector3(0, 0, 0), float radius = 1.0f) :
 		offset_(offset), radius_(radius)
 	{
-		shapeType = COL_SPHERE;	//Œ`óİ’è
+		shapeType_ = COL_SPHERE;	//Œ`óİ’è
 	}
 
 	void Update()override;

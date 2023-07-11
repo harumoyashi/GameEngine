@@ -1,11 +1,12 @@
 #pragma once
-#include <NVector3.h>
-#include <NColor.h>
-#include <NTexture.h>
-#include <NConstBuff.h>
-#include <NVertexBuff.h>
-#include <NEasing.h>
-#include <NTimer.h>
+#include "NVector3.h"
+#include "NColor.h"
+#include "NTexture.h"
+#include "NLightGroup.h"
+#include "NConstBuff.h"
+#include "NVertexBuff.h"
+#include "NEasing.h"
+#include "NTimer.h"
 
 class IEmitter3D
 {
@@ -52,6 +53,9 @@ private:
 	NVertexBuff<NVertexParticle> vertexBuff_;	//頂点バッファ
 
 	NMatrix4 matWorld_;	//3D変換行列
+
+	// ライト
+	static NLightGroup* sLightGroup;
 
 	//座標
 	NVector3 pos_{};
@@ -131,6 +135,9 @@ public:
 	void SetScale(NVector3& scale);
 	//角度設定
 	inline void SetRot(float rot) { rot_ = rot; }
+
+	//ライトを設定
+	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 
 	//有効フラグ設定
 	inline void SetIsActive(bool isActive) { isActive_ = isActive; }

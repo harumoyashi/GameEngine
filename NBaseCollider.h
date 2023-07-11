@@ -13,7 +13,7 @@ public:
 
 protected:
 	NObj3d* obj_ = nullptr;					//オブジェクト
-	ColShapeType shapeType = SHAPE_UNKNOWN;	//形状タイプ
+	ColShapeType shapeType_ = SHAPE_UNKNOWN;	//形状タイプ
 
 public:
 	NBaseCollider() = default;
@@ -30,7 +30,7 @@ public:
 	//オブジェクト取得
 	inline NObj3d* GetObj3d() { return obj_; }
 	//形状タイプ取得
-	inline ColShapeType GetShapeType() { return shapeType; }
+	inline ColShapeType GetShapeType() { return shapeType_; }
 
 	// セッター //
 	//オブジェクト設定
