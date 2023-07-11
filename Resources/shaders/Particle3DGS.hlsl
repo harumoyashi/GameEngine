@@ -172,7 +172,7 @@ void main(
         float4 wpos = mul(world, element.svpos);
         element.worldpos = wpos;
         element.color = input[0].color;
-        float4 wnormal = normalize(mul(world, float4(normal_array[i], 0)));
+        float4 wnormal = normalize(mul(rotMat, float4(normal_array[i], 0)));
         element.normal = wnormal.xyz;
         //element.normal = normal_array[i];
         element.uv = uv_array[i];
