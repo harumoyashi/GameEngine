@@ -1,26 +1,26 @@
 #include "NCollider.h"
 
-CircleCollider::CircleCollider() :
+Circle::Circle() :
 	centerPos(0, 0), radius(1)
 {
 }
 
-CircleCollider::CircleCollider(const NVector2& centerPos, const float radius) :
+Circle::Circle(const NVector2& centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
 }
 
-SphereCollider::SphereCollider() :
+Sphere::Sphere() :
 	centerPos(0, 0, 0), radius(1)
 {
 }
 
-SphereCollider::SphereCollider(const NVector3& centerPos, const float radius) :
+Sphere::Sphere(const NVector3& centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
 }
 
-void SphereCollider::Init()
+void Sphere::Init()
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel("sphere");
@@ -29,43 +29,43 @@ void SphereCollider::Init()
 	obj_->scale_ = { radius,radius,radius };
 }
 
-void SphereCollider::Update()
+void Sphere::Update()
 {
 	obj_->position_ = centerPos;
 	obj_->Update();
 }
 
-void SphereCollider::Draw()
+void Sphere::Draw()
 {
 	obj_->Draw();
 }
 
-ReyCollider::ReyCollider() :
+Ray::Ray() :
 	startPos(0, 0, 0), dirVec(0, 0, 1)
 {
 }
 
-ReyCollider::ReyCollider(const NVector3& startPos, const NVector3& dirVec) :
+Ray::Ray(const NVector3& startPos, const NVector3& dirVec) :
 	startPos(startPos), dirVec(dirVec)
 {
 }
 
-LineCollider::LineCollider() :
+Line::Line() :
 	startPos(0, 0, 0), endPos(0, 0, 0)
 {
 }
 
-LineCollider::LineCollider(const NVector3& startPos, const NVector3& endPos) :
+Line::Line(const NVector3& startPos, const NVector3& endPos) :
 	startPos(startPos), endPos(endPos)
 {
 }
 
-PlaneCollider::PlaneCollider() :
+Plane::Plane() :
 	normal(0, 1, 0), distance(0)
 {
 }
 
-PlaneCollider::PlaneCollider(const NVector3& normal, const float distance) :
+Plane::Plane(const NVector3& normal, const float distance) :
 	normal(normal), distance(distance)
 {
 }

@@ -22,7 +22,7 @@ protected:
 
 	bool isAlive_;				//生存フラグ
 	float collisionRadius_;		//コライダーの半径
-	SphereCollider collider_;	//弾の当たり判定
+	Sphere collider_;	//弾の当たり判定
 
 	NTimer lifeTimer_;			//生存時間(フレーム数なので注意)
 
@@ -43,7 +43,7 @@ public:
 public:
 	// ゲッター //
 	//コライダー取得
-	inline const SphereCollider& GetIBulletCollider()const { return collider_; }
+	inline const Sphere& GetIBulletCollider()const { return collider_; }
 	//生存フラグ取得
 	inline bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得

@@ -13,6 +13,10 @@ NObj3d::NObj3d()
 
 NObj3d::~NObj3d()
 {
+	if (collider_)
+	{
+		delete collider_;
+	}
 }
 
 bool NObj3d::Init()
@@ -24,8 +28,9 @@ bool NObj3d::Init()
 	cbTrans_->Init();
 	cbMaterial_->Init();
 	cbColor_->Init();
-
 	color_ = NColor::kWhite;
+
+	objName_ = typeid(*this).name();
 	return true;
 }
 
@@ -55,6 +60,11 @@ void NObj3d::Update()
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
+
+	if (collider_)
+	{
+		collider_->Update();
+	}
 }
 
 void NObj3d::MoveKey()
@@ -222,4 +232,10 @@ void NObj3d::DrawCommand(const uint32_t indexSize)
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
+}
+
+void NObj3d::SetCollider(NBaseCollider* collider)
+{
+	collider->SetObj(this);
+	collider_ = collider;
 }

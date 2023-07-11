@@ -7,11 +7,11 @@ class NCollision
 {
 public:
 	//‰~“¯Žm‚Ì“–‚½‚è”»’è
-	static bool CircleCol(const CircleCollider& c0, const CircleCollider& c1);
+	static bool CircleCol(const Circle& c0, const Circle& c1);
 
 	//‹…“¯Žm‚Ì“–‚½‚è”»’è
-	static bool SphereCol(const SphereCollider& s0, const SphereCollider& s1);
+	static bool SphereCol(const Sphere& s0, const Sphere& s1);
 	
 	//‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
-	static bool Sphere2PlaneCol(const SphereCollider& sphere,const PlaneCollider& plane/*,NVector3 inter*/);
+	static bool Sphere2PlaneCol(const Sphere& sphere,const Plane& plane/*,NVector3 inter*/);
 };

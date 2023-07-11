@@ -21,7 +21,7 @@ protected:
 	uint32_t maxHP_;				//最大体力
 	uint32_t hp_;					//現在の体力
 	float collisionRadius_;			//コライダーの半径
-	SphereCollider collider_;		//当たり判定
+	Sphere collider_;		//当たり判定
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
@@ -50,7 +50,7 @@ public:
 
 	// ゲッター //
 	//コライダー取得
-	inline const SphereCollider& GetCollider()const { return collider_; }
+	inline const Sphere& GetCollider()const { return collider_; }
 	//生存フラグ取得
 	inline bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得

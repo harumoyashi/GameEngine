@@ -117,8 +117,11 @@
     <ClInclude Include="LineBullet.h" />
     <ClInclude Include="NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
+    <ClInclude Include="NBaseCollider.h" />
     <ClInclude Include="NCameraManager.h" />
     <ClInclude Include="NCollider.h" />
+    <ClInclude Include="NCollisionInfo.h" />
+    <ClInclude Include="NCollisionManager.h" />
     <ClInclude Include="NEasing.h" />
     <ClInclude Include="NLevelDataLoader.h" />
     <ClInclude Include="NAssimpModel.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="RadialBlur.h" />
     <ClInclude Include="SideBullet.h" />
     <ClInclude Include="SimpleParticle.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="Wolf.h" />
   </ItemGroup>
@@ -191,8 +195,11 @@
     <ClCompile Include="LineBullet.cpp" />
     <ClCompile Include="NAssimpLoader.cpp" />
     <ClCompile Include="imgui\NImGuiManager.cpp" />
+    <ClCompile Include="NBaseCollider.cpp" />
     <ClCompile Include="NCameraManager.cpp" />
     <ClCompile Include="NCollider.cpp" />
+    <ClCompile Include="NCollisionInfo.cpp" />
+    <ClCompile Include="NCollisionManager.cpp" />
     <ClCompile Include="NEasing.cpp" />
     <ClCompile Include="NLevelDataLoader.cpp" />
     <ClCompile Include="NAssimpModel.cpp" />
@@ -249,6 +256,7 @@
     <ClCompile Include="RadialBlur.cpp" />
     <ClCompile Include="SideBullet.cpp" />
     <ClCompile Include="SimpleParticle.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="Wolf.cpp" />
   </ItemGroup>
