@@ -62,7 +62,7 @@ void IEnemy::Update()
 
 void IEnemy::Draw()
 {
-	collider_.Draw();
+	//collider_.Draw();
 	obj_->Draw();
 }
 

@@ -13,7 +13,7 @@ float4 main(GSOutput input) : SV_TARGET
 {
     PSOutput output;
     
-    float m_ambient = 0.8f;
+    float m_ambient = 0.3f;
     float m_diffuse = 0.8f;
     float m_specular = 0.5f;
     
