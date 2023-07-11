@@ -13,7 +13,7 @@ float4 main(GSOutput input) : SV_TARGET
 {
     PSOutput output;
     
-    float m_ambient = 0.3f;
+    float m_ambient = 0.8f;
     float m_diffuse = 0.8f;
     float m_specular = 0.5f;
     
@@ -23,7 +23,7 @@ float4 main(GSOutput input) : SV_TARGET
 	// 光沢度
     const float shininess = 4.0f;
 	// 頂点から視点への方向ベクトル
-    float3 eyedir = normalize(cameraPos - input.svpos.xyz);
+    float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	
 	// 環境反射光
     float3 ambient = m_ambient * ambientColor;
@@ -55,7 +55,7 @@ float4 main(GSOutput input) : SV_TARGET
         if (pointLights[j].active)
         {
             // ライトのベクトル
-            float3 lightv = pointLights[j].lightpos - input.svpos.xyz;
+            float3 lightv = pointLights[j].lightpos - input.worldpos.xyz;
             //ベクトルの長さ
             float d = length(lightv);
             //正規化し、単位ベクトルにする
@@ -82,7 +82,7 @@ float4 main(GSOutput input) : SV_TARGET
         if (spotLights[k].active)
         {
             // ライトのベクトル
-            float3 lightv = spotLights[k].lightpos - input.svpos.xyz;
+            float3 lightv = spotLights[k].lightpos - input.worldpos.xyz;
             //ベクトルの長さ
             float d = length(lightv);
             //正規化し、単位ベクトルにする
@@ -116,7 +116,7 @@ float4 main(GSOutput input) : SV_TARGET
         if (circleShadows[l].active)
         {
             //オブジェクト表面からキャスターへのベクトル
-            float3 casterv = circleShadows[l].casterPos - input.svpos.xyz;
+            float3 casterv = circleShadows[l].casterPos - input.worldpos.xyz;
             //投影方向での距離
             float d = dot(casterv, circleShadows[l].dir);
             //距離減衰係数
@@ -127,7 +127,7 @@ float4 main(GSOutput input) : SV_TARGET
             //仮想ライトの座標
             float3 lightpos = circleShadows[l].casterPos + circleShadows[l].dir * circleShadows[l].distanceCasterLight;
             //オブジェクト表面からライトへのベクトル(単位ベクトル)
-            float3 lightv = normalize(lightpos - input.svpos.xyz);
+            float3 lightv = normalize(lightpos - input.worldpos.xyz);
             //角度減衰
             float cos = dot(lightv, circleShadows[l].dir);
             //減衰開始角度から減衰終了角度にかけて減衰
