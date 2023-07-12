@@ -19,14 +19,8 @@ struct Sphere
 	NVector3 centerPos;
 	float radius;
 
-	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-
 	Sphere();
 	Sphere(const NVector3& centerPos, const float radius);
-
-	void Init();
-	void Update();
-	void Draw();
 };
 
 //レイコライダー//

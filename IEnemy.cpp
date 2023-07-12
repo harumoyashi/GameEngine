@@ -21,11 +21,9 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	colliderRadius_ = obj_->scale_.x;
 	collider_.centerPos = obj_->position_;
 	collider_.radius = colliderRadius_;
-	obj_->SetCollider(new SphereCollider(obj_->position_, colliderRadius_));
+	obj_->SetCollider(new SphereCollider(NVector3(0,0,0), colliderRadius_));
 
 	moveAngle_ = moveAngle;
-
-	collider_.Init();
 }
 
 bool IEnemy::Init()
@@ -56,19 +54,17 @@ void IEnemy::Update()
 	collider_.centerPos = obj_->position_;
 	collider_.radius = colliderRadius_;
 
-	collider_.Update();
 	obj_->Update();
 }
 
 void IEnemy::Draw()
 {
-	//collider_.Draw();
 	obj_->Draw();
 }
 
 void IEnemy::OnCollision(const NCollisionInfo& info)
 {
-	collider_.obj_->color_ = NColor::kPink;
+	obj_->color_ = NColor::kPink;
 }
 
 void IEnemy::Move()

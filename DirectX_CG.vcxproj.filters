@@ -606,7 +606,7 @@
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

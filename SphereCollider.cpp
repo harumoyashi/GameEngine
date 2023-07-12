@@ -3,5 +3,5 @@
 void SphereCollider::Update()
 {
 	Sphere::centerPos = NBaseCollider::obj_->GetMatWorld().GetWorldPos() + offset_;
-	Sphere::radius = radius;
+	Sphere::radius = SphereCollider::radius_;
 }

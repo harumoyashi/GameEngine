@@ -17,7 +17,7 @@ public:
 	//コライダーをリストに追加
 	inline void AddCollider(NBaseCollider* collider)
 	{
-		colliders_.push_front(collider);
+		colliders_.emplace_front(collider);
 	}
 	//コライダーをリストから削除
 	inline void RemoveCollider(NBaseCollider* collider)

@@ -37,27 +37,6 @@ bool NObj3d::Init()
 	return true;
 }
 
-NObj3d* NObj3d::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	NObj3d* obj3d = new NObj3d();
-	if (obj3d == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!obj3d->Init()) {
-		delete obj3d;
-		assert(0);
-		return nullptr;
-	}
-
-	float scale_val = 20;
-	obj3d->scale_ = { scale_val ,scale_val ,scale_val };
-
-	return obj3d;
-}
-
 void NObj3d::Update()
 {
 	UpdateMatrix();

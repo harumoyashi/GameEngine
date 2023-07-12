@@ -16,7 +16,7 @@ class NBaseCollider;
 
 class NObj3d
 {
-private:
+protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
@@ -53,8 +53,6 @@ public:
 #pragma region 初期化まわり
 	//初期化
 	virtual bool Init();
-
-	NObj3d* Create();
 
 #pragma endregion
 #pragma region 更新まわり

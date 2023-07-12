@@ -12,7 +12,7 @@ public:
 	};
 
 protected:
-	NObj3d* obj_ = nullptr;					//オブジェクト
+	NObj3d* obj_ = nullptr;						//オブジェクト
 	ColShapeType shapeType_ = SHAPE_UNKNOWN;	//形状タイプ
 
 public:
@@ -36,4 +36,3 @@ public:
 	//オブジェクト設定
 	inline void SetObj(NObj3d* obj) { obj_ = obj; }
 };
-
