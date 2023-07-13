@@ -48,6 +48,7 @@ bool Player::Init()
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetColID("player");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
@@ -174,6 +175,10 @@ void Player::Shot()
 
 void Player::OnCollision()
 {
-	NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
-	isAlive_ = false;
+	//当たった相手が敵だった時の処理
+	if (collider_.GetColInfo()->GetColID() == "enemy")
+	{
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+		isAlive_ = false;
+	}
 }

@@ -22,6 +22,7 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetColID("enemy");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 
