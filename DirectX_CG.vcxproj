@@ -120,7 +120,6 @@
     <ClInclude Include="NBaseCollider.h" />
     <ClInclude Include="NCameraManager.h" />
     <ClInclude Include="NCollider.h" />
-    <ClInclude Include="NCollisionInfo.h" />
     <ClInclude Include="NCollisionManager.h" />
     <ClInclude Include="NEasing.h" />
     <ClInclude Include="NLevelDataLoader.h" />
@@ -198,7 +197,6 @@
     <ClCompile Include="NBaseCollider.cpp" />
     <ClCompile Include="NCameraManager.cpp" />
     <ClCompile Include="NCollider.cpp" />
-    <ClCompile Include="NCollisionInfo.cpp" />
     <ClCompile Include="NCollisionManager.cpp" />
     <ClCompile Include="NEasing.cpp" />
     <ClCompile Include="NLevelDataLoader.cpp" />

@@ -29,8 +29,8 @@ public:
 
 	// セッター //
 	//撃てるかフラグ設定
-	inline void SetIsCanShot(const bool isCanShot) { isCanShot_ = isCanShot; }
+	inline void SetIsCanShot(bool isCanShot) { isCanShot_ = isCanShot; }
 	//弾の強化レベル設定
-	inline void SetLevel(const bool level) { level_ = level; }
+	inline void SetLevel(bool level) { level_ = level; }
 };
 

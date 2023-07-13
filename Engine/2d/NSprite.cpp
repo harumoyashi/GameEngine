@@ -30,7 +30,7 @@ void NSprite::CreateSprite(const std::string& texHandle)
 }
 
 void NSprite::CreateSprite(const std::string& texHandle,
-	const NVector2& anchorPoint_, const bool isFlipX_, const bool isFlipY_)
+	const NVector2& anchorPoint_, bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//’¸“_
@@ -49,7 +49,7 @@ void NSprite::CreateSprite(const std::string& texHandle,
 
 void NSprite::CreateClipSprite(const std::string& texHandle,
 	const NVector2& texLeftTop_, const NVector2& texSize_, const NVector2& anchorPoint_,
-	const bool isFlipX_, const bool isFlipY_)
+	bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//’¸“_

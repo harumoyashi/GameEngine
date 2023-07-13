@@ -49,7 +49,7 @@ public://メンバ関数
 	void SetFactorAngle(const NVector2& factorAngle);
 	inline const NVector2& GetFactorAngle()const { return factorAngleCos_; }
 	//有効フラグをセット
-	inline void SetActive(const bool isActive) { isActive_ = isActive; }
+	inline void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline const bool GetActive()const { return isActive_; }
+	inline bool GetActive()const { return isActive_; }
 };

@@ -42,8 +42,8 @@ private:
 public://静的メンバ関数
 	//それぞれのライトを使うか決める
 	//何も指定しなければ平行光源と丸影が有効になる
-	void Init(const bool isDirLights = true, const bool isPointLights = false,
-		const bool isSpotLights = false, const bool isCircleShadows = false);
+	void Init(bool isDirLights = true, bool isPointLights = false,
+		bool isSpotLights = false, bool isCircleShadows = false);
 	void Update();
 	//rootParamIndex:ルートパラメータの何番目か
 	void Draw(const uint32_t rootParamIndex);

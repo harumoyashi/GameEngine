@@ -122,7 +122,7 @@ public:
 	//"roopNum" ループする回数。0だとループはせず一度だけ流れる
 	//0で無音、1がデフォルト音量。あまり大きくしすぎると音割れする
 	//return 再生ハンドル
-	uint32_t PlayWave(const uint32_t soundDataHandle, const bool loopFlag = false, const float volume = 1.0f, const int roopNum = 0);
+	uint32_t PlayWave(const uint32_t soundDataHandle, bool loopFlag = false, const float volume = 1.0f, const int roopNum = 0);
 
 	//音声削除
 	//"voiceHandle" 再生ハンドル

@@ -21,34 +21,38 @@ void NCollisionManager::CheckAllCollision()
 		++itB;
 		for (; itB != colliders_.end(); ++itB)
 		{
-			colA = *itA;
-			colB = *itB;
+			colA_ = *itA;
+			colB_ = *itB;
 
 			//比較対象がある場合のみ判定を行う
-			if (colA != nullptr && colB != nullptr)
+			if (colA_ != nullptr && colB_ != nullptr)
 			{
 				SphereCol();
 			}
 		}
 	}
-
 }
 
 void NCollisionManager::SphereCol()
 {
 	//球同士だった場合
-	if (colA->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE &&
-		colB->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE)
+	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE &&
+		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE)
 	{
 		//型変換
-		Sphere* sphereA = dynamic_cast<Sphere*>(colA);
-		Sphere* sphereB = dynamic_cast<Sphere*>(colB);
+		SphereCollider* sphereA = static_cast<SphereCollider*>(colA_);
+		SphereCollider* sphereB = static_cast<SphereCollider*>(colB_);
 
 		NVector3 inter; //交差点(今は使ってない)
 		if (NCollision::SphereCol(*sphereA, *sphereB, inter))
 		{
-			colA->OnCollision(NCollisionInfo(colB, inter));
-			colB->OnCollision(NCollisionInfo(colA, inter));
+			colA_->SetIsCol(true);
+			//コールバック関数ポインタの呼び出し
+			//後ろの()には本来引数を入れるが、引数がないので空にしてる
+			colA_->GetOnCollision()();
+			colB_->SetIsCol(true);
+			//コールバック関数ポインタの呼び出し
+			colB_->GetOnCollision()();
 		}
 	}
 }

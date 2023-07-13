@@ -15,11 +15,6 @@ NObj3d::NObj3d()
 
 NObj3d::~NObj3d()
 {
-	if (collider_)
-	{
-		NCollisionManager::GetInstance()->RemoveCollider(collider_);
-		delete collider_;
-	}
 }
 
 bool NObj3d::Init()
@@ -42,11 +37,6 @@ void NObj3d::Update()
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
-
-	if (collider_)
-	{
-		collider_->Update();
-	}
 }
 
 void NObj3d::MoveKey()
@@ -129,7 +119,7 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
-void NObj3d::CommonBeginDraw(const bool isTiling)
+void NObj3d::CommonBeginDraw(bool isTiling)
 {
 	if (isTiling)
 	{
@@ -214,15 +204,4 @@ void NObj3d::DrawCommand(const uint32_t indexSize)
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
-}
-
-void NObj3d::SetCollider(NBaseCollider* collider)
-{
-	collider->SetObj(this);
-	//コライダーを更新しておく
-	collider->Update();
-	//コライダー代入
-	collider_ = collider;
-	//コリジョンマネージャーに登録
-	NCollisionManager::GetInstance()->AddCollider(collider_);
 }

@@ -1,9 +1,9 @@
 #pragma once
 #include "NObj3d.h"
 #include "NCollider.h"
+#include "SphereCollider.h"
 
-class IEnemy:
-	public NObj3d
+class IEnemy
 {
 public:
 	//ここのタイプに応じてファクトリーで配置して生成する
@@ -14,8 +14,7 @@ public:
 
 protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-	Sphere collider_;				//コライダー(生成時に総当たりじゃなく使いたいので別で用意)
-	float colliderRadius_;			//コライダーの半径
+	SphereCollider collider_;		//コライダー
 	NVector2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
@@ -49,7 +48,7 @@ public:
 	void Draw();
 
 	//何かに当たった時の処理
-	void OnCollision(const NCollisionInfo& info)override;
+	void OnCollision();
 
 	//---------------------------- 継承するやつら ----------------------------//
 	//移動
@@ -57,7 +56,7 @@ public:
 
 	// ゲッター //
 	//コライダー取得
-	inline const Sphere& GetCollider()const { return collider_; }
+	inline const SphereCollider GetCollider()const { return collider_; }
 	//生存フラグ取得
 	inline bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
@@ -71,18 +70,16 @@ public:
 
 	// セッター //
 	//生存フラグ設定
-	inline void SetisAlive(const bool isAlive) { isAlive_ = isAlive; }
+	inline void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//座標設定
-	inline void SetPos(const NVector3 pos) { obj_->position_ = pos; collider_.centerPos = pos; }
+	inline void SetPos(const NVector3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
 	//大きさ設定
 	inline void SetScale(const float scale) {
-		obj_->scale_ = scale; colliderRadius_ = scale; collider_.radius = scale; }
+		obj_->scale_ = scale;  collider_.SetRadius(scale); }
 	//移動角度設定
 	inline void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
 	//移動スピード設定
 	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
-	//コライダーの半径設定
-	inline void SetColRadius(const float radius) { colliderRadius_ = colliderRadius_ * radius; }
 	//経過時間スピード設定
 	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

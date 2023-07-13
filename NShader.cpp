@@ -109,7 +109,7 @@ void NShader::LoadGS(std::string gsPath)
 	}
 }
 
-void NShader::CreateShader(std::string id, std::string path, const bool isLoadGS)
+void NShader::CreateShader(std::string id, std::string path, bool isLoadGS)
 {
 	shaderMap_[id] = NShader();
 	shaderMap_[id].LoadVS(path);

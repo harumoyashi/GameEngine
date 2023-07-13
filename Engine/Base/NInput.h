@@ -48,7 +48,7 @@ public:
 	/// マウス移動量を取得
 	/// </summary>
 	/// <returns>マウス移動量</returns>
-	static NVector3 GetMouseMove(const bool isNowState = true);
+	static NVector3 GetMouseMove(bool isNowState = true);
 
 	//マウスの移動量を反映
 	static void SetMouseMove(NVector2& mouseVec);
@@ -103,20 +103,20 @@ public:
 
 	//トリガーの押し込み具合取得
 	//isLeft:右左どっち！
-	static uint32_t GetTrigger(const bool isLeft = true);
+	static uint32_t GetTrigger(bool isLeft = true);
 
 	//デッドゾーンの設定
 	static void SetDeadZone();
 
 	//スティックの傾き具合取得(0.0f~1.0f)
 	//isLeft:右左どっち！
-	static NVector2 GetStick(const bool isLeft = true);
+	static NVector2 GetStick(bool isLeft = true);
 
 	//isVertical:垂直方向か
 	//isLstick:Lスティックか
 	//上、左はなら-1
 	//下、右なら+1が返ってくる
-	static uint32_t StickTriggered(bool isVertical, const bool isLstick = true);
+	static uint32_t StickTriggered(bool isVertical, bool isLstick = true);
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね

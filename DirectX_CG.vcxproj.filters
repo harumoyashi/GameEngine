@@ -366,20 +366,17 @@
     <ClInclude Include="EnemyManager.h">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="NBaseCollider.h">
-      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="NCollisionInfo.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
     <ClInclude Include="NCollisionManager.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
     <ClInclude Include="SphereCollider.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -593,13 +590,7 @@
     <ClCompile Include="EnemyManager.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyFactory.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="NBaseCollider.cpp">
-      <Filter>Engine\ソース ファイル\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="NCollisionInfo.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
     <ClCompile Include="NCollisionManager.cpp">
@@ -607,6 +598,9 @@
     </ClCompile>
     <ClCompile Include="SphereCollider.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyFactory.cpp">
+      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

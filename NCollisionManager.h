@@ -8,8 +8,8 @@ class NCollisionManager
 private:
 	std::forward_list<NBaseCollider*>colliders_;
 
-	NBaseCollider* colA;
-	NBaseCollider* colB;
+	NBaseCollider* colA_;
+	NBaseCollider* colB_;
 
 public:
 	static NCollisionManager* GetInstance();
@@ -24,6 +24,7 @@ public:
 	{
 		colliders_.remove(collider);
 	}
+
 	//全ての衝突チェック
 	void CheckAllCollision();
 

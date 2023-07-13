@@ -1,11 +1,12 @@
 #include "IEnemy.h"
 #include "Player.h"
 #include "SphereCollider.h"
+#include "NCollisionManager.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
-	colliderRadius_(1.0f), elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
+	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
 {
 }
 
@@ -17,11 +18,12 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 1.5f;
 	obj_->color_ = NColor::kWhite;
+	obj_->Update();
 
-	colliderRadius_ = obj_->scale_.x;
-	collider_.centerPos = obj_->position_;
-	collider_.radius = colliderRadius_;
-	obj_->SetCollider(new SphereCollider(NVector3(0,0,0), colliderRadius_));
+	collider_.SetCenterPos(obj_->position_);
+	collider_.SetRadius(obj_->scale_.x);
+	NCollisionManager::GetInstance()->AddCollider(&collider_);
+	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 
 	moveAngle_ = moveAngle;
 }
@@ -50,11 +52,8 @@ void IEnemy::Update()
 
 	obj_->rotation_.y = moveAngle_;
 
-	//コライダーの設定
-	collider_.centerPos = obj_->position_;
-	collider_.radius = colliderRadius_;
-
 	obj_->Update();
+	collider_.Update(obj_.get());
 }
 
 void IEnemy::Draw()
@@ -62,9 +61,16 @@ void IEnemy::Draw()
 	obj_->Draw();
 }
 
-void IEnemy::OnCollision(const NCollisionInfo& info)
+void IEnemy::OnCollision()
 {
-	obj_->color_ = NColor::kPink;
+	if (collider_.GetIsCol())
+	{
+		obj_->color_ = NColor::kPink;
+	}
+	else
+	{
+		obj_->color_ = NColor::kWhite;
+	}
 }
 
 void IEnemy::Move()

@@ -60,12 +60,12 @@ public:
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
 	void CreateSprite(const std::string& texHandle,
-		const NVector2& anchorPoint, const bool isFlipX = false, const bool isFlipY = false);
+		const NVector2& anchorPoint, bool isFlipX = false, bool isFlipY = false);
 	//テクスチャを切り取ってスプライト生成(アニメーション、フォントなど)
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
 	void CreateClipSprite(const std::string& texHandle, const NVector2& texLeftTop,
-		const NVector2& texSize, const NVector2& anchorPoint = { 0.5f,0.5f }, const bool isFlipX = false, const bool isFlipY = false);
+		const NVector2& texSize, const NVector2& anchorPoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
 
 private:
 	//テクスチャサイズを取得して設定
@@ -73,7 +73,7 @@ private:
 	//アンカーポイント適用
 	void SetAncor(const NVector2& anchorPoint);
 	//上下左右反転フラグ適用
-	void SetIsFlip(const bool isFlipX, const bool isFlipY);
+	void SetIsFlip(bool isFlipX, bool isFlipY);
 	//切り抜き範囲適用
 	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
 

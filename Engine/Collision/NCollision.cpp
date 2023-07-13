@@ -13,12 +13,12 @@ bool NCollision::CircleCol(const Circle& c0, const Circle& c1, const NVector2& i
 	return false;
 }
 
-bool NCollision::SphereCol(const Sphere& s0, const Sphere& s1, const NVector3& inter)
+bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1, const NVector3& inter)
 {
-	float distX = (s0.centerPos.x - s1.centerPos.x) * (s0.centerPos.x - s1.centerPos.x);
-	float distY = (s0.centerPos.y - s1.centerPos.y) * (s0.centerPos.y - s1.centerPos.y);
-	float distZ = (s0.centerPos.z - s1.centerPos.z) * (s0.centerPos.z - s1.centerPos.z);
-	float distR = (s0.radius + s1.radius) * (s0.radius + s1.radius);
+	float distX = (s0.GetCenterPos().x - s1.GetCenterPos().x) * (s0.GetCenterPos().x - s1.GetCenterPos().x);
+	float distY = (s0.GetCenterPos().y - s1.GetCenterPos().y) * (s0.GetCenterPos().y - s1.GetCenterPos().y);
+	float distZ = (s0.GetCenterPos().z - s1.GetCenterPos().z) * (s0.GetCenterPos().z - s1.GetCenterPos().z);
+	float distR = (s0.GetRadius() + s1.GetRadius()) * (s0.GetRadius() + s1.GetRadius());
 
 	if (distX + distY + distZ <= distR)
 	{

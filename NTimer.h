@@ -30,10 +30,10 @@ public:
 	//セッター
 	inline void SetTimer(const float timer) { timer_ = timer; }
 	inline void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
-	inline void SetisTimeOut(const bool isTimeOut) { isTimeOut_ = isTimeOut; }
+	inline void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
 
 	//ゲッター
-	inline const bool GetisTimeOut()const { return isTimeOut_; }
+	inline bool GetisTimeOut()const { return isTimeOut_; }
 	inline const float GetMaxTimer()const { return (float)maxTimer_; }
 	inline const float GetTimer()const { return (float)timer_; }
 	//タイマーの進み具合を取得
