@@ -86,7 +86,7 @@ bool NInput::TriggerMouse(const MouseButton button)
 /// マウス移動量を取得
 /// </summary>
 /// <returns>マウス移動量</returns>
-NVector3 NInput::GetMouseMove(const bool isNowState) {
+NVector3 NInput::GetMouseMove(bool isNowState) {
 	NVector3 tmp;
 	if (isNowState)
 	{
@@ -239,7 +239,7 @@ bool NInput::IsButtonRelease(const uint32_t button)
 
 //トリガーの押し込み具合取得
 //isLeft:右左どっち！
-uint32_t NInput::GetTrigger(const bool isLeft)
+uint32_t NInput::GetTrigger(bool isLeft)
 {
 	if (isLeft)
 	{
@@ -275,7 +275,7 @@ void NInput::SetDeadZone()
 
 //スティックの傾き具合取得(0.0f~1.0f)
 //isLeft:右左どっち！
-NVector2 NInput::GetStick(const bool isLeft)
+NVector2 NInput::GetStick(bool isLeft)
 {
 	if (isLeft)
 	{
@@ -297,7 +297,7 @@ NVector2 NInput::GetStick(const bool isLeft)
 //isLstick:Lスティックか
 //上、左はなら-1
 //下、右なら+1が返ってくる
-uint32_t NInput::StickTriggered(const bool isVertical, const bool isLstick)
+uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 {
 	if (isLstick)
 	{

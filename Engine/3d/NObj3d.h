@@ -7,7 +7,6 @@
 #include "NMatrix4.h"
 #include "NLightGroup.h"
 #include "NConstBuff.h"
-#include "NCollisionInfo.h"
 
 #include<memory>
 #include <wrl.h>
@@ -16,7 +15,7 @@ class NBaseCollider;
 
 class NObj3d
 {
-private:
+protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
@@ -45,7 +44,6 @@ public:
 	NColor color_;				//色
 
 	std::string objName_;		//デバッグ用に名前つける
-	NBaseCollider* collider_;	//コライダー
 
 public:
 	NObj3d();
@@ -53,8 +51,6 @@ public:
 #pragma region 初期化まわり
 	//初期化
 	virtual bool Init();
-
-	NObj3d* Create();
 
 #pragma endregion
 #pragma region 更新まわり
@@ -74,7 +70,7 @@ public:
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
-	static void CommonBeginDraw(const bool isTiling = false);
+	static void CommonBeginDraw(bool isTiling = false);
 	//描画
 	virtual void Draw();
 	void SetSRVHeap();
@@ -89,9 +85,6 @@ public:
 	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
 
-	//衝突時コールバック関数
-	virtual void OnCollision(const NCollisionInfo& info) {}
-
 	// ゲッター //
 	//ワールド行列取得
 	const NMatrix4& GetMatWorld() { return matWorld_; }
@@ -103,7 +96,4 @@ public:
 	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 	//ライトを設定
 	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
-
-	//コライダーの設定
-	void SetCollider(NBaseCollider* collider);
 };

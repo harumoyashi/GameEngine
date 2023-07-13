@@ -2,17 +2,16 @@
 #include "NObj3d.h"
 #include "NTimer.h"
 #include "NCollider.h"
+#include "SphereCollider.h"
 
 class Player
 {
 private:
 	std::unique_ptr<NObj3d> obj_;
-	Sphere collider_;	//プレイヤーの当たり判定
+	SphereCollider collider_;	//プレイヤーの当たり判定
 
-	bool isAlive_;		//生きてるかフラグ
-	bool isDraw_;		//描画するかフラグ
-
-	float collisionRadius_;	//コライダーの半径
+	bool isAlive_;				//生きてるかフラグ
+	bool isDraw_;				//描画するかフラグ
 
 	//------------------------ 移動関連 ------------------------//
 	bool isMove_;				//動いてるかフラグ
@@ -24,9 +23,9 @@ private:
 	float elapseSpeed_;			//経過時間(こいつが全てに影響を及ぼす)
 
 	//------------------------ ダメージ関連 ------------------------//
-	bool isGodmode_;		//無敵状態か
-	bool isFlashing_;		//チカチカさせるため用
-	NTimer godmodeTimer_;	//無敵時間
+	bool isGodmode_;			//無敵状態か
+	bool isFlashing_;			//チカチカさせるため用
+	NTimer godmodeTimer_;		//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
 	uint32_t lineLevel_;		//通常弾のレベル
@@ -39,7 +38,7 @@ public:
 	static Player* GetInstance();
 
 	//初期化
-	void Init();
+	bool Init();
 	//更新
 	void Update();
 	//描画
@@ -50,6 +49,9 @@ public:
 	//射撃
 	void Shot();
 
+	//何かに当たった時の処理
+	void OnCollision();
+
 	// ゲッター //
 	//座標取得
 	inline NVector3 GetPos()const { return obj_->position_; }
@@ -57,8 +59,6 @@ public:
 	inline float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
 	//大きさ取得
 	inline NVector3 GetScale()const { return obj_->scale_; }
-	//コライダーの半径取得
-	inline float GetCollisionRadius()const { return collisionRadius_; }
 	//無敵状態取得
 	inline bool GetIsGodmode()const { return isGodmode_; }
 	//生きてるかフラグ取得
@@ -66,7 +66,7 @@ public:
 	//動けるかフラグ取得
 	inline bool GetIsMove()const { return isMove_; }
 	//コライダー取得
-	inline const Sphere& GetPlayerCollider()const { return collider_; }
+	inline const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
 	inline NVector2 GetMoveVelo()const { return moveVelo_; }
 	//経過時間取得
@@ -78,11 +78,9 @@ public:
 	//大きさ設定
 	inline void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
 	//無敵状態設定
-	inline void SetIsGodmode(const bool isGodmode) { isGodmode_ = isGodmode; }
+	inline void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
 	//生きてるかフラグ設定
-	inline void SetIsAlive(const bool isAlive) { isAlive_ = isAlive; }
-	//コライダーの半径設定
-	inline void SetCollisionRadius(const float collisionRadius) { collisionRadius_ = collisionRadius; }
+	inline void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
 	//動けるかフラグ設定
-	inline void SetIsMove(const bool isMove) { isMove_ = isMove; }
+	inline void SetIsMove(bool isMove) { isMove_ = isMove; }
 };

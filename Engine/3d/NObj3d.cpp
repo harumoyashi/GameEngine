@@ -4,6 +4,7 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 #include "NBaseCollider.h"
+#include "NCollisionManager.h"
 
 NLightGroup* NObj3d::sLightGroup = nullptr;
 
@@ -14,10 +15,6 @@ NObj3d::NObj3d()
 
 NObj3d::~NObj3d()
 {
-	if (collider_)
-	{
-		delete collider_;
-	}
 }
 
 bool NObj3d::Init()
@@ -35,37 +32,11 @@ bool NObj3d::Init()
 	return true;
 }
 
-NObj3d* NObj3d::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	NObj3d* obj3d = new NObj3d();
-	if (obj3d == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!obj3d->Init()) {
-		delete obj3d;
-		assert(0);
-		return nullptr;
-	}
-
-	float scale_val = 20;
-	obj3d->scale_ = { scale_val ,scale_val ,scale_val };
-
-	return obj3d;
-}
-
 void NObj3d::Update()
 {
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
-
-	if (collider_)
-	{
-		collider_->Update();
-	}
 }
 
 void NObj3d::MoveKey()
@@ -148,7 +119,7 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
-void NObj3d::CommonBeginDraw(const bool isTiling)
+void NObj3d::CommonBeginDraw(bool isTiling)
 {
 	if (isTiling)
 	{
@@ -177,7 +148,7 @@ void NObj3d::Draw()
 	SetIB(model_.indexBuff.view_);
 	SetSRVHeap(model_.material.texture.gpuHandle_);
 	//ライトの描画
-	sLightGroup->Draw();
+	sLightGroup->Draw(4);
 	DrawCommand((uint32_t)model_.indices.size());
 }
 
@@ -233,10 +204,4 @@ void NObj3d::DrawCommand(const uint32_t indexSize)
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
-}
-
-void NObj3d::SetCollider(NBaseCollider* collider)
-{
-	collider->SetObj(this);
-	collider_ = collider;
 }

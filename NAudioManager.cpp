@@ -31,7 +31,7 @@ void NAudioManager::LoadSound(const std::string& filename, const std::string& so
     }
 }
 
-void NAudioManager::Play(const std::string& soundHandle, const bool isRoop, const float volume, const int roopNum)
+void NAudioManager::Play(const std::string& soundHandle, bool isRoop, const float volume, const int roopNum)
 {
     uint32_t a = sSoundMap[soundHandle];
     NAudio::GetInstance()->PlayWave(sSoundMap[soundHandle],isRoop,volume,roopNum);

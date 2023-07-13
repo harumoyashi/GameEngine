@@ -23,7 +23,7 @@ public:
 	//"volume" ボリューム
 	//"roopNum" ループする回数。0だとループはせず一度だけ流れる
 	//0で無音、1がデフォルト音量。あまり大きくしすぎると音割れする
-	static void Play(const std::string& soundHandle, const bool isRoop = false, const float volume = 1.0f, const int roopNum = 0);
+	static void Play(const std::string& soundHandle, bool isRoop = false, const float volume = 1.0f, const int roopNum = 0);
 	//音声削除
 	//"voiceHandle" 再生ハンドル
 	static void Destroy(const std::string& soundHandle);

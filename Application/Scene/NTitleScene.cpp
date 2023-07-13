@@ -144,7 +144,7 @@ void NTitleScene::Update()
 		lo->Update();
 	}
 
-	isCol_ = NCollision::Sphere2PlaneCol(sphere_, plane_);
+	//isCol_ = NCollision::Sphere2PlaneCol(sphere_, plane_);
 
 	//foreSprite_[0]->Update();
 

@@ -21,7 +21,7 @@ void NRootSignature::Create()
 	assert(SUCCEEDED(result));
 }
 
-void NRootSignature::SetSamplerDesc(const bool isTiling)
+void NRootSignature::SetSamplerDesc(bool isTiling)
 {
 	if (isTiling)
 	{

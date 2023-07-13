@@ -1,7 +1,11 @@
 #include "Player.h"
 #include "NInput.h"
 #include "BulletFactory.h"
+#include "SphereCollider.h"
+#include "NCollisionManager.h"
+#include "NParticleManager.h"
 
+#include <functional>
 #include "NImGuiManager.h"
 #include "imgui.h"
 
@@ -17,13 +21,12 @@ Player* Player::GetInstance()
 	return &instance;
 }
 
-void Player::Init()
+bool Player::Init()
 {
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
-
-	collisionRadius_ = obj_->scale_.x;
+	obj_->Update();
 
 	isAlive_ = true;
 	isGodmode_ = false;
@@ -41,6 +44,14 @@ void Player::Init()
 	sideLevel_ = 1;
 	wideLevel_ = 0;
 	roketLevel_ = 0;
+
+	//コライダー設定
+	collider_.SetCenterPos(obj_->position_);
+	collider_.SetRadius(obj_->scale_.x);
+	NCollisionManager::GetInstance()->AddCollider(&collider_);
+	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
+
+	return true;
 }
 
 void Player::Update()
@@ -52,10 +63,11 @@ void Player::Update()
 	}
 	else
 	{
-		elapseSpeed_ = 1.0f;	//死んだら経過時間通常に
+		elapseSpeed_ = 0.01f;	//死んだらスローモーションに
 	}
 
 	obj_->Update();
+	collider_.Update(obj_.get());
 }
 
 void Player::Draw()
@@ -84,7 +96,7 @@ void Player::Move()
 	}
 	else
 	{
-		moveVelo_ = {0,0};
+		moveVelo_ = { 0,0 };
 		//いずれかのキーを押したとき
 		if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
 		{
@@ -158,4 +170,10 @@ void Player::Shot()
 	{
 
 	}*/
+}
+
+void Player::OnCollision()
+{
+	NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+	isAlive_ = false;
 }

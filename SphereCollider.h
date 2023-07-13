@@ -3,20 +3,31 @@
 #include "NCollider.h"
 
 class SphereCollider:
-	public NBaseCollider,public Sphere
+	public NBaseCollider
 {
 private:
-	NVector3 offset_;	//オブジェクト中心からのオフセット
-	float radius_;		//半径
+	NVector3 centerPos_;	//コライダーの中心座標
+	NVector3 offset_;		//オブジェクト中心からのオフセット
+	float radius_;			//半径
 
 public:
 	SphereCollider(NVector3 offset = NVector3(0, 0, 0), float radius = 1.0f) :
 		offset_(offset), radius_(radius)
 	{
-		shapeType = COL_SPHERE;	//形状設定
+		shapeType_ = COL_SPHERE;	//形状設定
 	}
 
-	void Update()override;
+	void Update(NObj3d* obj)override;
 
+	// ゲッター //
+	//半径設定
+	inline float GetRadius()const { return radius_; }
+	//コライダーの中心座標取得
+	inline const NVector3& GetCenterPos()const { return centerPos_; }
+
+	// セッター //
+	//半径設定
 	inline void SetRadius(float radius) { radius_ = radius; }
+	//コライダーの中心座標設定
+	inline void SetCenterPos(NVector3 centerPos) { centerPos_ = centerPos; }
 };

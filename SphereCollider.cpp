@@ -1,7 +1,7 @@
 #include "SphereCollider.h"
 
-void SphereCollider::Update()
+void SphereCollider::Update(NObj3d* obj)
 {
-	Sphere::centerPos = NBaseCollider::obj_->position_ + offset_;
-	Sphere::radius = radius;
+	//オブジェクト情報をもとにコライダーの座標も移動
+	centerPos_ = obj->GetMatWorld().GetWorldPos() + offset_;
 }

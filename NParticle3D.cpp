@@ -5,6 +5,8 @@
 
 #include "Player.h"
 
+NLightGroup* IEmitter3D::sLightGroup = nullptr;
+
 IEmitter3D::IEmitter3D()
 {
 	//定数バッファ
@@ -126,13 +128,16 @@ void IEmitter3D::CommonBeginDraw()
 
 void IEmitter3D::Draw()
 {
-	//ルートパラメータ1番に3D変換行列の定数バッファを渡す
+	//ルートパラメータ2番に3D変換行列の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
 
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuff_.GetView());
 
 	//SRVの設定
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture_.gpuHandle_);
+
+	//ライトの描画
+	sLightGroup->Draw(3);
 
 	// 描画コマンド
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);

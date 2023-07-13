@@ -435,19 +435,16 @@ void PipeLineManager::CreateAll()
 	//ルートシグネチャ設定
 	NRootSignature rootSigParticle;
 	rootSigParticle.SetSamplerDesc(false);
-	//テクスチャ2個、行列
-	rootSigParticle.SetRootParam(2, 1);
+	//テクスチャ2個、行列、光源
+	rootSigParticle.SetRootParam(2, 2);
 	rootSigParticle.Create();
 	particleDesc.rootSig = rootSigParticle;
 
 	//シェーダー設定
 	particleDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
 
-	//深度情報設定
-	particleDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	particleDesc.depth.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;	//書き込み不可
-	//深度テストしない
-	particleDesc.depth.DepthStencilState.DepthEnable = false;
+	//深度テストする
+	particleDesc.depth.DepthStencilState.DepthEnable = true;
 
 	//カリング設定
 	particleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;

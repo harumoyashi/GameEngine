@@ -28,7 +28,7 @@ public:
 	void LoadGS(std::string gsPath);
 
 	//シェーダーを生成してマップに登録
-	void CreateShader(std::string id, std::string path, const bool isLoadGS);
+	void CreateShader(std::string id, std::string path, bool isLoadGS);
 	//指定したidのシェーダーを取得
 	NShader* GetShader(std::string id);
 

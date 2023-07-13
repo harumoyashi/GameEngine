@@ -22,7 +22,7 @@ public:
 	void Create();
 	//テクスチャサンプラーの設定
 	//isTiling:タイリングするかフラグ
-	void SetSamplerDesc(const bool isTiling);
+	void SetSamplerDesc(bool isTiling);
 
 	//ルートパラメータ取得
 	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);

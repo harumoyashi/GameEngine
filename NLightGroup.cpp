@@ -6,8 +6,8 @@ std::unique_ptr<NPointLight> NLightGroup::sPointLights[kPointLightNum] = {};
 std::unique_ptr<NSpotLight> NLightGroup::sSpotLights[kSpotLightNum] = {};
 std::unique_ptr<NCircleShadow> NLightGroup::sCircleShadows[kCircleShadowNum] = {};
 
-void NLightGroup::Init(const bool isDirLights, const bool isPointLights,
-	const bool isSpotLights, const bool isCircleShadows)
+void NLightGroup::Init(bool isDirLights, bool isPointLights,
+	bool isSpotLights, bool isCircleShadows)
 {
 	cbLight_ = std::make_unique<NConstBuff<ConstBuffDataLightGroup>>();
 	cbLight_->Init();
@@ -77,10 +77,11 @@ void NLightGroup::Update()
 	}
 }
 
-void NLightGroup::Draw()
+void NLightGroup::Draw(const uint32_t rootParamIndex)
 {
 	//定数バッファビューをセット
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4,
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(
+		(UINT)rootParamIndex,
 		cbLight_->constBuff_->GetGPUVirtualAddress());
 }
 

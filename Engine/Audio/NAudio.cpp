@@ -227,7 +227,7 @@ void NAudio::Unload(SoundData* soundData) {
 	soundData->wfex = {};
 }
 
-uint32_t NAudio::PlayWave(const uint32_t soundDataHandle, const bool loopFlag, const float volume, const int roopNum) {
+uint32_t NAudio::PlayWave(const uint32_t soundDataHandle, bool loopFlag, const float volume, const int roopNum) {
 	HRESULT result;
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 

@@ -13,31 +13,13 @@ Circle::Circle(const NVector2& centerPos, const float radius) :
 Sphere::Sphere() :
 	centerPos(0, 0, 0), radius(1)
 {
+
 }
 
 Sphere::Sphere(const NVector3& centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
-}
 
-void Sphere::Init()
-{
-	obj_ = move(std::make_unique<NObj3d>());
-	obj_->SetModel("sphere");
-	
-	obj_->position_ = centerPos;
-	obj_->scale_ = { radius,radius,radius };
-}
-
-void Sphere::Update()
-{
-	obj_->position_ = centerPos;
-	obj_->Update();
-}
-
-void Sphere::Draw()
-{
-	obj_->Draw();
 }
 
 Ray::Ray() :

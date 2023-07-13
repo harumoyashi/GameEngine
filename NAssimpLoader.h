@@ -97,7 +97,7 @@ public:
 	bool Load(const ImportSettings& setting); // ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
 
 private:
-	void LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, const bool inverseV);
+	void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
 	void LoadBone(Bone& dst, const aiMesh* src);
 	void LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src);
 };

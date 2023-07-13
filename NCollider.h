@@ -3,6 +3,9 @@
 #include "NVector3.h"
 #include "NObj3d.h"
 
+//ここにあるやつはあくまで必要な要素の参考用で、
+//それぞれNBaseColliderを継承した〇〇Colliderクラスを作る
+
 //円コライダー//
 struct Circle
 {
@@ -19,14 +22,8 @@ struct Sphere
 	NVector3 centerPos;
 	float radius;
 
-	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-
 	Sphere();
 	Sphere(const NVector3& centerPos, const float radius);
-
-	void Init();
-	void Update();
-	void Draw();
 };
 
 //レイコライダー//

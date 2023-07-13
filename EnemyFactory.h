@@ -8,7 +8,7 @@ private:
 	Wolf wolf;
 
 	bool isCollision = false;
-	uint32_t wolfSideNum = 10;
+	uint32_t wolfSideNum = 2;
 
 public:
 	static EnemyFactory* GetInstance();

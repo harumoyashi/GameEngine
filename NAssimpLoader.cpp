@@ -85,7 +85,7 @@ bool NAssimpLoader::Load(const ImportSettings& settings)
 	return true;
 }
 
-void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, const bool inverseU, const bool inverseV)
+void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV)
 {
 	aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 	aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);

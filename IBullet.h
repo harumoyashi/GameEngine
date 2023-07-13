@@ -59,7 +59,7 @@ public:
 
 	// セッター //
 	//生存フラグ設定
-	inline void SetisAlive(const bool isAlive) { isAlive_ = isAlive; }
+	inline void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//与えるダメージ量設定
 	inline void SetDamage(const float damage) { damage_ = damage; }
 	//大きさ設定
