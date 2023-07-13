@@ -73,7 +73,7 @@ void NGameScene::Update()
 	Wave::GetInstance()->Update();
 	if (NInput::IsKeyDown(DIK_0))
 	{
-		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), Player::GetInstance()->GetColor());
 	}
 
 	NParticleManager::GetInstance()->Update();
@@ -84,7 +84,7 @@ void NGameScene::Update()
 	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 	{
 		Player::GetInstance()->SetIsAlive(false);
-		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), Player::GetInstance()->GetColor());
 	}
 
 	NCollisionManager::GetInstance()->CheckAllCollision();

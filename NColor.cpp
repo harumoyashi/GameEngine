@@ -101,3 +101,14 @@ bool NColor::operator!=(const NColor& col) const
 	}
 	return false;
 }
+
+NColor NColor::operator+(const NColor& col) const
+{
+	NColor color;
+	//—¼•û‚Ì’l‚ğ‘«‚µ‚Ä2‚ÅŠ„‚é‚±‚Æ‚Å’†ŠÔ‚ÌF‚Æ‚·‚é
+	color.r = (r + col.r) * 0.5f;
+	color.g = (g + col.g) * 0.5f;
+	color.b = (b + col.b) * 0.5f;
+	color.a = (a + col.a) * 0.5f;
+	return color;
+}

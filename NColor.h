@@ -39,4 +39,5 @@ public:
 	NColor operator=(const NColor& col);
 	bool operator==(const NColor& col) const;
 	bool operator!=(const NColor& col) const;
+	NColor operator+(const NColor& col) const;
 };

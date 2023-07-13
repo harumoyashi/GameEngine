@@ -71,6 +71,8 @@ public:
 	inline NVector2 GetMoveVelo()const { return moveVelo_; }
 	//経過時間取得
 	inline float GetElapseSpeed()const { return elapseSpeed_; }
+	//オブジェクトの色取得
+	inline NColor& GetColor()const { return obj_->color_; }
 
 	// セッター //
 	//座標設定

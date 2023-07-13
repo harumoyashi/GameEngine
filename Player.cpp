@@ -178,7 +178,7 @@ void Player::OnCollision()
 	//“–‚½‚Á‚½‘ŠŽè‚ª“G‚¾‚Á‚½Žž‚Ìˆ—
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
-		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+		NParticleManager::GetInstance()->PlayerDeadEffect(GetPos(), obj_->color_);
 		isAlive_ = false;
 	}
 }

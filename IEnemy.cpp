@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "SphereCollider.h"
 #include "NCollisionManager.h"
+#include "NParticleManager.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
@@ -64,7 +65,12 @@ void IEnemy::Draw()
 
 void IEnemy::OnCollision()
 {
-	obj_->color_ = NColor::kRed;
+	//当たった相手が弾だった時の処理
+	if (collider_.GetColInfo()->GetColID() == "bullet")
+	{
+		NParticleManager::GetInstance()->PlayerDeadEffect(GetPos(), NColor::kLightblue);
+		isAlive_ = false;
+	}
 }
 
 void IEnemy::Move()
