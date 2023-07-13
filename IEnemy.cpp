@@ -63,14 +63,7 @@ void IEnemy::Draw()
 
 void IEnemy::OnCollision()
 {
-	if (collider_.GetIsCol())
-	{
-		obj_->color_ = NColor::kPink;
-	}
-	else
-	{
-		obj_->color_ = NColor::kWhite;
-	}
+	obj_->color_ = NColor::kRed;
 }
 
 void IEnemy::Move()

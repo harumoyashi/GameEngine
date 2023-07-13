@@ -174,9 +174,6 @@ void Player::Shot()
 
 void Player::OnCollision()
 {
-	if (collider_.GetIsCol())
-	{
-		NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
-		isAlive_ = false;
-	}
+	NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
+	isAlive_ = false;
 }

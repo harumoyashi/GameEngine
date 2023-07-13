@@ -3,6 +3,9 @@
 #include "NVector3.h"
 #include "NObj3d.h"
 
+//ここにあるやつはあくまで必要な要素の参考用で、
+//それぞれNBaseColliderを継承した〇〇Colliderクラスを作る
+
 //円コライダー//
 struct Circle
 {
