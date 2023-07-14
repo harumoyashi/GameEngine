@@ -8,7 +8,7 @@
 #include "NMathUtil.h"
 #include "NConstBuff.h"
 
-class NSpotLight
+class NSpotLight final
 {
 public:
 	//定数バッファ

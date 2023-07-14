@@ -1,13 +1,11 @@
 #pragma once
-class NVector4
+struct NVector4
 {
-public:
 	float x;
 	float y;
 	float z;
 	float w;
 
-public:
 	NVector4();								//ゼロベクトルとする
 	NVector4(const float x, const float y, const float z, const float w);	//x成分,y成分,z成分,w成分を指定しての生成
 

@@ -12,7 +12,7 @@
 #include "NAudio.h"
 #include "NCollision.h"
 
-class NResultScene
+class NResultScene final
 {
 private:
 	//オブジェクト

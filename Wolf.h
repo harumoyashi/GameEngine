@@ -1,6 +1,6 @@
 #pragma once
 #include "IEnemy.h"
-class Wolf :
+class Wolf final :
     public IEnemy
 {
 public:

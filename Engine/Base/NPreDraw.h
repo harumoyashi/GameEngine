@@ -3,9 +3,9 @@
 
 #include <wrl.h>
 
-class NPreDraw
+class NPreDraw final
 {
-public:
+private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	uint32_t bbIndex_;

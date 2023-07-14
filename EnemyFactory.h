@@ -2,7 +2,7 @@
 #include "EnemyManager.h"
 #include "Wolf.h"
 
-class EnemyFactory
+class EnemyFactory final
 {
 private:
 	Wolf wolf;

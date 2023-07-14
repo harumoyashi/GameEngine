@@ -4,7 +4,7 @@
 
 //’Êí‚Ì’e
 //‹­‰»‚Å–{”‚ª‘‚¦‚é
-class LineBullet :
+class LineBullet final :
 	public IBullet
 {
 private:

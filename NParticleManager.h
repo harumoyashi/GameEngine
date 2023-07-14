@@ -4,7 +4,7 @@
 
 class IEmitter3D;
 
-class NParticleManager
+class NParticleManager final
 {
 private:
 	std::forward_list<IEmitter3D*> emitters_;	//パーティクルエミッター群

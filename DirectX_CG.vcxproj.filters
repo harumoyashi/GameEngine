@@ -151,6 +151,21 @@
     <Filter Include="Application\ソースファイル\Chara\Enemy">
       <UniqueIdentifier>{7a044dd6-7778-4440-a96a-92c6b0939acd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\ヘッダーファイル\Bullet">
+      <UniqueIdentifier>{d45ddd16-4307-4cdb-8a53-218b8bdbe77f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ヘッダーファイル\Chara">
+      <UniqueIdentifier>{fe1e0921-436f-42d1-8105-7b2fe18e0abd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ヘッダーファイル\Chara\Enemy">
+      <UniqueIdentifier>{597175a3-613e-4539-be06-788c236d4811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ヘッダーファイル\Chara\Player">
+      <UniqueIdentifier>{7bad2fb4-ef57-4514-bd1e-9154bd3a27cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\ヘッダーファイル\Field">
+      <UniqueIdentifier>{1464d517-abc8-4cbc-a368-0c86903c0fcc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Math\NMatrix4.h">
@@ -297,9 +312,6 @@
     <ClInclude Include="RadialBlur.h">
       <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
-      <Filter>Application\ソースファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="NCameraManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
@@ -308,30 +320,6 @@
     </ClInclude>
     <ClInclude Include="NEasing.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Application\ソースファイル\Chara</Filter>
-    </ClInclude>
-    <ClInclude Include="IBullet.h">
-      <Filter>Application\ソースファイル\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletManager.h">
-      <Filter>Application\ソースファイル\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="LineBullet.h">
-      <Filter>Application\ソースファイル\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletFactory.h">
-      <Filter>Application\ソースファイル\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="SideBullet.h">
-      <Filter>Application\ソースファイル\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>Application\ソースファイル\Field</Filter>
-    </ClInclude>
-    <ClInclude Include="Wave.h">
-      <Filter>Application\ソースファイル\Field</Filter>
     </ClInclude>
     <ClInclude Include="NParticle3D.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
@@ -357,15 +345,6 @@
     <ClInclude Include="NParticleManager.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="IEnemy.h">
-      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Wolf.h">
-      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyManager.h">
-      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="NBaseCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
@@ -375,8 +354,44 @@
     <ClInclude Include="SphereCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Application\ヘッダーファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Application\ヘッダーファイル\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>Application\ヘッダーファイル\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Application\ヘッダーファイル\Chara\Player</Filter>
+    </ClInclude>
     <ClInclude Include="EnemyFactory.h">
-      <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+      <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnemy.h">
+      <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletFactory.h">
+      <Filter>Application\ヘッダーファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManager.h">
+      <Filter>Application\ヘッダーファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="IBullet.h">
+      <Filter>Application\ヘッダーファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="LineBullet.h">
+      <Filter>Application\ヘッダーファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SideBullet.h">
+      <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@
 
 #include "NInput.h"
 
-class NDX12
+class NDX12 final
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

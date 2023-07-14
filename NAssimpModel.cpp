@@ -99,7 +99,7 @@ void NAssimpModel::Draw()
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 
 		NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuffers_[i].GetView());
-		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBuffers_[i].view_);
+		NDX12::GetInstance()->GetCommandList()->IASetIndexBuffer(indexBuffers_[i].GetView());
 
 		//テクスチャの名前取得
 		std::string texName = NUtil::ToUTF8(meshes_[i].textureName);

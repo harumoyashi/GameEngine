@@ -1,13 +1,13 @@
 #pragma once
 #include "NModel.h"
-#include <map>
+#include <unordered_map>
 
 typedef std::string ModelHandle;
 
-class NModelManager
+class NModelManager final
 {
 private:
-	static std::map<ModelHandle, uint32_t> sModelMap;	//モデル群
+	static std::unordered_map<ModelHandle, uint32_t> sModelMap;	//モデル群
 
 	// モデルデータコンテナ
 	static std::vector<Model> modelDatas_;

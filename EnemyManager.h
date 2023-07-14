@@ -1,7 +1,7 @@
 #pragma once
 #include "IEnemy.h"
 
-class EnemyManager
+class EnemyManager final
 {
 public:
 	std::vector<std::unique_ptr<IEnemy>> enemys_;

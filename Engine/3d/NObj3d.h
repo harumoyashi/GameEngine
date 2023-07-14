@@ -13,9 +13,9 @@
 
 class NBaseCollider;
 
-class NObj3d
+class NObj3d final
 {
-protected:
+private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	D3D12_HEAP_PROPERTIES heapProp_{};	//ÉqÅ[Év

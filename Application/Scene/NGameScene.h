@@ -16,7 +16,7 @@
 
 #include "SimpleParticle.h"
 
-class NGameScene:
+class NGameScene final :
 	public IScene
 {
 private:

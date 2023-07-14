@@ -4,7 +4,7 @@
 
 //¶‰E“¯‚É2”­Œ‚‚Â
 //‹­‰»‚É‚æ‚èn‰ñ˜A‘±‚ÅŒ‚‚Â
-class SideBullet:
+class SideBullet final :
 	public IBullet
 {
 private:

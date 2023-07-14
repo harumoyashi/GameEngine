@@ -1,7 +1,7 @@
 #pragma once
 #include "NParticle3D.h"
 
-class SimpleParticle
+class SimpleParticle final
 	:public IEmitter3D
 {
 public:

@@ -3,7 +3,7 @@
 
 class NBaseCollider;
 
-class NCollisionManager
+class NCollisionManager final
 {
 private:
 	std::forward_list<NBaseCollider*>colliders_;

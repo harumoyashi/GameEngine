@@ -2,16 +2,12 @@
 #include "NVector3.h"
 #include "NMatrix4.h"
 
-class NQuaternion {
-public:
+struct NQuaternion {
 	float x;
 	float y;
 	float z;
 	float w;
 
-private:
-
-public:
 	//単位クォータニオンでの生成
 	NQuaternion()
 		: x(0), y(0), z(0), w(1) {}

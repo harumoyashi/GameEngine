@@ -10,7 +10,7 @@ enum class CameraType
 	Result,
 };
 
-class NCameraManager
+class NCameraManager final
 {
 private:
 	uint32_t nowCameraType_;	//Œ»İ‚ÌƒJƒƒ‰‚Ìí—Ş

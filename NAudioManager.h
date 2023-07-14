@@ -1,13 +1,13 @@
 #pragma once
 #include "NAudio.h"
-#include <map>
+#include <unordered_map>
 
 typedef std::string SoundHandle;
 
-class NAudioManager
+class NAudioManager final
 {
 private:
-	static std::map<SoundHandle, uint32_t> sSoundMap;	//サウンド群 
+	static std::unordered_map<SoundHandle, uint32_t> sSoundMap;	//サウンド群 
 
 public:
 	//全部の音ファイル読み込み

@@ -5,7 +5,7 @@
 #include "SphereCollider.h"
 #include "SimpleParticle.h"
 
-class Player
+class Player final
 {
 private:
 	std::unique_ptr<NObj3d> obj_;

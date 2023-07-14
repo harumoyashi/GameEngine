@@ -6,7 +6,7 @@
 #include "NVector3.h"
 #include "NConstBuff.h"
 
-class NPointLight
+class NPointLight final
 {
 public:
 	//定数バッファ

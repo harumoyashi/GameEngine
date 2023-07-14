@@ -1,7 +1,7 @@
 #include "NAudioManager.h"
 #include "NUtil.h"
 
-std::map<SoundHandle, uint32_t> NAudioManager::sSoundMap;
+std::unordered_map<SoundHandle, uint32_t> NAudioManager::sSoundMap;
 
 void NAudioManager::AllLoad()
 {

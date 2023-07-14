@@ -6,7 +6,7 @@
 #include <wrl.h>
 
 template<typename T>
-class NConstBuff
+struct NConstBuff
 {
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -16,10 +16,7 @@ public:
 
 public:
 	NConstBuff() :constMap_(nullptr) {}
-	~NConstBuff()
-	{
-
-	}
+	~NConstBuff() = default;
 
 	void Init()
 	{

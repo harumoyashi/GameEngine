@@ -1,13 +1,11 @@
 #pragma once
 
-class NVector2
+struct NVector2
 {
-public:
     // メンバ変数
     float x; // x成分
     float y; // y成分
 
-public:
     // コンストラクタ
     NVector2();                            // 零ベクトルとして生成
     NVector2(const float x, const float y);            // x,y成分を指定しての生成
