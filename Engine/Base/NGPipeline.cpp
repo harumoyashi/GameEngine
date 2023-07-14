@@ -170,7 +170,7 @@ void NGPipeline::SetVertLayoutPostEffect()
 	// 頂点レイアウト
 	//座標
 	vertLayoutPostEffect_[0] = {
-	"SV_POSITION",										//セマンティック名
+	"SV_POSITION",									//セマンティック名
 	0,												//同名のセマンティックがあるとき使うインデックス
 	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
 	0,												//入力スロットインデックス
