@@ -110,7 +110,7 @@ struct PipelineDesc
 	NRootSignature rootSig;
 };
 
-class NGPipeline
+class NGPipeline final
 {
 public:
 	//パイプラインデスク
@@ -157,7 +157,7 @@ public:
 };
 
 
-class PipeLineManager
+class PipeLineManager final
 {
 public:
 	static PipeLineManager* GetInstance();

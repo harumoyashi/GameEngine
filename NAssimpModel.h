@@ -5,7 +5,7 @@
 #include "NLightGroup.h"
 #include <memory>
 
-class NAssimpModel
+class NAssimpModel final
 {
 private:
 	std::vector<Mesh> meshes_;	// ƒƒbƒVƒ…‚Ì”z—ñ

@@ -4,7 +4,7 @@
 #include <vector>
 #include "NVertex.h"
 
-template<typename T> class NVertexBuff
+template<typename T> class NVertexBuff final
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

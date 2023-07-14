@@ -1,9 +1,8 @@
 #pragma once
 #include <stdint.h>
 
-class NColor
+struct NColor
 {
-public:
 	float r, g, b, a;
 
 	NColor() : r(1.0f), g(1.0f), b(1.0f), a(1.0f) {}
@@ -39,4 +38,5 @@ public:
 	NColor operator=(const NColor& col);
 	bool operator==(const NColor& col) const;
 	bool operator!=(const NColor& col) const;
+	NColor operator+(const NColor& col) const;
 };

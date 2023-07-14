@@ -6,9 +6,8 @@
 #include "NVector3.h"
 #include "NColor.h"
 
-class NVertex
+struct NVertex
 {
-public:
 	NVector3 pos = { 0, 0, 0 };
 
 	NVertex(NVector3 pos = { 0, 0, 0 })
@@ -16,9 +15,8 @@ public:
 };
 
 //position,uv‚Ì2—v‘f
-class NVertexUV
+struct NVertexUV
 {
-public:
 	NVector3 pos = { 0, 0, 0 };
 	NVector2 uv = { 0, 0 };
 
@@ -29,9 +27,8 @@ public:
 };
 
 //position,normal,uv‚Ì3—v‘f
-class NVertexPNU
+struct NVertexPNU
 {
-public:
 	NVector3 pos = { 0, 0, 0 };
 	NVector3 normal = { 0, 0, 1 };
 	NVector2 uv = { 0, 0 };
@@ -50,9 +47,8 @@ public:
 };
 
 //position,scale,color‚Ì3—v‘f
-class NVertexParticle
+struct NVertexParticle
 {
-public:
 	NVector3 pos = { 0, 0, 0 };
 	NVector3 rot = { 0, 0, 0 };
 	NColor color = NColor::kWhite;
@@ -66,9 +62,8 @@ public:
 };
 
 //position,normal,uv,boneIndex,boneWeight‚Ì5—v‘f
-class NVertexAssimp
+struct NVertexAssimp
 {
-public:
 	NVector3 pos = { 0, 0, 0 };
 	NVector3 normal = { 0, 0, 1 };
 	NVector2 uv = { 0, 0 };

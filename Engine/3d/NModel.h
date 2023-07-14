@@ -16,10 +16,3 @@ struct Model
 
 	NMaterial material;						//ƒ}ƒeƒŠƒAƒ‹
 };
-
-class NModel
-{
-public:
-	void Init();
-	void Finalize();
-};

@@ -2,12 +2,23 @@
 #include "Player.h"
 #include "SphereCollider.h"
 #include "NCollisionManager.h"
+#include "NParticleManager.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
 	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
 {
+	//パーティクルエミッターをマネージャーに登録
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
+}
+
+IEnemy::~IEnemy()
+{
+	//コライダーマネージャーから削除
+	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	//パーティクルマネージャーから削除
+	NParticleManager::GetInstance()->RemoveEmitter(&deadParticle_);
 }
 
 void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
@@ -22,6 +33,7 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetColID("enemy");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 
@@ -63,7 +75,22 @@ void IEnemy::Draw()
 
 void IEnemy::OnCollision()
 {
-	obj_->color_ = NColor::kRed;
+	//当たった相手が弾だった時の処理
+	if (collider_.GetColInfo()->GetColID() == "bullet")
+	{
+		DeadParticle();
+		isAlive_ = false;
+	}
+}
+
+void IEnemy::DeadParticle()
+{
+	if (isAlive_)
+	{
+		deadParticle_.SetIsRotation(true);
+		deadParticle_.SetPos(GetPos());
+		deadParticle_.Add(50, 30, NColor::kLightblue, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+	}
 }
 
 void IEnemy::Move()

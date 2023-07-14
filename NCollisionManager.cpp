@@ -46,13 +46,13 @@ void NCollisionManager::SphereCol()
 		NVector3 inter; //交差点(今は使ってない)
 		if (NCollision::SphereCol(*sphereA, *sphereB, inter))
 		{
-			colA_->SetIsCol(true);
-			//コールバック関数ポインタの呼び出し
-			//後ろの()には本来引数を入れるが、引数がないので空にしてる
-			colA_->GetOnCollision()();
-			colB_->SetIsCol(true);
-			//コールバック関数ポインタの呼び出し
+			colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
+			colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
+			colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+
+			colB_->SetColInfo(colA_);
 			colB_->GetOnCollision()();
+			colB_->SetIsCol(true);
 		}
 	}
 }

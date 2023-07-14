@@ -8,7 +8,7 @@ enum class TimeType
 	Minute
 };
 
-class NTimer
+class NTimer final
 {
 private:
 	float timer_;		//タイマー

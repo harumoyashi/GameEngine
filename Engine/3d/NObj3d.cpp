@@ -145,7 +145,7 @@ void NObj3d::Draw()
 {
 	SetCBV();
 	SetVB(model_.vertexBuff.GetView());
-	SetIB(model_.indexBuff.view_);
+	SetIB(*model_.indexBuff.GetView());
 	SetSRVHeap(model_.material.texture.gpuHandle_);
 	//ƒ‰ƒCƒg‚Ì•`‰æ
 	sLightGroup->Draw(4);

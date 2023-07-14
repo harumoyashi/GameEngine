@@ -4,7 +4,7 @@
 #include "NCollider.h"
 #include "SphereCollider.h"
 
-class NCollision
+class NCollision final
 {
 public:
 	//‰~“¯Žm‚Ì“–‚½‚è”»’è

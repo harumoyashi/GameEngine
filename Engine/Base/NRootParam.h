@@ -2,7 +2,7 @@
 #include <vector>
 #include "NDX12.h"
 
-class NRootParam
+class NRootParam final
 {
 public:
 	std::vector<D3D12_ROOT_PARAMETER> entity_ = {};

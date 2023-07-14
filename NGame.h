@@ -10,7 +10,8 @@
 #include "NPostEffect.h"
 #include "NFramework.h"
 
-class NGame :public NFramework
+class NGame final
+	:public NFramework
 {
 private:
 	NWindows* win_;

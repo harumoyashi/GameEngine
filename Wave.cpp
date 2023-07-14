@@ -28,7 +28,7 @@ void Wave::Init()
 		{ Field::GetInstance()->GetScale().x / waveDivide_,1.0f, scaleZ_ };
 		obj_.back()->position_ =
 		{ obj_.back()->scale_.x * i - obj_.back()->scale_.x * 0.5f, 0,  posZ_ };
-		obj_.back()->color_.SetColor255(255, 5, 5);
+		obj_.back()->color_.SetColor255(5, 5, 255);
 	}
 #pragma endregion
 }

@@ -170,7 +170,7 @@ void NGPipeline::SetVertLayoutPostEffect()
 	// 頂点レイアウト
 	//座標
 	vertLayoutPostEffect_[0] = {
-	"POSITION",										//セマンティック名
+	"SV_POSITION",									//セマンティック名
 	0,												//同名のセマンティックがあるとき使うインデックス
 	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
 	0,												//入力スロットインデックス
@@ -352,7 +352,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("PostEffect");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -380,7 +380,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Gaussian");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -405,7 +405,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Radial");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;

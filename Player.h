@@ -3,8 +3,9 @@
 #include "NTimer.h"
 #include "NCollider.h"
 #include "SphereCollider.h"
+#include "SimpleParticle.h"
 
-class Player
+class Player final
 {
 private:
 	std::unique_ptr<NObj3d> obj_;
@@ -33,8 +34,12 @@ private:
 	uint32_t wideLevel_;		//左右に角度つけて出る弾のレベル
 	uint32_t roketLevel_;		//ロケット弾のレベル
 
+	//------------------------ その他 ------------------------//
+	SimpleParticle deadParticle_;	//死んだときに出るパーティクル
+
 public:
 	Player();
+	~Player();
 	static Player* GetInstance();
 
 	//初期化
@@ -51,6 +56,9 @@ public:
 
 	//何かに当たった時の処理
 	void OnCollision();
+
+	//死んだときのパーティクルを出す
+	void DeadParticle();
 
 	// ゲッター //
 	//座標取得
@@ -71,6 +79,8 @@ public:
 	inline NVector2 GetMoveVelo()const { return moveVelo_; }
 	//経過時間取得
 	inline float GetElapseSpeed()const { return elapseSpeed_; }
+	//オブジェクトの色取得
+	inline NColor& GetColor()const { return obj_->color_; }
 
 	// セッター //
 	//座標設定

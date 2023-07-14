@@ -1,4 +1,5 @@
 #include "NParticleManager.h"
+#include "NParticle3D.h"
 
 NParticleManager* NParticleManager::GetInstance()
 {
@@ -8,22 +9,25 @@ NParticleManager* NParticleManager::GetInstance()
 
 void NParticleManager::Init()
 {
-	playerDeadParticle_.ClearParticles();
+	for (auto& emitter : emitters_)
+	{
+		emitter->ClearParticles();
+		emitter->Init();
+	}
 }
 
 void NParticleManager::Update()
 {
-	playerDeadParticle_.Update();
+	for (auto& emitter : emitters_)
+	{
+		emitter->Update();
+	}
 }
 
 void NParticleManager::Draw()
 {
-	playerDeadParticle_.Draw();
-}
-
-void NParticleManager::PlayerDeadEffect(const NVector3& pos, const NColor& color)
-{
-	playerDeadParticle_.SetPos(pos.x,pos.y,pos.z);
-	playerDeadParticle_.SetIsRotation(true);
-	playerDeadParticle_.Add(20, 200, color,0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 },{0,0,0},{-1,-1,-1},{1,1,1});
+	for (auto& emitter : emitters_)
+	{
+		emitter->Draw();
+	}
 }

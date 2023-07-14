@@ -5,7 +5,7 @@
 #include <map>
 #include <wrl.h>
 
-class NShader
+class NShader final
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

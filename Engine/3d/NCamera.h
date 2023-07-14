@@ -6,7 +6,7 @@
 #include "NVector3.h"
 #include "NMatrix4.h"
 
-class NCamera
+class NCamera final
 {
 public:
 	static std::unique_ptr<NCamera> sNCamera;

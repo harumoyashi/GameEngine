@@ -4,7 +4,7 @@
 #include <NTexture.h>
 #include <NEasing.h>
 
-class Emitter2D
+class Emitter2D final
 {
 	//—±Žq1—±
 	struct Particle2D

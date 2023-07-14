@@ -2,7 +2,7 @@
 #include <string>
 #include <windows.h>
 
-class NWindows
+class NWindows final
 {
 public:
 	static const uint32_t kWin_width = 1280;

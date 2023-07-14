@@ -1,9 +1,9 @@
 #pragma once
 #include "NPostEffect.h"
-class RadialBlur :
-    public NPostEffect
+
+class RadialBlur final
+	: public NPostEffect
 {
 public:
-    void Init() override;
+	void Init() override;
 };
-

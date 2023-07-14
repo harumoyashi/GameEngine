@@ -2,6 +2,7 @@
 #include "NObj3d.h"
 #include "NCollider.h"
 #include "SphereCollider.h"
+#include "SimpleParticle.h"
 
 class IEnemy
 {
@@ -25,6 +26,8 @@ protected:
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
+	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
+
 	//アイテム持たせる
 
 	//コイン(ゲージ)持たせる
@@ -32,7 +35,7 @@ protected:
 
 public:
 	IEnemy();
-	virtual ~IEnemy() = default;
+	virtual ~IEnemy();
 
 	//生成
 	//pos:配置する座標
@@ -49,6 +52,9 @@ public:
 
 	//何かに当たった時の処理
 	void OnCollision();
+
+	//死んだときのパーティクルを出す
+	void DeadParticle();
 
 	//---------------------------- 継承するやつら ----------------------------//
 	//移動

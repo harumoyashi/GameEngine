@@ -1,7 +1,8 @@
 #pragma once
 #include "json.hpp"
-#include <NObj3d.h>
-#include <NCamera.h>
+#include "NObj3d.h"
+#include "NCamera.h"
+#include <unordered_map>
 
 typedef std::string ModelName;
 
@@ -17,10 +18,10 @@ struct LevelData
 
 	NCamera camera;
 	std::list<ObjectData> objects;
-	std::map<ModelName, NModel> models;
+	std::unordered_map<ModelName, Model> models;
 };
 
-class NLevelDataLoader
+class NLevelDataLoader final
 {
 private:
 

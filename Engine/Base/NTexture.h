@@ -1,7 +1,7 @@
 #pragma once
 #include "NDX12.h"
 #include <array>
-#include <map>
+#include <unordered_map>
 
 #include <wrl.h>
 
@@ -20,7 +20,7 @@ struct NTexture
 	~NTexture();
 };
 
-class NTextureManager
+class NTextureManager final
 {
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -35,7 +35,7 @@ public:
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//設定構造体
 
-	std::map<TextureHandle, NTexture> textureMap_;	//テクスチャ群
+	std::unordered_map<TextureHandle, NTexture> textureMap_;	//テクスチャ群
 	ComPtr<ID3D12Resource> tb_;	//転送用のテクスチャバッファ
 
 public:

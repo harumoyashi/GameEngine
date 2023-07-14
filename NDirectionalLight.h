@@ -6,7 +6,7 @@
 #include "NVector3.h"
 #include "NConstBuff.h"
 
-class NDirectionalLight
+class NDirectionalLight final
 {
 private://静的メンバ変数
 	NVector3 lightdir_ = { 1,0,0 };	 // ライト光線方向

@@ -110,7 +110,6 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	//postEffect_->TexChange();
 	if (isPostEffect_)
 	{
 		postEffect_->Update();

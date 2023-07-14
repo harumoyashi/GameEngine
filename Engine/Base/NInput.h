@@ -8,7 +8,7 @@
 
 #include <wrl.h>
 
-class NInput
+class NInput final
 {
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

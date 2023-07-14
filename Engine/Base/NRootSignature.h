@@ -4,7 +4,7 @@
 
 #include <wrl.h>
 
-class NRootSignature
+class NRootSignature final
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

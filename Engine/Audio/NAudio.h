@@ -32,7 +32,7 @@ struct Voice {
 	IXAudio2SourceVoice* sourceVoice = nullptr;
 };
 
-class NAudio
+class NAudio final
 {
 private:
 	// サウンドデータの最大数

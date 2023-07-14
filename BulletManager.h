@@ -4,7 +4,7 @@
 
 #include "IBullet.h"
 
-class BulletManager
+class BulletManager final
 {
 public:
 	std::vector<std::unique_ptr<IBullet>> bullets_;	//’e‚Ç‚à

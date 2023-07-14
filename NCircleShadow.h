@@ -8,7 +8,7 @@
 #include "NMathUtil.h"
 #include "NConstBuff.h"
 
-class NCircleShadow
+class NCircleShadow final
 {
 public://サブクラス
 	//定数バッファ用データ構造体

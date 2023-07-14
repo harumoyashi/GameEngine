@@ -1,10 +1,16 @@
 #include "IBullet.h"
 #include "Player.h"
+#include "NCollisionManager.h"
 
 IBullet::IBullet() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.2f), isAlive_(true),
-	collisionRadius_(1.0f), lifeTimer_(120.0f), damage_(1), elapseSpeed_(0.0f)
+	lifeTimer_(120.0f), damage_(1), elapseSpeed_(0.0f)
 {
+}
+
+IBullet::~IBullet()
+{
+	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 }
 
 void IBullet::Generate(const NVector3& pos, const float moveAngle)
@@ -14,8 +20,13 @@ void IBullet::Generate(const NVector3& pos, const float moveAngle)
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 0.5f;
 	obj_->color_ = NColor::kWhite;
-	collider_.centerPos = obj_->position_;
-	collider_.radius = obj_->scale_.x;
+	
+	//コライダー設定
+	collider_.SetCenterPos(obj_->position_);
+	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetColID("bullet");
+	NCollisionManager::GetInstance()->AddCollider(&collider_);
+	collider_.SetOnCollision(std::bind(&IBullet::OnCollision, this));
 
 	moveAngle_ = moveAngle;
 }
@@ -33,6 +44,7 @@ void IBullet::Update()
 	}
 
 	//弾の移動
+	//移動量 = 進む方向 * スピード * 経過時間
 	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 
@@ -40,14 +52,15 @@ void IBullet::Update()
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
 
-	//コライダーの設定
-	collider_.centerPos = obj_->position_;
-	collider_.radius = collisionRadius_;
-
 	obj_->Update();
+	collider_.Update(obj_.get());
 }
 
 void IBullet::Draw()
 {
 	obj_->Draw();
+}
+
+void IBullet::OnCollision()
+{
 }

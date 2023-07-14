@@ -5,7 +5,7 @@
 #include "NCircleShadow.h"
 #include "NConstBuff.h"
 
-class NLightGroup
+class NLightGroup final
 {
 public:
 	static const uint32_t kDirLightNum = 3;

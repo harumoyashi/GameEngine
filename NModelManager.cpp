@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-std::map<ModelHandle, uint32_t> NModelManager::sModelMap{};
+std::unordered_map<ModelHandle, uint32_t> NModelManager::sModelMap{};
 
 std::vector<Model> NModelManager::modelDatas_{};
 uint32_t NModelManager::indexModelData_ = 0u;

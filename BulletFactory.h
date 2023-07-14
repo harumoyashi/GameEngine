@@ -5,7 +5,7 @@
 
 //’e¶¬Hê
 //zŠÂQÆ‚ª‹N‚«‚È‚¢‚æ‚¤‚ÉBulletManager‚Æ•ª‚¯‚Ä‚é
-class BulletFactory
+class BulletFactory final
 {
 private:
 	LineBullet line_;	//’Êí’e

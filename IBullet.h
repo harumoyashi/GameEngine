@@ -1,6 +1,6 @@
 #pragma once
 #include "NObj3d.h"
-#include "NCollider.h"
+#include "SphereCollider.h"
 #include "NTimer.h"
 
 class IBullet
@@ -20,19 +20,18 @@ protected:
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
-	bool isAlive_;				//生存フラグ
-	float collisionRadius_;		//コライダーの半径
-	Sphere collider_;	//弾の当たり判定
+	bool isAlive_;					//生存フラグ
+	SphereCollider collider_;		//弾の当たり判定
 
-	NTimer lifeTimer_;			//生存時間(フレーム数なので注意)
+	NTimer lifeTimer_;				//生存時間(フレーム数なので注意)
 
-	float damage_;				//与えるダメージ量
+	float damage_;					//与えるダメージ量
 
-	float elapseSpeed_;			//経過時間のスピード(スローモーション用)
+	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
 public:
 	IBullet();
-	virtual ~IBullet() = default;
+	virtual ~IBullet();
 	//生成
 	void Generate(const NVector3& pos,const float moveAngle = 0.0f);
 	//更新
@@ -40,10 +39,13 @@ public:
 	//描画
 	void Draw();
 
+	//何かに当たった時の処理
+	void OnCollision();
+
 public:
 	// ゲッター //
 	//コライダー取得
-	inline const Sphere& GetIBulletCollider()const { return collider_; }
+	inline const SphereCollider& GetIBulletCollider()const { return collider_; }
 	//生存フラグ取得
 	inline bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
@@ -63,15 +65,13 @@ public:
 	//与えるダメージ量設定
 	inline void SetDamage(const float damage) { damage_ = damage; }
 	//大きさ設定
-	inline void SetScale(const float scale) { obj_->scale_ = scale; collisionRadius_ = scale; }
+	inline void SetScale(const float scale) { obj_->scale_ = scale; collider_.SetRadius(scale); }
 	//移動角度設定
 	inline void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
 	//移動スピード設定
 	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
 	//生存時間設定
 	inline void SetLifeTimer(const float lifeTimer) { lifeTimer_ = lifeTimer; }
-	//コライダーの半径設定
-	inline void SetColRadius(const float radius) { collisionRadius_ = collisionRadius_ * radius; }
 	//経過時間スピード設定
 	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

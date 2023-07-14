@@ -2,7 +2,7 @@
 #include "NBaseCollider.h"
 #include "NCollider.h"
 
-class SphereCollider:
+class SphereCollider final :
 	public NBaseCollider
 {
 private:

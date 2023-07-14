@@ -1,9 +1,9 @@
 #pragma once
 #include "NPostEffect.h"
-class GaussianBlur :
-    public NPostEffect
+class GaussianBlur final
+	: public NPostEffect
 {
 public:
-    void Init() override;
+	void Init() override;
 };
 

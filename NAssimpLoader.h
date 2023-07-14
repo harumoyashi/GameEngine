@@ -88,7 +88,7 @@ struct ImportSettings
 	bool inverseV = false;				//VÀ•W‚ğ”½“]‚³‚¹‚é‚©
 };
 
-class NAssimpLoader
+class NAssimpLoader final
 {
 public:
 	NVertexBuff<NVertexPNU> vertexBuff_;

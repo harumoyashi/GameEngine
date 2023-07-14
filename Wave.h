@@ -2,7 +2,7 @@
 #include "NObj3d.h"
 #include "NEasing.h"
 
-class Wave
+class Wave final
 {
 private:
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト群

@@ -3,7 +3,7 @@
 #include "NEasing.h"
 
 //床。タイリングと行動範囲以外色変えする専用のシェーダーがいる。
-class Field
+class Field final
 {
 public:
 	enum class ObjType

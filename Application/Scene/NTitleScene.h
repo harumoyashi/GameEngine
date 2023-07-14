@@ -17,7 +17,7 @@
 #include "NConstBuff.h"
 #include "NLevelDataLoader.h"
 
-class NTitleScene:
+class NTitleScene final :
 	public IScene
 {
 private:

@@ -1,9 +1,8 @@
 #pragma once
 #include "NVector3.h"
 
-class NMatrix4
+struct NMatrix4
 {
-public:
 	float m[4][4];
 
 	//’PˆÊs—ñ‚Å¶¬

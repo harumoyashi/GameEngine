@@ -8,7 +8,7 @@ enum Scene {
 	GAMESCENE,
 };
 
-class NSceneManager
+class NSceneManager final
 {
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

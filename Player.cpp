@@ -13,6 +13,17 @@ Player::Player()
 {
 	obj_ = std::make_unique<NObj3d>();
 	obj_->SetModel("cat");
+
+	//パーティクルエミッターをマネージャーに登録
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
+}
+
+Player::~Player()
+{
+	//コライダーマネージャーから削除
+	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	//パーティクルマネージャーから削除
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
 }
 
 Player* Player::GetInstance()
@@ -48,6 +59,7 @@ bool Player::Init()
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetColID("player");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
@@ -174,6 +186,20 @@ void Player::Shot()
 
 void Player::OnCollision()
 {
-	NParticleManager::GetInstance()->PlayerDeadEffect(Player::GetInstance()->GetPos(), NColor::kBlue);
-	isAlive_ = false;
+	//当たった相手が敵だった時の処理
+	if (collider_.GetColInfo()->GetColID() == "enemy")
+	{
+		DeadParticle();
+		isAlive_ = false;
+	}
+}
+
+void Player::DeadParticle()
+{
+	if (isAlive_)
+	{
+		deadParticle_.SetIsRotation(true);
+		deadParticle_.SetPos(GetPos());
+		deadParticle_.Add(150, 100, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+	}
 }
