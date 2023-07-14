@@ -8,6 +8,11 @@ IBullet::IBullet() :
 {
 }
 
+IBullet::~IBullet()
+{
+	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+}
+
 void IBullet::Generate(const NVector3& pos, const float moveAngle)
 {
 	obj_ = move(std::make_unique<NObj3d>());
@@ -39,6 +44,7 @@ void IBullet::Update()
 	}
 
 	//弾の移動
+	//移動量 = 進む方向 * スピード * 経過時間
 	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 

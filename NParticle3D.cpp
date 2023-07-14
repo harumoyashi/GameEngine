@@ -236,7 +236,7 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScal
 	}
 }
 
-void IEmitter3D::SetScale(NVector3& scale)
+void IEmitter3D::SetScale(const NVector3& scale)
 {
 	scale_ = scale;
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管

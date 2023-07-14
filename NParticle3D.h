@@ -111,7 +111,7 @@ public:
 
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
 	virtual void Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
-		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {});
+		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {}) = 0;
 	//パーティクル全消し
 	inline void ClearParticles() { particles_.clear(); }
 
@@ -130,9 +130,9 @@ public:
 	//セッター//
 	//座標設定
 	inline void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
-	inline void SetPos(NVector3& pos) { pos_ = pos; }
+	inline void SetPos(const NVector3& pos) { pos_ = pos; }
 	//大きさ設定
-	void SetScale(NVector3& scale);
+	void SetScale(const NVector3& scale);
 	//角度設定
 	inline void SetRot(float rot) { rot_ = rot; }
 
