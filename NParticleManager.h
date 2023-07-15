@@ -16,7 +16,7 @@ public:
 	inline void AddEmitter(IEmitter3D* emitter, std::string key)
 	{
 		emitter->Init();					//初期化してから登録
-		emitters_.insert(std::make_pair(key,emitter));
+		emitters_.emplace(std::make_pair(key,emitter));
 	}
 	//エミッターをunordered_mapから削除
 	inline void EraseEmitter(std::string key)

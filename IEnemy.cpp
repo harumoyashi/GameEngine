@@ -90,7 +90,7 @@ void IEnemy::DeadParticle()
 		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetIsRotation(true);
 		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetPos(GetPos());
 		NParticleManager::GetInstance()->emitters_["enemyDead"]->Add(
-			50, 30, NColor::kLightblue, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+			30, 15, NColor::kLightblue, 0.1f, 0.5f, { -0.5f,-0.5f,-0.5f }, { 0.5f,0.5f,0.5f }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }
 

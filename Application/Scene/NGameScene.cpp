@@ -83,8 +83,8 @@ void NGameScene::Update()
 
 	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 	{
-		Player::GetInstance()->SetIsAlive(false);
 		Player::GetInstance()->DeadParticle();
+		Player::GetInstance()->SetIsAlive(false);
 	}
 
 	NCollisionManager::GetInstance()->CheckAllCollision();
