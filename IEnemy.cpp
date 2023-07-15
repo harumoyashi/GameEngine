@@ -10,7 +10,7 @@ IEnemy::IEnemy() :
 	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
 {
 	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "enemyDead");
 }
 
 IEnemy::~IEnemy()
@@ -18,7 +18,7 @@ IEnemy::~IEnemy()
 	//コライダーマネージャーから削除
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 	//パーティクルマネージャーから削除
-	NParticleManager::GetInstance()->RemoveEmitter(&deadParticle_);
+	//NParticleManager::GetInstance()->EraseEmitter("enemyDead");
 }
 
 void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
@@ -87,9 +87,10 @@ void IEnemy::DeadParticle()
 {
 	if (isAlive_)
 	{
-		deadParticle_.SetIsRotation(true);
-		deadParticle_.SetPos(GetPos());
-		deadParticle_.Add(50, 30, NColor::kLightblue, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetIsRotation(true);
+		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_["enemyDead"]->Add(
+			50, 30, NColor::kLightblue, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }
 

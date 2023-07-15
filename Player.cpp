@@ -15,7 +15,7 @@ Player::Player()
 	obj_->SetModel("cat");
 
 	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_,"playerDead");
 }
 
 Player::~Player()
@@ -23,7 +23,7 @@ Player::~Player()
 	//コライダーマネージャーから削除
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 	//パーティクルマネージャーから削除
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
+	NParticleManager::GetInstance()->EraseEmitter("playerDead");
 }
 
 Player* Player::GetInstance()
@@ -198,8 +198,9 @@ void Player::DeadParticle()
 {
 	if (isAlive_)
 	{
-		deadParticle_.SetIsRotation(true);
-		deadParticle_.SetPos(GetPos());
-		deadParticle_.Add(150, 100, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+		NParticleManager::GetInstance()->emitters_["playerDead"]->SetIsRotation(true);
+		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_["playerDead"]->Add(
+			150, 100, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }

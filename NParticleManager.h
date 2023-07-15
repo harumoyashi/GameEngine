@@ -1,27 +1,28 @@
 #pragma once
 #include "SimpleParticle.h"
-#include <forward_list>
+#include <unordered_map>
 
 class IEmitter3D;
 
 class NParticleManager final
 {
-private:
-	std::forward_list<IEmitter3D*> emitters_;	//パーティクルエミッター群
+public:
+	std::unordered_map<std::string,IEmitter3D*> emitters_;	//パーティクルエミッター群
 
 public:
 	static NParticleManager *GetInstance();
 
-	//コライダーをunordered_mapに追加
-	inline void AddEmitter(IEmitter3D* emitter)
+	//エミッターをunordered_mapに追加
+	inline void AddEmitter(IEmitter3D* emitter, std::string key)
 	{
-		emitters_.emplace_front(emitter);
-		emitters_.front()->Init();
+		emitter->Init();					//初期化してから登録
+		emitters_.insert(std::make_pair(key,emitter));
 	}
-	//コライダーをunordered_mapから削除
-	inline void RemoveEmitter(IEmitter3D* emitter)
+	//エミッターをunordered_mapから削除
+	inline void EraseEmitter(std::string key)
 	{
-		emitters_.remove(emitter);
+		emitters_[key]->ClearParticles();	//残ってるパーティクル全部消してから削除
+		emitters_.erase(key);
 	}
 
 	void Init();

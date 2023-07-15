@@ -11,8 +11,8 @@ void NParticleManager::Init()
 {
 	for (auto& emitter : emitters_)
 	{
-		emitter->ClearParticles();
-		emitter->Init();
+		emitter.second->ClearParticles();
+		emitter.second->Init();
 	}
 }
 
@@ -20,7 +20,7 @@ void NParticleManager::Update()
 {
 	for (auto& emitter : emitters_)
 	{
-		emitter->Update();
+		emitter.second->Update();
 	}
 }
 
@@ -28,6 +28,6 @@ void NParticleManager::Draw()
 {
 	for (auto& emitter : emitters_)
 	{
-		emitter->Draw();
+		emitter.second->Draw();
 	}
 }
