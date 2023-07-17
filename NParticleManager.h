@@ -11,23 +11,26 @@ public:
 
 public:
 	static NParticleManager *GetInstance();
+	void Init();
+	void Update();
+	void Draw();
 
 	//エミッターをunordered_mapに追加
-	inline void AddEmitter(IEmitter3D* emitter, std::string key)
+	inline void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
 		emitter->Init();					//初期化してから登録
 		emitters_.emplace(std::make_pair(key,emitter));
 	}
 	//エミッターをunordered_mapから削除
-	inline void EraseEmitter(std::string key)
+	inline void EraseEmitter(const std::string& key)
 	{
-		emitters_[key]->ClearParticles();	//残ってるパーティクル全部消してから削除
 		emitters_.erase(key);
 	}
-
-	void Init();
-	void Update();
-	void Draw();
+	//有効フラグを設定
+	inline void SetIsActive(const std::string& key,bool isActive)
+	{
+		emitters_[key]->SetIsActive(isActive);
+	}
 
 private:
 	NParticleManager() = default;

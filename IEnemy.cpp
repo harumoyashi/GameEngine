@@ -9,16 +9,14 @@ IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
 	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
 {
-	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "enemyDead");
 }
 
 IEnemy::~IEnemy()
 {
 	//コライダーマネージャーから削除
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
-	//パーティクルマネージャーから削除
-	//NParticleManager::GetInstance()->EraseEmitter("enemyDead");
+	//エミッター群から削除
+	NParticleManager::GetInstance()->EraseEmitter(enemyTypeName_ + enemyNum_);
 }
 
 void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
@@ -40,9 +38,8 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	moveAngle_ = moveAngle;
 }
 
-bool IEnemy::Init()
+void IEnemy::Init()
 {
-	return true;
 }
 
 void IEnemy::Update()
@@ -70,7 +67,10 @@ void IEnemy::Update()
 
 void IEnemy::Draw()
 {
-	obj_->Draw();
+	if (isAlive_)
+	{
+		obj_->Draw();
+	}
 }
 
 void IEnemy::OnCollision()
@@ -83,13 +83,22 @@ void IEnemy::OnCollision()
 	}
 }
 
+void IEnemy::AddEmitter(std::string enemyNum)
+{
+	//パーティクルエミッターをマネージャーに登録
+	enemyNum_ = enemyNum;
+	std::string emitterName = enemyTypeName_ + enemyNum;
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, emitterName);
+
+}
+
 void IEnemy::DeadParticle()
 {
 	if (isAlive_)
 	{
-		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetIsRotation(true);
-		NParticleManager::GetInstance()->emitters_["enemyDead"]->SetPos(GetPos());
-		NParticleManager::GetInstance()->emitters_["enemyDead"]->Add(
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetIsRotation(true);
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->Add(
 			30, 15, NColor::kLightblue, 0.1f, 0.5f, { -0.5f,-0.5f,-0.5f }, { 0.5f,0.5f,0.5f }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }

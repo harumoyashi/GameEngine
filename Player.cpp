@@ -22,8 +22,6 @@ Player::~Player()
 {
 	//コライダーマネージャーから削除
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
-	//パーティクルマネージャーから削除
-	NParticleManager::GetInstance()->EraseEmitter("playerDead");
 }
 
 Player* Player::GetInstance()

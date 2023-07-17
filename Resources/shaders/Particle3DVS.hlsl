@@ -6,7 +6,7 @@ VSOutput main(float4 pos : POSITION, float3 rot : ROT
 	VSOutput output; // ピクセルシェーダーに渡す値
 	output.pos = pos;
 	output.rot = rot;
-    output.scale = scale;
     output.color = color;
+    output.scale = scale;
 	return output;
 }

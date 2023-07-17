@@ -26,6 +26,8 @@ protected:
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
+	std::string enemyTypeName_;		//敵の種族名
+	std::string enemyNum_;			//敵の識別番号
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
 	//アイテム持たせる
@@ -44,7 +46,7 @@ public:
 	void Generate(const NVector3& pos, const float moveAngle, const std::string& modelname);
 
 	//初期化
-	bool Init();
+	virtual void Init();
 	//更新
 	void Update();
 	//描画
@@ -53,6 +55,9 @@ public:
 	//何かに当たった時の処理
 	void OnCollision();
 
+	//エミッターの登録
+	//enemyNum:敵の識別番号
+	void AddEmitter(std::string enemyNum);
 	//死んだときのパーティクルを出す
 	void DeadParticle();
 
@@ -73,6 +78,8 @@ public:
 	inline NVector3& GetScale()const { return obj_->scale_; }
 	//移動用角度取得
 	inline float GetMoveAngle()const { return moveAngle_; }
+	//パーティクルが1つも出てないかフラグ取得
+	inline bool GetParticlesDead()const { return deadParticle_.GetParticlesDead(); }
 
 	// セッター //
 	//生存フラグ設定
