@@ -16,8 +16,6 @@ private:
 	static std::unique_ptr<IScene> currentScene_;
 	static std::unique_ptr<IScene> nextScene_;
 
-	static bool sIsSceneChange;	//シーンの初期化フラグ
-
 public:
 	//インスタンス取得
 	static NSceneManager* GetInstance();

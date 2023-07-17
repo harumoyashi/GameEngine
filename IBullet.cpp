@@ -54,6 +54,13 @@ void IBullet::Update()
 
 	obj_->Update();
 	collider_.Update(obj_.get());
+
+	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
+	if (isAlive_ == false)
+	{
+		//コライダーマネージャーから削除
+		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	}
 }
 
 void IBullet::Draw()
@@ -63,4 +70,9 @@ void IBullet::Draw()
 
 void IBullet::OnCollision()
 {
+	//当たった相手が弾だった時の処理
+	if (collider_.GetColInfo()->GetColID() == "enemy")
+	{
+		isAlive_ = false;
+	}
 }

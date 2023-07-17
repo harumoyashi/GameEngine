@@ -78,6 +78,13 @@ void Player::Update()
 
 	obj_->Update();
 	collider_.Update(obj_.get());
+
+	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
+	if (isAlive_ == false)
+	{
+		//コライダーマネージャーから削除
+		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	}
 }
 
 void Player::Draw()

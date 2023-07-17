@@ -1,6 +1,7 @@
 #include "NDX12.h"
 #include "NGameScene.h"
 #include "NSceneManager.h"
+#include "NSceneChange.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
 #include "NParticleManager.h"
@@ -93,7 +94,14 @@ void NGameScene::Update()
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
-		NSceneManager::ChangeScene<NTitleScene>();
+		NSceneChange::GetInstance()->Start();	//シーン遷移開始
+	}
+
+	//切り替えてﾖｼって言われたら
+	if (NSceneChange::GetInstance()->GetIsChange() == true)
+	{
+		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
 
 	//リセットボタン
