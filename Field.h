@@ -18,9 +18,9 @@ private:
 	std::unique_ptr<NObj3d> fieldObj_;			//床
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト群
 
-	float kStartPosZ = 5.0f;		//スタート地点(縦だけ)
-	float linePosZ_ = 0.0f;			//横線の位置
-	float startOffset_ = 5.0f;		//スタート文字のオフセット
+	const float kStartPosZ = 5.0f;		//スタート地点(縦だけ)
+	float linePosZ_ = 0.0f;				//横線の位置
+	float startOffset_ = 5.0f;			//スタート文字のオフセット
 
 	float slidePos_ = 0.0f;			//横に掃けてく時のスライド位置
 	NEasing::EaseTimer slideTimer_ = 0.1f;	//スライド時のイージング用

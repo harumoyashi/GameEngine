@@ -33,6 +33,7 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
+	NParticleManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
@@ -93,6 +94,12 @@ void NGameScene::Update()
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
 		NSceneManager::ChangeScene<NTitleScene>();
+	}
+
+	//リセットボタン
+	if (NInput::IsKeyDown(DIK_R) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
+	{
+		NSceneManager::ChangeScene<NGameScene>();
 	}
 }
 

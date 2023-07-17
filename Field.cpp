@@ -16,6 +16,9 @@ void Field::Init()
 	linePosZ_ = kStartPosZ;
 	isStart_ = false;
 	startOffset_ = 5.0f;
+	slidePos_ = 0.0f;
+	slideTimer_.Reset();
+	isStart_ = false;
 
 #pragma region オブジェクトの生成
 	fieldObj_ = std::make_unique<NObj3d>();
