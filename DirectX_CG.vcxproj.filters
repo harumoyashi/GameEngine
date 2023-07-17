@@ -393,6 +393,9 @@
     <ClInclude Include="SideBullet.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="NSceneChange.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -616,6 +619,9 @@
     </ClCompile>
     <ClCompile Include="EnemyFactory.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="NSceneChange.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

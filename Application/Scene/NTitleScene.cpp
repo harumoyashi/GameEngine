@@ -2,6 +2,7 @@
 #include "NTitleScene.h"
 #include "NGameScene.h"
 #include "NSceneManager.h"
+#include "NSceneChange.h"
 #include "NAudioManager.h"
 #include "NModelManager.h"
 #include "NInput.h"
@@ -153,9 +154,15 @@ void NTitleScene::Update()
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
-		NSceneManager::ChangeScene<NGameScene>();
+		NSceneChange::GetInstance()->Start();	//シーン遷移開始
 	}
 
+	//切り替えてﾖｼって言われたら
+	if (NSceneChange::GetInstance()->GetIsChange() == true)
+	{
+		NSceneManager::ChangeScene<NGameScene>();			//タイトルシーンに切り替え
+		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
+	}
 }
 
 void NTitleScene::DrawBack3D()

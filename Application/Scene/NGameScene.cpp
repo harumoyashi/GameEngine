@@ -1,6 +1,7 @@
 #include "NDX12.h"
 #include "NGameScene.h"
 #include "NSceneManager.h"
+#include "NSceneChange.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
 #include "NParticleManager.h"
@@ -33,6 +34,7 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
+	NParticleManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
@@ -83,8 +85,8 @@ void NGameScene::Update()
 
 	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 	{
-		Player::GetInstance()->SetIsAlive(false);
 		Player::GetInstance()->DeadParticle();
+		Player::GetInstance()->SetIsAlive(false);
 	}
 
 	NCollisionManager::GetInstance()->CheckAllCollision();
@@ -92,7 +94,20 @@ void NGameScene::Update()
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
-		NSceneManager::ChangeScene<NTitleScene>();
+		NSceneChange::GetInstance()->Start();	//シーン遷移開始
+	}
+
+	//切り替えてﾖｼって言われたら
+	if (NSceneChange::GetInstance()->GetIsChange() == true)
+	{
+		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
+	}
+
+	//リセットボタン
+	if (NInput::IsKeyDown(DIK_R) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
+	{
+		NSceneManager::ChangeScene<NGameScene>();
 	}
 }
 

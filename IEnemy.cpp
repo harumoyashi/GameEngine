@@ -9,16 +9,12 @@ IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
 	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
 {
-	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_);
 }
 
 IEnemy::~IEnemy()
 {
-	//コライダーマネージャーから削除
-	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
-	//パーティクルマネージャーから削除
-	NParticleManager::GetInstance()->RemoveEmitter(&deadParticle_);
+	//エミッター群から削除
+	NParticleManager::GetInstance()->EraseEmitter(enemyTypeName_ + enemyNum_);
 }
 
 void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
@@ -40,9 +36,8 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	moveAngle_ = moveAngle;
 }
 
-bool IEnemy::Init()
+void IEnemy::Init()
 {
-	return true;
 }
 
 void IEnemy::Update()
@@ -66,11 +61,21 @@ void IEnemy::Update()
 
 	obj_->Update();
 	collider_.Update(obj_.get());
+
+	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
+	if (isAlive_ == false)
+	{
+		//コライダーマネージャーから削除
+		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	}
 }
 
 void IEnemy::Draw()
 {
-	obj_->Draw();
+	if (isAlive_)
+	{
+		obj_->Draw();
+	}
 }
 
 void IEnemy::OnCollision()
@@ -83,13 +88,23 @@ void IEnemy::OnCollision()
 	}
 }
 
+void IEnemy::AddEmitter(std::string enemyNum)
+{
+	//パーティクルエミッターをマネージャーに登録
+	enemyNum_ = enemyNum;
+	std::string emitterName = enemyTypeName_ + enemyNum;
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, emitterName);
+
+}
+
 void IEnemy::DeadParticle()
 {
 	if (isAlive_)
 	{
-		deadParticle_.SetIsRotation(true);
-		deadParticle_.SetPos(GetPos());
-		deadParticle_.Add(50, 30, NColor::kLightblue, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetIsRotation(true);
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->Add(
+			30, 15, NColor::kLightblue, 0.1f, 0.5f, { -0.5f,-0.5f,-0.5f }, { 0.5f,0.5f,0.5f }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }
 

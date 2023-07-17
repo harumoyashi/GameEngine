@@ -5,11 +5,11 @@
 #include "NSprite.h"
 #include "NObj3d.h"
 #include "NParticle3D.h"
+#include "NSceneChange.h"
 
 #pragma region staticメンバ変数初期化
 
 //シーン変更フラグの初期化
-bool NSceneManager::sIsSceneChange = false;
 std::unique_ptr<IScene> NSceneManager::currentScene_;
 std::unique_ptr<IScene> NSceneManager::nextScene_;
 
@@ -28,11 +28,13 @@ NSceneManager* NSceneManager::GetInstance()
 void NSceneManager::Init()
 {
 	currentScene_->Init();
+	NSceneChange::GetInstance()->Init();
 }
 
 void NSceneManager::Update()
 {
 	currentScene_->Update();
+	NSceneChange::GetInstance()->Update();
 }
 
 void NSceneManager::Draw()
@@ -47,4 +49,5 @@ void NSceneManager::Draw()
 	currentScene_->DrawParticle();
 	NSprite::CommonBeginDraw();
 	currentScene_->DrawForeSprite();
+	NSceneChange::GetInstance()->Draw();
 }

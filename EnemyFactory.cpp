@@ -1,5 +1,6 @@
 #include "EnemyFactory.h"
 #include "NCollision.h"
+#include "NParticleManager.h"
 
 EnemyFactory* EnemyFactory::GetInstance()
 {
@@ -23,6 +24,10 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVector3 pos)
 			EnemyManager::GetInstance()->enemys_.emplace_back();
 			//対応した種類に所有権持たせて生成
 			EnemyManager::GetInstance()->enemys_.back() = std::make_unique<Wolf>();
+
+			//パーティクルエミッターをマネージャーに登録
+			EnemyManager::GetInstance()->enemys_.back()->AddEmitter(
+				std::to_string(EnemyManager::GetInstance()->enemys_.size()));
 
 			NVector3 offset = { MathUtil::Randomf(-2.0f,2.0f),0,MathUtil::Randomf(-1.0f,1.0f) };
 			//配置位置が中心より右か左で進行方向変える
@@ -63,8 +68,7 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVector3 pos)
 							NVector3 posI = EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetPos();
 							NVector3 posJ = EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetPos();
 							//被らなくなるまで押し出し
-							NVector3 vec = EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetPos() -
-								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetPos();
+							NVector3 vec = posI - posJ;
 
 							//最後ちょっと大きくしとかないと少数の差が小さすぎてオーバーフロー起こる
 							vec = vec.Normalize() * EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetScale() * 5.0f;

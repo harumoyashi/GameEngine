@@ -62,9 +62,9 @@ private:
 	//角度
 	NVector3 rot_{};
 	//大きさ
-	NVector3 scale_{ 1.f,1.f,1.f };
-	float minScale_;	//エミッターの最小サイズ(比率)
-	float maxScale_;	//エミッターの最大サイズ(比率)
+	NVector3 scale_{ 0.1f,0.1f,0.1f };	//これ0にするといかれる(原因不明)
+	float minScale_;	//パーティクルの最小サイズ
+	float maxScale_;	//パーティクルの最大サイズ
 	//元の大きさ
 	NVector3 originalScale_;
 	//拡縮用倍率
@@ -82,7 +82,7 @@ private:
 	const uint32_t maxParticle_ = 256;		//最大数
 	std::vector<Particle3D> particles_;		//パーティクル配列
 
-	bool isActive_ = false;					//有効にするかフラグ
+	bool isActive_ = true;					//有効にするかフラグ
 
 	bool isGravity_ = false;				//重力の影響受けるかフラグ
 	bool isRotation_ = false;				//回すかフラグ
@@ -120,12 +120,12 @@ public:
 	inline NVector3 GetPos()const { return pos_; }
 	//大きさ取得
 	inline NVector3 GetScale()const { return scale_; }
-
 	//パーティクル全部死んだか取得
 	inline bool GetParticlesDead()const { return particles_.empty(); }
-
 	//何個パーティクルあるか取得
 	inline size_t GetParticlesSize()const { return particles_.size(); }
+	//有効フラグ取得
+	inline bool GetIsActive()const { return isActive_; }
 
 	//セッター//
 	//座標設定
@@ -135,10 +135,8 @@ public:
 	void SetScale(const NVector3& scale);
 	//角度設定
 	inline void SetRot(float rot) { rot_ = rot; }
-
 	//ライトを設定
 	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
-
 	//有効フラグ設定
 	inline void SetIsActive(bool isActive) { isActive_ = isActive; }
 	//重力フラグ設定

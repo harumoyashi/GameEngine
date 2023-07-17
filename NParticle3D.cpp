@@ -23,6 +23,8 @@ IEmitter3D::IEmitter3D()
 	vertices_.resize(maxParticle_);
 	//それによってバッファの初期化をする
 	vertexBuff_.Init(vertices_);
+
+	isActive_ = true;	//生成時には有効フラグ立てる
 }
 
 void IEmitter3D::Init()
