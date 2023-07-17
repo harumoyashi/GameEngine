@@ -81,6 +81,12 @@ void Field::Update()
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10,0,5));
 		}
 
+		//“Go‚µ‚¿‚á‚¤‚æƒ{ƒ^ƒ“
+		if (NInput::IsKeyDown(DIK_C))
+		{
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+		}
+
 		slideTimer_.Update();
 
 		if (slideTimer_.GetEnd())

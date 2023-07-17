@@ -18,8 +18,15 @@ public:
 	//エミッターをunordered_mapに追加
 	inline void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
-		emitter->Init();					//初期化してから登録
-		emitters_.emplace(std::make_pair(key,emitter));
+		if (emitters_.max_size() > emitters_.size())
+		{
+			emitter->Init();					//初期化してから登録
+			emitters_.emplace(std::make_pair(key, emitter));
+		}
+		else
+		{
+			emitter->Init();
+		}
 	}
 	//エミッターをunordered_mapから削除
 	inline void EraseEmitter(const std::string& key)

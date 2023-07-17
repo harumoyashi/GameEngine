@@ -20,8 +20,18 @@ void EnemyManager::Update()
 		{
 			enemys_.erase(enemys_.begin() + i);
 			i = (size_t)-1;
+			isEnemyDead = true;
 		}
 	}
+
+	//if (isEnemyDead)	//もし誰か死んだら
+	//{
+	//	for (size_t i = 0; i < enemys_.size(); i++)
+	//	{
+	//		//パーティクルエミッターをマネージャーに再登録
+	//		EnemyManager::GetInstance()->enemys_[i]->AddEmitter(std::to_string(i));
+	//	}
+	//}
 
 	for (auto& enemy : enemys_)
 	{

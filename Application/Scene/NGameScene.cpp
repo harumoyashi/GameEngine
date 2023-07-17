@@ -35,6 +35,7 @@ void NGameScene::Init()
 #pragma region 描画初期化処理
 	//オブジェクト
 	NParticleManager::GetInstance()->Init();
+	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
