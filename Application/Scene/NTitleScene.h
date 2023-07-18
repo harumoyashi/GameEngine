@@ -13,6 +13,7 @@
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NTimer.h"
+#include "NEasing.h"
 #include "NAssimpModel.h"
 #include "NConstBuff.h"
 #include "NLevelDataLoader.h"
@@ -36,13 +37,12 @@ private:
 	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
 
 	//前景スプライト
-	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
-	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
+	std::unique_ptr<NSprite> titleLogo_;						//タイトルロゴ
+	std::vector<std::unique_ptr<NSprite>> aButton_{ 2 };		//AボタンUI
+	NEasing::EaseTimer flashingTimer_ = 1.0f;					//点滅タイマー
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
-
-	NTimer timer_;
 
 	std::unique_ptr<LevelData> levelData_;
 

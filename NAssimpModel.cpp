@@ -57,6 +57,27 @@ void NAssimpModel::Update()
 {
 	//3D変換行列情報転送
 	HRESULT result;
+
+	//ワールド行列
+	NMatrix4 matScale;	//スケーリング行列
+	matScale = matScale.Scale(scale_);
+
+	NMatrix4 matRot;		//回転行列
+	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rotation_.z));
+	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rotation_.x));
+	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rotation_.y));
+	matRot *= matZ;	//Z軸周りに回転してから
+	matRot *= matX;	//X軸周りに回転して
+	matRot *= matY;	//Y軸周りに回転
+
+	NMatrix4 matTrans;	//平行移動行列
+	matTrans = matTrans.Translation(position_);
+
+	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
+	matWorld_ *= matRot;	//ワールド座標に回転を反映
+	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
+
 	// 定数バッファへデータ転送
 	cbTrans_->constMap_ = nullptr;
 	result = cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);

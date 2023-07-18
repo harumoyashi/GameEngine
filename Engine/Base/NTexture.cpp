@@ -10,15 +10,18 @@ NTextureManager* NTextureManager::GetInstance()
 
 void NTextureManager::Init()
 {
+	std::string directryPass = "Resources/Texture/";
+
 	CreateErrorTexture();
 	//Ç±Ç±Ç≈àÍäáì«Ç›çûÇ›
-	LoadTexture("Resources/white64x64.png", "white");
-	LoadTexture("Resources/itiro_kimegao.png", "itiro");
-	LoadTexture("Resources/hamutaro.jpg", "hamu");
-	LoadTexture("Resources/mario.jpg", "mario");
-	LoadTexture("Resources/start.png", "start");
-	LoadTexture("Resources/timerocker_tile.png", "tile");
-	LoadTexture("Resources/sceneChange.png", "sceneChange");
+	LoadTexture(directryPass + "white64x64.png", "white");
+	LoadTexture(directryPass + "start.png", "start");
+	LoadTexture(directryPass + "timerocker_tile.png", "tile");
+	LoadTexture(directryPass + "title_logo.png", "logo");
+	LoadTexture(directryPass + "Abutton_UI.png", "Abutton");
+	LoadTexture(directryPass + "Bbutton_UI.png", "Bbutton");
+	LoadTexture(directryPass + "shaft.png", "shaft");
+	LoadTexture(directryPass + "stick.png", "stick");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

@@ -5,7 +5,8 @@
 class NSceneChange
 {
 private:
-	std::unique_ptr<NSprite> sprite_;
+	std::unique_ptr<NSprite> titleLogo_;	//タイトルロゴ
+	std::unique_ptr<NSprite> blackBack_;	//背景の黒い奴
 
 	bool isSceneChange_;	//シーン切り替えるかフラグ
 	bool isSceneChangeNow_;	//シーン遷移中かフラグ

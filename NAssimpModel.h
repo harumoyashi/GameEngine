@@ -14,7 +14,6 @@ private:
 	std::vector<NIndexBuff> indexBuffers_; // メッシュの数分のインデックスバッファ
 	const wchar_t* kModelFile;
 
-
 	//いるかわからんけど仮で
 	NMatrix4 matWorld_;		//3D変換行列
 	NMaterial material_;	//マテリアル
@@ -41,6 +40,10 @@ private:
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
 
 public:
+	NVector3 scale_ = { 1.0f,1.0f,1.0f };		//スケーリング倍率
+	NVector3 rotation_ = { 0.0f,0.0f,0.0f };	//回転角
+	NVector3 position_ = { 0.0f,0.0f,0.0f };	//座標
+
 	//ボーンインデックスの最大数
 	static const uint32_t MAX_BONE_INDICES = 4;
 

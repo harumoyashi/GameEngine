@@ -47,7 +47,7 @@ bool Player::Init()
 	godmodeTimer_.Reset();
 	godmodeTimer_.SetMaxTimer(120.0f);
 
-	isMove_ = false;
+	isMove_ = true;
 
 	//弾のレベルたち
 	lineLevel_ = 1;
@@ -101,53 +101,49 @@ void Player::Draw()
 
 void Player::Move()
 {
-	isMove_ = false;
-
-	//パッド接続されてるなら
-	if (NInput::GetIsConnect())
+	if (isMove_)
 	{
-		//スティック移動
-		moveVelo_ = NInput::GetStick();
-		//イージング的な感じにして速度の可変明確に
-		moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
-		moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
-	}
-	else
-	{
-		moveVelo_ = { 0,0 };
-		//いずれかのキーを押したとき
-		if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
+		//パッド接続されてるなら
+		if (NInput::GetIsConnect())
 		{
-			if (NInput::IsKey(DIK_W)) { moveVelo_.y = +1.0f; }
-			else if (NInput::IsKey(DIK_S)) { moveVelo_.y = -1.0f; }
-			if (NInput::IsKey(DIK_D)) { moveVelo_.x = +1.0f; }
-			else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
+			//スティック移動
+			moveVelo_ = NInput::GetStick();
+			//イージング的な感じにして速度の可変明確に
+			moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
+			moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
 		}
-	}
-
-	if (moveVelo_.Length() > 0.0f)	//入力されてたら
-	{
-		isMove_ = true;
-	}
-
-	elapseSpeed_ = moveVelo_.Length();	//移動量によって経過時間変化
-
-	//移動量を加算
-	obj_->position_.x += moveVelo_.x * moveSpeed_;
-	obj_->position_.z += moveVelo_.y * moveSpeed_;
-
-	//移動方向に合わせて回転
-	if (isMove_)			//入力されてたら
-	{
-		NVector2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
-		velo.Normalize();
-		moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
-		if (velo.x < 0)
+		else
 		{
-			moveAngle_ = -moveAngle_;
+			moveVelo_ = { 0,0 };
+			//いずれかのキーを押したとき
+			if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
+			{
+				if (NInput::IsKey(DIK_W)) { moveVelo_.y = +1.0f; }
+				else if (NInput::IsKey(DIK_S)) { moveVelo_.y = -1.0f; }
+				if (NInput::IsKey(DIK_D)) { moveVelo_.x = +1.0f; }
+				else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
+			}
 		}
 
-		obj_->rotation_.y = moveAngle_;
+		elapseSpeed_ = moveVelo_.Length();	//移動量によって経過時間変化
+
+		//移動量を加算
+		obj_->position_.x += moveVelo_.x * moveSpeed_;
+		obj_->position_.z += moveVelo_.y * moveSpeed_;
+
+		//移動方向に合わせて回転
+		if (moveVelo_.Length() > 0.0f)			//入力されてたら
+		{
+			NVector2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
+			velo.Normalize();
+			moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
+			if (velo.x < 0)
+			{
+				moveAngle_ = -moveAngle_;
+			}
+
+			obj_->rotation_.y = moveAngle_;
+		}
 	}
 
 	//リリースでもいじりたいからifdefで囲ってない

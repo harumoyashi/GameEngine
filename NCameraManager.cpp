@@ -12,7 +12,7 @@ void NCameraManager::NormalCameraInit()
 	nextPos_ = nextTarget_ - NVector3(0, length_, 0);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVector3(0, 0, 1);
+	nextUpVec_ = NVector3(0, 0, 1);	//下見下ろす形にする
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -46,6 +46,59 @@ void NCameraManager::DebugCameraUpdate()
 
 	debugCamera_.DebugCameraUpdate();
 	NCamera::sCurrentCamera = &debugCamera_;
+}
+
+void NCameraManager::TitleCameraInit()
+{
+	length_ = 1.0f;
+	cameraRotEase_.Reset();
+
+	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+	nextTarget_ = Player::GetInstance()->GetPos();
+
+	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	nextPos_ = nextTarget_ - NVector3(length_, 0, -length_);
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	nextUpVec_ = NVector3(0, 1, 0);
+
+	currentFov_ = NCamera::sCurrentCamera->GetFov();
+	nextFov_ = 45.0f;
+}
+
+void NCameraManager::TitleCameraUpdate()
+{
+	if (isChange_ == false)
+	{
+		TitleCameraInit();
+		isChange_ = true;
+	}
+
+	//前のカメラから諸々イージングしてから下の処理やりたい
+	//カメラ回転用のタイマー動かし続ける
+	cameraRotEase_.Update();
+	if (cameraRotEase_.GetStarted() == false)
+	{
+		cameraRotEase_.Start();
+	}
+	else if (cameraRotEase_.GetEnd())
+	{
+		cameraRotEase_.Reset();
+	}
+
+	NVector2 vec2;	//カメラに足すベクトル
+	//円運動させる
+	vec2 = MathUtil::CircleMotion(
+		{ titleCamera_.GetTarget().x,titleCamera_.GetTarget().z },
+		length_,
+		cameraRotEase_.GetTimeRate() * PI2);
+
+	titleCamera_.SetTarget(Player::GetInstance()->GetPos());
+	titleCamera_.SetEye(NVector3(vec2.x,length_,vec2.y));
+	titleCamera_.SetUpVec(nextUpVec_);
+
+	titleCamera_.Update();
+	NCamera::sCurrentCamera = &titleCamera_;
 }
 
 void NCameraManager::ResultCameraInit()
@@ -103,7 +156,7 @@ void NCameraManager::Update()
 		if (nowCameraType_ != (uint32_t)CameraType::Debug)
 		{
 			prevCameraType_ = nowCameraType_;
-			
+
 			ChangeCameara(CameraType::Debug);
 		}
 		else if (nowCameraType_ == (uint32_t)CameraType::Debug)
@@ -118,6 +171,7 @@ void NCameraManager::Update()
 		// 登録
 		&NCameraManager::NormalCameraUpdate,
 		&NCameraManager::DebugCameraUpdate,
+		&NCameraManager::TitleCameraUpdate,
 		&NCameraManager::ResultCameraUpdate,
 	};
 

@@ -7,6 +7,7 @@ enum class CameraType
 {
 	Normal,
 	Debug,
+	Title,
 	Result,
 };
 
@@ -23,6 +24,10 @@ private:
 	NEasing::EaseTimer normalCameraMoveEase_;	//通常カメラに持ってくためのイージング
 	//通常時のカメラ関連
 	NCamera debugCamera_;						//デバッグ用カメラ
+	//タイトル時のカメラ関連
+	NCamera titleCamera_;						//タイトルのカメラ
+	NEasing::EaseTimer titleCameraMoveEase_;	//タイトルカメラに持ってくためのイージング
+	NEasing::EaseTimer cameraRotEase_ = 4.0f;	//カメラを回転させる用のタイマー
 	//リザルト時のカメラ関連
 	NCamera resultCamera_;						//リザルトのカメラ
 	NEasing::EaseTimer resultCameraMoveEase_;	//リザルトカメラに持ってくためのイージング
@@ -40,7 +45,7 @@ private:
 	NVector3 nextPos_;			//持っていきたいカメラ座標
 	NVector3 currentTarget_;	//現在のカメラの注視点座標
 	NVector3 nextTarget_;		//持っていきたいカメラの注視点座標
-	NVector3 currentUpVec_;	//現在のカメラの注視点座標
+	NVector3 currentUpVec_;		//現在のカメラの注視点座標
 	NVector3 nextUpVec_;		//持っていきたいカメラの注視点座標
 	float currentFov_;			//現在のカメラ視野
 	float nextFov_;				//持っていきたいカメラ視野
@@ -51,8 +56,11 @@ private:
 	// 通常時
 	void NormalCameraInit();
 	void NormalCameraUpdate();
-	//デバッグカメラ時
+	// デバッグカメラ時
 	void DebugCameraUpdate();
+	// タイトル時
+	void TitleCameraInit();
+	void TitleCameraUpdate();
 	// リザルト時
 	void ResultCameraInit();
 	void ResultCameraUpdate();

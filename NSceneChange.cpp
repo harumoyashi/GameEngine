@@ -3,9 +3,16 @@
 
 NSceneChange::NSceneChange()
 {
-	sprite_ = std::make_unique<NSprite>();
-	sprite_->CreateSprite("sceneChange");
-	sprite_->SetSize(
+	titleLogo_ = std::make_unique<NSprite>();
+	titleLogo_->CreateSprite("logo");
+	titleLogo_->SetSize(
+		(float)NWindows::GetInstance()->kWin_width,
+		(float)NWindows::GetInstance()->kWin_height);
+
+	blackBack_ = std::make_unique<NSprite>();
+	blackBack_->CreateSprite("white");
+	blackBack_->color_ = NColor::kBlack;
+	blackBack_->SetSize(
 		(float)NWindows::GetInstance()->kWin_width,
 		(float)NWindows::GetInstance()->kWin_height);
 }
@@ -27,7 +34,8 @@ void NSceneChange::Init()
 	pos_ = {
 		-(float)NWindows::GetInstance()->kWin_height * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f };
-	sprite_->SetPos(pos_.x, pos_.y);
+	titleLogo_->SetPos(pos_.x, pos_.y);
+	blackBack_->SetPos(pos_.x, pos_.y);
 }
 
 void NSceneChange::Update()
@@ -77,15 +85,18 @@ void NSceneChange::Update()
 		}
 	}
 
-	sprite_->SetPos(pos_.x, pos_.y);
-	sprite_->Update();
+	titleLogo_->SetPos(pos_.x, pos_.y);
+	blackBack_->SetPos(pos_.x, pos_.y);
+	titleLogo_->Update();
+	blackBack_->Update();
 }
 
 void NSceneChange::Draw()
 {
 	if (isSceneChangeNow_)
 	{
-		sprite_->Draw();
+		blackBack_->Draw();
+		titleLogo_->Draw();
 	}
 }
 
