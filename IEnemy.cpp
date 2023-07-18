@@ -13,8 +13,6 @@ IEnemy::IEnemy() :
 
 IEnemy::~IEnemy()
 {
-	//エミッター群から削除
-	NParticleManager::GetInstance()->EraseEmitter(enemyTypeName_ + enemyNum_);
 }
 
 void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
@@ -88,12 +86,13 @@ void IEnemy::OnCollision()
 	}
 }
 
-void IEnemy::AddEmitter(std::string enemyNum)
+void IEnemy::AddEmitter(uint32_t eneNum)
 {
+	//識別番号をつける
+	enemyNum_ = eneNum;
 	//パーティクルエミッターをマネージャーに登録
-	enemyNum_ = enemyNum;
-	std::string emitterName = enemyTypeName_ + enemyNum;
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, emitterName);
+	NParticleManager::GetInstance()->enemyEmitters_.emplace_back();
+	NParticleManager::GetInstance()->enemyEmitters_.back() = &deadParticle_;
 
 }
 
@@ -101,9 +100,9 @@ void IEnemy::DeadParticle()
 {
 	if (isAlive_)
 	{
-		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetIsRotation(true);
-		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->SetPos(GetPos());
-		NParticleManager::GetInstance()->emitters_[enemyTypeName_+enemyNum_]->Add(
+		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetIsRotation(true);
+		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetPos(GetPos());
+		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->Add(
 			30, 15, NColor::kLightblue, 0.1f, 0.5f, { -0.5f,-0.5f,-0.5f }, { 0.5f,0.5f,0.5f }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }

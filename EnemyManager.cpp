@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "NParticleManager.h"
 
 EnemyManager* EnemyManager::GetInstance()
 {
@@ -19,19 +20,23 @@ void EnemyManager::Update()
 		if (enemys_[i]->GetisAlive() == false && enemys_[i]->GetParticlesDead())
 		{
 			enemys_.erase(enemys_.begin() + i);
+			//エミッター群から削除
+			NParticleManager::GetInstance()->enemyEmitters_.erase(
+				NParticleManager::GetInstance()->enemyEmitters_.begin() + i);
 			i = (size_t)-1;
 			isEnemyDead = true;
 		}
 	}
 
-	//if (isEnemyDead)	//もし誰か死んだら
-	//{
-	//	for (size_t i = 0; i < enemys_.size(); i++)
-	//	{
-	//		//パーティクルエミッターをマネージャーに再登録
-	//		EnemyManager::GetInstance()->enemys_[i]->AddEmitter(std::to_string(i));
-	//	}
-	//}
+	if (isEnemyDead)	//もし誰か死んだら
+	{
+		for (uint32_t i = 0; i < enemys_.size(); i++)
+		{
+			//敵の識別番号を再登録
+			EnemyManager::GetInstance()->enemys_[i]->SetEnemyNum(i);
+		}
+		isEnemyDead = false;
+	}
 
 	for (auto& enemy : enemys_)
 	{

@@ -27,7 +27,7 @@ protected:
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
 	std::string enemyTypeName_;		//敵の種族名
-	std::string enemyNum_;			//敵の識別番号
+	uint32_t enemyNum_;				//敵の識別番号
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
 	//アイテム持たせる
@@ -57,7 +57,7 @@ public:
 
 	//エミッターの登録
 	//enemyNum:敵の識別番号
-	void AddEmitter(std::string enemyNum);
+	void AddEmitter(uint32_t eneNum);
 	//死んだときのパーティクルを出す
 	void DeadParticle();
 
@@ -95,4 +95,6 @@ public:
 	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
 	//経過時間スピード設定
 	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	//敵の識別番号設定
+	inline void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
 };
