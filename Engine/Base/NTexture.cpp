@@ -18,6 +18,7 @@ void NTextureManager::Init()
 	LoadTexture("Resources/mario.jpg", "mario");
 	LoadTexture("Resources/start.png", "start");
 	LoadTexture("Resources/timerocker_tile.png", "tile");
+	LoadTexture("Resources/sceneChange.png", "sceneChange");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

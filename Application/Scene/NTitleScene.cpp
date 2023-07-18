@@ -32,7 +32,7 @@ void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
 	NAudio::GetInstance()->Init();
-	//NAudioManager::Play("RetroBGM",true,0.2f);
+	NAudioManager::Play("titleBGM",true,0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
@@ -109,11 +109,6 @@ void NTitleScene::Init()
 
 void NTitleScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_RETURN))
-	{
-		NAudioManager::Play("WinSE", false, 0.5f);
-	}
-
 	//ライトたちの更新
 	lightGroup_->Update();
 

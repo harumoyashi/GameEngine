@@ -1,9 +1,13 @@
 #include "NSceneChange.h"
+#include "NAudioManager.h"
 
 NSceneChange::NSceneChange()
 {
 	sprite_ = std::make_unique<NSprite>();
-	sprite_->CreateSprite("mario");
+	sprite_->CreateSprite("sceneChange");
+	sprite_->SetSize(
+		(float)NWindows::GetInstance()->kWin_width,
+		(float)NWindows::GetInstance()->kWin_height);
 }
 
 NSceneChange* NSceneChange::GetInstance()
@@ -20,9 +24,10 @@ void NSceneChange::Init()
 	inTimer_.Reset();
 	outTimer_.Reset();
 
-	sprite_->SetPos(
-		NWindows::GetInstance()->kWin_width * 0.5f,
-		NWindows::GetInstance()->kWin_height * 0.5f);
+	pos_ = {
+		-(float)NWindows::GetInstance()->kWin_height * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f };
+	sprite_->SetPos(pos_.x, pos_.y);
 }
 
 void NSceneChange::Update()
@@ -39,11 +44,29 @@ void NSceneChange::Update()
 			inTimer_.Start();
 		}
 
+		//前半のタイマーが動いてる時
+		if (inTimer_.GetRun())
+		{
+			pos_.x = NEasing::InOutBack(
+				-(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				inTimer_.GetTimeRate());
+		}
+
 		//前半が終わったなら後半スタート
-		if (inTimer_.GetEnd()&& outTimer_.GetStarted() == false)
+		if (inTimer_.GetEnd() && outTimer_.GetStarted() == false)
 		{
 			outTimer_.Start();
 			isSceneChange_ = true;		//シーン切り替えてﾖｼ!!!
+		}
+
+		//後半のタイマーが動いてる時
+		if (outTimer_.GetRun())
+		{
+			pos_.x = NEasing::InQuad(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				(float)NWindows::GetInstance()->kWin_width * 1.5f,
+				outTimer_.GetTimeRate());
 		}
 
 		//終わり
@@ -54,6 +77,7 @@ void NSceneChange::Update()
 		}
 	}
 
+	sprite_->SetPos(pos_.x, pos_.y);
 	sprite_->Update();
 }
 
@@ -69,7 +93,7 @@ void NSceneChange::Start()
 {
 	if (isSceneChangeNow_ == false)
 	{
-		//ここで音鳴らしたりする//
+		NAudioManager::Play("sceneChangeSE");
 		Init();
 		isSceneChange_ = false;		//まだだ、まだ切り替えるな
 		isSceneChangeNow_ = true;

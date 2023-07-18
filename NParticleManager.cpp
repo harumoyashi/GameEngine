@@ -18,8 +18,8 @@ void NParticleManager::Init()
 	for (auto& eneEmitter : enemyEmitters_)
 	{
 		eneEmitter->ClearParticles();
-		eneEmitter->Init();
 	}
+	enemyEmitters_.clear();
 }
 
 void NParticleManager::Update()

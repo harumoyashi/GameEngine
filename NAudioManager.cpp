@@ -5,9 +5,14 @@ std::unordered_map<SoundHandle, uint32_t> NAudioManager::sSoundMap;
 
 void NAudioManager::AllLoad()
 {
-    LoadSound("fanfare.wav", "WinSE");
-    LoadSound("fever.wav", "Fever");
-    LoadSound("retrogamecenter3.mp3", "RetroBGM");
+    LoadSound("title_BGM.mp3", "titleBGM"); //タイトルのBGM
+    LoadSound("play_BGM.mp3", "playBGM");   //プレイ中のBGM
+
+    LoadSound("shot_SE.mp3", "shotSE");                 //弾撃った時
+    LoadSound("start_SE.mp3", "startSE");               //スタートの文字掃ける音
+    LoadSound("vanish_SE.mp3", "vanishSE");             //敵が弾ける音
+    LoadSound("explosion_SE.mp3", "explosionSE");       //プレイヤーが弾ける音
+    LoadSound("sceneChange_SE.mp3", "sceneChangeSE");   //シーン遷移音
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)

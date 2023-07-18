@@ -4,6 +4,7 @@
 #include "SphereCollider.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
+#include "NAudioManager.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -196,6 +197,7 @@ void Player::OnCollision()
 	{
 		DeadParticle();
 		isAlive_ = false;
+		NAudioManager::Play("explosionSE");
 	}
 }
 

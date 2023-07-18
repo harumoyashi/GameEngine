@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "EnemyFactory.h"
 
+#include "NAudioManager.h"
+
 #include "NImGuiManager.h"
 #include "imgui.h"
 
@@ -79,6 +81,8 @@ void Field::Update()
 			slideTimer_.Start();
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10,0,8));
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10,0,5));
+
+			NAudioManager::Play("startSE");
 		}
 
 		//“Go‚µ‚¿‚á‚¤‚æƒ{ƒ^ƒ“

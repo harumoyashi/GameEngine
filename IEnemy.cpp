@@ -3,6 +3,7 @@
 #include "SphereCollider.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
+#include "NAudioManager.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
@@ -83,6 +84,7 @@ void IEnemy::OnCollision()
 	{
 		DeadParticle();
 		isAlive_ = false;
+		NAudioManager::Play("vanishSE");
 	}
 }
 
