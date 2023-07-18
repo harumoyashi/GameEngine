@@ -7,7 +7,7 @@
 LineBullet::LineBullet()
 {
     shotCoolTimer_ = 5.0f;      //弾撃つまでの時間
-    isCanShot_ = true;			//撃てるかフラグ
+    isCanShot_ = false;			//撃てるかフラグ
     level_ = 1;                 //弾の強化レベル
     
     //obj_->color_ = NColor::kRed;  //なぜかエラー出る

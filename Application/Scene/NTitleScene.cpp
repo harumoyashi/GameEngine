@@ -10,6 +10,9 @@
 #include "NMathUtil.h"
 #include "NCameraManager.h"
 
+#include "Player.h"
+#include "Field.h"
+
 NTitleScene* NTitleScene::GetInstance()
 {
 	static NTitleScene instance;
@@ -32,55 +35,28 @@ void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
 	NAudio::GetInstance()->Init();
-	//NAudioManager::Play("RetroBGM",true,0.2f);
+	NAudioManager::Play("titleBGM", true, 0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Title);
 #pragma endregion
 #pragma region 描画初期化処理
-	//オブジェクト
-	//レベルデータからの読み込み
-	levelData_ = std::make_unique<LevelData>();
-	levelData_ = NLevelDataLoader::GetInstance()->Load("levelEditor.json");
-	//SetObject(levelData_.get());
-	NLevelDataLoader::GetInstance()->SetObject(levelData_.get(), levelDataobj_);
-	//レベルデータにあるカメラをデバッグカメラ情報に適用
-	NCamera camera = NLevelDataLoader::GetInstance()->SetCamera(levelData_.get());
-	NCameraManager::GetInstance()->SetDebugCamera(camera);
-	
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_.emplace_back();
-		obj_[i] = std::make_unique<NObj3d>();
-		obj_[i]->Init();
-	}
-	obj_[0]->SetModel("sphere");
-	obj_[1]->SetModel("sphere");
-	obj_[2]->SetModel("cube");
 
 #pragma region オブジェクトの初期値設定
-	obj_[0]->position_ = { 0,2,0 };
-	obj_[1]->position_ = { 2,0,0 };
-	obj_[2]->position_ = { 0,0,0 };
-	obj_[2]->scale_ = { 10,0.1f,10 };
 
-	//設定したのを適用
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->Update();
-	}
-
-	sphere_.centerPos = obj_[0]->position_;
-	sphere_.radius = obj_[0]->scale_.x;
-	plane_.normal = { 0,1,0 };
-	plane_.distance = obj_[2]->position_.Length();
 #pragma endregion
 
 	//assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
 	//assimpModel_.Load(L"Resources/Tripping.fbx");
-	assimpModel_.Load(L"Resources/Cat_fixed.fbx");
+	/*assimpModel_.Load(L"Resources/Cat_fixed.fbx");
 	assimpModel_.Init();
+	assimpModel_.position_ = {0,0,1};
+	assimpModel_.rotation_ = {0,0,0};
+	assimpModel_.scale_ = {0.03f,0.03f,0.03f};*/
+
+	Player::GetInstance()->Init();
+	//Player::GetInstance()->SetPos(NVector3(0,0,0));
 
 #pragma region オブジェクトの初期値設定
 
@@ -88,68 +64,74 @@ void NTitleScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
-	foreSprite_[0] = std::make_unique<NSprite>();
-	foreSprite_[0]->CreateSprite("hamu", { 0,0 });
-	foreSprite_[0]->SetPos(0, 0);
-	foreSprite_[0]->SetSize(100, 100);
-	foreSprite_[0]->color_.SetColor255(255, 255, 255, 255);
+	titleLogo_ = std::make_unique<NSprite>();
+	titleLogo_->CreateSprite("logo");
+	titleLogo_->SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	titleLogo_->SetSize(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	titleLogo_->color_.SetColor255(255, 255, 255, 255);
+
+	for (uint32_t i = 0; i < aButton_.size(); i++)
+	{
+		aButton_[i] = std::make_unique<NSprite>();
+		aButton_[i]->CreateClipSprite("Abutton", { i * 192.f,0 }, { 192.f,192.f });
+		aButton_[i]->SetPos(
+			(float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f);
+	}
 
 #pragma endregion
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init(true,false,false,false);
+	lightGroup_->Init(true, false, false, false);
 	//lightGroup_->SetSpotLightColor({0,0,1});
 	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	NAssimpModel::SetLightGroup(lightGroup_.get());
-
-	timer_.SetMaxTimer(10);
 }
 
 void NTitleScene::Update()
 {
-	if (NInput::IsKeyDown(DIK_RETURN))
-	{
-		NAudioManager::Play("WinSE", false, 0.5f);
-	}
-
 	//ライトたちの更新
 	lightGroup_->Update();
 
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-	if (isCol_)
+	titleLogo_->Update();
+	for (uint32_t i = 0; i < aButton_.size(); i++)
 	{
-		obj_[0]->color_.SetColor255(255, 0, 0, 255);
+		aButton_[i]->Update();
+	}
+
+	flashingTimer_.Update();
+	if (flashingTimer_.GetStarted() == false)
+	{
+		flashingTimer_.Start();
+	}
+	else if (flashingTimer_.GetEnd())
+	{
+		flashingTimer_.Reset();
+	}
+
+	if (flashingTimer_.GetTimeRate() > 0.7f)
+	{
+		aButton_[0]->isInvisible_ = true;
+		aButton_[1]->isInvisible_ = false;
 	}
 	else
 	{
-		obj_[0]->color_.SetColor255(255, 255, 255, 255);
-	}
-	obj_[2]->color_.SetColor255(255, 255, 255, 255);
-
-	obj_[0]->MoveKey();
-
-	sphere_.centerPos = obj_[0]->position_;
-	plane_.distance = obj_[2]->position_.Dot(plane_.normal);
-
-	for (auto& o : obj_)
-	{
-		o->Update();
+		aButton_[0]->isInvisible_ = false;
+		aButton_[1]->isInvisible_ = true;
 	}
 
-	for (auto& lo : levelDataobj_)
-	{
-		lo->Update();
-	}
+	//assimpModel_.Update();
 
-	//isCol_ = NCollision::Sphere2PlaneCol(sphere_, plane_);
-
-	//foreSprite_[0]->Update();
-
-	assimpModel_.Update();
+	Player::GetInstance()->SetIsMove(false);
+	Player::GetInstance()->Update();
 
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
@@ -175,18 +157,9 @@ void NTitleScene::DrawBackSprite()
 
 void NTitleScene::Draw3D()
 {
-	for (size_t i = 0; i < obj_.size(); i++)
-	{
-		obj_[i]->Draw();
-	}
-
-	for (size_t i = 0; i < levelDataobj_.size(); i++)
-	{
-		levelDataobj_[i]->Draw();
-	}
-
 	//assimpモデル描画//
-	assimpModel_.Draw();
+	//assimpModel_.Draw();
+	Player::GetInstance()->Draw();
 }
 
 void NTitleScene::DrawParticle()
@@ -195,5 +168,9 @@ void NTitleScene::DrawParticle()
 
 void NTitleScene::DrawForeSprite()
 {
-	foreSprite_[0]->Draw();
+	titleLogo_->Draw();
+	for (uint32_t i = 0; i < aButton_.size(); i++)
+	{
+		aButton_[i]->Draw();
+	}
 }

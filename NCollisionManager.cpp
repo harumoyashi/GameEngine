@@ -8,6 +8,11 @@ NCollisionManager* NCollisionManager::GetInstance()
 	return &instance;
 }
 
+void NCollisionManager::Init()
+{
+	colliders_.clear();
+}
+
 void NCollisionManager::CheckAllCollision()
 {
 	std::forward_list<NBaseCollider*>::iterator itA;

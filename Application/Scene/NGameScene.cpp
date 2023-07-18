@@ -4,6 +4,7 @@
 #include "NSceneChange.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
+#include "NAudioManager.h"
 #include "NParticleManager.h"
 #include "NCollisionManager.h"
 
@@ -26,7 +27,8 @@ void NGameScene::LoadResources()
 void NGameScene::Init()
 {
 #pragma region	オーディオ初期化
-	audio_ = NAudio::GetInstance();
+	NAudio::GetInstance()->Init();
+	NAudioManager::Play("playBGM", true, 0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
@@ -35,6 +37,7 @@ void NGameScene::Init()
 #pragma region 描画初期化処理
 	//オブジェクト
 	NParticleManager::GetInstance()->Init();
+	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();

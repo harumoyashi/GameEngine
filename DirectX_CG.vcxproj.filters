@@ -394,7 +394,7 @@
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="NSceneChange.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -621,7 +621,7 @@
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="NSceneChange.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

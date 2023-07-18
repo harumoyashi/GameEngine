@@ -1,4 +1,5 @@
 #include "EnemyManager.h"
+#include "NParticleManager.h"
 
 EnemyManager* EnemyManager::GetInstance()
 {
@@ -19,8 +20,22 @@ void EnemyManager::Update()
 		if (enemys_[i]->GetisAlive() == false && enemys_[i]->GetParticlesDead())
 		{
 			enemys_.erase(enemys_.begin() + i);
+			//ƒGƒ~ƒbƒ^[ŒQ‚©‚çíœ
+			NParticleManager::GetInstance()->enemyEmitters_.erase(
+				NParticleManager::GetInstance()->enemyEmitters_.begin() + i);
 			i = (size_t)-1;
+			isEnemyDead = true;
 		}
+	}
+
+	if (isEnemyDead)	//‚à‚µ’N‚©Ž€‚ñ‚¾‚ç
+	{
+		for (uint32_t i = 0; i < enemys_.size(); i++)
+		{
+			//“G‚ÌŽ¯•Ê”Ô†‚ðÄ“o˜^
+			EnemyManager::GetInstance()->enemys_[i]->SetEnemyNum(i);
+		}
+		isEnemyDead = false;
 	}
 
 	for (auto& enemy : enemys_)

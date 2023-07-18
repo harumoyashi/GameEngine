@@ -1,4 +1,5 @@
 #include "BulletFactory.h"
+#include "NAudioManager.h"
 
 BulletFactory* BulletFactory::GetInstance()
 {
@@ -29,6 +30,8 @@ void BulletFactory::Create(IBullet::BulletType type, NVector3 pos, uint32_t leve
 			//生成が終わったらタイマーとフラグをリセット
 			line_.SetIsCanShot(false);
 			line_.ReSetShotCoolTimer();
+
+			NAudioManager::Play("shotSE",false,0.5f);
 		}
 
 		break;

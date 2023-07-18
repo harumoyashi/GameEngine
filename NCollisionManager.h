@@ -14,6 +14,9 @@ private:
 public:
 	static NCollisionManager* GetInstance();
 
+	//初期化(コライダー群全削除)
+	void Init();
+
 	//コライダーをリストに追加
 	inline void AddCollider(NBaseCollider* collider)
 	{
