@@ -26,7 +26,7 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVector3 pos)
 			EnemyManager::GetInstance()->enemys_.back() = std::make_unique<Wolf>();
 
 			//パーティクルエミッターをマネージャーに登録
-			EnemyManager::GetInstance()->enemys_.back()->AddEmitter((uint32_t)EnemyManager::GetInstance()->enemys_.size());
+			EnemyManager::GetInstance()->enemys_.back()->AddEmitter((uint32_t)EnemyManager::GetInstance()->enemys_.size() - 1);
 
 			NVector3 offset = { MathUtil::Randomf(-2.0f,2.0f),0,MathUtil::Randomf(-1.0f,1.0f) };
 			//配置位置が中心より右か左で進行方向変える

@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "NParticleManager.h"
+#include "Wave.h"
 
 EnemyManager* EnemyManager::GetInstance()
 {
