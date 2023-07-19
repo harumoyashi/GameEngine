@@ -5,6 +5,7 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "Field.h"
 #include "RadialBlur.h"
 
 #include <functional>
@@ -17,7 +18,7 @@ Player::Player()
 	obj_->SetModel("cat");
 
 	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_,"playerDead");
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 }
 
 Player::~Player()
@@ -131,6 +132,9 @@ void Player::Move()
 		//移動量を加算
 		obj_->position_.x += moveVelo_.x * moveSpeed_;
 		obj_->position_.z += moveVelo_.y * moveSpeed_;
+		//加算後に行動範囲超えてる場合は超えないようにする
+		obj_->position_.x = (std::max)(obj_->position_.x, -Field::GetInstance()->GetActivityAreaX() + obj_->scale_.x);
+		obj_->position_.x = (std::min)(obj_->position_.x, Field::GetInstance()->GetActivityAreaX() - obj_->scale_.x);
 
 		//移動方向に合わせて回転
 		if (moveVelo_.Length() > 0.0f)			//入力されてたら

@@ -1,5 +1,6 @@
 #pragma once
 #include "NObj3d.h"
+#include "NTile.h"
 #include "NEasing.h"
 
 //床。タイリングと行動範囲以外色変えする専用のシェーダーがいる。
@@ -15,8 +16,11 @@ public:
 	};
 
 private:
-	std::unique_ptr<NObj3d> fieldObj_;			//床
+	std::unique_ptr<NTile> fieldObj_;			//床
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト群
+
+	float tileDivide_ = 0.5f;					//タイルの分割幅
+	float activityAreaX_ = 10.0f;				//行動範囲制限
 
 	const float kStartPosZ = 5.0f;				//スタート地点(縦だけ)
 	float linePosZ_ = 0.0f;						//横線の位置
@@ -41,6 +45,8 @@ public:
 	inline NVector3 GetScale() const { return fieldObj_->scale_; }
 	//スタートしたかフラグ取得
 	inline bool GetIsStart() const { return isStart_; }
+	//行動範囲取得
+	inline float GetActivityAreaX() const { return activityAreaX_; }
 
 	// セッター //
 

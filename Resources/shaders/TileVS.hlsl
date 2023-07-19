@@ -23,10 +23,6 @@ VSOutput main(float3 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
     output.uv = uv;
     
     //ワールド行列からスケールを抽出
-    //float4 x = Vec4TimeMat(float4(1, 0, 0, 0), world);
-    //float4 y = Vec4TimeMat(float4(0, 1, 0, 0), world);
-    //float4 z = Vec4TimeMat(float4(0, 0, 1, 0), world);
-    
     float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));
     float y = sqrt(pow(world[1][0], 2) + pow(world[1][1], 2) + pow(world[1][2], 2));
     float z = sqrt(pow(world[2][0], 2) + pow(world[2][1], 2) + pow(world[2][2], 2));
@@ -34,6 +30,8 @@ VSOutput main(float3 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
     float3 scale = { x, y, z };
     
     output.scale = scale;
+    output.divide = divide;
+    output.activityArea = activityArea;
 	
     return output;
 }

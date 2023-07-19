@@ -171,6 +171,7 @@
     <ClInclude Include="NSceneChange.h" />
     <ClInclude Include="NShader.h" />
     <ClInclude Include="NSpotLight.h" />
+    <ClInclude Include="NTile.h" />
     <ClInclude Include="NTimer.h" />
     <ClInclude Include="NUtil.h" />
     <ClInclude Include="NVector4.h" />
@@ -248,6 +249,7 @@
     <ClCompile Include="NSceneChange.cpp" />
     <ClCompile Include="NShader.cpp" />
     <ClCompile Include="NSpotLight.cpp" />
+    <ClCompile Include="NTile.cpp" />
     <ClCompile Include="NTimer.cpp" />
     <ClCompile Include="NUtil.cpp" />
     <ClCompile Include="NVector4.cpp" />

@@ -94,3 +94,10 @@ struct ConstBuffDataCircleShadow
 	uint32_t active;
 	float pad3;
 };
+
+//ƒ^ƒCƒ‹
+struct ConstBuffDataTile
+{
+	float divide;		//•ªŠ„•
+	float activityArea;	//s“®”ÍˆÍ
+};

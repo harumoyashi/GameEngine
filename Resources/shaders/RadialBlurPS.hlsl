@@ -12,7 +12,7 @@ float4 main(VSOutput input) : SV_TARGET
     
     // UVを-0.5～0.5に変換
     float2 symmetryUv = input.uv - 0.5;
-    // 外側に行くほどこの値が大きくなる(0～0.707)
+    // 外側に行くほどこの値が大きくなる
     float distance = length(symmetryUv);
     for (int j = 0; j < _SampleCount; j++)
     {

@@ -119,20 +119,11 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
-void NObj3d::CommonBeginDraw(bool isTiling)
+void NObj3d::CommonBeginDraw()
 {
-	if (isTiling)
-	{
-		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObj"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObj")->pRootSignature);
-	}
-	else
-	{
-		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
-	}
+	// パイプラインステートとルートシグネチャの設定コマンド
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
@@ -166,7 +157,7 @@ void NObj3d::SetSRVHeap()
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
 	//指定のヒープにあるSRVをルートパラメータ0番に設定
-	if (gpuHandle.ptr==0)
+	if (gpuHandle.ptr == 0)
 	{
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
 	}

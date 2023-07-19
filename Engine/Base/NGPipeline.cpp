@@ -281,8 +281,8 @@ void PipeLineManager::CreateAll()
 	//ルートシグネチャ設定
 	NRootSignature rootSigTile;
 	rootSigTile.SetSamplerDesc(true);
-	//テクスチャ1個、行列、マテリアル、色、光源
-	rootSigTile.SetRootParam(1, 4);
+	//テクスチャ1個、行列、マテリアル、色、光源、タイル用の情報
+	rootSigTile.SetRootParam(1, 5);
 	rootSigTile.Create();
 	tileDesc.rootSig = rootSigTile;
 
@@ -365,6 +365,10 @@ void PipeLineManager::CreateAll()
 	//カリング設定
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
+	//ブレンドモード設定
+	postEffectDesc.blend.blendDesc =
+		bDesc::GetBlendMode(bDesc::BlendMode::None);
+
 	//パイプライン生成
 	NGPipeline::Create(postEffectDesc, "PostEffect");
 #pragma endregion
@@ -390,6 +394,10 @@ void PipeLineManager::CreateAll()
 	//カリング設定
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
+	//ブレンドモード設定
+	postEffectDesc.blend.blendDesc =
+		bDesc::GetBlendMode(bDesc::BlendMode::None);
+
 	//パイプライン生成
 	NGPipeline::Create(postEffectDesc, "Gaussian");
 #pragma endregion
@@ -414,6 +422,10 @@ void PipeLineManager::CreateAll()
 
 	//カリング設定
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//ブレンドモード設定
+	postEffectDesc.blend.blendDesc = 
+		bDesc::GetBlendMode(bDesc::BlendMode::None);
 
 	//パイプライン生成
 	NGPipeline::Create(postEffectDesc, "Radial");
@@ -459,6 +471,12 @@ bDesc bDesc::GetBlendMode(BlendMode blendMode)
 	bDesc desc;
 	switch (blendMode)
 	{
+	case BlendMode::None:
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
+		desc.SrcBlend = D3D12_BLEND_ONE;				//ソースのアルファ値
+		desc.DestBlend = D3D12_BLEND_ZERO;				//1.0f-ソースのアルファ値
+		break;
+
 	case BlendMode::Alpha:
 		desc.BlendOp = D3D12_BLEND_OP_ADD;					//加算
 		desc.SrcBlend = D3D12_BLEND_SRC_ALPHA;				//ソースのアルファ値

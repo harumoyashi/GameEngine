@@ -23,7 +23,7 @@ void Field::Init()
 	isStart_ = false;
 
 #pragma region オブジェクトの生成
-	fieldObj_ = std::make_unique<NObj3d>();
+	fieldObj_ = std::make_unique<NTile>();
 	fieldObj_->Init();
 
 	for (uint32_t i = 0; i < (uint32_t)ObjType::MaxSize; i++)
@@ -37,8 +37,10 @@ void Field::Init()
 	fieldObj_->SetModel("plane");
 	fieldObj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
 	fieldObj_->color_.SetColor255(5, 5, 5, 255);
-	fieldObj_->scale_ = { 100.0f,0.01f,5000.0f };
+	fieldObj_->scale_ = { 100.0f,0.01f,1000.0f };
 	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
+	fieldObj_->SetDivide(tileDivide_);
+	fieldObj_->SetActivityArea(activityAreaX_);
 
 	obj_[(uint32_t)ObjType::Line]->SetModel("plane");
 	obj_[(uint32_t)ObjType::Line]->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
@@ -53,7 +55,10 @@ void Field::Init()
 
 void Field::Update()
 {
+	fieldObj_->SetDivide(tileDivide_);
+	fieldObj_->SetActivityArea(activityAreaX_);
 	fieldObj_->Update();
+
 	for (auto& obj : obj_)
 	{
 		obj->Update();
@@ -112,16 +117,18 @@ void Field::Update()
 	//リリースでもいじりたいからifdefで囲ってない
 	ImGui::Begin("FieldParameter");
 	//1F~180Fまでの間にとどめる
-	ImGui::SliderFloat("LinePosZ_", &linePosZ_, 1.0f, 180.0f);
+	ImGui::SliderFloat("LinePosZ", &linePosZ_, 1.0f, 180.0f);
+	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
+	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
 	ImGui::End();
 }
 
 void Field::Draw()
 {
 	//床だけタイリングする
-	NObj3d::CommonBeginDraw(true);
+	NTile::CommonBeginDraw();
 	fieldObj_->Draw();
-	NObj3d::CommonBeginDraw(false);
+	NObj3d::CommonBeginDraw();
 
 	for (auto& obj : obj_)
 	{

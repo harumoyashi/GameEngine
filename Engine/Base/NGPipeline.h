@@ -41,6 +41,7 @@ struct PipelineDesc
 
 			enum class BlendMode
 			{
+				None,
 				Alpha,	//ƒ¿ƒuƒŒƒ“ƒh
 				Add,	//‰ÁŽZ
 				Sub,	//Œ¸ŽZ
