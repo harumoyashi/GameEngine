@@ -2,6 +2,8 @@
 #include "NImGuiManager.h"
 #include "imgui.h"
 
+#include "NPostEffect.h"
+#include "NSceneChange.h"
 #include "GaussianBlur.h"
 #include "RadialBlur.h"
 
@@ -42,14 +44,9 @@ void NGame::Init()
 	sceneMane_ = NSceneManager::GetInstance();
 	sceneMane_->Init();
 #pragma endregion
-#pragma region ポストエフェクト初期化
-	postEffect_ = std::make_unique<NPostEffect>();
-	postEffect_->Init();
-#pragma endregion
 #pragma region ImGui初期化
 	NImGuiManager::GetInstance()->Init();
 #pragma endregion
-	isPostEffect_ = false;
 }
 
 void NGame::Update()
@@ -57,49 +54,7 @@ void NGame::Update()
 	NImGuiManager::GetInstance()->Begin();
 	//ImGui::ShowDemoWindow();
 
-#ifdef _DEBUG
-	ImGui::Begin("PostEffectType");
-	static int postEffectNum;
-	const char* items[] = {"NoEffect","GaussianBlur","RadianBlur","CG4" };
-	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
-	{
-		switch (postEffectNum)
-		{
-		case 0:
-			isPostEffect_ = false;
-			
-			break;
-
-		case 1:
-			isPostEffect_ = true;
-
-			postEffect_ = std::make_unique<GaussianBlur>();
-			postEffect_->Init();
-
-			break;
-
-		case 2:
-			isPostEffect_ = true;
-
-			postEffect_ = std::make_unique<RadialBlur>();
-			postEffect_->Init();
-
-			break;
-
-		case 3:
-			isPostEffect_ = true;
-
-			postEffect_ = std::make_unique<NPostEffect>();
-			postEffect_->Init();
-
-			break;
-
-		default:
-			break;
-		}
-	}
-	
-	ImGui::End();
+#ifdef _DEBUG //ポストエフェクトImGui
 #endif // DEBUG
 
 	NFramework::Update();
@@ -110,9 +65,9 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	if (isPostEffect_)
+	if (NPostEffect::GetIsActive())
 	{
-		postEffect_->Update();
+		NPostEffect::Update();
 	}
 	sceneMane_->Update();
 #pragma endregion
@@ -121,14 +76,15 @@ void NGame::Update()
 
 void NGame::Draw()
 {
-	if (isPostEffect_)
+	if (NPostEffect::GetIsActive())
 	{
-		postEffect_->PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
+		NPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
 		sceneMane_->Draw();						//レンダーテクスチャにゲームシーンの描画
-		postEffect_->PostDrawScene();			//読み込み専用状態にして終了
+		NPostEffect::PostDrawScene();			//読み込み専用状態にして終了
 
 		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
-		postEffect_->Draw();					//バックバッファにポストエフェクトの描画
+		NPostEffect::Draw();					//バックバッファにポストエフェクトの描画
+		//NSceneChange::GetInstance()->Draw();	//暗幕はポストエフェクトの上から描画し直す
 		NImGuiManager::GetInstance()->Draw();	//ImGui描画
 		NDX12::GetInstance()->PostDraw();		//バックバッファのに描画したのを表示に
 	}

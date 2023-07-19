@@ -7,7 +7,6 @@
 #include "NSceneManager.h"
 #include "NAudioManager.h"
 #include "NModelManager.h"
-#include "NPostEffect.h"
 #include "NFramework.h"
 
 class NGame final
@@ -20,8 +19,6 @@ private:
 	PipeLineManager* pipeline_;
 	NTextureManager* texManager_;
 	NSceneManager* sceneMane_;
-	std::unique_ptr<NPostEffect> postEffect_;
-	bool isPostEffect_;	//ポストエフェクト適用するか
 
 public:
 	void Init() override;

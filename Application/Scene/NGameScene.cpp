@@ -7,6 +7,7 @@
 #include "NAudioManager.h"
 #include "NParticleManager.h"
 #include "NCollisionManager.h"
+#include "NPostEffect.h"
 
 #include "Player.h"
 #include "BulletManager.h"
@@ -59,8 +60,9 @@ void NGameScene::Init()
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
-	NParticleManager::GetInstance()->Init();
 	IEmitter3D::SetLightGroup(lightGroup_.get());
+
+	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
 }
 
 void NGameScene::Update()
@@ -95,7 +97,7 @@ void NGameScene::Update()
 	NCollisionManager::GetInstance()->CheckAllCollision();
 
 	//シーン切り替え
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
 		NSceneChange::GetInstance()->Start();	//シーン遷移開始
 	}

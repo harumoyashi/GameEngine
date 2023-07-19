@@ -95,6 +95,7 @@ void NSceneChange::Draw()
 {
 	if (isSceneChangeNow_)
 	{
+		NSprite::CommonBeginDraw();
 		blackBack_->Draw();
 		titleLogo_->Draw();
 	}

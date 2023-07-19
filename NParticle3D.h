@@ -113,7 +113,7 @@ public:
 	virtual void Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
 		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {}) = 0;
 	//パーティクル全消し
-	inline void ClearParticles() { particles_.clear(); }
+	void ClearParticles() { particles_.clear(); }
 
 	//ゲッター//
 	//座標取得

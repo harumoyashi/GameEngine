@@ -5,6 +5,7 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "RadialBlur.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -201,8 +202,9 @@ void Player::DeadParticle()
 {
 	if (isAlive_)
 	{
+		RadialBlur::Init();		//ラジアルブラーかける
 		NParticleManager::GetInstance()->emitters_["playerDead"]->SetIsRotation(true);
-		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(obj_->position_);
 		NParticleManager::GetInstance()->emitters_["playerDead"]->Add(
 			150, 100, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}

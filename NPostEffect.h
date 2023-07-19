@@ -5,40 +5,65 @@ class NPostEffect
 	: public NSprite
 {
 protected:
+	static NVertexBuff<NVertexUV> vertexBuff_;		//頂点バッファ
+
+	//定数バッファまわり//
+	static std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D変換行列
+	static std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
+
+	//行列//
+	static NMatrix4 matWorld_;		//変換行列
+	static NMatrix4 matProjection_;	//平行投影保管用
+
+	//変換用//
+	static float rotation_;		//Z軸の回転角
+	static NVector2 position_;	//座標
+	static NColor color_;		//色
+
 	//テクスチャバッファ
-	ComPtr<ID3D12Resource> texBuff_[2];
+	static ComPtr<ID3D12Resource> texBuff_[2];
 	//SRV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
+	static ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
 
 	//深度バッファ
-	ComPtr<ID3D12Resource> depthBuff_;
+	static ComPtr<ID3D12Resource> depthBuff_;
 	//RTV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
+	static ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
 	//DSV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
+	static ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
 	//画面クリアカラー
 	static const float kClearColor[4];
 
 	//パイプラインの名前
-	std::string pipelineName_;
+	static std::string pipelineName_;
+
+	static bool isActive_;	//ポストエフェクト有効フラグ
 
 public:
 	NPostEffect();
 	virtual ~NPostEffect() = default;
 
-	virtual void Init();
-	void Draw();
+	static void Init();
+	static void Update();
 
 	//テクスチャ生成
-	void CreateTexture();
+	static void CreateTexture();
 	//レンダーターゲットビュー生成
-	void CreateRTV();
+	static void CreateRTV();
 	//深度バッファ生成
-	void CreateDepthBuff();
+	static void CreateDepthBuff();
 	//デプスステンシルビュー生成
-	void CreateDSV();
+	static void CreateDSV();
+	static void Draw();
 
-	void PreDrawScene();
-	void PostDrawScene();
+	static void PreDrawScene();
+	static void PostDrawScene();
+
+	// ゲッター //
+	static inline bool GetIsActive() { return isActive_; }
+
+	// セッター //
+	//ポストエフェクト有効フラグ設定
+	static inline void SetIsActive(bool isActive) { isActive_ = isActive; }
 };
