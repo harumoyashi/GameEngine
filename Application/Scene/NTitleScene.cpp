@@ -171,9 +171,9 @@ void NTitleScene::DrawParticle()
 
 void NTitleScene::DrawForeSprite()
 {
-	titleLogo_->Draw();
+	/*titleLogo_->Draw();
 	for (uint32_t i = 0; i < aButton_.size(); i++)
 	{
 		aButton_[i]->Draw();
-	}
+	}*/
 }
