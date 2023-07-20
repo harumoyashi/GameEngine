@@ -130,8 +130,10 @@ void Field::Draw()
 	fieldObj_->Draw();
 	NObj3d::CommonBeginDraw();
 
+	NObj3d::SetBlendMode(BlendMode::Alpha);
 	for (auto& obj : obj_)
 	{
 		obj->Draw();
 	}
+	NObj3d::SetBlendMode(BlendMode::None);
 }

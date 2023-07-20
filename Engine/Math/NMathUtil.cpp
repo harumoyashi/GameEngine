@@ -1,4 +1,6 @@
 #include "NMathUtil.h"
+#include "NCamera.h"
+#include "NWindows.h"
 #include <math.h>
 #include <random>
 
@@ -12,16 +14,19 @@ NMatrix4 MathUtil::MatViewLockTo(const NVector3& eye, const NVector3& front, con
 	//外積使って向いてる方向に対しての右ベクトル求める
 	NVector3 rightVec = up.Cross(front);
 	rightVec = rightVec.Normalize();
-	
+
 	mat.m[0][0] = rightVec.x;
 	mat.m[0][1] = rightVec.y;
 	mat.m[0][2] = rightVec.z;
+
 	mat.m[1][0] = up.x;
 	mat.m[1][1] = up.y;
 	mat.m[1][2] = up.z;
+
 	mat.m[2][0] = front.x;
 	mat.m[2][1] = front.y;
 	mat.m[2][2] = front.z;
+
 	mat.m[3][0] = eye.x;
 	mat.m[3][1] = eye.y;
 	mat.m[3][2] = eye.z;
@@ -66,6 +71,28 @@ NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, co
 	perspective.m[2][3] = 1;
 
 	return perspective;
+}
+
+NVector2 MathUtil::WorldToScreen(const NVector3& pos, const NMatrix4& matWorld)
+{
+	NVector2 result;
+	NVector4 p = { pos.x,pos.y,pos.z,1 };
+	NMatrix4 view = NCamera::sCurrentCamera->GetMatView();
+	NMatrix4 prj = NCamera::sCurrentCamera->GetMatProjection();
+	NMatrix4 viewport = NMatrix4(
+		(float)NWindows::kWin_width * 0.5f, 0, 0, 0,
+		0, -(float)NWindows::kWin_height * 0.5f, 0, 0,
+		0, 0, 1, 0,
+		(float)NWindows::kWin_width * 0.5f, (float)NWindows::kWin_height * 0.5f, 0, 1);
+
+	p = matWorld.Vec4MulMat(p, matWorld);
+	p = matWorld.Vec4MulMat(p, view);
+	p = matWorld.Vec4MulMat(p, prj);
+	p = matWorld.Vec4MulMat(p, viewport);
+
+	result = { p.x,p.y };
+
+	return result;
 }
 
 float MathUtil::Degree2Radian(const float degree)

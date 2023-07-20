@@ -48,6 +48,7 @@ public:
 	void Update();
 	//•`‰æ
 	void Draw();
+	void DrawSprite();
 
 	//ˆÚ“®ˆ—
 	void Move();

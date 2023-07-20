@@ -78,7 +78,7 @@ void NObj3d::UpdateMatrix()
 
 	matWorld_ = matWorld_.Identity();	//単位行列代入
 	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
-	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matRot;	//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	//親オブジェクトがあれば

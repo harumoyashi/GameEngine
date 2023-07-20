@@ -1,5 +1,7 @@
 #include "IEnemy.h"
 #include "Player.h"
+#include "Field.h"
+#include "NCamera.h"
 #include "SphereCollider.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
@@ -57,6 +59,25 @@ void IEnemy::Update()
 	//}
 
 	obj_->rotation_.y = moveAngle_;
+
+	//「行動範囲+3Dに直した画面端座標」を「敵の座標+敵の半径」が超えた場合殺す
+	float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
+	
+	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
+	NMatrix4 matWorldRight,matWorldLeft;
+	matWorldRight = matWorldRight.Translation(NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineRight = MathUtil::WorldToScreen(NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0),matWorldRight).x;
+	matWorldLeft = matWorldLeft.Translation(NVector3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineLeft = MathUtil::WorldToScreen(-NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0), matWorldLeft).x;
+
+	float objRight, objLeft;	//オブジェの右端左端
+	objRight = MathUtil::WorldToScreen(obj_->position_ + obj_->scale_,obj_->GetMatWorld()).x;
+	objLeft = MathUtil::WorldToScreen(obj_->position_ - obj_->scale_, obj_->GetMatWorld()).x;
+	//ボーダーライン超えたら殺す
+	if (borderLineRight < objLeft || borderLineLeft > objRight)
+	{
+		isAlive_ = false;
+	}
 
 	obj_->Update();
 	collider_.Update(obj_.get());

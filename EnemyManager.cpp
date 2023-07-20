@@ -2,6 +2,9 @@
 #include "NParticleManager.h"
 #include "Wave.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 EnemyManager* EnemyManager::GetInstance()
 {
 	static EnemyManager instance;
@@ -43,6 +46,11 @@ void EnemyManager::Update()
 	{
 		enemy->Update();
 	}
+
+	//ƒŠƒŠ[ƒX‚Å‚àŒ©‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+	ImGui::Begin("Enemys");
+	ImGui::Text("EnemysSize:%d", enemys_.size());
+	ImGui::End();
 }
 
 void EnemyManager::Draw()
