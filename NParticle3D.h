@@ -7,6 +7,7 @@
 #include "NVertexBuff.h"
 #include "NEasing.h"
 #include "NTimer.h"
+#include "NUtil.h"
 
 class IEmitter3D
 {
@@ -101,6 +102,8 @@ public:
 	virtual void Update();
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画
 	void Draw();
 

@@ -1,6 +1,15 @@
 #pragma once
 #include <string>
 
+enum class BlendMode
+{
+	None,	//‚»‚Ì‚Ü‚Ü
+	Alpha,	//ƒ¿ƒuƒŒƒ“ƒh
+	Add,	//‰ÁŽZ
+	Sub,	//Œ¸ŽZ
+	Inv,	//”½“]
+};
+
 struct NUtil
 {
 	//wstringŒ^‚ðstringŒ^‚É•ÏŠ·

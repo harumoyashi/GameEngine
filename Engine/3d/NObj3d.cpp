@@ -121,15 +121,41 @@ void NObj3d::TransferMaterial()
 
 void NObj3d::CommonBeginDraw()
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
-
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+}
+
+void NObj3d::SetBlendMode(BlendMode blendMode)
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	switch (blendMode)
+	{
+	case BlendMode::None:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
+		break;
+	case BlendMode::Alpha:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAlpha"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAlpha")->pRootSignature);
+		break;
+	case BlendMode::Add:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAdd"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAdd")->pRootSignature);
+		break;
+	case BlendMode::Sub:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjSub"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjSub")->pRootSignature);
+		break;
+	case BlendMode::Inv:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjInv"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjInv")->pRootSignature);
+		break;
+	default:
+		break;
+	}
 }
 
 void NObj3d::Draw()

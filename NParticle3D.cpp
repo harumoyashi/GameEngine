@@ -117,15 +117,41 @@ void IEmitter3D::Update()
 
 void IEmitter3D::CommonBeginDraw()
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3d"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3d")->pRootSignature);
-
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); // 点
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+}
+
+void IEmitter3D::SetBlendMode(BlendMode blendMode)
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	switch (blendMode)
+	{
+	case BlendMode::None:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dNone")->pRootSignature);
+		break;
+	case BlendMode::Alpha:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAlpha"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAlpha")->pRootSignature);
+		break;
+	case BlendMode::Add:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAdd"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAdd")->pRootSignature);
+		break;
+	/*case BlendMode::Sub:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dSub"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dSub")->pRootSignature);
+		break;
+	case BlendMode::Inv:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dInv"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dInv")->pRootSignature);
+		break;*/
+	default:
+		break;
+	}
 }
 
 void IEmitter3D::Draw()

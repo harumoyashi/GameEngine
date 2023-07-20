@@ -94,6 +94,8 @@ public:
 #pragma region 描画
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画コマンド
 	void Draw();
 #pragma endregion

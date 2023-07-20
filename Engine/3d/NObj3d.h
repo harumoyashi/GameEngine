@@ -67,6 +67,8 @@ public:
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画
 	virtual void Draw();
 	void SetSRVHeap();

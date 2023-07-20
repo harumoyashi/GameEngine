@@ -196,15 +196,41 @@ void NSprite::SetPos(const float x, const float y)
 
 void NSprite::CommonBeginDraw()
 {
-	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Sprite"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Sprite")->pRootSignature);
-
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // 三角形ストリップ
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+}
+
+void NSprite::SetBlendMode(BlendMode blendMode)
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	switch (blendMode)
+	{
+	case BlendMode::None:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("SpriteNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("SpriteNone")->pRootSignature);
+		break;
+	case BlendMode::Alpha:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("SpriteAlpha"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("SpriteAlpha")->pRootSignature);
+		break;
+	case BlendMode::Add:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("SpriteAdd"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("SpriteAdd")->pRootSignature);
+		break;
+	case BlendMode::Sub:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("SpriteSub"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("SpriteSub")->pRootSignature);
+		break;
+	case BlendMode::Inv:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("SpriteInv"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("SpriteInv")->pRootSignature);
+		break;
+	default:
+		break;
+	}
 }
 
 void NSprite::Draw()

@@ -28,8 +28,8 @@ void NTile::Update()
 void NTile::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObj"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObj")->pRootSignature);
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjNone"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjNone")->pRootSignature);
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

@@ -95,6 +95,7 @@ void NSceneChange::Draw()
 {
 	if (isSceneChangeNow_)
 	{
+		NSprite::SetBlendMode(BlendMode::Alpha);
 		NSprite::CommonBeginDraw();
 		blackBack_->Draw();
 		titleLogo_->Draw();
