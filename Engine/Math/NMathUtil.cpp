@@ -76,7 +76,7 @@ NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, co
 NVector2 MathUtil::WorldToScreen(const NVector3& pos, const NMatrix4& matWorld)
 {
 	NVector2 result;
-	NVector4 p = { pos.x,pos.y,pos.z,1 };
+	NVector4 p = { 0,0,0,1 };
 	NMatrix4 view = NCamera::sCurrentCamera->GetMatView();
 	NMatrix4 prj = NCamera::sCurrentCamera->GetMatProjection();
 	NMatrix4 viewport = NMatrix4(

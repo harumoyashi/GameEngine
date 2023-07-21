@@ -60,3 +60,11 @@ void EnemyManager::Draw()
 		enemy->Draw();
 	}
 }
+
+void EnemyManager::DrawSprite()
+{
+	for (auto& enemy : enemys_)
+	{
+		enemy->DrawSprite();
+	}
+}

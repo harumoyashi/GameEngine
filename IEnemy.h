@@ -1,5 +1,6 @@
 #pragma once
 #include "NObj3d.h"
+#include "NSprite.h"
 #include "NCollider.h"
 #include "SphereCollider.h"
 #include "SimpleParticle.h"
@@ -36,6 +37,8 @@ protected:
 
 
 public:
+	NVector2 vec2;
+	std::unique_ptr<NSprite> sprite_;
 	IEnemy();
 	virtual ~IEnemy();
 
@@ -51,6 +54,7 @@ public:
 	void Update();
 	//•`‰æ
 	void Draw();
+	void DrawSprite();
 
 	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
 	void OnCollision();

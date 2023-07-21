@@ -35,6 +35,10 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 
 	moveAngle_ = moveAngle;
+
+	sprite_ = std::make_unique<NSprite>();
+	sprite_->CreateSprite("", { 0.5f,0.5f });
+	sprite_->SetSize(50.f, 50.f);
 }
 
 void IEnemy::Init()
@@ -60,17 +64,18 @@ void IEnemy::Update()
 
 	obj_->rotation_.y = moveAngle_;
 
-	// 「行動範囲+3Dに直した画面端座標」を「敵の座標+敵の半径」が超えた場合殺す //
+	// 「2Dに直した行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
 	float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
 
-	//「行動範囲+3Dに直した画面端座標」
+	//「2Dに直した行動範囲+画面端座標」
 	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
-	borderLineRight = MathUtil::WorldToScreen(
-		NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0),
-		NMatrix4()).x + NWindows::kWin_width * 0.5f;
-	borderLineLeft = MathUtil::WorldToScreen(
-		NVector3(-Field::GetInstance()->GetActivityAreaX(), 0, 0),
-		NMatrix4()).x - NWindows::kWin_width * 0.5f;
+	NMatrix4 matWorldRight, matWorldLeft;
+
+	matWorldRight = matWorldRight.Translation(NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineRight = MathUtil::WorldToScreen(NVector3(), matWorldRight).x + NWindows::kWin_width * 0.5f;
+
+	matWorldLeft = matWorldLeft.Translation(NVector3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineLeft = MathUtil::WorldToScreen(NVector3(), matWorldLeft).x - NWindows::kWin_width * 0.5f;
 
 	float objRight, objLeft;	//オブジェの右端左端
 	objRight = MathUtil::WorldToScreen(obj_->position_ + obj_->scale_, obj_->GetMatWorld()).x;
@@ -83,6 +88,10 @@ void IEnemy::Update()
 
 	obj_->Update();
 	collider_.Update(obj_.get());
+
+	vec2 = MathUtil::WorldToScreen(obj_->position_, obj_->GetMatWorld());
+	sprite_->SetPos(vec2.x, vec2.y);
+	sprite_->Update();
 
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
@@ -98,6 +107,11 @@ void IEnemy::Draw()
 	{
 		obj_->Draw();
 	}
+}
+
+void IEnemy::DrawSprite()
+{
+	sprite_->Draw();
 }
 
 void IEnemy::OnCollision()

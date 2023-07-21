@@ -140,4 +140,5 @@ void NGameScene::DrawParticle()
 
 void NGameScene::DrawForeSprite()
 {
+	EnemyManager::GetInstance()->DrawSprite();
 }
