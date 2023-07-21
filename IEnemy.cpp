@@ -35,10 +35,6 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 
 	moveAngle_ = moveAngle;
-
-	sprite_ = std::make_unique<NSprite>();
-	sprite_->CreateSprite("", { 0.5f,0.5f });
-	sprite_->SetSize(50.f, 50.f);
 }
 
 void IEnemy::Init()
@@ -89,10 +85,6 @@ void IEnemy::Update()
 	obj_->Update();
 	collider_.Update(obj_.get());
 
-	vec2 = MathUtil::WorldToScreen(obj_->position_, obj_->GetMatWorld());
-	sprite_->SetPos(vec2.x, vec2.y);
-	sprite_->Update();
-
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
 	{
@@ -107,11 +99,6 @@ void IEnemy::Draw()
 	{
 		obj_->Draw();
 	}
-}
-
-void IEnemy::DrawSprite()
-{
-	sprite_->Draw();
 }
 
 void IEnemy::OnCollision()
