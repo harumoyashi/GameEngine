@@ -20,6 +20,16 @@ class NGameScene final :
 	public IScene
 {
 private:
+	//ゲームシーン内でのシーン分け
+	enum class SceneMode
+	{
+		Play,	//プレイ中
+		Clear,	//クリアリザルト
+		Faild,	//失敗リザルト
+	};
+
+	SceneMode scene = SceneMode::Play;
+
 	//オブジェクト
 
 
@@ -34,9 +44,6 @@ private:
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
-
-public:
-
 
 public:
 	//インスタンス取得

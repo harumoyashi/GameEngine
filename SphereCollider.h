@@ -21,13 +21,13 @@ public:
 
 	// ゲッター //
 	//半径設定
-	inline float GetRadius()const { return radius_; }
+	float GetRadius()const { return radius_; }
 	//コライダーの中心座標取得
-	inline const NVector3& GetCenterPos()const { return centerPos_; }
+	const NVector3& GetCenterPos()const { return centerPos_; }
 
 	// セッター //
 	//半径設定
-	inline void SetRadius(float radius) { radius_ = radius; }
+	void SetRadius(float radius) { radius_ = radius; }
 	//コライダーの中心座標設定
-	inline void SetCenterPos(NVector3 centerPos) { centerPos_ = centerPos; }
+	void SetCenterPos(NVector3 centerPos) { centerPos_ = centerPos; }
 };

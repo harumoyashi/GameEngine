@@ -12,7 +12,6 @@
 #include "NSprite.h"
 #include "NCollision.h"
 #include "NLightGroup.h"
-#include "NTimer.h"
 #include "NEasing.h"
 #include "NAssimpModel.h"
 #include "NConstBuff.h"

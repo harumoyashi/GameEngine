@@ -1,5 +1,6 @@
 #pragma once
 #include "NVector3.h"
+#include "NVector4.h"
 
 struct NMatrix4
 {
@@ -56,6 +57,7 @@ struct NMatrix4
 	NVector3 Transform(const NVector3& v, const NMatrix4& m);
 	//w除算を使った座標変換
 	NVector3 WTransform(const NVector3& v, const NMatrix4& m);
+	NVector4 Vec4MulMat(const NVector4& v, const NMatrix4& m)const;
 
 	//オイラー角への変換
 	//参考:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf#%E5%9B%9E%E8%BB%A2%E8%A1%8C%E5%88%97%E3%81%8B%E3%82%89%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC%E8%A7%92
@@ -68,4 +70,5 @@ struct NMatrix4
 };
 
 NVector3 operator*(const NVector3& v, const NMatrix4& m);
+NVector4 operator*(const NVector4& v, const NMatrix4& m);
 NVector3& operator*=(NVector3& v, const NMatrix4& m);

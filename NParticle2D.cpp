@@ -67,7 +67,7 @@ void Emitter2D::DrawGraph()
 	}
 }
 
-void Emitter2D::Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo, NVector2 accel, float minRot, float maxRot, NColor color)
+void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo, NVector2 accel, float minRot, float maxRot, NColor color)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -101,13 +101,13 @@ void Emitter2D::Add(uint32_t addNum, uint32_t life, float minScale, float maxSca
 		p.rot = rot;
 		p.velo = velo;
 		p.accel = accel;
-		p.num_frame = life;
+		p.num_frame = (uint32_t)life;
 		p.scale = randomScale;
 		p.startScale = randomScale;
 		p.endScale = { 0,0 };
 		p.color = color;
 		//イージング用のタイマーを設定、開始
-		p.timer.maxTime_ = (float)life / 60.0f;
+		p.timer.maxTime_ = life;
 		p.timer.Start();
 	}
 }

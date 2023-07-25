@@ -9,6 +9,7 @@
 #include "NQuaternion.h"
 #include "NMathUtil.h"
 #include "NCameraManager.h"
+#include "NPostEffect.h"
 
 #include "Player.h"
 #include "Field.h"
@@ -91,6 +92,8 @@ void NTitleScene::Init()
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	NAssimpModel::SetLightGroup(lightGroup_.get());
+
+	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
 }
 
 void NTitleScene::Update()
@@ -134,7 +137,7 @@ void NTitleScene::Update()
 	Player::GetInstance()->Update();
 
 	//シーン切り替え
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
 		NSceneChange::GetInstance()->Start();	//シーン遷移開始
 	}

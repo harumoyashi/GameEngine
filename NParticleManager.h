@@ -17,18 +17,18 @@ public:
 	void Draw();
 
 	//エミッターをunordered_mapに追加
-	inline void AddEmitter(IEmitter3D* emitter, const std::string& key)
+	void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
 		emitter->Init();					//初期化してから登録
 		emitters_.emplace(std::make_pair(key, emitter));
 	}
 	//エミッターをunordered_mapから削除
-	inline void EraseEmitter(const std::string& key)
+	void EraseEmitter(const std::string& key)
 	{
 		emitters_.erase(key);
 	}
 	//有効フラグを設定
-	inline void SetIsActive(const std::string& key, bool isActive)
+	void SetIsActive(const std::string& key, bool isActive)
 	{
 		emitters_[key]->SetIsActive(isActive);
 	}

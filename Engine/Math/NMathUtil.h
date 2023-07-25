@@ -17,6 +17,8 @@ namespace MathUtil
 	NMatrix4 ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT);
 	//透視投影変換行列生成
 	NMatrix4 PerspectiveProjection(const float fov, const float aspect, const  float nearZ, const float farZ);
+	//ワールド座標からスクリーン座標に変換
+	NVector2 WorldToScreen(const NVector3& pos, const NMatrix4& matWorld);
 
 	//度数法→ラジアン
 	float Degree2Radian(const float degree);

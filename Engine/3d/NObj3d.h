@@ -13,9 +13,9 @@
 
 class NBaseCollider;
 
-class NObj3d final
+class NObj3d
 {
-private:
+protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	D3D12_HEAP_PROPERTIES heapProp_{};	//ヒープ
@@ -48,11 +48,8 @@ public:
 public:
 	NObj3d();
 	virtual ~NObj3d();
-#pragma region 初期化まわり
 	//初期化
 	virtual bool Init();
-
-#pragma endregion
 #pragma region 更新まわり
 	//更新
 	virtual void Update();
@@ -66,11 +63,12 @@ public:
 	void TransferColor();
 	//光情報転送
 	void TransferMaterial();
-
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド
-	static void CommonBeginDraw(bool isTiling = false);
+	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画
 	virtual void Draw();
 	void SetSRVHeap();
@@ -93,7 +91,7 @@ public:
 	//モデルの設定
 	void SetModel(const std::string& modelname);
 	//ワールド行列設定
-	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
+	void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 	//ライトを設定
-	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 };

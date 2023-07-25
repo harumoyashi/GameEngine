@@ -26,7 +26,7 @@ public:
 
 	// ゲッター //
 	//バッファー取得
-	inline ID3D12Resource* GetBuffer() { return buff_.Get(); }
+	ID3D12Resource* GetBuffer() { return buff_.Get(); }
 	//ビュー取得
-	inline D3D12_INDEX_BUFFER_VIEW* GetView() { return &view_; }
+	D3D12_INDEX_BUFFER_VIEW* GetView() { return &view_; }
 };

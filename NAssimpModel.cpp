@@ -103,8 +103,8 @@ void NAssimpModel::Draw()
 	for (size_t i = 0; i < meshes_.size(); i++)
 	{
 		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
 
 		// プリミティブ形状の設定コマンド
 		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

@@ -396,6 +396,9 @@
     <ClInclude Include="NSceneChange.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="NTile.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Math\NMatrix4.cpp">
@@ -622,6 +625,9 @@
     </ClCompile>
     <ClCompile Include="NSceneChange.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NTile.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

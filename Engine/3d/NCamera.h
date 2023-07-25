@@ -39,23 +39,23 @@ public:
 	void DebugCameraUpdate();
 
 	//セッター
-	inline void SetEye(const NVector3& eye) { eye_ = eye; }
-	inline void SetTarget(const NVector3& target) { target_ = target; }
-	inline void SetUpVec(const NVector3& up) { up_ = up; }
-	inline void SetRot(const NVector3& rot) { rot_ = rot; }
-	inline void SetMatView(const NMatrix4& mat) { matView_ = mat; }
+	void SetEye(const NVector3& eye) { eye_ = eye; }
+	void SetTarget(const NVector3& target) { target_ = target; }
+	void SetUpVec(const NVector3& up) { up_ = up; }
+	void SetRot(const NVector3& rot) { rot_ = rot; }
+	void SetMatView(const NMatrix4& mat) { matView_ = mat; }
 	void SetNearFar(const float nearZ, const float farZ);
 	void SetFov(const float fov) { fov_ = fov; }
 
 	//ゲッター
-	inline const NMatrix4& GetMatProjection()const { return matProjection_; }
-	inline const NMatrix4& GetMatView()const { return matView_; }
+	const NMatrix4& GetMatProjection()const { return matProjection_; }
+	const NMatrix4& GetMatView()const { return matView_; }
 	//eye座標取得
-	inline const NVector3& GetPos()const { return eye_; }
+	const NVector3& GetPos()const { return eye_; }
 	//注視点座標取得
-	inline const NVector3& GetTarget()const { return target_; }
+	const NVector3& GetTarget()const { return target_; }
 	//上ベクトル取得
-	inline const NVector3& GetUpVec()const { return up_; }
+	const NVector3& GetUpVec()const { return up_; }
 
-	inline const float GetFov()const { return fov_; }
+	const float GetFov()const { return fov_; }
 };

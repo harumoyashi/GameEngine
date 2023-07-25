@@ -30,8 +30,8 @@ void NRootSignature::SetSamplerDesc(bool isTiling)
 	}
 	else
 	{
-		samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;			//横繰り返ししない（タイリングなし）
-		samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;			//縦繰り返ししない（タイリングなし）
+		samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;			//横繰り返ししない（タイリングなし）
+		samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;			//縦繰り返ししない（タイリングなし）
 	}
 	samplerDesc_.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;				//奥行繰り返し（タイリング）
 	samplerDesc_.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;	//ボーダーの時は黒

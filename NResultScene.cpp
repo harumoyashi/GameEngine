@@ -75,7 +75,7 @@ void NResultScene::Update()
 	lightGroup_->Update();
 
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
+	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
 		NSceneManager::ChangeScene<NTitleScene>();
 	}

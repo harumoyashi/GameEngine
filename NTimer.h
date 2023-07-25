@@ -28,16 +28,16 @@ public:
 	void SubTimer(const float subTimer);
 
 	//セッター
-	inline void SetTimer(const float timer) { timer_ = timer; }
-	inline void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
-	inline void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
+	void SetTimer(const float timer) { timer_ = timer; }
+	void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
+	void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
 
 	//ゲッター
-	inline bool GetisTimeOut()const { return isTimeOut_; }
-	inline const float GetMaxTimer()const { return (float)maxTimer_; }
-	inline const float GetTimer()const { return (float)timer_; }
+	bool GetisTimeOut()const { return isTimeOut_; }
+	const float GetMaxTimer()const { return (float)maxTimer_; }
+	const float GetTimer()const { return (float)timer_; }
 	//タイマーの進み具合を取得
-	inline const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
+	const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
 	//システムが開始されてからの時間を取得
 	float GetNowTime(const TimeType& timeType);
 };

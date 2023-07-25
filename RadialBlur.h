@@ -5,5 +5,5 @@ class RadialBlur final
 	: public NPostEffect
 {
 public:
-	void Init() override;
+	static void Init();
 };

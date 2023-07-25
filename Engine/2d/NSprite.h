@@ -94,9 +94,11 @@ public:
 #pragma region 描画
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画コマンド
 	void Draw();
 #pragma endregion
-	inline const NVector2& GetTexSize()const { return texSize_; }
-	inline const NVector2& GetSize()const { return size_; }
+	const NVector2& GetTexSize()const { return texSize_; }
+	const NVector2& GetSize()const { return size_; }
 };

@@ -123,5 +123,5 @@ public:
 	static void Vibration(const float leftVibrationPower, const float rightVibrationPower);
 
 	//Ú‘±î•ñæ“¾
-	inline static bool GetIsConnect() { return sIsConnect; }
+	static bool GetIsConnect() { return sIsConnect; }
 };

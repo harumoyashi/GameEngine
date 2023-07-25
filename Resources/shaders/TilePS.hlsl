@@ -14,8 +14,11 @@ PSOutput main(VSOutput input) : SV_TARGET
     PSOutput output;
     
 	// テクスチャマッピング
-    float tileDivide = 0.5f; //タイルの間隔
-    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / tileDivide, input.scale.z / tileDivide));
+    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / input.divide, input.scale.z / input.divide));
+    if (input.activityArea < input.worldpos.x || -input.activityArea > input.worldpos.x)
+    {
+        texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
+    }
     
 	// 光沢度
     const float shininess = 4.0f;
@@ -137,6 +140,7 @@ PSOutput main(VSOutput input) : SV_TARGET
         }
     }
 
+    
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;
     //float4 color = (1,1,1,1);

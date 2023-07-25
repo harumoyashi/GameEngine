@@ -15,116 +15,181 @@ Field* Field::GetInstance()
 
 void Field::Init()
 {
-	linePosZ_ = kStartPosZ;
 	isStart_ = false;
-	startOffset_ = 5.0f;
-	slidePos_ = 0.0f;
-	slideTimer_.Reset();
-	isStart_ = false;
+	isGoal_ = false;
 
 #pragma region オブジェクトの生成
-	fieldObj_ = std::make_unique<NObj3d>();
+	fieldObj_ = std::make_unique<NTile>();
 	fieldObj_->Init();
-
-	for (uint32_t i = 0; i < (uint32_t)ObjType::MaxSize; i++)
-	{
-		obj_.emplace_back();
-		obj_.back() = std::make_unique<NObj3d>();
-		obj_.back()->Init();
-	}
-#pragma endregion
-#pragma region 各オブジェクトの設定
 	fieldObj_->SetModel("plane");
 	fieldObj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
 	fieldObj_->color_.SetColor255(5, 5, 5, 255);
-	fieldObj_->scale_ = { 100.0f,0.01f,5000.0f };
+	fieldObj_->scale_ = { 100.0f,0.01f,1000.0f };
 	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
+	fieldObj_->SetDivide(tileDivide_);
+	fieldObj_->SetActivityArea(activityAreaX_);
 
-	obj_[(uint32_t)ObjType::Line]->SetModel("plane");
-	obj_[(uint32_t)ObjType::Line]->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
-	obj_[(uint32_t)ObjType::Line]->position_ = { 0,0, linePosZ_ };
+	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	{
+		lines_.emplace_back();
+		lines_.back().line = std::make_unique<NObj3d>();
+		lines_.back().line->Init();
+		lines_.back().line->SetModel("plane");
+		lines_.back().line->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
+		lines_.back().text = std::make_unique<NObj3d>();
+		lines_.back().text->Init();
+		lines_.back().text->SetModel("plane");
+		lines_.back().text->scale_ = { 1.5f,1.0f,0.25f };
 
-	obj_[(uint32_t)ObjType::Start]->SetModel("plane");
-	obj_[(uint32_t)ObjType::Start]->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
-	obj_[(uint32_t)ObjType::Start]->scale_ = { 1.5f,1.0f,0.25f };	//縦横比6:1
-	obj_[(uint32_t)ObjType::Start]->position_ = { startOffset_,0, linePosZ_ - 0.5f };
+		lines_.back().isSlide = false;
+		lines_.back().slidePos = 0.0f;
+		lines_.back().slideTimer.Reset();
+	}
+#pragma endregion
+#pragma region 各オブジェクトの設定
+	lines_[(uint32_t)LineType::Start].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
+	lines_[(uint32_t)LineType::Start].offset = 5.0f;
+	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
+
+	lines_[(uint32_t)LineType::Goal].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["goal"];
+	lines_[(uint32_t)LineType::Goal].offset = 5.0f;
+	lines_[(uint32_t)LineType::Goal].text->position_ = { lines_[(uint32_t)LineType::Goal].offset,0, goalPosZ_ - 0.5f };
 #pragma endregion
 }
 
 void Field::Update()
 {
-	fieldObj_->Update();
-	for (auto& obj : obj_)
-	{
-		obj->Update();
-	}
+	//座標を適用
+	lines_[(uint32_t)LineType::Start].line->position_ =
+	{ Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_ };
+	lines_[(uint32_t)LineType::Start].text->position_ =
+	{ Player::GetInstance()->GetPos().x +
+		lines_[(uint32_t)LineType::Start].offset +
+		lines_[(uint32_t)LineType::Start].slidePos,
+		0, startPosZ_ - 0.5f };
 
-	obj_[(uint32_t)ObjType::Line]->position_ =
-	{ Player::GetInstance()->GetPos().x + slidePos_,0, linePosZ_ };
-	if (slideTimer_.GetEnd() == false)
-	{
-		obj_[(uint32_t)ObjType::Start]->position_ =
-		{ Player::GetInstance()->GetPos().x + startOffset_ + slidePos_,0, linePosZ_ - 0.5f };
-	}
+	lines_[(uint32_t)LineType::Goal].line->position_ =
+	{ Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_ };
+	lines_[(uint32_t)LineType::Goal].text->position_ =
+	{ Player::GetInstance()->GetPos().x +
+		lines_[(uint32_t)LineType::Goal].offset +
+		lines_[(uint32_t)LineType::Goal].slidePos,
+		0, goalPosZ_ - 0.5f };
 
-	//線を超えたらスタートした判定trueに
-	if (linePosZ_ <= Player::GetInstance()->GetPos().z)
+	//スタートしてないとき
+	if (isStart_ == false)
 	{
-		isStart_ = true;
+		//線を超えたらスタートした判定trueに
+		if (startPosZ_ <= Player::GetInstance()->GetPos().z)
+		{
+			isStart_ = true;
+			lines_[(uint32_t)LineType::Start].isSlide = true;
+		}
 	}
 
 	//スタートしたなら
 	if (isStart_)
 	{
-		if (slideTimer_.GetStarted() == false)
-		{
-			slideTimer_.Start();
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10,0,8));
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10,0,5));
+		//画面左外までぶっ飛ばす
+		lines_[(uint32_t)LineType::Start].slidePos =
+			NEasing::InQuad(0.0f,
+				-fieldObj_->scale_.x,
+				lines_[(uint32_t)LineType::Start].slideTimer.GetTimeRate());
 
-			NAudioManager::Play("startSE");
+		//スライドしきったら
+		if (lines_[(uint32_t)LineType::Start].slideTimer.GetEnd())
+		{
 		}
+
+		//------------------------------------- 敵の生成処理 -------------------------------------//
+		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide,{7,0,8});
 
 		//敵出しちゃうよボタン
 		if (NInput::IsKeyDown(DIK_C))
 		{
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
 		}
+	}
 
-		slideTimer_.Update();
-
-		if (slideTimer_.GetEnd())
+	//ゴールしてないとき
+	if (isGoal_ == false)
+	{
+		//線を超えたらスタートした判定trueに
+		if (goalPosZ_ <= Player::GetInstance()->GetPos().z)
 		{
-			//画面外まで行ったならスプライト消す
-			if (obj_.size() == (uint32_t)ObjType::MaxSize)
+			isGoal_ = true;
+			lines_[(uint32_t)LineType::Goal].isSlide = true;
+		}
+	}
+
+	//ゴールしたなら
+	if (isGoal_)
+	{
+		//画面左外までぶっ飛ばす
+		lines_[(uint32_t)LineType::Goal].slidePos =
+			NEasing::InQuad(0.0f,
+				-fieldObj_->scale_.x,
+				lines_[(uint32_t)LineType::Goal].slideTimer.GetTimeRate());
+
+		//スライドしきったら
+		if (lines_[(uint32_t)LineType::Goal].slideTimer.GetEnd())
+		{
+		}
+	}
+
+	//スライドしていいなら
+	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	{
+		if (lines_[i].isSlide)
+		{
+			//スタート線スライドタイマー開始
+			if (lines_[i].slideTimer.GetStarted() == false)
 			{
-				obj_.erase(obj_.begin() + (uint32_t)ObjType::Start);
+				lines_[i].slideTimer.Start();
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+
+				NAudioManager::Play("startSE");
+				lines_[i].isSlide = false;	//スライドしちゃだめにする
 			}
 		}
-		//画面左外までぶっ飛ばす
-		slidePos_ = NEasing::InQuad(0.0f, -fieldObj_->scale_.x, slideTimer_.GetTimeRate());
+		//タイマー更新
+		lines_[i].slideTimer.Update();
+	}
 
+	//オブジェクトの更新
+	fieldObj_->SetDivide(tileDivide_);
+	fieldObj_->SetActivityArea(activityAreaX_);
+	fieldObj_->Update();
 
-		//------------------------------------- 敵の生成処理 -------------------------------------//
-		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide,{7,0,8});
+	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	{
+		lines_[i].line->Update();
+		lines_[i].text->Update();
 	}
 
 	//リリースでもいじりたいからifdefで囲ってない
 	ImGui::Begin("FieldParameter");
 	//1F~180Fまでの間にとどめる
-	ImGui::SliderFloat("LinePosZ_", &linePosZ_, 1.0f, 180.0f);
+	ImGui::SliderFloat("StartPosZ", &startPosZ_, 1.0f, 180.0f);
+	ImGui::SliderFloat("GoalPosZ", &goalPosZ_, 1.0f, 180.0f);
+	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
+	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
 	ImGui::End();
 }
 
 void Field::Draw()
 {
 	//床だけタイリングする
-	NObj3d::CommonBeginDraw(true);
+	NTile::CommonBeginDraw();
 	fieldObj_->Draw();
-	NObj3d::CommonBeginDraw(false);
+	NObj3d::CommonBeginDraw();
 
-	for (auto& obj : obj_)
+	NObj3d::SetBlendMode(BlendMode::Alpha);
+	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
 	{
-		obj->Draw();
+		lines_[i].line->Draw();
+		lines_[i].text->Draw();
 	}
+	NObj3d::SetBlendMode(BlendMode::None);
 }

@@ -7,8 +7,11 @@ class EnemyFactory final
 private:
 	Wolf wolf;
 
-	bool isCollision = false;
-	uint32_t wolfSideNum = 10;
+	NVector3 offset;			//エミッター内でどれだけ出現位置ずらすか
+	bool isCollision = false;	//敵同士が被ってるかフラグ
+
+	uint32_t wolfSideNum = 10;				//狼群(横)の出現数
+	NVector2 wolfSideEmitter = {2.0f,1.0f};	//狼群(横)の出現範囲
 
 public:
 	static EnemyFactory* GetInstance();

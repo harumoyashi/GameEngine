@@ -78,7 +78,7 @@ void NObj3d::UpdateMatrix()
 
 	matWorld_ = matWorld_.Identity();	//単位行列代入
 	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
-	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matRot;	//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
 	//親オブジェクトがあれば
@@ -119,26 +119,43 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_.material.alpha;
 }
 
-void NObj3d::CommonBeginDraw(bool isTiling)
+void NObj3d::CommonBeginDraw()
 {
-	if (isTiling)
-	{
-		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObj"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObj")->pRootSignature);
-	}
-	else
-	{
-		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Obj"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Obj")->pRootSignature);
-	}
-
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+}
+
+void NObj3d::SetBlendMode(BlendMode blendMode)
+{
+	// パイプラインステートとルートシグネチャの設定コマンド
+	switch (blendMode)
+	{
+	case BlendMode::None:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
+		break;
+	case BlendMode::Alpha:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAlpha"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAlpha")->pRootSignature);
+		break;
+	case BlendMode::Add:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAdd"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAdd")->pRootSignature);
+		break;
+	case BlendMode::Sub:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjSub"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjSub")->pRootSignature);
+		break;
+	case BlendMode::Inv:
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjInv"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjInv")->pRootSignature);
+		break;
+	default:
+		break;
+	}
 }
 
 void NObj3d::Draw()
@@ -166,7 +183,7 @@ void NObj3d::SetSRVHeap()
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
 	//指定のヒープにあるSRVをルートパラメータ0番に設定
-	if (gpuHandle.ptr==0)
+	if (gpuHandle.ptr == 0)
 	{
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
 	}

@@ -5,6 +5,8 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "Field.h"
+#include "RadialBlur.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -16,7 +18,7 @@ Player::Player()
 	obj_->SetModel("cat");
 
 	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&deadParticle_,"playerDead");
+	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 }
 
 Player::~Player()
@@ -45,7 +47,7 @@ bool Player::Init()
 	moveSpeed_ = 0.05f;
 
 	godmodeTimer_.Reset();
-	godmodeTimer_.SetMaxTimer(120.0f);
+	godmodeTimer_.maxTime_ = 2.0f;
 
 	isMove_ = true;
 
@@ -62,11 +64,17 @@ bool Player::Init()
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
+	deadEffectTimer_ = 1.0f;	//スローは考慮せずに何秒か
+	deadEffectTimer_.Reset();
+
 	return true;
 }
 
 void Player::Update()
 {
+	//タイマー更新
+	deadEffectTimer_.Update();
+
 	if (isAlive_)
 	{
 		Move();
@@ -74,7 +82,7 @@ void Player::Update()
 	}
 	else
 	{
-		elapseSpeed_ = 0.01f;	//死んだらスローモーションに
+		elapseSpeed_ = slowElapseTime_;	//死んだらスローモーションに
 	}
 
 	obj_->Update();
@@ -85,6 +93,12 @@ void Player::Update()
 	{
 		//コライダーマネージャーから削除
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	}
+
+	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
+	if (NParticleManager::GetInstance()->emitters_["playerDead"]->GetParticlesDead())
+	{
+		NPostEffect::SetIsActive(false);
 	}
 }
 
@@ -130,6 +144,9 @@ void Player::Move()
 		//移動量を加算
 		obj_->position_.x += moveVelo_.x * moveSpeed_;
 		obj_->position_.z += moveVelo_.y * moveSpeed_;
+		//加算後に行動範囲超えてる場合は超えないようにする
+		obj_->position_.x = (std::max)(obj_->position_.x, -Field::GetInstance()->GetActivityAreaX() + obj_->scale_.x);
+		obj_->position_.x = (std::min)(obj_->position_.x, Field::GetInstance()->GetActivityAreaX() - obj_->scale_.x);
 
 		//移動方向に合わせて回転
 		if (moveVelo_.Length() > 0.0f)			//入力されてたら
@@ -201,9 +218,14 @@ void Player::DeadParticle()
 {
 	if (isAlive_)
 	{
+		if (deadEffectTimer_.GetStarted() == false)
+		{
+			deadEffectTimer_.Start();
+		}
+		RadialBlur::Init();		//ラジアルブラーかける
 		NParticleManager::GetInstance()->emitters_["playerDead"]->SetIsRotation(true);
-		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(GetPos());
+		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(obj_->position_);
 		NParticleManager::GetInstance()->emitters_["playerDead"]->Add(
-			150, 100, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+			150, 1.5f, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }

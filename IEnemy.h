@@ -1,5 +1,6 @@
 #pragma once
 #include "NObj3d.h"
+#include "NSprite.h"
 #include "NCollider.h"
 #include "SphereCollider.h"
 #include "SimpleParticle.h"
@@ -67,34 +68,34 @@ public:
 
 	// ゲッター //
 	//コライダー取得
-	inline const SphereCollider GetCollider()const { return collider_; }
+	const SphereCollider GetCollider()const { return collider_; }
 	//生存フラグ取得
-	inline bool GetisAlive()const { return isAlive_; }
+	bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
-	inline float GetMoveSpeed()const { return moveSpeed_; }
+	float GetMoveSpeed()const { return moveSpeed_; }
 	//座標取得
-	inline NVector3& GetPos()const { return obj_->position_; }
+	NVector3& GetPos()const { return obj_->position_; }
 	//大きさ取得
-	inline NVector3& GetScale()const { return obj_->scale_; }
+	NVector3& GetScale()const { return obj_->scale_; }
 	//移動用角度取得
-	inline float GetMoveAngle()const { return moveAngle_; }
+	float GetMoveAngle()const { return moveAngle_; }
 	//パーティクルが1つも出てないかフラグ取得
-	inline bool GetParticlesDead()const { return deadParticle_.GetParticlesDead(); }
+	bool GetParticlesDead()const { return deadParticle_.GetParticlesDead(); }
 
 	// セッター //
 	//生存フラグ設定
-	inline void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
+	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//座標設定
-	inline void SetPos(const NVector3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
+	void SetPos(const NVector3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
 	//大きさ設定
-	inline void SetScale(const float scale) {
+	void SetScale(const float scale) {
 		obj_->scale_ = scale;  collider_.SetRadius(scale); }
 	//移動角度設定
-	inline void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
+	void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
 	//移動スピード設定
-	inline void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
+	void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
 	//経過時間スピード設定
-	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 	//敵の識別番号設定
-	inline void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
+	void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
 };

@@ -4,7 +4,24 @@
 #include "NMathUtil.h"
 #include "NInput.h"
 
+NVertexBuff<NVertexUV> NPostEffect::vertexBuff_;
+std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> NPostEffect::cbTrans_;	//2D変換行列
+std::unique_ptr<NConstBuff<ConstBuffDataColor>> NPostEffect::cbColor_;
+NMatrix4 NPostEffect::matWorld_;		//変換行列
+NMatrix4 NPostEffect::matProjection_;	//平行投影保管用
+float NPostEffect::rotation_;			//Z軸の回転角
+NVector2 NPostEffect::position_;		//座標
+NColor NPostEffect::color_;				//色
+
+ComPtr<ID3D12Resource> NPostEffect::texBuff_[2];
+ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapSRV_;
+ComPtr<ID3D12Resource> NPostEffect::depthBuff_;
+ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapRTV_;
+ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapDSV_;
+
 const float NPostEffect::kClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
+std::string NPostEffect::pipelineName_;
+bool NPostEffect::isActive_ = false;
 
 NPostEffect::NPostEffect()
 {
@@ -12,11 +29,35 @@ NPostEffect::NPostEffect()
 
 void NPostEffect::Init()
 {
+	//定数バッファ
+	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
+	cbTrans_->Init();
+	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbColor_->Init();
+
 	CreateTexture();
 	CreateRTV();
 	CreateDepthBuff();
 	CreateDSV();
 	pipelineName_ = "PostEffect";
+}
+
+void NPostEffect::Update()
+{
+	//ワールド行列
+	NMatrix4 matRot;	//回転行列
+	matRot = matRot.RotateZ(MathUtil::Degree2Radian(rotation_));	//Z軸周りに回転
+
+	NMatrix4 matTrans;	//平行移動行列
+	matTrans = matTrans.Translation({ position_.x, position_.y, 0 });
+
+	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ *= matRot;		//ワールド座標に回転を反映
+	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
+
+	// 定数バッファへデータ転送
+	cbTrans_->constMap_->mat = matWorld_ * matProjection_;
+	cbColor_->constMap_->color = color_;
 }
 
 void NPostEffect::Draw()
@@ -158,18 +199,6 @@ void NPostEffect::CreateTexture()
 	vert[2].pos = { right,bottom,0.0f };	// 右下
 	vert[3].pos = { right,top   ,0.0f };	// 右上
 
-	//テクスチャサイズをもとに切り取る部分のuvを計算
-	float tex_left = texLeftTop_.x / texresDesc.Width;
-	float tex_right = (texLeftTop_.x + texSize_.x) / texresDesc.Width;
-	float tex_top = texLeftTop_.y / texresDesc.Height;
-	float tex_bottom = (texLeftTop_.y + texSize_.y) / texresDesc.Height;
-
-	//計算したuvに合わせて設定
-	//vert[0].uv = { tex_left ,tex_bottom };	// 左下
-	//vert[1].uv = { tex_left ,tex_top };	// 左上
-	//vert[2].uv = { tex_right,tex_bottom };	// 右下
-	//vert[3].uv = { tex_right,tex_top };	// 右上
-
 	vert[0].uv = { 0 ,1 };	// 左下
 	vert[1].uv = { 0 ,0 };	// 左上
 	vert[2].uv = { 1,1 };	// 右下
@@ -183,6 +212,7 @@ void NPostEffect::CreateTexture()
 		static_cast<float>(NWindows::kWin_width),
 		static_cast<float>(NWindows::kWin_height)
 	);
+
 	Update();
 }
 

@@ -18,12 +18,12 @@ public:
 	void Init();
 
 	//コライダーをリストに追加
-	inline void AddCollider(NBaseCollider* collider)
+	void AddCollider(NBaseCollider* collider)
 	{
 		colliders_.emplace_front(collider);
 	}
 	//コライダーをリストから削除
-	inline void RemoveCollider(NBaseCollider* collider)
+	void RemoveCollider(NBaseCollider* collider)
 	{
 		colliders_.remove(collider);
 	}

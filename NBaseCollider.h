@@ -29,32 +29,32 @@ public:
 
 	// ゲッター //
 	//オブジェクト取得
-	inline NObj3d* GetObj3d() { return obj_; }
+	NObj3d* GetObj3d() { return obj_; }
 	//形状タイプ取得
-	inline ColShapeType GetShapeType() { return shapeType_; }
+	ColShapeType GetShapeType() { return shapeType_; }
 	//当たってるかフラグ取得
-	inline bool GetIsCol() { return isCollision_; }
+	bool GetIsCol() { return isCollision_; }
 	//コライダー自身を取得
-	inline NBaseCollider* GetCollider() { return this; }
+	NBaseCollider* GetCollider() { return this; }
 
 public:
 	// ゲッター //
 	//コールバック関数ポインタ変数取得
-	inline std::function<void(void)> GetOnCollision()const { return onCollision_; }
+	std::function<void(void)> GetOnCollision()const { return onCollision_; }
 	//コライダーの識別ID取得
-	inline std::string GetColID()const { return colID; }
+	std::string GetColID()const { return colID; }
 	//衝突相手の取得
-	inline NBaseCollider* GetColInfo()const { return colInfo_; }
+	NBaseCollider* GetColInfo()const { return colInfo_; }
 
 	// セッター //
 	//オブジェクト設定
-	inline void SetObj(NObj3d* obj) { obj_ = obj; }
+	void SetObj(NObj3d* obj) { obj_ = obj; }
 	//当たってるかフラグ設定
-	inline void SetIsCol(bool isCol) { isCollision_ = isCol; }
+	void SetIsCol(bool isCol) { isCollision_ = isCol; }
 	//コールバック関数ポインタ変数設定
-	inline void SetOnCollision(const std::function<void(void)>& onCollision) { onCollision_ = onCollision; }
+	void SetOnCollision(const std::function<void(void)>& onCollision) { onCollision_ = onCollision; }
 	//コライダーの識別ID設定
-	inline void SetColID(std::string id) { colID = id; }
+	void SetColID(std::string id) { colID = id; }
 	//衝突相手の設定
-	inline void SetColInfo(NBaseCollider* colInfo) { colInfo_ = colInfo; }
+	void SetColInfo(NBaseCollider* colInfo) { colInfo_ = colInfo; }
 };

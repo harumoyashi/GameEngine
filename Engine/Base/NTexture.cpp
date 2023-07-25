@@ -16,6 +16,7 @@ void NTextureManager::Init()
 	//‚±‚±‚ÅˆêŠ‡“Ç‚İ‚İ
 	LoadTexture(directryPass + "white64x64.png", "white");
 	LoadTexture(directryPass + "start.png", "start");
+	LoadTexture(directryPass + "goal.png", "goal");
 	LoadTexture(directryPass + "timerocker_tile.png", "tile");
 	LoadTexture(directryPass + "title_logo.png", "logo");
 	LoadTexture(directryPass + "Abutton_UI.png", "Abutton");

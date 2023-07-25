@@ -5,6 +5,7 @@
 #include "NRootSignature.h"
 #include "NRootParam.h"
 #include "NShader.h"
+#include "NUtil.h"
 #include <d3dx12.h>
 
 #include <wrl.h>
@@ -38,14 +39,6 @@ struct PipelineDesc
 			D3D12_BLEND_OP BlendOp = D3D12_BLEND_OP_ADD;
 			D3D12_BLEND SrcBlend = D3D12_BLEND_SRC_ALPHA;
 			D3D12_BLEND DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
-
-			enum class BlendMode
-			{
-				Alpha,	//αブレンド
-				Add,	//加算
-				Sub,	//減算
-				Inv,	//反転
-			};
 
 			//指定したブレンドモードのブレンド情報を取得
 			static PipelineDesc::Blend::BlendDesc GetBlendMode(BlendMode blendMode);

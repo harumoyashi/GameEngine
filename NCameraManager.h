@@ -74,7 +74,7 @@ public:
 
 	void ChangeCameara(const CameraType cameraType);
 
-	inline bool GetisActive() { return isActive_; }
+	bool GetisActive() { return isActive_; }
 
 	void SetDebugCamera(NCamera& camera);
 };

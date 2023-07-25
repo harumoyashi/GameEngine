@@ -7,6 +7,7 @@
 #include "NVertexBuff.h"
 #include "NEasing.h"
 #include "NTimer.h"
+#include "NUtil.h"
 
 class IEmitter3D
 {
@@ -32,7 +33,7 @@ class IEmitter3D
 		//色
 		NColor color;
 		//生存時間(フレーム数)
-		NTimer aliveTimer;
+		NEasing::EaseTimer aliveTimer;
 
 		//イージング用タイマー
 		NEasing::EaseTimer easeTimer = 1.0f;
@@ -101,6 +102,8 @@ public:
 	virtual void Update();
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
+	//ブレンドモード設定
+	static void SetBlendMode(BlendMode blendMode);
 	//描画
 	void Draw();
 
@@ -110,39 +113,40 @@ public:
 	void TransferMatrix();
 
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
-	virtual void Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
+	//life:秒数指定なので注意
+	virtual void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
 		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {}) = 0;
 	//パーティクル全消し
-	inline void ClearParticles() { particles_.clear(); }
+	void ClearParticles() { particles_.clear(); }
 
 	//ゲッター//
 	//座標取得
-	inline NVector3 GetPos()const { return pos_; }
+	NVector3 GetPos()const { return pos_; }
 	//大きさ取得
-	inline NVector3 GetScale()const { return scale_; }
+	NVector3 GetScale()const { return scale_; }
 	//パーティクル全部死んだか取得
-	inline bool GetParticlesDead()const { return particles_.empty(); }
+	bool GetParticlesDead()const { return particles_.empty(); }
 	//何個パーティクルあるか取得
-	inline size_t GetParticlesSize()const { return particles_.size(); }
+	size_t GetParticlesSize()const { return particles_.size(); }
 	//有効フラグ取得
-	inline bool GetIsActive()const { return isActive_; }
+	bool GetIsActive()const { return isActive_; }
 
 	//セッター//
 	//座標設定
-	inline void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
-	inline void SetPos(const NVector3& pos) { pos_ = pos; }
+	void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
+	void SetPos(const NVector3& pos) { pos_ = pos; }
 	//大きさ設定
 	void SetScale(const NVector3& scale);
 	//角度設定
-	inline void SetRot(float rot) { rot_ = rot; }
+	void SetRot(float rot) { rot_ = rot; }
 	//ライトを設定
-	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 	//有効フラグ設定
-	inline void SetIsActive(bool isActive) { isActive_ = isActive; }
+	void SetIsActive(bool isActive) { isActive_ = isActive; }
 	//重力フラグ設定
-	inline void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
+	void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
 	//回転フラグ設定
-	inline void SetIsRotation(bool isRotation) { isRotation_ = isRotation; }
+	void SetIsRotation(bool isRotation) { isRotation_ = isRotation; }
 
 	//拡縮用タイマーが切り替わる時間設定(秒)
 	void SetScalingTimer(float timer);
@@ -151,5 +155,5 @@ public:
 	void StartScalingTimer(bool isRun = true);
 
 	//経過時間スピード設定
-	inline void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

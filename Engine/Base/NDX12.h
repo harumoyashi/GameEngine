@@ -93,28 +93,28 @@ public:
 
 	//ゲッター//
 	//デバイス取得
-	inline ID3D12Device* GetDevice()const { return device_.Get(); }
+	ID3D12Device* GetDevice()const { return device_.Get(); }
 	//スワップチェーン取得
-	inline IDXGISwapChain4* GetSwapchain()const { return swapchain_.Get(); }
+	IDXGISwapChain4* GetSwapchain()const { return swapchain_.Get(); }
 	//コマンドアロケーター取得
-	inline ID3D12CommandAllocator* GetCommandAllocator()const { return commandAllocator_.Get(); }
+	ID3D12CommandAllocator* GetCommandAllocator()const { return commandAllocator_.Get(); }
 	//コマンドリスト取得
-	inline ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
+	ID3D12GraphicsCommandList* GetCommandList()const { return commandList_.Get(); }
 	//コマンドキュー取得
-	inline ID3D12CommandQueue* GetCommandQueue()const { return commandQueue_.Get(); }
+	ID3D12CommandQueue* GetCommandQueue()const { return commandQueue_.Get(); }
 	//RTVヒープ取得
-	inline ID3D12DescriptorHeap* GetRTVHeap()const { return rtvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetRTVHeap()const { return rtvHeap_.Get(); }
 	//SRVヒープ取得
-	inline ID3D12DescriptorHeap* GetSRVHeap()const { return srvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetSRVHeap()const { return srvHeap_.Get(); }
 	//RTVヒープデスク取得
-	inline D3D12_DESCRIPTOR_HEAP_DESC GetRTVHeapDesc()const { return rtvHeapDesc_; }
+	D3D12_DESCRIPTOR_HEAP_DESC GetRTVHeapDesc()const { return rtvHeapDesc_; }
 	//DSVヒープ取得
-	inline ID3D12DescriptorHeap* GetDSVHeap()const { return dsvHeap_.Get(); }
+	ID3D12DescriptorHeap* GetDSVHeap()const { return dsvHeap_.Get(); }
 	//フェンス取得
-	inline ID3D12Fence* GetFence()const { return fence_.Get(); }
+	ID3D12Fence* GetFence()const { return fence_.Get(); }
 
 	//デルタタイム取得
-	inline float GetDelta()const { return deltaTime_; }
+	float GetDelta()const { return deltaTime_; }
 
 private:
 	//アダプター選択
