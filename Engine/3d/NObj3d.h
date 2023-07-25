@@ -91,7 +91,7 @@ public:
 	//モデルの設定
 	void SetModel(const std::string& modelname);
 	//ワールド行列設定
-	inline void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
+	void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 	//ライトを設定
-	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 };

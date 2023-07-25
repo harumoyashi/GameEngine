@@ -35,21 +35,21 @@ public://メンバ関数
 
 	//影の方向をセット
 	void SetDir(const NVector3& dir);
-	inline const NVector3& GetDir()const { return dir_; }
+	const NVector3& GetDir()const { return dir_; }
 	//座標をセット
 	void SetCasterPos(const NVector3& casterPos);
-	inline const NVector3& GetCasterPos()const { return casterPos_; }
+	const NVector3& GetCasterPos()const { return casterPos_; }
 	//キャスターとライトの距離をセット
 	void SetDistanceCasterLight(const float distanceCasterLight);
-	inline const float GetDistanceCasterLight()const { return distanceCasterLight_; }
+	const float GetDistanceCasterLight()const { return distanceCasterLight_; }
 	//減衰係数をセット
 	void SetAtten(const NVector3& atten);
-	inline const NVector3& GetAtten()const { return atten_; }
+	const NVector3& GetAtten()const { return atten_; }
 	//減衰角度をセット
 	void SetFactorAngle(const NVector2& factorAngle);
-	inline const NVector2& GetFactorAngle()const { return factorAngleCos_; }
+	const NVector2& GetFactorAngle()const { return factorAngleCos_; }
 	//有効フラグをセット
-	inline void SetActive(bool isActive) { isActive_ = isActive; }
+	void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
-	inline bool GetActive()const { return isActive_; }
+	bool GetActive()const { return isActive_; }
 };

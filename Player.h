@@ -1,6 +1,5 @@
 #pragma once
 #include "NObj3d.h"
-#include "NTimer.h"
 #include "NCollider.h"
 #include "SphereCollider.h"
 #include "SimpleParticle.h"
@@ -26,7 +25,7 @@ private:
 	//------------------------ ダメージ関連 ------------------------//
 	bool isGodmode_;			//無敵状態か
 	bool isFlashing_;			//チカチカさせるため用
-	NTimer godmodeTimer_;		//無敵時間
+	NEasing::EaseTimer godmodeTimer_;		//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
 	uint32_t lineLevel_;		//通常弾のレベル
@@ -35,7 +34,9 @@ private:
 	uint32_t roketLevel_;		//ロケット弾のレベル
 
 	//------------------------ その他 ------------------------//
-	SimpleParticle deadParticle_;	//死んだときに出るパーティクル
+	SimpleParticle deadParticle_;				//死んだときに出るパーティクル
+	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
+	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
 
 public:
 	Player();
@@ -63,35 +64,37 @@ public:
 
 	// ゲッター //
 	//座標取得
-	inline NVector3 GetPos()const { return obj_->position_; }
+	NVector3 GetPos()const { return obj_->position_; }
 	//前方座標取得
-	inline float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
+	float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
 	//大きさ取得
-	inline NVector3 GetScale()const { return obj_->scale_; }
+	NVector3 GetScale()const { return obj_->scale_; }
 	//無敵状態取得
-	inline bool GetIsGodmode()const { return isGodmode_; }
+	bool GetIsGodmode()const { return isGodmode_; }
 	//生きてるかフラグ取得
-	inline bool GetIsAlive()const { return isAlive_; }
+	bool GetIsAlive()const { return isAlive_; }
 	//動けるかフラグ取得
-	inline bool GetIsMove()const { return isMove_; }
+	bool GetIsMove()const { return isMove_; }
 	//コライダー取得
-	inline const SphereCollider& GetPlayerCollider()const { return collider_; }
+	const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
-	inline NVector2 GetMoveVelo()const { return moveVelo_; }
+	NVector2 GetMoveVelo()const { return moveVelo_; }
 	//経過時間取得
-	inline float GetElapseSpeed()const { return elapseSpeed_; }
+	float GetElapseSpeed()const { return elapseSpeed_; }
 	//オブジェクトの色取得
-	inline NColor& GetColor()const { return obj_->color_; }
+	NColor& GetColor()const { return obj_->color_; }
+	//死亡演出が終わったかどうか取得
+	bool GetDeadEffectEnd()const { return deadEffectTimer_.GetEnd(); }
 
 	// セッター //
 	//座標設定
-	inline void SetPos(const NVector3& pos) { obj_->position_ = pos; }
+	void SetPos(const NVector3& pos) { obj_->position_ = pos; }
 	//大きさ設定
-	inline void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
+	void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
 	//無敵状態設定
-	inline void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
+	void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
 	//生きてるかフラグ設定
-	inline void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
+	void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
 	//動けるかフラグ設定
-	inline void SetIsMove(bool isMove) { isMove_ = isMove; }
+	void SetIsMove(bool isMove) { isMove_ = isMove; }
 };

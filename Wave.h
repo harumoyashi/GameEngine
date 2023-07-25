@@ -21,7 +21,7 @@ public:
 
 	// ゲッター //
 	//波の前方座標取得
-	inline float GetFrontPosZ() const { return posZ_ + scaleZ_; }
+	float GetFrontPosZ() const { return posZ_ + scaleZ_; }
 
 	// セッター //
 

@@ -6,7 +6,7 @@
 
 LineBullet::LineBullet()
 {
-    shotCoolTimer_ = 5.0f;      //弾撃つまでの時間
+    shotCoolTimer_ = 0.1f;      //弾撃つまでの時間
     isCanShot_ = false;			//撃てるかフラグ
     level_ = 1;                 //弾の強化レベル
     
@@ -19,16 +19,22 @@ void LineBullet::LineUpdate()
     SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
     shotCoolTimer_.Update(elapseSpeed_);
-    if (shotCoolTimer_.GetisTimeOut())
+    //タイマーループ
+    if (shotCoolTimer_.GetStarted() == false)
+    {
+        shotCoolTimer_.Start();
+    }
+    if (shotCoolTimer_.GetEnd())
     {
         isCanShot_ = true;
+        shotCoolTimer_.Reset();
     }
 
     //リリースでもいじりたいからifdefで囲ってない
-    static float coolTimer = 5.0f;
+    static float coolTimer = 0.1f;
     ImGui::Begin("LineBulletParameter");
     //1F~60Fまでの間にとどめる
-    ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 1.0f, 60.0f);
+    ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 0.0f, 10.0f);
     ImGui::End();
-    shotCoolTimer_.SetMaxTimer(coolTimer);
+    shotCoolTimer_.maxTime_ = coolTimer;
 }

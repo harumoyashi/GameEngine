@@ -4,7 +4,7 @@
 
 IBullet::IBullet() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.2f), isAlive_(true),
-	lifeTimer_(120.0f), damage_(1), elapseSpeed_(0.0f)
+	lifeTimer_(2.0f), damage_(1), elapseSpeed_(0.0f)
 {
 }
 
@@ -38,7 +38,7 @@ void IBullet::Update()
 
 	//ê∂ë∂éûä‘âﬂÇ¨ÇΩÇÁéÄÇÒÇæîªíËÇ…
 	lifeTimer_.Update(elapseSpeed_);
-	if (lifeTimer_.GetisTimeOut())
+	if (lifeTimer_.GetEnd())
 	{
 		isAlive_ = false;
 	}

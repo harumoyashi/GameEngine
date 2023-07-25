@@ -38,7 +38,7 @@ void IEmitter3D::Update()
 	//寿命が尽きたパーティクルを全削除
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		if (particles_[i].aliveTimer.GetisTimeOut())
+		if (particles_[i].aliveTimer.GetEnd())
 		{
 			particles_.erase(particles_.begin() + i);
 			i = (size_t)-1;
@@ -210,7 +210,7 @@ void IEmitter3D::TransferMatrix()
 	cbTrans_->Unmap();
 }
 
-void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScale, float maxScale,
+void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
 	NVector3 minVelo, NVector3 maxVelo, NVector3 accel, NVector3 minRot, NVector3 maxRot)
 {
 	for (uint32_t i = 0; i < addNum; i++)
@@ -253,13 +253,13 @@ void IEmitter3D::Add(uint32_t addNum, uint32_t life, NColor color, float minScal
 		p.plusRot = p.rot;
 		p.velo = randomVelo;
 		p.accel = accel;
-		p.aliveTimer = (float)life;
+		p.aliveTimer = life;
 		p.scale = sX;
 		p.startScale = p.scale;
 		p.endScale = 0.0f;
 		p.color = color;
 		//イージング用のタイマーを設定、開始
-		p.easeTimer.maxTime_ = (float)life / 60.0f;
+		p.easeTimer.maxTime_ = life;
 		p.easeTimer.Start();
 	}
 }

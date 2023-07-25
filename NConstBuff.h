@@ -53,5 +53,5 @@ public:
 		constBuff_->Unmap(0, nullptr);
 	};
 
-	inline void Unmap(){ constBuff_->Unmap(0, nullptr); }
+	void Unmap(){ constBuff_->Unmap(0, nullptr); }
 };

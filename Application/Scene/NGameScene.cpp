@@ -63,6 +63,8 @@ void NGameScene::Init()
 	IEmitter3D::SetLightGroup(lightGroup_.get());
 
 	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
+
+	scene = SceneMode::Play;
 }
 
 void NGameScene::Update()
@@ -70,31 +72,50 @@ void NGameScene::Update()
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-#pragma region プレイヤー
 	Player::GetInstance()->Update();
-
-#pragma endregion
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
-	Wave::GetInstance()->Update();
-	if (NInput::IsKeyDown(DIK_0))
-	{
-		Player::GetInstance()->DeadParticle();
-	}
 
 	NParticleManager::GetInstance()->Update();
 
 	//ライトたちの更新
 	lightGroup_->Update();
 
-	if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
-	{
-		Player::GetInstance()->DeadParticle();
-		Player::GetInstance()->SetIsAlive(false);
-	}
-
 	NCollisionManager::GetInstance()->CheckAllCollision();
+
+	if (scene == SceneMode::Play)	//プレイ中の処理
+	{
+		Wave::GetInstance()->Update();
+		//死亡パーティクル出るボタン
+		if (NInput::IsKeyDown(DIK_0))
+		{
+			Player::GetInstance()->DeadParticle();
+		}
+
+		//プレイヤーが波に飲み込まれたら殺す
+		if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+		{
+			Player::GetInstance()->DeadParticle();
+			Player::GetInstance()->SetIsAlive(false);
+		}
+
+		//プレイヤーが死んで、死亡演出が終わったら失敗リザルトへ
+		if (Player::GetInstance()->GetIsAlive() == false &&
+			Player::GetInstance()->GetDeadEffectEnd())
+		{
+			scene = SceneMode::Faild;
+			NCameraManager::GetInstance()->ChangeCameara(CameraType::Result);
+		}
+	}
+	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
+	{
+
+	}
+	else if (scene == SceneMode::Faild)	//失敗リザルトの処理
+	{
+
+	}
 
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))

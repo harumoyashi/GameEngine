@@ -33,7 +33,7 @@ namespace NEasing
 	float InOutBack(float timeRate);
 	float InOutBack(float start, float end, float timeRate);
 
-	//イージング用のタイマー
+	//イージング用のタイマー(秒数)
 	class EaseTimer
 	{
 	private:
@@ -56,22 +56,22 @@ namespace NEasing
 		float maxTime_ = 1.0f;		// 何秒かけて移動するか
 
 		//タイマーが進んでるかフラグ取得
-		inline bool GetRun()const { return run_; };
+		bool GetRun()const { return run_; };
 		//一度でも進行されたらtrueになるフラグ取得
-		inline bool GetStarted()const { return run_ || end_; };
+		bool GetStarted()const { return run_ || end_; };
 		//タイマーが進み切ったかフラグ取得
-		inline bool GetEnd()const { return end_; };
+		bool GetEnd()const { return end_; };
 		//進み切ったかフラグを設定
-		inline void SetEnd(bool end) { end_ = end; };
+		void SetEnd(bool end) { end_ = end; };
 
 		//タイマーが戻ってるかフラグ取得
-		inline bool GetReverse()const { return reverse_; };
+		bool GetReverse()const { return reverse_; };
 		//タイマーが戻り切ったかフラグ取得
-		inline bool GetReverseEnd()const { return reverseend_; };
+		bool GetReverseEnd()const { return reverseend_; };
 		//戻り切ったかフラグを設定
-		inline void SetReverseEnd(bool reverseend) { reverseend_ = reverseend; };
+		void SetReverseEnd(bool reverseend) { reverseend_ = reverseend; };
 		//一度でも後退されたらtrueになるフラグ取得
-		inline bool GetReverseStarted()const { return reverse_ || reverseend_; };
+		bool GetReverseStarted()const { return reverse_ || reverseend_; };
 
 		//タイマーは起動しないが初期化する
 		void Reset();

@@ -54,5 +54,5 @@ public:
 	void Update();
 	void Draw();
 
-	inline static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
 };

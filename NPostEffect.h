@@ -61,9 +61,9 @@ public:
 	static void PostDrawScene();
 
 	// ゲッター //
-	static inline bool GetIsActive() { return isActive_; }
+	static bool GetIsActive() { return isActive_; }
 
 	// セッター //
 	//ポストエフェクト有効フラグ設定
-	static inline void SetIsActive(bool isActive) { isActive_ = isActive; }
+	static void SetIsActive(bool isActive) { isActive_ = isActive; }
 };

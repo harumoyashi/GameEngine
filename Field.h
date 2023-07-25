@@ -51,15 +51,15 @@ public:
 
 	// ゲッター //
 	//スタート地点座標取得
-	inline float GetStartPos() const { return startPosZ_; }
+	float GetStartPos() const { return startPosZ_; }
 	//フィールドの大きさ取得
-	inline NVector3 GetScale() const { return fieldObj_->scale_; }
+	NVector3 GetScale() const { return fieldObj_->scale_; }
 	//スタートしたかフラグ取得
-	inline bool GetIsStart() const { return isStart_; }
+	bool GetIsStart() const { return isStart_; }
 	//ゴールしたかフラグ取得
-	inline bool GetIsGoal() const { return isGoal_; }
+	bool GetIsGoal() const { return isGoal_; }
 	//行動範囲取得
-	inline float GetActivityAreaX() const { return activityAreaX_; }
+	float GetActivityAreaX() const { return activityAreaX_; }
 
 	// セッター //
 

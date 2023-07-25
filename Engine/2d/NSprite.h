@@ -99,6 +99,6 @@ public:
 	//•`‰æƒRƒ}ƒ“ƒh
 	void Draw();
 #pragma endregion
-	inline const NVector2& GetTexSize()const { return texSize_; }
-	inline const NVector2& GetSize()const { return size_; }
+	const NVector2& GetTexSize()const { return texSize_; }
+	const NVector2& GetSize()const { return size_; }
 };

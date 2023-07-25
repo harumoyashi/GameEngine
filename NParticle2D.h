@@ -81,34 +81,34 @@ public:
 	void DrawGraph();
 
 	//パーティクル追加
-	void Add(uint32_t addNum, uint32_t life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo,
+	void Add(uint32_t addNum, float life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo,
 		NVector2 accel = { 0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
 	//パーティクル全消し
-	inline void ClearParticles() { particles_.clear(); }
+	void ClearParticles() { particles_.clear(); }
 
 	//ゲッター//
 	//座標取得
-	inline NVector2 GetPos()const { return pos_; }
+	NVector2 GetPos()const { return pos_; }
 	//大きさ取得
-	inline NVector2 GetScale()const { return scale_; }
+	NVector2 GetScale()const { return scale_; }
 
 	//パーティクル全部死んだか取得
-	inline bool GetParticlesDead()const { return particles_.empty(); }
+	bool GetParticlesDead()const { return particles_.empty(); }
 
 	//何個パーティクルあるか取得
-	inline size_t GetParticlesSize()const { return particles_.size(); }
+	size_t GetParticlesSize()const { return particles_.size(); }
 
 	//セッター//
 	//座標設定
-	inline void SetPos(float x, float y) { pos_ = { x,y }; }
-	inline void SetPos(NVector2& pos) { pos_ = pos; }
+	void SetPos(float x, float y) { pos_ = { x,y }; }
+	void SetPos(NVector2& pos) { pos_ = pos; }
 	//大きさ設定
 	void SetScale(NVector2& scale);
 	//角度設定
-	inline void SetRot(float rot) { rot_ = rot; }
+	void SetRot(float rot) { rot_ = rot; }
 
 	//有効フラグ設定
-	inline void SetIsActive(bool isActive) { isActive_ = isActive; }
+	void SetIsActive(bool isActive) { isActive_ = isActive; }
 	//テクスチャの設定
 	void SetTextureKey(TextureHandle& key) { key_ = key; }
 

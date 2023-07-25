@@ -28,11 +28,11 @@ public:
 
 	// ゲッター //
 	//シーン切り替えるかフラグ取得
-	inline bool GetIsChange()const { return isSceneChange_; }
+	bool GetIsChange()const { return isSceneChange_; }
 	//シーン遷移中かフラグ取得
-	inline bool GetIsChangeNow()const { return isSceneChangeNow_; }
+	bool GetIsChangeNow()const { return isSceneChangeNow_; }
 
 	// セッター //
 	//シーン切り替えるかフラグ設定
-	inline void SetIsChange(bool isChange) { this->isSceneChange_ = isChange; }
+	void SetIsChange(bool isChange) { this->isSceneChange_ = isChange; }
 };
