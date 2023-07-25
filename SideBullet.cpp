@@ -44,7 +44,7 @@ void SideBullet::SideUpdate()
 	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
 	static float coolTimer = 1.0f;
 	ImGui::Begin("SideBulletParameter");
-	//1F~180F‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
+	//0•b~10•b‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
 	ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 0.0f, 10.0f);
 	ImGui::End();
 	shotCoolTimer_.maxTime_ = coolTimer;
