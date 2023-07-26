@@ -29,6 +29,7 @@ void Field::Init()
 	fieldObj_->SetDivide(tileDivide_);
 	fieldObj_->SetActivityArea(activityAreaX_);
 
+	lines_.clear();	//一回全部消してから生成し直す
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
 	{
 		lines_.emplace_back();
@@ -50,10 +51,32 @@ void Field::Init()
 	lines_[(uint32_t)LineType::Start].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
 	lines_[(uint32_t)LineType::Start].offset = 5.0f;
 	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
+	lines_[(uint32_t)LineType::Start].line->position_ =
+	{ 
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_ 
+	};
+	lines_[(uint32_t)LineType::Start].text->position_ =
+	{
+		Player::GetInstance()->GetPos().x +
+		lines_[(uint32_t)LineType::Start].offset +
+		lines_[(uint32_t)LineType::Start].slidePos,
+		0, startPosZ_ - 0.5f 
+	};
 
 	lines_[(uint32_t)LineType::Goal].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["goal"];
 	lines_[(uint32_t)LineType::Goal].offset = 5.0f;
 	lines_[(uint32_t)LineType::Goal].text->position_ = { lines_[(uint32_t)LineType::Goal].offset,0, goalPosZ_ - 0.5f };
+	lines_[(uint32_t)LineType::Goal].line->position_ =
+	{
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_
+	};
+	lines_[(uint32_t)LineType::Goal].text->position_ =
+	{ 
+		Player::GetInstance()->GetPos().x +
+		lines_[(uint32_t)LineType::Goal].offset +
+		lines_[(uint32_t)LineType::Goal].slidePos,
+		0, goalPosZ_ - 0.5f
+	};
 #pragma endregion
 }
 
@@ -61,20 +84,28 @@ void Field::Update()
 {
 	//座標を適用
 	lines_[(uint32_t)LineType::Start].line->position_ =
-	{ Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_ };
+	{
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_
+	};
 	lines_[(uint32_t)LineType::Start].text->position_ =
-	{ Player::GetInstance()->GetPos().x +
+	{
+		Player::GetInstance()->GetPos().x +
 		lines_[(uint32_t)LineType::Start].offset +
 		lines_[(uint32_t)LineType::Start].slidePos,
-		0, startPosZ_ - 0.5f };
+		0, startPosZ_ - 0.5f
+	};
 
 	lines_[(uint32_t)LineType::Goal].line->position_ =
-	{ Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_ };
+	{
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_ 
+	};
 	lines_[(uint32_t)LineType::Goal].text->position_ =
-	{ Player::GetInstance()->GetPos().x +
+	{ 
+		Player::GetInstance()->GetPos().x +
 		lines_[(uint32_t)LineType::Goal].offset +
 		lines_[(uint32_t)LineType::Goal].slidePos,
-		0, goalPosZ_ - 0.5f };
+		0, goalPosZ_ - 0.5f 
+	};
 
 	//スタートしてないとき
 	if (isStart_ == false)

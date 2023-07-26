@@ -111,7 +111,9 @@ void Player::Update()
 
 void Player::ClearUpdate()
 {
-	isDraw_ = true;
+	isDraw_ = true;						//絶対描画させる
+	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	obj_->position_.z += 0.05f;			//前に向かって走り続ける
 
 	obj_->Update();
 }
@@ -129,8 +131,8 @@ void Player::FaildUpdate()
 		faildEffectTimer_.Reset();
 	}
 
-	isDraw_ = true;		//絶対描画させる
-	NPostEffect::SetIsActive(false);
+	isDraw_ = true;						//絶対描画させる
+	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
 	obj_->position_ = deadPos_ + NVector3(3.0f, 2.0f, -5.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる

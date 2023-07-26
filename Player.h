@@ -37,8 +37,9 @@ private:
 	SimpleParticle deadParticle_;				//死んだときに出るパーティクル
 	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
 	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
-
 	NVector3 deadPos_;							//死んだ座標保存用
+
+	//------------------------ その他 ------------------------//
 	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
 
 public:

@@ -108,6 +108,12 @@ void NGameScene::Update()
 			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
+
+		if (Field::GetInstance()->GetIsGoal())
+		{
+			scene = SceneMode::Clear;
+			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
+		}
 	}
 	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
 	{

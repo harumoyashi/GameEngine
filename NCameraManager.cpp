@@ -9,7 +9,7 @@ void NCameraManager::NormalCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ - NVector3(0, length_, length_ * 0.5f);
+	nextPos_ = nextTarget_ + NVector3(0, -length_, -length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVector3(0, 0, 1);	//下見下ろす形にする
@@ -57,7 +57,7 @@ void NCameraManager::TitleCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ - NVector3(length_, 0, -length_);
+	nextPos_ = nextTarget_ + NVector3(-length_, 0, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVector3(0, 1, 0);
@@ -110,7 +110,7 @@ void NCameraManager::FaildCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = Player::GetInstance()->GetPos() - NVector3(0, -length_ * 0.5f, length_);
+	nextPos_ = Player::GetInstance()->GetPos() + NVector3(0, length_ * 0.5f, -length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVector3(0, 1, 0);
@@ -134,7 +134,7 @@ void NCameraManager::FaildCameraUpdate()
 		faildCameraMoveEase_.Start();
 	}
 
-	//前のカメラから現在のカメラまでのイージング
+	//前のカメラから現在のカメラまでの補間
 	if (faildCameraMoveEase_.GetRun())
 	{
 		NVector3 target,pos,upVec;
@@ -145,18 +145,76 @@ void NCameraManager::FaildCameraUpdate()
 		faildCamera_.SetTarget(target);
 		faildCamera_.SetEye(pos);
 		faildCamera_.SetUpVec(upVec);
-	}
-
-	//カメラ動くことないからイージング終わったら放置でいいかも
-	if (faildCameraMoveEase_.GetEnd())
-	{
-		faildCamera_.SetTarget(nextTarget_);
-		faildCamera_.SetEye(nextPos_);
-		faildCamera_.SetUpVec(nextUpVec_);
-	}
+	}	//カメラ動くことないから補間終わったら放置
 
 	faildCamera_.Update();
 	NCamera::sCurrentCamera = &faildCamera_;
+}
+
+void NCameraManager::ClearCameraInit()
+{
+	length_ = 1.0f;
+	clearCameraMoveEase_.Reset();
+
+	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+	nextTarget_ = Player::GetInstance()->GetPos();
+
+	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	nextPos_ = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	nextUpVec_ = NVector3(0, 1, 0);
+
+	currentFov_ = NCamera::sCurrentCamera->GetFov();
+	nextFov_ = 45.0f;
+}
+
+void NCameraManager::ClearCameraUpdate()
+{
+	if (isChange_ == false)
+	{
+		ClearCameraInit();
+		isChange_ = true;
+	}
+
+	//イージング用のタイマー動かす
+	clearCameraMoveEase_.Update();
+	if (clearCameraMoveEase_.GetStarted() == false)
+	{
+		clearCameraMoveEase_.Start();
+	}
+
+	//前のカメラから現在のカメラまでの補間
+	if (clearCameraMoveEase_.GetRun())
+	{
+		//ずれが起きないように更新し続ける
+		currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+		nextTarget_ = Player::GetInstance()->GetPos();
+		currentPos_ = NCamera::sCurrentCamera->GetPos();
+		nextPos_ = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+		currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+
+		NVector3 target, pos, upVec;
+		target = InQuad(currentTarget_, nextTarget_, clearCameraMoveEase_.GetTimeRate());
+		pos = InQuad(currentPos_, nextPos_, clearCameraMoveEase_.GetTimeRate());
+		upVec = InQuad(currentUpVec_, nextUpVec_, clearCameraMoveEase_.GetTimeRate());
+
+		clearCamera_.SetTarget(target);
+		clearCamera_.SetEye(pos);
+		clearCamera_.SetUpVec(upVec);
+	}
+
+	//補間終わった後もプレイヤーが動くので追いかけ続ける
+	if (clearCameraMoveEase_.GetEnd())
+	{
+		NVector3 pos;
+		pos = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+		clearCamera_.SetEye(pos);
+		clearCamera_.SetTarget(Player::GetInstance()->GetPos());
+	}
+
+	clearCamera_.Update();
+	NCamera::sCurrentCamera = &clearCamera_;
 }
 
 NVector3 NCameraManager::InQuad(const NVector3& start, const NVector3& end, float timerate)
@@ -195,6 +253,7 @@ void NCameraManager::Init()
 
 	cameraRotEase_ = 4.0f;
 	faildCameraMoveEase_ = 0.3f;
+	clearCameraMoveEase_ = 0.5f;
 }
 
 void NCameraManager::Update()
@@ -222,6 +281,7 @@ void NCameraManager::Update()
 		&NCameraManager::DebugCameraUpdate,
 		&NCameraManager::TitleCameraUpdate,
 		&NCameraManager::FaildCameraUpdate,
+		&NCameraManager::ClearCameraUpdate,
 	};
 
 	// 実行

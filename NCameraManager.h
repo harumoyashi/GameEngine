@@ -29,9 +29,12 @@ private:
 	NCamera titleCamera_;						//タイトルのカメラ
 	NEasing::EaseTimer titleCameraMoveEase_;	//タイトルカメラに持ってくためのイージング
 	NEasing::EaseTimer cameraRotEase_;			//カメラを回転させる用のタイマー
-	//リザルト時のカメラ関連
-	NCamera faildCamera_;						//リザルトのカメラ
-	NEasing::EaseTimer faildCameraMoveEase_;	//リザルトカメラに持ってくためのイージング
+	//失敗リザルト時のカメラ関連
+	NCamera faildCamera_;						//失敗リザルトのカメラ
+	NEasing::EaseTimer faildCameraMoveEase_;	//失敗リザルトカメラに持ってくためのイージング
+	//クリアリザルト時のカメラ関連
+	NCamera clearCamera_;						//クリアリザルトのカメラ
+	NEasing::EaseTimer clearCameraMoveEase_;	//クリアリザルトカメラに持ってくためのイージング
 
 	// 姿勢制御関連
 	NVector3 frontVec_;
@@ -62,9 +65,12 @@ private:
 	// タイトル時
 	void TitleCameraInit();
 	void TitleCameraUpdate();
-	// リザルト時
+	// 失敗リザルト時
 	void FaildCameraInit();
 	void FaildCameraUpdate();
+	// クリアリザルト時
+	void ClearCameraInit();
+	void ClearCameraUpdate();
 
 	//Vec3のイージング用
 	NVector3 InQuad(const NVector3& start,const NVector3& end,float timerate);
