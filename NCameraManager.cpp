@@ -104,12 +104,16 @@ void NCameraManager::TitleCameraUpdate()
 void NCameraManager::FaildCameraInit()
 {
 	length_ = 2.0f;
+	faildCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
 	nextPos_ = Player::GetInstance()->GetPos() - NVector3(0, -length_ * 0.5f, length_);
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	nextUpVec_ = NVector3(0, 1, 0);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -123,12 +127,54 @@ void NCameraManager::FaildCameraUpdate()
 		isChange_ = true;
 	}
 
+	//イージング用のタイマー動かす
+	faildCameraMoveEase_.Update();
+	if (faildCameraMoveEase_.GetStarted() == false)
+	{
+		faildCameraMoveEase_.Start();
+	}
+
+	//前のカメラから現在のカメラまでのイージング
+	if (faildCameraMoveEase_.GetRun())
+	{
+		NVector3 target,pos,upVec;
+		target = OutQuad(currentTarget_, nextTarget_, faildCameraMoveEase_.GetTimeRate());
+		pos = OutQuad(currentPos_, nextPos_, faildCameraMoveEase_.GetTimeRate());
+		upVec = OutQuad(currentUpVec_, nextUpVec_, faildCameraMoveEase_.GetTimeRate());
+
+		faildCamera_.SetTarget(target);
+		faildCamera_.SetEye(pos);
+		faildCamera_.SetUpVec(upVec);
+	}
+
 	//カメラ動くことないからイージング終わったら放置でいいかも
-	faildCamera_.SetTarget(nextTarget_);
-	faildCamera_.SetEye(nextPos_);
+	if (faildCameraMoveEase_.GetEnd())
+	{
+		faildCamera_.SetTarget(nextTarget_);
+		faildCamera_.SetEye(nextPos_);
+		faildCamera_.SetUpVec(nextUpVec_);
+	}
 
 	faildCamera_.Update();
 	NCamera::sCurrentCamera = &faildCamera_;
+}
+
+NVector3 NCameraManager::InQuad(const NVector3& start, const NVector3& end, float timerate)
+{
+	NVector3 result;
+	result.x = NEasing::InQuad(start.x, end.x, timerate);
+	result.y = NEasing::InQuad(start.y, end.y, timerate);
+	result.z = NEasing::InQuad(start.z, end.z, timerate);
+	return result;
+}
+
+NVector3 NCameraManager::OutQuad(const NVector3& start, const NVector3& end, float timerate)
+{
+	NVector3 result;
+	result.x = NEasing::OutQuad(start.x, end.x, timerate);
+	result.y = NEasing::OutQuad(start.y, end.y, timerate);
+	result.z = NEasing::OutQuad(start.z, end.z, timerate);
+	return result;
 }
 
 NCameraManager* NCameraManager::GetInstance()
@@ -146,6 +192,9 @@ void NCameraManager::Init()
 	nowCameraType_ = (uint32_t)CameraType::Normal;
 	isChange_ = false;
 	isActive_ = true;
+
+	cameraRotEase_ = 4.0f;
+	faildCameraMoveEase_ = 0.3f;
 }
 
 void NCameraManager::Update()

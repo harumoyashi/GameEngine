@@ -28,7 +28,7 @@ private:
 	//タイトル時のカメラ関連
 	NCamera titleCamera_;						//タイトルのカメラ
 	NEasing::EaseTimer titleCameraMoveEase_;	//タイトルカメラに持ってくためのイージング
-	NEasing::EaseTimer cameraRotEase_ = 4.0f;	//カメラを回転させる用のタイマー
+	NEasing::EaseTimer cameraRotEase_;			//カメラを回転させる用のタイマー
 	//リザルト時のカメラ関連
 	NCamera faildCamera_;						//リザルトのカメラ
 	NEasing::EaseTimer faildCameraMoveEase_;	//リザルトカメラに持ってくためのイージング
@@ -65,6 +65,10 @@ private:
 	// リザルト時
 	void FaildCameraInit();
 	void FaildCameraUpdate();
+
+	//Vec3のイージング用
+	NVector3 InQuad(const NVector3& start,const NVector3& end,float timerate);
+	NVector3 OutQuad(const NVector3& start,const NVector3& end,float timerate);
 
 public:
 	//シングルトンインスタンス取得
