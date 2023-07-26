@@ -9,7 +9,7 @@ void NCameraManager::NormalCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ - NVector3(0, length_, 0);
+	nextPos_ = nextTarget_ - NVector3(0, length_, length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVector3(0, 0, 1);	//下見下ろす形にする
@@ -29,7 +29,7 @@ void NCameraManager::NormalCameraUpdate()
 	//前のカメラから諸々イージングしてから下の処理やりたい
 
 	normalCamera_.SetTarget(Player::GetInstance()->GetPos());
-	normalCamera_.SetEye(normalCamera_.GetTarget() + NVector3(0, length_, 0));
+	normalCamera_.SetEye(normalCamera_.GetTarget() + NVector3(0, length_, -length_ * 0.5f));
 	normalCamera_.SetUpVec(nextUpVec_);
 
 	normalCamera_.Update();
@@ -94,41 +94,41 @@ void NCameraManager::TitleCameraUpdate()
 		cameraRotEase_.GetTimeRate() * PI2);
 
 	titleCamera_.SetTarget(Player::GetInstance()->GetPos());
-	titleCamera_.SetEye(NVector3(vec2.x,length_,vec2.y));
+	titleCamera_.SetEye(NVector3(vec2.x, length_, vec2.y));
 	titleCamera_.SetUpVec(nextUpVec_);
 
 	titleCamera_.Update();
 	NCamera::sCurrentCamera = &titleCamera_;
 }
 
-void NCameraManager::ResultCameraInit()
+void NCameraManager::FaildCameraInit()
 {
-	length_ = 20.0f;
+	length_ = 2.0f;
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = Player::GetInstance()->GetPos() - NVector3(0, 0, -length_);
+	nextPos_ = Player::GetInstance()->GetPos() - NVector3(0, -length_ * 0.5f, length_);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
 }
 
-void NCameraManager::ResultCameraUpdate()
+void NCameraManager::FaildCameraUpdate()
 {
 	if (isChange_ == false)
 	{
-		ResultCameraInit();
+		FaildCameraInit();
 		isChange_ = true;
 	}
 
 	//カメラ動くことないからイージング終わったら放置でいいかも
-	resultCamera_.SetTarget(nextTarget_);
-	resultCamera_.SetEye(nextPos_);
+	faildCamera_.SetTarget(nextTarget_);
+	faildCamera_.SetEye(nextPos_);
 
-	resultCamera_.Update();
-	NCamera::sCurrentCamera = &resultCamera_;
+	faildCamera_.Update();
+	NCamera::sCurrentCamera = &faildCamera_;
 }
 
 NCameraManager* NCameraManager::GetInstance()
@@ -172,7 +172,7 @@ void NCameraManager::Update()
 		&NCameraManager::NormalCameraUpdate,
 		&NCameraManager::DebugCameraUpdate,
 		&NCameraManager::TitleCameraUpdate,
-		&NCameraManager::ResultCameraUpdate,
+		&NCameraManager::FaildCameraUpdate,
 	};
 
 	// 実行

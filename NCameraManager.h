@@ -5,10 +5,11 @@
 //ここにカメラの種類登録
 enum class CameraType
 {
-	Normal,
-	Debug,
-	Title,
-	Result,
+	Normal,	//通常(プレイ中)
+	Debug,	//デバッグ用
+	Title,	//タイトル用
+	Faild,	//失敗リザルト用
+	Clear,	//クリアリザルト用
 };
 
 class NCameraManager final
@@ -29,8 +30,8 @@ private:
 	NEasing::EaseTimer titleCameraMoveEase_;	//タイトルカメラに持ってくためのイージング
 	NEasing::EaseTimer cameraRotEase_ = 4.0f;	//カメラを回転させる用のタイマー
 	//リザルト時のカメラ関連
-	NCamera resultCamera_;						//リザルトのカメラ
-	NEasing::EaseTimer resultCameraMoveEase_;	//リザルトカメラに持ってくためのイージング
+	NCamera faildCamera_;						//リザルトのカメラ
+	NEasing::EaseTimer faildCameraMoveEase_;	//リザルトカメラに持ってくためのイージング
 
 	// 姿勢制御関連
 	NVector3 frontVec_;
@@ -62,8 +63,8 @@ private:
 	void TitleCameraInit();
 	void TitleCameraUpdate();
 	// リザルト時
-	void ResultCameraInit();
-	void ResultCameraUpdate();
+	void FaildCameraInit();
+	void FaildCameraUpdate();
 
 public:
 	//シングルトンインスタンス取得

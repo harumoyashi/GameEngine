@@ -50,6 +50,7 @@ bool Player::Init()
 	godmodeTimer_.maxTime_ = 2.0f;
 
 	isMove_ = true;
+	elapseSpeed_ = 0.0f;
 
 	//弾のレベルたち
 	lineLevel_ = 1;
@@ -66,6 +67,9 @@ bool Player::Init()
 
 	deadEffectTimer_ = 1.0f;	//スローは考慮せずに何秒か
 	deadEffectTimer_.Reset();
+
+	faildEffectTimer_ = 3.0f;
+	faildEffectTimer_.Reset();
 
 	return true;
 }
@@ -93,6 +97,9 @@ void Player::Update()
 	{
 		//コライダーマネージャーから削除
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+
+		deadPos_ = GetPos();	//リザルト用に死んだ座標を記録
+		isDraw_ = false;		//通常は死んだら描画しない
 	}
 
 	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
@@ -102,14 +109,41 @@ void Player::Update()
 	}
 }
 
+void Player::ClearUpdate()
+{
+	isDraw_ = true;
+
+	obj_->Update();
+}
+
+void Player::FaildUpdate()
+{
+	faildEffectTimer_.Update();
+	//タイマーループ
+	if (faildEffectTimer_.GetStarted() == false)
+	{
+		faildEffectTimer_.Start();
+	}
+	else if (faildEffectTimer_.GetEnd())
+	{
+		faildEffectTimer_.Reset();
+	}
+
+	isDraw_ = true;		//絶対描画させる
+	NPostEffect::SetIsActive(false);
+	obj_->position_ = deadPos_ + NVector3(3.0f, 2.0f, -5.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
+
+	//その場で回転させる
+	obj_->rotation_.y = MathUtil::Radian2Degree(faildEffectTimer_.GetTimeRate() * PI2);
+
+	obj_->Update();
+}
+
 void Player::Draw()
 {
-	if (isAlive_)	//ほんとは違うけど一旦わかりやすいので
+	if (isDraw_)
 	{
-		if (isDraw_)
-		{
-			obj_->Draw();
-		}
+		obj_->Draw();
 	}
 }
 

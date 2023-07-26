@@ -33,10 +33,13 @@ private:
 	uint32_t wideLevel_;		//左右に角度つけて出る弾のレベル
 	uint32_t roketLevel_;		//ロケット弾のレベル
 
-	//------------------------ その他 ------------------------//
+	//------------------------ 死んだとき関連 ------------------------//
 	SimpleParticle deadParticle_;				//死んだときに出るパーティクル
 	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
 	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
+
+	NVector3 deadPos_;							//死んだ座標保存用
+	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
 
 public:
 	Player();
@@ -47,9 +50,12 @@ public:
 	bool Init();
 	//更新
 	void Update();
+	//クリア時専用の更新
+	void ClearUpdate();
+	//失敗時専用の更新
+	void FaildUpdate();
 	//描画
 	void Draw();
-	void DrawSprite();
 
 	//移動処理
 	void Move();

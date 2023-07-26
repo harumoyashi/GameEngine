@@ -397,7 +397,7 @@
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="NTile.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -627,7 +627,7 @@
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="NTile.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

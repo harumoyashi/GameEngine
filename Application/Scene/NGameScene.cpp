@@ -72,7 +72,6 @@ void NGameScene::Update()
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-	Player::GetInstance()->Update();
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
@@ -86,6 +85,7 @@ void NGameScene::Update()
 
 	if (scene == SceneMode::Play)	//プレイ中の処理
 	{
+		Player::GetInstance()->Update();
 		Wave::GetInstance()->Update();
 		//死亡パーティクル出るボタン
 		if (NInput::IsKeyDown(DIK_0))
@@ -105,22 +105,29 @@ void NGameScene::Update()
 			Player::GetInstance()->GetDeadEffectEnd())
 		{
 			scene = SceneMode::Faild;
-			NCameraManager::GetInstance()->ChangeCameara(CameraType::Result);
+			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
+			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
 	}
 	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
 	{
+		Player::GetInstance()->ClearUpdate();
 
+		//シーン切り替え
+		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+		{
+			NSceneChange::GetInstance()->Start();	//シーン遷移開始
+		}
 	}
 	else if (scene == SceneMode::Faild)	//失敗リザルトの処理
 	{
+		Player::GetInstance()->FaildUpdate();
 
-	}
-
-	//シーン切り替え
-	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-	{
-		NSceneChange::GetInstance()->Start();	//シーン遷移開始
+		//シーン切り替え
+		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+		{
+			NSceneChange::GetInstance()->Start();	//シーン遷移開始
+		}
 	}
 
 	//切り替えてﾖｼって言われたら
@@ -130,7 +137,13 @@ void NGameScene::Update()
 		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
 
-	//リセットボタン
+	//シーン切り替え(デバッグ用)
+	if (NInput::IsKeyDown(DIK_RETURN) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
+	{
+		NSceneChange::GetInstance()->Start();	//シーン遷移開始
+	}
+
+	//リセットボタン(デバッグ用)
 	if (NInput::IsKeyDown(DIK_R) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 	{
 		NSceneManager::ChangeScene<NGameScene>();
