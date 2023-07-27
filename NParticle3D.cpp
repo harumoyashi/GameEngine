@@ -259,6 +259,7 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 		p.velo = randomVelo;
 		p.accel = accel;
 		p.aliveTimer = life;
+		p.aliveTimer.Start();
 		p.scale = sX;
 		p.startScale = p.scale;
 		p.endScale = 0.0f;

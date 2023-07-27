@@ -35,9 +35,6 @@ Player* Player::GetInstance()
 
 bool Player::Init()
 {
-	deadParticle_.Init();
-	deadParticle_.ClearParticles();
-
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
@@ -50,7 +47,7 @@ bool Player::Init()
 	moveSpeed_ = 0.05f;
 
 	godmodeTimer_.Reset();
-	godmodeTimer_.maxTime_ = 2.0f;
+	godmodeTimer_.maxTime_ = 2.5f;
 
 	isMove_ = true;
 	elapseSpeed_ = 0.0f;
@@ -68,7 +65,7 @@ bool Player::Init()
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
-	deadEffectTimer_ = 2.0f;	//スローは考慮せずに何秒か
+	deadEffectTimer_ = 1.5f;	//スローは考慮せずに何秒か
 	deadEffectTimer_.Reset();
 
 	faildEffectTimer_ = 3.0f;
@@ -94,20 +91,26 @@ void Player::Update()
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
 	{
+		if (deadEffectTimer_.GetStarted() == false)
+		{
+			deadEffectTimer_.Start();
+		}
+
 		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//死亡演出の2割はヒットストップに使う
 		{
 			elapseSpeed_ = 0.0f;
 		}
 		else
 		{
+			DeadParticle();
 			elapseSpeed_ = slowElapseTime_;			//ヒットストップ終わったらスローに
+			isDraw_ = false;						//通常は死んだら描画しない
 		}
 
 		//コライダーマネージャーから削除
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 
 		deadPos_ = GetPos();	//リザルト用に死んだ座標を記録
-		isDraw_ = false;		//通常は死んだら描画しない
 	}
 
 	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
@@ -141,7 +144,7 @@ void Player::FaildUpdate()
 
 	isDraw_ = true;						//絶対描画させる
 	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
-	obj_->position_ = deadPos_ + NVector3(3.0f, 2.0f, -5.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
+	obj_->position_ = deadPos_ + NVector3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる
 	obj_->rotation_.y = MathUtil::Radian2Degree(faildEffectTimer_.GetTimeRate() * PI2);
@@ -252,7 +255,6 @@ void Player::OnCollision()
 	//当たった相手が敵だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
-		DeadParticle();
 		isAlive_ = false;
 		NAudioManager::Play("explosionSE");
 	}
@@ -260,12 +262,8 @@ void Player::OnCollision()
 
 void Player::DeadParticle()
 {
-	if (isAlive_)
+	if (isDraw_)
 	{
-		if (deadEffectTimer_.GetStarted() == false)
-		{
-			deadEffectTimer_.Start();
-		}
 		RadialBlur::Init();		//ラジアルブラーかける
 		deadParticle_.SetIsRotation(true);
 		deadParticle_.SetPos(obj_->position_);
