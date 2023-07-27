@@ -98,10 +98,20 @@ void Player::Update()
 
 		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//死亡演出の2割はヒットストップに使う
 		{
+			isFlashing_ = ((int)(deadEffectTimer_.GetTimeRate() * 100.0f) % 2 == 0);
+			if (isFlashing_^ obj_->color_ == NColor::kWhite)
+			{
+				obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
+			}
+			else
+			{
+				obj_->color_ = NColor::kWhite;
+			}
 			elapseSpeed_ = 0.0f;
 		}
 		else
 		{
+			obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
 			DeadParticle();
 			elapseSpeed_ = slowElapseTime_;			//ヒットストップ終わったらスローに
 			isDraw_ = false;						//通常は死んだら描画しない
@@ -268,6 +278,6 @@ void Player::DeadParticle()
 		deadParticle_.SetIsRotation(true);
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
-			150, 1.5f, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }
