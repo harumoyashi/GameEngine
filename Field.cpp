@@ -46,21 +46,44 @@ void Field::Init()
 		lines_.back().slidePos = 0.0f;
 		lines_.back().slideTimer.Reset();
 	}
+
+	checkPoints_.clear();	//一回全部消してから生成し直す
+	for (uint32_t i = 0; i < checkPointNum; i++)
+	{
+		checkPoints_.emplace_back();
+		checkPoints_.back().line = std::make_unique<NObj3d>();
+		checkPoints_.back().line->Init();
+		checkPoints_.back().line->SetModel("plane");
+		checkPoints_.back().line->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
+		checkPoints_.back().text = std::make_unique<NObj3d>();
+		checkPoints_.back().text->Init();
+		checkPoints_.back().text->SetModel("plane");
+		checkPoints_.back().text->scale_ = { 1.5f,1.0f,0.25f };
+		checkPoints_.back().text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
+
+		float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
+		checkPoints_.back().line->position_ = { Player::GetInstance()->GetPos().x,0, posZ };
+		checkPoints_.back().text->position_ = { checkPoints_.back().offset,0, posZ - 0.5f };
+
+		checkPoints_.back().isSlide = false;
+		checkPoints_.back().slidePos = 0.0f;
+		checkPoints_.back().slideTimer.Reset();
+	}
 #pragma endregion
 #pragma region 各オブジェクトの設定
 	lines_[(uint32_t)LineType::Start].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
 	lines_[(uint32_t)LineType::Start].offset = 5.0f;
 	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
 	lines_[(uint32_t)LineType::Start].line->position_ =
-	{ 
-		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_ 
+	{
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_
 	};
 	lines_[(uint32_t)LineType::Start].text->position_ =
 	{
 		Player::GetInstance()->GetPos().x +
 		lines_[(uint32_t)LineType::Start].offset +
 		lines_[(uint32_t)LineType::Start].slidePos,
-		0, startPosZ_ - 0.5f 
+		0, startPosZ_ - 0.5f
 	};
 
 	lines_[(uint32_t)LineType::Goal].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["goal"];
@@ -71,7 +94,7 @@ void Field::Init()
 		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_
 	};
 	lines_[(uint32_t)LineType::Goal].text->position_ =
-	{ 
+	{
 		Player::GetInstance()->GetPos().x +
 		lines_[(uint32_t)LineType::Goal].offset +
 		lines_[(uint32_t)LineType::Goal].slidePos,
@@ -82,7 +105,7 @@ void Field::Init()
 
 void Field::Update()
 {
-	//座標を適用
+#pragma region 座標を適用
 	lines_[(uint32_t)LineType::Start].line->position_ =
 	{
 		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_
@@ -97,16 +120,32 @@ void Field::Update()
 
 	lines_[(uint32_t)LineType::Goal].line->position_ =
 	{
-		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_ 
+		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Goal].slidePos,0, goalPosZ_
 	};
 	lines_[(uint32_t)LineType::Goal].text->position_ =
-	{ 
+	{
 		Player::GetInstance()->GetPos().x +
 		lines_[(uint32_t)LineType::Goal].offset +
 		lines_[(uint32_t)LineType::Goal].slidePos,
-		0, goalPosZ_ - 0.5f 
+		0, goalPosZ_ - 0.5f
 	};
 
+	for (uint32_t i = 0; i < checkPointNum; i++)
+	{
+		float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
+		checkPoints_[i].line->position_ =
+		{
+			Player::GetInstance()->GetPos().x + checkPoints_[i].slidePos,0, posZ
+		};
+		checkPoints_[i].text->position_ =
+		{
+			Player::GetInstance()->GetPos().x +
+			checkPoints_[i].offset +
+			checkPoints_[i].slidePos,
+			0, posZ - 0.5f
+		};
+	}
+#pragma endregion 
 	//スタートしてないとき
 	if (isStart_ == false)
 	{
@@ -126,10 +165,26 @@ void Field::Update()
 			NEasing::InQuad(0.0f,
 				-fieldObj_->scale_.x,
 				lines_[(uint32_t)LineType::Start].slideTimer.GetTimeRate());
+		//画面左外までぶっ飛ばす
+		for (uint32_t i = 0; i < checkPointNum; i++)
+		{
+			checkPoints_[i].slidePos =
+				NEasing::InQuad(0.0f, -fieldObj_->scale_.x, checkPoints_[i].slideTimer.GetTimeRate());
+		}
 
 		//スライドしきったら
 		if (lines_[(uint32_t)LineType::Start].slideTimer.GetEnd())
 		{
+		}
+
+		//線を超えたらスタートした判定trueに
+		for (uint32_t i = 0; i < checkPointNum; i++)
+		{
+			float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
+			if (posZ <= Player::GetInstance()->GetPos().z)
+			{
+				checkPoints_[i].isSlide = true;
+			}
 		}
 
 		//------------------------------------- 敵の生成処理 -------------------------------------//
@@ -187,6 +242,25 @@ void Field::Update()
 		//タイマー更新
 		lines_[i].slideTimer.Update();
 	}
+	//スライドしていいなら
+	for (uint32_t i = 0; i < checkPointNum; i++)
+	{
+		if (checkPoints_[i].isSlide)
+		{
+			//スタート線スライドタイマー開始
+			if (checkPoints_[i].slideTimer.GetStarted() == false)
+			{
+				checkPoints_[i].slideTimer.Start();
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+
+				NAudioManager::Play("startSE");
+				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする
+			}
+		}
+		//タイマー更新
+		checkPoints_[i].slideTimer.Update();
+	}
 
 	//オブジェクトの更新
 	fieldObj_->SetDivide(tileDivide_);
@@ -197,6 +271,12 @@ void Field::Update()
 	{
 		lines_[i].line->Update();
 		lines_[i].text->Update();
+	}
+
+	for (uint32_t i = 0; i < checkPointNum; i++)
+	{
+		checkPoints_[i].line->Update();
+		checkPoints_[i].text->Update();
 	}
 
 	//リリースでもいじりたいからifdefで囲ってない
@@ -221,6 +301,12 @@ void Field::Draw()
 	{
 		lines_[i].line->Draw();
 		lines_[i].text->Draw();
+	}
+
+	for (uint32_t i = 0; i < checkPointNum; i++)
+	{
+		checkPoints_[i].line->Draw();
+		checkPoints_[i].text->Draw();
 	}
 	NObj3d::SetBlendMode(BlendMode::None);
 }
