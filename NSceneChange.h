@@ -35,4 +35,9 @@ public:
 	// セッター //
 	//シーン切り替えるかフラグ設定
 	void SetIsChange(bool isChange) { this->isSceneChange_ = isChange; }
+
+private:
+	NSceneChange(const NSceneChange&) = delete;
+	~NSceneChange() = default;
+	NSceneChange& operator=(const NSceneChange&) = delete;
 };

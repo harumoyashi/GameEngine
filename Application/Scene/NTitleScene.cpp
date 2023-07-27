@@ -14,12 +14,6 @@
 #include "Player.h"
 #include "Field.h"
 
-NTitleScene* NTitleScene::GetInstance()
-{
-	static NTitleScene instance;
-	return &instance;
-}
-
 NTitleScene::NTitleScene()
 {
 }

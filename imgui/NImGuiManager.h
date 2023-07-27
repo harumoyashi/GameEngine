@@ -19,4 +19,10 @@ public:
 	void End();
 	//‰æ–Ê‚Ö‚Ì•`‰æ
 	void Draw();
+
+private:
+	NImGuiManager() = default;
+	NImGuiManager(const NImGuiManager&) = delete;
+	~NImGuiManager() = default;
+	NImGuiManager& operator=(const NImGuiManager&) = delete;
 };

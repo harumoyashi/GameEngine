@@ -34,9 +34,6 @@ private:
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
-	//インスタンス取得
-	static NResultScene* GetInstance();
-
 	void Init();
 	void Update();
 	void Draw();

@@ -4,12 +4,6 @@
 #include "NTitleScene.h"
 #include "NCameraManager.h"
 
-NResultScene* NResultScene::GetInstance()
-{
-	static NResultScene instance;
-	return &instance;
-}
-
 void NResultScene::Init()
 {
 #pragma region	オーディオ初期化

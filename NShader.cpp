@@ -4,11 +4,7 @@
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
-NShader* NShader::GetInstance()
-{
-	static NShader instance;
-	return &instance;
-}
+std::map<std::string, NShader> NShader::shaderMap_;
 
 void NShader::LoadVS(std::string vsPath)
 {

@@ -1,6 +1,5 @@
 #pragma once
 #include <DirectXMath.h>
-#include "NDX12.h"
 #include "NTexture.h"
 #include "NRootSignature.h"
 #include "NRootParam.h"
@@ -156,4 +155,10 @@ public:
 	static PipeLineManager* GetInstance();
 	//パイプライン全種つくる
 	void CreateAll();
+
+private:
+	PipeLineManager() = default;
+	PipeLineManager(const PipeLineManager&) = delete;
+	~PipeLineManager() = default;
+	PipeLineManager& operator=(const PipeLineManager&) = delete;
 };

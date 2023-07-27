@@ -25,4 +25,9 @@ public:
 
 	// セッター //
 
+private:
+	Wave() = default;
+	Wave(const Wave&) = delete;
+	~Wave() = default;
+	Wave& operator=(const Wave&) = delete;
 };

@@ -15,12 +15,6 @@
 #include "Field.h"
 #include "Wave.h"
 
-NGameScene* NGameScene::GetInstance()
-{
-	static NGameScene instance;
-	return &instance;
-}
-
 void NGameScene::LoadResources()
 {
 }

@@ -17,4 +17,10 @@ public:
 	void Update();
 	//íeÇÃê∂ê¨
 	void Create(IBullet::BulletType type,NVector3 pos,uint32_t level);
+
+private:
+	BulletFactory() = default;
+	BulletFactory(const BulletFactory&) = delete;
+	~BulletFactory() = default;
+	BulletFactory& operator=(const BulletFactory&) = delete;
 };

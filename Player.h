@@ -104,4 +104,7 @@ public:
 	void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
 	//“®‚¯‚é‚©ƒtƒ‰ƒOİ’è
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
+
+private:
+	Player& operator=(const Player&) = delete;
 };

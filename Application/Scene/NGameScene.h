@@ -46,9 +46,6 @@ private:
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
-	//インスタンス取得
-	static NGameScene* GetInstance();
-
 	void LoadResources();
 	void Init() override;
 	void Update() override;
@@ -62,8 +59,5 @@ public:
 	void DrawParticle() override;
 	//前景スプライト
 	void DrawForeSprite() override;
-
-private:
-
 
 };

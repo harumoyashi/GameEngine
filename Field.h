@@ -32,9 +32,11 @@ public:
 private:
 	std::unique_ptr<NTile> fieldObj_;			//床
 	std::vector<Line> lines_;					//フィールドにある線たち
+	std::vector<Line> checkPoints_;				//フィールドにあるチェックポイントたち
 
 	float tileDivide_ = 0.5f;					//タイルの分割幅
 	float activityAreaX_ = 10.0f;				//行動範囲制限
+	uint32_t checkPosintNum = 3;				//チェックポイントいくつか
 	
 	float startPosZ_ = 5.0f;					//スタート地点(縦だけ)
 	float goalPosZ_ = 20.0f;					//ゴール地点(縦だけ)
@@ -63,4 +65,10 @@ public:
 
 	// セッター //
 
+
+private:
+	Field() = default;
+	Field(const Field&) = delete;
+	~Field() = default;
+	Field& operator=(const Field&) = delete;
 };

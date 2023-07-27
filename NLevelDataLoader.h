@@ -40,5 +40,11 @@ public:
 
 	//ƒJƒƒ‰‚ğİ’è‚·‚é
 	NCamera SetCamera(const LevelData* levelData);
+
+private:
+	NLevelDataLoader() = default;
+	NLevelDataLoader(const NLevelDataLoader&) = delete;
+	~NLevelDataLoader() = default;
+	NLevelDataLoader& operator=(const NLevelDataLoader&) = delete;
 };
 

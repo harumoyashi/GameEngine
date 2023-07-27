@@ -172,5 +172,11 @@ private:
 	void SetViewport();
 	//シザー矩形設定
 	void SetScissorRect();
+
+	private:
+		NDX12() = default;
+		NDX12(const NDX12&) = delete;
+		~NDX12() = default;
+		NDX12& operator=(const NDX12&) = delete;
 };
 

@@ -47,4 +47,10 @@ public:
 	const HWND& GetHwnd()const { return hwnd_; }
 	const HINSTANCE& GetHInstance()const { return win_.hInstance; }
 #pragma endregion
+
+private:
+	NWindows() = default;
+	NWindows(const NWindows&) = delete;
+	~NWindows() = default;
+	NWindows& operator=(const NWindows&) = delete;
 };

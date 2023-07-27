@@ -13,4 +13,10 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+
+private:
+	EnemyManager() = default;
+	EnemyManager(const EnemyManager&) = delete;
+	~EnemyManager() = default;
+	EnemyManager& operator=(const EnemyManager&) = delete;
 };

@@ -48,9 +48,6 @@ private:
 	NAssimpModel assimpModel_;
 
 public:
-	//インスタンス取得
-	static NTitleScene* GetInstance();
-
 	NTitleScene();
 	~NTitleScene();
 

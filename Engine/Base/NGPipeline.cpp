@@ -240,7 +240,7 @@ void PipeLineManager::CreateAll()
 	pipeLine.SetVertLayoutParticle();
 #pragma region デフォルト3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objDesc;
 	//頂点レイアウト設定
@@ -256,7 +256,7 @@ void PipeLineManager::CreateAll()
 	objDesc.rootSig = rootSigObj;
 
 	//シェーダー設定
-	objDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
+	objDesc.shader.pShader = NShader::GetShader("Obj");
 
 	//カリング設定
 	objDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -275,7 +275,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region αブレンド3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objAlphaDesc;
 	//頂点レイアウト設定
@@ -291,7 +291,7 @@ void PipeLineManager::CreateAll()
 	objAlphaDesc.rootSig = rootSigObjAlpha;
 
 	//シェーダー設定
-	objAlphaDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
+	objAlphaDesc.shader.pShader = NShader::GetShader("Obj");
 
 	//カリング設定
 	objAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -310,7 +310,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 加算3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objAddDesc;
 	//頂点レイアウト設定
@@ -326,7 +326,7 @@ void PipeLineManager::CreateAll()
 	objAddDesc.rootSig = rootSigObjAdd;
 
 	//シェーダー設定
-	objAddDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
+	objAddDesc.shader.pShader = NShader::GetShader("Obj");
 
 	//カリング設定
 	objAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -345,7 +345,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 減算3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objSubDesc;
 	//頂点レイアウト設定
@@ -361,7 +361,7 @@ void PipeLineManager::CreateAll()
 	objSubDesc.rootSig = rootSigObjSub;
 
 	//シェーダー設定
-	objSubDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
+	objSubDesc.shader.pShader = NShader::GetShader("Obj");
 
 	//カリング設定
 	objSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -380,7 +380,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 色反転3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj", false);
 
 	PipelineDesc objInvDesc;
 	//頂点レイアウト設定
@@ -396,7 +396,7 @@ void PipeLineManager::CreateAll()
 	objInvDesc.rootSig = rootSigObjInv;
 
 	//シェーダー設定
-	objInvDesc.shader.pShader = NShader::GetInstance()->GetShader("Obj");
+	objInvDesc.shader.pShader = NShader::GetShader("Obj");
 
 	//カリング設定
 	objInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -415,7 +415,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region タイリング3D(背景オブジェクトとかに使う)
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Tile", "Tile", false);
+	NShader::CreateShader("Tile", "Tile", false);
 
 	PipelineDesc tileDesc;
 	//頂点レイアウト設定
@@ -431,7 +431,7 @@ void PipeLineManager::CreateAll()
 	tileDesc.rootSig = rootSigTile;
 
 	//シェーダー設定
-	tileDesc.shader.pShader = NShader::GetInstance()->GetShader("Tile");
+	tileDesc.shader.pShader = NShader::GetShader("Tile");
 
 	//カリング設定
 	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
@@ -450,7 +450,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region デフォルト2D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteDesc;
 	//頂点レイアウト設定
@@ -466,7 +466,7 @@ void PipeLineManager::CreateAll()
 	spriteDesc.rootSig = rootSigSprite;
 
 	//シェーダー設定
-	spriteDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	spriteDesc.shader.pShader = NShader::GetShader("Sprite");
 
 	//深度情報設定
 	spriteDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -488,7 +488,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region αブレンド2D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteAlphaDesc;
 	//頂点レイアウト設定
@@ -504,7 +504,7 @@ void PipeLineManager::CreateAll()
 	spriteAlphaDesc.rootSig = rootSigSpriteAlpha;
 
 	//シェーダー設定
-	spriteAlphaDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	spriteAlphaDesc.shader.pShader = NShader::GetShader("Sprite");
 
 	//深度情報設定
 	spriteAlphaDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -526,7 +526,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 加算2D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteAddDesc;
 	//頂点レイアウト設定
@@ -542,7 +542,7 @@ void PipeLineManager::CreateAll()
 	spriteAddDesc.rootSig = rootSigSpriteAdd;
 
 	//シェーダー設定
-	spriteAddDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	spriteAddDesc.shader.pShader = NShader::GetShader("Sprite");
 
 	//深度情報設定
 	spriteAddDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -564,7 +564,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 減算2D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteSubDesc;
 	//頂点レイアウト設定
@@ -580,7 +580,7 @@ void PipeLineManager::CreateAll()
 	spriteSubDesc.rootSig = rootSigSpriteSub;
 
 	//シェーダー設定
-	spriteSubDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	spriteSubDesc.shader.pShader = NShader::GetShader("Sprite");
 
 	//深度情報設定
 	spriteSubDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -602,7 +602,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 色反転2D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite", false);
 
 	PipelineDesc spriteInvDesc;
 	//頂点レイアウト設定
@@ -618,7 +618,7 @@ void PipeLineManager::CreateAll()
 	spriteInvDesc.rootSig = rootSigSpriteInv;
 
 	//シェーダー設定
-	spriteInvDesc.shader.pShader = NShader::GetInstance()->GetShader("Sprite");
+	spriteInvDesc.shader.pShader = NShader::GetShader("Sprite");
 
 	//深度情報設定
 	spriteInvDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -640,7 +640,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ポストエフェクト
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("PostEffect", "CG4", false);
+	NShader::CreateShader("PostEffect", "CG4", false);
 
 	PipelineDesc postEffectDesc;
 	//頂点レイアウト設定
@@ -656,7 +656,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("PostEffect");
+	postEffectDesc.shader.pShader = NShader::GetShader("PostEffect");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -678,7 +678,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ガウシアンブラー
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Gaussian", "GaussianBlur", false);
+	NShader::CreateShader("Gaussian", "GaussianBlur", false);
 
 	//頂点レイアウト設定
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
@@ -688,7 +688,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Gaussian");
+	postEffectDesc.shader.pShader = NShader::GetShader("Gaussian");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -707,7 +707,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ラジアルブラー
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Radial", "RadialBlur", false);
+	NShader::CreateShader("Radial", "RadialBlur", false);
 
 	//頂点レイアウト設定
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
@@ -717,7 +717,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetInstance()->GetShader("Radial");
+	postEffectDesc.shader.pShader = NShader::GetShader("Radial");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -736,7 +736,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region デフォルトパーティクル3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Particle3d", "Particle3D", true);
+	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleDesc;
 	//頂点レイアウト設定
@@ -754,7 +754,7 @@ void PipeLineManager::CreateAll()
 	particleDesc.rootSig = rootSigParticle;
 
 	//シェーダー設定
-	particleDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
+	particleDesc.shader.pShader = NShader::GetShader("Particle3d");
 
 	//深度テストする
 	particleDesc.depth.DepthStencilState.DepthEnable = true;
@@ -771,7 +771,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region αブレンドパーティクル3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Particle3d", "Particle3D", true);
+	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleAlphaDesc;
 	//頂点レイアウト設定
@@ -789,7 +789,7 @@ void PipeLineManager::CreateAll()
 	particleAlphaDesc.rootSig = rootSigParticleAlpha;
 
 	//シェーダー設定
-	particleAlphaDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
+	particleAlphaDesc.shader.pShader = NShader::GetShader("Particle3d");
 
 	//深度テストする
 	particleAlphaDesc.depth.DepthStencilState.DepthEnable = true;
@@ -806,7 +806,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 加算パーティクル3D
 	//シェーダー生成
-	NShader::GetInstance()->CreateShader("Particle3d", "Particle3D", true);
+	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleAddDesc;
 	//頂点レイアウト設定
@@ -824,7 +824,7 @@ void PipeLineManager::CreateAll()
 	particleAddDesc.rootSig = rootSigParticleAdd;
 
 	//シェーダー設定
-	particleAddDesc.shader.pShader = NShader::GetInstance()->GetShader("Particle3d");
+	particleAddDesc.shader.pShader = NShader::GetShader("Particle3d");
 
 	//深度テストする
 	particleAddDesc.depth.DepthStencilState.DepthEnable = true;

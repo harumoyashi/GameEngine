@@ -15,11 +15,9 @@ private:
 	ComPtr<ID3DBlob> gsBlob_;		// ピクセルシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob_;	// エラーオブジェクト
 
-	std::map<std::string, NShader> shaderMap_;
+	static std::map<std::string, NShader> shaderMap_;
 
 public:
-	static NShader* GetInstance();
-
 	//パスに合わせた頂点シェーダーの読み込み
 	void LoadVS(std::string vsPath);
 	//パスに合わせたピクセルシェーダーの読み込み
@@ -28,9 +26,9 @@ public:
 	void LoadGS(std::string gsPath);
 
 	//シェーダーを生成してマップに登録
-	void CreateShader(std::string id, std::string path, bool isLoadGS);
+	static void CreateShader(std::string id, std::string path, bool isLoadGS);
 	//指定したidのシェーダーを取得
-	NShader* GetShader(std::string id);
+	static NShader* GetShader(std::string id);
 
 	ID3DBlob* GetVSBlob() { return vsBlob_.Get(); }
 	ID3DBlob* GetPSBlob() { return psBlob_.Get(); }

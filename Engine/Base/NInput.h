@@ -61,7 +61,6 @@ private:
 	static ComPtr<IDirectInput8> sDirectInput;
 
 public:
-	NInput() {};
 	static NInput* GetInstance();
 
 	//key‰Šú‰»
@@ -124,4 +123,10 @@ public:
 
 	//Ú‘±î•ñæ“¾
 	static bool GetIsConnect() { return sIsConnect; }
+
+private:
+	NInput() = default;
+	NInput(const NInput&) = delete;
+	~NInput() = default;
+	NInput& operator=(const NInput&) = delete;
 };

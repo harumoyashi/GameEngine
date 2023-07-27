@@ -19,4 +19,10 @@ public:
 	void Update();
 	//ìGÇÃê∂ê¨
 	void Create(IEnemy::EnemyType type, NVector3 pos);
+
+private:
+	EnemyFactory() = default;
+	EnemyFactory(const EnemyFactory&) = delete;
+	~EnemyFactory() = default;
+	EnemyFactory& operator=(const EnemyFactory&) = delete;
 };

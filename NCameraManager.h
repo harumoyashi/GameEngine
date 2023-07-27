@@ -88,4 +88,10 @@ public:
 	bool GetisActive() { return isActive_; }
 
 	void SetDebugCamera(NCamera& camera);
+
+private:
+	NCameraManager() = default;
+	NCameraManager(const NCameraManager&) = delete;
+	~NCameraManager() = default;
+	NCameraManager& operator=(const NCameraManager&) = delete;
 };

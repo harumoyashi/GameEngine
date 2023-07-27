@@ -40,6 +40,8 @@ public:
 #pragma region ƒQƒbƒ^[
 #pragma endregion
 private:
-
+	NSceneManager(const NSceneManager&) = delete;
+	~NSceneManager() = default;
+	NSceneManager& operator=(const NSceneManager&) = delete;
 
 };
