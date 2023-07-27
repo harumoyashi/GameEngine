@@ -20,7 +20,7 @@ void IBullet::Generate(const NVector3& pos, const float moveAngle)
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 0.5f;
 	obj_->color_ = NColor::kWhite;
-	
+
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
@@ -38,7 +38,11 @@ void IBullet::Update()
 
 	//生存時間過ぎたら死んだ判定に
 	lifeTimer_.Update(elapseSpeed_);
-	if (lifeTimer_.GetEnd())
+	if (lifeTimer_.GetStarted() == false)
+	{
+		lifeTimer_.Start();
+	}
+	else if (lifeTimer_.GetEnd())
 	{
 		isAlive_ = false;
 	}

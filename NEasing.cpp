@@ -223,6 +223,19 @@ void NEasing::EaseTimer::Update(const float elapseTimer)
 	}
 }
 
+void NEasing::EaseTimer::Roop(const float elapseTimer)
+{
+	Update(elapseTimer);
+	if (GetStarted() == false)
+	{
+		Start();
+	}
+	else if (GetEnd())
+	{
+		Reset();
+	}
+}
+
 float NEasing::EaseTimer::GetTimeRate()
 {
 	float timeRate = 0.0f;

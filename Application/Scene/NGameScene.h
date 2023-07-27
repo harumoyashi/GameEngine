@@ -33,6 +33,8 @@ private:
 	{
 		Shaft,
 		LStick,
+		Abutton,
+		AbuttonPush,
 
 		MaxForeSprite
 	};
@@ -47,8 +49,9 @@ private:
 
 	//前景スプライト
 	std::vector<std::unique_ptr<NSprite>> foreSprite_{ (uint32_t)FSpriteType::MaxForeSprite };		//LスティックUI
-	float slidePos = 0.0f;					//横に掃けてく時のスライド位置
-	NEasing::EaseTimer slideTimer = 0.1f;	//スライド時のイージング用
+	float slidePos = 0.0f;							//横に掃けてく時のスライド位置
+	NEasing::EaseTimer slideTimer = 0.1f;			//スライド時のイージング用
+	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー
 
 	//オーディオ
 	NAudio* audio_ = nullptr;

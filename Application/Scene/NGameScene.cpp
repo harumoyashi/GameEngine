@@ -50,13 +50,22 @@ void NGameScene::Init()
 	{
 		foreSprite_[i] = std::make_unique<NSprite>();
 	}
+#pragma region 各スプライトの設定
 	foreSprite_[(uint32_t)FSpriteType::Shaft]->CreateSprite("shaft");
 	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetSize(100.0f, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 200.0f);
+	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 500.0f);
 	foreSprite_[(uint32_t)FSpriteType::LStick]->CreateSprite("stick");
 	foreSprite_[(uint32_t)FSpriteType::LStick]->SetSize(100.0f, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 200.0f);
+	foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 500.0f);
 
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		foreSprite_[(uint32_t)FSpriteType::Abutton + i] = std::make_unique<NSprite>();
+		foreSprite_[(uint32_t)FSpriteType::Abutton + i]->CreateClipSprite("Abutton", { i * 192.f,0 }, { 192.f,192.f });
+		foreSprite_[(uint32_t)FSpriteType::Abutton + i]->SetPos(
+			(float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f);
+	}
+#pragma endregion
 #pragma endregion
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
@@ -107,6 +116,10 @@ void NGameScene::Update()
 			Player::GetInstance()->DeadParticle();
 		}
 
+		//Aボタンはプレイ中使わないから見せない
+		foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
+		foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+
 		if (Field::GetInstance()->GetIsStart())
 		{
 			//スタート線スライドタイマー開始
@@ -118,14 +131,14 @@ void NGameScene::Update()
 
 			slidePos = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer.GetTimeRate());
 			foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(
-				NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 200.0f);
+				NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 500.0f);
 		}
 
 		NVector2 stickVec;
-		stickVec = NInput::GetInstance()->GetStick() * 10.0f;
+		stickVec = NInput::GetInstance()->GetStick() * 8.0f;
 		//Yはスティックだと上が正の値なので引く
 		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(
-			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos, 200.0f - stickVec.y);
+			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos, 500.0f - stickVec.y);
 
 		//プレイヤーが波に飲み込まれたら殺す
 		if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
@@ -153,6 +166,19 @@ void NGameScene::Update()
 	{
 		Player::GetInstance()->ClearUpdate();
 
+		//Aボタン点滅
+		flashingTimer_.Roop();
+		if (flashingTimer_.GetTimeRate() > 0.7f)
+		{
+			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
+			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = false;
+		}
+		else
+		{
+			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = false;
+			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+		}
+
 		//シーン切り替え
 		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 		{
@@ -162,6 +188,19 @@ void NGameScene::Update()
 	else if (scene == SceneMode::Faild)	//失敗リザルトの処理
 	{
 		Player::GetInstance()->FaildUpdate();
+
+		//Aボタン点滅
+		flashingTimer_.Roop();
+		if (flashingTimer_.GetTimeRate() > 0.7f)
+		{
+			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
+			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = false;
+		}
+		else
+		{
+			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = false;
+			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+		}
 
 		//シーン切り替え
 		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))

@@ -104,16 +104,7 @@ void NTitleScene::Update()
 		aButton_[i]->Update();
 	}
 
-	flashingTimer_.Update();
-	if (flashingTimer_.GetStarted() == false)
-	{
-		flashingTimer_.Start();
-	}
-	else if (flashingTimer_.GetEnd())
-	{
-		flashingTimer_.Reset();
-	}
-
+	flashingTimer_.Roop();
 	if (flashingTimer_.GetTimeRate() > 0.7f)
 	{
 		aButton_[0]->isInvisible_ = true;

@@ -99,7 +99,7 @@ void Player::Update()
 		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//死亡演出の2割はヒットストップに使う
 		{
 			isFlashing_ = ((int)(deadEffectTimer_.GetTimeRate() * 100.0f) % 2 == 0);
-			if (isFlashing_^ obj_->color_ == NColor::kWhite)
+			if (isFlashing_ ^ obj_->color_ == NColor::kWhite)
 			{
 				obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
 			}
@@ -141,16 +141,8 @@ void Player::ClearUpdate()
 
 void Player::FaildUpdate()
 {
-	faildEffectTimer_.Update();
 	//タイマーループ
-	if (faildEffectTimer_.GetStarted() == false)
-	{
-		faildEffectTimer_.Start();
-	}
-	else if (faildEffectTimer_.GetEnd())
-	{
-		faildEffectTimer_.Reset();
-	}
+	faildEffectTimer_.Roop();
 
 	isDraw_ = true;						//絶対描画させる
 	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
@@ -196,7 +188,8 @@ void Player::Move()
 			}
 		}
 
-		elapseSpeed_ = moveVelo_.Length();	//移動量によって経過時間変化
+		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//移動量によって経過時間変化
+		elapseSpeed_ = MathUtil::Clamp(elapseSpeed_, 0.0f, 1.0f);
 
 		//移動量を加算
 		obj_->position_.x += moveVelo_.x * moveSpeed_;
@@ -226,6 +219,8 @@ void Player::Move()
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
 	ImGui::SliderInt("LineLevel", &lineLv, 0, 5);
 	ImGui::SliderInt("SideLevel", &sideLv, 0, 5);
+	ImGui::Text("MoveVelo:%f,%f", moveVelo_.x, moveVelo_.y);
+	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
 	lineLevel_ = lineLv;
 	sideLevel_ = sideLv;

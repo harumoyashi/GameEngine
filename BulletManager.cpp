@@ -37,7 +37,7 @@ void BulletManager::Update()
 	float bulNum = (float)bullets_.size();
 	ImGui::Begin("Bullets");
 	ImGui::Text("num:%f", bulNum);
-	ImGui::Text("elapse:%f", Player::GetInstance()->GetMoveVelo().Length());
+	ImGui::Text("elapse:%f", Player::GetInstance()->GetElapseSpeed());
 	ImGui::End();
 #endif
 }
