@@ -61,10 +61,6 @@ void Field::Init()
 		checkPoints_.back().text->scale_ = { 1.5f,1.0f,0.25f };
 		checkPoints_.back().text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
 
-		float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
-		checkPoints_.back().line->position_ = { Player::GetInstance()->GetPos().x,0, posZ };
-		checkPoints_.back().text->position_ = { checkPoints_.back().offset,0, posZ - 0.5f };
-
 		checkPoints_.back().isSlide = false;
 		checkPoints_.back().slidePos = 0.0f;
 		checkPoints_.back().slideTimer.Reset();
@@ -132,7 +128,8 @@ void Field::Update()
 
 	for (uint32_t i = 0; i < checkPointNum; i++)
 	{
-		float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
+		//スタートからゴールまでをn+1等分して、1~n-1番目の線にスタート位置足した座標をチェックポイントにする
+		float posZ = startPosZ_ + (goalPosZ_ - startPosZ_) / (float)(checkPointNum + 1) * (float)(i + 1);
 		checkPoints_[i].line->position_ =
 		{
 			Player::GetInstance()->GetPos().x + checkPoints_[i].slidePos,0, posZ
@@ -180,7 +177,8 @@ void Field::Update()
 		//線を超えたらスタートした判定trueに
 		for (uint32_t i = 0; i < checkPointNum; i++)
 		{
-			float posZ = (goalPosZ_ - startPosZ_) / (float)checkPointNum * (float)(i + 1);
+			//スタートからゴールまでをn+1等分して、1~n-1番目の線にスタート位置足した座標をチェックポイントにする
+			float posZ = startPosZ_ + (goalPosZ_ - startPosZ_) / (float)(checkPointNum + 1) * (float)(i + 1);
 			if (posZ <= Player::GetInstance()->GetPos().z)
 			{
 				checkPoints_[i].isSlide = true;
