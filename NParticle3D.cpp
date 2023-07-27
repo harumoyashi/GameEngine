@@ -9,9 +9,18 @@ NLightGroup* IEmitter3D::sLightGroup = nullptr;
 
 IEmitter3D::IEmitter3D()
 {
+	Init();
+}
+
+void IEmitter3D::Init()
+{
 	//定数バッファ
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbTrans_->Init();
+
+	pos_ = { 0,0,0 };
+	rot_ = { 0,0,0 };
+	scale_ = { 0.1f,0.1f,0.1f };
 
 	addInterval_ = 0;
 	maxScale_ = 0;
@@ -25,10 +34,6 @@ IEmitter3D::IEmitter3D()
 	vertexBuff_.Init(vertices_);
 
 	isActive_ = true;	//生成時には有効フラグ立てる
-}
-
-void IEmitter3D::Init()
-{
 }
 
 void IEmitter3D::Update()

@@ -26,7 +26,11 @@ void NParticleManager::Update()
 {
 	for (auto& emitter : emitters_)
 	{
-		emitter.second->Update();
+		//パーティクルがあるときだけ更新処理回す
+		if (emitter.second->GetParticlesDead() == false)
+		{
+			emitter.second->Update();
+		}
 	}
 
 	for (auto& eneEmitter : enemyEmitters_)
@@ -39,7 +43,11 @@ void NParticleManager::Draw()
 {
 	for (auto& emitter : emitters_)
 	{
-		emitter.second->Draw();
+		//パーティクルがあるときだけ描画処理回す
+		if (emitter.second->GetParticlesDead() == false)
+		{
+			emitter.second->Draw();
+		}
 	}
 
 	for (auto& eneEmitter : enemyEmitters_)

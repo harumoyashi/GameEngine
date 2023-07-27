@@ -35,6 +35,9 @@ Player* Player::GetInstance()
 
 bool Player::Init()
 {
+	deadParticle_.Init();
+	deadParticle_.ClearParticles();
+
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
@@ -65,7 +68,7 @@ bool Player::Init()
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
-	deadEffectTimer_ = 1.0f;	//スローは考慮せずに何秒か
+	deadEffectTimer_ = 2.0f;	//スローは考慮せずに何秒か
 	deadEffectTimer_.Reset();
 
 	faildEffectTimer_ = 3.0f;
@@ -84,10 +87,6 @@ void Player::Update()
 		Move();
 		Shot();
 	}
-	else
-	{
-		elapseSpeed_ = slowElapseTime_;	//死んだらスローモーションに
-	}
 
 	obj_->Update();
 	collider_.Update(obj_.get());
@@ -95,6 +94,15 @@ void Player::Update()
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
 	{
+		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//死亡演出の2割はヒットストップに使う
+		{
+			elapseSpeed_ = 0.0f;
+		}
+		else
+		{
+			elapseSpeed_ = slowElapseTime_;			//ヒットストップ終わったらスローに
+		}
+
 		//コライダーマネージャーから削除
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 
@@ -103,7 +111,7 @@ void Player::Update()
 	}
 
 	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
-	if (NParticleManager::GetInstance()->emitters_["playerDead"]->GetParticlesDead())
+	if (deadParticle_.GetParticlesDead())
 	{
 		NPostEffect::SetIsActive(false);
 	}
@@ -259,9 +267,9 @@ void Player::DeadParticle()
 			deadEffectTimer_.Start();
 		}
 		RadialBlur::Init();		//ラジアルブラーかける
-		NParticleManager::GetInstance()->emitters_["playerDead"]->SetIsRotation(true);
-		NParticleManager::GetInstance()->emitters_["playerDead"]->SetPos(obj_->position_);
-		NParticleManager::GetInstance()->emitters_["playerDead"]->Add(
+		deadParticle_.SetIsRotation(true);
+		deadParticle_.SetPos(obj_->position_);
+		deadParticle_.Add(
 			150, 1.5f, obj_->color_, 0.1f, 1.0f, { -1,-1,-1 }, { 1,1,1 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
 	}
 }

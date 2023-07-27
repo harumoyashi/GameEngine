@@ -2,6 +2,7 @@
 
 void SimpleParticle::Init()
 {
+	IEmitter3D::Init();
 	IEmitter3D::SetIsRotation(true);
 }
 
