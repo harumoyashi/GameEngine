@@ -46,6 +46,16 @@ void NGameScene::Init()
 	//背景スプライト生成
 
 	//前景スプライト生成
+	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
+	{
+		foreSprite_[i] = std::make_unique<NSprite>();
+	}
+	foreSprite_[(uint32_t)FSpriteType::Shaft]->CreateSprite("shaft");
+	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetSize(100.0f, 100.0f);
+	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 200.0f);
+	foreSprite_[(uint32_t)FSpriteType::LStick]->CreateSprite("stick");
+	foreSprite_[(uint32_t)FSpriteType::LStick]->SetSize(100.0f, 100.0f);
+	foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 200.0f);
 
 #pragma endregion
 	// ライト生成
@@ -59,12 +69,22 @@ void NGameScene::Init()
 	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
 
 	scene = SceneMode::Play;
+
+	slidePos = 0.0f;
+	slideTimer.Reset();
 }
 
 void NGameScene::Update()
 {
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
+#pragma endregion
+#pragma region スプライト
+	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
+	{
+		foreSprite_[i]->Update();
+	}
+
 #pragma endregion
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
@@ -86,6 +106,26 @@ void NGameScene::Update()
 		{
 			Player::GetInstance()->DeadParticle();
 		}
+
+		if (Field::GetInstance()->GetIsStart())
+		{
+			//スタート線スライドタイマー開始
+			if (slideTimer.GetStarted() == false)
+			{
+				slideTimer.Start();
+			}
+			slideTimer.Update();
+
+			slidePos = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer.GetTimeRate());
+			foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(
+				NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 200.0f);
+		}
+
+		NVector2 stickVec;
+		stickVec = NInput::GetInstance()->GetStick() * 10.0f;
+		//Yはスティックだと上が正の値なので引く
+		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(
+			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos, 200.0f - stickVec.y);
 
 		//プレイヤーが波に飲み込まれたら殺す
 		if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
@@ -174,4 +214,8 @@ void NGameScene::DrawParticle()
 
 void NGameScene::DrawForeSprite()
 {
+	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
+	{
+		foreSprite_[i]->Draw();
+	}
 }

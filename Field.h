@@ -38,7 +38,7 @@ private:
 	float activityAreaX_ = 10.0f;				//行動範囲制限
 	uint32_t checkPosintNum = 3;				//チェックポイントいくつか
 	
-	float startPosZ_ = 5.0f;					//スタート地点(縦だけ)
+	float startPosZ_ = 3.0f;					//スタート地点(縦だけ)
 	float goalPosZ_ = 20.0f;					//ゴール地点(縦だけ)
 
 	bool isStart_ = false;						//スタートしたかフラグ
