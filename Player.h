@@ -72,6 +72,8 @@ public:
 	// ゲッター //
 	//座標取得
 	NVector3 GetPos()const { return obj_->position_; }
+	//注視点用にちょい高めの座標取得
+	NVector3 GetHeadPos()const { return { obj_->position_.x,obj_->position_.y + obj_->scale_.y,obj_->position_.z }; }
 	//前方座標取得
 	float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
 	//大きさ取得

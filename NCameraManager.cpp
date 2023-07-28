@@ -107,7 +107,7 @@ void NCameraManager::FaildCameraInit()
 	faildCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
-	nextTarget_ = Player::GetInstance()->GetPos();
+	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
 	nextPos_ = Player::GetInstance()->GetPos() + NVector3(0, length_ * 0.5f, -length_);
@@ -157,10 +157,10 @@ void NCameraManager::ClearCameraInit()
 	clearCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
-	nextTarget_ = Player::GetInstance()->GetPos();
+	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+	nextPos_ = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVector3(0, 1, 0);
@@ -189,9 +189,9 @@ void NCameraManager::ClearCameraUpdate()
 	{
 		//‚¸‚ê‚ª‹N‚«‚È‚¢‚æ‚¤‚ÉXV‚µ‘±‚¯‚é
 		currentTarget_ = NCamera::sCurrentCamera->GetTarget();
-		nextTarget_ = Player::GetInstance()->GetPos();
+		nextTarget_ = Player::GetInstance()->GetHeadPos();
 		currentPos_ = NCamera::sCurrentCamera->GetPos();
-		nextPos_ = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+		nextPos_ = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
 		currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 
 		NVector3 target, pos, upVec;
@@ -208,9 +208,9 @@ void NCameraManager::ClearCameraUpdate()
 	if (clearCameraMoveEase_.GetEnd())
 	{
 		NVector3 pos;
-		pos = Player::GetInstance()->GetPos() + NVector3(-length_, length_ * 0.5f, length_);
+		pos = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
 		clearCamera_.SetEye(pos);
-		clearCamera_.SetTarget(Player::GetInstance()->GetPos());
+		clearCamera_.SetTarget(Player::GetInstance()->GetHeadPos());
 	}
 
 	clearCamera_.Update();

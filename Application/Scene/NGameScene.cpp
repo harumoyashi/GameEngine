@@ -65,6 +65,11 @@ void NGameScene::Init()
 		foreSprite_[(uint32_t)FSpriteType::Abutton + i]->SetPos(
 			(float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f);
 	}
+
+	foreSprite_[(uint32_t)FSpriteType::Clear]->CreateSprite("clear");
+	foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
+	foreSprite_[(uint32_t)FSpriteType::Faild]->CreateSprite("faild");
+	foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
 #pragma endregion
 #pragma endregion
 	// ライト生成
@@ -81,6 +86,7 @@ void NGameScene::Init()
 
 	slidePos = 0.0f;
 	slideTimer.Reset();
+	slideTimer = 0.1f;
 }
 
 void NGameScene::Update()
@@ -152,6 +158,8 @@ void NGameScene::Update()
 			Player::GetInstance()->GetDeadEffectEnd())
 		{
 			scene = SceneMode::Faild;
+			slideTimer.Reset();
+			slideTimer = 0.5f;
 			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
@@ -159,12 +167,24 @@ void NGameScene::Update()
 		if (Field::GetInstance()->GetIsGoal())
 		{
 			scene = SceneMode::Clear;
+			slideTimer.Reset();
+			slideTimer = 0.5f;
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
 	}
 	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
 	{
 		Player::GetInstance()->ClearUpdate();
+
+		//スタート線スライドタイマー開始
+		if (slideTimer.GetStarted() == false)
+		{
+			slideTimer.Start();
+		}
+		slideTimer.Update();
+		//クリアテキストスライド
+		slidePos = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
+		foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
 
 		//Aボタン点滅
 		flashingTimer_.Roop();
@@ -188,6 +208,16 @@ void NGameScene::Update()
 	else if (scene == SceneMode::Faild)	//失敗リザルトの処理
 	{
 		Player::GetInstance()->FaildUpdate();
+
+		//スタート線スライドタイマー開始
+		if (slideTimer.GetStarted() == false)
+		{
+			slideTimer.Start();
+		}
+		slideTimer.Update();
+		//失敗テキストスライド
+		slidePos = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
+		foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
 
 		//Aボタン点滅
 		flashingTimer_.Roop();

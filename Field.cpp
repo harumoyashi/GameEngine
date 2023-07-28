@@ -58,8 +58,8 @@ void Field::Init()
 		checkPoints_.back().text = std::make_unique<NObj3d>();
 		checkPoints_.back().text->Init();
 		checkPoints_.back().text->SetModel("plane");
-		checkPoints_.back().text->scale_ = { 1.5f,1.0f,0.25f };
-		checkPoints_.back().text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
+		checkPoints_.back().text->scale_ = { 2.5f,1.0f,0.25f };
+		checkPoints_.back().text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["checkpoint"];
 
 		checkPoints_.back().isSlide = false;
 		checkPoints_.back().slidePos = 0.0f;
@@ -68,7 +68,7 @@ void Field::Init()
 #pragma endregion
 #pragma region 各オブジェクトの設定
 	lines_[(uint32_t)LineType::Start].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
-	lines_[(uint32_t)LineType::Start].offset = 5.0f;
+	lines_[(uint32_t)LineType::Start].offset = 6.0f;
 	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
 	lines_[(uint32_t)LineType::Start].line->position_ =
 	{
@@ -83,7 +83,7 @@ void Field::Init()
 	};
 
 	lines_[(uint32_t)LineType::Goal].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["goal"];
-	lines_[(uint32_t)LineType::Goal].offset = 5.0f;
+	lines_[(uint32_t)LineType::Goal].offset = 6.0f;
 	lines_[(uint32_t)LineType::Goal].text->position_ = { lines_[(uint32_t)LineType::Goal].offset,0, goalPosZ_ - 0.5f };
 	lines_[(uint32_t)LineType::Goal].line->position_ =
 	{

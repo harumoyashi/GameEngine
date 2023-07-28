@@ -35,6 +35,8 @@ private:
 		LStick,
 		Abutton,
 		AbuttonPush,
+		Clear,
+		Faild,
 
 		MaxForeSprite
 	};

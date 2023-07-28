@@ -23,6 +23,9 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "Bbutton_UI.png", "Bbutton");
 	LoadTexture(directryPass + "shaft.png", "shaft");
 	LoadTexture(directryPass + "stick.png", "stick");
+	LoadTexture(directryPass + "checkpoint.png", "checkpoint");
+	LoadTexture(directryPass + "clear.png", "clear");
+	LoadTexture(directryPass + "faild.png", "faild");
 }
 
 NTexture NTextureManager::CreateErrorTexture()
