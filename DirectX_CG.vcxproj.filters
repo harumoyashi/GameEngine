@@ -166,474 +166,483 @@
     <Filter Include="Application\ヘッダーファイル\Field">
       <UniqueIdentifier>{1464d517-abc8-4cbc-a368-0c86903c0fcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ソース ファイル\FrameWork">
+      <UniqueIdentifier>{e3d40e25-e4de-4b04-99ec-e47942cc7370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\FrameWork">
+      <UniqueIdentifier>{d22d9cb0-91bb-4cc8-85af-398b2e3c32aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\Undefined">
+      <UniqueIdentifier>{40c87d30-c203-4793-9344-e33bd22b008e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\Undefined">
+      <UniqueIdentifier>{6f0fd84d-a029-4509-8333-92824ac6126f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Math\NMatrix4.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NMatrix4.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Math\NVector2.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector2.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Math\NVector3.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector3.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NRootParam.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NRootParam.h">
       <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NRootSignature.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NRootSignature.h">
       <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NGPipeline.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NGPipeline.h">
       <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NMaterial.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NMaterial.h">
       <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\NGameScene.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NGameScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\NSceneManager.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NSceneManager.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Scene\NTitleScene.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NTitleScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NObj3d.h">
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NObj3d.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\2d\NSprite.h">
+    <ClInclude Include="Engine\ヘッダーファイル\2D\NSprite.h">
       <Filter>Engine\ヘッダー ファイル\2D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NModel.h">
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NModel.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NDX12.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NDX12.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NInput.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NInput.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NWindows.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NWindows.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NPreDraw.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NPreDraw.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NTexture.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NTexture.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NVertex.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Basic\NVertex.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NIndexBuff.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Buffer\NIndexBuff.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Base\NVertexBuff.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Buffer\NVertexBuff.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Math\NQuaternion.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NQuaternion.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NMtllib.h">
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NMtllib.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Collision\NCollision.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\NCollision.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Math\NMathUtil.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NMathUtil.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="NDirectionalLight.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Light\NDirectionalLight.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NPointLight.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Light\NPointLight.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NSpotLight.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Light\NSpotLight.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NCircleShadow.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Light\NCircleShadow.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NResultScene.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NResultScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="NColor.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NColor.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="imgui\NImGuiManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NImGuiManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NAudioManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NAudioManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NTimer.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NTimer.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NGame.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NFramework.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NConstBuff.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Buffer\NConstBuff.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="NConstBuffData.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Buffer\NConstBuffData.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="External\json.hpp">
-      <Filter>Engine\ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="NVector4.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector4.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="NLightGroup.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Light\NLightGroup.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="NAssimpModel.h">
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NAssimpModel.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NAssimpLoader.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Loader\NAssimpLoader.h">
       <Filter>Engine\ヘッダー ファイル\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="NLevelDataLoader.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Loader\NLevelDataLoader.h">
       <Filter>Engine\ヘッダー ファイル\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="NUtil.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NUtil.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="GaussianBlur.h">
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\GaussianBlur.h">
       <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="NPostEffect.h">
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffect.h">
       <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="RadialBlur.h">
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\RadialBlur.h">
       <Filter>Engine\ヘッダー ファイル\PostEffect</Filter>
     </ClInclude>
-    <ClInclude Include="NCameraManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NCameraManager.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NCollider.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\NCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="NEasing.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NEasing.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NParticle3D.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticle3D.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="NParticle2D.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticle2D.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Audio\NAudio.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NAudio.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\3d\NCamera.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NCamera.h">
       <Filter>Engine\ヘッダー ファイル\Util</Filter>
     </ClInclude>
-    <ClInclude Include="NModelManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NModelManager.h">
       <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
-    <ClInclude Include="NShader.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NShader.h">
       <Filter>Engine\ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleParticle.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Particle\SimpleParticle.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="NParticleManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticleManager.h">
       <Filter>Engine\ヘッダー ファイル\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="NBaseCollider.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\NBaseCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="NCollisionManager.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\NCollisionManager.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="SphereCollider.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\SphereCollider.h">
       <Filter>Engine\ヘッダー ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\IScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Wave.h">
+    <ClInclude Include="Application\ヘッダーファイル\Field\Wave.h">
       <Filter>Application\ヘッダーファイル\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
+    <ClInclude Include="Application\ヘッダーファイル\Field\Field.h">
       <Filter>Application\ヘッダーファイル\Field</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Player\Player.h">
       <Filter>Application\ヘッダーファイル\Chara\Player</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\EnemyFactory.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyManager.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\EnemyManager.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="IEnemy.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\IEnemy.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Wolf.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Wolf.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="BulletFactory.h">
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\BulletFactory.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BulletManager.h">
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\BulletManager.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="IBullet.h">
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\IBullet.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="LineBullet.h">
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\LineBullet.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="SideBullet.h">
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\SideBullet.h">
       <Filter>Application\ヘッダーファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="NSceneChange.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NSceneChange.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="NTile.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NTile.h">
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ヘッダーファイル\FrameWork\NFramework.h">
+      <Filter>Engine\ヘッダー ファイル\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ヘッダーファイル\FrameWork\NGame.h">
+      <Filter>Engine\ヘッダー ファイル\FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="External\json.hpp">
+      <Filter>Engine\ヘッダー ファイル\Undefined</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\Math\NMatrix4.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Math\NVector2.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVector2.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Math\NVector3.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVector3.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NGPipeline.cpp">
+    <ClCompile Include="Engine\ソースファイル\Pipeline\NGPipeline.cpp">
       <Filter>Engine\ソース ファイル\PipeLine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NRootParam.cpp">
+    <ClCompile Include="Engine\ソースファイル\Pipeline\NRootParam.cpp">
       <Filter>Engine\ソース ファイル\PipeLine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NRootSignature.cpp">
+    <ClCompile Include="Engine\ソースファイル\Pipeline\NRootSignature.cpp">
       <Filter>Engine\ソース ファイル\PipeLine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NMaterial.cpp">
+    <ClCompile Include="Engine\ソースファイル\Pipeline\NMaterial.cpp">
       <Filter>Engine\ソース ファイル\PipeLine</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\NGameScene.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NGameScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\NSceneManager.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NSceneManager.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Scene\NTitleScene.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NTitleScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NObj3d.cpp">
+    <ClCompile Include="Engine\ソースファイル\3D\NObj3d.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\2d\NSprite.cpp">
+    <ClCompile Include="Engine\ソースファイル\2D\NSprite.cpp">
       <Filter>Engine\ソース ファイル\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NModel.cpp">
+    <ClCompile Include="Engine\ソースファイル\3D\NModel.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NDX12.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NDX12.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NInput.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NInput.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NWindows.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NWindows.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
     <ClCompile Include="main\main.cpp">
       <Filter>main</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NPreDraw.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NPreDraw.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NVertexBuff.cpp">
+    <ClCompile Include="Engine\ソースファイル\Buffer\NVertexBuff.cpp">
       <Filter>Engine\ソース ファイル\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NIndexBuff.cpp">
+    <ClCompile Include="Engine\ソースファイル\Buffer\NIndexBuff.cpp">
       <Filter>Engine\ソース ファイル\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NTexture.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NTexture.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Base\NVertex.cpp">
+    <ClCompile Include="Engine\ソースファイル\Basic\NVertex.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Math\NQuaternion.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NQuaternion.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NMtllib.cpp">
+    <ClCompile Include="Engine\ソースファイル\3D\NMtllib.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Collision\NCollision.cpp">
+    <ClCompile Include="Engine\ソースファイル\Collision\NCollision.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Math\NMathUtil.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NMathUtil.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NDirectionalLight.cpp">
+    <ClCompile Include="Engine\ソースファイル\Light\NDirectionalLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NResultScene.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NResultScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="NColor.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NColor.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="imgui\NImGuiManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NImGuiManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NAudioManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NAudioManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NTimer.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NTimer.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NGame.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NFramework.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="NConstBuff.cpp">
+    <ClCompile Include="Engine\ソースファイル\Buffer\NConstBuff.cpp">
       <Filter>Engine\ソース ファイル\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="NSpotLight.cpp">
+    <ClCompile Include="Engine\ソースファイル\Light\NSpotLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NCircleShadow.cpp">
+    <ClCompile Include="Engine\ソースファイル\Light\NCircleShadow.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NPointLight.cpp">
+    <ClCompile Include="Engine\ソースファイル\Light\NPointLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NVector4.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVector4.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="NLightGroup.cpp">
+    <ClCompile Include="Engine\ソースファイル\Light\NLightGroup.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="NAssimpModel.cpp">
+    <ClCompile Include="Engine\ソースファイル\3D\NAssimpModel.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NAssimpLoader.cpp">
+    <ClCompile Include="Engine\ソースファイル\Loader\NAssimpLoader.cpp">
       <Filter>Engine\ソース ファイル\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="NLevelDataLoader.cpp">
+    <ClCompile Include="Engine\ソースファイル\Loader\NLevelDataLoader.cpp">
       <Filter>Engine\ソース ファイル\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="NUtil.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NUtil.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NEasing.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NEasing.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NCollider.cpp">
+    <ClCompile Include="Engine\ソースファイル\Collision\NCollider.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="GaussianBlur.cpp">
+    <ClCompile Include="Engine\ソースファイル\PostEffect\GaussianBlur.cpp">
       <Filter>Engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="NPostEffect.cpp">
+    <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffect.cpp">
       <Filter>Engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="RadialBlur.cpp">
+    <ClCompile Include="Engine\ソースファイル\PostEffect\RadialBlur.cpp">
       <Filter>Engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
-    <ClCompile Include="IScene.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\IScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Player\Player.cpp">
       <Filter>Application\ソースファイル\Chara</Filter>
     </ClCompile>
-    <ClCompile Include="IBullet.cpp">
+    <ClCompile Include="Application\ソースファイル\Bullet\IBullet.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletManager.cpp">
+    <ClCompile Include="Application\ソースファイル\Bullet\BulletManager.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="LineBullet.cpp">
+    <ClCompile Include="Application\ソースファイル\Bullet\LineBullet.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BulletFactory.cpp">
+    <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="SideBullet.cpp">
+    <ClCompile Include="Application\ソースファイル\Bullet\SideBullet.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
+    <ClCompile Include="Application\ソースファイル\Field\Field.cpp">
       <Filter>Application\ソースファイル\Field</Filter>
     </ClCompile>
-    <ClCompile Include="Wave.cpp">
+    <ClCompile Include="Application\ソースファイル\Field\Wave.cpp">
       <Filter>Application\ソースファイル\Field</Filter>
     </ClCompile>
-    <ClCompile Include="NParticle3D.cpp">
+    <ClCompile Include="Engine\ソースファイル\Particle\NParticle3D.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="NParticle2D.cpp">
+    <ClCompile Include="Engine\ソースファイル\Particle\NParticle2D.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Audio\NAudio.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NAudio.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3d\NCamera.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NCamera.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NCameraManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\Util\NCameraManager.cpp">
       <Filter>Engine\ソース ファイル\Util</Filter>
     </ClCompile>
-    <ClCompile Include="NModelManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\3D\NModelManager.cpp">
       <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
-    <ClCompile Include="NShader.cpp">
+    <ClCompile Include="Engine\ソースファイル\Pipeline\NShader.cpp">
       <Filter>Engine\ソース ファイル\PipeLine</Filter>
     </ClCompile>
-    <ClCompile Include="NParticleManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\Particle\NParticleManager.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleParticle.cpp">
+    <ClCompile Include="Engine\ソースファイル\Particle\SimpleParticle.cpp">
       <Filter>Engine\ソース ファイル\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="IEnemy.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\IEnemy.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Wolf.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\Wolf.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyManager.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\EnemyManager.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="NBaseCollider.cpp">
+    <ClCompile Include="Engine\ソースファイル\Collision\NBaseCollider.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="NCollisionManager.cpp">
+    <ClCompile Include="Engine\ソースファイル\Collision\NCollisionManager.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="SphereCollider.cpp">
+    <ClCompile Include="Engine\ソースファイル\Collision\SphereCollider.cpp">
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyFactory.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\EnemyFactory.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="NSceneChange.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NSceneChange.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="NTile.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+    <ClCompile Include="Engine\ソースファイル\3D\NTile.cpp">
+      <Filter>Engine\ソース ファイル\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ソースファイル\FrameWork\NFramework.cpp">
+      <Filter>Engine\ソース ファイル\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ソースファイル\FrameWork\NGame.cpp">
+      <Filter>Engine\ソース ファイル\FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\shaders\Basic.hlsli">
-      <Filter>リソース ファイル</Filter>
-    </None>
     <None Include="packages.config" />
     <None Include="Resources\shaders\CG4.hlsli">
       <Filter>リソース ファイル\postEffect\CG4</Filter>
@@ -658,12 +667,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\BasicPS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\shaders\BasicVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\shaders\CG4PS.hlsl">
       <Filter>リソース ファイル\postEffect\CG4</Filter>
     </FxCompile>
