@@ -25,7 +25,7 @@ void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::str
 
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 1.5f;
-	obj_->color_ = NColor::kWhite;
+	obj_->color_ = NColor::kLightblue;
 	obj_->Update();
 
 	collider_.SetCenterPos(obj_->position_);
@@ -48,17 +48,6 @@ void IEnemy::Update()
 
 	//ˆÚ“®
 	Move();
-
-	//ˆÚ“®‚É‰ž‚¶‚Ä‰ñ“]
-	//NVector2 velo = moveVelo_;	//moveVelo_‚Ì’l‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤‚ÉŠi”[
-	//velo.Normalize();
-	//moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
-	//if (velo.x < 0)
-	//{
-	//	moveAngle_ = -moveAngle_;
-	//}
-
-	obj_->rotation_.y = moveAngle_;
 
 	// u2D‚É’¼‚µ‚½s“®”ÍˆÍ+‰æ–Ê’[À•Wv‚ðu2D‚É’¼‚µ‚½“G‚ÌÀ•W+“G‚Ì”¼Œav‚ª’´‚¦‚½ê‡ŽE‚· //
 	float borderLineRight, borderLineLeft;	//’´‚¦‚½‚çŽ€‚Ê‚Æ‚±
@@ -141,4 +130,7 @@ void IEnemy::Move()
 	//ˆÚ“®
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
+
+	//Œü‚©‚Á‚Ä‚é•û‚Æ‚Í‹t‚Á‚Û‚¢
+	obj_->rotation_.y = -MathUtil::Radian2Degree(moveAngle_);
 }

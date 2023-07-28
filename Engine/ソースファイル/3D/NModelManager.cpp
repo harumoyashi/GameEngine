@@ -18,6 +18,7 @@ void NModelManager::AllLoad()
 	LoadModel("busterSword", "busterSword");
 	LoadModel("boss_model", "boss");
 	LoadModel("cat", "cat");
+	LoadModel("mouse", "mouse");
 }
 
 Model NModelManager::GetModel(const std::string& modelHandle)

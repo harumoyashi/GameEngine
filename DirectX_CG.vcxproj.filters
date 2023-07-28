@@ -378,7 +378,7 @@
     <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\IEnemy.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Wolf.h">
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Mouse.h">
       <Filter>Application\ヘッダーファイル\Chara\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Application\ヘッダーファイル\Bullet\BulletFactory.h">
@@ -611,7 +611,7 @@
     <ClCompile Include="Application\ソースファイル\Chara\Enemy\IEnemy.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ソースファイル\Chara\Enemy\Wolf.cpp">
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\Mouse.cpp">
       <Filter>Application\ソースファイル\Chara\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Application\ソースファイル\Chara\Enemy\EnemyManager.cpp">

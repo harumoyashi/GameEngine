@@ -110,8 +110,6 @@ void NGameScene::Update()
 	//ライトたちの更新
 	lightGroup_->Update();
 
-	NCollisionManager::GetInstance()->CheckAllCollision();
-
 	if (scene == SceneMode::Play)	//プレイ中の処理
 	{
 		Player::GetInstance()->Update();
@@ -171,6 +169,9 @@ void NGameScene::Update()
 			slideTimer = 0.5f;
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
+
+		//当たり判定総当たり
+		NCollisionManager::GetInstance()->CheckAllCollision();
 	}
 	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
 	{

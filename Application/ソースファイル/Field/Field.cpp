@@ -186,12 +186,12 @@ void Field::Update()
 		}
 
 		//------------------------------------- 敵の生成処理 -------------------------------------//
-		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide,{7,0,8});
+		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide,{7,0,8});
 
 		//敵出しちゃうよボタン
 		if (NInput::IsKeyDown(DIK_C))
 		{
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
 		}
 	}
 
@@ -230,8 +230,8 @@ void Field::Update()
 			if (lines_[i].slideTimer.GetStarted() == false)
 			{
 				lines_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
 
 				NAudioManager::Play("startSE");
 				lines_[i].isSlide = false;	//スライドしちゃだめにする
@@ -249,8 +249,8 @@ void Field::Update()
 			if (checkPoints_[i].slideTimer.GetStarted() == false)
 			{
 				checkPoints_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::WolfSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
 
 				NAudioManager::Play("startSE");
 				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする

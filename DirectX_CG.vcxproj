@@ -182,7 +182,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Particle\SimpleParticle.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Collision\SphereCollider.h" />
     <ClInclude Include="Application\ヘッダーファイル\Field\Wave.h" />
-    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Wolf.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Mouse.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -260,7 +260,7 @@
     <ClCompile Include="Engine\ソースファイル\Particle\SimpleParticle.cpp" />
     <ClCompile Include="Engine\ソースファイル\Collision\SphereCollider.cpp" />
     <ClCompile Include="Application\ソースファイル\Field\Wave.cpp" />
-    <ClCompile Include="Application\ソースファイル\Chara\Enemy\Wolf.cpp" />
+    <ClCompile Include="Application\ソースファイル\Chara\Enemy\Mouse.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

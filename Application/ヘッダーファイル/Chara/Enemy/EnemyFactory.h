@@ -1,17 +1,17 @@
 #pragma once
 #include "EnemyManager.h"
-#include "Wolf.h"
+#include "Mouse.h"
 
 class EnemyFactory final
 {
 private:
-	Wolf wolf;
+	Mouse mouse;
 
 	NVector3 offset;			//ƒGƒ~ƒbƒ^[“à‚Å‚Ç‚ê‚¾‚¯oŒ»ˆÊ’u‚¸‚ç‚·‚©
 	bool isCollision = false;	//“G“¯m‚ª”í‚Á‚Ä‚é‚©ƒtƒ‰ƒO
 
-	uint32_t wolfSideNum = 10;				//˜TŒQ(‰¡)‚ÌoŒ»”
-	NVector2 wolfSideEmitter = {2.0f,1.0f};	//˜TŒQ(‰¡)‚ÌoŒ»”ÍˆÍ
+	uint32_t mouseSideNum = 10;				//˜TŒQ(‰¡)‚ÌoŒ»”
+	NVector2 mouseSideEmitter = {2.0f,1.0f};	//˜TŒQ(‰¡)‚ÌoŒ»”ÍˆÍ
 
 public:
 	static EnemyFactory* GetInstance();
