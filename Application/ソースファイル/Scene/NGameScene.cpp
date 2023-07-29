@@ -152,11 +152,13 @@ void NGameScene::Update()
 		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(
 			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos, 500.0f - stickVec.y);
 
-		//プレイヤーが波に飲み込まれたら殺す
-		if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+		if (Field::GetInstance()->GetIsStart())
 		{
-			Player::GetInstance()->DeadParticle();
-			Player::GetInstance()->SetIsAlive(false);
+			//プレイヤーが波に飲み込まれたら殺す
+			if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+			{
+				Player::GetInstance()->SetIsAlive(false);
+			}
 		}
 
 		//プレイヤーが死んで、死亡演出が終わったら失敗リザルトへ

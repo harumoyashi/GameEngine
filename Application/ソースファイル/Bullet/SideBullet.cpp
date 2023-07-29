@@ -41,7 +41,7 @@ void SideBullet::SideUpdate()
 		shortShotCoolTimer_.Reset();
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	static float coolTimer = 1.0f;
 	ImGui::Begin("SideBulletParameter");
 	//0�b~10�b�܂ł̊ԂɂƂǂ߂�

@@ -277,7 +277,7 @@ void Field::Update()
 		checkPoints_[i].text->Update();
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	ImGui::Begin("FieldParameter");
 	//1F~180F�܂ł̊ԂɂƂǂ߂�
 	ImGui::SliderFloat("StartPosZ", &startPosZ_, 1.0f, 180.0f);

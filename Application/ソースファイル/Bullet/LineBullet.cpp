@@ -30,7 +30,7 @@ void LineBullet::LineUpdate()
         shotCoolTimer_.Reset();
     }
 
-#ifdef DEBUG
+#ifdef _DEBUG
     static float coolTimer = 0.1f;
     ImGui::Begin("LineBulletParameter");
     //0�b~10�b�܂ł̊ԂɂƂǂ߂�

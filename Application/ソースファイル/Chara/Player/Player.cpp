@@ -213,7 +213,7 @@ void Player::Move()
 		}
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);

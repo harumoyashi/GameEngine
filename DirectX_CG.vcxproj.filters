@@ -178,6 +178,9 @@
     <Filter Include="Engine\ソース ファイル\Undefined">
       <UniqueIdentifier>{6f0fd84d-a029-4509-8333-92824ac6126f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\ソースファイル\Chara\Player">
+      <UniqueIdentifier>{11e35fb2-e507-4c13-9a17-e1eeaa61b392}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ヘッダーファイル\Math\NMatrix4.h">
@@ -557,9 +560,6 @@
     <ClCompile Include="Application\ソースファイル\Scene\IScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ソースファイル\Chara\Player\Player.cpp">
-      <Filter>Application\ソースファイル\Chara</Filter>
-    </ClCompile>
     <ClCompile Include="Application\ソースファイル\Bullet\IBullet.cpp">
       <Filter>Application\ソースファイル\Bullet</Filter>
     </ClCompile>
@@ -640,6 +640,9 @@
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\FrameWork\NGame.cpp">
       <Filter>Engine\ソース ファイル\FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ソースファイル\Chara\Player\Player.cpp">
+      <Filter>Application\ソースファイル\Chara\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

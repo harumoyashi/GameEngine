@@ -47,7 +47,7 @@ void EnemyManager::Update()
 		enemy->Update();
 	}
 
-#ifdef DEBUG
+#ifdef _DEBUG
 	ImGui::Begin("Enemys");
 	ImGui::Text("EnemysSize:%d", enemys_.size());
 	ImGui::End();
