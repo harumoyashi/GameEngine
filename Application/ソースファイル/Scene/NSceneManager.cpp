@@ -39,12 +39,12 @@ void NSceneManager::Update()
 
 void NSceneManager::Draw()
 {
-	NObj3d::SetBlendMode(BlendMode::None);
-	NObj3d::CommonBeginDraw();
-	currentScene_->DrawBack3D();
 	NSprite::SetBlendMode(BlendMode::Alpha);
 	NSprite::CommonBeginDraw();
 	currentScene_->DrawBackSprite();
+	NObj3d::SetBlendMode(BlendMode::None);
+	NObj3d::CommonBeginDraw();
+	currentScene_->DrawBack3D();
 	NObj3d::SetBlendMode(BlendMode::None);
 	NObj3d::CommonBeginDraw();
 	currentScene_->Draw3D();

@@ -44,6 +44,13 @@ void NGameScene::Init()
 
 #pragma endregion
 	//背景スプライト生成
+	backSprite_ = std::make_unique<NSprite>();
+	backSprite_->CreateSprite("white");
+	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
+	backSprite_->SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	backSprite_->color_.SetColor255(10, 10, 10);
 
 	//前景スプライト生成
 	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
@@ -95,6 +102,7 @@ void NGameScene::Update()
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
 #pragma region スプライト
+	backSprite_->Update();
 	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
 	{
 		foreSprite_[i]->Update();
@@ -264,14 +272,15 @@ void NGameScene::Update()
 	}
 }
 
+void NGameScene::DrawBackSprite()
+{
+	backSprite_->Draw();
+}
+
 void NGameScene::DrawBack3D()
 {
 	Field::GetInstance()->Draw();
 	Wave::GetInstance()->Draw();
-}
-
-void NGameScene::DrawBackSprite()
-{
 }
 
 void NGameScene::Draw3D()

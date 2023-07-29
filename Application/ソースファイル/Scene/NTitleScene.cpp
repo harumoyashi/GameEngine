@@ -57,6 +57,13 @@ void NTitleScene::Init()
 
 #pragma endregion
 	//背景スプライト生成
+	backSprite_ = std::make_unique<NSprite>();
+	backSprite_->CreateSprite("white");
+	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
+	backSprite_->SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	backSprite_->color_.SetColor255(10,10,10);
 
 	//前景スプライト生成
 	titleLogo_ = std::make_unique<NSprite>();
@@ -98,6 +105,7 @@ void NTitleScene::Update()
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
+	backSprite_->Update();
 	titleLogo_->Update();
 	for (uint32_t i = 0; i < aButton_.size(); i++)
 	{
@@ -135,11 +143,12 @@ void NTitleScene::Update()
 	}
 }
 
-void NTitleScene::DrawBack3D()
+void NTitleScene::DrawBackSprite()
 {
+	backSprite_->Draw();
 }
 
-void NTitleScene::DrawBackSprite()
+void NTitleScene::DrawBack3D()
 {
 }
 

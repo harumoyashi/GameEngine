@@ -10,8 +10,8 @@ public:
 	virtual void LoadResources() = 0;
 	virtual void Init() = 0;
 	virtual void Update() = 0;
-	virtual void DrawBack3D() = 0;
 	virtual void DrawBackSprite() = 0;
+	virtual void DrawBack3D() = 0;
 	virtual void Draw3D() = 0;
 	virtual void DrawParticle() = 0;
 	virtual void DrawForeSprite() = 0;

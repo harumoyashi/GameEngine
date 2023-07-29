@@ -32,8 +32,7 @@ private:
 	bool isCol_ = false;
 
 	//背景スプライト
-	static const uint32_t kMaxBackSprite = 3;	//背景スプライト数
-	std::unique_ptr<NSprite> backSprite_[kMaxBackSprite];	//背景スプライト
+	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
 
 	//前景スプライト
 	std::unique_ptr<NSprite> titleLogo_;						//タイトルロゴ
@@ -54,10 +53,10 @@ public:
 	void LoadResources();
 	void Init() override;
 	void Update() override;
-	//背景3Dオブジェクト
-	void DrawBack3D()override;
 	//背景スプライト
 	void DrawBackSprite()override;
+	//背景3Dオブジェクト
+	void DrawBack3D()override;
 	//3Dオブジェクト
 	void Draw3D() override;
 	//パーティクル
