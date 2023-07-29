@@ -213,7 +213,7 @@ void Player::Move()
 		}
 	}
 
-	//リリースでもいじりたいからifdefで囲ってない
+#ifdef DEBUG
 	static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
@@ -224,6 +224,7 @@ void Player::Move()
 	ImGui::End();
 	lineLevel_ = lineLv;
 	sideLevel_ = sideLv;
+#endif //DEBUG
 }
 
 void Player::Shot()
@@ -260,8 +261,8 @@ void Player::OnCollision()
 	//当たった相手が敵だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
+		NAudioManager::Play("deadSE");
 		isAlive_ = false;
-		NAudioManager::Play("explosionSE");
 	}
 }
 
@@ -269,6 +270,7 @@ void Player::DeadParticle()
 {
 	if (isDraw_)
 	{
+		NAudioManager::Play("explosionSE");
 		RadialBlur::Init();		//ラジアルブラーかける
 		deadParticle_.SetIsRotation(true);
 		deadParticle_.SetPos(obj_->position_);

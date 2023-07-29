@@ -277,7 +277,7 @@ void Field::Update()
 		checkPoints_[i].text->Update();
 	}
 
-	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+#ifdef DEBUG
 	ImGui::Begin("FieldParameter");
 	//1F~180F‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
 	ImGui::SliderFloat("StartPosZ", &startPosZ_, 1.0f, 180.0f);
@@ -285,6 +285,7 @@ void Field::Update()
 	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
 	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
 	ImGui::End();
+#endif //DEBUG
 }
 
 void Field::Draw()

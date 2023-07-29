@@ -41,11 +41,12 @@ void SideBullet::SideUpdate()
 		shortShotCoolTimer_.Reset();
 	}
 
-	//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+#ifdef DEBUG
 	static float coolTimer = 1.0f;
 	ImGui::Begin("SideBulletParameter");
 	//0•b~10•b‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
 	ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 0.0f, 10.0f);
 	ImGui::End();
 	shotCoolTimer_.maxTime_ = coolTimer;
+#endif //DEBUG
 }

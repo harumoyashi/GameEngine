@@ -42,12 +42,13 @@ void Wave::Update()
 	}
 	else
 	{
-		//ƒŠƒŠ[ƒX‚Å‚à‚¢‚¶‚è‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+#ifdef DEBUG
 		static float moveS = 0.02f;
 		ImGui::Begin("WaveParameter");
 		ImGui::SliderFloat("MoveSpeed", &moveS, 0.00f, 0.5f);
 		ImGui::End();
 		moveSpeed_ = moveS;
+#endif //DEBUG
 	}
 
 	posZ_ += moveSpeed_;

@@ -5,14 +5,17 @@ std::unordered_map<SoundHandle, uint32_t> NAudioManager::sSoundMap;
 
 void NAudioManager::AllLoad()
 {
-    LoadSound("title_BGM.mp3", "titleBGM"); //タイトルのBGM
-    LoadSound("play_BGM.mp3", "playBGM");   //プレイ中のBGM
+    LoadSound("title_BGM.mp3", "titleBGM");     //タイトルのBGM
+    LoadSound("play_BGM.mp3", "playBGM");       //プレイ中のBGM
+    LoadSound("clear_BGM.mp3", "clearBGM");     //クリアリザルトのBGM
+    LoadSound("faild_BGM.mp3", "faildBGM");     //失敗リザルトのBGM
 
     LoadSound("shot_SE.mp3", "shotSE");                 //弾撃った時
     LoadSound("start_SE.mp3", "startSE");               //スタートの文字掃ける音
     LoadSound("vanish_SE.mp3", "vanishSE");             //敵が弾ける音
     LoadSound("explosion_SE.mp3", "explosionSE");       //プレイヤーが弾ける音
     LoadSound("sceneChange_SE.mp3", "sceneChangeSE");   //シーン遷移音
+    LoadSound("dead_SE.mp3", "deadSE");                 //プレイヤー死亡音
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)

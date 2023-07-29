@@ -47,10 +47,11 @@ void EnemyManager::Update()
 		enemy->Update();
 	}
 
-	//ƒŠƒŠ[ƒX‚Å‚àŒ©‚½‚¢‚©‚çifdef‚ÅˆÍ‚Á‚Ä‚È‚¢
+#ifdef DEBUG
 	ImGui::Begin("Enemys");
 	ImGui::Text("EnemysSize:%d", enemys_.size());
 	ImGui::End();
+#endif //DEBUG
 }
 
 void EnemyManager::Draw()
