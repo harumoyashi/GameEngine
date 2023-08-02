@@ -138,9 +138,7 @@ PSOutput main(VSOutput input) : SV_TARGET
 
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;
-    //float4 color = (1,1,1,1);
     output.target0 = color;
     output.target1 = color;
     return output;
-    //return shadecolor * texcolor * m_color;
 }

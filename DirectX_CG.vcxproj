@@ -167,7 +167,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticleManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Light\NPointLight.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffect.h" />
-    <ClInclude Include="Application\ヘッダーファイル\Scene\NResultScene.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NTestScene.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\NSceneChange.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NShader.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Light\NSpotLight.h" />
@@ -245,7 +245,7 @@
     <ClCompile Include="Engine\ソースファイル\Particle\NParticleManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\Light\NPointLight.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffect.cpp" />
-    <ClCompile Include="Application\ソースファイル\Scene\NResultScene.cpp" />
+    <ClCompile Include="Application\ソースファイル\Scene\NTestScene.cpp" />
     <ClCompile Include="Application\ソースファイル\Scene\NSceneChange.cpp" />
     <ClCompile Include="Engine\ソースファイル\Pipeline\NShader.cpp" />
     <ClCompile Include="Engine\ソースファイル\Light\NSpotLight.cpp" />

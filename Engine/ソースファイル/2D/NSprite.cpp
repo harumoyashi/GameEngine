@@ -184,7 +184,6 @@ void NSprite::TransferVertex()
 void NSprite::SetSize(const float x, const float y)
 {
 	size_ = { x,y };
-	//texSize_ = size_;
 	TransferVertex();
 }
 

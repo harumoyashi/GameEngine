@@ -270,7 +270,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Light\NCircleShadow.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Application\ヘッダーファイル\Scene\NResultScene.h">
+    <ClInclude Include="Application\ヘッダーファイル\Scene\NTestScene.h">
       <Filter>Application\ヘッダーファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\Util\NColor.h">
@@ -497,7 +497,7 @@
     <ClCompile Include="Engine\ソースファイル\Light\NDirectionalLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Application\ソースファイル\Scene\NResultScene.cpp">
+    <ClCompile Include="Application\ソースファイル\Scene\NTestScene.cpp">
       <Filter>Application\ソースファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\Util\NColor.cpp">

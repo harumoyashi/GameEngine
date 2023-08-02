@@ -10,7 +10,6 @@ EnemyFactory* EnemyFactory::GetInstance()
 
 void EnemyFactory::Update()
 {
-	//mouse.Update();
 }
 
 void EnemyFactory::Create(IEnemy::EnemyType type, NVector3 pos)

@@ -59,7 +59,6 @@ void IEmitter3D::Update()
 
 		//スケールの線形補間
 		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].easeTimer.GetTimeRate());
-		//particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].easeTimer.GetTimeRate());
 
 		//加速度を速度に加算
 		particles_[i].velo += particles_[i].accel;
@@ -146,14 +145,6 @@ void IEmitter3D::SetBlendMode(BlendMode blendMode)
 		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAdd"));
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAdd")->pRootSignature);
 		break;
-	/*case BlendMode::Sub:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dSub"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dSub")->pRootSignature);
-		break;
-	case BlendMode::Inv:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dInv"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dInv")->pRootSignature);
-		break;*/
 	default:
 		break;
 	}

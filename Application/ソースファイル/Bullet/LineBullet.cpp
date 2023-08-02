@@ -10,7 +10,6 @@ LineBullet::LineBullet()
     isCanShot_ = false;			//撃てるかフラグ
     level_ = 1;                 //弾の強化レベル
     
-    //obj_->color_ = NColor::kRed;  //なぜかエラー出る
     SetDamage(1.0f);
 }
 

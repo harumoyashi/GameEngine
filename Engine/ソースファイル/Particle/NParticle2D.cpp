@@ -55,7 +55,7 @@ void Emitter2D::DrawBox()
 {
 	for (auto& p : particles_)
 	{
-		//SpDS::DrawBox(p.pos.x, p.pos.y, p.scale.x, p.scale.y, p.rot, p.color);
+		//ï ÇÃÇ∆Ç±Ç≈DrawBoxçÏÇ¡ÇƒÇ±Ç±Ç≈égÇ§;
 	}
 }
 
@@ -63,7 +63,7 @@ void Emitter2D::DrawGraph()
 {
 	for (auto& p : particles_)
 	{
-		//SpDS::DrawRotaGraph((uint32_t)p.pos.x, (uint32_t)p.pos.y, p.scale.x, p.scale.y, p.rot, p.key, Anchor::Center, p.color);
+		//å„Ç≈Ç‚ÇÎÇ§;
 	}
 }
 

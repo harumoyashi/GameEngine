@@ -141,13 +141,7 @@ float4 main(GSOutput input) : SV_TARGET
     }
 
     // シェーディング色で描画
-    //float4 color = shadecolor * texcolor * m_color;
+    float4 color = shadecolor * texcolor * input.color;
     
-    //float4 color = input.color;
-    
-    //output.target0 = color;
-    //output.target1 = color;
-    //return output;
-    
-    return shadecolor * input.color;
+    return color;
 }

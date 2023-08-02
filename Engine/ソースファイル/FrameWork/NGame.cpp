@@ -52,7 +52,7 @@ void NGame::Init()
 void NGame::Update()
 {
 	NImGuiManager::GetInstance()->Begin();
-	//ImGui::ShowDemoWindow();
+	//ImGui::ShowDemoWindow();でImGuiのサンプル見れる//
 
 #ifdef _DEBUG //ポストエフェクトImGui
 #endif // DEBUG

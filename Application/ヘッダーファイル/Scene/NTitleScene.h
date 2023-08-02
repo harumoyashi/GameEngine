@@ -13,7 +13,6 @@
 #include "NCollision.h"
 #include "NLightGroup.h"
 #include "NEasing.h"
-#include "NAssimpModel.h"
 #include "NConstBuff.h"
 #include "NLevelDataLoader.h"
 
@@ -43,8 +42,6 @@ private:
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 	std::unique_ptr<LevelData> levelData_;
-
-	NAssimpModel assimpModel_;
 
 public:
 	NTitleScene();

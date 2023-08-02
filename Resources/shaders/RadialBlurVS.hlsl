@@ -7,8 +7,3 @@ VSOutput main(float3 pos : SV_POSITION, float2 uv : TEXCOORD)
     output.uv = uv;
     return output;
 }
-
-//float4 main(float4 pos : POSITION) : SV_POSITION
-//{
-//    return pos;
-//}

@@ -174,7 +174,6 @@ void main(
         element.color = input[0].color;
         float4 wnormal = normalize(mul(rotMat, float4(normal_array[i], 0)));
         element.normal = wnormal.xyz;
-        //element.normal = normal_array[i];
         element.uv = uv_array[i];
         
         output.Append(element);

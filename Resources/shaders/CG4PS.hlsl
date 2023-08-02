@@ -40,8 +40,3 @@ float4 main(VSOutput input) : SV_TARGET
     
     return color;
 }
-
-//float4 main(VSOutput input) : SV_TARGET
-//{
-//    return tex1.Sample(smp, input.uv);
-//}

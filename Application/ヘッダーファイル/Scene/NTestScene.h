@@ -11,8 +11,9 @@
 #include "NSprite.h"
 #include "NAudio.h"
 #include "NCollision.h"
+#include "NAssimpModel.h"
 
-class NResultScene final
+class NTestScene final
 {
 private:
 	//オブジェクト
@@ -29,7 +30,9 @@ private:
 	//前景スプライト
 	static const uint32_t kMaxForeSprite = 3;	//前景スプライト数
 	std::unique_ptr<NSprite> foreSprite_[kMaxForeSprite];	//前景スプライト
-	
+
+	NAssimpModel assimpModel_;
+
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 

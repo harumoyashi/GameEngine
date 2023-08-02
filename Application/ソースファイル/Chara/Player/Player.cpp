@@ -244,16 +244,6 @@ void Player::Shot()
 			Create(IBullet::BulletType::SideBullet,
 				obj_->position_ + NVector3(0, obj_->scale_.y, 0), sideLevel_);
 	}
-
-	/*if (wideLevel)
-	{
-
-	}
-
-	if (roketLevel)
-	{
-
-	}*/
 }
 
 void Player::OnCollision()

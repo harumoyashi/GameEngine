@@ -150,7 +150,6 @@ private:
 	// サウンドデータコンテナ
 	std::array<SoundData, kMaxSoundData_> soundDatas_;
 	// 再生中データコンテナ
-	// std::unordered_map<uint32_t, IXAudio2SourceVoice*> voices_;
 	std::set<Voice*> voices_;
 	// サウンド格納ディレクトリ
 	std::string directoryPath_;

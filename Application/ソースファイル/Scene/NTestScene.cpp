@@ -1,10 +1,10 @@
 #include "NDX12.h"
-#include "NResultScene.h"
+#include "NTestScene.h"
 #include "NSceneManager.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
 
-void NResultScene::Init()
+void NTestScene::Init()
 {
 #pragma region	オーディオ初期化
 	
@@ -39,6 +39,13 @@ void NResultScene::Init()
 	}
 
 #pragma endregion
+	//FBX読み込み忘れない用
+	assimpModel_.Load(L"Resources/Cat_fixed.fbx");
+	assimpModel_.Init();
+	assimpModel_.position_ = {0,0,1};
+	assimpModel_.rotation_ = {0,0,0};
+	assimpModel_.scale_ = {0.03f,0.03f,0.03f};
+
 	//背景スプライト生成
 
 	//前景スプライト生成
@@ -49,9 +56,10 @@ void NResultScene::Init()
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+	NAssimpModel::SetLightGroup(lightGroup_.get());
 }
 
-void NResultScene::Update()
+void NTestScene::Update()
 {
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
@@ -65,6 +73,8 @@ void NResultScene::Update()
 		obj_[i]->Update();
 	}
 
+	assimpModel_.Update();
+
 	//ライトたちの更新
 	lightGroup_->Update();
 
@@ -75,7 +85,7 @@ void NResultScene::Update()
 	}
 }
 
-void NResultScene::Draw()
+void NTestScene::Draw()
 {
 #pragma region グラフィックスコマンド
 	//背景スプライト
@@ -88,6 +98,9 @@ void NResultScene::Draw()
 		obj_[i]->Draw();
 	}
 
+	//assimpモデル描画//
+	assimpModel_.Draw();
+	
 	//前景スプライト
 	NSprite::CommonBeginDraw();
 
@@ -95,13 +108,13 @@ void NResultScene::Draw()
 #pragma endregion
 }
 
-void NResultScene::Reset()
+void NTestScene::Reset()
 {
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
-void NResultScene::Finalize()
+void NTestScene::Finalize()
 {
 }

@@ -186,8 +186,6 @@ void Field::Update()
 		}
 
 		//------------------------------------- “G‚Ì¶¬ˆ— -------------------------------------//
-		//EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide,{7,0,8});
-
 		//“Go‚µ‚¿‚á‚¤‚æƒ{ƒ^ƒ“
 		if (NInput::IsKeyDown(DIK_C))
 		{

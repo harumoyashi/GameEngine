@@ -41,17 +41,7 @@ void NTitleScene::Init()
 #pragma region オブジェクトの初期値設定
 
 #pragma endregion
-
-	//assimpModel_.Load(L"Resources/FBX/Alicia_solid_Unity.FBX");
-	//assimpModel_.Load(L"Resources/Tripping.fbx");
-	/*assimpModel_.Load(L"Resources/Cat_fixed.fbx");
-	assimpModel_.Init();
-	assimpModel_.position_ = {0,0,1};
-	assimpModel_.rotation_ = {0,0,0};
-	assimpModel_.scale_ = {0.03f,0.03f,0.03f};*/
-
 	Player::GetInstance()->Init();
-	//Player::GetInstance()->SetPos(NVector3(0,0,0));
 
 #pragma region オブジェクトの初期値設定
 
@@ -88,11 +78,9 @@ void NTitleScene::Init()
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, false, false, false);
-	//lightGroup_->SetSpotLightColor({0,0,1});
 	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
-	NAssimpModel::SetLightGroup(lightGroup_.get());
 
 	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
 }
@@ -124,8 +112,6 @@ void NTitleScene::Update()
 		aButton_[1]->isInvisible_ = true;
 	}
 
-	//assimpModel_.Update();
-
 	Player::GetInstance()->SetIsMove(false);
 	Player::GetInstance()->Update();
 
@@ -154,8 +140,6 @@ void NTitleScene::DrawBack3D()
 
 void NTitleScene::Draw3D()
 {
-	//assimpモデル描画//
-	//assimpModel_.Draw();
 	Player::GetInstance()->Draw();
 }
 

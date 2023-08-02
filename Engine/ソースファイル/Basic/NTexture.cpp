@@ -155,7 +155,7 @@ bool NTextureManager::Load(const std::string& pictureName)
 			wPictureName.c_str(),	//‚±‚±‚Å•¶ŽšŒ^‚É
 			&metadata_, scratchImg_);
 	}
-	else /*if (ext == "png" || ext == "jpg")*/
+	else
 	{
 		result = LoadFromWICFile(
 			wPictureName.c_str(),	//‚±‚±‚Å•¶ŽšŒ^‚É

@@ -30,8 +30,3 @@ float4 main(VSOutput input) : SV_TARGET
     
     return blurCol;
 }
-
-//float4 main(VSOutput input) : SV_TARGET
-//{
-//    return tex1.Sample(smp, input.uv);
-//}
