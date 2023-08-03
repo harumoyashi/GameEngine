@@ -88,7 +88,9 @@ void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool i
 		auto position = &(src->mVertices[i]);
 		auto normal = &(src->mNormals[i]);
 		auto uv = (src->HasTextureCoords(0)) ? &(src->mTextureCoords[0][i]) : &zero3D;
-		
+		auto boneIndex = (src->mBones[i]->mNumWeights);
+		auto boneWeight = (src->mBones[i]->mWeights);
+
 		// ”½“]ƒIƒvƒVƒ‡ƒ“‚ª‚ ‚Á‚½‚çUV‚ð”½“]‚³‚¹‚é
 		if (inverseU)
 		{
@@ -99,10 +101,12 @@ void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool i
 			uv->y = 1 - uv->y;
 		}
 
-		NVertexPNU vertex = {};
+		NVertexAssimp vertex = {};
 		vertex.pos = NVector3(position->x, position->y, position->z);
 		vertex.normal = NVector3(normal->x, normal->y, normal->z);
 		vertex.uv = NVector2(uv->x, uv->y);
+		vertex.boneIndex[0] = 0;
+		vertex.boneWeight = {1.f,0.f,0.f};
 
 		dst.vertices[i] = vertex;
 	}
@@ -124,6 +128,35 @@ void NAssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool i
 
 void NAssimpLoader::LoadBone(Bone& dst, const aiMesh* src)
 {
+	/*for (auto i = 0u; i < src->mNumVertices; ++i)
+	{
+		aiBone* bone = src->mBones[i];
+
+		dst.ofstd::filesystemetMatrix.m[0][0] = (float)bone->mOfstd::filesystemetMatrix.a1;
+		dst.ofstd::filesystemetMatrix.m[0][1] = (float)bone->mOfstd::filesystemetMatrix.a2;
+		dst.ofstd::filesystemetMatrix.m[0][2] = (float)bone->mOfstd::filesystemetMatrix.a3;
+		dst.ofstd::filesystemetMatrix.m[0][3] = (float)bone->mOfstd::filesystemetMatrix.a4;
+		dst.ofstd::filesystemetMatrix.m[1][0] = (float)bone->mOfstd::filesystemetMatrix.b1;
+		dst.ofstd::filesystemetMatrix.m[1][1] = (float)bone->mOfstd::filesystemetMatrix.b2;
+		dst.ofstd::filesystemetMatrix.m[1][2] = (float)bone->mOfstd::filesystemetMatrix.b3;
+		dst.ofstd::filesystemetMatrix.m[1][3] = (float)bone->mOfstd::filesystemetMatrix.b4;
+		dst.ofstd::filesystemetMatrix.m[2][0] = (float)bone->mOfstd::filesystemetMatrix.c1;
+		dst.ofstd::filesystemetMatrix.m[2][1] = (float)bone->mOfstd::filesystemetMatrix.c2;
+		dst.ofstd::filesystemetMatrix.m[2][2] = (float)bone->mOfstd::filesystemetMatrix.c3;
+		dst.ofstd::filesystemetMatrix.m[2][3] = (float)bone->mOfstd::filesystemetMatrix.c4;
+		dst.ofstd::filesystemetMatrix.m[3][0] = (float)bone->mOfstd::filesystemetMatrix.d1;
+		dst.ofstd::filesystemetMatrix.m[3][1] = (float)bone->mOfstd::filesystemetMatrix.d2;
+		dst.ofstd::filesystemetMatrix.m[3][2] = (float)bone->mOfstd::filesystemetMatrix.d3;
+		dst.ofstd::filesystemetMatrix.m[3][3] = (float)bone->mOfstd::filesystemetMatrix.d4;
+	}
+	dst.indices.resize(src->mNumFaces * 3);
+	for (auto i = 0u; i < src->mNumFaces; ++i)
+	{
+		const auto& face = src->mFaces[i];
+		dst.indices[i * 3 + 0] = face.mIndices[0];
+		dst.indices[i * 3 + 1] = face.mIndices[1];
+		dst.indices[i * 3 + 2] = face.mIndices[2];
+	}*/
 }
 
 void NAssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)

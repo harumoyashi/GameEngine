@@ -14,21 +14,13 @@
 #include "NLightGroup.h"
 #include "NEasing.h"
 #include "NConstBuff.h"
-#include "NLevelDataLoader.h"
 
 class NTitleScene final :
 	public IScene
 {
 private:
 	//オブジェクト
-	NMaterial material_;				//マテリアル
-	static const uint32_t kMaxObj = 3;	//オブジェクト数
-	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト
-	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
-
-	Sphere sphere_;
-	Plane plane_;
-	bool isCol_ = false;
+	
 
 	//背景スプライト
 	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
@@ -40,8 +32,6 @@ private:
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
-
-	std::unique_ptr<LevelData> levelData_;
 
 public:
 	NTitleScene();

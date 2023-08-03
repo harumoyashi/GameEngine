@@ -39,10 +39,6 @@ void NCamera::Update()
 
 void NCamera::DebugCameraUpdate()
 {
-	up_.x = matView_.m[1][0];
-	up_.y = matView_.m[1][1];
-	up_.z = matView_.m[1][2];
-
 	matView_.RotateX(rot_.x);
 	matView_.RotateY(rot_.y);
 
@@ -83,9 +79,14 @@ void NCamera::DebugCameraUpdate()
 		const float moveSpeed = 0.025f;
 		sCurrentCamera->eye_ += frontVec * NInput::GetMouseMove().z * moveSpeed;
 	}
-
 	matView_ = MathUtil::MatViewLockTo(eye_, frontVec, up_);
+
 	ProjectiveProjection();
+
+	//‚±‚±‚ÅŒˆ‚ß‚È‚¢‚Æƒrƒ…[•ÏŠ·‚Å•Ï‚í‚Á‚Ä‚ª‚­‚ª‚­‚µ‚¿‚á‚¤
+	up_.x = matView_.m[1][0];
+	up_.y = matView_.m[1][1];
+	up_.z = matView_.m[1][2];
 
 #ifdef _DEBUG
 	ImGui::Begin("Camera");

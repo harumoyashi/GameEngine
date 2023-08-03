@@ -181,6 +181,9 @@
     <Filter Include="Application\ソースファイル\Chara\Player">
       <UniqueIdentifier>{11e35fb2-e507-4c13-9a17-e1eeaa61b392}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\Model">
+      <UniqueIdentifier>{1190f0dc-c12a-4417-9576-bcdd34ed593d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ヘッダーファイル\Math\NMatrix4.h">
@@ -668,6 +671,9 @@
     <None Include="Resources\shaders\Particle3D.hlsli">
       <Filter>リソース ファイル\Particle\particle3D</Filter>
     </None>
+    <None Include="Resources\shaders\Model.hlsli">
+      <Filter>リソース ファイル\Model</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\CG4PS.hlsl">
@@ -714,6 +720,12 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\Particle3DVS.hlsl">
       <Filter>リソース ファイル\Particle\particle3D</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ModelPS.hlsl">
+      <Filter>リソース ファイル\Model</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ModelVS.hlsl">
+      <Filter>リソース ファイル\Model</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -5,9 +5,11 @@
 
 NLightGroup* NAssimpModel::sLightGroup = nullptr;
 
-void NAssimpModel::Load(const wchar_t* filename)
+void NAssimpModel::Load(const std::string& modelname)
 {
-	importSetting_.filename = filename;
+	std::string filename = "Resources/" + modelname + ".fbx";
+	std::wstring wModelName(filename.begin(), filename.end());
+	importSetting_.filename = wModelName.c_str();
 
 	//model読み込み
 	if (!loader_.Load(importSetting_))
@@ -29,7 +31,7 @@ void NAssimpModel::Init()
 	vertexBuffers_.reserve(meshes_.size());
 	for (size_t i = 0; i < meshes_.size(); i++)
 	{
-		NVertexBuff<NVertexPNU> pVB;
+		NVertexBuff<NVertexAssimp> pVB;
 		pVB.Init(meshes_[i].vertices);
 
 		vertexBuffers_.emplace_back(pVB);
@@ -103,8 +105,8 @@ void NAssimpModel::Draw()
 	for (size_t i = 0; i < meshes_.size(); i++)
 	{
 		// パイプラインステートとルートシグネチャの設定コマンド
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Model"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Model")->pRootSignature);
 
 		// プリミティブ形状の設定コマンド
 		NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

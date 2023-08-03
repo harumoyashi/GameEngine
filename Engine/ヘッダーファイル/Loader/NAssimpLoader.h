@@ -14,7 +14,7 @@
 
 struct Mesh
 {
-	std::vector<NVertexPNU> vertices;
+	std::vector<NVertexAssimp> vertices;
 	std::vector<uint32_t> indices;
 
 	std::wstring textureName;
@@ -41,6 +41,7 @@ typedef struct ImportSetting
 {
     const std::string fileName;//ファイルパス
     std::vector<Mesh> meshies; //出力先メッシュ配列
+    std::vector<Bone> bones_;	// ボーンの配列
     bool inversU = false; //U座標反転フラグ
     bool inversV = false; //V座標反転フラグ
 }ImportSetting;
@@ -83,7 +84,7 @@ struct ImportSettings
 {
 	const wchar_t* filename = nullptr;	//ファイルパス
 	std::vector<Mesh>& meshes;			//出力先のメッシュ配列
-	//std::vector<Bone> bones;
+	std::vector<Bone> bones;
 	bool inverseU = false;				//U座標を反転させるか
 	bool inverseV = false;				//V座標を反転させるか
 };
@@ -91,7 +92,7 @@ struct ImportSettings
 class NAssimpLoader final
 {
 public:
-	NVertexBuff<NVertexPNU> vertexBuff_;
+	NVertexBuff<NVertexAssimp> vertexBuff_;
 	NIndexBuff indexBuff_;
 
 	bool Load(const ImportSettings& setting); // モデルをロードする

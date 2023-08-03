@@ -3,6 +3,23 @@
 #include "NSceneManager.h"
 #include "NTitleScene.h"
 #include "NCameraManager.h"
+#include "NSceneChange.h"
+#include "NAudioManager.h"
+#include "NModelManager.h"
+#include "NInput.h"
+#include "NPostEffect.h"
+
+NTestScene::NTestScene()
+{
+}
+
+NTestScene::~NTestScene()
+{
+}
+
+void NTestScene::LoadResources()
+{
+}
 
 void NTestScene::Init()
 {
@@ -15,36 +32,16 @@ void NTestScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_.emplace_back();
-		obj_[i] = std::make_unique<NObj3d>();
-		obj_[i]->Init();
-	}
-	obj_[0]->SetModel("sphere");
-	obj_[1]->SetModel("cube");
-	obj_[2]->SetModel("sphere");
-	obj_[3]->SetModel("busterSword");
-
+	
 #pragma region オブジェクトの初期値設定
-	obj_[0]->position_ = { 0,0,0 };
-	obj_[1]->position_ = { 0,-2,0 };
-	obj_[1]->scale_ = { 10,0.1f,10 };
-	obj_[2]->position_ = { 2,0,0 };
-	obj_[3]->position_ = { -2,3,0 };
-	//設定したのを適用
-	for (uint32_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->Update();
-	}
-
+	
 #pragma endregion
 	//FBX読み込み忘れない用
-	assimpModel_.Load(L"Resources/Cat_fixed.fbx");
+	/*assimpModel_.Load("FBX/Alicia_solid_Unity");
 	assimpModel_.Init();
 	assimpModel_.position_ = {0,0,1};
 	assimpModel_.rotation_ = {0,0,0};
-	assimpModel_.scale_ = {0.03f,0.03f,0.03f};
+	assimpModel_.scale_ = {0.03f,0.03f,0.03f};*/
 
 	//背景スプライト生成
 
@@ -65,15 +62,7 @@ void NTestScene::Update()
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
 
-	obj_[0]->MoveKey();
-	obj_[3]->MoveKey();
-
-	for (size_t i = 0; i < kMaxObj; i++)
-	{
-		obj_[i]->Update();
-	}
-
-	assimpModel_.Update();
+	//assimpModel_.Update();
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -81,40 +70,35 @@ void NTestScene::Update()
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
-		NSceneManager::ChangeScene<NTitleScene>();
+		NSceneChange::GetInstance()->Start();	//シーン遷移開始
 	}
-}
 
-void NTestScene::Draw()
-{
-#pragma region グラフィックスコマンド
-	//背景スプライト
-	NSprite::CommonBeginDraw();
-
-	//3Dオブジェクト
-	NObj3d::CommonBeginDraw();
-	for (uint32_t i = 0; i < kMaxObj; i++)
+	//切り替えてﾖｼって言われたら
+	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
-		obj_[i]->Draw();
+		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
-
-	//assimpモデル描画//
-	assimpModel_.Draw();
-	
-	//前景スプライト
-	NSprite::CommonBeginDraw();
-
-	// 4.描画コマンドここまで
-#pragma endregion
 }
 
-void NTestScene::Reset()
+void NTestScene::DrawBackSprite()
 {
-	lightGroup_->Init();
-	// 3Dオブジェクトにライトをセット
-	NObj3d::SetLightGroup(lightGroup_.get());
 }
 
-void NTestScene::Finalize()
+void NTestScene::DrawBack3D()
+{
+}
+
+void NTestScene::Draw3D()
+{
+	//assimpモデル描画//
+	//assimpModel_.Draw();
+}
+
+void NTestScene::DrawParticle()
+{
+}
+
+void NTestScene::DrawForeSprite()
 {
 }

@@ -1,5 +1,6 @@
 #include "NSceneManager.h"
 
+#include "NTestScene.h"
 #include "NTitleScene.h"
 #include "NGameScene.h"
 #include "NSprite.h"
