@@ -14,6 +14,7 @@
 #include "EnemyManager.h"
 #include "Field.h"
 #include "Wave.h"
+#include "Score.h"
 
 void NGameScene::LoadResources()
 {
@@ -38,6 +39,7 @@ void NGameScene::Init()
 	EnemyManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
+	Score::Init();
 
 #pragma region オブジェクトの初期値設定
 
@@ -112,6 +114,7 @@ void NGameScene::Update()
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
+	Score::DrawImGui();
 
 	NParticleManager::GetInstance()->Update();
 
@@ -303,4 +306,6 @@ void NGameScene::DrawForeSprite()
 	{
 		foreSprite_[i]->Draw();
 	}
+
+	Score::Draw();
 }

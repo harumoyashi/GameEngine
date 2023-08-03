@@ -417,6 +417,9 @@
     <ClInclude Include="External\json.hpp">
       <Filter>Engine\ヘッダー ファイル\Undefined</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -646,6 +649,9 @@
     </ClCompile>
     <ClCompile Include="Application\ソースファイル\Chara\Player\Player.cpp">
       <Filter>Application\ソースファイル\Chara\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

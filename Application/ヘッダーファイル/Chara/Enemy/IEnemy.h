@@ -24,6 +24,7 @@ protected:
 	bool isAlive_;					//生存フラグ
 	uint32_t maxHP_;				//最大体力
 	uint32_t hp_;					//現在の体力
+	uint32_t score_;				//倒すことで獲得できる得点(本家の10倍にする)
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 

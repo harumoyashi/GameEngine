@@ -134,6 +134,7 @@ void Player::ClearUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
 	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	obj_->rotation_.y = 0.0f;			//前に向かせる
 	obj_->position_.z += 0.05f;			//前に向かって走り続ける
 
 	obj_->Update();

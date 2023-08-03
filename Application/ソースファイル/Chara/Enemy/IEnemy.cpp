@@ -6,11 +6,12 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "Score.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
-	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_)
+	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_),score_(10)
 {
 }
 
@@ -97,6 +98,7 @@ void IEnemy::OnCollision()
 	{
 		DeadParticle();
 		isAlive_ = false;
+		Score::AddScore(score_);
 		NAudioManager::Play("vanishSE");
 	}
 }
