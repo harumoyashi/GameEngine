@@ -109,12 +109,11 @@ void NGameScene::Update()
 	{
 		foreSprite_[i]->Update();
 	}
-
+	Score::Update();
 #pragma endregion
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
-	Score::DrawImGui();
 
 	NParticleManager::GetInstance()->Update();
 

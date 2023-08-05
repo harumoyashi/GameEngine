@@ -1,7 +1,9 @@
 #pragma once
 #include <stdint.h>
+#include "NumDrower.h"
 
-class Score
+class Score:
+	public NumDrower
 {
 private:
 	static uint32_t nowScore_;
@@ -9,6 +11,7 @@ private:
 
 public:
 	static void Init();
+	static void Update();
 	static void Draw();
 	static void DrawImGui();
 

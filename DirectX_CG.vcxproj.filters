@@ -420,6 +420,9 @@
     <ClInclude Include="Score.h">
       <Filter>Engine\ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="NumDrower.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -651,6 +654,9 @@
       <Filter>Application\ソースファイル\Chara\Player</Filter>
     </ClCompile>
     <ClCompile Include="Score.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NumDrower.cpp">
       <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

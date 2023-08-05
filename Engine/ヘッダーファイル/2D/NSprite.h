@@ -20,9 +20,9 @@ protected:
 	uint32_t singleSizeVB_;						//頂点バッファ1個当たりのサイズ
 	uint32_t singleVB_;							//頂点バッファ全体のサイズ
 	std::vector<NVertexUV> vertices_{ 4 };		//頂点代入用
-	D3D12_HEAP_PROPERTIES heapPropVert_{};	//ヒープ
-	D3D12_RESOURCE_DESC resDescVert_{};		//リソース
-	NVertexBuff<NVertexUV> vertexBuff_;		//頂点バッファ
+	D3D12_HEAP_PROPERTIES heapPropVert_{};		//ヒープ
+	D3D12_RESOURCE_DESC resDescVert_{};			//リソース
+	NVertexBuff<NVertexUV> vertexBuff_;			//頂点バッファ
 
 	//定数バッファまわり//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D変換行列
@@ -37,9 +37,9 @@ protected:
 	bool isFlipX_ = false;	//左右反転フラグ
 	bool isFlipY_ = false;	//上下反転フラグ
 	NVector2 texLeftTop_ = { 0,0 };			//テクスチャ左上座標
-	NVector2 texSize_ = { 100,100 };			//テクスチャ切り出しサイズ
+	NVector2 texSize_ = { 100,100 };		//テクスチャ切り出しサイズ
 
-	NVector2 size_ = { 100,100 };		//スプライトの大きさ
+	NVector2 size_ = { 100,100 };			//スプライトの大きさ
 
 public:
 	//変換用//

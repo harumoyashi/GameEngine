@@ -26,6 +26,7 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "checkpoint.png", "checkpoint");
 	LoadTexture(directryPass + "clear.png", "clear");
 	LoadTexture(directryPass + "faild.png", "faild");
+	LoadTexture(directryPass + "number.png", "number");
 }
 
 NTexture NTextureManager::CreateErrorTexture()
