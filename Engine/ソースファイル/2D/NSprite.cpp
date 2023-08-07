@@ -30,7 +30,7 @@ void NSprite::CreateSprite(const std::string& texHandle)
 }
 
 void NSprite::CreateSprite(const std::string& texHandle,
-	const NVector2& anchorPoint_, bool isFlipX_, bool isFlipY_)
+	const NVec2& anchorPoint_, bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
 	//頂点
@@ -48,7 +48,7 @@ void NSprite::CreateSprite(const std::string& texHandle,
 }
 
 void NSprite::CreateClipSprite(const std::string& texHandle,
-	const NVector2& texLeftTop_, const NVector2& texSize_, const NVector2& anchorPoint_,
+	const NVec2& texLeftTop_, const NVec2& texSize_, const NVec2& anchorPoint_,
 	bool isFlipX_, bool isFlipY_)
 {
 	SetTexHandle(texHandle);
@@ -75,7 +75,7 @@ void NSprite::SetTexSize(const ComPtr<ID3D12Resource>& texBuff)
 	size_ = texSize_;
 }
 
-void NSprite::SetAncor(const NVector2& anchorPoint)
+void NSprite::SetAncor(const NVec2& anchorPoint)
 {
 	anchorPoint_ = anchorPoint;
 }
@@ -86,7 +86,7 @@ void NSprite::SetIsFlip(bool isFlipX, bool isFlipY)
 	isFlipY_ = isFlipY;
 }
 
-void NSprite::SetClipRange(const NVector2& texLeftTop, const NVector2& texSize)
+void NSprite::SetClipRange(const NVec2& texLeftTop, const NVec2& texSize)
 {
 	texLeftTop_ = texLeftTop;
 	texSize_ = texSize;
@@ -111,7 +111,7 @@ void NSprite::Update()
 	NMatrix4 matTrans;	//平行移動行列
 	matTrans = matTrans.Translation({ position_.x, position_.y, 0 });
 
-	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ = NMatrix4::Identity();	//単位行列代入
 	matWorld_ *= matRot;		//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 

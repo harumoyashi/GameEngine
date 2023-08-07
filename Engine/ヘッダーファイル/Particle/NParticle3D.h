@@ -1,5 +1,5 @@
 #pragma once
-#include "NVector3.h"
+#include "NVec3.h"
 #include "NColor.h"
 #include "NTexture.h"
 #include "NLightGroup.h"
@@ -15,18 +15,18 @@ class IEmitter3D
 	struct Particle3D
 	{
 		//座標
-		NVector3 pos;
+		NVec3 pos;
 		//大きさ
 		float scale;
 		float startScale;	//開始時の大きさ
 		float endScale;		//終了時の大きさ
 		//角度
-		NVector3 rot;
-		NVector3 plusRot;	//更新処理で回転させるときに使う用
+		NVec3 rot;
+		NVec3 plusRot;	//更新処理で回転させるときに使う用
 		//速度
-		NVector3 velo;
+		NVec3 velo;
 		//加速度
-		NVector3 accel;
+		NVec3 accel;
 		//重力
 		float gravity = 0.98f;
 
@@ -59,15 +59,15 @@ private:
 	static NLightGroup* sLightGroup;
 
 	//座標
-	NVector3 pos_{};
+	NVec3 pos_{};
 	//角度
-	NVector3 rot_{};
+	NVec3 rot_{};
 	//大きさ
-	NVector3 scale_{ 0.1f,0.1f,0.1f };	//これ0にするといかれる(原因不明)
+	NVec3 scale_{ 0.1f,0.1f,0.1f };	//これ0にするといかれる(原因不明)
 	float minScale_;	//パーティクルの最小サイズ
 	float maxScale_;	//パーティクルの最大サイズ
 	//元の大きさ
-	NVector3 originalScale_;
+	NVec3 originalScale_;
 	//拡縮用倍率
 	float scaling_;
 	//拡縮用タイマー
@@ -115,15 +115,15 @@ public:
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
 	//life:秒数指定なので注意
 	virtual void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-		NVector3 minVelo, NVector3 maxVelo, NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {}) = 0;
+		NVec3 minVelo, NVec3 maxVelo, NVec3 accel = {}, NVec3 minRot = {}, NVec3 maxRot = {}) = 0;
 	//パーティクル全消し
 	void ClearParticles() { particles_.clear(); }
 
 	//ゲッター//
 	//座標取得
-	NVector3 GetPos()const { return pos_; }
+	NVec3 GetPos()const { return pos_; }
 	//大きさ取得
-	NVector3 GetScale()const { return scale_; }
+	NVec3 GetScale()const { return scale_; }
 	//パーティクル全部死んだか取得
 	bool GetParticlesDead()const { return particles_.empty(); }
 	//何個パーティクルあるか取得
@@ -134,9 +134,9 @@ public:
 	//セッター//
 	//座標設定
 	void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
-	void SetPos(const NVector3& pos) { pos_ = pos; }
+	void SetPos(const NVec3& pos) { pos_ = pos; }
 	//大きさ設定
-	void SetScale(const NVector3& scale);
+	void SetScale(const NVec3& scale);
 	//角度設定
 	void SetRot(float rot) { rot_ = rot; }
 	//ライトを設定

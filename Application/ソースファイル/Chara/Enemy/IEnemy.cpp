@@ -19,7 +19,7 @@ IEnemy::~IEnemy()
 {
 }
 
-void IEnemy::Generate(const NVector3& pos, const float moveAngle, const std::string& modelname)
+void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string& modelname)
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel(modelname);
@@ -57,11 +57,11 @@ void IEnemy::Update()
 	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
 	NMatrix4 matWorldRight, matWorldLeft;
 
-	matWorldRight = matWorldRight.Translation(NVector3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
-	borderLineRight = MathUtil::WorldToScreen(NVector3(), matWorldRight).x + NWindows::kWin_width * 0.5f;
+	matWorldRight = matWorldRight.Translation(NVec3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineRight = MathUtil::WorldToScreen(NVec3(), matWorldRight).x + NWindows::kWin_width * 0.5f;
 
-	matWorldLeft = matWorldLeft.Translation(NVector3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
-	borderLineLeft = MathUtil::WorldToScreen(NVector3(), matWorldLeft).x - NWindows::kWin_width * 0.5f;
+	matWorldLeft = matWorldLeft.Translation(NVec3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	borderLineLeft = MathUtil::WorldToScreen(NVec3(), matWorldLeft).x - NWindows::kWin_width * 0.5f;
 
 	float objRight, objLeft;	//オブジェの右端左端
 	objRight = MathUtil::WorldToScreen(obj_->position_ + obj_->scale_, obj_->GetMatWorld()).x;
@@ -120,7 +120,7 @@ void IEnemy::DeadParticle()
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetIsRotation(true);
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetPos(GetPos());
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->Add(
-			15, 0.25f, NColor::kLightblue, 0.1f, 0.4f, { -0.5f,-0.1f,-0.5f }, { 0.5f,0.1f,0.5f }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+			15, 0.25f, NColor::kLightblue, 0.1f, 0.4f, { -0.5f,-0.1f,-0.5f }, { 0.5f,0.1f,0.5f }, NVec3::zero, -NVec3::one, NVec3::one);
 	}
 }
 

@@ -2,25 +2,25 @@
 #include <d3d12.h>
 #include <vector>
 #include "NDX12.h"
-#include "NVector2.h"
-#include "NVector3.h"
+#include "NVec2.h"
+#include "NVec3.h"
 #include "NColor.h"
 
 struct NVertex
 {
-	NVector3 pos = { 0, 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
 
-	NVertex(NVector3 pos = { 0, 0, 0 })
+	NVertex(NVec3 pos = { 0, 0, 0 })
 		: pos(pos) {}
 };
 
 //position,uv‚Ì2—v‘f
 struct NVertexUV
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector2 uv = { 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec2 uv = { 0, 0 };
 
-	NVertexUV(NVector3 pos = { 0, 0, 0 }, NVector2 uv = { 0, 0 })
+	NVertexUV(NVec3 pos = { 0, 0, 0 }, NVec2 uv = { 0, 0 })
 		: pos(pos), uv(uv) {}
 
 	bool operator==(const NVertexUV& a) const;
@@ -29,11 +29,11 @@ struct NVertexUV
 //position,normal,uv‚Ì3—v‘f
 struct NVertexPNU
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 normal = { 0, 0, 1 };
-	NVector2 uv = { 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 normal = { 0, 0, 1 };
+	NVec2 uv = { 0, 0 };
 
-	NVertexPNU(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 })
+	NVertexPNU(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 })
 		: pos(pos), normal(normal), uv(uv) {}
 
 	bool operator==(const NVertexPNU& a) const;
@@ -49,12 +49,12 @@ struct NVertexPNU
 //position,scale,color‚Ì3—v‘f
 struct NVertexParticle
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 rot = { 0, 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 rot = { 0, 0, 0 };
 	NColor color = NColor::kWhite;
 	float scale = 0.0f;
 
-	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NVector3 rot = { 0, 0, 0 },
+	NVertexParticle(NVec3 pos = { 0, 0, 0 }, NVec3 rot = { 0, 0, 0 },
 		NColor color = NColor::kWhite, float scale = 0.0f)
 		: pos(pos), rot(rot), color(color), scale(scale) {}
 
@@ -64,13 +64,13 @@ struct NVertexParticle
 //position,normal,uv,boneIndex,boneWeight‚Ì5—v‘f
 struct NVertexAssimp
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 normal = { 0, 0, 1 };
-	NVector2 uv = { 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 normal = { 0, 0, 1 };
+	NVec2 uv = { 0, 0 };
 	std::vector<uint32_t> boneIndex{ 4 };
 	std::vector<float> boneWeight{ 4 };
 
-	NVertexAssimp(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 },
+	NVertexAssimp(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 },
 		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
 		: pos(pos), normal(normal), uv(uv), boneIndex(boneIndex), boneWeight(boneWeight) {}
 

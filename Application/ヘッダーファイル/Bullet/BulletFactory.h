@@ -16,7 +16,7 @@ public:
 
 	void Update();
 	//íeÇÃê∂ê¨
-	void Create(IBullet::BulletType type,NVector3 pos,uint32_t level);
+	void Create(IBullet::BulletType type,NVec3 pos,uint32_t level);
 
 private:
 	BulletFactory() = default;

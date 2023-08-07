@@ -1,18 +1,14 @@
 #pragma once
-#include "NDX12.h"
 #include "NVertexBuff.h"
 #include "NIndexBuff.h"
 #include "NConstBuff.h"
-#include "NMaterial.h"
 
-struct Model
+struct NMesh final
 {
-	std::string name;						//モデル名
+public:
 	NVertexBuff<NVertexPNU> vertexBuff;		//頂点バッファ
 	NIndexBuff indexBuff;					//インデックスバッファ
 
 	std::vector<NVertexPNU> vertices;		//頂点群
 	std::vector<uint32_t> indices;			//インデックス群
-
-	NMaterial material;						//マテリアル
 };

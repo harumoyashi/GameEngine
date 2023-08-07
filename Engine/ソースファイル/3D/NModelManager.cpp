@@ -7,27 +7,27 @@
 
 std::unordered_map<ModelHandle, uint32_t> NModelManager::sModelMap{};
 
-std::vector<Model> NModelManager::modelDatas_{};
+std::vector<IModel> NModelManager::modelDatas_{};
 uint32_t NModelManager::indexModelData_ = 0u;
 
 void NModelManager::AllLoad()
 {
-	LoadModel("sphere", "sphere");
-	LoadModel("Cube", "cube");
-	LoadModel("plane", "plane");
-	LoadModel("busterSword", "busterSword");
-	LoadModel("boss_model", "boss");
-	LoadModel("cat", "cat");
-	LoadModel("mouse", "mouse");
+	LoadObjModel("sphere", "sphere");
+	LoadObjModel("Cube", "cube");
+	LoadObjModel("plane", "plane");
+	LoadObjModel("busterSword", "busterSword");
+	LoadObjModel("boss_model", "boss");
+	LoadObjModel("cat", "cat");
+	LoadObjModel("mouse", "mouse");
 }
 
-Model NModelManager::GetModel(const std::string& modelHandle)
+IModel* NModelManager::GetModel(const std::string& modelHandle)
 {
 	uint32_t modelNum = sModelMap[modelHandle];
-	return modelDatas_[modelNum];
+	return &modelDatas_[modelNum];
 }
 
-uint32_t NModelManager::LoadModel(const std::string& modelname, const std::string& modelHandle)
+uint32_t NModelManager::LoadObjModel(const std::string& modelname, const std::string& modelHandle)
 {
 	uint32_t handle = indexModelData_;
 
@@ -53,12 +53,12 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		assert(0);
 	}
 
-	std::vector<NVector3>positions;	//頂点座標
-	std::vector<NVector3>normals;	//法線ベクトル
-	std::vector<NVector2>texcoords;	//テクスチャUV
+	std::vector<NVec3>positions;	//頂点座標
+	std::vector<NVec3>normals;	//法線ベクトル
+	std::vector<NVec2>texcoords;	//テクスチャUV
 	modelDatas_.emplace_back();
 	// 書き込むモデルデータの参照
-	Model& modelData = modelDatas_.at(handle);
+	IModel& modelData = modelDatas_.at(handle);
 	//1行ずつ読み込む
 	std::string line;
 	while (getline(file, line))
@@ -84,7 +84,7 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		if (key == "v")
 		{
 			//X,Y,Z座標読み込み
-			NVector3 position{};
+			NVec3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
@@ -96,7 +96,7 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		if (key == "vt")
 		{
 			//U,V成分読み込み
-			NVector2 texcoord{};
+			NVec2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
 			//V方向転換
@@ -109,7 +109,7 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 		if (key == "vn")
 		{
 			//X,Y,Z成分読み込み
-			NVector3 normal{};
+			NVec3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
@@ -138,10 +138,10 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
-				modelData.vertices.emplace_back(vertex);
+				modelData.mesh.vertices.emplace_back(vertex);
 
 				//インデックスデータの追加
-				modelData.indices.emplace_back((unsigned short)modelData.indices.size());
+				modelData.mesh.indices.emplace_back((unsigned short)modelData.mesh.indices.size());
 			}
 		}
 	}
@@ -149,8 +149,8 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 	file.close();
 
 	//バッファの生成
-	modelData.vertexBuff.Init(modelData.vertices);
-	modelData.indexBuff.Init(modelData.indices);
+	modelData.mesh.vertexBuff.Init(modelData.mesh.vertices);
+	modelData.mesh.indexBuff.Init(modelData.mesh.indices);
 	//モデル名を登録して
 	modelData.name = modelname;
 
@@ -160,4 +160,9 @@ uint32_t NModelManager::LoadModel(const std::string& modelname, const std::strin
 	//モデルマップに登録
 	sModelMap.insert(std::make_pair(modelHandle, handle));
 	return handle;
+}
+
+uint32_t NModelManager::LoadFbxModel(const std::string& modelname, const std::string& modelHandle)
+{
+	return 0;
 }

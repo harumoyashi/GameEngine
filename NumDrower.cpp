@@ -2,8 +2,8 @@
 
 std::vector<std::unique_ptr<NSprite>> NumDrower::numSprite_;
 const float NumDrower::scale_ = 64.f;
-NVector2 NumDrower::pos_ = { 0.f,0.f };
-NVector2 NumDrower::size_ = { scale_,scale_ };
+NVec2 NumDrower::pos_ = { 0.f,0.f };
+NVec2 NumDrower::size_ = { scale_,scale_ };
 std::vector<uint32_t> NumDrower::digit_;
 
 void NumDrower::Create(uint32_t spriteNum)
@@ -33,7 +33,7 @@ void NumDrower::Draw()
 	}
 }
 
-void NumDrower::SetPos(const NVector2& pos)
+void NumDrower::SetPos(const NVec2& pos)
 {
 	pos_ = pos;
 	for (size_t i = 0; i < numSprite_.size(); i++)
@@ -43,7 +43,7 @@ void NumDrower::SetPos(const NVector2& pos)
 	}
 }
 
-void NumDrower::SetSize(const NVector2& size)
+void NumDrower::SetSize(const NVec2& size)
 {
 	size_ = size;
 	for (size_t i = 0; i < numSprite_.size(); i++)

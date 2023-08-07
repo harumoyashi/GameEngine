@@ -14,7 +14,7 @@ private:
 	NEasing::EaseTimer inTimer_ = 0.5f;		//入ってくるときのタイマー
 	NEasing::EaseTimer outTimer_ = 0.5f;	//出てくときのタイマー
 
-	NVector2 pos_;	//暗幕の座標
+	NVec2 pos_;	//暗幕の座標
 
 public:
 	NSceneChange();

@@ -11,14 +11,14 @@ struct LevelData
 	struct ObjectData
 	{
 		std::string filename;
-		NVector3 trans;
-		NVector3 rot;
-		NVector3 scale;
+		NVec3 trans;
+		NVec3 rot;
+		NVec3 scale;
 	};
 
 	NCamera camera;
 	std::list<ObjectData> objects;
-	std::unordered_map<ModelName, Model> models;
+	std::unordered_map<ModelName, IModel> models;
 };
 
 class NLevelDataLoader final

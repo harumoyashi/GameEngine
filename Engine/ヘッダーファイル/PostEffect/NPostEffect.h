@@ -17,7 +17,7 @@ protected:
 
 	//変換用//
 	static float rotation_;		//Z軸の回転角
-	static NVector2 position_;	//座標
+	static NVec2 position_;	//座標
 	static NColor color_;		//色
 
 	//テクスチャバッファ

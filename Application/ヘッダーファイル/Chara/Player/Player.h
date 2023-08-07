@@ -15,7 +15,7 @@ private:
 
 	//------------------------ 移動関連 ------------------------//
 	bool isMove_;				//動いてるかフラグ
-	NVector2 moveVelo_;			//移動量
+	NVec2 moveVelo_;			//移動量
 	float moveSpeed_;			//移動速度
 
 	float moveAngle_;			//回転角度
@@ -37,7 +37,7 @@ private:
 	SimpleParticle deadParticle_;				//死んだときに出るパーティクル
 	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
 	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
-	NVector3 deadPos_;							//死んだ座標保存用
+	NVec3 deadPos_;							//死んだ座標保存用
 
 	//------------------------ その他 ------------------------//
 	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
@@ -71,13 +71,13 @@ public:
 
 	// ゲッター //
 	//座標取得
-	NVector3 GetPos()const { return obj_->position_; }
+	NVec3 GetPos()const { return obj_->position_; }
 	//注視点用にちょい高めの座標取得
-	NVector3 GetHeadPos()const { return { obj_->position_.x,obj_->position_.y + obj_->scale_.y,obj_->position_.z }; }
+	NVec3 GetHeadPos()const { return { obj_->position_.x,obj_->position_.y + obj_->scale_.y,obj_->position_.z }; }
 	//前方座標取得
 	float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
 	//大きさ取得
-	NVector3 GetScale()const { return obj_->scale_; }
+	NVec3 GetScale()const { return obj_->scale_; }
 	//無敵状態取得
 	bool GetIsGodmode()const { return isGodmode_; }
 	//生きてるかフラグ取得
@@ -87,7 +87,7 @@ public:
 	//コライダー取得
 	const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
-	NVector2 GetMoveVelo()const { return moveVelo_; }
+	NVec2 GetMoveVelo()const { return moveVelo_; }
 	//経過時間取得
 	float GetElapseSpeed()const { return elapseSpeed_; }
 	//オブジェクトの色取得
@@ -97,9 +97,9 @@ public:
 
 	// セッター //
 	//座標設定
-	void SetPos(const NVector3& pos) { obj_->position_ = pos; }
+	void SetPos(const NVec3& pos) { obj_->position_ = pos; }
 	//大きさ設定
-	void SetScale(const NVector3& scale) { obj_->scale_ = scale; }
+	void SetScale(const NVec3& scale) { obj_->scale_ = scale; }
 	//無敵状態設定
 	void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
 	//生きてるかフラグ設定

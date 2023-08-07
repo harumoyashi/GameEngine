@@ -3,14 +3,14 @@
 #include <d3dx12.h>
 #include <assert.h>
 #include <wrl.h>
-#include "NVector3.h"
+#include "NVec3.h"
 #include "NConstBuff.h"
 
 class NDirectionalLight final
 {
 private://静的メンバ変数
-	NVector3 lightdir_ = { 1,0,0 };	 // ライト光線方向
-	NVector3 lightcolor_ = { 1,1,1 }; // ライト色
+	NVec3 lightdir_ = { 1,0,0 };	 // ライト光線方向
+	NVec3 lightcolor_ = NVec3::one; // ライト色
 
 	//ダーティフラグ
 	bool isDirty_ = false;
@@ -29,11 +29,11 @@ public: //メンバ関数
 	void Init();
 
 	//ライトの方向をセット
-	void SetLightDir(const NVector3& lightdir);
-	const NVector3& GetLightDir()const { return lightdir_; }
+	void SetLightDir(const NVec3& lightdir);
+	const NVec3& GetLightDir()const { return lightdir_; }
 	//ライトの色をセット
-	void SetLightColor(const NVector3& lightcolor);
-	const NVector3& GetLightColor()const { return lightcolor_; }
+	void SetLightColor(const NVec3& lightcolor);
+	const NVec3& GetLightColor()const { return lightcolor_; }
 	//有効フラグをセット
 	void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得

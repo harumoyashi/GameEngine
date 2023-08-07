@@ -9,10 +9,10 @@ void NCameraManager::NormalCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ + NVector3(0, -length_, -length_ * 0.5f);
+	nextPos_ = nextTarget_ + NVec3(0, -length_, -length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVector3(0, 0, 1);	//下見下ろす形にする
+	nextUpVec_ = NVec3(0, 0, 1);	//下見下ろす形にする
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -29,7 +29,7 @@ void NCameraManager::NormalCameraUpdate()
 	//前のカメラから諸々イージングしてから下の処理やりたい
 
 	normalCamera_.SetTarget(Player::GetInstance()->GetPos());
-	normalCamera_.SetEye(normalCamera_.GetTarget() + NVector3(0, length_, -length_ * 0.5f));
+	normalCamera_.SetEye(normalCamera_.GetTarget() + NVec3(0, length_, -length_ * 0.5f));
 	normalCamera_.SetUpVec(nextUpVec_);
 
 	normalCamera_.Update();
@@ -57,10 +57,10 @@ void NCameraManager::TitleCameraInit()
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ + NVector3(-length_, 0, length_);
+	nextPos_ = nextTarget_ + NVec3(-length_, 0, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVector3(0, 1, 0);
+	nextUpVec_ = NVec3(0, 1, 0);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -86,7 +86,7 @@ void NCameraManager::TitleCameraUpdate()
 		cameraRotEase_.Reset();
 	}
 
-	NVector2 vec2;	//カメラに足すベクトル
+	NVec2 vec2;	//カメラに足すベクトル
 	//円運動させる
 	vec2 = MathUtil::CircleMotion(
 		{ titleCamera_.GetTarget().x,titleCamera_.GetTarget().z },
@@ -94,7 +94,7 @@ void NCameraManager::TitleCameraUpdate()
 		cameraRotEase_.GetTimeRate() * PI2);
 
 	titleCamera_.SetTarget(Player::GetInstance()->GetPos());
-	titleCamera_.SetEye(NVector3(vec2.x, length_, vec2.y));
+	titleCamera_.SetEye(NVec3(vec2.x, length_, vec2.y));
 	titleCamera_.SetUpVec(nextUpVec_);
 
 	titleCamera_.Update();
@@ -110,10 +110,10 @@ void NCameraManager::FaildCameraInit()
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = Player::GetInstance()->GetPos() + NVector3(0, length_ * 0.5f, -length_);
+	nextPos_ = Player::GetInstance()->GetPos() + NVec3(0, length_ * 0.5f, -length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVector3(0, 1, 0);
+	nextUpVec_ = NVec3(0, 1, 0);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -137,7 +137,7 @@ void NCameraManager::FaildCameraUpdate()
 	//前のカメラから現在のカメラまでの補間
 	if (faildCameraMoveEase_.GetRun())
 	{
-		NVector3 target,pos,upVec;
+		NVec3 target,pos,upVec;
 		target = OutQuad(currentTarget_, nextTarget_, faildCameraMoveEase_.GetTimeRate());
 		pos = OutQuad(currentPos_, nextPos_, faildCameraMoveEase_.GetTimeRate());
 		upVec = OutQuad(currentUpVec_, nextUpVec_, faildCameraMoveEase_.GetTimeRate());
@@ -160,10 +160,10 @@ void NCameraManager::ClearCameraInit()
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
+	nextPos_ = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVector3(0, 1, 0);
+	nextUpVec_ = NVec3(0, 1, 0);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -191,10 +191,10 @@ void NCameraManager::ClearCameraUpdate()
 		currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 		nextTarget_ = Player::GetInstance()->GetHeadPos();
 		currentPos_ = NCamera::sCurrentCamera->GetPos();
-		nextPos_ = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
+		nextPos_ = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
 		currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 
-		NVector3 target, pos, upVec;
+		NVec3 target, pos, upVec;
 		target = InQuad(currentTarget_, nextTarget_, clearCameraMoveEase_.GetTimeRate());
 		pos = InQuad(currentPos_, nextPos_, clearCameraMoveEase_.GetTimeRate());
 		upVec = InQuad(currentUpVec_, nextUpVec_, clearCameraMoveEase_.GetTimeRate());
@@ -207,8 +207,8 @@ void NCameraManager::ClearCameraUpdate()
 	//補間終わった後もプレイヤーが動くので追いかけ続ける
 	if (clearCameraMoveEase_.GetEnd())
 	{
-		NVector3 pos;
-		pos = Player::GetInstance()->GetHeadPos() + NVector3(-length_, length_ * 0.5f, length_);
+		NVec3 pos;
+		pos = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
 		clearCamera_.SetEye(pos);
 		clearCamera_.SetTarget(Player::GetInstance()->GetHeadPos());
 	}
@@ -217,18 +217,18 @@ void NCameraManager::ClearCameraUpdate()
 	NCamera::sCurrentCamera = &clearCamera_;
 }
 
-NVector3 NCameraManager::InQuad(const NVector3& start, const NVector3& end, float timerate)
+NVec3 NCameraManager::InQuad(const NVec3& start, const NVec3& end, float timerate)
 {
-	NVector3 result;
+	NVec3 result;
 	result.x = NEasing::InQuad(start.x, end.x, timerate);
 	result.y = NEasing::InQuad(start.y, end.y, timerate);
 	result.z = NEasing::InQuad(start.z, end.z, timerate);
 	return result;
 }
 
-NVector3 NCameraManager::OutQuad(const NVector3& start, const NVector3& end, float timerate)
+NVec3 NCameraManager::OutQuad(const NVec3& start, const NVec3& end, float timerate)
 {
-	NVector3 result;
+	NVec3 result;
 	result.x = NEasing::OutQuad(start.x, end.x, timerate);
 	result.y = NEasing::OutQuad(start.y, end.y, timerate);
 	result.z = NEasing::OutQuad(start.z, end.z, timerate);

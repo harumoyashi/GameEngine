@@ -18,8 +18,8 @@ void IEmitter3D::Init()
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbTrans_->Init();
 
-	pos_ = { 0,0,0 };
-	rot_ = { 0,0,0 };
+	pos_ = NVec3::zero;
+	rot_ = NVec3::zero;
 	scale_ = { 0.1f,0.1f,0.1f };
 
 	addInterval_ = 0;
@@ -184,7 +184,7 @@ void IEmitter3D::UpdateMatrix()
 	NMatrix4 matTrans;	//平行移動行列
 	matTrans = matTrans.Translation(pos_);
 
-	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ = NMatrix4::Identity();	//単位行列代入
 	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
 	matWorld_ *= matRot;		//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
@@ -207,7 +207,7 @@ void IEmitter3D::TransferMatrix()
 }
 
 void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-	NVector3 minVelo, NVector3 maxVelo, NVector3 accel, NVector3 minRot, NVector3 maxRot)
+	NVec3 minVelo, NVec3 maxVelo, NVec3 accel, NVec3 minRot, NVec3 maxRot)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -225,22 +225,22 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 		float pX = MathUtil::Randomf(-scale_.x, scale_.x);
 		float pY = MathUtil::Randomf(-scale_.y, scale_.y);
 		float pZ = MathUtil::Randomf(-scale_.z, scale_.z);
-		NVector3 randomPos(pX, pY, pZ);
+		NVec3 randomPos(pX, pY, pZ);
 		//引数の範囲から大きさランダムで決定
 		float sX = MathUtil::Randomf(minScale, maxScale);
 		float sY = MathUtil::Randomf(minScale, maxScale);
 		float sZ = MathUtil::Randomf(minScale, maxScale);
-		NVector3 randomScale(sX, sY, sZ);
+		NVec3 randomScale(sX, sY, sZ);
 		//引数の範囲から飛ばす方向ランダムで決定
 		float vX = MathUtil::Randomf(minVelo.x, maxVelo.x);
 		float vY = MathUtil::Randomf(minVelo.y, maxVelo.y);
 		float vZ = MathUtil::Randomf(minVelo.z, maxVelo.z);
-		NVector3 randomVelo(vX, vY, vZ);
+		NVec3 randomVelo(vX, vY, vZ);
 		//引数の範囲から回転をランダムで決定
 		float rX = MathUtil::Randomf(minRot.x, maxRot.x);
 		float rY = MathUtil::Randomf(minRot.y, maxRot.y);
 		float rZ = MathUtil::Randomf(minRot.z, maxRot.z);
-		NVector3 randomRot(rX, rY, rZ);
+		NVec3 randomRot(rX, rY, rZ);
 
 		//決まった座標にエミッター自体の座標を足して正しい位置に
 		p.pos = randomPos + pos_;
@@ -261,7 +261,7 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 	}
 }
 
-void IEmitter3D::SetScale(const NVector3& scale)
+void IEmitter3D::SetScale(const NVec3& scale)
 {
 	scale_ = scale;
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管

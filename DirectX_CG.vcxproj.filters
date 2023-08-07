@@ -184,15 +184,21 @@
     <Filter Include="リソース ファイル\Model">
       <UniqueIdentifier>{1190f0dc-c12a-4417-9576-bcdd34ed593d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\ヘッダー ファイル\3D\Model">
+      <UniqueIdentifier>{fa3e2b2c-0857-4109-8a62-52e983334140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\ソース ファイル\3D\Model">
+      <UniqueIdentifier>{c0436b0e-fb16-44c4-a1ed-47f493a8baa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ヘッダーファイル\Math\NMatrix4.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector2.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVec2.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector3.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVec3.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NRootParam.h">
@@ -221,9 +227,6 @@
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\2D\NSprite.h">
       <Filter>Engine\ヘッダー ファイル\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ヘッダーファイル\3D\NModel.h">
-      <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\Basic\NDX12.h">
       <Filter>Engine\ヘッダー ファイル\Basic</Filter>
@@ -294,14 +297,11 @@
     <ClInclude Include="Engine\ヘッダーファイル\Buffer\NConstBuffData.h">
       <Filter>Engine\ヘッダー ファイル\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\ヘッダーファイル\Math\NVector4.h">
+    <ClInclude Include="Engine\ヘッダーファイル\Math\NVec4.h">
       <Filter>Engine\ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\Light\NLightGroup.h">
       <Filter>Engine\ヘッダー ファイル\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\ヘッダーファイル\3D\NAssimpModel.h">
-      <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="Engine\ヘッダーファイル\Loader\NAssimpLoader.h">
       <Filter>Engine\ヘッダー ファイル\Loader</Filter>
@@ -417,21 +417,33 @@
     <ClInclude Include="External\json.hpp">
       <Filter>Engine\ヘッダー ファイル\Undefined</Filter>
     </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+    <ClInclude Include="NMesh.h">
+      <Filter>Engine\ヘッダー ファイル\3D</Filter>
     </ClInclude>
     <ClInclude Include="NumDrower.h">
-      <Filter>Engine\ヘッダー ファイル</Filter>
+      <Filter>Engine\ヘッダー ファイル\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Application\ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ヘッダーファイル\3D\IModel.h">
+      <Filter>Engine\ヘッダー ファイル\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="NFbxModel.h">
+      <Filter>Engine\ヘッダー ファイル\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="NObjModel.h">
+      <Filter>Engine\ヘッダー ファイル\3D\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\Math\NVector2.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVec2.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\Math\NVector3.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVec3.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\Pipeline\NGPipeline.cpp">
@@ -460,9 +472,6 @@
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\2D\NSprite.cpp">
       <Filter>Engine\ソース ファイル\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\3D\NModel.cpp">
-      <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\Basic\NDX12.cpp">
       <Filter>Engine\ソース ファイル\Basic</Filter>
@@ -533,14 +542,11 @@
     <ClCompile Include="Engine\ソースファイル\Light\NPointLight.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\Math\NVector4.cpp">
+    <ClCompile Include="Engine\ソースファイル\Math\NVec4.cpp">
       <Filter>Engine\ソース ファイル\Math</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\Light\NLightGroup.cpp">
       <Filter>Engine\ソース ファイル\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\3D\NAssimpModel.cpp">
-      <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\Loader\NAssimpLoader.cpp">
       <Filter>Engine\ソース ファイル\Loader</Filter>
@@ -653,11 +659,23 @@
     <ClCompile Include="Application\ソースファイル\Chara\Player\Player.cpp">
       <Filter>Application\ソースファイル\Chara\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+    <ClCompile Include="NMesh.cpp">
+      <Filter>Engine\ソース ファイル\3D</Filter>
     </ClCompile>
     <ClCompile Include="NumDrower.cpp">
-      <Filter>Engine\ソース ファイル</Filter>
+      <Filter>Engine\ソース ファイル\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Application\ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="NFbxModel.cpp">
+      <Filter>Engine\ソース ファイル\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\ソースファイル\3D\IModel.cpp">
+      <Filter>Engine\ソース ファイル\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="NObjModel.cpp">
+      <Filter>Engine\ソース ファイル\3D\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

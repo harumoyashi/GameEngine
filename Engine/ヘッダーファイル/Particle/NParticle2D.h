@@ -1,5 +1,5 @@
 #pragma once
-#include <NVector2.h>
+#include <NVec2.h>
 #include <NColor.h>
 #include <NTexture.h>
 #include <NEasing.h>
@@ -10,17 +10,17 @@ class Emitter2D final
 	struct Particle2D
 	{
 		//座標
-		NVector2 pos;
+		NVec2 pos;
 		//大きさ
-		NVector2 scale;
-		NVector2 startScale;	//開始時の大きさ
-		NVector2 endScale;		//終了時の大きさ
+		NVec2 scale;
+		NVec2 startScale;	//開始時の大きさ
+		NVec2 endScale;		//終了時の大きさ
 		//角度
 		float rot = 0;
 		//速度
-		NVector2 velo;
+		NVec2 velo;
 		//加速度
-		NVector2 accel;
+		NVec2 accel;
 		//重力
 		float gravity = 0.98f;
 
@@ -44,15 +44,15 @@ class Emitter2D final
 
 private:
 	//座標
-	NVector2 pos_;
+	NVec2 pos_;
 	//角度
 	float rot_ = 0.0f;
 	//大きさ
-	NVector2 scale_{ 1.f,1.f };
+	NVec2 scale_{ 1.f,1.f };
 	float minScale_;	//エミッターの最小サイズ(比率)
 	float maxScale_;	//エミッターの最大サイズ(比率)
 	//元の大きさ
-	NVector2 originalScale_;
+	NVec2 originalScale_;
 	//拡縮用倍率
 	float scaling_;
 	//拡縮用タイマー
@@ -81,16 +81,16 @@ public:
 	void DrawGraph();
 
 	//パーティクル追加
-	void Add(uint32_t addNum, float life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo,
-		NVector2 accel = { 0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
+	void Add(uint32_t addNum, float life, float minScale, float maxScale, NVec2 minVelo, NVec2 maxVelo,
+		NVec2 accel = { 0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
 	//パーティクル全消し
 	void ClearParticles() { particles_.clear(); }
 
 	//ゲッター//
 	//座標取得
-	NVector2 GetPos()const { return pos_; }
+	NVec2 GetPos()const { return pos_; }
 	//大きさ取得
-	NVector2 GetScale()const { return scale_; }
+	NVec2 GetScale()const { return scale_; }
 
 	//パーティクル全部死んだか取得
 	bool GetParticlesDead()const { return particles_.empty(); }
@@ -101,9 +101,9 @@ public:
 	//セッター//
 	//座標設定
 	void SetPos(float x, float y) { pos_ = { x,y }; }
-	void SetPos(NVector2& pos) { pos_ = pos; }
+	void SetPos(NVec2& pos) { pos_ = pos; }
 	//大きさ設定
-	void SetScale(NVector2& scale);
+	void SetScale(NVec2& scale);
 	//角度設定
 	void SetRot(float rot) { rot_ = rot; }
 

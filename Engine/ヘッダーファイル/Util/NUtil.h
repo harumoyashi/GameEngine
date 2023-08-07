@@ -10,6 +10,13 @@ enum class BlendMode
 	Inv,	//反転
 };
 
+// モデルのフォーマット
+enum class ModelFormat
+{
+	Obj,
+	Fbx,
+};
+
 struct NUtil
 {
 	//wstring型をstring型に変換

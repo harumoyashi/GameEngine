@@ -13,7 +13,7 @@ void BulletFactory::Update()
 	side_.SideUpdate();
 }
 
-void BulletFactory::Create(IBullet::BulletType type, NVector3 pos, uint32_t level)
+void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 {
 	switch (type)
 	{

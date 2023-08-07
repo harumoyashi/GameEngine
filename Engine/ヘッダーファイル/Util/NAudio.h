@@ -75,7 +75,8 @@ private:
 	ComPtr<IMFMediaType> mFMediaType_;
 
 	//オーディオコールバック
-	class XAudio2VoiceCallback : public IXAudio2VoiceCallback {
+	class XAudio2VoiceCallback final
+		: public IXAudio2VoiceCallback {
 	public:
 		// ボイス処理パスの開始時
 		STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ uint32_t BytesRequired) {};

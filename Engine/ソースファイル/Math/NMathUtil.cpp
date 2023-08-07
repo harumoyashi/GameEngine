@@ -7,12 +7,12 @@
 std::random_device seed;
 std::mt19937 engine(seed());
 
-NMatrix4 MathUtil::MatViewLockTo(const NVector3& eye, const NVector3& front, const NVector3& up)
+NMatrix4 MathUtil::MatViewLockTo(const NVec3& eye, const NVec3& front, const NVec3& up)
 {
 	NMatrix4 mat;
 
 	//外積使って向いてる方向に対しての右ベクトル求める
-	NVector3 rightVec = up.Cross(front);
+	NVec3 rightVec = up.Cross(front);
 	rightVec = rightVec.Normalize();
 
 	mat.m[0][0] = rightVec.x;
@@ -35,9 +35,9 @@ NMatrix4 MathUtil::MatViewLockTo(const NVector3& eye, const NVector3& front, con
 	return mat;
 }
 
-NMatrix4 MathUtil::MatViewLockAt(const NVector3& eye, const NVector3& target, const NVector3& up)
+NMatrix4 MathUtil::MatViewLockAt(const NVec3& eye, const NVec3& target, const NVec3& up)
 {
-	NVector3 direction = target - eye;
+	NVec3 direction = target - eye;
 	direction = direction.Normalize();
 
 	return MatViewLockTo(eye, direction, up);
@@ -73,10 +73,10 @@ NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, co
 	return perspective;
 }
 
-NVector2 MathUtil::WorldToScreen(const NVector3& pos, const NMatrix4& matWorld)
+NVec2 MathUtil::WorldToScreen(const NVec3& pos, const NMatrix4& matWorld)
 {
-	NVector2 result;
-	NVector4 p = { 0,0,0,1 };
+	NVec2 result;
+	NVec4 p = { 0,0,0,1 };
 	NMatrix4 view = NCamera::sCurrentCamera->GetMatView();
 	NMatrix4 prj = NCamera::sCurrentCamera->GetMatProjection();
 	NMatrix4 viewport = NMatrix4(
@@ -135,9 +135,9 @@ float MathUtil::Randomf(const float min, const float max)
 	return (float)dist1(engine);
 }
 
-NVector2 MathUtil::CircleMotion(NVector2 CenterPoint, float radius, float angle)
+NVec2 MathUtil::CircleMotion(NVec2 CenterPoint, float radius, float angle)
 {
-	NVector2 position;
+	NVec2 position;
 
 	position.x = CenterPoint.x + radius * cosf(angle);
 	position.y = CenterPoint.y + radius * sinf(angle);

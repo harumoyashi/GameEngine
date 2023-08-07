@@ -23,7 +23,7 @@ public:
 	void Reset();
 	//更新(タイマー足されてく)
 	//elapseTimer:経過時間。タイマー加算量に影響する。スローモーション用
-	void Update(const float elapseTimer = 1.0f);
+	void Update(const bool isRoop,const float elapseTimer = 1.0f);
 	//指定した値分タイマーを減らしてく
 	void SubTimer(const float subTimer);
 

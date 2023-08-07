@@ -86,8 +86,8 @@ bool NInput::TriggerMouse(const MouseButton button)
 /// マウス移動量を取得
 /// </summary>
 /// <returns>マウス移動量</returns>
-NVector3 NInput::GetMouseMove(bool isNowState) {
-	NVector3 tmp;
+NVec3 NInput::GetMouseMove(bool isNowState) {
+	NVec3 tmp;
 	if (isNowState)
 	{
 		tmp.x = (float)sStateMouse.lX;
@@ -104,7 +104,7 @@ NVector3 NInput::GetMouseMove(bool isNowState) {
 }
 
 //マウスの移動量を反映
-void NInput::SetMouseMove(NVector2& mouseVec)
+void NInput::SetMouseMove(NVec2& mouseVec)
 {
 	sStateMouse.lX = (LONG)mouseVec.x;
 	sStateMouse.lY = (LONG)mouseVec.y;
@@ -275,21 +275,21 @@ void NInput::SetDeadZone()
 
 //スティックの傾き具合取得(0.0f~1.0f)
 //isLeft:右左どっち！
-NVector2 NInput::GetStick(bool isLeft)
+NVec2 NInput::GetStick(bool isLeft)
 {
 	if (isLeft)
 	{
 		SHORT x = sStatePad.Gamepad.sThumbLX;
 		SHORT y = sStatePad.Gamepad.sThumbLY;
 
-		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
+		return NVec2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
 	else
 	{
 		SHORT x = sStatePad.Gamepad.sThumbRX;
 		SHORT y = sStatePad.Gamepad.sThumbRY;
 
-		return NVector2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
+		return NVec2(static_cast<float>(x) / 32767.0f, static_cast<float>(y) / 32767.0f);
 	}
 }
 

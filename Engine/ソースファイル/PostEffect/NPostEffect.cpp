@@ -1,6 +1,6 @@
 #include "NPostEffect.h"
 #include "NWindows.h"
-#include "NVector4.h"
+#include "NVec4.h"
 #include "NMathUtil.h"
 #include "NInput.h"
 
@@ -10,7 +10,7 @@ std::unique_ptr<NConstBuff<ConstBuffDataColor>> NPostEffect::cbColor_;
 NMatrix4 NPostEffect::matWorld_;		//変換行列
 NMatrix4 NPostEffect::matProjection_;	//平行投影保管用
 float NPostEffect::rotation_;			//Z軸の回転角
-NVector2 NPostEffect::position_;		//座標
+NVec2 NPostEffect::position_;		//座標
 NColor NPostEffect::color_;				//色
 
 ComPtr<ID3D12Resource> NPostEffect::texBuff_[2];
@@ -51,7 +51,7 @@ void NPostEffect::Update()
 	NMatrix4 matTrans;	//平行移動行列
 	matTrans = matTrans.Translation({ position_.x, position_.y, 0 });
 
-	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ = NMatrix4::Identity();	//単位行列代入
 	matWorld_ *= matRot;		//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
 
@@ -131,17 +131,17 @@ void NPostEffect::CreateTexture()
 
 		//------------------------------テクスチャ生成--------------------------------//
 		//一辺のピクセル数
-		const uint32_t rowPitch = sizeof(NVector4) * NWindows::kWin_width;
+		const uint32_t rowPitch = sizeof(NVec4) * NWindows::kWin_width;
 		const uint32_t depthPitch = rowPitch * NWindows::kWin_height;
 		//配列の要素数
 		const uint32_t imageDataCount = NWindows::kWin_width * NWindows::kWin_height;
 		//画像イメージデータ配列
-		std::vector<NVector4> imageData;
+		std::vector<NVec4> imageData;
 
 		//全ピクセルの色を初期化
 		for (size_t j = 0; j < imageDataCount; j++)
 		{
-			imageData.emplace_back(NVector4(1, 0, 1, 1));
+			imageData.emplace_back(NVec4(1, 0, 1, 1));
 		}
 
 		//テクスチャバッファにデータ転送

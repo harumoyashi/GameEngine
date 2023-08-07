@@ -33,18 +33,18 @@ protected:
 	NMatrix4 matProjection_{};	//平行投影保管用
 
 	//生成時の設定用//
-	NVector2 anchorPoint_ = { 0.5f,0.5f };	//アンカーポイント(0.0f~1.0fじゃないと画像から出る)
+	NVec2 anchorPoint_ = { 0.5f,0.5f };	//アンカーポイント(0.0f~1.0fじゃないと画像から出る)
 	bool isFlipX_ = false;	//左右反転フラグ
 	bool isFlipY_ = false;	//上下反転フラグ
-	NVector2 texLeftTop_ = { 0,0 };			//テクスチャ左上座標
-	NVector2 texSize_ = { 100,100 };		//テクスチャ切り出しサイズ
+	NVec2 texLeftTop_ = { 0,0 };			//テクスチャ左上座標
+	NVec2 texSize_ = { 100,100 };		//テクスチャ切り出しサイズ
 
-	NVector2 size_ = { 100,100 };			//スプライトの大きさ
+	NVec2 size_ = { 100,100 };			//スプライトの大きさ
 
 public:
 	//変換用//
 	float rotation_ = 0.0f;	//Z軸の回転角
-	NVector2 position_ = { 0.0f,0.0f };	//座標
+	NVec2 position_ = { 0.0f,0.0f };	//座標
 	bool isInvisible_ = false;	//非表示にするフラグ
 
 	std::string texHandle_ = "";	//テクスチャ指定用
@@ -60,22 +60,22 @@ public:
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
 	void CreateSprite(const std::string& texHandle,
-		const NVector2& anchorPoint, bool isFlipX = false, bool isFlipY = false);
+		const NVec2& anchorPoint, bool isFlipX = false, bool isFlipY = false);
 	//テクスチャを切り取ってスプライト生成(アニメーション、フォントなど)
 	//アンカーポイントも設定できる(設定しないと中心になる)
 	//上下左右の反転フラグも設定できる(設定しないと反転しない)
-	void CreateClipSprite(const std::string& texHandle, const NVector2& texLeftTop,
-		const NVector2& texSize, const NVector2& anchorPoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
+	void CreateClipSprite(const std::string& texHandle, const NVec2& texLeftTop,
+		const NVec2& texSize, const NVec2& anchorPoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
 
 private:
 	//テクスチャサイズを取得して設定
 	void SetTexSize(const ComPtr<ID3D12Resource>& texBuff);
 	//アンカーポイント適用
-	void SetAncor(const NVector2& anchorPoint);
+	void SetAncor(const NVec2& anchorPoint);
 	//上下左右反転フラグ適用
 	void SetIsFlip(bool isFlipX, bool isFlipY);
 	//切り抜き範囲適用
-	void SetClipRange(const NVector2& texLeftTop, const NVector2& texSize);
+	void SetClipRange(const NVec2& texLeftTop, const NVec2& texSize);
 
 	//テクスチャハンドルをセット
 	void SetTexHandle(const std::string& texHandle);
@@ -99,6 +99,6 @@ public:
 	//描画コマンド
 	void Draw();
 #pragma endregion
-	const NVector2& GetTexSize()const { return texSize_; }
-	const NVector2& GetSize()const { return size_; }
+	const NVec2& GetTexSize()const { return texSize_; }
+	const NVec2& GetSize()const { return size_; }
 };

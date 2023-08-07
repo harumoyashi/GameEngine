@@ -19,32 +19,32 @@ void NSpotLight::Init()
 	lightpos_ = { 0,3,0 };
 }
 
-void NSpotLight::SetLightDir(const NVector3& lightdir)
+void NSpotLight::SetLightDir(const NVec3& lightdir)
 {
 	//ê≥ãKâªÇµÇƒÉZÉbÉg
 	lightdir_ = lightdir.Normalize();
 	isDirty_ = true;
 }
 
-void NSpotLight::SetLightPos(const NVector3& lightpos)
+void NSpotLight::SetLightPos(const NVec3& lightpos)
 {
 	lightpos_ = lightpos;
 	isDirty_ = true;
 }
 
-void NSpotLight::SetLightColor(const NVector3& lightcolor)
+void NSpotLight::SetLightColor(const NVec3& lightcolor)
 {
 	lightcolor_ = lightcolor;
 	isDirty_ = true;
 }
 
-void NSpotLight::SetLightAtten(const NVector3& lightatten)
+void NSpotLight::SetLightAtten(const NVec3& lightatten)
 {
 	lightatten_ = lightatten;
 	isDirty_ = true;
 }
 
-void NSpotLight::SetLightFactorAngle(const NVector2& lightFactorAngle)
+void NSpotLight::SetLightFactorAngle(const NVec2& lightFactorAngle)
 {
 	lightFactorAngleCos_.x = cosf(MathUtil::Degree2Radian(lightFactorAngle.x));
 	lightFactorAngleCos_.y = cosf(MathUtil::Degree2Radian(lightFactorAngle.y));

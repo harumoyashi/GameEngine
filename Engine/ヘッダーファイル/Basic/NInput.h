@@ -3,8 +3,8 @@
 #include <dinput.h>
 #include <Xinput.h>
 #include <stdint.h>
-#include "NVector2.h"
-#include "NVector3.h"
+#include "NVec2.h"
+#include "NVec3.h"
 
 #include <wrl.h>
 
@@ -48,10 +48,10 @@ public:
 	/// マウス移動量を取得
 	/// </summary>
 	/// <returns>マウス移動量</returns>
-	static NVector3 GetMouseMove(bool isNowState = true);
+	static NVec3 GetMouseMove(bool isNowState = true);
 
 	//マウスの移動量を反映
-	static void SetMouseMove(NVector2& mouseVec);
+	static void SetMouseMove(NVec2& mouseVec);
 
 	//マウスホイールの移動量を反映
 	static void SetWheelMove(float wheelMove);
@@ -109,7 +109,7 @@ public:
 
 	//スティックの傾き具合取得(0.0f~1.0f)
 	//isLeft:右左どっち！
-	static NVector2 GetStick(bool isLeft = true);
+	static NVec2 GetStick(bool isLeft = true);
 
 	//isVertical:垂直方向か
 	//isLstick:Lスティックか

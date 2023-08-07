@@ -24,7 +24,7 @@ void NTestScene::LoadResources()
 void NTestScene::Init()
 {
 #pragma region	オーディオ初期化
-	
+
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
@@ -32,16 +32,16 @@ void NTestScene::Init()
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-	
+
 #pragma region オブジェクトの初期値設定
-	
+
 #pragma endregion
 	//FBX読み込み忘れない用
-	/*assimpModel_.Load("FBX/Alicia_solid_Unity");
+	/*assimpModel_.Load("boneTest");
 	assimpModel_.Init();
-	assimpModel_.position_ = {0,0,1};
-	assimpModel_.rotation_ = {0,0,0};
-	assimpModel_.scale_ = {0.03f,0.03f,0.03f};*/
+	assimpModel_.position_ = { 0,0,1 };
+	assimpModel_.rotation_ = NVec3::zero;
+	assimpModel_.scale_ = { 0.03f,0.03f,0.03f };*/
 
 	//背景スプライト生成
 
@@ -53,7 +53,7 @@ void NTestScene::Init()
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
-	NAssimpModel::SetLightGroup(lightGroup_.get());
+	//NAssimpModel::SetLightGroup(lightGroup_.get());
 }
 
 void NTestScene::Update()

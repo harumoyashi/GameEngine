@@ -12,7 +12,7 @@ void SimpleParticle::Update()
 }
 
 void SimpleParticle::Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-	NVector3 minVelo, NVector3 maxVelo, NVector3 accel, NVector3 minRot, NVector3 maxRot)
+	NVec3 minVelo, NVec3 maxVelo, NVec3 accel, NVec3 minRot, NVec3 maxRot)
 {
 	IEmitter3D::Add(addNum, life, color, minScale, maxScale, minVelo, maxVelo, accel, minRot, maxRot);
 }

@@ -55,7 +55,7 @@ public:
 	//スタート地点座標取得
 	float GetStartPos() const { return startPosZ_; }
 	//フィールドの大きさ取得
-	NVector3 GetScale() const { return fieldObj_->scale_; }
+	NVec3 GetScale() const { return fieldObj_->scale_; }
 	//スタートしたかフラグ取得
 	bool GetIsStart() const { return isStart_; }
 	//ゴールしたかフラグ取得

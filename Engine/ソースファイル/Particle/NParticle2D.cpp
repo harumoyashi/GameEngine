@@ -67,7 +67,7 @@ void Emitter2D::DrawGraph()
 	}
 }
 
-void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale, NVector2 minVelo, NVector2 maxVelo, NVector2 accel, float minRot, float maxRot, NColor color)
+void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale, NVec2 minVelo, NVec2 maxVelo, NVec2 accel, float minRot, float maxRot, NColor color)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -84,12 +84,12 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 		//エミッターの中からランダムで座標を決定
 		float x = (float)MathUtil::Random((uint32_t)-scale_.x, (uint32_t)scale_.x);
 		float y = (float)MathUtil::Random((uint32_t)-scale_.y, (uint32_t)scale_.y);
-		NVector2 randomPos(x, y);
+		NVec2 randomPos(x, y);
 		//引数の範囲から大きさランダムで決定
 		float scale_ = (float)MathUtil::Random((uint32_t)minScale, (uint32_t)maxScale);
-		NVector2 randomScale(scale_, scale_);
+		NVec2 randomScale(scale_, scale_);
 		//引数の範囲から飛ばす方向ランダムで決定
-		NVector2 velo = { 
+		NVec2 velo = { 
 			(float)MathUtil::Random((uint32_t)minVelo.x,(uint32_t)maxVelo.x),
 			(float)MathUtil::Random((uint32_t)minVelo.y,(uint32_t)maxVelo.y) };
 		//引数の範囲から回転をランダムで決定
@@ -112,7 +112,7 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 	}
 }
 
-void Emitter2D::SetScale(NVector2& scale)
+void Emitter2D::SetScale(NVec2& scale)
 {
 	scale_ = scale;
 	originalScale_ = scale_;			//拡縮用に元のサイズを保管
