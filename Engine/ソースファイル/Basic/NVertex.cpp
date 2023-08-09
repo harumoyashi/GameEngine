@@ -51,7 +51,7 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<ui
 	}
 }
 
-bool NVertexAssimp::operator==(const NVertexAssimp& a) const
+bool NVertexFbx::operator==(const NVertexFbx& a) const
 {
 	if (pos.x != a.pos.x || pos.y != a.pos.y || pos.z != a.pos.z)
 	{
@@ -77,7 +77,7 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	return true;
 }
 
-void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vector<uint32_t>& indices)
+void NVertexFbx::CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<uint32_t>& indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)

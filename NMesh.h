@@ -6,9 +6,9 @@
 struct NMesh final
 {
 public:
-	NVertexBuff<NVertexPNU> vertexBuff;		//頂点バッファ
+	NVertexBuff<NVertexFbx> vertexBuff;		//頂点バッファ
 	NIndexBuff indexBuff;					//インデックスバッファ
 
-	std::vector<NVertexPNU> vertices;		//頂点群
+	std::vector<NVertexFbx> vertices;		//頂点群
 	std::vector<uint32_t> indices;			//インデックス群
 };

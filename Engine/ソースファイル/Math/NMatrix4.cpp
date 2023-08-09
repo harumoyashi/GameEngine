@@ -274,6 +274,20 @@ NVec3 NMatrix4::ToEuler() const
 	return euler;
 }
 
+NMatrix4 NMatrix4::Transpose()
+{
+	NMatrix4 result;
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.m[i][j] = m[j][i];
+		}
+	}
+	return result;
+}
+
 NVec3 NMatrix4::GetWorldPos() const
 {
 	NVec3 pos = {};

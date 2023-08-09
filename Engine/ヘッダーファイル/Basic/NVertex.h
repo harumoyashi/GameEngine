@@ -62,7 +62,7 @@ struct NVertexParticle
 };
 
 //position,normal,uv,boneIndex,boneWeightの5要素
-struct NVertexAssimp
+struct NVertexFbx
 {
 	NVec3 pos = { 0, 0, 0 };
 	NVec3 normal = { 0, 0, 1 };
@@ -70,16 +70,16 @@ struct NVertexAssimp
 	std::vector<uint32_t> boneIndex{ 4 };
 	std::vector<float> boneWeight{ 4 };
 
-	NVertexAssimp(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 },
+	NVertexFbx(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 },
 		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
 		: pos(pos), normal(normal), uv(uv), boneIndex(boneIndex), boneWeight(boneWeight) {}
 
-	bool operator==(const NVertexAssimp& a) const;
+	bool operator==(const NVertexFbx& a) const;
 
 	/// <summary>
 	/// 法線ベクトルを計算
 	/// </summary>
 	/// <param name="vertices">計算する頂点群</param>
 	/// <param name="indices">インデックスリスト（三角形、全て時計回りであること）</param>
-	static void CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vector<uint32_t>& indices);
+	static void CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<uint32_t>& indices);
 };

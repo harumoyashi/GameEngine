@@ -1,57 +1,33 @@
 #pragma once
-#define NONINMAX
-#include <d3d12.h>
 #include <DirectXMath.h>
 #include <string>
 #include <vector>
 #include <memory>
-#include "NVertexBuff.h"
-#include "NIndexBuff.h"
-#include "NMatrix4.h"
-#include "NMesh.h"
+#include "NFbxModel.h"
 
-#include <assimp/IOStream.hpp>
-#include <assimp/IOSystem.hpp>
+class NAssimpLoader final
+{
+private:
+	static const int maxBoneIndices = 4;
 
-//typedef struct ImportSetting
-//{
-//    const std::string fileName; //ファイルパス
-//    std::vector<NMesh> meshies; //出力先メッシュ配列
-//    std::vector<Bone> bones_;	// ボーンの配列
-//    bool inversU = false;       //U座標反転フラグ
-//    bool inversV = false;       //V座標反転フラグ
-//}ImportSetting;
-//
-//typedef struct NodeAnime
-//{
-//    std::string name;
-//    std::vector<NVec3> position;
-//    std::vector<double> positionTime;
-//    std::vector<NVec3> rotation;
-//    std::vector<double> rotationTime;
-//    std::vector<NVec3> scale;
-//    std::vector<double> scaleTime;
-//}NodeAnime;
-//
-//struct ImportSettings
-//{
-//	const wchar_t* filename = nullptr;	//ファイルパス
-//	std::vector<NMesh>& meshes;			//出力先のメッシュ配列
-//	std::vector<Bone> bones;
-//	bool inverseU = false;				//U座標を反転させるか
-//	bool inverseV = false;				//V座標を反転させるか
-//};
-//
-//class NAssimpLoader final
-//{
-//public:
-//	NVertexBuff<NVertexAssimp> vertexBuff_;
-//	NIndexBuff indexBuff_;
-//
-//	bool Load(const ImportSettings& setting); // モデルをロードする
-//
-//private:
-//	void LoadMesh(NMesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
-//	void LoadBone(Bone& dst, const aiMesh* src);
-//	void LoadTexture(const wchar_t* filename, NMesh& dst, const aiMaterial* src);
-//};
+private:
+	void ParseMesh(FbxModel* model, aiMesh* mesh);								//メッシュの解析
+	void ParseVertex(FbxModel* model, aiMesh* mesh);							//頂点の解析
+	void ParseFace(FbxModel* model, aiMesh* mesh);								//フェイスの解析
+	void ParseSkin(FbxModel* model, aiMesh* mesh);								//スキンの解析
+	void ParseMaterial(FbxModel* model, const aiScene* scene);					//マテリアルの解析
+	void ParseNodeRecursive(FbxModel* model, Node* parent,const aiNode* node);	//解析
+
+public:
+	//シングルトンインスタンス取得
+	static NAssimpLoader* GetInstance();
+
+	bool Load(const std::string& filePath, FbxModel* model);	//モデルをロードする
+	//AssimpのMat4を自作Mat4型に変換
+	static NMatrix4 AssimpMatToMat4(const aiMatrix4x4& mat);
+	//ファイル名切り取って返す
+	std::string ExractFileName(const std::string& path);
+
+private:
+	NAssimpLoader() = default;
+};
