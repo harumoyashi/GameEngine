@@ -37,20 +37,20 @@ private:
 	NEasing::EaseTimer clearCameraMoveEase_;	//クリアリザルトカメラに持ってくためのイージング
 
 	// 姿勢制御関連
-	NVector3 frontVec_;
-	NVector3 upVec_;
-	NVector3 rightVec_;
+	NVec3 frontVec_;
+	NVec3 upVec_;
+	NVec3 rightVec_;
 
 	bool isChange_;				//カメラの種類切り替えフラグ
 	bool isActive_;
 
 	//共通のカメラに必要な情報
-	NVector3 currentPos_;		//現在のカメラ座標
-	NVector3 nextPos_;			//持っていきたいカメラ座標
-	NVector3 currentTarget_;	//現在のカメラの注視点座標
-	NVector3 nextTarget_;		//持っていきたいカメラの注視点座標
-	NVector3 currentUpVec_;		//現在のカメラの注視点座標
-	NVector3 nextUpVec_;		//持っていきたいカメラの注視点座標
+	NVec3 currentPos_;		//現在のカメラ座標
+	NVec3 nextPos_;			//持っていきたいカメラ座標
+	NVec3 currentTarget_;	//現在のカメラの注視点座標
+	NVec3 nextTarget_;		//持っていきたいカメラの注視点座標
+	NVec3 currentUpVec_;		//現在のカメラの注視点座標
+	NVec3 nextUpVec_;		//持っていきたいカメラの注視点座標
 	float currentFov_;			//現在のカメラ視野
 	float nextFov_;				//持っていきたいカメラ視野
 	float length_;				//見るものとの距離
@@ -73,8 +73,8 @@ private:
 	void ClearCameraUpdate();
 
 	//Vec3のイージング用
-	NVector3 InQuad(const NVector3& start,const NVector3& end,float timerate);
-	NVector3 OutQuad(const NVector3& start,const NVector3& end,float timerate);
+	NVec3 InQuad(const NVec3& start,const NVec3& end,float timerate);
+	NVec3 OutQuad(const NVec3& start,const NVec3& end,float timerate);
 
 public:
 	//シングルトンインスタンス取得

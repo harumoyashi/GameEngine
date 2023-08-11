@@ -1,6 +1,6 @@
 #pragma once
-#include "NVector3.h"
-#include "NVector4.h"
+#include "NVec3.h"
+#include "NVec4.h"
 
 struct NMatrix4
 {
@@ -44,31 +44,34 @@ struct NMatrix4
 	//全ての要素が0の行列
 	NMatrix4 Zero();
 	//単位行列
-	NMatrix4 Identity();
+	static NMatrix4 Identity();
 	//拡縮行列の設定
-	NMatrix4 Scale(const NVector3& s);
+	NMatrix4 Scale(const NVec3& s);
 	//回転行列の設定
 	NMatrix4 RotateX(const float angle);
 	NMatrix4 RotateY(const float angle);
 	NMatrix4 RotateZ(const float angle);
 	//平行移動行列の作成
-	NMatrix4 Translation(const NVector3& t);
+	NMatrix4 Translation(const NVec3& t);
 	//座標変換（ベクトルと行列の掛け算）
-	NVector3 Transform(const NVector3& v, const NMatrix4& m);
+	NVec3 Transform(const NVec3& v, const NMatrix4& m);
 	//w除算を使った座標変換
-	NVector3 WTransform(const NVector3& v, const NMatrix4& m);
-	NVector4 Vec4MulMat(const NVector4& v, const NMatrix4& m)const;
+	NVec3 WTransform(const NVec3& v, const NMatrix4& m);
+	NVec4 Vec4MulMat(const NVec4& v, const NMatrix4& m)const;
 
 	//オイラー角への変換
 	//参考:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf#%E5%9B%9E%E8%BB%A2%E8%A1%8C%E5%88%97%E3%81%8B%E3%82%89%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC%E8%A7%92
-	NVector3 ToEuler() const;
+	NVec3 ToEuler() const;
+
+	//転置行列
+	NMatrix4 Transpose();
 
 	//行列からワールド座標情報を抽出
-	NVector3 GetWorldPos() const;
+	NVec3 GetWorldPos() const;
 	//行列からスケール情報を抽出
-	NVector3 GetScale() const;
+	NVec3 GetScale() const;
 };
 
-NVector3 operator*(const NVector3& v, const NMatrix4& m);
-NVector4 operator*(const NVector4& v, const NMatrix4& m);
-NVector3& operator*=(NVector3& v, const NMatrix4& m);
+NVec3 operator*(const NVec3& v, const NMatrix4& m);
+NVec4 operator*(const NVec4& v, const NMatrix4& m);
+NVec3& operator*=(NVec3& v, const NMatrix4& m);

@@ -48,7 +48,7 @@ void NCollisionManager::SphereCol()
 		SphereCollider* sphereA = static_cast<SphereCollider*>(colA_);
 		SphereCollider* sphereB = static_cast<SphereCollider*>(colB_);
 
-		NVector3 inter; //交差点(今は使ってない)
+		NVec3 inter; //交差点(今は使ってない)
 		if (NCollision::SphereCol(*sphereA, *sphereB, inter))
 		{
 			colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録

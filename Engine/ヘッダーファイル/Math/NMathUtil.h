@@ -1,6 +1,6 @@
 #pragma once
-#include "NVector2.h"
-#include "NVector3.h"
+#include "NVec2.h"
+#include "NVec3.h"
 #include "NMatrix4.h"
 #include "NQuaternion.h"
 #include <stdint.h>
@@ -11,14 +11,14 @@ const float PI2 = PI * 2.0f;
 namespace MathUtil
 {
 	//ビュー変換行列生成
-	NMatrix4 MatViewLockTo(const NVector3& eye, const NVector3& front, const NVector3& up);
-	NMatrix4 MatViewLockAt(const NVector3& eye, const NVector3& target, const NVector3& up);
+	NMatrix4 MatViewLockTo(const NVec3& eye, const NVec3& front, const NVec3& up);
+	NMatrix4 MatViewLockAt(const NVec3& eye, const NVec3& target, const NVec3& up);
 	//平行投影変換行列生成
 	NMatrix4 ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT);
 	//透視投影変換行列生成
 	NMatrix4 PerspectiveProjection(const float fov, const float aspect, const  float nearZ, const float farZ);
 	//ワールド座標からスクリーン座標に変換
-	NVector2 WorldToScreen(const NVector3& pos, const NMatrix4& matWorld);
+	NVec2 WorldToScreen(const NVec3& pos, const NMatrix4& matWorld);
 
 	//度数法→ラジアン
 	float Degree2Radian(const float degree);
@@ -44,5 +44,5 @@ namespace MathUtil
 	}
 
 	//円運動
-	NVector2 CircleMotion(NVector2 CenterPoint, float radius, float angle);
+	NVec2 CircleMotion(NVec2 CenterPoint, float radius, float angle);
 }

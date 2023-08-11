@@ -17,19 +17,19 @@ void NPointLight::Init()
 	SetActive(true);
 }
 
-void NPointLight::SetLightPos(const NVector3& lightpos)
+void NPointLight::SetLightPos(const NVec3& lightpos)
 {
 	lightpos_ = lightpos;
 	isDirty_ = true;
 }
 
-void NPointLight::SetLightColor(const NVector3& lightcolor)
+void NPointLight::SetLightColor(const NVec3& lightcolor)
 {
 	lightcolor_ = lightcolor;
 	isDirty_ = true;
 }
 
-void NPointLight::SetLightAtten(const NVector3& lightatten)
+void NPointLight::SetLightAtten(const NVec3& lightatten)
 {
 	lightatten_ = lightatten;
 	isDirty_ = true;

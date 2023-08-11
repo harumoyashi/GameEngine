@@ -76,7 +76,7 @@ void NObj3d::UpdateMatrix()
 	NMatrix4 matTrans;	//平行移動行列
 	matTrans = matTrans.Translation(position_);
 
-	matWorld_ = matWorld_.Identity();	//単位行列代入
+	matWorld_ = NMatrix4::Identity();	//単位行列代入
 	matWorld_ *= matScale;	//ワールド座標にスケーリングを反映
 	matWorld_ *= matRot;	//ワールド座標に回転を反映
 	matWorld_ *= matTrans;	//ワールド座標に平行移動を反映
@@ -113,10 +113,10 @@ void NObj3d::TransferColor()
 
 void NObj3d::TransferMaterial()
 {
-	cbMaterial_->constMap_->ambient = model_.material.ambient;
-	cbMaterial_->constMap_->diffuse = model_.material.diffuse;
-	cbMaterial_->constMap_->specular = model_.material.specular;
-	cbMaterial_->constMap_->alpha = model_.material.alpha;
+	cbMaterial_->constMap_->ambient = model_->material.ambient;
+	cbMaterial_->constMap_->diffuse = model_->material.diffuse;
+	cbMaterial_->constMap_->specular = model_->material.specular;
+	cbMaterial_->constMap_->alpha = model_->material.alpha;
 }
 
 void NObj3d::CommonBeginDraw()
@@ -161,23 +161,12 @@ void NObj3d::SetBlendMode(BlendMode blendMode)
 void NObj3d::Draw()
 {
 	SetCBV();
-	SetVB(model_.vertexBuff.GetView());
-	SetIB(*model_.indexBuff.GetView());
-	SetSRVHeap(model_.material.texture.gpuHandle_);
+	SetVB(model_->mesh.vertexBuff.GetView());
+	SetIB(*model_->mesh.indexBuff.GetView());
+	SetSRVHeap(texture_->gpuHandle_);
 	//ライトの描画
 	sLightGroup->Draw(4);
-	DrawCommand((uint32_t)model_.indices.size());
-}
-
-void NObj3d::SetSRVHeap()
-{
-	//シェーダリソースビュー(SRV)ヒープの先頭ハンドルを取得(SRVを指してるはず)
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NDX12::GetInstance()->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
-	//ハンドルを指定のとこまで進める
-	uint32_t incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	srvGpuHandle.ptr += incrementSize * (uint32_t)texNum_;
-	//指定のヒープにあるSRVをルートパラメータ1番に設定
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+	DrawCommand((uint32_t)model_->mesh.indices.size());
 }
 
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
@@ -221,4 +210,10 @@ void NObj3d::DrawCommand(const uint32_t indexSize)
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
+	texture_ = &model_->material.texture;
+}
+
+void NObj3d::SetTexture(const std::string& texname)
+{
+	texture_ = &NTextureManager::GetInstance()->textureMap_[texname];
 }

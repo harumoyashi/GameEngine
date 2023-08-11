@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+static const int maxBoneIndices = 4;
+
 enum class BlendMode
 {
 	None,	//そのまま
@@ -8,6 +10,13 @@ enum class BlendMode
 	Add,	//加算
 	Sub,	//減算
 	Inv,	//反転
+};
+
+// モデルのフォーマット
+enum class ModelFormat
+{
+	Obj,
+	Fbx,
 };
 
 struct NUtil

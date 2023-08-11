@@ -15,7 +15,6 @@
 #include "NEasing.h"
 #include "NConstBuff.h"
 #include "NLevelDataLoader.h"
-#include "NAssimpModel.h"
 
 class NTestScene final :
 	public IScene

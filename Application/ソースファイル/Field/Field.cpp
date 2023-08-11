@@ -22,7 +22,7 @@ void Field::Init()
 	fieldObj_ = std::make_unique<NTile>();
 	fieldObj_->Init();
 	fieldObj_->SetModel("plane");
-	fieldObj_->model_.material.texture = NTextureManager::GetInstance()->textureMap_["tile"];
+	fieldObj_->SetTexture("tile");
 	fieldObj_->color_.SetColor255(5, 5, 5, 255);
 	fieldObj_->scale_ = { 100.0f,0.01f,1000.0f };
 	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
@@ -59,7 +59,7 @@ void Field::Init()
 		checkPoints_.back().text->Init();
 		checkPoints_.back().text->SetModel("plane");
 		checkPoints_.back().text->scale_ = { 2.5f,1.0f,0.25f };
-		checkPoints_.back().text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["checkpoint"];
+		checkPoints_.back().text->SetTexture("checkpoint");
 
 		checkPoints_.back().isSlide = false;
 		checkPoints_.back().slidePos = 0.0f;
@@ -67,7 +67,7 @@ void Field::Init()
 	}
 #pragma endregion
 #pragma region 各オブジェクトの設定
-	lines_[(uint32_t)LineType::Start].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["start"];
+	lines_[(uint32_t)LineType::Start].text->SetTexture("start");
 	lines_[(uint32_t)LineType::Start].offset = 6.0f;
 	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
 	lines_[(uint32_t)LineType::Start].line->position_ =
@@ -82,7 +82,7 @@ void Field::Init()
 		0, startPosZ_ - 0.5f
 	};
 
-	lines_[(uint32_t)LineType::Goal].text->model_.material.texture = NTextureManager::GetInstance()->textureMap_["goal"];
+	lines_[(uint32_t)LineType::Goal].text->SetTexture("goal");
 	lines_[(uint32_t)LineType::Goal].offset = 6.0f;
 	lines_[(uint32_t)LineType::Goal].text->position_ = { lines_[(uint32_t)LineType::Goal].offset,0, goalPosZ_ - 0.5f };
 	lines_[(uint32_t)LineType::Goal].line->position_ =
@@ -189,7 +189,7 @@ void Field::Update()
 		//敵出しちゃうよボタン
 		if (NInput::IsKeyDown(DIK_C))
 		{
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8));
 		}
 	}
 
@@ -228,8 +228,8 @@ void Field::Update()
 			if (lines_[i].slideTimer.GetStarted() == false)
 			{
 				lines_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5));
 
 				NAudioManager::Play("startSE");
 				lines_[i].isSlide = false;	//スライドしちゃだめにする
@@ -247,8 +247,8 @@ void Field::Update()
 			if (checkPoints_[i].slideTimer.GetStarted() == false)
 			{
 				checkPoints_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(10, 0, 8));
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVector3(-10, 0, 5));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8));
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5));
 
 				NAudioManager::Play("startSE");
 				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする

@@ -12,7 +12,7 @@ void EnemyFactory::Update()
 {
 }
 
-void EnemyFactory::Create(IEnemy::EnemyType type, NVector3 pos)
+void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos)
 {
 	switch (type)
 	{

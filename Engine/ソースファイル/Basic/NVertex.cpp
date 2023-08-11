@@ -30,16 +30,16 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<ui
 		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
-		NVector3 p0 = vertices[index0].pos;
-		NVector3 p1 = vertices[index1].pos;
-		NVector3 p2 = vertices[index2].pos;
+		NVec3 p0 = vertices[index0].pos;
+		NVec3 p1 = vertices[index1].pos;
+		NVec3 p2 = vertices[index2].pos;
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
-		NVector3 v1 = p1 - p0;
-		NVector3 v2 = p2 - p0;
+		NVec3 v1 = p1 - p0;
+		NVec3 v2 = p2 - p0;
 
 		//外積は両方から垂直なベクトル
-		NVector3 normal = v1.Cross(v2);
+		NVec3 normal = v1.Cross(v2);
 
 		//正規化
 		normal = normal.Normalize();
@@ -51,7 +51,7 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<ui
 	}
 }
 
-bool NVertexAssimp::operator==(const NVertexAssimp& a) const
+bool NVertexFbx::operator==(const NVertexFbx& a) const
 {
 	if (pos.x != a.pos.x || pos.y != a.pos.y || pos.z != a.pos.z)
 	{
@@ -77,7 +77,7 @@ bool NVertexAssimp::operator==(const NVertexAssimp& a) const
 	return true;
 }
 
-void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vector<uint32_t>& indices)
+void NVertexFbx::CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<uint32_t>& indices)
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
@@ -88,16 +88,16 @@ void NVertexAssimp::CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vec
 		uint32_t index2 = indices[i * 3 + 2];
 
 		//三角形を構成する頂点座標をベクトルに代入
-		NVector3 p0 = vertices[index0].pos;
-		NVector3 p1 = vertices[index1].pos;
-		NVector3 p2 = vertices[index2].pos;
+		NVec3 p0 = vertices[index0].pos;
+		NVec3 p1 = vertices[index1].pos;
+		NVec3 p2 = vertices[index2].pos;
 
 		//p0→p1ベクトル、p0→p2ベクトルを計算(ベクトルの減算)
-		NVector3 v1 = p1 - p0;
-		NVector3 v2 = p2 - p0;
+		NVec3 v1 = p1 - p0;
+		NVec3 v2 = p2 - p0;
 
 		//外積は両方から垂直なベクトル
-		NVector3 normal = v1.Cross(v2);
+		NVec3 normal = v1.Cross(v2);
 
 		//正規化
 		normal = normal.Normalize();

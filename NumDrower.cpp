@@ -30,7 +30,7 @@ void NumDrower::Draw()
 	}
 }
 
-void NumDrower::SetPos(const NVector2& pos)
+void NumDrower::SetPos(const NVec2& pos)
 {
 	pos_ = pos;
 	for (size_t i = 0; i < numSprite_.size(); i++)
@@ -40,7 +40,7 @@ void NumDrower::SetPos(const NVector2& pos)
 	}
 }
 
-void NumDrower::SetSize(const NVector2& size)
+void NumDrower::SetSize(const NVec2& size)
 {
 	size_ = size;
 	for (size_t i = 0; i < numSprite_.size(); i++)

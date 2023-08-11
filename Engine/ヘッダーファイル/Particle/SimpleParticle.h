@@ -11,5 +11,5 @@ public:
 	void Update() override;
 	//パーティクルの追加
 	void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-		NVector3 minVelo, NVector3 maxVelo,NVector3 accel = {}, NVector3 minRot = {}, NVector3 maxRot = {}) override;
+		NVec3 minVelo, NVec3 maxVelo,NVec3 accel = {}, NVec3 minRot = {}, NVec3 maxRot = {}) override;
 };

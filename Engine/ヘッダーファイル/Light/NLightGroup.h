@@ -23,7 +23,7 @@ private:
 	//上記の定数がないと定義できないため、ここでやってる
 	struct ConstBuffDataLightGroup
 	{
-		NVector3 ambientcolor;	//環境光の色
+		NVec3 ambientcolor;	//環境光の色
 		float pad1;	//パディング
 		ConstBuffDataLight dirLights[kDirLightNum];					//平行光源用
 		ConstBuffDataPointLight pointLights[kPointLightNum];		//点光源用
@@ -34,7 +34,7 @@ private:
 	//定数バッファ
 	std::unique_ptr<NConstBuff<ConstBuffDataLightGroup>> cbLight_;
 
-	NVector3 ambientcolor = { 1,1,1 };				//環境光の色
+	NVec3 ambientcolor = NVec3::one;				//環境光の色
 	
 	//ダーティフラグ
 	bool isDirty = false;
@@ -50,10 +50,10 @@ public://静的メンバ関数
 
 	void TransferConstBuffer();
 
-	void SetAmbientColor(const NVector3& color);
+	void SetAmbientColor(const NVec3& color);
 
 	//ライトの色をセット
-	void SetDirLightColor(const NVector3& lightcolor);
-	void SetPointLightColor(const NVector3& lightcolor);
-	void SetSpotLightColor(const NVector3& lightcolor);
+	void SetDirLightColor(const NVec3& lightcolor);
+	void SetPointLightColor(const NVec3& lightcolor);
+	void SetSpotLightColor(const NVec3& lightcolor);
 };

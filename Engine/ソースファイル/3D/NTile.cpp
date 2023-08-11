@@ -43,12 +43,12 @@ void NTile::Draw()
 	SetCBV();
 	//タイル用の定数バッファ渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbTile_->constBuff_->GetGPUVirtualAddress());
-	SetVB(model_.vertexBuff.GetView());
-	SetIB(*model_.indexBuff.GetView());
-	SetSRVHeap(model_.material.texture.gpuHandle_);
+	SetVB(model_->mesh.vertexBuff.GetView());
+	SetIB(*model_->mesh.indexBuff.GetView());
+	SetSRVHeap(texture_->gpuHandle_);
 	//ライトの描画
 	sLightGroup->Draw(4);
-	DrawCommand((uint32_t)model_.indices.size());
+	DrawCommand((uint32_t)model_->mesh.indices.size());
 }
 
 void NTile::TransferCBTile()

@@ -13,7 +13,7 @@ IBullet::~IBullet()
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 }
 
-void IBullet::Generate(const NVector3& pos, const float moveAngle)
+void IBullet::Generate(const NVec3& pos, const float moveAngle)
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel("Sphere");

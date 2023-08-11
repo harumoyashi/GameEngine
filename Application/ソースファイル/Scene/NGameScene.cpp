@@ -150,7 +150,7 @@ void NGameScene::Update()
 				NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 500.0f);
 		}
 
-		NVector2 stickVec;
+		NVec2 stickVec;
 		stickVec = NInput::GetInstance()->GetStick() * 8.0f;
 		//Yはスティックだと上が正の値なので引く
 		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(

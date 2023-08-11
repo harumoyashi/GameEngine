@@ -124,7 +124,7 @@ float NQuaternion::Dot(const NQuaternion& q0, const NQuaternion& q1)
 	return q0.w * q1.w + q0.x * q1.x + q0.y * q1.y + q0.z * q1.z;
 }
 
-NVector3 NQuaternion::Cross(const NQuaternion& q0, const NQuaternion& q1)
+NVec3 NQuaternion::Cross(const NQuaternion& q0, const NQuaternion& q1)
 {
 	float x = q0.y * q1.z - q0.z * q1.y;
 	float y = q0.z * q1.x - q0.x * q1.z;
@@ -157,7 +157,7 @@ NQuaternion NQuaternion::Inverse(const NQuaternion& q)
 	return result;
 }
 
-NQuaternion NQuaternion::MakeAxisAngle(const NVector3& axis, const float angle)
+NQuaternion NQuaternion::MakeAxisAngle(const NVec3& axis, const float angle)
 {
 	NQuaternion q(
 		axis.x * sinf(angle / 2.0f),
@@ -169,7 +169,7 @@ NQuaternion NQuaternion::MakeAxisAngle(const NVector3& axis, const float angle)
 	return q;
 }
 
-NQuaternion NQuaternion::EulerToQuaternion(const NVector3& rot) const
+NQuaternion NQuaternion::EulerToQuaternion(const NVec3& rot) const
 {
 	NQuaternion x = MakeAxisAngle({ 1, 0, 0 }, rot.x);
 	NQuaternion y = MakeAxisAngle({ 0, 1, 0 }, rot.y);
@@ -183,7 +183,7 @@ NQuaternion NQuaternion::EulerToQuaternion(const NVector3& rot) const
 NMatrix4 NQuaternion::QuaternionToMatrix() const
 {
 	NMatrix4 mat;
-	mat = mat.Identity();
+	mat = NMatrix4::Identity();
 
 	float xx = x * x;
 	float yy = y * y;
@@ -208,12 +208,12 @@ NMatrix4 NQuaternion::QuaternionToMatrix() const
 	return mat;
 }
 
-NVector3 NQuaternion::RotateVector(const NVector3& vector, const NQuaternion& quaternion) const
+NVec3 NQuaternion::RotateVector(const NVec3& vector, const NQuaternion& quaternion) const
 {
 	NMatrix4 mat;
 	mat = quaternion.QuaternionToMatrix();
 
-	NVector3 vec;
+	NVec3 vec;
 	vec = mat.ToEuler();
 
 	NMatrix4 mat2;
@@ -250,13 +250,13 @@ NQuaternion NQuaternion::Slarp(const NQuaternion& q0, const NQuaternion& q1, con
 	return q * (1.0f - t) + q1 * t;
 }
 
-NQuaternion NQuaternion::VecToVecRota(const NVector3& u, const NVector3& v)
+NQuaternion NQuaternion::VecToVecRota(const NVec3& u, const NVec3& v)
 {
 	//正規化して内積を求める
 	float dot = u.Normalize().Dot(v.Normalize());
 
 	//軸を求める(外積の結果が単位ベクトルとは限らないので正規化必須)
-	NVector3 axis = u.Cross(v).Normalize();
+	NVec3 axis = u.Cross(v).Normalize();
 
 	//単位ベクトルで内積を取ったのでacosで角度を求める
 	float theta = acosf(dot);

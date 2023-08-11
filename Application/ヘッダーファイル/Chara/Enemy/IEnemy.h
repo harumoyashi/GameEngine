@@ -17,7 +17,7 @@ public:
 protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
 	SphereCollider collider_;		//コライダー
-	NVector2 moveVelo_;				//移動量
+	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
@@ -45,7 +45,7 @@ public:
 	//pos:配置する座標
 	//moveAngle:移動する角度
 	//modelname:モデルの名前(ID)
-	void Generate(const NVector3& pos, const float moveAngle, const std::string& modelname);
+	void Generate(const NVec3& pos, const float moveAngle, const std::string& modelname);
 
 	//初期化
 	virtual void Init();
@@ -75,9 +75,9 @@ public:
 	//移動スピード取得
 	float GetMoveSpeed()const { return moveSpeed_; }
 	//座標取得
-	NVector3& GetPos()const { return obj_->position_; }
+	NVec3& GetPos()const { return obj_->position_; }
 	//大きさ取得
-	NVector3& GetScale()const { return obj_->scale_; }
+	NVec3& GetScale()const { return obj_->scale_; }
 	//移動用角度取得
 	float GetMoveAngle()const { return moveAngle_; }
 	//パーティクルが1つも出てないかフラグ取得
@@ -87,7 +87,7 @@ public:
 	//生存フラグ設定
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//座標設定
-	void SetPos(const NVector3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
+	void SetPos(const NVec3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
 	//大きさ設定
 	void SetScale(const float scale) {
 		obj_->scale_ = scale;  collider_.SetRadius(scale); }

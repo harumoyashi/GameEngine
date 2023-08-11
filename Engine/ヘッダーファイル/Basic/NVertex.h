@@ -2,25 +2,26 @@
 #include <d3d12.h>
 #include <vector>
 #include "NDX12.h"
-#include "NVector2.h"
-#include "NVector3.h"
+#include "NVec2.h"
+#include "NVec3.h"
 #include "NColor.h"
+#include "NUtil.h"
 
 struct NVertex
 {
-	NVector3 pos = { 0, 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
 
-	NVertex(NVector3 pos = { 0, 0, 0 })
+	NVertex(NVec3 pos = { 0, 0, 0 })
 		: pos(pos) {}
 };
 
 //position,uvの2要素
 struct NVertexUV
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector2 uv = { 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec2 uv = { 0, 0 };
 
-	NVertexUV(NVector3 pos = { 0, 0, 0 }, NVector2 uv = { 0, 0 })
+	NVertexUV(NVec3 pos = { 0, 0, 0 }, NVec2 uv = { 0, 0 })
 		: pos(pos), uv(uv) {}
 
 	bool operator==(const NVertexUV& a) const;
@@ -29,11 +30,11 @@ struct NVertexUV
 //position,normal,uvの3要素
 struct NVertexPNU
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 normal = { 0, 0, 1 };
-	NVector2 uv = { 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 normal = { 0, 0, 1 };
+	NVec2 uv = { 0, 0 };
 
-	NVertexPNU(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 })
+	NVertexPNU(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 })
 		: pos(pos), normal(normal), uv(uv) {}
 
 	bool operator==(const NVertexPNU& a) const;
@@ -49,12 +50,12 @@ struct NVertexPNU
 //position,scale,colorの3要素
 struct NVertexParticle
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 rot = { 0, 0, 0 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 rot = { 0, 0, 0 };
 	NColor color = NColor::kWhite;
 	float scale = 0.0f;
 
-	NVertexParticle(NVector3 pos = { 0, 0, 0 }, NVector3 rot = { 0, 0, 0 },
+	NVertexParticle(NVec3 pos = { 0, 0, 0 }, NVec3 rot = { 0, 0, 0 },
 		NColor color = NColor::kWhite, float scale = 0.0f)
 		: pos(pos), rot(rot), color(color), scale(scale) {}
 
@@ -62,24 +63,20 @@ struct NVertexParticle
 };
 
 //position,normal,uv,boneIndex,boneWeightの5要素
-struct NVertexAssimp
+struct NVertexFbx
 {
-	NVector3 pos = { 0, 0, 0 };
-	NVector3 normal = { 0, 0, 1 };
-	NVector2 uv = { 0, 0 };
-	std::vector<uint32_t> boneIndex{ 4 };
-	std::vector<float> boneWeight{ 4 };
+	NVec3 pos = { 0, 0, 0 };
+	NVec3 normal = { 0, 0, 1 };
+	NVec2 uv = { 0, 0 };
+	uint32_t boneIndex[maxBoneIndices];
+	float boneWeight[maxBoneIndices];
 
-	NVertexAssimp(NVector3 pos = { 0, 0, 0 }, NVector3 normal = { 0, 0, 1 }, NVector2 uv = { 0, 0 },
-		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
-		: pos(pos), normal(normal), uv(uv), boneIndex(boneIndex), boneWeight(boneWeight) {}
-
-	bool operator==(const NVertexAssimp& a) const;
+	bool operator==(const NVertexFbx& a) const;
 
 	/// <summary>
 	/// 法線ベクトルを計算
 	/// </summary>
 	/// <param name="vertices">計算する頂点群</param>
 	/// <param name="indices">インデックスリスト（三角形、全て時計回りであること）</param>
-	static void CalcNormalVec(std::vector<NVertexAssimp>& vertices, std::vector<uint32_t>& indices);
+	static void CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<uint32_t>& indices);
 };

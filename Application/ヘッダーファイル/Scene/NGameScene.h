@@ -4,16 +4,12 @@
 #include <wrl.h>
 
 #include "IScene.h"
-#include "NRootParam.h"
-#include "NMaterial.h"
-#include "NGPipeline.h"
-#include "NRootSignature.h"
 #include "NObj3d.h"
-#include "NTexture.h"
 #include "NSprite.h"
 #include "NModel.h"
 
 #include "SimpleParticle.h"
+#include "NEasing.h"
 
 class NGameScene final :
 	public IScene

@@ -2,7 +2,7 @@
 #include "NWindows.h"
 #include "NMathUtil.h"
 #include "NInput.h"
-#include "NVector4.h"
+#include "NVec4.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -15,7 +15,7 @@ void NCamera::Init()
 	eye_ = { 0, 10.0f, -30.0f };	//視点座標
 	target_ = { 0, 0, 0 };			//注視点座標
 	up_ = { 0, 1.0f, 0 };			//上方向ベクトル
-	rot_ = { 0,0,0 };				//カメラの回転角
+	rot_ = NVec3::zero;				//カメラの回転角
 	nearZ_ = 0.1f;
 	farZ_ = 1000.0f;
 
@@ -42,7 +42,7 @@ void NCamera::DebugCameraUpdate()
 	matView_.RotateX(rot_.x);
 	matView_.RotateY(rot_.y);
 
-	const NVector3 frontVec =
+	const NVec3 frontVec =
 	{
 		sinf(sCurrentCamera->rot_.y),
 		-sinf(sCurrentCamera->rot_.x),
@@ -67,7 +67,7 @@ void NCamera::DebugCameraUpdate()
 		if (NInput::GetMouseMove().x != 0 || NInput::GetMouseMove().y != 0)
 		{
 			const float moveSpeed = 0.001f * eye_.Length();
-			const NVector3 rightVec = frontVec.Cross({ 0,1,0 });
+			const NVec3 rightVec = frontVec.Cross({ 0,1,0 });
 			sCurrentCamera->eye_ += rightVec * NInput::GetMouseMove().x * moveSpeed;
 			sCurrentCamera->eye_ += up_ * NInput::GetMouseMove().y * moveSpeed;
 		}

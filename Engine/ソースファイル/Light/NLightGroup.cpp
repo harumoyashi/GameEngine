@@ -159,13 +159,13 @@ void NLightGroup::TransferConstBuffer()
 	}
 }
 
-void NLightGroup::SetAmbientColor(const NVector3& color)
+void NLightGroup::SetAmbientColor(const NVec3& color)
 {
 	ambientcolor = color;
 	isDirty = true;
 }
 
-void NLightGroup::SetDirLightColor(const NVector3& lightcolor)
+void NLightGroup::SetDirLightColor(const NVec3& lightcolor)
 {
 	for (uint32_t i = 0; i < kDirLightNum; i++)
 	{
@@ -173,7 +173,7 @@ void NLightGroup::SetDirLightColor(const NVector3& lightcolor)
 	}
 }
 
-void NLightGroup::SetPointLightColor(const NVector3& lightcolor)
+void NLightGroup::SetPointLightColor(const NVec3& lightcolor)
 {
 	for (uint32_t i = 0; i < kPointLightNum; i++)
 	{
@@ -181,7 +181,7 @@ void NLightGroup::SetPointLightColor(const NVector3& lightcolor)
 	}
 }
 
-void NLightGroup::SetSpotLightColor(const NVector3& lightcolor)
+void NLightGroup::SetSpotLightColor(const NVec3& lightcolor)
 {
 	for (uint32_t i = 0; i < kSpotLightNum; i++)
 	{

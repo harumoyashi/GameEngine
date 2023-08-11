@@ -19,14 +19,14 @@ void NDirectionalLight::Init()
 	SetLightDir({ 0.0f, -1.0f, 0.0f });
 }
 
-void NDirectionalLight::SetLightDir(const NVector3& lightdir)
+void NDirectionalLight::SetLightDir(const NVec3& lightdir)
 {
 	//ê≥ãKâªÇµÇƒÉZÉbÉg
 	lightdir_ = lightdir.Normalize();
 	isDirty_ = true;
 }
 
-void NDirectionalLight::SetLightColor(const NVector3& lightcolor)
+void NDirectionalLight::SetLightColor(const NVec3& lightcolor)
 {
 	lightcolor_ = lightcolor;
 	isDirty_ = true;

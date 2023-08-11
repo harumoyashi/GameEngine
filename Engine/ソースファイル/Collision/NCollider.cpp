@@ -5,7 +5,7 @@ Circle::Circle() :
 {
 }
 
-Circle::Circle(const NVector2& centerPos, const float radius) :
+Circle::Circle(const NVec2& centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
 }
@@ -16,7 +16,7 @@ Sphere::Sphere() :
 
 }
 
-Sphere::Sphere(const NVector3& centerPos, const float radius) :
+Sphere::Sphere(const NVec3& centerPos, const float radius) :
 	centerPos(centerPos), radius(radius)
 {
 
@@ -27,7 +27,7 @@ Ray::Ray() :
 {
 }
 
-Ray::Ray(const NVector3& startPos, const NVector3& dirVec) :
+Ray::Ray(const NVec3& startPos, const NVec3& dirVec) :
 	startPos(startPos), dirVec(dirVec)
 {
 }
@@ -37,7 +37,7 @@ Line::Line() :
 {
 }
 
-Line::Line(const NVector3& startPos, const NVector3& endPos) :
+Line::Line(const NVec3& startPos, const NVec3& endPos) :
 	startPos(startPos), endPos(endPos)
 {
 }
@@ -47,7 +47,7 @@ Plane::Plane() :
 {
 }
 
-Plane::Plane(const NVector3& normal, const float distance) :
+Plane::Plane(const NVec3& normal, const float distance) :
 	normal(normal), distance(distance)
 {
 }

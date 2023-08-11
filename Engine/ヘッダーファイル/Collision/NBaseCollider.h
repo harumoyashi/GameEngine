@@ -17,7 +17,7 @@ protected:
 
 	NBaseCollider* colInfo_;					//衝突相手のコライダー
 	std::string colID;							//コライダーの識別ID
-	NVector3 inter_;							//衝突点
+	NVec3 inter_;							//衝突点
 
 	std::function<void(void)>onCollision_;		//コールバック関数ポインタ変数
 

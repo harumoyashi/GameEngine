@@ -155,7 +155,7 @@ NMatrix4 NMatrix4::Identity()
 	return result;
 }
 
-NMatrix4 NMatrix4::Scale(const NVector3& s)
+NMatrix4 NMatrix4::Scale(const NVec3& s)
 {
 	NMatrix4 result = Identity();
 	result.m[0][0] = s.x;
@@ -203,7 +203,7 @@ NMatrix4 NMatrix4::RotateZ(const float angle)
 	return result;
 }
 
-NMatrix4 NMatrix4::Translation(const NVector3& t)
+NMatrix4 NMatrix4::Translation(const NVec3& t)
 {
 	NMatrix4 result = Identity();
 	result.m[3][0] = t.x;
@@ -212,11 +212,11 @@ NMatrix4 NMatrix4::Translation(const NVector3& t)
 	return result;
 }
 
-NVector3 NMatrix4::Transform(const NVector3& v, const NMatrix4& m)
+NVec3 NMatrix4::Transform(const NVec3& v, const NMatrix4& m)
 {
 	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
 
-	NVector3 result
+	NVec3 result
 	{
 		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0] * 0.0f) / w,
 		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1] * 0.0f) / w,
@@ -226,11 +226,11 @@ NVector3 NMatrix4::Transform(const NVector3& v, const NMatrix4& m)
 	return result;
 }
 
-NVector3 NMatrix4::WTransform(const NVector3& v, const NMatrix4& m)
+NVec3 NMatrix4::WTransform(const NVec3& v, const NMatrix4& m)
 {
 	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
 
-	NVector3 result
+	NVec3 result
 	{
 		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]) / w,
 		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]) / w,
@@ -240,11 +240,11 @@ NVector3 NMatrix4::WTransform(const NVector3& v, const NMatrix4& m)
 	return result;
 }
 
-NVector4 NMatrix4::Vec4MulMat(const NVector4& v, const NMatrix4& m) const
+NVec4 NMatrix4::Vec4MulMat(const NVec4& v, const NMatrix4& m) const
 {
 	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
 
-	NVector4 result
+	NVec4 result
 	{
 		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + v.w * m.m[3][0]) / w,
 		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + v.w * m.m[3][1]) / w,
@@ -255,9 +255,9 @@ NVector4 NMatrix4::Vec4MulMat(const NVector4& v, const NMatrix4& m) const
 	return result;
 }
 
-NVector3 NMatrix4::ToEuler() const
+NVec3 NMatrix4::ToEuler() const
 {
-	NVector3 euler;
+	NVec3 euler;
 
 	euler.x = asinf(m[1][2]);
 	if (cosf(euler.x) != 0.0f)
@@ -274,9 +274,23 @@ NVector3 NMatrix4::ToEuler() const
 	return euler;
 }
 
-NVector3 NMatrix4::GetWorldPos() const
+NMatrix4 NMatrix4::Transpose()
 {
-	NVector3 pos = {};
+	NMatrix4 result;
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			result.m[i][j] = m[j][i];
+		}
+	}
+	return result;
+}
+
+NVec3 NMatrix4::GetWorldPos() const
+{
+	NVec3 pos = {};
 
 	float x = m[3][0];
 	float y = m[3][1];
@@ -287,9 +301,9 @@ NVector3 NMatrix4::GetWorldPos() const
 	return pos;
 }
 
-NVector3 NMatrix4::GetScale() const
+NVec3 NMatrix4::GetScale() const
 {
-	NVector3 scale = {};
+	NVec3 scale = {};
 
 	float x = sqrtf(powf(m[0][0], 2) + powf(m[0][1], 2) + powf(m[0][2], 2));
 	float y = sqrtf(powf(m[1][0], 2) + powf(m[1][1], 2) + powf(m[1][2], 2));
@@ -307,18 +321,18 @@ const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
 	return result *= m2;
 }
 
-NVector3 operator*(const NVector3& v, const NMatrix4& m)
+NVec3 operator*(const NVec3& v, const NMatrix4& m)
 {
-	NVector3 result = v;
+	NVec3 result = v;
 	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0];
 	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1];
 	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2];
 	return result;
 }
 
-NVector4 operator*(const NVector4& v, const NMatrix4& m)
+NVec4 operator*(const NVec4& v, const NMatrix4& m)
 {
-	NVector4 result = v;
+	NVec4 result = v;
 	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + v.w * m.m[3][0];
 	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + v.w * m.m[3][1];
 	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + v.w * m.m[3][2];
@@ -326,9 +340,9 @@ NVector4 operator*(const NVector4& v, const NMatrix4& m)
 	return result;
 }
 
-NVector3& operator*=(NVector3& v, const NMatrix4& m)
+NVec3& operator*=(NVec3& v, const NMatrix4& m)
 {
-	NVector3 result = v * m;
+	NVec3 result = v * m;
 	v = result;
 	return v;
 }

@@ -147,7 +147,7 @@ void Player::FaildUpdate()
 
 	isDraw_ = true;						//絶対描画させる
 	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
-	obj_->position_ = deadPos_ + NVector3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
+	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる
 	obj_->rotation_.y = MathUtil::Radian2Degree(faildEffectTimer_.GetTimeRate() * PI2);
@@ -202,7 +202,7 @@ void Player::Move()
 		//移動方向に合わせて回転
 		if (moveVelo_.Length() > 0.0f)			//入力されてたら
 		{
-			NVector2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
+			NVec2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
 			velo.Normalize();
 			moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
 			if (velo.x < 0)
@@ -236,14 +236,14 @@ void Player::Shot()
 	{
 		BulletFactory::GetInstance()->
 			Create(IBullet::BulletType::LineBullet,
-				obj_->position_ + NVector3(0, obj_->scale_.y, 0), lineLevel_);
+				obj_->position_ + NVec3(0, obj_->scale_.y, 0), lineLevel_);
 	}
 
 	if (sideLevel_ > 0)
 	{
 		BulletFactory::GetInstance()->
 			Create(IBullet::BulletType::SideBullet,
-				obj_->position_ + NVector3(0, obj_->scale_.y, 0), sideLevel_);
+				obj_->position_ + NVec3(0, obj_->scale_.y, 0), sideLevel_);
 	}
 }
 
@@ -266,6 +266,6 @@ void Player::DeadParticle()
 		deadParticle_.SetIsRotation(true);
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
-			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, { 0,0,0 }, { -1,-1,-1 }, { 1,1,1 });
+			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, NVec3::zero, -NVec3::one, NVec3::one);
 	}
 }

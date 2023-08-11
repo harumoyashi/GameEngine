@@ -7,7 +7,7 @@ void NTimer::Reset()
 	isTimeOut_ = false;
 }
 
-void NTimer::Update(const float elapseTimer)
+void NTimer::Update(const bool isRoop,const float elapseTimer)
 {
 	if (timer_ < maxTimer_)
 	{
@@ -17,6 +17,10 @@ void NTimer::Update(const float elapseTimer)
 	{
 		timer_ = maxTimer_;
 		isTimeOut_ = true;
+		if (isRoop == true)
+		{
+			Reset();
+		}
 	}
 }
 

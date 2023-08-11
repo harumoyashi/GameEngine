@@ -1,5 +1,5 @@
 #include "NTexture.h"
-#include "NVector4.h"
+#include "NVec4.h"
 #include "NUtil.h"
 
 NTextureManager* NTextureManager::GetInstance()
@@ -41,7 +41,7 @@ NTexture NTextureManager::CreateErrorTexture()
 		//配列の要素数
 		const size_t imageDataCount = textureLen * textureLen;
 		//画像イメージデータ配列
-		std::vector<NVector4> imageData;
+		std::vector<NVec4> imageData;
 
 		//全ピクセルの色を初期化
 		for (size_t i = 0; i < imageDataCount; i++)
@@ -52,10 +52,10 @@ NTexture NTextureManager::CreateErrorTexture()
 			//左上と右下をピンクに
 			if ((x < textureLen / 2 && y < textureLen / 2)
 				|| (x >= textureLen / 2 && y >= textureLen / 2)) {
-				imageData.emplace_back(NVector4(1, 0, 1, 1));
+				imageData.emplace_back(NVec4(1, 0, 1, 1));
 			}
 			else {	//それ以外は黒に
-				imageData.emplace_back(NVector4(0, 0, 0, 1));
+				imageData.emplace_back(NVec4(0, 0, 0, 1));
 			}
 		}
 
@@ -84,8 +84,8 @@ NTexture NTextureManager::CreateErrorTexture()
 			0,
 			nullptr,	//全領域へコピー
 			imageData.data(),	//元データアドレス
-			sizeof(NVector4) * textureLen,	//1ラインサイズ
-			sizeof(NVector4) * imageDataCount	//全サイズ
+			sizeof(NVec4) * textureLen,	//1ラインサイズ
+			sizeof(NVec4) * imageDataCount	//全サイズ
 		);
 
 		//シェーダーリソースビュー設定

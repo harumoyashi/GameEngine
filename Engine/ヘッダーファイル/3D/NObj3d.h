@@ -28,22 +28,20 @@ protected:
 
 	NMatrix4 matWorld_;	//3D変換行列
 
+	NTexture* texture_;			//テクスチャ
+	IModel* model_;				//モデル
+	std::string objName_;		//デバッグ用に名前つける
+
 	// ライト
 	static NLightGroup* sLightGroup;
 
 public:
-	NVector3 scale_ = { 1.0f,1.0f,1.0f };		//スケーリング倍率
-	NVector3 rotation_ = { 0.0f,0.0f,0.0f };	//回転角
-	NVector3 position_ = { 0.0f,0.0f,0.0f };	//座標
+	NVec3 scale_ = { 1.0f,1.0f,1.0f };		//スケーリング倍率
+	NVec3 rotation_ = { 0.0f,0.0f,0.0f };	//回転角
+	NVec3 position_ = { 0.0f,0.0f,0.0f };	//座標
 
 	NObj3d* parent_ = nullptr;	//親のポインタ
-
-	uint32_t texNum_ = 0;		//テクスチャ指定用
-
-	Model model_;				//モデル
 	NColor color_;				//色
-
-	std::string objName_;		//デバッグ用に名前つける
 
 public:
 	NObj3d();
@@ -71,7 +69,7 @@ public:
 	static void SetBlendMode(BlendMode blendMode);
 	//描画
 	virtual void Draw();
-	void SetSRVHeap();
+	//シェーダーリソースビューの設定コマンド
 	void SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle);
 	//頂点バッファビューの設定コマンド
 	void SetVB(const D3D12_VERTEX_BUFFER_VIEW* vbView);
@@ -90,6 +88,8 @@ public:
 	// セッター //
 	//モデルの設定
 	void SetModel(const std::string& modelname);
+	//テクスチャの設定
+	void SetTexture(const std::string& texname);
 	//ワールド行列設定
 	void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 	//ライトを設定

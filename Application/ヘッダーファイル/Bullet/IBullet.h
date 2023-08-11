@@ -16,7 +16,7 @@ public:
 
 protected:
 	std::unique_ptr<NObj3d> obj_;	//弾のオブジェクト
-	NVector2 moveVelo_;				//移動量
+	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
@@ -33,7 +33,7 @@ public:
 	IBullet();
 	virtual ~IBullet();
 	//生成
-	void Generate(const NVector3& pos,const float moveAngle = 0.0f);
+	void Generate(const NVec3& pos,const float moveAngle = 0.0f);
 	//更新
 	void Update();
 	//描画
@@ -53,9 +53,9 @@ public:
 	//与えるダメージ量取得
 	float GetDamage()const { return damage_; }
 	//座標取得
-	NVector3& GetPos()const { return obj_->position_; }
+	NVec3& GetPos()const { return obj_->position_; }
 	//大きさ取得
-	NVector3& GetScale()const { return obj_->scale_; }
+	NVec3& GetScale()const { return obj_->scale_; }
 	//移動用角度取得
 	float GetMoveAngle()const { return moveAngle_; }
 
