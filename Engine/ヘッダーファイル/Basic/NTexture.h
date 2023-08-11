@@ -7,7 +7,7 @@
 
 typedef std::string TextureHandle;
 
-struct NTexture
+struct NTexture final
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 

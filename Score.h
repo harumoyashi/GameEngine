@@ -18,6 +18,7 @@ private:
 	static uint32_t topScore_;	//一番高いスコア
 
 	static std::vector<NumDrower> scoreTex_;	//スコア表示用
+	static std::unique_ptr<NSprite> topTex_;	//TOPテクスチャ
 
 public:
 	static void Create();

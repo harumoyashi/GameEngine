@@ -6,6 +6,7 @@
 uint32_t Score::nowScore_;
 uint32_t Score::topScore_;
 std::vector<NumDrower> Score::scoreTex_{ 3 };
+std::unique_ptr<NSprite> Score::topTex_;
 
 void Score::Init()
 {
@@ -22,24 +23,32 @@ void Score::Init()
 		{ NWindows::kWin_width * 0.5f - scoreTex_[(uint32_t)TexType::Result].GetSize().x * 2.5f,-500.f });
 	scoreTex_[(uint32_t)TexType::Result].SetSize({ 80.f,80.f });
 	scoreTex_[(uint32_t)TexType::Result].SetNum(nowScore_);
-	scoreTex_[(uint32_t)TexType::Top].SetPos({ NWindows::kWin_width * 0.5f,-500.f });
+	scoreTex_[(uint32_t)TexType::Top].SetPos(
+		{ NWindows::kWin_width * 0.5f,-500.f });
 	scoreTex_[(uint32_t)TexType::Top].SetSize({ 40.f,40.f });
 	scoreTex_[(uint32_t)TexType::Top].SetNum(topScore_);
+
+	topTex_ = std::make_unique<NSprite>();
+	topTex_->CreateSprite("top",{0,0});
+	topTex_->SetPos(Score::GetPos(TexType::Result).x, -500.f);
+	topTex_->SetSize(Score::GetSize(TexType::Top).x * 3.f, Score::GetSize(TexType::Top).y);
 }
 
 void Score::Update()
 {
-	for (size_t i = 0; i < scoreTex_.size(); i++)
-	{
-		scoreTex_[i].Update();
-	}
-
 	//ハイスコアの更新あったら
 	if (topScore_ < nowScore_)
 	{
 		topScore_ = nowScore_;
 		scoreTex_[(uint32_t)TexType::Top].SetNum(topScore_);
 	}
+	topTex_->SetPos(Score::GetPos(TexType::Result).x, Score::GetPos(TexType::Top).y);
+
+	for (size_t i = 0; i < scoreTex_.size(); i++)
+	{
+		scoreTex_[i].Update();
+	}
+	topTex_->Update();
 }
 
 void Score::Draw()
@@ -48,6 +57,7 @@ void Score::Draw()
 	{
 		scoreTex_[i].Draw();
 	}
+	topTex_->Draw();
 }
 
 void Score::DrawImGui()

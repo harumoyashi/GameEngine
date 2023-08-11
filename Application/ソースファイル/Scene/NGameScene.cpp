@@ -211,7 +211,7 @@ void NGameScene::Update()
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
 			Score::TexType::Result);
 		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP - Score::GetSize(Score::TexType::Result).y },
+			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
 			Score::TexType::Top);
 
 		//Aボタン点滅
@@ -253,7 +253,7 @@ void NGameScene::Update()
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
 			Score::TexType::Result);
 		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP - Score::GetSize(Score::TexType::Result).y },
+			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
 			Score::TexType::Top);
 
 		//Aボタン点滅
