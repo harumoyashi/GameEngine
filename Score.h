@@ -30,11 +30,11 @@ public:
 	static void AddScore(uint32_t score);
 
 	// ゲッター //
-	static NVector2 GetPos(TexType type) { return scoreTex_[(uint32_t)type].GetPos(); }
-	static NVector2 GetSize(TexType type) { return scoreTex_[(uint32_t)type].GetSize(); }
+	static NVec2 GetPos(TexType type) { return scoreTex_[(uint32_t)type].GetPos(); }
+	static NVec2 GetSize(TexType type) { return scoreTex_[(uint32_t)type].GetSize(); }
 
 	// セッター //
-	static void SetPos(const NVector2& pos, TexType type);
-	static void SetSize(const NVector2& size, TexType type);
+	static void SetPos(const NVec2& pos, TexType type);
+	static void SetSize(const NVec2& size, TexType type);
 	static void SetColor(const NColor& color, TexType type);
 };

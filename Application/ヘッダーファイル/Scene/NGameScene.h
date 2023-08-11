@@ -6,8 +6,6 @@
 #include "IScene.h"
 #include "NObj3d.h"
 #include "NSprite.h"
-#include "NModel.h"
-
 #include "SimpleParticle.h"
 #include "NEasing.h"
 

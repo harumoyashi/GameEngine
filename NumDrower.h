@@ -5,8 +5,8 @@ class NumDrower final
 {
 private:
 	std::vector<std::unique_ptr<NSprite>> numSprite_;
-	NVector2 pos_;					//座標保存用
-	NVector2 size_;					//サイズ保存用
+	NVec2 pos_;					//座標保存用
+	NVec2 size_;					//サイズ保存用
 	NColor color_;					//色保存用
 	std::vector<uint32_t> digit_;	//各桁の数字格納用
 	const float scale_ = 64.f;		//文字の大きさ
@@ -19,12 +19,12 @@ public:
 	void Draw();
 
 	// ゲッター //
-	NVector2 GetPos()const { return pos_; }
-	NVector2 GetSize()const { return size_; }
+	NVec2 GetPos()const { return pos_; }
+	NVec2 GetSize()const { return size_; }
 
 	// セッター //
-	void SetPos(const NVector2& pos);
-	void SetSize(const NVector2& size);
+	void SetPos(const NVec2& pos);
+	void SetSize(const NVec2& size);
 	void SetColor(const NColor& color);
 	void SetNum(uint32_t num);
 };

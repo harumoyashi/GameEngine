@@ -76,12 +76,12 @@ void Score::AddScore(uint32_t score)
 	}
 }
 
-void Score::SetPos(const NVector2& pos, TexType type)
+void Score::SetPos(const NVec2& pos, TexType type)
 {
 	scoreTex_[(uint32_t)type].SetPos(pos);
 }
 
-void Score::SetSize(const NVector2& size, TexType type)
+void Score::SetSize(const NVec2& size, TexType type)
 {
 	scoreTex_[(uint32_t)type].SetSize(size);
 }
