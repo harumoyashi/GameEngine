@@ -3,21 +3,13 @@
 #include "NTimer.h"
 
 #include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/cimport.h>
 
-struct Bone final
+struct Bone
 {
 	std::string name;
 
 	NMatrix4 offsetMat;
 	NMatrix4 currentMat;
-
-	//コンストラクタ
-	Bone(const std::string& name)
-	{
-		this->name = name;
-	}
 };
 
 typedef struct Animation final
@@ -37,6 +29,12 @@ typedef struct Node final
 	NMatrix4 globalTransformMat;
 	Node* parent = nullptr;
 }Node;
+
+//前方宣言
+struct aiNodeAnim;
+struct aiAnimation;
+struct aiNode;
+struct aiScene;
 
 struct FbxModel final
 	: public IModel

@@ -136,7 +136,7 @@ uint32_t NModelManager::LoadObjModel(const std::string& modelname, const std::st
 				index_stream >> indexNormal;
 
 				//頂点データに追加
-				NVertexPNU vertex{};
+				NVertexFbx vertex{};
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];

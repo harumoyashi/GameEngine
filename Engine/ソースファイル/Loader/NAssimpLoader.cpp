@@ -1,3 +1,6 @@
+#include <assimp/postprocess.h>
+#include <assimp/scene.h>
+
 #include <filesystem>
 #include "NAssimpLoader.h"
 #include "NUtil.h"
@@ -411,12 +414,15 @@ bool NAssimpLoader::Load(const std::string& filePath, FbxModel* model)
 	if (model->scene == nullptr)
 	{
 		assert(0 && "モデルの読み込みに失敗しました");
+		return false;
 	}
 
 	// マテリアルの解析
 	ParseMaterial(model, model->scene);
 
 	ParseNodeRecursive(model, nullptr, model->scene->mRootNode);
+
+	return true;
 }
 
 NMatrix4 NAssimpLoader::AssimpMatToMat4(const aiMatrix4x4& mat)

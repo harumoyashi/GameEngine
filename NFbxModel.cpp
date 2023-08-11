@@ -1,6 +1,8 @@
 #include "NFbxModel.h"
 #include "NAssimpLoader.h"
 
+#include <assimp/scene.h>
+
 FbxModel::FbxModel()
 {
 	format = ModelFormat::Fbx;

@@ -5,6 +5,11 @@
 #include <memory>
 #include "NFbxModel.h"
 
+//前方宣言
+struct aiMesh;
+struct aiScene;
+struct aiNode;
+
 class NAssimpLoader final
 {
 private:
@@ -21,7 +26,6 @@ private:
 public:
 	//シングルトンインスタンス取得
 	static NAssimpLoader* GetInstance();
-
 	bool Load(const std::string& filePath, FbxModel* model);	//モデルをロードする
 	//AssimpのMat4を自作Mat4型に変換
 	static NMatrix4 AssimpMatToMat4(const aiMatrix4x4& mat);

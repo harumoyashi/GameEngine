@@ -1,10 +1,10 @@
 #pragma once
 #include "IModel.h"
 
-struct NObjModel final
+struct ObjModel final
 	: public IModel
 {
-	NObjModel()
+	ObjModel()
 	{
 		format = ModelFormat::Obj;
 	}
