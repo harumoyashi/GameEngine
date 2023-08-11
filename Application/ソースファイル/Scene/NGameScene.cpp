@@ -39,8 +39,6 @@ void NGameScene::Init()
 	EnemyManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
-	Score::Init();
-
 #pragma region オブジェクトの初期値設定
 
 
@@ -59,6 +57,8 @@ void NGameScene::Init()
 	{
 		foreSprite_[i] = std::make_unique<NSprite>();
 	}
+
+	Score::Init();
 #pragma region 各スプライトの設定
 	foreSprite_[(uint32_t)FSpriteType::Shaft]->CreateSprite("shaft");
 	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetSize(100.0f, 100.0f);
@@ -77,8 +77,10 @@ void NGameScene::Init()
 
 	foreSprite_[(uint32_t)FSpriteType::Clear]->CreateSprite("clear");
 	foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
+	foreSprite_[(uint32_t)FSpriteType::Clear]->SetSize(350.f,100.f);
 	foreSprite_[(uint32_t)FSpriteType::Faild]->CreateSprite("faild");
 	foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
+	foreSprite_[(uint32_t)FSpriteType::Faild]->SetSize(350.f, 100.f);
 #pragma endregion
 #pragma endregion
 	// ライト生成
@@ -203,6 +205,15 @@ void NGameScene::Update()
 		slidePos = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
 		foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
 
+		//リザルトスコアが上から落ちてくる
+		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer.GetTimeRate());
+		Score::SetPos(
+			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
+			Score::TexType::Result);
+		Score::SetPos(
+			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP - Score::GetSize(Score::TexType::Result).y },
+			Score::TexType::Top);
+
 		//Aボタン点滅
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
@@ -235,6 +246,15 @@ void NGameScene::Update()
 		//失敗テキストスライド
 		slidePos = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
 		foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
+
+		//リザルトスコアが上から落ちてくる
+		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer.GetTimeRate());
+		Score::SetPos(
+			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
+			Score::TexType::Result);
+		Score::SetPos(
+			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP - Score::GetSize(Score::TexType::Result).y },
+			Score::TexType::Top);
 
 		//Aボタン点滅
 		flashingTimer_.Roop();

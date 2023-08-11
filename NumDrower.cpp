@@ -1,19 +1,16 @@
 #include "NumDrower.h"
 
-std::vector<std::unique_ptr<NSprite>> NumDrower::numSprite_;
-const float NumDrower::scale_ = 64.f;
-NVector2 NumDrower::pos_ = { 0.f,0.f };
-NVector2 NumDrower::size_ = { scale_,scale_ };
-std::vector<uint32_t> NumDrower::digit_;
-
 void NumDrower::Create(uint32_t spriteNum)
 {
 	for (size_t i = 0; i < spriteNum; i++)
 	{
-		numSprite_.emplace_back();
-		numSprite_[i] = std::make_unique<NSprite>();
-		//アンカーポイントは左上
-		numSprite_[i]->CreateClipSprite("number", { 0, 0 }, { scale_,scale_ }, { 0,0 });
+		if (numSprite_.size() < spriteNum)
+		{
+			numSprite_.emplace_back();
+			numSprite_[i] = std::make_unique<NSprite>();
+			//アンカーポイントは左上
+			numSprite_[i]->CreateClipSprite("number", { 0, 0 }, { scale_,scale_ }, { 0,0 });
+		}
 	}
 }
 
@@ -49,6 +46,15 @@ void NumDrower::SetSize(const NVector2& size)
 	for (size_t i = 0; i < numSprite_.size(); i++)
 	{
 		numSprite_[i]->SetSize(size_.x, size_.y);
+	}
+}
+
+void NumDrower::SetColor(const NColor& color)
+{
+	color_ = color;
+	for (size_t i = 0; i < numSprite_.size(); i++)
+	{
+		numSprite_[i]->color_ = color_;
 	}
 }
 

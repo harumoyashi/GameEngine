@@ -12,7 +12,6 @@
 #include "NTexture.h"
 #include "NSprite.h"
 #include "NModel.h"
-#include "NAudio.h"
 
 #include "SimpleParticle.h"
 
@@ -54,9 +53,6 @@ private:
 	float slidePos = 0.0f;							//横に掃けてく時のスライド位置
 	NEasing::EaseTimer slideTimer = 0.1f;			//スライド時のイージング用
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー
-
-	//オーディオ
-	NAudio* audio_ = nullptr;
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
