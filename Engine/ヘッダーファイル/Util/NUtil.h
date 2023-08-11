@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+static const int maxBoneIndices = 4;
+
 enum class BlendMode
 {
 	None,	//‚»‚Ì‚Ü‚Ü

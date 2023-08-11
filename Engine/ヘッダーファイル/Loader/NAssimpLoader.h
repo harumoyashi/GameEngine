@@ -13,9 +13,6 @@ struct aiNode;
 class NAssimpLoader final
 {
 private:
-	static const int maxBoneIndices = 4;
-
-private:
 	void ParseMesh(FbxModel* model, aiMesh* mesh);								//メッシュの解析
 	void ParseVertex(FbxModel* model, aiMesh* mesh);							//頂点の解析
 	void ParseFace(FbxModel* model, aiMesh* mesh);								//フェイスの解析

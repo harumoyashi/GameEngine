@@ -21,6 +21,7 @@ void NModelManager::AllLoad()
 	LoadObjModel("boss_model", "boss");
 	LoadObjModel("cat", "cat");
 	LoadObjModel("mouse", "mouse");
+	LoadFbxModel("boneTest", "boneTest");
 }
 
 IModel* NModelManager::GetModel(const std::string& modelHandle)
@@ -178,6 +179,7 @@ uint32_t NModelManager::LoadFbxModel(const std::string& modelname, const std::st
 		return handle;
 	}
 
+	sModelDatas.emplace_back();
 	// 書き込むモデルデータの参照
 	IModel& modelData = sModelDatas.at(handle);
 
@@ -186,7 +188,7 @@ uint32_t NModelManager::LoadFbxModel(const std::string& modelname, const std::st
 	model->name = modelname;
 
 	// モデルと同じ名前のフォルダーから読み込む
-	std::string path = sDirectoryPath + modelname + "/";
+	std::string path = sDirectoryPath + "/";
 	std::string fbxfile = modelname + ".fbx";
 	std::string fullPath = path + fbxfile;
 

@@ -5,6 +5,7 @@
 #include "NVec2.h"
 #include "NVec3.h"
 #include "NColor.h"
+#include "NUtil.h"
 
 struct NVertex
 {
@@ -67,12 +68,8 @@ struct NVertexFbx
 	NVec3 pos = { 0, 0, 0 };
 	NVec3 normal = { 0, 0, 1 };
 	NVec2 uv = { 0, 0 };
-	std::vector<uint32_t> boneIndex{ 4 };
-	std::vector<float> boneWeight{ 4 };
-
-	NVertexFbx(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 },
-		std::vector<uint32_t> boneIndex = {}, std::vector<float> boneWeight = {})
-		: pos(pos), normal(normal), uv(uv), boneIndex(boneIndex), boneWeight(boneWeight) {}
+	uint32_t boneIndex[maxBoneIndices];
+	float boneWeight[maxBoneIndices];
 
 	bool operator==(const NVertexFbx& a) const;
 

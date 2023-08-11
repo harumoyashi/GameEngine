@@ -1,7 +1,7 @@
+#include <assimp/scene.h>
 #include "NFbxModel.h"
 #include "NAssimpLoader.h"
 
-#include <assimp/scene.h>
 
 FbxModel::FbxModel()
 {
