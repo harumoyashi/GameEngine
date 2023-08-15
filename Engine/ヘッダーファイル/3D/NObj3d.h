@@ -25,12 +25,14 @@ protected:
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
 	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
+	std::unique_ptr<NConstBuff<ConstBuffDataSkin>> cbSkin_;
 
 	NMatrix4 matWorld_;	//3D変換行列
 
-	NTexture* texture_;			//テクスチャ
-	IModel* model_;				//モデル
-	std::string objName_;		//デバッグ用に名前つける
+	NTexture* texture_;				//テクスチャ
+	IModel* model_;					//モデル
+	static ModelFormat modelFormat;	//モデルの形式格納用
+	std::string objName_;			//デバッグ用に名前つける
 
 	// ライト
 	static NLightGroup* sLightGroup;
@@ -61,6 +63,8 @@ public:
 	void TransferColor();
 	//光情報転送
 	void TransferMaterial();
+	//スキン情報転送(FBXのみ)
+	void TransferSkin();
 #pragma endregion
 #pragma region 描画まわり
 	//共通グラフィックスコマンド

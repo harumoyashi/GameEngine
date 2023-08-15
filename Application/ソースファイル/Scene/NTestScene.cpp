@@ -28,7 +28,7 @@ void NTestScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト

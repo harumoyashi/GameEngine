@@ -1,6 +1,7 @@
 #pragma once
 #include "NVec3.h"
 #include "NVec4.h"
+#include "NQuaternion.h"
 
 struct NMatrix4
 {
@@ -42,21 +43,23 @@ struct NMatrix4
 	NMatrix4& operator*=(const NMatrix4& m);
 
 	//全ての要素が0の行列
-	NMatrix4 Zero();
+	static NMatrix4 Zero();
 	//単位行列
 	static NMatrix4 Identity();
 	//拡縮行列の設定
-	NMatrix4 Scale(const NVec3& s);
+	static NMatrix4 Scale(const NVec3& s);
 	//回転行列の設定
-	NMatrix4 RotateX(const float angle);
-	NMatrix4 RotateY(const float angle);
-	NMatrix4 RotateZ(const float angle);
+	static NMatrix4 RotateX(const float angle);
+	static NMatrix4 RotateY(const float angle);
+	static NMatrix4 RotateZ(const float angle);
+	//クォータニオンから回転行列に変換
+	static NMatrix4 RotateQuaternion(const NQuaternion& q);
 	//平行移動行列の作成
-	NMatrix4 Translation(const NVec3& t);
+	static NMatrix4 Translation(const NVec3& t);
 	//座標変換（ベクトルと行列の掛け算）
-	NVec3 Transform(const NVec3& v, const NMatrix4& m);
+	static NVec3 Transform(const NVec3& v, const NMatrix4& m);
 	//w除算を使った座標変換
-	NVec3 WTransform(const NVec3& v, const NMatrix4& m);
+	static NVec3 WTransform(const NVec3& v, const NMatrix4& m);
 	NVec4 Vec4MulMat(const NVec4& v, const NMatrix4& m)const;
 
 	//オイラー角への変換

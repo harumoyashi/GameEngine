@@ -135,6 +135,24 @@ float MathUtil::Randomf(const float min, const float max)
 	return (float)dist1(engine);
 }
 
+NMatrix4 MathUtil::CalculateWorldMat(const NVec3 pos, const NVec3 scale, const NQuaternion rot)
+{
+	NMatrix4 result = NMatrix4::Identity();
+
+	// 平行移動、スケーリング、回転行列作成
+	NMatrix4 transMat = NMatrix4::Identity();
+	NMatrix4 scaleMat = NMatrix4::Identity();
+	NMatrix4 rotMat = NMatrix4::Identity();
+
+	transMat = NMatrix4::Translation(pos);		//平行移動
+	scaleMat = NMatrix4::Scale(scale);			//スケーリング
+	rotMat = NMatrix4::RotateQuaternion(rot);	//回転
+
+	result = scaleMat * rotMat * transMat;
+
+	return result;
+}
+
 NVec2 MathUtil::CircleMotion(NVec2 CenterPoint, float radius, float angle)
 {
 	NVec2 position;

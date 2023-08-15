@@ -51,7 +51,7 @@ struct NQuaternion {
 	//normを返す
 	float Norm(const NQuaternion& q);
 	//内積
-	float Dot(const NQuaternion& q0, const NQuaternion& q1);
+	static float Dot(const NQuaternion& q0, const NQuaternion& q1);
 	//外積
 	NVec3 Cross(const NQuaternion& q0, const NQuaternion& q1);
 	//正規化したのを返す
@@ -59,6 +59,8 @@ struct NQuaternion {
 	NQuaternion Normalize(const NQuaternion& q);
 	//逆クォータニオンを返す
 	NQuaternion Inverse(const NQuaternion& q);
+	//線形補間
+	static NQuaternion Lerp(const NQuaternion q1, const NQuaternion q2, float t);
 
 	/// <summary>
 	/// 任意の回転軸で指定した角度だけ回転した姿勢クォータニオンを生成する
@@ -88,7 +90,7 @@ struct NQuaternion {
 	/// </summary>
 	/// <returns>回転行列</returns>
 	/// 参考:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf
-	NMatrix4 QuaternionToMatrix() const;
+	NMatrix4 const QuaternionToMatrix() const;
 
 	/// <summary>
 	/// ベクトルをクォータニオンで回転させた結果のベクトルを求める

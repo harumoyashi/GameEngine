@@ -157,6 +157,35 @@ NQuaternion NQuaternion::Inverse(const NQuaternion& q)
 	return result;
 }
 
+NQuaternion NQuaternion::Lerp(const NQuaternion q1, const NQuaternion q2, float t)
+{
+	float cos = Dot(q1, q2);
+	NQuaternion t2 = q2;
+
+	if (cos < 0.f)
+	{
+		cos = -cos;
+		t2 = -q2;
+	}
+
+	float k0 = 1.f - t;
+	float k1 = t;
+
+	if ((1.f - cos) > 0.001f)
+	{
+		float theta = acosf(cos);
+		k0 = sinf(theta * k0) / sinf(theta);
+		k1 = sinf(theta * k1) / sinf(theta);
+	}
+
+	if (cos >= 1.f - 0.0005f)
+	{
+		return  q1 * (1.f - t) + t2 * t;
+	}
+
+	return q1 * k0 + t2 * k1;
+}
+
 NQuaternion NQuaternion::MakeAxisAngle(const NVec3& axis, const float angle)
 {
 	NQuaternion q(
@@ -180,7 +209,7 @@ NQuaternion NQuaternion::EulerToQuaternion(const NVec3& rot) const
 	return q;
 }
 
-NMatrix4 NQuaternion::QuaternionToMatrix() const
+NMatrix4 const NQuaternion::QuaternionToMatrix() const
 {
 	NMatrix4 mat;
 	mat = NMatrix4::Identity();

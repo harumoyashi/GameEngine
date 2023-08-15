@@ -182,11 +182,11 @@
     <ClInclude Include="Engine\ヘッダーファイル\Collision\SphereCollider.h" />
     <ClInclude Include="Application\ヘッダーファイル\Field\Wave.h" />
     <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Mouse.h" />
-    <ClInclude Include="NFbxModel.h" />
-    <ClInclude Include="NMesh.h" />
-    <ClInclude Include="NObjModel.h" />
-    <ClInclude Include="NumDrower.h" />
-    <ClInclude Include="Score.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NFbxModel.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NMesh.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\3D\NObjModel.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\Util\NumDrower.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Field\Score.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -264,14 +264,15 @@
     <ClCompile Include="Engine\ソースファイル\Collision\SphereCollider.cpp" />
     <ClCompile Include="Application\ソースファイル\Field\Wave.cpp" />
     <ClCompile Include="Application\ソースファイル\Chara\Enemy\Mouse.cpp" />
-    <ClCompile Include="NFbxModel.cpp" />
-    <ClCompile Include="NMesh.cpp" />
-    <ClCompile Include="NObjModel.cpp" />
-    <ClCompile Include="NumDrower.cpp" />
-    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Engine\ソースファイル\3D\NFbxModel.cpp" />
+    <ClCompile Include="Engine\ソースファイル\3D\NMesh.cpp" />
+    <ClCompile Include="Engine\ソースファイル\3D\NObjModel.cpp" />
+    <ClCompile Include="Engine\ソースファイル\Util\NumDrower.cpp" />
+    <ClCompile Include="Application\ソースファイル\Field\Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\shaders\Fbx.hlsli" />
     <None Include="Resources\shaders\GaussianBlur.hlsli" />
     <None Include="Resources\shaders\CG4.hlsli" />
     <None Include="Resources\shaders\Model.hlsli" />
@@ -282,6 +283,18 @@
     <None Include="Resources\shaders\Tile.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\shaders\FbxPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FbxVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

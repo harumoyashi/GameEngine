@@ -203,6 +203,32 @@ NMatrix4 NMatrix4::RotateZ(const float angle)
 	return result;
 }
 
+NMatrix4 NMatrix4::RotateQuaternion(const NQuaternion& q)
+{
+	NMatrix4 result = NMatrix4::Identity();
+
+	float xx = q.x * q.x;
+	float yy = q.y * q.y;
+	float zz = q.z * q.z;
+	float ww = q.w * q.w;
+	float xy = q.x * q.y * 2.0f;
+	float xz = q.x * q.z * 2.0f;
+	float yz = q.y * q.z * 2.0f;
+	float wx = q.w * q.x * 2.0f;
+	float wy = q.w * q.y * 2.0f;
+	float wz = q.w * q.z * 2.0f;
+
+	result =
+	{
+		ww + xx - yy - zz, xy + wz          , xz - wy          ,0.0f,
+		xy - wz          , ww - xx + yy - zz, yz + wx          ,0.0f,
+		xz + wy          , yz - wx          , ww - xx - yy + zz,0.0f,
+		0.0f             ,0.0f              ,0.0f              ,1.0f
+	};
+
+	return result;
+}
+
 NMatrix4 NMatrix4::Translation(const NVec3& t)
 {
 	NMatrix4 result = Identity();

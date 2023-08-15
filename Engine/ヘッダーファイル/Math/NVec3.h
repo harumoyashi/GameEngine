@@ -20,7 +20,9 @@ struct NVec3
 	float Length() const;						//ノルム(長さ)を求める
 	NVec3 Normalize() const;					//正規化をする
 	float Dot(const NVec3& v) const;			//内積を求める
-	NVec3 Cross(const NVec3& v) const;	//外積を求める
+	NVec3 Cross(const NVec3& v) const;			//外積を求める
+	//線形補間
+	static NVec3 Lerp(const NVec3 start, const NVec3 end, const float timer);
 
 	//単項演算子オーバーロード
 	NVec3 operator+() const;

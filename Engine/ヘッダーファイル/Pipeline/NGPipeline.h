@@ -113,6 +113,7 @@ public:
 public:
 	//頂点レイアウトたち(必要な分だけ用意する)
 	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutFbx_[5];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutParticle_[4];
@@ -137,8 +138,10 @@ private:
 
 public:
 #pragma region 頂点レイアウトまわり
-	//3Dオブジェクト用頂点レイアウト設定
+	//obj形式用頂点レイアウト設定
 	void SetVertLayoutObj();
+	//FBX形式用頂点レイアウト設定
+	void SetVertLayoutFbx();
 	//スプライト用頂点レイアウト設定
 	void SetVertLayoutSprite();
 	//ポストエフェクト用頂点レイアウト設定
