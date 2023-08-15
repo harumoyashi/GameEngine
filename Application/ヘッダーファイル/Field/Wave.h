@@ -6,11 +6,14 @@ class Wave final
 {
 private:
 	std::vector<std::unique_ptr<NObj3d>> obj_;	//オブジェクト群
-	const uint32_t waveDivide_ = 1;				//波の分割数
+	std::vector<float> randomPosZ_;				//各波のうにょうにょ
+	const uint32_t waveDivide_ = 200;			//波の分割数
 
 	float scaleZ_;								//波の大きさ(zだけ)
 	float posZ_;								//波全体の共通座標(z座標)
 	float moveSpeed_;							//移動速度
+
+	std::vector<NEasing::EaseTimer> waveTimer_;	//波のうねり用タイマー
 
 public:
 	static Wave* GetInstance();

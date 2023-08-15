@@ -9,18 +9,18 @@
 #include "SimpleParticle.h"
 #include "NEasing.h"
 
+//ゲームシーン内でのシーン分け
+enum class SceneMode
+{
+	Play,	//プレイ中
+	Clear,	//クリアリザルト
+	Faild,	//失敗リザルト
+};
+
 class NGameScene final :
 	public IScene
 {
 private:
-	//ゲームシーン内でのシーン分け
-	enum class SceneMode
-	{
-		Play,	//プレイ中
-		Clear,	//クリアリザルト
-		Faild,	//失敗リザルト
-	};
-
 	//前景スプライトの種類
 	enum class FSpriteType
 	{
@@ -34,7 +34,8 @@ private:
 		MaxForeSprite
 	};
 
-	SceneMode scene = SceneMode::Play;
+	//ゲーム内でのシーン状態
+	static SceneMode scene;
 
 	//オブジェクト
 
@@ -66,4 +67,6 @@ public:
 	//前景スプライト
 	void DrawForeSprite() override;
 
+	//プレイ中かどうか取得
+	static bool GetIsPlay() { return scene == SceneMode::Play; }
 };

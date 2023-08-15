@@ -83,6 +83,7 @@ namespace NEasing
 		void Update(const float elapseTimer = 1.0f);
 		//タイマー更新+無限ループ
 		void Roop(const float elapseTimer = 1.0f);
+		void RoopReverse(const float elapseTimer = 1.0f);
 
 		//現在が最大秒数のうちどの割合かを(0.0f～1.0f)の値で返す
 		float GetTimeRate();

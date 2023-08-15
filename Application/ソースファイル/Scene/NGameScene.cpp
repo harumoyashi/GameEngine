@@ -16,6 +16,8 @@
 #include "Wave.h"
 #include "Score.h"
 
+SceneMode NGameScene::scene = SceneMode::Play;
+
 void NGameScene::LoadResources()
 {
 }
@@ -77,7 +79,7 @@ void NGameScene::Init()
 
 	foreSprite_[(uint32_t)FSpriteType::Clear]->CreateSprite("clear");
 	foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::Clear]->SetSize(350.f,100.f);
+	foreSprite_[(uint32_t)FSpriteType::Clear]->SetSize(350.f, 100.f);
 	foreSprite_[(uint32_t)FSpriteType::Faild]->CreateSprite("faild");
 	foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
 	foreSprite_[(uint32_t)FSpriteType::Faild]->SetSize(350.f, 100.f);
@@ -116,6 +118,7 @@ void NGameScene::Update()
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
+	Wave::GetInstance()->Update();
 
 	NParticleManager::GetInstance()->Update();
 
@@ -125,7 +128,6 @@ void NGameScene::Update()
 	if (scene == SceneMode::Play)	//プレイ中の処理
 	{
 		Player::GetInstance()->Update();
-		Wave::GetInstance()->Update();
 		//死亡パーティクル出るボタン
 		if (NInput::IsKeyDown(DIK_0))
 		{

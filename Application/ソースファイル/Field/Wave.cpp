@@ -1,5 +1,6 @@
 #include "Wave.h"
 #include "Field.h"
+#include "NGameScene.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -24,19 +25,26 @@ void Wave::Init()
 
 		obj_.back()->SetModel("plane");
 		//フィールドの横幅をもとに分割する
-		obj_.back()->scale_ = 
-		{ Field::GetInstance()->GetScale().x / waveDivide_,1.0f, scaleZ_ };
+		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
+		obj_.back()->scale_ =
+		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
 		obj_.back()->position_ =
-		{ obj_.back()->scale_.x * i - obj_.back()->scale_.x * 0.5f, 0,  posZ_ };
+		{ obj_.back()->scale_.x * 2.0f * i - obj_.back()->scale_.x - waveScaleX, 0,  posZ_ };
 		obj_.back()->color_.SetColor255(5, 5, 255);
+
+		randomPosZ_.emplace_back();
+		randomPosZ_.back() = MathUtil::Randomf(0.5f, 1.5f);
+
+		waveTimer_.emplace_back();
+		waveTimer_.back() = MathUtil::Randomf(0.5f, 2.0f);
 	}
 #pragma endregion
 }
 
 void Wave::Update()
 {
-	//スタートしてたら動くように
-	if (Field::GetInstance()->GetIsStart() == false)
+	//プレイ中は動くように
+	if (NGameScene::GetIsPlay() == false)
 	{
 		moveSpeed_ = 0.0f;
 	}
@@ -51,13 +59,23 @@ void Wave::Update()
 		moveSpeed_ = moveS;
 	}
 
+	for (size_t i = 0; i < obj_.size(); i++)
+	{
+		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
+		obj_[i]->scale_ =
+		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
+		obj_[i]->position_.x = obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX;
+	}
+
 	posZ_ += moveSpeed_;
 
-	for (auto& obj : obj_)
+	for (size_t i = 0; i < obj_.size(); i++)
 	{
-		obj->position_.z = posZ_ /*+ 各々の動き*/;
+		waveTimer_[i].RoopReverse();
+		float plusPos = sinf(randomPosZ_[i] * waveTimer_[i].GetTimeRate());
+		obj_[i]->position_.z = posZ_ + plusPos;
 
-		obj->Update();
+		obj_[i]->Update();
 	}
 }
 

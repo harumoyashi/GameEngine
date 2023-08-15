@@ -236,6 +236,23 @@ void NEasing::EaseTimer::Roop(const float elapseTimer)
 	}
 }
 
+void NEasing::EaseTimer::RoopReverse(const float elapseTimer)
+{
+	Update(elapseTimer);
+	if (GetStarted() == false && GetReverseStarted() == false)
+	{
+		Start();
+	}
+	else if (GetEnd())
+	{
+		ReverseStart();
+	}
+	else if (GetReverseEnd())
+	{
+		Reset();
+	}
+}
+
 float NEasing::EaseTimer::GetTimeRate()
 {
 	float timeRate = 0.0f;
