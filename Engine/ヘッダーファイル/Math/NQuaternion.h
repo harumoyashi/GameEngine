@@ -90,7 +90,7 @@ struct NQuaternion {
 	/// </summary>
 	/// <returns>回転行列</returns>
 	/// 参考:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf
-	NMatrix4 const QuaternionToMatrix() const;
+	NMatrix4 QuaternionToMatrix() const;
 
 	/// <summary>
 	/// ベクトルをクォータニオンで回転させた結果のベクトルを求める

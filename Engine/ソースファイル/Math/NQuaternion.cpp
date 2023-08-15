@@ -209,7 +209,7 @@ NQuaternion NQuaternion::EulerToQuaternion(const NVec3& rot) const
 	return q;
 }
 
-NMatrix4 const NQuaternion::QuaternionToMatrix() const
+NMatrix4 NQuaternion::QuaternionToMatrix() const
 {
 	NMatrix4 mat;
 	mat = NMatrix4::Identity();
