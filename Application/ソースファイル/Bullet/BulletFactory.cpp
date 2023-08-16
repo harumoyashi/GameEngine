@@ -57,6 +57,7 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 	case IBullet::BulletType::SideBullet:
 		if (side_.GetIsCanShot())	//撃てるなら
 		{
+			//撃った回数カウント用
 			static uint32_t shotCount;
 			//レベルに応じて追加
 			if (side_.GetIsShortCanShot())	//撃てるなら
@@ -76,13 +77,12 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 				//生成が終わったらタイマーとフラグをリセット
 				side_.SetIsShortCanShot(false);
 				side_.ReSetShortShotCoolTimer();
-				shotCount++;
+				shotCount++;	//撃った回数を加算してく
 
-				//鳴ってないなら鳴らす
-				
-					NAudioManager::Play("shotSE", false, 0.5f);
+				NAudioManager::Play("shotSE", false, 0.5f);
 			}
 
+			//撃った回数が弾レベルに達したら終わり
 			if (shotCount >= side_.GetLevel())
 			{
 				shotCount = 0;
