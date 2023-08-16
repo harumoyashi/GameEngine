@@ -20,18 +20,37 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 	case IBullet::BulletType::LineBullet:
 		if (line_.GetIsCanShot())	//撃てるなら
 		{
-			//とりあえず追加
-			BulletManager::GetInstance()->bullets_.emplace_back();
 			//レベル格納して(レベル用の処理未対応)
 			line_.SetLevel(level);
-			//対応した種類に所有権持たせて生成
-			BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
-			BulletManager::GetInstance()->bullets_.back()->Generate(pos);
+			for (uint32_t i = 0; i < line_.GetLevel(); i++)
+			{
+				//レベルに応じて追加
+				BulletManager::GetInstance()->bullets_.emplace_back();
+
+				//対応した種類に所有権持たせて生成
+				BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
+
+				//奇数か偶数かで左右に振り分け親方
+				if (i % 2 == 0)
+				{
+					//基準となる座標から横にずらして生成
+					NVec3 generatePos = pos;
+					generatePos.x += (float)(i / 2) * 0.3f;
+					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
+				}
+				else
+				{
+					//1足してあげないと2の時0で重なっちゃう
+					NVec3 generatePos = pos;
+					generatePos.x -= (float)(i / 2 + 1) * 0.3f;
+					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
+				}
+			}
 			//生成が終わったらタイマーとフラグをリセット
 			line_.SetIsCanShot(false);
 			line_.ReSetShotCoolTimer();
 
-			NAudioManager::Play("shotSE",false,0.5f);
+			NAudioManager::Play("shotSE", false, 0.5f);
 		}
 
 		break;
@@ -53,6 +72,12 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 			//生成が終わったらタイマーとフラグをリセット
 			side_.SetIsCanShot(false);
 			side_.ReSetShotCoolTimer();
+
+			//鳴ってないなら鳴らす
+			if (NAudioManager::GetIsPlaying("shotSE") == false)
+			{
+				NAudioManager::Play("shotSE", false, 0.5f);
+			}
 		}
 
 		break;

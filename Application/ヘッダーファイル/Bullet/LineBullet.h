@@ -30,6 +30,6 @@ public:
 	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOİ’è
 	void SetIsCanShot(bool isCanShot) { isCanShot_ = isCanShot; }
 	//’e‚Ì‹­‰»ƒŒƒxƒ‹İ’è
-	void SetLevel(bool level) { level_ = level; }
+	void SetLevel(uint32_t level) { level_ = level; }
 };
 
