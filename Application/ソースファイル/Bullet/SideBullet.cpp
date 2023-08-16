@@ -38,6 +38,7 @@ void SideBullet::SideUpdate()
 	}
 	if (shortShotCoolTimer_.GetEnd())
 	{
+		isShortCanShot_ = true;
 		shortShotCoolTimer_.Reset();
 	}
 

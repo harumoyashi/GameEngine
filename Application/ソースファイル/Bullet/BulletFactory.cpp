@@ -57,26 +57,38 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 	case IBullet::BulletType::SideBullet:
 		if (side_.GetIsCanShot())	//撃てるなら
 		{
-			//2発分回す(後でレベルに対応したfor文さらに回す)
-			for (size_t i = 0; i < side_.GetAllAtOnceNum(); i++)
+			static uint32_t shotCount;
+			//レベルに応じて追加
+			if (side_.GetIsShortCanShot())	//撃てるなら
 			{
-				//とりあえず追加
-				BulletManager::GetInstance()->bullets_.emplace_back();
-				//レベル格納して(レベル用の処理未対応)
-				side_.SetLevel(level);
-				//対応した種類に所有権持たせて生成
-				BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
-				//左右に出すように
-				BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(90.0f + 180.0f * i));
-			}
-			//生成が終わったらタイマーとフラグをリセット
-			side_.SetIsCanShot(false);
-			side_.ReSetShotCoolTimer();
+				//2発分回す(後でレベルに対応したfor文さらに回す)
+				for (size_t j = 0; j < side_.GetAllAtOnceNum(); j++)
+				{
+					//とりあえず追加
+					BulletManager::GetInstance()->bullets_.emplace_back();
+					//レベル格納して(レベル用の処理未対応)
+					side_.SetLevel(level);
+					//対応した種類に所有権持たせて生成
+					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
+					//左右に出すように
+					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(90.0f + 180.0f * j));
+				}
+				//生成が終わったらタイマーとフラグをリセット
+				side_.SetIsShortCanShot(false);
+				side_.ReSetShortShotCoolTimer();
+				shotCount++;
 
-			//鳴ってないなら鳴らす
-			if (NAudioManager::GetIsPlaying("shotSE") == false)
+				//鳴ってないなら鳴らす
+				
+					NAudioManager::Play("shotSE", false, 0.5f);
+			}
+
+			if (shotCount >= side_.GetLevel())
 			{
-				NAudioManager::Play("shotSE", false, 0.5f);
+				shotCount = 0;
+				//生成が終わったらタイマーとフラグをリセット
+				side_.SetIsCanShot(false);
+				side_.ReSetShotCoolTimer();
 			}
 		}
 
