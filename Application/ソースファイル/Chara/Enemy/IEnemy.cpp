@@ -103,7 +103,8 @@ void IEnemy::OnCollision()
 		//アイテム持ってるフラグ立ってたらアイテム落とす
 		if (isItem_)
 		{
-			ItemManager::GetInstance()->Generate(obj_->position_);
+			uint32_t bulType = MathUtil::Random(0,(uint32_t)BulletType::MaxType);
+			ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
 		}
 		NAudioManager::Play("vanishSE");
 	}

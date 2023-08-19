@@ -218,8 +218,8 @@ void Player::Move()
 	/*static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
-	ImGui::SliderInt("LineLevel", &lineLv, 0, 5);
-	ImGui::SliderInt("SideLevel", &sideLv, 0, 5);
+	ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
+	ImGui::SliderInt("SideLevel", &sideLv, 0, maxBulLevel_);
 	ImGui::Text("MoveVelo:%f,%f", moveVelo_.x, moveVelo_.y);
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
@@ -276,17 +276,29 @@ void Player::LevelUp(BulletType bulletType)
 	switch (bulletType)
 	{
 	case BulletType::LineBullet:
-		lineLevel_ += 1;
+		if (lineLevel_ < maxBulLevel_)
+		{
+			lineLevel_ += 1;
+		}
 		break;
 	case BulletType::SideBullet:
-		sideLevel_ += 1;
+		if (sideLevel_ < maxBulLevel_)
+		{
+			sideLevel_ += 1;
+		}
 		break;
-	case BulletType::WideBullet:
-		wideLevel_ += 1;
+	/*case BulletType::WideBullet:
+		if (wideLevel_ < maxBulLevel_)
+		{
+			wideLevel_ += 1;
+		}
 		break;
 	case BulletType::Roket:
-		roketLevel_ += 1;
-		break;
+		if (wideLevel_ < maxBulLevel_)
+		{
+			roketLevel_ += 1;
+		}
+		break;*/
 	default:
 		break;
 	}

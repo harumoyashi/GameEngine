@@ -26,9 +26,10 @@ void ItemManager::Draw()
 	}
 }
 
-void ItemManager::Generate(const NVec3& pos, const float moveAngle)
+void ItemManager::Generate(const NVec3& pos, BulletType bulletType)
 {
 	items_.emplace_back();
 	items_.back() = std::make_unique<Item>();
-	items_.back()->Generate(pos, moveAngle);
+	items_.back()->Generate(pos);
+	items_.back()->SetBulletType(bulletType);
 }

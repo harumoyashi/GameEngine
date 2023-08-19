@@ -28,6 +28,7 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "faild.png", "faild");
 	LoadTexture(directryPass + "number.png", "number");
 	LoadTexture(directryPass + "top.png", "top");
+	LoadTexture(directryPass + "item.png", "item");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

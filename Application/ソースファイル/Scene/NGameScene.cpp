@@ -303,7 +303,7 @@ void NGameScene::Update()
 	//アイテム出すボタン(デバッグ用)
 	if (NInput::IsKeyDown(DIK_I))
 	{
-		ItemManager::GetInstance()->Generate(NVec3::zero);
+		ItemManager::GetInstance()->Generate(NVec3::zero,BulletType::LineBullet);
 	}
 }
 

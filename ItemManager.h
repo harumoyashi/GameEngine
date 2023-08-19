@@ -14,7 +14,8 @@ public:
 	void Update();
 	void Draw();
 
-	void Generate(const NVec3& pos, const float moveAngle = 0.0f);
+	//ê∂ê¨
+	void Generate(const NVec3& pos, BulletType bulletType);
 
 private:
 	ItemManager() = default;
