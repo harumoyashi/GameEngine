@@ -12,7 +12,7 @@ void EnemyFactory::Update()
 {
 }
 
-void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos)
+void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 {
 	switch (type)
 	{
@@ -41,6 +41,12 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos)
 			{
 				EnemyManager::GetInstance()->enemys_.back()->Generate(
 					pos + offset, MathUtil::Degree2Radian(90.0f), mouse.modelname);
+			}
+
+			//アイテム持った敵作る場合、最初の一体にだけ持たせる
+			if (isItem && i == 0)
+			{
+				EnemyManager::GetInstance()->enemys_.back()->SetisItem(true);
 			}
 		}
 

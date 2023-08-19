@@ -18,7 +18,10 @@ public:
 
 	void Update();
 	//敵の生成
-	void Create(IEnemy::EnemyType type, NVec3 pos);
+	//type:敵の種類
+	//pos:生成の基準座標
+	//isItem:アイテムを持った敵を生成するか
+	void Create(IEnemy::EnemyType type, NVec3 pos,bool isItem);
 
 private:
 	EnemyFactory() = default;

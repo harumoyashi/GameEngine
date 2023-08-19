@@ -435,6 +435,12 @@
     <ClInclude Include="NObjModel.h">
       <Filter>Engine\ヘッダー ファイル\3D\Model</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Engine\ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -676,6 +682,12 @@
     </ClCompile>
     <ClCompile Include="NObjModel.cpp">
       <Filter>Engine\ソース ファイル\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Engine\ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

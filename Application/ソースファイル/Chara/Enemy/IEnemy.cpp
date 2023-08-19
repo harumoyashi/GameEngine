@@ -6,12 +6,13 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "ItemManager.h"
 #include "Score.h"
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
-	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_),score_(10)
+	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_),score_(10), isItem_(false)
 {
 }
 
@@ -99,6 +100,11 @@ void IEnemy::OnCollision()
 		DeadParticle();
 		isAlive_ = false;
 		Score::AddScore(score_);
+		//アイテム持ってるフラグ立ってたらアイテム落とす
+		if (isItem_)
+		{
+			ItemManager::GetInstance()->Generate(obj_->position_);
+		}
 		NAudioManager::Play("vanishSE");
 	}
 }
@@ -135,4 +141,10 @@ void IEnemy::Move()
 
 	//向かってる方とは逆っぽい
 	obj_->rotation_.y = -MathUtil::Radian2Degree(moveAngle_);
+}
+
+void IEnemy::SetisItem(bool isItem)
+{
+	isItem_ = isItem;
+	obj_->color_ = NColor::kYellow;	//アイテム持ってる敵は黄色にする
 }

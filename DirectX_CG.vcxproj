@@ -182,6 +182,8 @@
     <ClInclude Include="Engine\ヘッダーファイル\Collision\SphereCollider.h" />
     <ClInclude Include="Application\ヘッダーファイル\Field\Wave.h" />
     <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Mouse.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
     <ClInclude Include="NFbxModel.h" />
     <ClInclude Include="NMesh.h" />
     <ClInclude Include="NObjModel.h" />
@@ -228,6 +230,8 @@
     <ClCompile Include="Engine\ソースファイル\Basic\NInput.cpp" />
     <ClCompile Include="Engine\ソースファイル\FrameWork\NFramework.cpp" />
     <ClCompile Include="Engine\ソースファイル\FrameWork\NGame.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="Engine\ソースファイル\Math\NQuaternion.cpp" />
     <ClCompile Include="Engine\ソースファイル\Pipeline\NRootParam.cpp" />

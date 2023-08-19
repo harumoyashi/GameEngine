@@ -13,11 +13,11 @@ void BulletFactory::Update()
 	side_.SideUpdate();
 }
 
-void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
+void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 {
 	switch (type)
 	{
-	case IBullet::BulletType::LineBullet:
+	case BulletType::LineBullet:
 		if (line_.GetIsCanShot())	//撃てるなら
 		{
 			//レベル格納して(レベル用の処理未対応)
@@ -54,7 +54,7 @@ void BulletFactory::Create(IBullet::BulletType type, NVec3 pos, uint32_t level)
 		}
 
 		break;
-	case IBullet::BulletType::SideBullet:
+	case BulletType::SideBullet:
 		if (side_.GetIsCanShot())	//撃てるなら
 		{
 			//撃った回数カウント用

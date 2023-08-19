@@ -3,6 +3,7 @@
 #include "NCollider.h"
 #include "SphereCollider.h"
 #include "SimpleParticle.h"
+#include "IBullet.h"
 
 class Player final
 {
@@ -37,7 +38,7 @@ private:
 	SimpleParticle deadParticle_;				//死んだときに出るパーティクル
 	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
 	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
-	NVec3 deadPos_;							//死んだ座標保存用
+	NVec3 deadPos_;								//死んだ座標保存用
 
 	//------------------------ その他 ------------------------//
 	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
@@ -68,6 +69,9 @@ public:
 
 	//死んだときのパーティクルを出す
 	void DeadParticle();
+
+	//指定された弾の種類のレベルを1上げる
+	void LevelUp(BulletType bulletType);
 
 	// ゲッター //
 	//座標取得

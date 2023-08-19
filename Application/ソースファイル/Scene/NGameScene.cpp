@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "BulletManager.h"
 #include "EnemyManager.h"
+#include "ItemManager.h"
 #include "Field.h"
 #include "Wave.h"
 #include "Score.h"
@@ -39,6 +40,7 @@ void NGameScene::Init()
 	Player::GetInstance()->Init();
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
+	ItemManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
 #pragma region オブジェクトの初期値設定
@@ -117,6 +119,7 @@ void NGameScene::Update()
 #pragma endregion
 	BulletManager::GetInstance()->Update();
 	EnemyManager::GetInstance()->Update();
+	ItemManager::GetInstance()->Update();
 	Field::GetInstance()->Update();
 	Wave::GetInstance()->Update();
 
@@ -296,6 +299,12 @@ void NGameScene::Update()
 	{
 		NSceneManager::ChangeScene<NGameScene>();
 	}
+
+	//アイテム出すボタン(デバッグ用)
+	if (NInput::IsKeyDown(DIK_I))
+	{
+		ItemManager::GetInstance()->Generate(NVec3::zero);
+	}
 }
 
 void NGameScene::DrawBackSprite()
@@ -313,6 +322,7 @@ void NGameScene::Draw3D()
 {
 	BulletManager::GetInstance()->Draw();
 	EnemyManager::GetInstance()->Draw();
+	ItemManager::GetInstance()->Draw();
 	Player::GetInstance()->Draw();
 }
 

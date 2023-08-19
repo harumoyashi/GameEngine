@@ -6,10 +6,12 @@
 
 SideBullet::SideBullet()
 {
+	bulletType = BulletType::SideBullet;
 	shotCoolTimer_ = 1.0f;					//弾撃つまでの時間
 	shortShotCoolTimer_ =
 		shotCoolTimer_.maxTime_ / 10.0f;	//1ループで二回以上打つ時に弾撃つまでの時間
 	isCanShot_ = false;						//撃てるかフラグ
+	isShortCanShot_ = false;				//撃てるかフラグ(短い版)
 	level_ = 0;								//弾の強化レベル
 	allAtOnceNum_ = 2;						//一度に撃つ弾の数
 }

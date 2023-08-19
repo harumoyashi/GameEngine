@@ -215,7 +215,7 @@ void Player::Move()
 	}
 
 #ifdef _DEBUG
-	static int lineLv = 1, sideLv = 1;
+	/*static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
 	ImGui::SliderInt("LineLevel", &lineLv, 0, 5);
@@ -224,7 +224,7 @@ void Player::Move()
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
 	lineLevel_ = lineLv;
-	sideLevel_ = sideLv;
+	sideLevel_ = sideLv;*/
 #endif //DEBUG
 }
 
@@ -235,14 +235,14 @@ void Player::Shot()
 	if (lineLevel_ > 0)
 	{
 		BulletFactory::GetInstance()->
-			Create(IBullet::BulletType::LineBullet,
+			Create(BulletType::LineBullet,
 				obj_->position_ + NVec3(0, obj_->scale_.y, 0), lineLevel_);
 	}
 
 	if (sideLevel_ > 0)
 	{
 		BulletFactory::GetInstance()->
-			Create(IBullet::BulletType::SideBullet,
+			Create(BulletType::SideBullet,
 				obj_->position_ + NVec3(0, obj_->scale_.y, 0), sideLevel_);
 	}
 }
@@ -267,5 +267,27 @@ void Player::DeadParticle()
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
 			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, NVec3::zero, -NVec3::one, NVec3::one);
+	}
+}
+
+void Player::LevelUp(BulletType bulletType)
+{
+	//w’è‚³‚ê‚½’e‚Ìí—Ş‚ÌƒŒƒxƒ‹‚ğ1ã‚°‚é
+	switch (bulletType)
+	{
+	case BulletType::LineBullet:
+		lineLevel_ += 1;
+		break;
+	case BulletType::SideBullet:
+		sideLevel_ += 1;
+		break;
+	case BulletType::WideBullet:
+		wideLevel_ += 1;
+		break;
+	case BulletType::Roket:
+		roketLevel_ += 1;
+		break;
+	default:
+		break;
 	}
 }

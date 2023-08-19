@@ -3,18 +3,19 @@
 #include "SphereCollider.h"
 #include "NEasing.h"
 
+enum class BulletType
+{
+	LineBullet,
+	SideBullet,
+	WideBullet,
+	Roket,
+};
+
 class IBullet
 {
-public:
-	enum class BulletType
-	{
-		LineBullet,
-		SideBullet,
-		WideBullet,
-		Roket,
-	};
-
 protected:
+	BulletType bulletType;			//弾の種類
+
 	std::unique_ptr<NObj3d> obj_;	//弾のオブジェクト
 	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度

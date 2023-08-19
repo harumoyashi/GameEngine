@@ -32,7 +32,7 @@ protected:
 	uint32_t enemyNum_;				//敵の識別番号
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
-	//アイテム持たせる
+	bool isItem_;					//アイテム持ってるかフラグ
 
 	//コイン(ゲージ)持たせる
 
@@ -99,4 +99,6 @@ public:
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 	//敵の識別番号設定
 	void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
+	//アイテム持ってるかフラグ設定
+	void SetisItem(bool isItem);
 };

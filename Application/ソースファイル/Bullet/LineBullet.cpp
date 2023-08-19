@@ -6,6 +6,7 @@
 
 LineBullet::LineBullet()
 {
+    bulletType = BulletType::LineBullet;
     shotCoolTimer_ = 0.1f;      //’eŒ‚‚Â‚Ü‚Å‚ÌŽžŠÔ
     isCanShot_ = false;			//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
     level_ = 1;                 //’e‚Ì‹­‰»ƒŒƒxƒ‹
