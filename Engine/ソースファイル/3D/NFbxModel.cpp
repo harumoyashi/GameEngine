@@ -36,6 +36,13 @@ void FbxModel::PlayAnimation()
 
 	//アニメーションタイマー回し続けとく
 	animation.timer.Update(true);
+
+	//リセットかかった時に一瞬形崩れるの防止
+	if (nowTime >= maxTime)
+	{
+		nowTime = animation.timer.GetTimeRate() * maxTime;
+		ParseNodeHeirarchy(nowTime, animation.index, NMatrix4::Identity(), scene->mRootNode);
+	}
 }
 
 aiNodeAnim* FbxModel::FindNodeAnimation(const std::string& nodeName, aiAnimation* animation)

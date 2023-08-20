@@ -24,7 +24,7 @@ void NModelManager::AllLoad()
 	LoadObjModel("cat", "cat");
 	LoadObjModel("mouse", "mouse");
 	LoadFbxModel("boneTest", "boneTest");
-	//LoadFbxModel("Tripping", "girl");
+	LoadFbxModel("Tripping", "girl");
 }
 
 IModel* NModelManager::GetModel(const std::string& modelHandle)
@@ -169,9 +169,6 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 
 IModel* NModelManager::LoadFbxModel(const std::string& modelname, const std::string& modelHandle)
 {
-	//// îrëºêßå‰
-	//std::lock_guard<std::mutex> lock(sMtx);
-
 	// ÉÇÉfÉãê∂ê¨
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 	model->name = modelname;
