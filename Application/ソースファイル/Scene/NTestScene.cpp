@@ -33,7 +33,7 @@ void NTestScene::Init()
 #pragma region 描画初期化処理
 	//オブジェクト
 	obj_ = std::make_unique<NObj3d>();
-	obj_->SetModel("girl");
+	obj_->SetModel("catWalk");
 	obj_->Init();
 #pragma region オブジェクトの初期値設定
 	obj_->scale_ = NVec3(0.01f, 0.01f, 0.01f);

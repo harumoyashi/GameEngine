@@ -21,10 +21,11 @@ void NModelManager::AllLoad()
 	LoadObjModel("plane", "plane");
 	LoadObjModel("busterSword", "busterSword");
 	LoadObjModel("boss_model", "boss");
-	LoadObjModel("cat", "cat");
+	LoadObjModel("catObj", "cat");
 	LoadObjModel("mouse", "mouse");
 	LoadFbxModel("boneTest", "boneTest");
 	LoadFbxModel("Tripping", "girl");
+	LoadFbxModel("cat", "catWalk");
 }
 
 IModel* NModelManager::GetModel(const std::string& modelHandle)
