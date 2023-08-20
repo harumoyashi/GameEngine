@@ -135,7 +135,7 @@ float MathUtil::Randomf(const float min, const float max)
 	return (float)dist1(engine);
 }
 
-NMatrix4 MathUtil::CalculateWorldMat(const NVec3 pos, const NVec3 scale, const NQuaternion rot)
+NMatrix4 MathUtil::CalculateWorldMat(const NVec3& pos, const NVec3& scale, const NQuaternion& rot)
 {
 	NMatrix4 result = NMatrix4::Identity();
 

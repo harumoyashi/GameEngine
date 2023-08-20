@@ -49,3 +49,8 @@ void BulletManager::Draw()
 		bullet->Draw();
 	}
 }
+
+NMatrix4 BulletManager::Q(const NQuaternion& q)
+{
+	return NMatrix4();
+}

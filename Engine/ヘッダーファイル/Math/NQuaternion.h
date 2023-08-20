@@ -1,6 +1,7 @@
 #pragma once
 #include "NVec3.h"
-#include "NMatrix4.h"
+
+struct NMatrix4;
 
 struct NQuaternion {
 	float x;
@@ -10,7 +11,7 @@ struct NQuaternion {
 
 	//単位クォータニオンでの生成
 	NQuaternion()
-		: x(0), y(0), z(0), w(1) {}
+		: x(0.f), y(0.f), z(0.f), w(1.f) {}
 
 	//指定した値での生成
 	//下手に値いじりたくない

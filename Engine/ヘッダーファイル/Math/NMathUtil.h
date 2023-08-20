@@ -44,7 +44,7 @@ namespace MathUtil
 	}
 
 	//çsóÒÇÃçáê¨
-	NMatrix4 CalculateWorldMat(const NVec3 pos, const NVec3 scale, const NQuaternion rot);
+	NMatrix4 CalculateWorldMat(const NVec3& pos, const NVec3& scale, const NQuaternion& rot);
 
 	//â~â^ìÆ
 	NVec2 CircleMotion(NVec2 CenterPoint, float radius, float angle);

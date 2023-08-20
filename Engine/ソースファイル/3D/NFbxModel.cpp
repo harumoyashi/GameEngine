@@ -8,6 +8,7 @@
 FbxModel::FbxModel()
 {
 	format = ModelFormat::Fbx;
+	animation.isPlay = true;
 }
 
 void FbxModel::PlayAnimation()
@@ -18,6 +19,12 @@ void FbxModel::PlayAnimation()
 		//アニメーションタイマーを強制的に0にして再生されないように
 		ParseNodeHeirarchy(0.f, 0, NMatrix4::Identity(), scene->mRootNode);
 		return;
+	}
+
+	//タイマーセット
+	if (animation.timer.GetMaxTimer() == 0.0f)
+	{
+		animation.timer.SetMaxTimer((float)scene->mAnimations[animation.index]->mDuration);
 	}
 
 	// 最大時間と現在の時間取得

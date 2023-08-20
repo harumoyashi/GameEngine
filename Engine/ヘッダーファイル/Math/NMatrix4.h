@@ -1,7 +1,7 @@
 #pragma once
+#include "NQuaternion.h"
 #include "NVec3.h"
 #include "NVec4.h"
-#include "NQuaternion.h"
 
 struct NMatrix4
 {
