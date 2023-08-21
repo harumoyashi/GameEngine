@@ -82,7 +82,10 @@ void Player::Update()
 	if (isAlive_)
 	{
 		Move();
-		Shot();
+		if (isMove_)	//“®‚¯‚È‚¢‚æ”»’è‚ÌŽž‚Í’e‚ðŒ‚‚½‚È‚¢‚æ‚¤‚É
+		{
+			Shot();
+		}
 	}
 
 	obj_->Update();

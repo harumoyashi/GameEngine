@@ -44,7 +44,7 @@ void Wave::Init()
 void Wave::Update()
 {
 	//プレイ中かつスタートしてたら動くように
-	if (NGameScene::GetIsPlay() && Field::GetInstance()->GetIsStart() == false)
+	if (NGameScene::GetIsPlay() == false || Field::GetInstance()->GetIsStart() == false)
 	{
 		moveSpeed_ = 0.0f;
 	}
