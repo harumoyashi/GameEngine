@@ -1,6 +1,6 @@
 # Blender 3.3.1
 # www.blender.org
-mtllib cat.mtl
+mtllib catObj.mtl
 o 球
 v 0.000000 3.669515 0.733752
 v 0.000000 2.962408 0.440859

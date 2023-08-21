@@ -3,13 +3,15 @@
 #include "NObjModel.h"
 #include "NFbxModel.h"
 #include <unordered_map>
+#include <mutex>
 
 typedef std::string ModelHandle;
 
 class NModelManager final
 {
 private:
-	static std::unordered_map<ModelHandle, uint32_t> sModelMap;	//モデル群
+	static std::unordered_map<ModelHandle, std::unique_ptr<IModel>> sModelMap;	//モデル群
+	static std::mutex sMtx;	// 排他制御
 
 	// モデルデータコンテナ
 	static std::vector<IModel> sModelDatas;
@@ -26,8 +28,8 @@ public:
 	
 	//objモデル読み込み
 	//"modelname" = モデル名
-	static uint32_t LoadObjModel(const std::string& modelname, const std::string& modelHandle);
+	static IModel* LoadObjModel(const std::string& modelname, const std::string& modelHandle);
 	//fbxモデル読み込み
 	//"modelname" = モデル名
-	static uint32_t LoadFbxModel(const std::string& modelname, const std::string& modelHandle);
+	static IModel* LoadFbxModel(const std::string& modelname, const std::string& modelHandle);
 };

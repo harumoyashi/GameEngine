@@ -2,6 +2,7 @@
 #include "NVec2.h"
 #include "NMatrix4.h"
 #include "NColor.h"
+#include <array>
 
 //定数バッファ用データ構造体//
 
@@ -100,4 +101,11 @@ struct ConstBuffDataTile
 {
 	float divide;		//分割幅
 	float activityArea;	//行動範囲
+};
+
+//スキン情報
+static const int maxBones = 32;
+struct ConstBuffDataSkin
+{
+	std::array<NMatrix4,maxBones> bones;
 };

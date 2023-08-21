@@ -17,6 +17,8 @@ private:
 	void ParseVertex(FbxModel* model, aiMesh* mesh);							//頂点の解析
 	void ParseFace(FbxModel* model, aiMesh* mesh);								//フェイスの解析
 	void ParseSkin(FbxModel* model, aiMesh* mesh);								//スキンの解析
+	
+public:
 	void ParseMaterial(FbxModel* model, const aiScene* scene);					//マテリアルの解析
 	void ParseNodeRecursive(FbxModel* model, Node* parent,const aiNode* node);	//解析
 

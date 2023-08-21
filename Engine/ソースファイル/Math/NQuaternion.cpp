@@ -1,4 +1,5 @@
 #include "NQuaternion.h"
+#include "NMatrix4.h"
 #include <math.h>
 
 NQuaternion NQuaternion::operator+(const NQuaternion& q) const
@@ -92,10 +93,10 @@ NQuaternion NQuaternion::Mul(const NQuaternion& lhs, const NQuaternion& rhs)
 
 NQuaternion NQuaternion::Identity()
 {
-	this->x = 0;
-	this->y = 0;
-	this->z = 0;
-	this->w = 1;
+	this->x = 0.f;
+	this->y = 0.f;
+	this->z = 0.f;
+	this->w = 1.f;
 	return *this;
 }
 
@@ -157,6 +158,35 @@ NQuaternion NQuaternion::Inverse(const NQuaternion& q)
 	return result;
 }
 
+NQuaternion NQuaternion::Lerp(const NQuaternion q1, const NQuaternion q2, float t)
+{
+	float cos = Dot(q1, q2);
+	NQuaternion t2 = q2;
+
+	if (cos < 0.f)
+	{
+		cos = -cos;
+		t2 = -q2;
+	}
+
+	float k0 = 1.f - t;
+	float k1 = t;
+
+	if ((1.f - cos) > 0.001f)
+	{
+		float theta = acosf(cos);
+		k0 = sinf(theta * k0) / sinf(theta);
+		k1 = sinf(theta * k1) / sinf(theta);
+	}
+
+	if (cos >= 1.f - 0.0005f)
+	{
+		return  q1 * (1.f - t) + t2 * t;
+	}
+
+	return q1 * k0 + t2 * k1;
+}
+
 NQuaternion NQuaternion::MakeAxisAngle(const NVec3& axis, const float angle)
 {
 	NQuaternion q(
@@ -171,9 +201,9 @@ NQuaternion NQuaternion::MakeAxisAngle(const NVec3& axis, const float angle)
 
 NQuaternion NQuaternion::EulerToQuaternion(const NVec3& rot) const
 {
-	NQuaternion x = MakeAxisAngle({ 1, 0, 0 }, rot.x);
-	NQuaternion y = MakeAxisAngle({ 0, 1, 0 }, rot.y);
-	NQuaternion z = MakeAxisAngle({ 0, 0, 1 }, rot.z);
+	NQuaternion x = MakeAxisAngle({ 1.f, 0.f, 0.f }, rot.x);
+	NQuaternion y = MakeAxisAngle({ 0.f, 1.f, 0.f }, rot.y);
+	NQuaternion z = MakeAxisAngle({ 0.f, 0.f, 1.f }, rot.z);
 
 	NQuaternion q = z * x * y;
 

@@ -60,11 +60,11 @@ struct FbxModel final
 	//
 	uint32_t FindPosIndex(const aiNodeAnim* nodeAnim, const float nowTime);
 
-	//
+	//スケーリングを補完
 	NVec3 CalcCurrentScale(const aiNodeAnim* nodeAnim, const float nowTime);
-	//
-	NVec3 CalcCurrentRot(const aiNodeAnim* nodeAnim, const float nowTime);
-	//
+	//回転を補完
+	NQuaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float nowTime);
+	//座標を補完
 	NVec3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float nowTime);
 	//
 	void ParseNodeHeirarchy(const float nowTime, const uint32_t index, const NMatrix4& parentMat, const aiNode* rootNode);

@@ -38,6 +38,12 @@ NVec3 NVec3::Cross(const NVec3& v) const
 	return vec3;
 }
 
+NVec3 NVec3::Lerp(const NVec3 start, const NVec3 end, const float timer)
+{
+	NVec3 distance = end - start;
+	return distance * timer + start;
+}
+
 float NVec3::Dot(const NVec3& v) const
 {
 	return x * v.x + y * v.y + z * v.z;

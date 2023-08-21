@@ -6,7 +6,6 @@
 #include "NAudioManager.h"
 #include "NModelManager.h"
 #include "NInput.h"
-#include "NQuaternion.h"
 #include "NMathUtil.h"
 #include "NCameraManager.h"
 #include "NPostEffect.h"

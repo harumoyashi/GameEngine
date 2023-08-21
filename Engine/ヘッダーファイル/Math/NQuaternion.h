@@ -1,6 +1,7 @@
 #pragma once
 #include "NVec3.h"
-#include "NMatrix4.h"
+
+struct NMatrix4;
 
 struct NQuaternion {
 	float x;
@@ -10,7 +11,7 @@ struct NQuaternion {
 
 	//単位クォータニオンでの生成
 	NQuaternion()
-		: x(0), y(0), z(0), w(1) {}
+		: x(0.f), y(0.f), z(0.f), w(1.f) {}
 
 	//指定した値での生成
 	//下手に値いじりたくない
@@ -51,7 +52,7 @@ struct NQuaternion {
 	//normを返す
 	float Norm(const NQuaternion& q);
 	//内積
-	float Dot(const NQuaternion& q0, const NQuaternion& q1);
+	static float Dot(const NQuaternion& q0, const NQuaternion& q1);
 	//外積
 	NVec3 Cross(const NQuaternion& q0, const NQuaternion& q1);
 	//正規化したのを返す
@@ -59,6 +60,8 @@ struct NQuaternion {
 	NQuaternion Normalize(const NQuaternion& q);
 	//逆クォータニオンを返す
 	NQuaternion Inverse(const NQuaternion& q);
+	//線形補間
+	static NQuaternion Lerp(const NQuaternion q1, const NQuaternion q2, float t);
 
 	/// <summary>
 	/// 任意の回転軸で指定した角度だけ回転した姿勢クォータニオンを生成する

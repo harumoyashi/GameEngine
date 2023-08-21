@@ -16,7 +16,7 @@ IBullet::~IBullet()
 void IBullet::Generate(const NVec3& pos, const float moveAngle)
 {
 	obj_ = move(std::make_unique<NObj3d>());
-	obj_->SetModel("Sphere");
+	obj_->SetModel("sphere");
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 0.5f;
 	obj_->color_ = NColor::kWhite;

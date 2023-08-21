@@ -28,21 +28,16 @@ void NTestScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
-
+	obj_ = std::make_unique<NObj3d>();
+	obj_->SetModel("catWalk");
+	obj_->Init();
 #pragma region オブジェクトの初期値設定
-
+	obj_->scale_ = NVec3(0.01f, 0.01f, 0.01f);
 #pragma endregion
-	//FBX読み込み忘れない用
-	/*assimpModel_.Load("boneTest");
-	assimpModel_.Init();
-	assimpModel_.position_ = { 0,0,1 };
-	assimpModel_.rotation_ = NVec3::zero;
-	assimpModel_.scale_ = { 0.03f,0.03f,0.03f };*/
-
 	//背景スプライト生成
 
 	//前景スプライト生成
@@ -62,7 +57,7 @@ void NTestScene::Update()
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
 
-	//assimpModel_.Update();
+	obj_->Update();
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -91,8 +86,7 @@ void NTestScene::DrawBack3D()
 
 void NTestScene::Draw3D()
 {
-	//assimpモデル描画//
-	//assimpModel_.Draw();
+	obj_->Draw();
 }
 
 void NTestScene::DrawParticle()

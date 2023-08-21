@@ -5,7 +5,7 @@
 #include "NMathUtil.h"
 #include "NBaseCollider.h"
 #include "NCollisionManager.h"
-
+ModelFormat NObj3d::modelFormat;
 NLightGroup* NObj3d::sLightGroup = nullptr;
 
 NObj3d::NObj3d()
@@ -23,9 +23,11 @@ bool NObj3d::Init()
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbMaterial_ = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
+	cbSkin_ = std::make_unique<NConstBuff<ConstBuffDataSkin>>();
 	cbTrans_->Init();
 	cbMaterial_->Init();
 	cbColor_->Init();
+	cbSkin_->Init();
 	color_ = NColor::kWhite;
 
 	objName_ = typeid(*this).name();
@@ -34,9 +36,14 @@ bool NObj3d::Init()
 
 void NObj3d::Update()
 {
+	modelFormat = model_->format;	//static変数にしてるから毎フレーム更新しないと他で変えた時影響されちゃう
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
+	if (modelFormat == ModelFormat::Fbx)
+	{
+		TransferSkin();
+	}
 }
 
 void NObj3d::MoveKey()
@@ -119,6 +126,19 @@ void NObj3d::TransferMaterial()
 	cbMaterial_->constMap_->alpha = model_->material.alpha;
 }
 
+void NObj3d::TransferSkin()
+{
+	auto fbxModel = static_cast<FbxModel*>(model_);
+	fbxModel->PlayAnimation();
+
+	ConstBuffDataSkin skinData{};
+	for (uint32_t i = 0; i < fbxModel->bones.size(); i++)
+	{
+		skinData.bones[i] = fbxModel->bones[i].currentMat;
+	}
+	cbSkin_->constMap_->bones = skinData.bones;
+}
+
 void NObj3d::CommonBeginDraw()
 {
 	// プリミティブ形状の設定コマンド
@@ -131,30 +151,61 @@ void NObj3d::CommonBeginDraw()
 void NObj3d::SetBlendMode(BlendMode blendMode)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	switch (blendMode)
+	if (modelFormat == ModelFormat::Obj)
 	{
-	case BlendMode::None:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
-		break;
-	case BlendMode::Alpha:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAlpha"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAlpha")->pRootSignature);
-		break;
-	case BlendMode::Add:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAdd"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAdd")->pRootSignature);
-		break;
-	case BlendMode::Sub:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjSub"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjSub")->pRootSignature);
-		break;
-	case BlendMode::Inv:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjInv"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjInv")->pRootSignature);
-		break;
-	default:
-		break;
+		switch (blendMode)
+		{
+		case BlendMode::None:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjNone"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjNone")->pRootSignature);
+			break;
+		case BlendMode::Alpha:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAlpha"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAlpha")->pRootSignature);
+			break;
+		case BlendMode::Add:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjAdd"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjAdd")->pRootSignature);
+			break;
+		case BlendMode::Sub:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjSub"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjSub")->pRootSignature);
+			break;
+		case BlendMode::Inv:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ObjInv"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ObjInv")->pRootSignature);
+			break;
+		default:
+			break;
+		}
+	}
+	else if (modelFormat == ModelFormat::Fbx)
+	{
+		switch (blendMode)
+		{
+		case BlendMode::None:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("FbxNone"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("FbxNone")->pRootSignature);
+			break;
+		case BlendMode::Alpha:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("FbxAlpha"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("FbxAlpha")->pRootSignature);
+			break;
+		case BlendMode::Add:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("FbxAdd"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("FbxAdd")->pRootSignature);
+			break;
+		case BlendMode::Sub:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("FbxSub"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("FbxSub")->pRootSignature);
+			break;
+		case BlendMode::Inv:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("FbxInv"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("FbxInv")->pRootSignature);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -200,6 +251,11 @@ void NObj3d::SetCBV()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
+	if (modelFormat == ModelFormat::Fbx)
+	{
+		//ルートパラメータ5番に3D変換行列の定数バッファを渡す
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbSkin_->constBuff_->GetGPUVirtualAddress());
+	}
 }
 
 void NObj3d::DrawCommand(const uint32_t indexSize)
@@ -210,7 +266,9 @@ void NObj3d::DrawCommand(const uint32_t indexSize)
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
+	//他で使う用にテクスチャとモデル形式を別で保存
 	texture_ = &model_->material.texture;
+	modelFormat = model_->format;
 }
 
 void NObj3d::SetTexture(const std::string& texname)
