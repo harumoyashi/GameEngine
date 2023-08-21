@@ -16,7 +16,7 @@ std::unique_ptr<IScene> NSceneManager::nextScene_;
 
 NSceneManager::NSceneManager()
 {
-	currentScene_ = std::move(std::make_unique<NTestScene>());
+	currentScene_ = std::move(std::make_unique<NTitleScene>());
 }
 
 #pragma region
@@ -43,10 +43,8 @@ void NSceneManager::Draw()
 	NSprite::SetBlendMode(BlendMode::Alpha);
 	NSprite::CommonBeginDraw();
 	currentScene_->DrawBackSprite();
-	NObj3d::SetBlendMode(BlendMode::None);
 	NObj3d::CommonBeginDraw();
 	currentScene_->DrawBack3D();
-	NObj3d::SetBlendMode(BlendMode::None);
 	NObj3d::CommonBeginDraw();
 	currentScene_->Draw3D();
 	IEmitter3D::SetBlendMode(BlendMode::None);

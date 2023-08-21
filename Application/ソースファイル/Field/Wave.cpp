@@ -83,6 +83,8 @@ void Wave::Draw()
 {
 	for (auto& obj : obj_)
 	{
+		obj->SetBlendMode(BlendMode::Alpha);
 		obj->Draw();
+		obj->SetBlendMode(BlendMode::None);
 	}
 }

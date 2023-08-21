@@ -5,7 +5,7 @@
 #include "NMathUtil.h"
 #include "NBaseCollider.h"
 #include "NCollisionManager.h"
-ModelFormat NObj3d::modelFormat;
+
 NLightGroup* NObj3d::sLightGroup = nullptr;
 
 NObj3d::NObj3d()
@@ -36,11 +36,10 @@ bool NObj3d::Init()
 
 void NObj3d::Update()
 {
-	modelFormat = model_->format;	//static変数にしてるから毎フレーム更新しないと他で変えた時影響されちゃう
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
-	if (modelFormat == ModelFormat::Fbx)
+	if (model_->format == ModelFormat::Fbx)
 	{
 		TransferSkin();
 	}
@@ -129,6 +128,7 @@ void NObj3d::TransferMaterial()
 void NObj3d::TransferSkin()
 {
 	auto fbxModel = static_cast<FbxModel*>(model_);
+	fbxModel->SetIsPlayAnime(true);
 	fbxModel->PlayAnimation();
 
 	ConstBuffDataSkin skinData{};
@@ -151,7 +151,7 @@ void NObj3d::CommonBeginDraw()
 void NObj3d::SetBlendMode(BlendMode blendMode)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	if (modelFormat == ModelFormat::Obj)
+	if (model_->format == ModelFormat::Obj)
 	{
 		switch (blendMode)
 		{
@@ -179,7 +179,7 @@ void NObj3d::SetBlendMode(BlendMode blendMode)
 			break;
 		}
 	}
-	else if (modelFormat == ModelFormat::Fbx)
+	else if (model_->format == ModelFormat::Fbx)
 	{
 		switch (blendMode)
 		{
@@ -251,7 +251,7 @@ void NObj3d::SetCBV()
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	//ルートパラメータ3番に3D変換行列の定数バッファを渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
-	if (modelFormat == ModelFormat::Fbx)
+	if (model_->format == ModelFormat::Fbx)
 	{
 		//ルートパラメータ5番に3D変換行列の定数バッファを渡す
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbSkin_->constBuff_->GetGPUVirtualAddress());
@@ -268,7 +268,6 @@ void NObj3d::SetModel(const std::string& modelname)
 	model_ = NModelManager::GetModel(modelname);
 	//他で使う用にテクスチャとモデル形式を別で保存
 	texture_ = &model_->material.texture;
-	modelFormat = model_->format;
 }
 
 void NObj3d::SetTexture(const std::string& texname)

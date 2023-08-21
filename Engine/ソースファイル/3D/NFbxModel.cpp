@@ -3,12 +3,11 @@
 #include "NAssimpLoader.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
-
+#include "Player.h"
 
 FbxModel::FbxModel()
 {
 	format = ModelFormat::Fbx;
-	animation.isPlay = true;
 }
 
 void FbxModel::PlayAnimation()
@@ -35,7 +34,9 @@ void FbxModel::PlayAnimation()
 	ParseNodeHeirarchy(nowTime, animation.index, NMatrix4::Identity(), scene->mRootNode);
 
 	//アニメーションタイマー回し続けとく
-	animation.timer.Update(true);
+	//依存関係やばいけど、モデルやオブジェにelapse持たせんのもおかしいし、引数で繋ぎまくるとそれはそれできもいから
+	//ここでPlayer呼ぶことで他のとこになるべく影響でないように
+	animation.timer.Update(true,Player::GetInstance()->GetElapseSpeed());
 
 	//リセットかかった時に一瞬形崩れるの防止
 	if (nowTime >= maxTime)

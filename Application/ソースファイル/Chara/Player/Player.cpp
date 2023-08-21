@@ -15,7 +15,7 @@
 Player::Player()
 {
 	obj_ = std::make_unique<NObj3d>();
-	obj_->SetModel("cat");
+	obj_->SetModel("catWalk");
 
 	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
@@ -159,7 +159,9 @@ void Player::Draw()
 {
 	if (isDraw_)
 	{
+		obj_->SetBlendMode(BlendMode::None);
 		obj_->Draw();
+		obj_->SetBlendMode(BlendMode::None);
 	}
 }
 

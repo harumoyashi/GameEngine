@@ -31,7 +31,6 @@ protected:
 
 	NTexture* texture_;				//テクスチャ
 	IModel* model_;					//モデル
-	static ModelFormat modelFormat;	//モデルの形式格納用
 	std::string objName_;			//デバッグ用に名前つける
 
 	// ライト
@@ -70,7 +69,7 @@ public:
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
 	//ブレンドモード設定
-	static void SetBlendMode(BlendMode blendMode);
+	void SetBlendMode(BlendMode blendMode);
 	//描画
 	virtual void Draw();
 	//シェーダーリソースビューの設定コマンド

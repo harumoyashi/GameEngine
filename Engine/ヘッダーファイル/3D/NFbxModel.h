@@ -66,6 +66,10 @@ struct FbxModel final
 	NQuaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float nowTime);
 	//座標を補完
 	NVec3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float nowTime);
-	//
+	//アニメーションのキーに応じて変形
 	void ParseNodeHeirarchy(const float nowTime, const uint32_t index, const NMatrix4& parentMat, const aiNode* rootNode);
+
+	// セッター //
+	//アニメーション再生フラグ設定
+	void SetIsPlayAnime(bool isPlay) { animation.isPlay = isPlay; }
 };

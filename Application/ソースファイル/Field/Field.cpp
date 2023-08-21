@@ -291,19 +291,21 @@ void Field::Draw()
 	//°‚¾‚¯ƒ^ƒCƒŠƒ“ƒO‚·‚é
 	NTile::CommonBeginDraw();
 	fieldObj_->Draw();
-	NObj3d::CommonBeginDraw();
 
-	NObj3d::SetBlendMode(BlendMode::Alpha);
+	NObj3d::CommonBeginDraw();
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
 	{
+		lines_[i].line->SetBlendMode(BlendMode::Alpha);
 		lines_[i].line->Draw();
 		lines_[i].text->Draw();
+		lines_[i].text->SetBlendMode(BlendMode::None);
 	}
 
 	for (uint32_t i = 0; i < checkPointNum; i++)
 	{
+		checkPoints_[i].line->SetBlendMode(BlendMode::Alpha);
 		checkPoints_[i].line->Draw();
 		checkPoints_[i].text->Draw();
+		checkPoints_[i].text->SetBlendMode(BlendMode::None);
 	}
-	NObj3d::SetBlendMode(BlendMode::None);
 }

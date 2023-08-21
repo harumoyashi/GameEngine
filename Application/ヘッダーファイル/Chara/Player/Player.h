@@ -111,6 +111,8 @@ public:
 	void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
 	//動けるかフラグ設定
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
+	//経過時間スピード設定
+	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 
 private:
 	Player& operator=(const Player&) = delete;

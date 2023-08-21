@@ -113,6 +113,7 @@ void NTitleScene::Update()
 
 	Player::GetInstance()->SetIsMove(false);
 	Player::GetInstance()->Update();
+	Player::GetInstance()->SetElapseSpeed(1.0f);	//アニメーションさせたいから経過時間固定
 
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
