@@ -118,7 +118,11 @@ void Wave::DrawObj()
 
 void Wave::DrawSprite()
 {
-	waveUI_->Draw();
-	meterUI_->Draw();
-	meterTex_.Draw();
+	//”g‚ª’Ç‚Á‚©‚¯‚Ä‚­‚éŽž‚¾‚¯•\Ž¦
+	if (NGameScene::GetIsPlay() && Field::GetInstance()->GetIsStart())
+	{
+		waveUI_->Draw();
+		meterUI_->Draw();
+		meterTex_.Draw();
+	}
 }

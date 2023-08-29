@@ -66,7 +66,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene;$(ProjectDir)\Application\ヘッダーファイル\Item</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -90,7 +90,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene;$(ProjectDir)\Application\ヘッダーファイル\Item</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -187,13 +187,8 @@
     <ClInclude Include="Engine\ヘッダーファイル\3D\NObjModel.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Util\NumDrower.h" />
     <ClInclude Include="Application\ヘッダーファイル\Field\Score.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemManager.h" />
-    <ClInclude Include="NFbxModel.h" />
-    <ClInclude Include="NMesh.h" />
-    <ClInclude Include="NObjModel.h" />
-    <ClInclude Include="NumDrower.h" />
-    <ClInclude Include="Score.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Item\Item.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Item\ItemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -235,8 +230,8 @@
     <ClCompile Include="Engine\ソースファイル\Basic\NInput.cpp" />
     <ClCompile Include="Engine\ソースファイル\FrameWork\NFramework.cpp" />
     <ClCompile Include="Engine\ソースファイル\FrameWork\NGame.cpp" />
-    <ClCompile Include="Item.cpp" />
-    <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="Application\ソースファイル\Item\Item.cpp" />
+    <ClCompile Include="Application\ソースファイル\Item\ItemManager.cpp" />
     <ClCompile Include="main\main.cpp" />
     <ClCompile Include="Engine\ソースファイル\Math\NQuaternion.cpp" />
     <ClCompile Include="Engine\ソースファイル\Pipeline\NRootParam.cpp" />
