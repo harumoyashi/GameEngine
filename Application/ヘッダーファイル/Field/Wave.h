@@ -1,6 +1,8 @@
 #pragma once
 #include "NObj3d.h"
+#include "NSprite.h"
 #include "NEasing.h"
+#include "NumDrower.h"
 
 class Wave final
 {
@@ -15,12 +17,18 @@ private:
 
 	std::vector<NEasing::EaseTimer> waveTimer_;	//波のうねり用タイマー
 
+	std::unique_ptr<NSprite> waveUI_;			//波が迫ってるか知らせるUI
+	std::unique_ptr<NSprite> meterUI_;			//波がどのくらい迫ってるか知らせるUI
+	uint32_t player2WaveLen_;					//プレイヤーと波の距離
+	NumDrower meterTex_;						//プレイヤーと波の距離表示
+
 public:
 	static Wave* GetInstance();
 
 	void Init();
 	void Update();
-	void Draw();
+	void DrawObj();
+	void DrawSprite();
 
 	// ゲッター //
 	//波の前方座標取得

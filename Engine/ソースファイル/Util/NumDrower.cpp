@@ -1,6 +1,6 @@
 #include "NumDrower.h"
 
-void NumDrower::Create(uint32_t spriteNum)
+void NumDrower::Create(uint32_t spriteNum, float indent)
 {
 	for (size_t i = 0; i < spriteNum; i++)
 	{
@@ -12,6 +12,8 @@ void NumDrower::Create(uint32_t spriteNum)
 			numSprite_[i]->CreateClipSprite("number", { 0, 0 }, { scale_,scale_ }, { 0,0 });
 		}
 	}
+
+	indent_ = indent;
 }
 
 void NumDrower::Update()
@@ -35,7 +37,7 @@ void NumDrower::SetPos(const NVec2& pos)
 	pos_ = pos;
 	for (size_t i = 0; i < numSprite_.size(); i++)
 	{
-		float posX = pos.x + numSprite_[i]->GetSize().x * 0.8f * (float)i;
+		float posX = pos.x + numSprite_[i]->GetSize().x * indent_ * (float)i;
 		numSprite_[i]->SetPos(posX, pos_.y);
 	}
 }
@@ -73,7 +75,7 @@ void NumDrower::SetNum(uint32_t num)
 		//対応したテクスチャを設定しなおす
 		numSprite_[i]->CreateClipSprite("number", { scale_ * digit_[i], 0 }, { scale_,scale_ }, { 0,0 });
 		//保存してた設定を反映
-		float posX = pos_.x + numSprite_[i]->GetSize().x * 0.8f * (float)i;
+		float posX = pos_.x + numSprite_[i]->GetSize().x * indent_ * (float)i;
 		numSprite_[i]->SetPos(posX, pos_.y);
 		numSprite_[i]->SetSize(size_.x, size_.y);
 	}

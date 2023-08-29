@@ -1,5 +1,6 @@
 #include "Wave.h"
 #include "Field.h"
+#include "Player.h"
 #include "NGameScene.h"
 
 #include "NImGuiManager.h"
@@ -39,6 +40,23 @@ void Wave::Init()
 		waveTimer_.back() = MathUtil::Randomf(0.5f, 2.0f);
 	}
 #pragma endregion
+#pragma region スプライトの生成,設定
+	waveUI_ = std::make_unique<NSprite>();
+	waveUI_->CreateSprite("waveUI", { 0.5f,0.5f });
+	waveUI_->SetSize(100.f, 100.f);
+	waveUI_->SetPos(NWindows::kWin_width * 0.5f, 650.f);
+	waveUI_->color_ = obj_[0]->color_;
+
+	meterUI_ = std::make_unique<NSprite>();
+	meterUI_->CreateSprite("meter");
+	meterUI_->SetPos(NWindows::kWin_width * 0.5f + 30.f, 582.f);
+	meterUI_->SetSize(20.f,15.f);
+
+	player2WaveLen_ = 0;
+	meterTex_.Create(3, 0.3f);
+	meterTex_.SetSize({ 20.f,20.f });
+	meterTex_.SetPos({ NWindows::kWin_width * 0.5f - 40.f, 570.f });
+#pragma endregion
 }
 
 void Wave::Update()
@@ -77,9 +95,18 @@ void Wave::Update()
 
 		obj_[i]->Update();
 	}
+
+	waveUI_->Update();
+	meterUI_->Update();
+
+	//プレイヤーと波の距離取る
+	player2WaveLen_ = (uint32_t)(Player::GetInstance()->GetFrontPosZ() - GetFrontPosZ());
+	player2WaveLen_ = MathUtil::Clamp(player2WaveLen_,0U,999U);	//マイナスにならないように
+	meterTex_.SetNum(player2WaveLen_);
+	meterTex_.Update();
 }
 
-void Wave::Draw()
+void Wave::DrawObj()
 {
 	for (auto& obj : obj_)
 	{
@@ -87,4 +114,11 @@ void Wave::Draw()
 		obj->Draw();
 		obj->SetBlendMode(BlendMode::None);
 	}
+}
+
+void Wave::DrawSprite()
+{
+	waveUI_->Draw();
+	meterUI_->Draw();
+	meterTex_.Draw();
 }

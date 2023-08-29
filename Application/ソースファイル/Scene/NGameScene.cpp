@@ -315,7 +315,7 @@ void NGameScene::DrawBackSprite()
 void NGameScene::DrawBack3D()
 {
 	Field::GetInstance()->Draw();
-	Wave::GetInstance()->Draw();
+	Wave::GetInstance()->DrawObj();
 }
 
 void NGameScene::Draw3D()
@@ -333,6 +333,8 @@ void NGameScene::DrawParticle()
 
 void NGameScene::DrawForeSprite()
 {
+	Wave::GetInstance()->DrawSprite();
+
 	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
 	{
 		foreSprite_[i]->Draw();
