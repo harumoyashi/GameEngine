@@ -1,5 +1,7 @@
 #pragma once
 #include "NObj3d.h"
+#include "NCollider.h"
+#include "PlaneCollider.h"
 #include "NTile.h"
 #include "NEasing.h"
 
@@ -31,6 +33,7 @@ public:
 
 private:
 	std::unique_ptr<NTile> fieldObj_;			//床
+	PlaneCollider collider_;					//床の当たり判定
 	std::vector<Line> lines_;					//フィールドにある線たち
 	std::vector<Line> checkPoints_;				//フィールドにあるチェックポイントたち
 
@@ -50,6 +53,9 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+
+	//何かに当たった時の処理
+	void OnCollision();
 
 	// ゲッター //
 	//スタート地点座標取得

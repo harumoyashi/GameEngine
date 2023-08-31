@@ -3,6 +3,7 @@
 
 #include "NCollider.h"
 #include "SphereCollider.h"
+#include "PlaneCollider.h"
 
 class NCollision final
 {
@@ -14,5 +15,5 @@ public:
 	static bool SphereCol(const SphereCollider& s0, const SphereCollider& s1, const NVec3& inter = NVec3(0, 0, 0));
 	
 	//‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
-	static bool Sphere2PlaneCol(const Sphere& sphere,const Plane& plane,NVec3 inter = NVec3(0,0,0));
+	static bool Sphere2PlaneCol(const SphereCollider& sphere,const PlaneCollider& plane);
 };

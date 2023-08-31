@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "NInput.h"
 #include "BulletFactory.h"
-#include "SphereCollider.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
@@ -192,6 +191,8 @@ void Player::Move()
 				if (NInput::IsKey(DIK_D)) { moveVelo_.x = +1.0f; }
 				else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
 			}
+			if (NInput::IsKey(DIK_Q)) { obj_->position_.y += 0.1f; }
+			else if (NInput::IsKey(DIK_E)) { obj_->position_.y -= 0.1f; }
 		}
 
 		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//ˆÚ“®—Ê‚É‚æ‚Á‚ÄŒo‰ßŽžŠÔ•Ï‰»
@@ -220,7 +221,7 @@ void Player::Move()
 	}
 
 #ifdef _DEBUG
-	/*static int lineLv = 1, sideLv = 1;
+	static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
 	ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
@@ -229,7 +230,7 @@ void Player::Move()
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
 	lineLevel_ = lineLv;
-	sideLevel_ = sideLv;*/
+	sideLevel_ = sideLv;
 #endif //DEBUG
 }
 
@@ -259,6 +260,11 @@ void Player::OnCollision()
 	{
 		NAudioManager::Play("deadSE");
 		isAlive_ = false;
+	}
+
+	if (collider_.GetColInfo()->GetColID() == "field")
+	{
+		//”»’è‚Í‚Æ‚ê‚Ä‚é‚Ì‚ÅA‰Ÿ‚µ–ß‚µ“ü‚ê‚½‚çok
 	}
 }
 

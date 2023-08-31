@@ -1,9 +1,10 @@
 #include "Field.h"
 #include "Player.h"
 #include "EnemyFactory.h"
-
+#include "NCollisionManager.h"
 #include "NAudioManager.h"
 
+#include <functional>
 #include "NImGuiManager.h"
 #include "imgui.h"
 
@@ -28,6 +29,13 @@ void Field::Init()
 	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
 	fieldObj_->SetDivide(tileDivide_);
 	fieldObj_->SetActivityArea(activityAreaX_);
+
+	//コライダー設定
+	collider_.SetNormal(NVec3::up);
+	collider_.SetDistance(0.f);
+	collider_.SetColID("field");
+	NCollisionManager::GetInstance()->AddCollider(&collider_);
+	collider_.SetOnCollision(std::bind(&Field::OnCollision, this));
 
 	lines_.clear();	//一回全部消してから生成し直す
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
@@ -308,4 +316,8 @@ void Field::Draw()
 		checkPoints_[i].text->Draw();
 		checkPoints_[i].text->SetBlendMode(BlendMode::None);
 	}
+}
+
+void Field::OnCollision()
+{
 }

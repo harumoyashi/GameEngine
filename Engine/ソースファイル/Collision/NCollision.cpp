@@ -27,16 +27,16 @@ bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1, c
 	return false;
 }
 
-bool NCollision::Sphere2PlaneCol(const Sphere& sphere, const Plane& plane, NVec3 inter)
+bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollider& plane)
 {
 	//座標系の原点から球の中心座標への距離
-	float distV = sphere.centerPos.Dot(plane.normal);
+	float distV = sphere.GetCenterPos().Dot(plane.GetNormal());
 
 	//平面の原点距離を減算することで、平面と球の中心との距離を出す
-	float dist = distV - plane.distance;
+	float dist = distV - plane.GetDistance();
 
 	//距離の絶対値が半径より大きければ当たってない
-	if (fabsf(dist) > sphere.radius)
+	if (fabsf(dist) > sphere.GetRadius())
 	{
 		return false;
 	}
