@@ -8,6 +8,7 @@ public:
 	{
 		SHAPE_UNKNOWN = -1,		//–¢’è‹`
 		COL_SPHERE,				//‹…
+		COL_PLANE,				//•½–Ê
 	};
 
 protected:

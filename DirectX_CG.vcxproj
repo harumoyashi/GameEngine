@@ -189,6 +189,7 @@
     <ClInclude Include="Application\ヘッダーファイル\Field\Score.h" />
     <ClInclude Include="Application\ヘッダーファイル\Item\Item.h" />
     <ClInclude Include="Application\ヘッダーファイル\Item\ItemManager.h" />
+    <ClInclude Include="PlaneCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -273,6 +274,7 @@
     <ClCompile Include="Engine\ソースファイル\3D\NObjModel.cpp" />
     <ClCompile Include="Engine\ソースファイル\Util\NumDrower.cpp" />
     <ClCompile Include="Application\ソースファイル\Field\Score.cpp" />
+    <ClCompile Include="PlaneCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

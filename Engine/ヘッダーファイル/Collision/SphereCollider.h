@@ -1,6 +1,5 @@
 #pragma once
 #include "NBaseCollider.h"
-#include "NCollider.h"
 
 class SphereCollider final :
 	public NBaseCollider
@@ -8,10 +7,10 @@ class SphereCollider final :
 private:
 	NVec3 centerPos_;	//コライダーの中心座標
 	NVec3 offset_;		//オブジェクト中心からのオフセット
-	float radius_;			//半径
+	float radius_;		//半径
 
 public:
-	SphereCollider(NVec3 offset = NVec3(0, 0, 0), float radius = 1.0f) :
+	SphereCollider(NVec3 offset = NVec3::zero, float radius = 1.0f) :
 		offset_(offset), radius_(radius)
 	{
 		shapeType_ = COL_SPHERE;	//形状設定
@@ -20,7 +19,7 @@ public:
 	void Update(NObj3d* obj)override;
 
 	// ゲッター //
-	//半径設定
+	//半径取得
 	float GetRadius()const { return radius_; }
 	//コライダーの中心座標取得
 	const NVec3& GetCenterPos()const { return centerPos_; }

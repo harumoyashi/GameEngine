@@ -38,4 +38,5 @@ private:
 	NCollisionManager& operator=(const NCollisionManager&) = delete;
 
 	void SphereCol();
+	void Sphere2PlaneCol();
 };
