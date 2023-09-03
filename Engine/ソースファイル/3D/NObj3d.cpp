@@ -29,6 +29,7 @@ bool NObj3d::Init()
 	cbColor_->Init();
 	cbSkin_->Init();
 	color_ = NColor::kWhite;
+	isElapseAnime_ = true;	//Œo‰ßŠÔ‚É‰e‹¿‚ğó‚¯‚éó‘Ô‚Å¶¬
 
 	objName_ = typeid(*this).name();
 	return true;
@@ -129,7 +130,7 @@ void NObj3d::TransferSkin()
 {
 	auto fbxModel = static_cast<FbxModel*>(model_);
 	fbxModel->SetIsPlayAnime(true);
-	fbxModel->PlayAnimation();
+	fbxModel->PlayAnimation(isElapseAnime_);
 
 	ConstBuffDataSkin skinData{};
 	for (uint32_t i = 0; i < fbxModel->bones.size(); i++)

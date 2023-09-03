@@ -10,7 +10,7 @@ FbxModel::FbxModel()
 	format = ModelFormat::Fbx;
 }
 
-void FbxModel::PlayAnimation()
+void FbxModel::PlayAnimation(bool isElapse)
 {
 	// アニメーション再生しない
 	if (animation.isPlay == false)
@@ -36,7 +36,14 @@ void FbxModel::PlayAnimation()
 	//アニメーションタイマー回し続けとく
 	//依存関係やばいけど、モデルやオブジェにelapse持たせんのもおかしいし、引数で繋ぎまくるとそれはそれできもいから
 	//ここでPlayer呼ぶことで他のとこになるべく影響でないように
-	animation.timer.Update(true,Player::GetInstance()->GetElapseSpeed());
+	if (isElapse)
+	{
+		animation.timer.Update(true, Player::GetInstance()->GetElapseSpeed());
+	}
+	else
+	{
+		animation.timer.Update(true);
+	}
 
 	//リセットかかった時に一瞬形崩れるの防止
 	if (nowTime >= maxTime)

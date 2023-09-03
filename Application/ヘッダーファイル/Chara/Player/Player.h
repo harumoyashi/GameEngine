@@ -105,6 +105,8 @@ public:
 	void SetPos(const NVec3& pos) { obj_->position_ = pos; }
 	//大きさ設定
 	void SetScale(const NVec3& scale) { obj_->scale_ = scale; }
+	//アニメーションに経過時間の影響を受けるかフラグ設定
+	void SetIsElapseAnime(bool isElapseAnime) { obj_->SetIsElapseAnime(isElapseAnime); }
 	//無敵状態設定
 	void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
 	//生きてるかフラグ設定

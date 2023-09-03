@@ -49,7 +49,7 @@ struct FbxModel final
 	FbxModel();
 
 	//アニメーションの再生
-	void PlayAnimation();
+	void PlayAnimation(bool isElapse);
 	//
 	aiNodeAnim* FindNodeAnimation(const std::string& nodeName, aiAnimation* animation);
 

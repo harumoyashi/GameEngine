@@ -28,6 +28,8 @@ void Item::Generate(const NVec3& pos)
 	collider_.SetColID("item");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Item::OnCollision, this));
+
+	moveVelo_ = { 0.f,0.8f };
 }
 
 void Item::Update()
@@ -37,6 +39,13 @@ void Item::Update()
 
 	//‚­‚é‚­‚é‚Ü‚í‚·
 	obj_->rotation_.y += 5.f * elapseSpeed_;
+
+	//“®‚©‚·
+	obj_->position_.y += moveVelo_.y * elapseSpeed_;
+	//d—Í‰ÁŽZ
+	moveVelo_.y -= 0.1f * elapseSpeed_;
+	//s‚«‚·‚¬‚È‚¢‚æ‚¤‚É
+	obj_->position_.y = MathUtil::Clamp(obj_->position_.y, collider_.GetRadius(), 100.f);
 
 	obj_->Update();
 	collider_.Update(obj_.get());

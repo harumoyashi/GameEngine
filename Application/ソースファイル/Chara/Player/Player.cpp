@@ -37,6 +37,7 @@ bool Player::Init()
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_.SetColor255(240, 30, 20, 255);	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
+	obj_->SetIsElapseAnime(false);	//Œo‰ßŽžŠÔ–³Ž‹‚µ‚Ä‚¨‚­
 	obj_->Update();
 
 	isAlive_ = true;

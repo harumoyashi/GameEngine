@@ -38,6 +38,7 @@ void NGameScene::Init()
 	NParticleManager::GetInstance()->Init();
 	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
+	Player::GetInstance()->SetIsElapseAnime(true);
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
 	ItemManager::GetInstance()->Init();
@@ -180,9 +181,11 @@ void NGameScene::Update()
 			slideTimer.Reset();
 			slideTimer = 0.5f;
 			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
+			Player::GetInstance()->SetIsElapseAnime(false);
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
 
+		//ゴールしたらクリアリザルトへ
 		if (Field::GetInstance()->GetIsGoal())
 		{
 			NAudioManager::Destroy("playBGM");
@@ -190,6 +193,7 @@ void NGameScene::Update()
 			scene = SceneMode::Clear;
 			slideTimer.Reset();
 			slideTimer = 0.5f;
+			Player::GetInstance()->SetIsElapseAnime(false);
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
 

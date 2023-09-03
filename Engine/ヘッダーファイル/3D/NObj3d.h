@@ -33,6 +33,8 @@ protected:
 	IModel* model_;					//モデル
 	std::string objName_;			//デバッグ用に名前つける
 
+	bool isElapseAnime_;			//アニメーションに経過時間の影響を受けるかフラグ
+
 	// ライト
 	static NLightGroup* sLightGroup;
 
@@ -97,4 +99,6 @@ public:
 	void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
 	//ライトを設定
 	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
+	//アニメーションに経過時間の影響を受けるかフラグ設定
+	void SetIsElapseAnime(bool isElapseAnime) { isElapseAnime_ = isElapseAnime; }
 };

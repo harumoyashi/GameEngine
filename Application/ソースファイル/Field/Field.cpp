@@ -194,11 +194,13 @@ void Field::Update()
 		}
 
 		//------------------------------------- 敵の生成処理 -------------------------------------//
+#ifdef _DEBUG
 		//敵出しちゃうよボタン
 		if (NInput::IsKeyDown(DIK_C))
 		{
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8),true);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
 		}
+#endif
 	}
 
 	//ゴールしてないとき
@@ -236,8 +238,8 @@ void Field::Update()
 			if (lines_[i].slideTimer.GetStarted() == false)
 			{
 				lines_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8),true);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5),false);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
 
 				NAudioManager::Play("startSE");
 				lines_[i].isSlide = false;	//スライドしちゃだめにする
@@ -255,8 +257,8 @@ void Field::Update()
 			if (checkPoints_[i].slideTimer.GetStarted() == false)
 			{
 				checkPoints_[i].slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8),false);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5),true);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
 
 				NAudioManager::Play("startSE");
 				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする
