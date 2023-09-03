@@ -181,8 +181,8 @@
     <ClInclude Include="Application\ヘッダーファイル\Item\Item.h" />
     <ClInclude Include="Application\ヘッダーファイル\Item\ItemManager.h" />
     <ClCompile Include="Engine\ソースファイル\Collision\PlaneCollider.cpp" />
-    <ClCompile Include="WideBullet.cpp" />
-    <ClCompile Include="RayCollider.cpp" />
+    <ClCompile Include="Application\ソースファイル\Bullet\WideBullet.cpp" />
+    <ClCompile Include="Engine\ソースファイル\Collision\RayCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -508,7 +508,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ヘッダーファイル\Collision\PlaneCollider.h" />
-    <ClInclude Include="WideBullet.h" />
-    <ClInclude Include="RayCollider.h" />
+    <ClInclude Include="Application\ヘッダーファイル\Bullet\WideBullet.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\RayCollider.h" />
   </ItemGroup>
 </Project>
