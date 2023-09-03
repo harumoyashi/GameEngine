@@ -27,6 +27,6 @@ public:
 	//Œ´“_‚©‚ç‚Ì‹——£İ’è
 	void SetDistance(float distance) { distance_ = distance; }
 	//–@üİ’è
-	void SetNormal(NVec3 normal) { normal_ = normal; }
+	void SetNormal(const NVec3& normal) { normal_ = normal; }
 };
 

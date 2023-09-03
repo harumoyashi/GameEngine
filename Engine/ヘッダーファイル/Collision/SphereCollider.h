@@ -28,5 +28,5 @@ public:
 	//半径設定
 	void SetRadius(float radius) { radius_ = radius; }
 	//コライダーの中心座標設定
-	void SetCenterPos(NVec3 centerPos) { centerPos_ = centerPos; }
+	void SetCenterPos(const NVec3& centerPos) { centerPos_ = centerPos; }
 };

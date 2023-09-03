@@ -43,3 +43,31 @@ bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollid
 
 	return true;
 }
+
+bool NCollision::Ray2PlaneCol(const RayCollider& ray, const PlaneCollider& plane)
+{
+	const float epsilon = 1.0e-5f;	//誤差吸収用の極小の値
+	//面法線とレイの方向ベクトルの内積
+	float d1 = plane.GetNormal().Dot(ray.GetDirVec());
+	//裏面には当たらない
+	if (d1 > -epsilon)
+	{
+		return false;
+	}
+	//始点と原点の距離(平面の法線方向)
+	//面法線とレイの始点座標(位置ベクトル)の内積
+	float d2 = plane.GetNormal().Dot(ray.GetStartPos());
+	//始点と平面の距離(平面の法線方向)
+	float dist = d2 - plane.GetDistance();
+	//始点と平面の距離(レイ方向)
+	float t = dist / -d1;
+	//交点が始点より後ろにあるので、当たらない
+	if (t < 0)
+	{
+		return false;
+	}
+	//交点を計算
+	
+
+	return true;
+}

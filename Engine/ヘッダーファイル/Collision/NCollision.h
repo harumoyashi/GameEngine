@@ -4,6 +4,7 @@
 #include "NCollider.h"
 #include "SphereCollider.h"
 #include "PlaneCollider.h"
+#include "RayCollider.h"
 
 class NCollision final
 {
@@ -16,4 +17,7 @@ public:
 	
 	//‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	static bool Sphere2PlaneCol(const SphereCollider& sphere,const PlaneCollider& plane);
+
+	//ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	static bool Ray2PlaneCol(const RayCollider& ray, const PlaneCollider& plane);
 };
