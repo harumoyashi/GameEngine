@@ -54,7 +54,7 @@ bool Player::Init()
 	//弾のレベルたち
 	lineLevel_ = 1;
 	sideLevel_ = 1;
-	wideLevel_ = 0;
+	wideLevel_ = 1;
 	roketLevel_ = 0;
 
 	//コライダー設定
@@ -226,7 +226,7 @@ void Player::Move()
 #ifdef _DEBUG
 	//弾レベルいじいじ用変数
 	static bool isLevelMane = false;
-	static int lineLv = 1, sideLv = 1;
+	static int lineLv = 1, sideLv = 1, wideLv = 1;
 	ImGui::Begin("PlayerParameter");
 	ImGui::Checkbox("LevelManagement", &isLevelMane);	//弾レベル管理できるするかフラグ指定
 	//弾レベルいじいじ
@@ -234,8 +234,10 @@ void Player::Move()
 	{
 		ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
 		ImGui::SliderInt("SideLevel", &sideLv, 0, maxBulLevel_);
+		ImGui::SliderInt("WideLevel", &wideLv, 0, maxBulLevel_);
 		lineLevel_ = lineLv;
 		sideLevel_ = sideLv;
+		wideLevel_ = wideLv;
 	}
 	//その他のパラメータいじいじ
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
@@ -261,6 +263,13 @@ void Player::Shot()
 		BulletFactory::GetInstance()->
 			Create(BulletType::SideBullet,
 				obj_->position_ + NVec3(0, obj_->scale_.y, 0), sideLevel_);
+	}
+
+	if (wideLevel_ > 0)
+	{
+		BulletFactory::GetInstance()->
+			Create(BulletType::WideBullet,
+				obj_->position_ + NVec3(0, obj_->scale_.y, 0), wideLevel_);
 	}
 }
 
@@ -304,18 +313,18 @@ void Player::LevelUp(BulletType bulletType)
 			sideLevel_ += 1;
 		}
 		break;
-		/*case BulletType::WideBullet:
-			if (wideLevel_ < maxBulLevel_)
-			{
-				wideLevel_ += 1;
-			}
-			break;
-		case BulletType::Roket:
-			if (wideLevel_ < maxBulLevel_)
-			{
-				roketLevel_ += 1;
-			}
-			break;*/
+	case BulletType::WideBullet:
+		if (wideLevel_ < maxBulLevel_)
+		{
+			wideLevel_ += 1;
+		}
+		break;
+		/*case BulletType::Roket:
+		if (wideLevel_ < maxBulLevel_)
+		{
+			roketLevel_ += 1;
+		}
+		break;*/
 	default:
 		break;
 	}

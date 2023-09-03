@@ -2,6 +2,7 @@
 #include "BulletManager.h"
 #include "LineBullet.h"
 #include "SideBullet.h"
+#include "WideBullet.h"
 
 //’e¶¬Hê
 //zŠÂQÆ‚ª‹N‚«‚È‚¢‚æ‚¤‚ÉBulletManager‚Æ•ª‚¯‚Ä‚é
@@ -10,6 +11,7 @@ class BulletFactory final
 private:
 	LineBullet line_;	//’Êí’e
 	SideBullet side_;	//ƒTƒCƒh’e
+	WideBullet wide_;	//ƒƒCƒh’e
 
 public:
 	static BulletFactory* GetInstance();

@@ -11,6 +11,7 @@ void BulletFactory::Update()
 {
 	line_.LineUpdate();
 	side_.SideUpdate();
+	wide_.WideUpdate();
 }
 
 void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
@@ -89,6 +90,46 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				//生成が終わったらタイマーとフラグをリセット
 				side_.SetIsCanShot(false);
 				side_.ReSetShotCoolTimer();
+			}
+		}
+
+		break;
+
+	case BulletType::WideBullet:
+		if (wide_.GetIsCanShot())	//撃てるなら
+		{
+			//撃った回数カウント用
+			static uint32_t shotCount;
+			//レベルに応じて追加
+			if (wide_.GetIsShortCanShot())	//撃てるなら
+			{
+				//2発分回す(後でレベルに対応したfor文さらに回す)
+				for (size_t j = 0; j < wide_.GetAllAtOnceNum(); j++)
+				{
+					//とりあえず追加
+					BulletManager::GetInstance()->bullets_.emplace_back();
+					//レベル格納して(レベル用の処理未対応)
+					wide_.SetLevel(level);
+					//対応した種類に所有権持たせて生成
+					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
+					//左右に出すように
+					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(-45.0f + 90.0f * j));
+				}
+				//生成が終わったらタイマーとフラグをリセット
+				wide_.SetIsShortCanShot(false);
+				wide_.ReSetShortShotCoolTimer();
+				shotCount++;	//撃った回数を加算してく
+
+				NAudioManager::Play("shotSE", false, 0.5f);
+			}
+
+			//撃った回数が弾レベルに達したら終わり
+			if (shotCount >= wide_.GetLevel())
+			{
+				shotCount = 0;
+				//生成が終わったらタイマーとフラグをリセット
+				wide_.SetIsCanShot(false);
+				wide_.ReSetShotCoolTimer();
 			}
 		}
 

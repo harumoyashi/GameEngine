@@ -7,8 +7,8 @@ enum class BulletType
 {
 	LineBullet,
 	SideBullet,
-	/*WideBullet,
-	Roket,*/
+	WideBullet,
+	//Roket,
 
 	MaxType
 };
