@@ -288,6 +288,7 @@ void NGameScene::Update()
 		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
 
+#ifdef _DEBUG
 	//シーン切り替え(デバッグ用)
 	if (NInput::IsKeyDown(DIK_RETURN) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
@@ -305,6 +306,7 @@ void NGameScene::Update()
 	{
 		ItemManager::GetInstance()->Generate(NVec3::zero,BulletType::LineBullet);
 	}
+#endif
 }
 
 void NGameScene::DrawBackSprite()

@@ -8,6 +8,7 @@ ItemManager* ItemManager::GetInstance()
 
 void ItemManager::Init()
 {
+	items_.clear();
 }
 
 void ItemManager::Update()

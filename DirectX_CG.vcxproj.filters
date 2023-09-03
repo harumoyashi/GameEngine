@@ -180,7 +180,7 @@
     <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\Mouse.h" />
     <ClInclude Include="Application\ヘッダーファイル\Item\Item.h" />
     <ClInclude Include="Application\ヘッダーファイル\Item\ItemManager.h" />
-    <ClCompile Include="PlaneCollider.cpp" />
+    <ClCompile Include="Engine\ソースファイル\Collision\PlaneCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -505,6 +505,6 @@
     <None Include="Resources\shaders\Fbx.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PlaneCollider.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\Collision\PlaneCollider.h" />
   </ItemGroup>
 </Project>

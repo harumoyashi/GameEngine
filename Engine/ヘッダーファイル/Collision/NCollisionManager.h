@@ -39,4 +39,5 @@ private:
 
 	void SphereCol();
 	void Sphere2PlaneCol();
+	void FieldCol();
 };

@@ -191,8 +191,11 @@ void Player::Move()
 				if (NInput::IsKey(DIK_D)) { moveVelo_.x = +1.0f; }
 				else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
 			}
+#ifdef _DEBUG
+			//床との当たり判定見たりするための上下移動
 			if (NInput::IsKey(DIK_Q)) { obj_->position_.y += 0.1f; }
 			else if (NInput::IsKey(DIK_E)) { obj_->position_.y -= 0.1f; }
+#endif
 		}
 
 		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//移動量によって経過時間変化
@@ -221,16 +224,24 @@ void Player::Move()
 	}
 
 #ifdef _DEBUG
+	//弾レベルいじいじ用変数
+	static bool isLevelMane = false;
 	static int lineLv = 1, sideLv = 1;
 	ImGui::Begin("PlayerParameter");
+	ImGui::Checkbox("LevelManagement", &isLevelMane);	//弾レベル管理できるするかフラグ指定
+	//弾レベルいじいじ
+	if (isLevelMane)
+	{
+		ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
+		ImGui::SliderInt("SideLevel", &sideLv, 0, maxBulLevel_);
+		lineLevel_ = lineLv;
+		sideLevel_ = sideLv;
+	}
+	//その他のパラメータいじいじ
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
-	ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
-	ImGui::SliderInt("SideLevel", &sideLv, 0, maxBulLevel_);
 	ImGui::Text("MoveVelo:%f,%f", moveVelo_.x, moveVelo_.y);
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
-	lineLevel_ = lineLv;
-	sideLevel_ = sideLv;
 #endif //DEBUG
 }
 
@@ -260,11 +271,6 @@ void Player::OnCollision()
 	{
 		NAudioManager::Play("deadSE");
 		isAlive_ = false;
-	}
-
-	if (collider_.GetColInfo()->GetColID() == "field")
-	{
-		//判定はとれてるので、押し戻し入れたらok
 	}
 }
 
@@ -298,18 +304,18 @@ void Player::LevelUp(BulletType bulletType)
 			sideLevel_ += 1;
 		}
 		break;
-	/*case BulletType::WideBullet:
-		if (wideLevel_ < maxBulLevel_)
-		{
-			wideLevel_ += 1;
-		}
-		break;
-	case BulletType::Roket:
-		if (wideLevel_ < maxBulLevel_)
-		{
-			roketLevel_ += 1;
-		}
-		break;*/
+		/*case BulletType::WideBullet:
+			if (wideLevel_ < maxBulLevel_)
+			{
+				wideLevel_ += 1;
+			}
+			break;
+		case BulletType::Roket:
+			if (wideLevel_ < maxBulLevel_)
+			{
+				roketLevel_ += 1;
+			}
+			break;*/
 	default:
 		break;
 	}

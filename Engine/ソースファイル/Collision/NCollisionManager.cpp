@@ -33,7 +33,7 @@ void NCollisionManager::CheckAllCollision()
 			if (colA_ != nullptr && colB_ != nullptr)
 			{
 				SphereCol();
-				Sphere2PlaneCol();
+				//Sphere2PlaneCol();
 			}
 		}
 	}
@@ -66,14 +66,12 @@ void NCollisionManager::SphereCol()
 void NCollisionManager::Sphere2PlaneCol()
 {
 	//球と平面か確かめる
-	bool isSpherePlane = false;
 	SphereCollider* sphere{};
 	PlaneCollider* plane{};
 
 	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE &&
 		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_PLANE)
 	{
-		isSpherePlane = true;
 		//型変換
 		sphere = static_cast<SphereCollider*>(colA_);
 		plane = static_cast<PlaneCollider*>(colB_);
@@ -81,24 +79,24 @@ void NCollisionManager::Sphere2PlaneCol()
 	else if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_PLANE &&
 		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE)
 	{
-		isSpherePlane = true;
 		//型変換
 		sphere = static_cast<SphereCollider*>(colB_);
 		plane = static_cast<PlaneCollider*>(colA_);
 	}
-
-	//球と平面だった場合
-	if (isSpherePlane == true)
+	else
 	{
-		if (NCollision::Sphere2PlaneCol(*sphere, *plane))
-		{
-			colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
-			colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
-			colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+		return;		//球と平面じゃないなら終わり
+	}
 
-			colB_->SetColInfo(colA_);
-			colB_->GetOnCollision()();
-			colB_->SetIsCol(true);
-		}
+	//球と平面だった場合当たり判定を取る
+	if (NCollision::Sphere2PlaneCol(*sphere, *plane))
+	{
+		colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
+		colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
+		colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+
+		colB_->SetColInfo(colA_);
+		colB_->GetOnCollision()();
+		colB_->SetIsCol(true);
 	}
 }
