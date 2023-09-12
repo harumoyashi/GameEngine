@@ -25,7 +25,7 @@ public:
 	//elapseTimer:経過時間。タイマー加算量に影響する。スローモーション用
 	void Update(const bool isRoop,const float elapseTimer = 1.0f);
 	//指定した値分タイマーを減らしてく
-	void SubTimer(const float subTimer);
+	void SubTimer(const float subTimer, const float elapseTimer = 1.0f);
 
 	//セッター
 	void SetTimer(const float timer) { timer_ = timer; }

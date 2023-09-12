@@ -24,9 +24,9 @@ void NTimer::Update(const bool isRoop,const float elapseTimer)
 	}
 }
 
-void NTimer::SubTimer(const float subTimer)
+void NTimer::SubTimer(const float subTimer, const float elapseTimer)
 {
-	timer_ -= subTimer;
+	timer_ -= subTimer * elapseTimer;
 }
 
 float NTimer::GetNowTime(const TimeType& timeType)
