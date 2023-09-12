@@ -37,7 +37,8 @@ private:
 	~NCollisionManager() = default;
 	NCollisionManager& operator=(const NCollisionManager&) = delete;
 
+	//‹…‘Ì“¯Žm‚Ì“–‚½‚è”»’è
 	void SphereCol();
+	//‹…‘Ì‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	void Sphere2PlaneCol();
-	void FieldCol();
 };
