@@ -45,12 +45,15 @@ private:
 
 	//前景スプライト
 	std::vector<std::unique_ptr<NSprite>> foreSprite_{ (uint32_t)FSpriteType::MaxForeSprite };		//LスティックUI
-	float slidePos = 0.0f;							//横に掃けてく時のスライド位置
-	NEasing::EaseTimer slideTimer = 0.1f;			//スライド時のイージング用
+	float slidePos_ = 0.0f;							//横に掃けてく時のスライド位置
+	NEasing::EaseTimer slideTimer_ = 0.1f;			//スライド時のイージング用
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
+
+	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
+	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
 
 public:
 	void LoadResources();

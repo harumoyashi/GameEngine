@@ -100,9 +100,14 @@ void NGameScene::Init()
 
 	scene = SceneMode::Play;
 
-	slidePos = 0.0f;
-	slideTimer.Reset();
-	slideTimer = 0.1f;
+	slidePos_ = 0.0f;
+	slideTimer_.Reset();
+	slideTimer_ = 0.1f;
+
+	//パーティクルエミッターをマネージャーに登録
+	NParticleManager::GetInstance()->AddEmitter(&clearParticle_, "gameClear");
+	clearParticle_.SetIsRotation(true);
+	clearParticleTimer_.Reset();
 }
 
 void NGameScene::Update()
@@ -145,22 +150,22 @@ void NGameScene::Update()
 		if (Field::GetInstance()->GetIsStart())
 		{
 			//スタート線スライドタイマー開始
-			if (slideTimer.GetStarted() == false)
+			if (slideTimer_.GetStarted() == false)
 			{
-				slideTimer.Start();
+				slideTimer_.Start();
 			}
-			slideTimer.Update();
+			slideTimer_.Update();
 
-			slidePos = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer.GetTimeRate());
+			slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer_.GetTimeRate());
 			foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(
-				NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 500.0f);
+				NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f);
 		}
 
 		NVec2 stickVec;
 		stickVec = NInput::GetInstance()->GetStick() * 8.0f;
 		//Yはスティックだと上が正の値なので引く
 		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(
-			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos, 500.0f - stickVec.y);
+			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y);
 
 		if (Field::GetInstance()->GetIsStart())
 		{
@@ -178,8 +183,8 @@ void NGameScene::Update()
 			NAudioManager::Destroy("playBGM");
 			NAudioManager::Play("faildBGM", true, 0.2f);
 			scene = SceneMode::Faild;
-			slideTimer.Reset();
-			slideTimer = 0.5f;
+			slideTimer_.Reset();
+			slideTimer_ = 0.5f;
 			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
 			Player::GetInstance()->SetIsElapseAnime(false);
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
@@ -191,8 +196,8 @@ void NGameScene::Update()
 			NAudioManager::Destroy("playBGM");
 			NAudioManager::Play("clearBGM", true, 0.2f);
 			scene = SceneMode::Clear;
-			slideTimer.Reset();
-			slideTimer = 0.5f;
+			slideTimer_.Reset();
+			slideTimer_ = 0.5f;
 			Player::GetInstance()->SetIsElapseAnime(false);
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
@@ -204,18 +209,35 @@ void NGameScene::Update()
 	{
 		Player::GetInstance()->ClearUpdate();
 
-		//スタート線スライドタイマー開始
-		if (slideTimer.GetStarted() == false)
+		//クリア時パーティクル用タイマー開始
+		clearParticleTimer_.Roop();
+		clearParticleTimer_.Update();
+
+		//クリア時にクラッカーみたいなパーティクルが通り道に出るやつ
+		if (clearParticleTimer_.GetTimeRate() <= 0.0f)
 		{
-			slideTimer.Start();
+			for (uint32_t i = 0; i < 7; i++)
+			{
+				clearParticle_.SetPos(Player::GetInstance()->GetPos() + NVec3(7.f, 0.f, (float)i * -7.f));
+				clearParticle_.Add(
+					10, 1.5f, NColor::kWhite, 0.1f, 0.8f,
+					{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
+					NVec3::zero, -NVec3::one, NVec3::one);
+			}
 		}
-		slideTimer.Update();
+
+		//スタート線スライドタイマー開始
+		if (slideTimer_.GetStarted() == false)
+		{
+			slideTimer_.Start();
+		}
+		slideTimer_.Update();
 		//クリアテキストスライド
-		slidePos = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
-		foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
+		slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
+		foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f);
 
 		//リザルトスコアが上から落ちてくる
-		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer.GetTimeRate());
+		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
 		Score::SetPos(
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
 			Score::TexType::Result);
@@ -247,17 +269,17 @@ void NGameScene::Update()
 		Player::GetInstance()->FaildUpdate();
 
 		//スタート線スライドタイマー開始
-		if (slideTimer.GetStarted() == false)
+		if (slideTimer_.GetStarted() == false)
 		{
-			slideTimer.Start();
+			slideTimer_.Start();
 		}
-		slideTimer.Update();
+		slideTimer_.Update();
 		//失敗テキストスライド
-		slidePos = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer.GetTimeRate());
-		foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos, 100.0f);
+		slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
+		foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f);
 
 		//リザルトスコアが上から落ちてくる
-		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer.GetTimeRate());
+		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
 		Score::SetPos(
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
 			Score::TexType::Result);
@@ -308,7 +330,7 @@ void NGameScene::Update()
 	//アイテム出すボタン(デバッグ用)
 	if (NInput::IsKeyDown(DIK_I))
 	{
-		ItemManager::GetInstance()->Generate(NVec3::zero,BulletType::LineBullet);
+		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
 #endif
 }

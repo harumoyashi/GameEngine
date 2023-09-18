@@ -18,6 +18,7 @@ Player::Player()
 
 	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
+	deadParticle_.SetIsRotation(true);
 }
 
 Player::~Player()
@@ -290,7 +291,7 @@ void Player::DeadParticle()
 	{
 		NAudioManager::Play("explosionSE");
 		RadialBlur::Init();		//ラジアルブラーかける
-		deadParticle_.SetIsRotation(true);
+		
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
 			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, NVec3::zero, -NVec3::one, NVec3::one);
