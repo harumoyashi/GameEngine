@@ -8,6 +8,12 @@
 #include "NModelManager.h"
 #include "NInput.h"
 #include "NPostEffect.h"
+#include "RadialBlur.h"
+#include "GaussianBlur.h"
+
+#include <functional>
+#include "NImGuiManager.h"
+#include "imgui.h"
 
 NTestScene::NTestScene()
 {
@@ -36,9 +42,18 @@ void NTestScene::Init()
 	obj_->SetModel("catWalk");
 	obj_->Init();
 #pragma region オブジェクトの初期値設定
-	obj_->scale_ = NVec3(0.01f, 0.01f, 0.01f);
+	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
+	obj_->SetIsElapseAnime(false);	//経過時間無視しておく
+	obj_->Update();
 #pragma endregion
 	//背景スプライト生成
+	backSprite_ = std::make_unique<NSprite>();
+	backSprite_->CreateSprite("logo");
+	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
+	backSprite_->SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	//backSprite_->color_.SetColor255(50, 50, 50);
 
 	//前景スプライト生成
 
@@ -53,10 +68,50 @@ void NTestScene::Init()
 
 void NTestScene::Update()
 {
+	//ImGui::ShowDemoWindow();
+
+#ifdef _DEBUG
+	ImGui::Begin("PostEffectType");
+	static int postEffectNum;
+	const char* items[] = { "NoEffect","GaussianBlur","RadianBlur","CG4" };
+	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
+	{
+		switch (postEffectNum)
+		{
+		case 0:
+			NPostEffect::SetIsActive(false);
+
+			break;
+
+		case 1:
+			GaussianBlur::Init();
+
+			break;
+
+		case 2:
+			RadialBlur::Init();
+
+			break;
+
+		case 3:
+			NPostEffect::Init();
+
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	ImGui::End();
+#endif _DEBUG //ポストエフェクトImGui
+
 #pragma region カメラ
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-
+#pragma region スプライト
+	backSprite_->Update();
+#pragma endregion
 	obj_->Update();
 
 	//ライトたちの更新
@@ -78,6 +133,7 @@ void NTestScene::Update()
 
 void NTestScene::DrawBackSprite()
 {
+	backSprite_->Draw();
 }
 
 void NTestScene::DrawBack3D()
@@ -86,7 +142,9 @@ void NTestScene::DrawBack3D()
 
 void NTestScene::Draw3D()
 {
+	obj_->SetBlendMode(BlendMode::None);
 	obj_->Draw();
+	obj_->SetBlendMode(BlendMode::None);
 }
 
 void NTestScene::DrawParticle()

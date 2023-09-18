@@ -4,8 +4,6 @@
 
 #include "NPostEffect.h"
 #include "NSceneChange.h"
-#include "GaussianBlur.h"
-#include "RadialBlur.h"
 
 void NGame::Init()
 {

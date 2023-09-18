@@ -13,7 +13,7 @@ float NPostEffect::rotation_;			//Z軸の回転角
 NVec2 NPostEffect::position_;		//座標
 NColor NPostEffect::color_;				//色
 
-ComPtr<ID3D12Resource> NPostEffect::texBuff_[2];
+ComPtr<ID3D12Resource> NPostEffect::texBuff_[texNum_];
 ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapSRV_;
 ComPtr<ID3D12Resource> NPostEffect::depthBuff_;
 ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapRTV_;
@@ -117,7 +117,7 @@ void NPostEffect::CreateTexture()
 	//テクスチャバッファの生成
 	CD3DX12_CLEAR_VALUE clearValue(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kClearColor);
 
-	for (uint32_t i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
 			&texHeapProp,
@@ -171,7 +171,7 @@ void NPostEffect::CreateTexture()
 	srvDesc.Texture2D.MipLevels = 1;
 
 	//デスクリプタヒープにSRV作成
-	for (uint32_t i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(
 			texBuff_[i].Get(),
@@ -310,7 +310,7 @@ void NPostEffect::PreDrawScene()
 {
 	// ------------------リソースバリアを書き込み専用状態に変更----------------------- //
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	for (uint32_t i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		barrierDesc.Transition.pResource = texBuff_[i].Get();
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;	//読み込み専用状態から
@@ -319,8 +319,8 @@ void NPostEffect::PreDrawScene()
 	}
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[2];
-	for (uint32_t i = 0; i < 2; i++)
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[texNum_];
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		rtvHandle[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(
 			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(),i,
@@ -335,8 +335,8 @@ void NPostEffect::PreDrawScene()
 
 	// -----------------------その他もろもろ-------------------------- //
 	//ビューポートの設定
-	CD3DX12_VIEWPORT viewport[2];
-	for (uint32_t i = 0; i < 2; i++)
+	CD3DX12_VIEWPORT viewport[texNum_];
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		viewport[i] = CD3DX12_VIEWPORT(0.0f, 0.0f,
 			NWindows::kWin_width, NWindows::kWin_height);
@@ -345,8 +345,8 @@ void NPostEffect::PreDrawScene()
 	NDX12::GetInstance()->GetCommandList()->RSSetViewports(2, viewport);
 
 	//シザリング矩形の設定
-	CD3DX12_RECT rect[2];
-	for (uint32_t i = 0; i < 2; i++)
+	CD3DX12_RECT rect[texNum_];
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		rect[i] = CD3DX12_RECT(0, 0,
 			NWindows::kWin_width, NWindows::kWin_height);
@@ -355,7 +355,7 @@ void NPostEffect::PreDrawScene()
 	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(2, rect);
 
 	//全画面クリア
-	for (uint32_t i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle[i], kClearColor, 0, nullptr);
 	}
@@ -367,7 +367,7 @@ void NPostEffect::PostDrawScene()
 {
 	//リソースバリアを変更(書き込み専用状態から読み取り専用状態に)
 	D3D12_RESOURCE_BARRIER barrierDesc{};
-	for (uint32_t i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < texNum_; i++)
 	{
 		barrierDesc.Transition.pResource = texBuff_[i].Get();
 		barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;		//書き込み専用状態から

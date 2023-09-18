@@ -121,7 +121,6 @@ void IEnemy::AddEmitter(uint32_t eneNum)
 	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->enemyEmitters_.emplace_back();
 	NParticleManager::GetInstance()->enemyEmitters_.back() = &deadParticle_;
-
 }
 
 void IEnemy::DeadParticle()
