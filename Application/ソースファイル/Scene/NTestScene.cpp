@@ -73,7 +73,7 @@ void NTestScene::Update()
 #ifdef _DEBUG
 	ImGui::Begin("PostEffectType");
 	static int postEffectNum;
-	const char* items[] = { "NoEffect","GaussianBlur","RadianBlur","CG4" };
+	const char* items[] = { "NoEffect","GaussianBlur","RadianBlur","Bloom" };
 	if (ImGui::Combo("PostEffect Choice", &postEffectNum, items, IM_ARRAYSIZE(items)))
 	{
 		switch (postEffectNum)

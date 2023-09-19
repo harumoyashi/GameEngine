@@ -3,8 +3,8 @@
   <ItemGroup>
     <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl" />
     <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl" />
-    <FxCompile Include="Resources\shaders\CG4PS.hlsl" />
-    <FxCompile Include="Resources\shaders\CG4VS.hlsl" />
+    <FxCompile Include="Resources\shaders\BloomPS.hlsl" />
+    <FxCompile Include="Resources\shaders\BloomVS.hlsl" />
     <FxCompile Include="Resources\shaders\ModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\ModelVS.hlsl" />
     <FxCompile Include="Resources\shaders\ObjPS.hlsl" />
@@ -497,7 +497,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\shaders\GaussianBlur.hlsli" />
-    <None Include="Resources\shaders\CG4.hlsli" />
+    <None Include="Resources\shaders\Bloom.hlsli" />
     <None Include="Resources\shaders\Model.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\Particle3D.hlsli" />

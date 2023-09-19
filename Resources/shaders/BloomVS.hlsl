@@ -1,4 +1,4 @@
-#include "GaussianBlur.hlsli"
+#include "Bloom.hlsli"
 
 VSOutput main(float3 pos : SV_POSITION, float2 uv : TEXCOORD)
 {

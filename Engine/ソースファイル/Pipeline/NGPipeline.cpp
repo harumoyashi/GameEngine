@@ -859,7 +859,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ポストエフェクト
 	//シェーダー生成
-	NShader::CreateShader("PostEffect", "CG4", false);
+	NShader::CreateShader("Bloom", "Bloom", false);
 
 	PipelineDesc postEffectDesc;
 	//頂点レイアウト設定
@@ -875,7 +875,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.rootSig = rootSigPostEffect;
 
 	//シェーダー設定
-	postEffectDesc.shader.pShader = NShader::GetShader("PostEffect");
+	postEffectDesc.shader.pShader = NShader::GetShader("Bloom");
 
 	//深度情報設定
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
@@ -893,7 +893,7 @@ void PipeLineManager::CreateAll()
 		bDesc::GetBlendMode(BlendMode::None);
 
 	//パイプライン生成
-	NGPipeline::Create(postEffectDesc, "PostEffect");
+	NGPipeline::Create(postEffectDesc, "Bloom");
 #pragma endregion
 #pragma region ガウシアンブラー
 	//シェーダー生成

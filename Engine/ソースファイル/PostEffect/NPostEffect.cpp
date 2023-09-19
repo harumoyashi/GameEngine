@@ -35,11 +35,12 @@ void NPostEffect::Init()
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
 	cbColor_->Init();
 
+	isActive_ = true;
 	CreateTexture();
 	CreateRTV();
 	CreateDepthBuff();
 	CreateDSV();
-	pipelineName_ = "PostEffect";
+	pipelineName_ = "Bloom";
 }
 
 void NPostEffect::Update()
@@ -158,7 +159,7 @@ void NPostEffect::CreateTexture()
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
 	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	srvDescHeapDesc.NumDescriptors = 2;
+	srvDescHeapDesc.NumDescriptors = texNum_;
 	//SRV用デスクリプタヒープを生成
 	result = NDX12::GetInstance()->GetDevice()->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV_));
 	assert(SUCCEEDED(result));
@@ -319,8 +320,8 @@ void NPostEffect::PreDrawScene()
 	}
 
 	//レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[texNum_];
-	for (uint32_t i = 0; i < texNum_; i++)
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[2];
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		rtvHandle[i] = CD3DX12_CPU_DESCRIPTOR_HANDLE(
 			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(),i,
@@ -352,10 +353,11 @@ void NPostEffect::PreDrawScene()
 			NWindows::kWin_width, NWindows::kWin_height);
 	}
 
+
 	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(2, rect);
 
 	//全画面クリア
-	for (uint32_t i = 0; i < texNum_; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle[i], kClearColor, 0, nullptr);
 	}

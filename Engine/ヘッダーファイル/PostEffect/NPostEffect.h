@@ -21,7 +21,7 @@ protected:
 	static NColor color_;		//色
 
 	//テクスチャバッファ
-	static const uint32_t texNum_ = 2;
+	static const uint32_t texNum_ = 3;
 	static ComPtr<ID3D12Resource> texBuff_[texNum_];
 	//SRV用デスクリプタヒープ
 	static ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
