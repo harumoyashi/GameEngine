@@ -1,33 +1,33 @@
-#include "NPostEffect.h"
+#include "IPostEffect.h"
 #include "NWindows.h"
 #include "NVec4.h"
 #include "NMathUtil.h"
 #include "NInput.h"
 
-NVertexBuff<NVertexUV> NPostEffect::vertexBuff_;
-std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> NPostEffect::cbTrans_;	//2D変換行列
-std::unique_ptr<NConstBuff<ConstBuffDataColor>> NPostEffect::cbColor_;
-NMatrix4 NPostEffect::matWorld_;		//変換行列
-NMatrix4 NPostEffect::matProjection_;	//平行投影保管用
-float NPostEffect::rotation_;			//Z軸の回転角
-NVec2 NPostEffect::position_;		//座標
-NColor NPostEffect::color_;				//色
+NVertexBuff<NVertexUV> IPostEffect::vertexBuff_;
+std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> IPostEffect::cbTrans_;	//2D変換行列
+std::unique_ptr<NConstBuff<ConstBuffDataColor>> IPostEffect::cbColor_;
+NMatrix4 IPostEffect::matWorld_;		//変換行列
+NMatrix4 IPostEffect::matProjection_;	//平行投影保管用
+float IPostEffect::rotation_;			//Z軸の回転角
+NVec2 IPostEffect::position_;			//座標
+NColor IPostEffect::color_;				//色
 
-ComPtr<ID3D12Resource> NPostEffect::texBuff_[texNum_];
-ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapSRV_;
-ComPtr<ID3D12Resource> NPostEffect::depthBuff_;
-ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapRTV_;
-ComPtr<ID3D12DescriptorHeap> NPostEffect::descHeapDSV_;
+ComPtr<ID3D12Resource> IPostEffect::texBuff_[texNum_];
+ComPtr<ID3D12DescriptorHeap> IPostEffect::descHeapSRV_;
+ComPtr<ID3D12Resource> IPostEffect::depthBuff_;
+ComPtr<ID3D12DescriptorHeap> IPostEffect::descHeapRTV_;
+ComPtr<ID3D12DescriptorHeap> IPostEffect::descHeapDSV_;
 
-const float NPostEffect::kClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
-std::string NPostEffect::pipelineName_;
-bool NPostEffect::isActive_ = false;
+const float IPostEffect::kClearColor[4] = { 0.1f,0.25f,0.5f,0.0f };
+std::string IPostEffect::pipelineName_;
+bool IPostEffect::isActive_ = false;
 
-NPostEffect::NPostEffect()
+IPostEffect::IPostEffect()
 {
 }
 
-void NPostEffect::Init()
+void IPostEffect::Init()
 {
 	//定数バッファ
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
@@ -40,10 +40,9 @@ void NPostEffect::Init()
 	CreateRTV();
 	CreateDepthBuff();
 	CreateDSV();
-	pipelineName_ = "Bloom";
 }
 
-void NPostEffect::Update()
+void IPostEffect::Update()
 {
 	//ワールド行列
 	NMatrix4 matRot;	//回転行列
@@ -61,7 +60,7 @@ void NPostEffect::Update()
 	cbColor_->constMap_->color = color_;
 }
 
-void NPostEffect::Draw()
+void IPostEffect::Draw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
 	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState(pipelineName_));
@@ -96,7 +95,7 @@ void NPostEffect::Draw()
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);
 }
 
-void NPostEffect::CreateTexture()
+void IPostEffect::CreateTexture()
 {
 	HRESULT result;
 
@@ -217,7 +216,7 @@ void NPostEffect::CreateTexture()
 	Update();
 }
 
-void NPostEffect::CreateRTV()
+void IPostEffect::CreateRTV()
 {
 	HRESULT result;
 
@@ -251,7 +250,7 @@ void NPostEffect::CreateRTV()
 	}
 }
 
-void NPostEffect::CreateDepthBuff()
+void IPostEffect::CreateDepthBuff()
 {
 	HRESULT result;
 
@@ -285,7 +284,7 @@ void NPostEffect::CreateDepthBuff()
 	assert(SUCCEEDED(result));
 }
 
-void NPostEffect::CreateDSV()
+void IPostEffect::CreateDSV()
 {
 	HRESULT result;
 
@@ -307,7 +306,7 @@ void NPostEffect::CreateDSV()
 	);
 }
 
-void NPostEffect::PreDrawScene()
+void IPostEffect::PreDrawScene()
 {
 	// ------------------リソースバリアを書き込み専用状態に変更----------------------- //
 	D3D12_RESOURCE_BARRIER barrierDesc{};
@@ -365,7 +364,7 @@ void NPostEffect::PreDrawScene()
 	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
-void NPostEffect::PostDrawScene()
+void IPostEffect::PostDrawScene()
 {
 	//リソースバリアを変更(書き込み専用状態から読み取り専用状態に)
 	D3D12_RESOURCE_BARRIER barrierDesc{};

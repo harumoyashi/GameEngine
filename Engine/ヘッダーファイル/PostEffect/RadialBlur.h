@@ -1,8 +1,8 @@
 #pragma once
-#include "NPostEffect.h"
+#include "IPostEffect.h"
 
 class RadialBlur final
-	: public NPostEffect
+	: public IPostEffect
 {
 public:
 	static void Init();

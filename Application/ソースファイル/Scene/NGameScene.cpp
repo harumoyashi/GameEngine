@@ -7,7 +7,7 @@
 #include "NAudioManager.h"
 #include "NParticleManager.h"
 #include "NCollisionManager.h"
-#include "NPostEffect.h"
+#include "IPostEffect.h"
 
 #include "Player.h"
 #include "BulletManager.h"
@@ -96,7 +96,7 @@ void NGameScene::Init()
 
 	IEmitter3D::SetLightGroup(lightGroup_.get());
 
-	NPostEffect::SetIsActive(false);	//ポストエフェクト消す
+	IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 
 	scene = SceneMode::Play;
 

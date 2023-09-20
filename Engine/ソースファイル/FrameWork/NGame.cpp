@@ -2,7 +2,7 @@
 #include "NImGuiManager.h"
 #include "imgui.h"
 
-#include "NPostEffect.h"
+#include "IPostEffect.h"
 #include "NSceneChange.h"
 
 void NGame::Init()
@@ -63,9 +63,9 @@ void NGame::Update()
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
-	if (NPostEffect::GetIsActive())
+	if (IPostEffect::GetIsActive())
 	{
-		NPostEffect::Update();
+		IPostEffect::Update();
 	}
 	sceneMane_->Update();
 #pragma endregion
@@ -74,18 +74,18 @@ void NGame::Update()
 
 void NGame::Draw()
 {
-	if (NPostEffect::GetIsActive())
+	if (IPostEffect::GetIsActive())
 	{
-		NPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
+		IPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
 		sceneMane_->Draw();						//レンダーテクスチャにゲームシーンの描画
-		NPostEffect::PostDrawScene();			//読み込み専用状態にして終了
+		IPostEffect::PostDrawScene();			//読み込み専用状態にして終了
 
-		//NPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
+		//IPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
 		////指定したテクスチャに書き込み//
-		//NPostEffect::PostDrawScene();			//読み込み専用状態にして終了
+		//IPostEffect::PostDrawScene();			//読み込み専用状態にして終了
 
 		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
-		NPostEffect::Draw();					//バックバッファにポストエフェクトの描画
+		IPostEffect::Draw();					//バックバッファにポストエフェクトの描画
 
 		NSceneChange::GetInstance()->Draw();	//暗幕はポストエフェクトの上から描画し直す
 		NImGuiManager::GetInstance()->Draw();	//ImGui描画

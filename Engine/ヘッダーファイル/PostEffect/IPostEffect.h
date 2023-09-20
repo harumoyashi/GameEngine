@@ -1,7 +1,7 @@
 #pragma once
 #include "NSprite.h"
 
-class NPostEffect
+class IPostEffect
 	: public NSprite
 {
 protected:
@@ -21,7 +21,7 @@ protected:
 	static NColor color_;		//色
 
 	//テクスチャバッファ
-	static const uint32_t texNum_ = 3;
+	static const uint32_t texNum_ = 2;
 	static ComPtr<ID3D12Resource> texBuff_[texNum_];
 	//SRV用デスクリプタヒープ
 	static ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
@@ -42,8 +42,8 @@ protected:
 	static bool isActive_;	//ポストエフェクト有効フラグ
 
 public:
-	NPostEffect();
-	virtual ~NPostEffect() = default;
+	IPostEffect();
+	virtual ~IPostEffect() = default;
 
 	static void Init();
 	static void Update();

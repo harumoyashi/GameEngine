@@ -7,7 +7,7 @@
 #include "NAudioManager.h"
 #include "NModelManager.h"
 #include "NInput.h"
-#include "NPostEffect.h"
+#include "Bloom.h"
 #include "RadialBlur.h"
 #include "GaussianBlur.h"
 
@@ -79,7 +79,7 @@ void NTestScene::Update()
 		switch (postEffectNum)
 		{
 		case 0:
-			NPostEffect::SetIsActive(false);
+			IPostEffect::SetIsActive(false);
 
 			break;
 
@@ -94,7 +94,7 @@ void NTestScene::Update()
 			break;
 
 		case 3:
-			NPostEffect::Init();
+			Bloom::Init();
 
 			break;
 

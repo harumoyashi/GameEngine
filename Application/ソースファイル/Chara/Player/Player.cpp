@@ -130,14 +130,14 @@ void Player::Update()
 	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
 	if (deadParticle_.GetParticlesDead())
 	{
-		NPostEffect::SetIsActive(false);
+		IPostEffect::SetIsActive(false);
 	}
 }
 
 void Player::ClearUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
-	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	IPostEffect::SetIsActive(false);	//ポストエフェクトは切る
 	obj_->rotation_.y = 0.0f;			//前に向かせる
 	obj_->position_.z += 0.05f;			//前に向かって走り続ける
 
@@ -150,7 +150,7 @@ void Player::FaildUpdate()
 	faildEffectTimer_.Roop();
 
 	isDraw_ = true;						//絶対描画させる
-	NPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	IPostEffect::SetIsActive(false);	//ポストエフェクトは切る
 	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる

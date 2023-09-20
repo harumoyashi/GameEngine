@@ -1,9 +1,9 @@
 #pragma once
 #include "IPostEffect.h"
-class GaussianBlur final
-	: public IPostEffect
+
+class Bloom :
+    public IPostEffect
 {
 public:
 	static void Init();
 };
-

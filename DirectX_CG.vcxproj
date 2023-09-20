@@ -115,6 +115,7 @@
     <ClInclude Include="Application\ヘッダーファイル\Chara\Enemy\IEnemy.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\IScene.h" />
     <ClInclude Include="Application\ヘッダーファイル\Bullet\LineBullet.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\Bloom.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Loader\NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="Engine\ヘッダーファイル\Collision\NBaseCollider.h" />
@@ -165,7 +166,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticle2D.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticleManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Light\NPointLight.h" />
-    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffect.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\IPostEffect.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\NTestScene.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\NSceneChange.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NShader.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Collision\PlaneCollider.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Collision\RayCollider.h" />
     <ClInclude Include="Application\ヘッダーファイル\Bullet\WideBullet.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -203,6 +205,7 @@
     <ClCompile Include="Application\ソースファイル\Chara\Enemy\IEnemy.cpp" />
     <ClCompile Include="Application\ソースファイル\Scene\IScene.cpp" />
     <ClCompile Include="Application\ソースファイル\Bullet\LineBullet.cpp" />
+    <ClCompile Include="Engine\ソースファイル\PostEffect\Bloom.cpp" />
     <ClCompile Include="Engine\ソースファイル\Loader\NAssimpLoader.cpp" />
     <ClCompile Include="Engine\ソースファイル\Util\NImGuiManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\Collision\NBaseCollider.cpp" />
@@ -254,7 +257,7 @@
     <ClCompile Include="Engine\ソースファイル\Particle\NParticle2D.cpp" />
     <ClCompile Include="Engine\ソースファイル\Particle\NParticleManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\Light\NPointLight.cpp" />
-    <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffect.cpp" />
+    <ClCompile Include="Engine\ソースファイル\PostEffect\IPostEffect.cpp" />
     <ClCompile Include="Application\ソースファイル\Scene\NTestScene.cpp" />
     <ClCompile Include="Application\ソースファイル\Scene\NSceneChange.cpp" />
     <ClCompile Include="Engine\ソースファイル\Pipeline\NShader.cpp" />
@@ -279,6 +282,7 @@
     <ClCompile Include="Engine\ソースファイル\Collision\PlaneCollider.cpp" />
     <ClCompile Include="Engine\ソースファイル\Collision\RayCollider.cpp" />
     <ClCompile Include="Application\ソースファイル\Bullet\WideBullet.cpp" />
+    <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
