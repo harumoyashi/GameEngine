@@ -9,6 +9,7 @@
 #include "NMathUtil.h"
 #include "NCameraManager.h"
 #include "IPostEffect.h"
+#include "Bloom.h"
 
 #include "Player.h"
 #include "Field.h"
@@ -81,7 +82,8 @@ void NTitleScene::Init()
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
-	IPostEffect::SetIsActive(false);	//ポストエフェクト消す
+	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
+	Bloom::Init();
 }
 
 void NTitleScene::Update()

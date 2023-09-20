@@ -8,6 +8,7 @@
 #include "NParticleManager.h"
 #include "NCollisionManager.h"
 #include "IPostEffect.h"
+#include "Bloom.h"
 
 #include "Player.h"
 #include "BulletManager.h"
@@ -96,18 +97,14 @@ void NGameScene::Init()
 
 	IEmitter3D::SetLightGroup(lightGroup_.get());
 
-	IPostEffect::SetIsActive(false);	//ポストエフェクト消す
+	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
+	Bloom::Init();
 
 	scene = SceneMode::Play;
 
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
 	slideTimer_ = 0.1f;
-
-	//パーティクルエミッターをマネージャーに登録
-	NParticleManager::GetInstance()->AddEmitter(&clearParticle_, "gameClear");
-	clearParticle_.SetIsRotation(true);
-	clearParticleTimer_.Reset();
 }
 
 void NGameScene::Update()
@@ -208,23 +205,6 @@ void NGameScene::Update()
 	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
 	{
 		Player::GetInstance()->ClearUpdate();
-
-		//クリア時パーティクル用タイマー開始
-		clearParticleTimer_.Roop();
-		clearParticleTimer_.Update();
-
-		//クリア時にクラッカーみたいなパーティクルが通り道に出るやつ
-		if (clearParticleTimer_.GetTimeRate() <= 0.0f)
-		{
-			for (uint32_t i = 0; i < 7; i++)
-			{
-				clearParticle_.SetPos(Player::GetInstance()->GetPos() + NVec3(7.f, 0.f, (float)i * -7.f));
-				clearParticle_.Add(
-					10, 1.5f, NColor::kWhite, 0.1f, 0.8f,
-					{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
-					NVec3::zero, -NVec3::one, NVec3::one);
-			}
-		}
 
 		//スタート線スライドタイマー開始
 		if (slideTimer_.GetStarted() == false)

@@ -6,6 +6,7 @@
 #include "NAudioManager.h"
 #include "Field.h"
 #include "RadialBlur.h"
+#include "Bloom.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -19,6 +20,9 @@ Player::Player()
 	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 	deadParticle_.SetIsRotation(true);
+
+	NParticleManager::GetInstance()->AddEmitter(&clearParticle_, "gameClear");
+	clearParticle_.SetIsRotation(true);
 }
 
 Player::~Player()
@@ -71,6 +75,8 @@ bool Player::Init()
 
 	faildEffectTimer_ = 3.0f;
 	faildEffectTimer_.Reset();
+
+	clearParticleTimer_.Reset();
 
 	return true;
 }
@@ -127,21 +133,38 @@ void Player::Update()
 		deadPos_ = GetPos();	//リザルト用に死んだ座標を記録
 	}
 
-	//死亡時のパーティクルが出ていないのであればポストエフェクトはかけない
+	//死亡時のパーティクルが出ていないのであればラジアルブラーはかけない
 	if (deadParticle_.GetParticlesDead())
 	{
-		IPostEffect::SetIsActive(false);
+		Bloom::Init();		//ラジアルブラー切ってブルームに戻す
 	}
 }
 
 void Player::ClearUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
-	IPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->rotation_.y = 0.0f;			//前に向かせる
 	obj_->position_.z += 0.05f;			//前に向かって走り続ける
 
 	obj_->Update();
+
+	//クリア時パーティクル用タイマー開始
+	clearParticleTimer_.Roop();
+	clearParticleTimer_.Update();
+
+	//クリア時にクラッカーみたいなパーティクルが通り道に出るやつ
+	if (clearParticleTimer_.GetTimeRate() <= 0.0f)
+	{
+		for (uint32_t i = 0; i < 7; i++)
+		{
+			clearParticle_.SetPos(obj_->position_ + NVec3(7.f, 0.f, (float)i * -7.f));
+			clearParticle_.Add(
+				10, 1.5f, NColor::kWhite, 0.1f, 0.8f,
+				{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
+				NVec3::zero, -NVec3::one, NVec3::one);
+		}
+	}
 }
 
 void Player::FaildUpdate()
@@ -150,7 +173,7 @@ void Player::FaildUpdate()
 	faildEffectTimer_.Roop();
 
 	isDraw_ = true;						//絶対描画させる
-	IPostEffect::SetIsActive(false);	//ポストエフェクトは切る
+	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる

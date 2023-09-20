@@ -19,6 +19,14 @@ public:
 	//エミッターをunordered_mapに追加
 	void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
+		//同じ名前のやつが登録されてたら追加せずに処理終了
+		for (auto& emitter : emitters_)
+		{
+			if (emitter.first == key)
+			{
+				return;
+			}
+		}
 		emitter->Init();					//初期化してから登録
 		emitters_.emplace(std::make_pair(key, emitter));
 	}

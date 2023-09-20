@@ -857,7 +857,7 @@ void PipeLineManager::CreateAll()
 	//パイプライン生成
 	NGPipeline::Create(spriteInvDesc, "SpriteInv");
 #pragma endregion
-#pragma region ポストエフェクト
+#pragma region ブルーム
 	//シェーダー生成
 	NShader::CreateShader("Bloom", "Bloom", false);
 

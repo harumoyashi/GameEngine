@@ -44,6 +44,9 @@ private:
 	//------------------------ その他 ------------------------//
 	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
 
+	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
+	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
+
 public:
 	Player();
 	~Player();

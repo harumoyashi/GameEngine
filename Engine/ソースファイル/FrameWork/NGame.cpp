@@ -4,6 +4,8 @@
 
 #include "IPostEffect.h"
 #include "NSceneChange.h"
+#include "GaussianBlur.h"
+#include "RadialBlur.h"
 
 void NGame::Init()
 {
@@ -80,13 +82,8 @@ void NGame::Draw()
 		sceneMane_->Draw();						//レンダーテクスチャにゲームシーンの描画
 		IPostEffect::PostDrawScene();			//読み込み専用状態にして終了
 
-		//IPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
-		////指定したテクスチャに書き込み//
-		//IPostEffect::PostDrawScene();			//読み込み専用状態にして終了
-
 		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
 		IPostEffect::Draw();					//バックバッファにポストエフェクトの描画
-
 		NSceneChange::GetInstance()->Draw();	//暗幕はポストエフェクトの上から描画し直す
 		NImGuiManager::GetInstance()->Draw();	//ImGui描画
 		NDX12::GetInstance()->PostDraw();		//バックバッファのに描画したのを表示に

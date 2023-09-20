@@ -52,9 +52,6 @@ private:
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 
-	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
-	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
-
 public:
 	void LoadResources();
 	void Init() override;

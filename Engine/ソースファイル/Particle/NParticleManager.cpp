@@ -12,7 +12,8 @@ void NParticleManager::Init()
 	for (auto& emitter : emitters_)
 	{
 		emitter.second->ClearParticles();
-		emitter.second->Init();
+		emitter.second->Init();			//ゲームシーンにパーティクル持たせたら情報保持できないときがあって初期化時にエラー起こった
+										//プレイヤーに持たせておけば大丈夫そうだけどなんでなのかわからないから先生に聞く
 	}
 
 	for (auto& eneEmitter : enemyEmitters_)

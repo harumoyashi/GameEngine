@@ -16,7 +16,7 @@ std::unique_ptr<IScene> NSceneManager::nextScene_;
 
 NSceneManager::NSceneManager()
 {
-	currentScene_ = std::move(std::make_unique<NTestScene>());
+	currentScene_ = std::move(std::make_unique<NTitleScene>());
 }
 
 #pragma region

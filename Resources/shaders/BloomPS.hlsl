@@ -1,7 +1,6 @@
 #include "Bloom.hlsli"
 
 Texture2D<float4> tex0 : register(t0); //0番スロットに設定されたテクスチャ
-Texture2D<float4> tex1 : register(t1); //1番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
 //高輝度抽出
@@ -9,7 +8,7 @@ float4 ExtractLuminance(float2 uv)
 {
     float4 col = tex0.Sample(smp, uv);
     float grayScale = col.r * 0.299f + col.g * 0.587f + col.b * 0.114f; //白黒にして
-    float extract = smoothstep(0.6f, 0.9f, grayScale);                  //明暗をはっきりさせて
+    float extract = smoothstep(0.4f, 0.9f, grayScale);                  //明暗をはっきりさせて
     return col * extract;                                               //元画像の明るい部分だけが残るように
 }
 
@@ -22,7 +21,7 @@ float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 float4 Blur(float2 uv)
 {
 	//ガウシアンブラー//
-    float totalWeight = 0, _Sigma = 0.005, _StepWidth = 0.001; //Bloomはブラーを大げさに
+    float totalWeight = 0, _Sigma = 0.003, _StepWidth = 0.001; //Bloomはブラーを大げさに
     float4 blurCol = float4(0, 0, 0, 0);
 
     for (float py = -_Sigma * 2.0f; py <= _Sigma * 2.0f; py += _StepWidth)
@@ -42,7 +41,7 @@ float4 Blur(float2 uv)
 
 float4 main(VSOutput input) : SV_TARGET
 {
+    float4 texcolor = tex0.Sample(smp, input.uv);
     float4 blurTexCol = Blur(input.uv);
-    float4 texcolor = tex1.Sample(smp, input.uv);
     return texcolor + blurTexCol;
 }
