@@ -80,7 +80,7 @@ private:
 	//経過時間のスピード(スローモーション用)
 	float elapseSpeed_;
 
-	const uint32_t maxParticle_ = 256;		//最大数
+	const uint32_t maxParticle_ = 25600;	//最大数
 	std::vector<Particle3D> particles_;		//パーティクル配列
 
 	bool isActive_ = true;					//有効にするかフラグ

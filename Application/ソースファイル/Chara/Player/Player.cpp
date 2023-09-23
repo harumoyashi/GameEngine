@@ -41,7 +41,7 @@ bool Player::Init()
 {
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
-	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
+	obj_->color_ = NColor::kPlayer;	//オレンジっぽく
 	obj_->SetIsElapseAnime(false);	//経過時間無視しておく
 	obj_->Update();
 
@@ -59,8 +59,8 @@ bool Player::Init()
 
 	//弾のレベルたち
 	lineLevel_ = 1;
-	sideLevel_ = 1;
-	wideLevel_ = 1;
+	sideLevel_ = 0;
+	wideLevel_ = 0;
 	roketLevel_ = 0;
 
 	//コライダー設定
@@ -111,7 +111,7 @@ void Player::Update()
 			isFlashing_ = ((int)(deadEffectTimer_.GetTimeRate() * 100.0f) % 2 == 0);
 			if (isFlashing_ ^ obj_->color_ == NColor::kWhite)
 			{
-				obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
+				obj_->color_ = NColor::kPlayer;	//オレンジっぽく
 			}
 			else
 			{
@@ -121,7 +121,7 @@ void Player::Update()
 		}
 		else
 		{
-			obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
+			obj_->color_ = NColor::kPlayer;	//オレンジっぽく
 			DeadParticle();
 			elapseSpeed_ = slowElapseTime_;			//ヒットストップ終わったらスローに
 			isDraw_ = false;						//通常は死んだら描画しない

@@ -129,7 +129,7 @@ void IEnemy::DeadParticle()
 	{
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetPos(GetPos());
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->Add(
-			15, 0.25f, obj_->color_, 0.1f, 0.4f, { -0.5f,-0.1f,-0.5f }, { 0.5f,0.1f,0.5f }, NVec3::zero, -NVec3::one, NVec3::one);
+			1500, 0.25f, obj_->color_, 0.1f, 0.4f, { -0.5f,-0.1f,-0.5f }, { 0.5f,0.1f,0.5f }, NVec3::zero, -NVec3::one, NVec3::one);
 	}
 }
 

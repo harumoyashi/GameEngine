@@ -8,6 +8,8 @@ const NColor NColor::kPink(1.0f, 0, 1.0f);
 const NColor NColor::kLightblue(0, 1.0f, 1.0f);
 const NColor NColor::kWhite(1.0f, 1.0f, 1.0f);
 const NColor NColor::kBlack(0, 0, 0);
+const NColor NColor::kPlayer(0.95f, 0.15f, 0.1f);
+
 
 void NColor::SetColor255(const uint32_t R, const uint32_t G, const uint32_t B, const uint32_t A)
 {

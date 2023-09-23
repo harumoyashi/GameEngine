@@ -27,6 +27,7 @@ struct NColor
 	const static NColor kLightblue;
 	const static NColor kWhite;
 	const static NColor kBlack;
+	const static NColor kPlayer;
 
 	NColor& operator++();
 

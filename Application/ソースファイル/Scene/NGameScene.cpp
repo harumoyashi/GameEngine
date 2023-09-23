@@ -307,12 +307,12 @@ void NGameScene::Update()
 		NSceneManager::ChangeScene<NGameScene>();
 	}
 
+#endif
 	//アイテム出すボタン(デバッグ用)
 	if (NInput::IsKeyDown(DIK_I))
 	{
 		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
-#endif
 }
 
 void NGameScene::DrawBackSprite()
