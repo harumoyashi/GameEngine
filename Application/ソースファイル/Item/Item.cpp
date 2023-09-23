@@ -74,6 +74,6 @@ void Item::OnCollision()
 	if (collider_.GetColInfo()->GetColID() == "player")
 	{
 		isAlive_ = false;
-		Player::GetInstance()->LevelUp(BulletType::LineBullet/*bulletType_*/);
+		Player::GetInstance()->LevelUp(bulletType_);
 	}
 }
