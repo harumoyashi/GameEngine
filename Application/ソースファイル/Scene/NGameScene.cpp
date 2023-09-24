@@ -335,6 +335,9 @@ void NGameScene::DrawForeSprite()
 	UI::GetInstance()->Draw(UIType::Faild);
 	UI::GetInstance()->Draw(UIType::Shaft);
 	UI::GetInstance()->Draw(UIType::Lstick);
+	UI::GetInstance()->Draw(UIType::Line);
+	UI::GetInstance()->Draw(UIType::Side);
+	UI::GetInstance()->Draw(UIType::Wide);
 
 	Score::Draw();
 }

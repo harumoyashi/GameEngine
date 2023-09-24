@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include "NSprite.h"
+#include "NEasing.h"
 
 enum class UIType
 {
@@ -22,6 +23,9 @@ class UI
 {
 private:
 	std::vector<NSprite> uiSprite_{ ((uint32_t)UIType::Max) };		//UI描画用スプライト群
+	std::vector<NEasing::EaseTimer> easeTimer_;						//UI用イージングタイマー群
+	std::vector<NEasing::EaseTimer> keepTimer_;						//UI用待機タイマー群
+	std::vector<NEasing::EaseTimer> easeBackTimer_;					//UI用イージングバックタイマー群
 
 public:
 	UI();
@@ -32,6 +36,9 @@ public:
 
 	//指定されたUIを描画
 	void Draw(UIType uiType);
+
+	//指定されたUIのタイマースタート
+	void StartEaseTimer(UIType uiType) { easeTimer_[(uint32_t)uiType].Start(); }
 
 	//指定されたUIの描画座標設定
 	void SetPos(UIType uiType, const NVec2& pos);

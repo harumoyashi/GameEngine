@@ -7,6 +7,7 @@
 #include "Field.h"
 #include "RadialBlur.h"
 #include "Bloom.h"
+#include "UI.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -330,18 +331,21 @@ void Player::LevelUp(BulletType bulletType)
 		if (lineLevel_ < maxBulLevel_)
 		{
 			lineLevel_ += 1;
+			UI::GetInstance()->StartEaseTimer(UIType::Line);
 		}
 		break;
 	case BulletType::SideBullet:
 		if (sideLevel_ < maxBulLevel_)
 		{
 			sideLevel_ += 1;
+			UI::GetInstance()->StartEaseTimer(UIType::Side);
 		}
 		break;
 	case BulletType::WideBullet:
 		if (wideLevel_ < maxBulLevel_)
 		{
 			wideLevel_ += 1;
+			UI::GetInstance()->StartEaseTimer(UIType::Wide);
 		}
 		break;
 		/*case BulletType::Roket:
