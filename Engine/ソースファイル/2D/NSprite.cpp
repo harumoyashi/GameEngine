@@ -30,13 +30,14 @@ void NSprite::CreateSprite(const std::string& texHandle)
 }
 
 void NSprite::CreateSprite(const std::string& texHandle,
-	const NVec2& anchorPoint_, bool isFlipX_, bool isFlipY_)
+	const NVec2& anchorPoint, bool isFlipX, bool isFlipY)
 {
 	SetTexHandle(texHandle);
 	//頂点
 	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
-	SetAncor(anchorPoint_);
-	SetIsFlip(isFlipX_, isFlipY_);
+	anchorPoint_ = anchorPoint;
+	isFlipX_ = isFlipX;
+	isFlipY_ = isFlipY;
 	TransferVertex();
 
 	//平行投影を代入
@@ -48,15 +49,16 @@ void NSprite::CreateSprite(const std::string& texHandle,
 }
 
 void NSprite::CreateClipSprite(const std::string& texHandle,
-	const NVec2& texLeftTop_, const NVec2& texSize_, const NVec2& anchorPoint_,
-	bool isFlipX_, bool isFlipY_)
+	const NVec2& texLeftTop, const NVec2& texSize, const NVec2& anchorPoint,
+	bool isFlipX, bool isFlipY)
 {
 	SetTexHandle(texHandle);
 	//頂点
 	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
-	SetAncor(anchorPoint_);
-	SetIsFlip(isFlipX_, isFlipY_);
-	SetClipRange(texLeftTop_, texSize_);
+	anchorPoint_ = anchorPoint;
+	isFlipX_ = isFlipX;
+	isFlipY_ = isFlipY;
+	SetClipRange(texLeftTop, texSize);
 	TransferVertex();
 
 	//平行投影を代入
@@ -78,12 +80,14 @@ void NSprite::SetTexSize(const ComPtr<ID3D12Resource>& texBuff)
 void NSprite::SetAncor(const NVec2& anchorPoint)
 {
 	anchorPoint_ = anchorPoint;
+	TransferVertex();
 }
 
 void NSprite::SetIsFlip(bool isFlipX, bool isFlipY)
 {
 	isFlipX_ = isFlipX;
 	isFlipY_ = isFlipY;
+	TransferVertex();
 }
 
 void NSprite::SetClipRange(const NVec2& texLeftTop, const NVec2& texSize)

@@ -31,6 +31,9 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "item.png", "item");
 	LoadTexture(directryPass + "wave_UI.png", "waveUI");
 	LoadTexture(directryPass + "meter.png", "meter");
+	LoadTexture(directryPass + "line_UI.png", "lineUI");
+	LoadTexture(directryPass + "sideshot_UI.png", "sideshotUI");
+	LoadTexture(directryPass + "wideshot_UI.png", "wideshotUI");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

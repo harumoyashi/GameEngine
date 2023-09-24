@@ -185,6 +185,7 @@
     <ClCompile Include="Engine\ソースファイル\Collision\RayCollider.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\Bloom.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -314,9 +315,6 @@
       <Filter>Engine\ソース ファイル\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\PostEffect\GaussianBlur.cpp">
-      <Filter>Engine\ソース ファイル\PostEffect</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffect.cpp">
       <Filter>Engine\ソース ファイル\PostEffect</Filter>
     </ClCompile>
     <ClCompile Include="Engine\ソースファイル\PostEffect\RadialBlur.cpp">
@@ -471,7 +469,6 @@
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticle2D.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NParticleManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Light\NPointLight.h" />
-    <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffect.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\NTestScene.h" />
     <ClInclude Include="Application\ヘッダーファイル\Scene\NSceneChange.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Pipeline\NShader.h" />
@@ -514,5 +511,6 @@
     <ClInclude Include="Engine\ヘッダーファイル\Collision\RayCollider.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\Bloom.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
 </Project>

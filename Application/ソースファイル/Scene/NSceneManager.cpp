@@ -7,6 +7,7 @@
 #include "NObj3d.h"
 #include "NParticle3D.h"
 #include "NSceneChange.h"
+#include "UI.h"
 
 #pragma region staticƒƒ“ƒo•Ï”‰Šú‰»
 
@@ -30,12 +31,14 @@ void NSceneManager::Init()
 {
 	currentScene_->Init();
 	NSceneChange::GetInstance()->Init();
+	UI::GetInstance()->Init();
 }
 
 void NSceneManager::Update()
 {
 	currentScene_->Update();
 	NSceneChange::GetInstance()->Update();
+	UI::GetInstance()->Update();
 }
 
 void NSceneManager::Draw()

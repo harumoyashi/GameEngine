@@ -70,10 +70,6 @@ public:
 private:
 	//テクスチャサイズを取得して設定
 	void SetTexSize(const ComPtr<ID3D12Resource>& texBuff);
-	//アンカーポイント適用
-	void SetAncor(const NVec2& anchorPoint);
-	//上下左右反転フラグ適用
-	void SetIsFlip(bool isFlipX, bool isFlipY);
 	//切り抜き範囲適用
 	void SetClipRange(const NVec2& texLeftTop, const NVec2& texSize);
 
@@ -90,6 +86,10 @@ public:
 	void SetSize(const float x, const float y);
 	//座標指定
 	void SetPos(const float x, const float y);
+	//アンカーポイント適用
+	void SetAncor(const NVec2& anchorPoint);
+	//上下左右反転フラグ適用
+	void SetIsFlip(bool isFlipX, bool isFlipY);
 #pragma endregion
 #pragma region 描画
 	//共通グラフィックスコマンド

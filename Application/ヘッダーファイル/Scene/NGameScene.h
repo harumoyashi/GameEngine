@@ -21,19 +21,6 @@ class NGameScene final :
 	public IScene
 {
 private:
-	//前景スプライトの種類
-	enum class FSpriteType
-	{
-		Shaft,
-		LStick,
-		Abutton,
-		AbuttonPush,
-		Clear,
-		Faild,
-
-		MaxForeSprite
-	};
-
 	//ゲーム内でのシーン状態
 	static SceneMode scene;
 
@@ -44,7 +31,6 @@ private:
 	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
 
 	//前景スプライト
-	std::vector<std::unique_ptr<NSprite>> foreSprite_{ (uint32_t)FSpriteType::MaxForeSprite };		//LスティックUI
 	float slidePos_ = 0.0f;							//横に掃けてく時のスライド位置
 	NEasing::EaseTimer slideTimer_ = 0.1f;			//スライド時のイージング用
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー

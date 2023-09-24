@@ -17,6 +17,7 @@
 #include "Field.h"
 #include "Wave.h"
 #include "Score.h"
+#include "UI.h"
 
 SceneMode NGameScene::scene = SceneMode::Play;
 
@@ -59,34 +60,24 @@ void NGameScene::Init()
 	backSprite_->color_.SetColor255(10, 10, 10);
 
 	//前景スプライト生成
-	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
-	{
-		foreSprite_[i] = std::make_unique<NSprite>();
-	}
 
 	Score::Init();
 #pragma region 各スプライトの設定
-	foreSprite_[(uint32_t)FSpriteType::Shaft]->CreateSprite("shaft");
-	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetSize(100.0f, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 500.0f);
-	foreSprite_[(uint32_t)FSpriteType::LStick]->CreateSprite("stick");
-	foreSprite_[(uint32_t)FSpriteType::LStick]->SetSize(100.0f, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f, 500.0f);
+	UI::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
+	UI::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
+	UI::GetInstance()->SetSize(UIType::Lstick, { 100.0f,100.0f });
+	UI::GetInstance()->SetPos(UIType::Lstick, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
 
-	for (uint32_t i = 0; i < 2; i++)
-	{
-		foreSprite_[(uint32_t)FSpriteType::Abutton + i] = std::make_unique<NSprite>();
-		foreSprite_[(uint32_t)FSpriteType::Abutton + i]->CreateClipSprite("Abutton", { i * 192.f,0 }, { 192.f,192.f });
-		foreSprite_[(uint32_t)FSpriteType::Abutton + i]->SetPos(
-			(float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f);
-	}
 
-	foreSprite_[(uint32_t)FSpriteType::Clear]->CreateSprite("clear");
-	foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::Clear]->SetSize(350.f, 100.f);
-	foreSprite_[(uint32_t)FSpriteType::Faild]->CreateSprite("faild");
-	foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(-(float)NWindows::GetInstance()->kWin_width, 100.0f);
-	foreSprite_[(uint32_t)FSpriteType::Faild]->SetSize(350.f, 100.f);
+	UI::GetInstance()->SetPos(UIType::Abutton,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
+	UI::GetInstance()->SetPos(UIType::AbuttonPush,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
+
+	UI::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
+	UI::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
+	UI::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
+	UI::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
 #pragma endregion
 #pragma endregion
 	// ライト生成
@@ -114,10 +105,6 @@ void NGameScene::Update()
 #pragma endregion
 #pragma region スプライト
 	backSprite_->Update();
-	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
-	{
-		foreSprite_[i]->Update();
-	}
 	Score::Update();
 #pragma endregion
 	BulletManager::GetInstance()->Update();
@@ -136,8 +123,8 @@ void NGameScene::Update()
 		Player::GetInstance()->Update();
 
 		//Aボタンはプレイ中使わないから見せない
-		foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
-		foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+		UI::GetInstance()->SetInvisible(UIType::Abutton, true);
+		UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
 		if (Field::GetInstance()->GetIsStart())
 		{
@@ -149,15 +136,15 @@ void NGameScene::Update()
 			slideTimer_.Update();
 
 			slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer_.GetTimeRate());
-			foreSprite_[(uint32_t)FSpriteType::Shaft]->SetPos(
-				NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f);
+			UI::GetInstance()->SetPos(UIType::Shaft,
+				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f });
 		}
 
 		NVec2 stickVec;
 		stickVec = NInput::GetInstance()->GetStick() * 8.0f;
 		//Yはスティックだと上が正の値なので引く
-		foreSprite_[(uint32_t)FSpriteType::LStick]->SetPos(
-			NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y);
+		UI::GetInstance()->SetPos(UIType::Lstick,
+			{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
 
 		if (Field::GetInstance()->GetIsStart())
 		{
@@ -209,7 +196,8 @@ void NGameScene::Update()
 		slideTimer_.Update();
 		//クリアテキストスライド
 		slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		foreSprite_[(uint32_t)FSpriteType::Clear]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f);
+		UI::GetInstance()->SetPos(UIType::Clear,
+			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
 		//リザルトスコアが上から落ちてくる
 		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
@@ -224,13 +212,13 @@ void NGameScene::Update()
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
-			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
-			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = false;
+			UI::GetInstance()->SetInvisible(UIType::Abutton, true);
+			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 		}
 		else
 		{
-			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = false;
-			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+			UI::GetInstance()->SetInvisible(UIType::Abutton, false);
+			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
 		//シーン切り替え
@@ -251,7 +239,8 @@ void NGameScene::Update()
 		slideTimer_.Update();
 		//失敗テキストスライド
 		slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		foreSprite_[(uint32_t)FSpriteType::Faild]->SetPos(NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f);
+		UI::GetInstance()->SetPos(UIType::Faild,
+			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
 		//リザルトスコアが上から落ちてくる
 		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
@@ -266,13 +255,13 @@ void NGameScene::Update()
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
-			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;
-			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = false;
+			UI::GetInstance()->SetInvisible(UIType::Abutton, true);
+			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 		}
 		else
 		{
-			foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = false;
-			foreSprite_[(uint32_t)FSpriteType::AbuttonPush]->isInvisible_ = true;
+			UI::GetInstance()->SetInvisible(UIType::Abutton, false);
+			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
 		//シーン切り替え
@@ -338,10 +327,12 @@ void NGameScene::DrawForeSprite()
 {
 	Wave::GetInstance()->DrawSprite();
 
-	for (uint32_t i = 0; i < (uint32_t)FSpriteType::MaxForeSprite; i++)
-	{
-		foreSprite_[i]->Draw();
-	}
+	UI::GetInstance()->Draw(UIType::Abutton);
+	UI::GetInstance()->Draw(UIType::AbuttonPush);
+	UI::GetInstance()->Draw(UIType::Clear);
+	UI::GetInstance()->Draw(UIType::Faild);
+	UI::GetInstance()->Draw(UIType::Shaft);
+	UI::GetInstance()->Draw(UIType::Lstick);
 
 	Score::Draw();
 }
