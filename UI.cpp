@@ -12,11 +12,6 @@ UI* UI::GetInstance()
 
 void UI::Init()
 {
-	/*for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
-	{
-		uiSprite_.emplace_back();
-	}*/
-
 	//“Ç‚Ýž‚Ý`
 	uiSprite_[(uint32_t)UIType::Abutton].CreateClipSprite("Abutton", { 0.f,0 }, { 192.f,192.f });
 	uiSprite_[(uint32_t)UIType::AbuttonPush].CreateClipSprite("Abutton", { 192.f,0 }, { 192.f,192.f });

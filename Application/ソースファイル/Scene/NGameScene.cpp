@@ -93,6 +93,7 @@ void NGameScene::Init()
 
 	scene = SceneMode::Play;
 
+	stickRotTimer_.Reset();
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
 	slideTimer_ = 0.1f;
@@ -140,8 +141,9 @@ void NGameScene::Update()
 				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f });
 		}
 
-		NVec2 stickVec;
-		stickVec = NInput::GetInstance()->GetStick() * 8.0f;
+		stickRotTimer_.Roop();
+		NVec2 stickVec = { sinf(stickRotTimer_.GetTimeRate() * PI2),cosf(stickRotTimer_.GetTimeRate() * PI2) };
+		stickVec *= 10.f;
 		//Yはスティックだと上が正の値なので引く
 		UI::GetInstance()->SetPos(UIType::Lstick,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
