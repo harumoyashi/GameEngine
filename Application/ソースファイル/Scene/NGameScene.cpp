@@ -134,11 +134,6 @@ void NGameScene::Update()
 	if (scene == SceneMode::Play)	//プレイ中の処理
 	{
 		Player::GetInstance()->Update();
-		//死亡パーティクル出るボタン
-		if (NInput::IsKeyDown(DIK_0))
-		{
-			Player::GetInstance()->DeadParticle();
-		}
 
 		//Aボタンはプレイ中使わないから見せない
 		foreSprite_[(uint32_t)FSpriteType::Abutton]->isInvisible_ = true;

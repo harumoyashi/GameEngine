@@ -16,6 +16,7 @@ void NAudioManager::AllLoad()
     LoadSound("explosion_SE.mp3", "explosionSE");       //プレイヤーが弾ける音
     LoadSound("sceneChange_SE.mp3", "sceneChangeSE");   //シーン遷移音
     LoadSound("dead_SE.mp3", "deadSE");                 //プレイヤー死亡音
+    LoadSound("item_get_SE.mp3", "itemGetSE");          //アイテム獲得音
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)

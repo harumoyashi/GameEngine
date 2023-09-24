@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "NCollisionManager.h"
+#include "NAudioManager.h"
 
 Item::Item() :
 	moveVelo_({ 0,0 }), moveSpeed_(0.2f), isAlive_(true), elapseSpeed_(0.0f)
@@ -75,5 +76,6 @@ void Item::OnCollision()
 	{
 		isAlive_ = false;
 		Player::GetInstance()->LevelUp(bulletType_);
+		NAudioManager::Play("itemGetSE");
 	}
 }
