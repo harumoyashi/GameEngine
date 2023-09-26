@@ -17,6 +17,8 @@ public:
 protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
 	SphereCollider collider_;		//コライダー
+	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
+	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
 	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
@@ -33,9 +35,6 @@ protected:
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
 	bool isItem_;					//アイテム持ってるかフラグ
-
-	//コイン(ゲージ)持たせる
-
 
 public:
 	IEnemy();
@@ -91,6 +90,8 @@ public:
 	//大きさ設定
 	void SetScale(const float scale) {
 		obj_->scale_ = scale;  collider_.SetRadius(scale); }
+	//スケールいじる用変数設定
+	void SetAddScale(const float scale) {addScale_ = scale;}
 	//移動角度設定
 	void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
 	//移動スピード設定

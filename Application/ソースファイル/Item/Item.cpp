@@ -25,7 +25,7 @@ void Item::Generate(const NVec3& pos)
 
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(obj_->scale_.x * 1.5f);	//ちょい大きめに判定取る
+	collider_.SetRadius(obj_->scale_.x * 2.5f);	//ちょい大きめに判定取る
 	collider_.SetColID("item");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Item::OnCollision, this));

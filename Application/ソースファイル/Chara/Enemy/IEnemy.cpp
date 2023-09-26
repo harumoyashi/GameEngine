@@ -26,12 +26,13 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->SetModel(modelname);
 
 	obj_->position_ = pos;
-	obj_->scale_ = Player::GetInstance()->GetScale() * 1.5f;
+	oriScale_ = Player::GetInstance()->GetScale();
+	obj_->scale_ = oriScale_;
 	obj_->color_ = NColor::kLightblue;
 	obj_->Update();
 
 	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetRadius(obj_->scale_.x * 2.f);
 	collider_.SetColID("enemy");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
@@ -49,6 +50,9 @@ void IEnemy::Update()
 {
 	//経過時間を適用
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
+	
+	//リズム乗らせるからスケールを常に更新
+	obj_->scale_ = oriScale_ + addScale_;
 
 	//移動
 	Move();

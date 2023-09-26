@@ -1,6 +1,7 @@
 #include "EnemyManager.h"
 #include "NParticleManager.h"
 #include "Wave.h"
+#include "Player.h"
 
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -14,6 +15,10 @@ EnemyManager* EnemyManager::GetInstance()
 void EnemyManager::Init()
 {
 	enemys_.clear();
+
+	beatInTimer_.Reset();
+	beatOutTimer_.Reset();
+	beatInTimer_.Start();
 }
 
 void EnemyManager::Update()
@@ -30,6 +35,35 @@ void EnemyManager::Update()
 			i = (size_t)-1;
 			isEnemyDead = true;
 		}
+	}
+
+	//リズム乗らせとく
+	float size = 0.f;
+	if (beatInTimer_.GetRun())
+	{
+		beatInTimer_.Update(Player::GetInstance()->GetElapseSpeed());
+		size = NEasing::OutQuad(beatInTimer_.GetTimeRate());
+
+		if (beatInTimer_.GetEnd())
+		{
+			beatOutTimer_.Start();
+		}
+	}
+	else if (beatOutTimer_.GetRun())
+	{
+		beatOutTimer_.Update(Player::GetInstance()->GetElapseSpeed());
+		size = 1.f - NEasing::InBack(beatOutTimer_.GetTimeRate());
+
+		if (beatOutTimer_.GetEnd())
+		{
+			beatInTimer_.Start();
+		}
+	}
+
+	//足す分のスケールを適用
+	for (auto& enemy : enemys_)
+	{
+		enemy->SetAddScale(size * Player::GetInstance()->GetScale().x);
 	}
 
 	if (isEnemyDead)	//もし誰か死んだら
