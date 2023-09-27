@@ -1,15 +1,17 @@
 #include "NCameraManager.h"
 #include "Player.h"
+#include "Field.h"
 
 void NCameraManager::NormalCameraInit()
 {
 	length_ = 10.0f;
+	normalCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ + NVec3(0, -length_, -length_ * 0.5f);
+	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVec3(0, 0, 1);	//下見下ろす形にする
@@ -27,10 +29,31 @@ void NCameraManager::NormalCameraUpdate()
 	}
 
 	//前のカメラから諸々イージングしてから下の処理やりたい
+	//イージング用のタイマー動かす
+	normalCameraMoveEase_.Update();
+	if (normalCameraMoveEase_.GetStarted() == false)
+	{
+		normalCameraMoveEase_.Start();
+	}
 
-	normalCamera_.SetTarget(Player::GetInstance()->GetPos());
-	normalCamera_.SetEye(normalCamera_.GetTarget() + NVec3(0, length_, -length_ * 0.5f));
-	normalCamera_.SetUpVec(nextUpVec_);
+	//前のカメラから現在のカメラまでの補間
+	if (normalCameraMoveEase_.GetRun())
+	{
+		NVec3 target, pos, upVec;
+		target = OutQuad(currentTarget_, nextTarget_, normalCameraMoveEase_.GetTimeRate());
+		pos = OutQuad(currentPos_, nextPos_, normalCameraMoveEase_.GetTimeRate());
+		upVec = OutQuad(currentUpVec_, nextUpVec_, normalCameraMoveEase_.GetTimeRate());
+
+		normalCamera_.SetTarget(target);
+		normalCamera_.SetEye(pos);
+		normalCamera_.SetUpVec(upVec);
+	}
+	else if (normalCameraMoveEase_.GetEnd())
+	{
+		normalCamera_.SetTarget(Player::GetInstance()->GetPos());
+		normalCamera_.SetEye(normalCamera_.GetTarget() + NVec3(0, length_, -length_ * 0.5f));
+		normalCamera_.SetUpVec(nextUpVec_);
+	}
 
 	normalCamera_.Update();
 	NCamera::sCurrentCamera = &normalCamera_;
@@ -99,6 +122,62 @@ void NCameraManager::TitleCameraUpdate()
 
 	titleCamera_.Update();
 	NCamera::sCurrentCamera = &titleCamera_;
+}
+
+void NCameraManager::BeforeStartCameraInit()
+{
+	length_ = 10.0f;
+	beforeStartCameraMoveEase_.Reset();
+
+	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+	nextTarget_ = { 0,0,Field::GetInstance()->GetGoalPos() };
+
+	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	nextPos_ = nextTarget_ + NVec3(0, length_, -length_*0.8f);
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	//あえてZ方向を見る形にすることで、見下ろす形に遷移してくといい感じのカメラワークになる
+	//多分回転とかでやったほうがいいけどまあいいやいい感じだもん
+	nextUpVec_ = NVec3(0, 1, 0);
+
+	currentFov_ = NCamera::sCurrentCamera->GetFov();
+	nextFov_ = 45.0f;
+}
+
+void NCameraManager::BeforeStartCameraUpdate()
+{
+	if (isChange_ == false)
+	{
+		BeforeStartCameraInit();
+		isChange_ = true;
+	}
+
+	////イージング用のタイマー動かす
+	//beforeStartCameraMoveEase_.Update();
+	//if (beforeStartCameraMoveEase_.GetStarted() == false)
+	//{
+	//	beforeStartCameraMoveEase_.Start();
+	//}
+
+	////前のカメラから現在のカメラまでの補間
+	//if (beforeStartCameraMoveEase_.GetRun())
+	//{
+	//	NVec3 target, pos, upVec;
+	//	target = OutQuad(currentTarget_, nextTarget_, beforeStartCameraMoveEase_.GetTimeRate());
+	//	pos = OutQuad(currentPos_, nextPos_, beforeStartCameraMoveEase_.GetTimeRate());
+	//	upVec = OutQuad(currentUpVec_, nextUpVec_, beforeStartCameraMoveEase_.GetTimeRate());
+
+	//	beforeStartCamera_.SetTarget(target);
+	//	beforeStartCamera_.SetEye(pos);
+	//	beforeStartCamera_.SetUpVec(upVec);
+	//}	//カメラ動くことないから補間終わったら放置
+
+	beforeStartCamera_.SetTarget(nextTarget_);
+	beforeStartCamera_.SetEye(nextPos_);
+	beforeStartCamera_.SetUpVec(nextUpVec_);
+
+	beforeStartCamera_.Update();
+	NCamera::sCurrentCamera = &beforeStartCamera_;
 }
 
 void NCameraManager::FaildCameraInit()
@@ -252,6 +331,8 @@ void NCameraManager::Init()
 	isActive_ = true;
 
 	cameraRotEase_ = 4.0f;
+	normalCameraMoveEase_ = 0.8f;
+	beforeStartCameraMoveEase_ = 0.3f;
 	faildCameraMoveEase_ = 0.3f;
 	clearCameraMoveEase_ = 0.5f;
 }
@@ -280,6 +361,7 @@ void NCameraManager::Update()
 		&NCameraManager::NormalCameraUpdate,
 		&NCameraManager::DebugCameraUpdate,
 		&NCameraManager::TitleCameraUpdate,
+		&NCameraManager::BeforeStartCameraUpdate,
 		&NCameraManager::FaildCameraUpdate,
 		&NCameraManager::ClearCameraUpdate,
 	};

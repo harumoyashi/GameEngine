@@ -12,9 +12,10 @@
 //ゲームシーン内でのシーン分け
 enum class SceneMode
 {
-	Play,	//プレイ中
-	Clear,	//クリアリザルト
-	Faild,	//失敗リザルト
+	BeforeStart,	//始まる前
+	Play,			//プレイ中
+	Clear,			//クリアリザルト
+	Faild,			//失敗リザルト
 };
 
 class NGameScene final :
@@ -26,14 +27,14 @@ private:
 
 	//オブジェクト
 
-
 	//背景スプライト
 	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
 
 	//前景スプライト
 
 	//UI用の変数
-	NEasing::EaseTimer stickRotTimer_ = 2.0f;			//Lスティックぐるぐるタイマー
+	NEasing::EaseTimer beforeStartTimer_ = 2.0f;	//始まる前の演出タイマー
+	NEasing::EaseTimer stickRotTimer_ = 2.0f;		//Lスティックぐるぐるタイマー
 	float slidePos_ = 0.0f;							//横に掃けてく時のスライド位置
 	NEasing::EaseTimer slideTimer_ = 0.1f;			//スライド時のイージング用
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー

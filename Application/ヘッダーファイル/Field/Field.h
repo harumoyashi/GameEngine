@@ -60,6 +60,8 @@ public:
 	// ゲッター //
 	//スタート地点座標取得
 	float GetStartPos() const { return startPosZ_; }
+	//ゴール地点座標取得
+	float GetGoalPos() const { return goalPosZ_; }
 	//フィールドの大きさ取得
 	NVec3 GetScale() const { return fieldObj_->scale_; }
 	//スタートしたかフラグ取得

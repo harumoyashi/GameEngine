@@ -4,6 +4,7 @@
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
+#include "NCameraManager.h"
 #include "Field.h"
 #include "RadialBlur.h"
 #include "Bloom.h"
@@ -89,7 +90,11 @@ void Player::Update()
 
 	if (isAlive_)
 	{
-		Move();
+		//ƒJƒƒ‰‘JˆÚ‚ªI‚í‚Á‚Ä‚½‚ç“®‚«o‚µ‚Ä‚¨‚‹
+		if (NCameraManager::GetInstance()->GetIsNormalCameraChanged())
+		{
+			Move();
+		}
 		if (isMove_)	//“®‚¯‚È‚¢‚æ”»’è‚ÌŽž‚Í’e‚ðŒ‚‚½‚È‚¢‚æ‚¤‚É
 		{
 			Shot();

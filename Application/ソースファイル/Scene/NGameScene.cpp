@@ -33,7 +33,7 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::BeforeStart);
 #pragma endregion
 #pragma region 描画初期化処理
 	//オブジェクト
@@ -74,6 +74,10 @@ void NGameScene::Init()
 	UI::GetInstance()->SetPos(UIType::AbuttonPush,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
 
+	//Aボタンはプレイ中使わないから見せない
+	UI::GetInstance()->SetInvisible(UIType::Abutton, true);
+	UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+
 	UI::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UI::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
 	UI::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
@@ -91,8 +95,9 @@ void NGameScene::Init()
 	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 	Bloom::Init();
 
-	scene = SceneMode::Play;
+	scene = SceneMode::BeforeStart;
 
+	beforeStartTimer_.Start();
 	stickRotTimer_.Reset();
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
@@ -119,13 +124,20 @@ void NGameScene::Update()
 	//ライトたちの更新
 	lightGroup_->Update();
 
-	if (scene == SceneMode::Play)	//プレイ中の処理
+	//ここはゲーム始まる前のシーン
+	if (scene == SceneMode::BeforeStart)	//始まる前の処理
+	{
+		beforeStartTimer_.Update();
+		//演出終わったらプレイシーンに移行
+		if (beforeStartTimer_.GetEnd())
+		{
+			NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+			scene = SceneMode::Play;
+		}
+	}
+	else if (scene == SceneMode::Play)	//プレイ中の処理
 	{
 		Player::GetInstance()->Update();
-
-		//Aボタンはプレイ中使わないから見せない
-		UI::GetInstance()->SetInvisible(UIType::Abutton, true);
-		UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
 		if (Field::GetInstance()->GetIsStart())
 		{
