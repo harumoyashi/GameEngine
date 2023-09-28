@@ -51,6 +51,12 @@ void NumDrower::SetSize(const NVec2& size)
 	}
 }
 
+void NumDrower::SetIndent(float indent)
+{
+	indent_ = indent;
+	SetPos(pos_);
+}
+
 void NumDrower::SetColor(const NColor& color)
 {
 	color_ = color;

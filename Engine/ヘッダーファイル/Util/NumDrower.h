@@ -26,6 +26,7 @@ public:
 	// セッター //
 	void SetPos(const NVec2& pos);
 	void SetSize(const NVec2& size);
+	void SetIndent(float indent);
 	void SetColor(const NColor& color);
 	void SetNum(uint32_t num);
 };

@@ -17,15 +17,17 @@ void Score::Init()
 	}
 
 	scoreTex_[(uint32_t)TexType::Now].SetPos({ 50.f,50.f });
-	scoreTex_[(uint32_t)TexType::Now].SetSize({ 50.f,50.f });
+	scoreTex_[(uint32_t)TexType::Now].SetSize({ 45.f,50.f });
 	scoreTex_[(uint32_t)TexType::Now].SetNum(nowScore_);
 	scoreTex_[(uint32_t)TexType::Result].SetPos(
 		{ NWindows::kWin_width * 0.5f - scoreTex_[(uint32_t)TexType::Result].GetSize().x * 2.5f,-500.f });
-	scoreTex_[(uint32_t)TexType::Result].SetSize({ 80.f,80.f });
+	scoreTex_[(uint32_t)TexType::Result].SetIndent(1.f);
+	scoreTex_[(uint32_t)TexType::Result].SetSize({ 70.f,80.f });
 	scoreTex_[(uint32_t)TexType::Result].SetNum(nowScore_);
 	scoreTex_[(uint32_t)TexType::Top].SetPos(
 		{ NWindows::kWin_width * 0.5f,-500.f });
-	scoreTex_[(uint32_t)TexType::Top].SetSize({ 40.f,40.f });
+	scoreTex_[(uint32_t)TexType::Top].SetIndent(1.f);
+	scoreTex_[(uint32_t)TexType::Top].SetSize({ 35.f,40.f });
 	scoreTex_[(uint32_t)TexType::Top].SetNum(topScore_);
 
 	topTex_ = std::make_unique<NSprite>();
