@@ -113,7 +113,7 @@ public:
 	//無敵状態設定
 	void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
 	//生きてるかフラグ設定
-	void SetIsAlive(bool isAlive) { isAlive_ = isAlive; }
+	void SetIsAlive(bool isAlive);
 	//動けるかフラグ設定
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
 	//経過時間スピード設定

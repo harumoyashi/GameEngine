@@ -165,7 +165,10 @@ void NGameScene::Update()
 			//ƒvƒŒƒCƒ„[‚ª”g‚Éˆù‚Ýž‚Ü‚ê‚½‚çŽE‚·
 			if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 			{
-				Player::GetInstance()->SetIsAlive(false);
+				if (Player::GetInstance()->GetIsAlive())	//¶‚«‚Ä‚é‚È‚çŽE‚·
+				{
+					Player::GetInstance()->SetIsAlive(false);
+				}
 			}
 		}
 
@@ -311,7 +314,7 @@ void NGameScene::Update()
 		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
 #endif
-}
+	}
 
 void NGameScene::DrawBackSprite()
 {

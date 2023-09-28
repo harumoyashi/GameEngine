@@ -310,7 +310,8 @@ void Player::OnCollision()
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
 		NAudioManager::Play("deadSE");
-		isAlive_ = false;
+		SetIsAlive(false);
+		NInput::Vibration(0.8f,0.8f,0.3f);
 	}
 }
 
@@ -361,5 +362,15 @@ void Player::LevelUp(BulletType bulletType)
 		break;*/
 	default:
 		break;
+	}
+}
+
+void Player::SetIsAlive(bool isAlive)
+{
+	isAlive_ = isAlive;
+	//死んだならコントローラー振動させる
+	if (isAlive_ == false)
+	{
+		NInput::Vibration(0.8f, 0.8f, 0.3f);
 	}
 }

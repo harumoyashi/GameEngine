@@ -185,6 +185,10 @@ XINPUT_STATE NInput::sPrevPad{};
 bool NInput::sIsConnect = false;
 //振動
 XINPUT_VIBRATION NInput::sVibration{};
+//振動時間決めるタイマー
+NEasing::EaseTimer NInput::sVibTimer = 0.f;
+//振動の大きさ
+NVec2 NInput::sVibPower = {};
 
 void NInput::PadInit()
 {
@@ -216,6 +220,7 @@ void NInput::PadUpdate()
 	{
 		sIsConnect = false;
 	}
+	VibUpdate();
 	SetDeadZone();
 }
 
@@ -337,13 +342,25 @@ uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 
 //コントローラーの振動を設定
 //パワーは0.0f~1.0fで入力してね
-void NInput::Vibration(const float leftVibrationPower, const float rightVibrationPower)
+void NInput::Vibration(float leftVibrationPower, float rightVibrationPower, float timer)
 {
-	float lVibPower = leftVibrationPower, rVibPower = rightVibrationPower;
-	lVibPower = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
-	rVibPower = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
+	sVibTimer = timer;
+	sVibTimer.Start();	//タイマースタート
 
-	sVibration.wLeftMotorSpeed = (int)(lVibPower * 65535.0f);
-	sVibration.wRightMotorSpeed = (int)(rVibPower * 65535.0f);
+	sVibPower.x = leftVibrationPower;
+	sVibPower.y = rightVibrationPower;
+
+	//はみ出さないように
+	sVibPower.x = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
+	sVibPower.y = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
+}
+
+void NInput::VibUpdate()
+{
+	sVibTimer.Update();
+	//タイマーに応じて振動弱めてく
+	float vibTimer = 1.f - sVibTimer.GetTimeRate();
+	sVibration.wLeftMotorSpeed = (int)(sVibPower.x * 65535.0f * vibTimer);
+	sVibration.wRightMotorSpeed = (int)(sVibPower.y * 65535.0f * vibTimer);
 	XInputSetState(0, &sVibration);
 }

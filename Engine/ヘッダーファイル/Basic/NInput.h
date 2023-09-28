@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "NVec2.h"
 #include "NVec3.h"
+#include "NEasing.h"
 
 #include <wrl.h>
 
@@ -86,6 +87,8 @@ private:
 
 	//振動
 	static XINPUT_VIBRATION sVibration;
+	static NEasing::EaseTimer sVibTimer;	//振動時間決めるタイマー
+	static NVec2 sVibPower;					//振動の大きさ(Xが左Yが右の振動)
 
 public:
 	//pad初期化
@@ -119,7 +122,9 @@ public:
 
 	//コントローラーの振動を設定
 	//パワーは0.0f~1.0fで入力してね
-	static void Vibration(const float leftVibrationPower, const float rightVibrationPower);
+	static void Vibration(float leftVibrationPower, float rightVibrationPower,float timer);
+	//コントローラーの振動用更新処理
+	static void VibUpdate();
 
 	//接続情報取得
 	static bool GetIsConnect() { return sIsConnect; }
