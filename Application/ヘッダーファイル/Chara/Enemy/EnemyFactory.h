@@ -7,11 +7,14 @@ class EnemyFactory final
 private:
 	Mouse mouse;
 
-	NVec3 offset;			//エミッター内でどれだけ出現位置ずらすか
+	NVec3 offset;				//エミッター内でどれだけ出現位置ずらすか
 	bool isCollision = false;	//敵同士が被ってるかフラグ
 
-	uint32_t mouseSideNum = 10;				//狼群(横)の出現数
-	NVec2 mouseSideEmitter = {2.0f,1.0f};	//狼群(横)の出現範囲
+	uint32_t mouseSideNum = 10;				//ねずみ群(横)の出現数
+	NVec2 mouseSideEmitter = {2.0f,1.0f};	//ねずみ群(横)の出現範囲
+
+	uint32_t mouseFrontNum = 8;				//ねずみ群(正面)の出現数
+	NVec2 mouseFrontEmitter = { 6.0f,1.0f };//ねずみ群(正面)の出現範囲
 
 public:
 	static EnemyFactory* GetInstance();

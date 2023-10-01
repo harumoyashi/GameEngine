@@ -146,8 +146,8 @@ void IEnemy::Move()
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
 
-	//Œü‚©‚Á‚Ä‚é•û‚Æ‚Í‹t‚Á‚Û‚¢
-	obj_->rotation_.y = -MathUtil::Radian2Degree(moveAngle_);
+	//‰ñ“]
+	obj_->rotation_.y = moveAngle_ * 360 / PI2;
 }
 
 void IEnemy::SetisItem(bool isItem)

@@ -11,7 +11,8 @@ public:
 	//ここのタイプに応じてファクトリーで配置して生成する
 	enum class EnemyType
 	{
-		MouseSide,	//横からくる狼たち
+		MouseSide,	//横からくるねずみたち
+		MouseFront,	//正面からくるねずみたち
 	};
 
 protected:
