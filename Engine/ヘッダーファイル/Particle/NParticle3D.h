@@ -32,7 +32,7 @@ class IEmitter3D
 
 		//色
 		NColor color;
-		//生存時間(フレーム数)
+		//生存時間
 		NEasing::EaseTimer aliveTimer;
 
 		//イージング用タイマー

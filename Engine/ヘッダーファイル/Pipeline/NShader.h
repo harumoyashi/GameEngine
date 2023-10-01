@@ -12,7 +12,8 @@ private:
 
 	ComPtr<ID3DBlob> vsBlob_;		// 頂点シェーダオブジェクト
 	ComPtr<ID3DBlob> psBlob_;		// ピクセルシェーダオブジェクト
-	ComPtr<ID3DBlob> gsBlob_;		// ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> gsBlob_;		// ジオメトリシェーダオブジェクト
+	ComPtr<ID3DBlob> csBlob_;		// コンピュートシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob_;	// エラーオブジェクト
 
 	static std::map<std::string, NShader> shaderMap_;
@@ -24,13 +25,20 @@ public:
 	void LoadPS(std::string psPath);
 	//パスに合わせたジオメトリシェーダーの読み込み
 	void LoadGS(std::string gsPath);
+	//パスに合わせたコンピュートシェーダーの読み込み
+	void LoadCS(std::string csPath);
 
 	//シェーダーを生成してマップに登録
-	static void CreateShader(std::string id, std::string path, bool isLoadGS);
+	//id:シェーダーマップに登録する名前
+	//path:シェーダーマップに登録するシェーダーのパス
+	//isLoadGS:ジオメトリシェーダー読み込むか
+	//isLoadCS:コンピュートシェーダー読み込むか
+	static void CreateShader(std::string id, std::string path, bool isLoadGS = false, bool isLoadCS = false);
 	//指定したidのシェーダーを取得
 	static NShader* GetShader(std::string id);
 
 	ID3DBlob* GetVSBlob() { return vsBlob_.Get(); }
 	ID3DBlob* GetPSBlob() { return psBlob_.Get(); }
 	ID3DBlob* GetGSBlob() { return gsBlob_.Get(); }
+	ID3DBlob* GetCSBlob() { return csBlob_.Get(); }
 };

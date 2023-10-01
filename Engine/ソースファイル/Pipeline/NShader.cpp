@@ -105,7 +105,40 @@ void NShader::LoadGS(std::string gsPath)
 	}
 }
 
-void NShader::CreateShader(std::string id, std::string path, bool isLoadGS)
+void NShader::LoadCS(std::string csPath)
+{
+	HRESULT result;
+
+	std::string shaderFolder = "Resources/shaders/";
+	std::string shaderType = "CS.hlsl";
+	csPath = shaderFolder + csPath + shaderType;
+
+	// 頂点シェーダの読み込みとコンパイル
+	result = D3DCompileFromFile(
+		std::wstring(csPath.begin(), csPath.end()).c_str(),  // シェーダファイル名
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+		"main", "cs_5_0", // エントリーポイント名、シェーダーモデル指定
+		D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+		0,
+		&csBlob_, &errorBlob_);
+
+	// エラーなら
+	if (FAILED(result)) {
+		// errorBlob_からエラー内容をstring型にコピー
+		std::string error;
+		error.resize(errorBlob_->GetBufferSize());
+		std::copy_n((char*)errorBlob_->GetBufferPointer(),
+			errorBlob_->GetBufferSize(),
+			error.begin());
+		error += "\n";
+		// エラー内容を出力ウィンドウに表示
+		OutputDebugStringA(error.c_str());
+		assert(0);
+	}
+}
+
+void NShader::CreateShader(std::string id, std::string path, bool isLoadGS, bool isLoadCS)
 {
 	shaderMap_[id] = NShader();
 	shaderMap_[id].LoadVS(path);
@@ -113,6 +146,11 @@ void NShader::CreateShader(std::string id, std::string path, bool isLoadGS)
 	if (isLoadGS)
 	{
 		shaderMap_[id].LoadGS(path);
+	}
+
+	if (isLoadCS)
+	{
+		shaderMap_[id].LoadCS(path);
 	}
 }
 

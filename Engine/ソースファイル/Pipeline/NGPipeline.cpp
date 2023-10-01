@@ -268,6 +268,50 @@ void NGPipeline::SetVertLayoutParticle()
 	};
 }
 
+void NGPipeline::SetVertLayoutGPUParticle()
+{
+	// 頂点レイアウト
+	//座標
+	vertLayoutGPUParticle_[0] = {
+	"POSITION",										//セマンティック名
+	0,												//同名のセマンティックがあるとき使うインデックス
+	DXGI_FORMAT_R32G32B32_FLOAT,					//要素数とビット数を表す
+	0,												//入力スロットインデックス
+	D3D12_APPEND_ALIGNED_ELEMENT,					//データのオフセット地(左のは自動設定)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//入力データ種別
+	0												//一度に描画するインスタンス数(0でよい)
+	};// (1行で書いたほうが見やすい)
+	//座標以外に色、テクスチャUVなどを渡す場合はさらに続ける
+	//UV
+	vertLayoutGPUParticle_[1] = {
+		"TEXCOORD",0,
+		DXGI_FORMAT_R32G32_FLOAT,0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
+	//回転情報
+	vertLayoutGPUParticle_[2] = {
+		"ROT",0,
+		DXGI_FORMAT_R32G32B32_FLOAT,0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
+	//色
+	vertLayoutGPUParticle_[3] = {
+		"COLOR",0,
+		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
+	};
+	//大きさ
+	vertLayoutGPUParticle_[4] = {
+		"SCALE", 0,
+		DXGI_FORMAT_R32_FLOAT, 0,
+		D3D12_APPEND_ALIGNED_ELEMENT,
+		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
+	};
+}
+
 PipeLineManager* PipeLineManager::GetInstance()
 {
 	static PipeLineManager instance;
@@ -282,9 +326,10 @@ void PipeLineManager::CreateAll()
 	pipeLine.SetVertLayoutSprite();
 	pipeLine.SetVertLayoutPostEffect();
 	pipeLine.SetVertLayoutParticle();
+	pipeLine.SetVertLayoutGPUParticle();
 #pragma region デフォルト3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objDesc;
 	//頂点レイアウト設定
@@ -295,7 +340,7 @@ void PipeLineManager::CreateAll()
 	NRootSignature rootSigObj;
 	rootSigObj.SetSamplerDesc(false);
 	//テクスチャ1個、行列、マテリアル、色、光源
-	rootSigObj.SetRootParam(1,4);
+	rootSigObj.SetRootParam(1, 4);
 	rootSigObj.Create();
 	objDesc.rootSig = rootSigObj;
 
@@ -319,7 +364,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region αブレンド3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objAlphaDesc;
 	//頂点レイアウト設定
@@ -354,7 +399,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 加算3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objAddDesc;
 	//頂点レイアウト設定
@@ -389,7 +434,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 減算3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objSubDesc;
 	//頂点レイアウト設定
@@ -424,7 +469,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 色反転3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj", false);
+	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objInvDesc;
 	//頂点レイアウト設定
@@ -459,7 +504,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region デフォルトFBX
 	//シェーダー生成
-	NShader::CreateShader("Fbx", "Fbx", false);
+	NShader::CreateShader("Fbx", "Fbx");
 
 	PipelineDesc fbxDesc;
 	//頂点レイアウト設定
@@ -492,149 +537,149 @@ void PipeLineManager::CreateAll()
 	//パイプライン生成
 	NGPipeline::Create(fbxDesc, "FbxNone");
 #pragma endregion
-//#pragma region αブレンドFBX
-//	//シェーダー生成
-//	NShader::CreateShader("Fbx", "Fbx", false);
-//
-//	PipelineDesc fbxAlphaDesc;
-//	//頂点レイアウト設定
-//	fbxAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
-//	fbxAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
-//
-//	//ルートシグネチャ設定
-//	NRootSignature rootSigFbxAlpha;
-//	rootSigFbxAlpha.SetSamplerDesc(false);
-//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
-//	rootSigFbx.SetRootParam(1, 5);
-//	rootSigFbxAlpha.Create();
-//	fbxAlphaDesc.rootSig = rootSigFbxAlpha;
-//
-//	//シェーダー設定
-//	fbxAlphaDesc.shader.pShader = NShader::GetShader("Fbx");
-//
-//	//カリング設定
-//	fbxAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
-//	//レンダーターゲット数設定
-//	fbxAlphaDesc.render.NumRenderTargets = 2;
-//
-//	//深度テストする
-//	fbxAlphaDesc.depth.DepthStencilState.DepthEnable = true;
-//
-//	//ブレンドモード設定
-//	fbxAlphaDesc.blend.blendDesc =
-//		bDesc::GetBlendMode(BlendMode::Alpha);
-//
-//	//パイプライン生成
-//	NGPipeline::Create(fbxAlphaDesc, "FbxAlpha");
-//#pragma endregion
-//#pragma region 加算FBX
-//	//シェーダー生成
-//	NShader::CreateShader("Fbx", "Fbx", false);
-//
-//	PipelineDesc fbxAddDesc;
-//	//頂点レイアウト設定
-//	fbxAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
-//	fbxAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
-//
-//	//ルートシグネチャ設定
-//	NRootSignature rootSigFbxAdd;
-//	rootSigFbxAdd.SetSamplerDesc(false);
-//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
-//	rootSigFbx.SetRootParam(1, 5);
-//	rootSigFbxAdd.Create();
-//	fbxAddDesc.rootSig = rootSigFbxAdd;
-//
-//	//シェーダー設定
-//	fbxAddDesc.shader.pShader = NShader::GetShader("Fbx");
-//
-//	//カリング設定
-//	fbxAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
-//	//レンダーターゲット数設定
-//	fbxAddDesc.render.NumRenderTargets = 2;
-//
-//	//深度テストする
-//	fbxAddDesc.depth.DepthStencilState.DepthEnable = true;
-//
-//	//ブレンドモード設定
-//	fbxAddDesc.blend.blendDesc =
-//		bDesc::GetBlendMode(BlendMode::Add);
-//
-//	//パイプライン生成
-//	NGPipeline::Create(fbxAddDesc, "FbxAdd");
-//#pragma endregion
-//#pragma region 減算FBX
-//	//シェーダー生成
-//	NShader::CreateShader("Fbx", "Fbx", false);
-//
-//	PipelineDesc fbxSubDesc;
-//	//頂点レイアウト設定
-//	fbxSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
-//	fbxSubDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
-//
-//	//ルートシグネチャ設定
-//	NRootSignature rootSigFbxSub;
-//	rootSigFbxSub.SetSamplerDesc(false);
-//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
-//	rootSigFbx.SetRootParam(1, 5);
-//	rootSigFbxSub.Create();
-//	fbxSubDesc.rootSig = rootSigFbxSub;
-//
-//	//シェーダー設定
-//	fbxSubDesc.shader.pShader = NShader::GetShader("Fbx");
-//
-//	//カリング設定
-//	fbxSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
-//	//レンダーターゲット数設定
-//	fbxSubDesc.render.NumRenderTargets = 2;
-//
-//	//深度テストする
-//	fbxSubDesc.depth.DepthStencilState.DepthEnable = true;
-//
-//	//ブレンドモード設定
-//	fbxSubDesc.blend.blendDesc =
-//		bDesc::GetBlendMode(BlendMode::Sub);
-//
-//	//パイプライン生成
-//	NGPipeline::Create(fbxSubDesc, "FbxSub");
-//#pragma endregion
-//#pragma region 色反転FBX
-//	//シェーダー生成
-//	NShader::CreateShader("Fbx", "Fbx", false);
-//
-//	PipelineDesc fbxInvDesc;
-//	//頂点レイアウト設定
-//	fbxInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
-//	fbxInvDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
-//
-//	//ルートシグネチャ設定
-//	NRootSignature rootSigFbxInv;
-//	rootSigFbxInv.SetSamplerDesc(false);
-//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
-//	rootSigFbx.SetRootParam(1, 5);
-//	rootSigFbxInv.Create();
-//	fbxInvDesc.rootSig = rootSigFbxInv;
-//
-//	//シェーダー設定
-//	fbxInvDesc.shader.pShader = NShader::GetShader("Fbx");
-//
-//	//カリング設定
-//	fbxInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
-//	//レンダーターゲット数設定
-//	fbxInvDesc.render.NumRenderTargets = 2;
-//
-//	//深度テストする
-//	fbxInvDesc.depth.DepthStencilState.DepthEnable = true;
-//
-//	//ブレンドモード設定
-//	fbxInvDesc.blend.blendDesc =
-//		bDesc::GetBlendMode(BlendMode::Inv);
-//
-//	//パイプライン生成
-//	NGPipeline::Create(fbxInvDesc, "FbxInv");
-//#pragma endregion
+	//#pragma region αブレンドFBX
+	//	//シェーダー生成
+	//	NShader::CreateShader("Fbx", "Fbx");
+	//
+	//	PipelineDesc fbxAlphaDesc;
+	//	//頂点レイアウト設定
+	//	fbxAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
+	//	fbxAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
+	//
+	//	//ルートシグネチャ設定
+	//	NRootSignature rootSigFbxAlpha;
+	//	rootSigFbxAlpha.SetSamplerDesc(false);
+	//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
+	//	rootSigFbx.SetRootParam(1, 5);
+	//	rootSigFbxAlpha.Create();
+	//	fbxAlphaDesc.rootSig = rootSigFbxAlpha;
+	//
+	//	//シェーダー設定
+	//	fbxAlphaDesc.shader.pShader = NShader::GetShader("Fbx");
+	//
+	//	//カリング設定
+	//	fbxAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	//	//レンダーターゲット数設定
+	//	fbxAlphaDesc.render.NumRenderTargets = 2;
+	//
+	//	//深度テストする
+	//	fbxAlphaDesc.depth.DepthStencilState.DepthEnable = true;
+	//
+	//	//ブレンドモード設定
+	//	fbxAlphaDesc.blend.blendDesc =
+	//		bDesc::GetBlendMode(BlendMode::Alpha);
+	//
+	//	//パイプライン生成
+	//	NGPipeline::Create(fbxAlphaDesc, "FbxAlpha");
+	//#pragma endregion
+	//#pragma region 加算FBX
+	//	//シェーダー生成
+	//	NShader::CreateShader("Fbx", "Fbx");
+	//
+	//	PipelineDesc fbxAddDesc;
+	//	//頂点レイアウト設定
+	//	fbxAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
+	//	fbxAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
+	//
+	//	//ルートシグネチャ設定
+	//	NRootSignature rootSigFbxAdd;
+	//	rootSigFbxAdd.SetSamplerDesc(false);
+	//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
+	//	rootSigFbx.SetRootParam(1, 5);
+	//	rootSigFbxAdd.Create();
+	//	fbxAddDesc.rootSig = rootSigFbxAdd;
+	//
+	//	//シェーダー設定
+	//	fbxAddDesc.shader.pShader = NShader::GetShader("Fbx");
+	//
+	//	//カリング設定
+	//	fbxAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	//	//レンダーターゲット数設定
+	//	fbxAddDesc.render.NumRenderTargets = 2;
+	//
+	//	//深度テストする
+	//	fbxAddDesc.depth.DepthStencilState.DepthEnable = true;
+	//
+	//	//ブレンドモード設定
+	//	fbxAddDesc.blend.blendDesc =
+	//		bDesc::GetBlendMode(BlendMode::Add);
+	//
+	//	//パイプライン生成
+	//	NGPipeline::Create(fbxAddDesc, "FbxAdd");
+	//#pragma endregion
+	//#pragma region 減算FBX
+	//	//シェーダー生成
+	//	NShader::CreateShader("Fbx", "Fbx");
+	//
+	//	PipelineDesc fbxSubDesc;
+	//	//頂点レイアウト設定
+	//	fbxSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
+	//	fbxSubDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
+	//
+	//	//ルートシグネチャ設定
+	//	NRootSignature rootSigFbxSub;
+	//	rootSigFbxSub.SetSamplerDesc(false);
+	//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
+	//	rootSigFbx.SetRootParam(1, 5);
+	//	rootSigFbxSub.Create();
+	//	fbxSubDesc.rootSig = rootSigFbxSub;
+	//
+	//	//シェーダー設定
+	//	fbxSubDesc.shader.pShader = NShader::GetShader("Fbx");
+	//
+	//	//カリング設定
+	//	fbxSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	//	//レンダーターゲット数設定
+	//	fbxSubDesc.render.NumRenderTargets = 2;
+	//
+	//	//深度テストする
+	//	fbxSubDesc.depth.DepthStencilState.DepthEnable = true;
+	//
+	//	//ブレンドモード設定
+	//	fbxSubDesc.blend.blendDesc =
+	//		bDesc::GetBlendMode(BlendMode::Sub);
+	//
+	//	//パイプライン生成
+	//	NGPipeline::Create(fbxSubDesc, "FbxSub");
+	//#pragma endregion
+	//#pragma region 色反転FBX
+	//	//シェーダー生成
+	//	NShader::CreateShader("Fbx", "Fbx");
+	//
+	//	PipelineDesc fbxInvDesc;
+	//	//頂点レイアウト設定
+	//	fbxInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
+	//	fbxInvDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
+	//
+	//	//ルートシグネチャ設定
+	//	NRootSignature rootSigFbxInv;
+	//	rootSigFbxInv.SetSamplerDesc(false);
+	//	//テクスチャ1個、行列、マテリアル、色、光源、スキン
+	//	rootSigFbx.SetRootParam(1, 5);
+	//	rootSigFbxInv.Create();
+	//	fbxInvDesc.rootSig = rootSigFbxInv;
+	//
+	//	//シェーダー設定
+	//	fbxInvDesc.shader.pShader = NShader::GetShader("Fbx");
+	//
+	//	//カリング設定
+	//	fbxInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	//	//レンダーターゲット数設定
+	//	fbxInvDesc.render.NumRenderTargets = 2;
+	//
+	//	//深度テストする
+	//	fbxInvDesc.depth.DepthStencilState.DepthEnable = true;
+	//
+	//	//ブレンドモード設定
+	//	fbxInvDesc.blend.blendDesc =
+	//		bDesc::GetBlendMode(BlendMode::Inv);
+	//
+	//	//パイプライン生成
+	//	NGPipeline::Create(fbxInvDesc, "FbxInv");
+	//#pragma endregion
 #pragma region タイリング3D(背景オブジェクトとかに使う)
 	//シェーダー生成
-	NShader::CreateShader("Tile", "Tile", false);
+	NShader::CreateShader("Tile", "Tile");
 
 	PipelineDesc tileDesc;
 	//頂点レイアウト設定
@@ -669,7 +714,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region デフォルト2D
 	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteDesc;
 	//頂点レイアウト設定
@@ -707,7 +752,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region αブレンド2D
 	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteAlphaDesc;
 	//頂点レイアウト設定
@@ -745,7 +790,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 加算2D
 	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteAddDesc;
 	//頂点レイアウト設定
@@ -783,7 +828,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 減算2D
 	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteSubDesc;
 	//頂点レイアウト設定
@@ -821,7 +866,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region 色反転2D
 	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite", false);
+	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteInvDesc;
 	//頂点レイアウト設定
@@ -859,7 +904,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ブルーム
 	//シェーダー生成
-	NShader::CreateShader("Bloom", "Bloom", false);
+	NShader::CreateShader("Bloom", "Bloom");
 
 	PipelineDesc postEffectDesc;
 	//頂点レイアウト設定
@@ -897,7 +942,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ガウシアンブラー
 	//シェーダー生成
-	NShader::CreateShader("Gaussian", "GaussianBlur", false);
+	NShader::CreateShader("Gaussian", "GaussianBlur");
 
 	//頂点レイアウト設定
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
@@ -926,7 +971,7 @@ void PipeLineManager::CreateAll()
 #pragma endregion
 #pragma region ラジアルブラー
 	//シェーダー生成
-	NShader::CreateShader("Radial", "RadialBlur", false);
+	NShader::CreateShader("Radial", "RadialBlur");
 
 	//頂点レイアウト設定
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
@@ -947,7 +992,7 @@ void PipeLineManager::CreateAll()
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
 	//ブレンドモード設定
-	postEffectDesc.blend.blendDesc = 
+	postEffectDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
 	//パイプライン生成
@@ -1057,6 +1102,41 @@ void PipeLineManager::CreateAll()
 
 	//パイプライン生成
 	NGPipeline::Create(particleAddDesc, "Particle3dAdd");
+#pragma endregion
+#pragma region GPUパーティクル
+	//シェーダー生成
+	NShader::CreateShader("GPUParticle", "GPUParticle", false, true);
+
+	PipelineDesc gpuParticleDesc;
+	//頂点レイアウト設定
+	gpuParticleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutGPUParticle_;
+	gpuParticleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutGPUParticle_);
+
+	gpuParticleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigGPUParticle;
+	rootSigGPUParticle.SetSamplerDesc(false);
+	//テクスチャ2個、行列、光源
+	rootSigGPUParticle.SetRootParam(2, 2);
+	rootSigGPUParticle.Create();
+	gpuParticleDesc.rootSig = rootSigGPUParticle;
+
+	//シェーダー設定
+	gpuParticleDesc.shader.pShader = NShader::GetShader("GPUParticle");
+
+	//深度テストする
+	gpuParticleDesc.depth.DepthStencilState.DepthEnable = true;
+
+	//カリング設定
+	gpuParticleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//ブレンドモード設定
+	gpuParticleDesc.blend.blendDesc =
+		bDesc::GetBlendMode(BlendMode::None);
+
+	//パイプライン生成
+	NGPipeline::Create(gpuParticleDesc, "GPUParticleNone");
 #pragma endregion
 }
 

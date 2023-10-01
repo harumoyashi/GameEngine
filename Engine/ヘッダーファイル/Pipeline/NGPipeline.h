@@ -117,6 +117,7 @@ public:
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutParticle_[4];
+	D3D12_INPUT_ELEMENT_DESC vertLayoutGPUParticle_[5];
 
 public:
 	//パイプライン生成、指定したIDで登録
@@ -148,6 +149,8 @@ public:
 	void SetVertLayoutPostEffect();
 	//3Dパーティクル用頂点レイアウト設定
 	void SetVertLayoutParticle();
+	//GPUパーティクル用頂点レイアウト設定
+	void SetVertLayoutGPUParticle();
 #pragma endregion
 };
 

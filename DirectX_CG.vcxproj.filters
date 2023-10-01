@@ -20,6 +20,10 @@
     <FxCompile Include="Resources\shaders\TileVS.hlsl" />
     <FxCompile Include="Resources\shaders\FbxPS.hlsl" />
     <FxCompile Include="Resources\shaders\FbxVS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticlePS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticleVS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticleGS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -186,6 +190,7 @@
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\Bloom.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Engine\ソースファイル\Particle\NGPUParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -504,6 +509,7 @@
     <None Include="Resources\shaders\Sprite.hlsli" />
     <None Include="Resources\shaders\Tile.hlsli" />
     <None Include="Resources\shaders\Fbx.hlsli" />
+    <None Include="Resources\shaders\GPUParticle.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\ヘッダーファイル\Collision\PlaneCollider.h" />
@@ -512,5 +518,6 @@
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\Bloom.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="Engine\ヘッダーファイル\Particle\NGPUParticle.h" />
   </ItemGroup>
 </Project>
