@@ -2,6 +2,9 @@
 #include "NUtil.h"
 
 std::unordered_map<SoundHandle, Sound> NAudioManager::sSoundMap;
+float NAudioManager::masterVolume_ = 1.f;
+float NAudioManager::bgmVolume_ = 1.f;
+float NAudioManager::seVolume_ = 1.f;
 
 void NAudioManager::AllLoad()
 {
@@ -23,7 +26,14 @@ void NAudioManager::SetMasterVolume(float masterVolume)
 {
 	for (auto& sound : sSoundMap)
 	{
-		NAudio::GetInstance()->SetVolume(sSoundMap[sound.first].handle, masterVolume);
+		if (sSoundMap[sound.first].isBGM)
+		{
+			NAudio::GetInstance()->SetVolume(sSoundMap[sound.first].handle, masterVolume * bgmVolume_);
+		}
+		else
+		{
+			NAudio::GetInstance()->SetVolume(sSoundMap[sound.first].handle, masterVolume * seVolume_);
+		}
 	}
 }
 
