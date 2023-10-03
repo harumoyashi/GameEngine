@@ -195,7 +195,7 @@
     <ClInclude Include="Application\ヘッダーファイル\Bullet\WideBullet.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NGPUParticle.h" />
-    <ClInclude Include="UI.h" />
+    <ClInclude Include="Application\ヘッダーファイル\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -286,7 +286,7 @@
     <ClCompile Include="Application\ソースファイル\Bullet\WideBullet.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\Particle\NGPUParticle.cpp" />
-    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Application\ソースファイル\UI\UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

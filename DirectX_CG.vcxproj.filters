@@ -189,7 +189,7 @@
     <ClCompile Include="Engine\ソースファイル\Collision\RayCollider.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\PostEffect\Bloom.cpp" />
-    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Application\ソースファイル\UI\UI.cpp" />
     <ClCompile Include="Engine\ソースファイル\Particle\NGPUParticle.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -517,7 +517,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\Collision\RayCollider.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\Bloom.h" />
-    <ClInclude Include="UI.h" />
+    <ClInclude Include="Application\ヘッダーファイル\UI\UI.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NGPUParticle.h" />
   </ItemGroup>
 </Project>

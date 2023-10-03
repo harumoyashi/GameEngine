@@ -23,6 +23,9 @@ struct NUtil
 {
 	//wstring型をstring型に変換
 	static std::string ToUTF8(const std::wstring& value);
+	
+	//マルチバイト文字列をワイド文字列に変換
+	static std::wstring ToWideString(const std::string& mString);
 	//拡張子抽出
 	static std::string GetExtension(const std::string& path);
 	//拡張子置き換え処理

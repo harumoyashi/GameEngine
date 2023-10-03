@@ -1,6 +1,6 @@
 #include "NUtil.h"
 #include "NWindows.h"
-#include "stringapiset.h"
+#include "DirectXTex.h"
 #include <filesystem>
 
 std::string NUtil::ToUTF8(const std::wstring& value)
@@ -15,6 +15,21 @@ std::string NUtil::ToUTF8(const std::wstring& value)
     buffer = nullptr;
 
     return result;
+}
+
+std::wstring NUtil::ToWideString(const std::string& mString)
+{
+	//ワイド文字列に変換した際の文字数を計算
+	int buffSize = MultiByteToWideChar(CP_ACP, 0U, mString.c_str(), -1, nullptr, 0);
+
+	//ワイド文字列
+	std::wstring wString;
+	wString.resize(buffSize);
+
+	//ワイド文字列に変換
+	MultiByteToWideChar(CP_ACP, 0, mString.c_str(), -1, &wString[0], buffSize);
+
+	return wString;
 }
 
 std::string NUtil::GetExtension(const std::string& path)
