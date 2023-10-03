@@ -8,6 +8,7 @@
 #include "NParticle3D.h"
 #include "NSceneChange.h"
 #include "UI.h"
+#include "NAudioManager.h"
 
 #pragma region staticƒƒ“ƒo•Ï”‰Šú‰»
 
@@ -29,6 +30,7 @@ NSceneManager* NSceneManager::GetInstance()
 
 void NSceneManager::Init()
 {
+	NAudio::GetInstance()->Init();
 	currentScene_->Init();
 	NSceneChange::GetInstance()->Init();
 	UI::GetInstance()->Init();
@@ -39,6 +41,7 @@ void NSceneManager::Update()
 	currentScene_->Update();
 	NSceneChange::GetInstance()->Update();
 	UI::GetInstance()->Update();
+	NAudioManager::GetInstance()->ImGuiDraw();
 }
 
 void NSceneManager::Draw()

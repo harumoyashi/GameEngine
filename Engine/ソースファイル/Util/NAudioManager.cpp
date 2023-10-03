@@ -1,18 +1,60 @@
 #include "NAudioManager.h"
 #include "NUtil.h"
 
+#include <functional>
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 std::unordered_map<SoundHandle, Sound> NAudioManager::sSoundMap;
 float NAudioManager::masterVolume_ = 1.f;
 float NAudioManager::bgmVolume_ = 1.f;
 float NAudioManager::seVolume_ = 1.f;
 
+void NAudioManager::AllSetVolume()
+{
+	for (auto& sound : sSoundMap)
+	{
+		if (sSoundMap[sound.first].isBGM)
+		{
+			//保存してた個別の音量 * 全体の音量 * BGMの音量
+			NAudio::GetInstance()->SetVolume(
+				sSoundMap[sound.first].handle,
+				sSoundMap[sound.first].volume * masterVolume_ * bgmVolume_
+			);
+		}
+		else
+		{
+			//保存してた個別の音量 * 全体の音量 * SEの音量
+			NAudio::GetInstance()->SetVolume(
+				sSoundMap[sound.first].handle,
+				sSoundMap[sound.first].volume * masterVolume_ * seVolume_
+			);
+		}
+	}
+}
+
+void NAudioManager::ImGuiDraw()
+{
+	ImGui::Begin("AudioVolume");
+	ImGui::SliderFloat("MasterVolume",&masterVolume_,0.f,1.f);
+	ImGui::SliderFloat("bgmVolume",&bgmVolume_,0.f,1.f);
+	ImGui::SliderFloat("seVolume",&seVolume_,0.f,1.f);
+	if (ImGui::Button("SetVolume"))
+	{
+		AllSetVolume();
+	}
+	ImGui::End();
+}
+
 void NAudioManager::AllLoad()
 {
+	//BGM読み込み
 	LoadSound("title_BGM.mp3", "titleBGM", true);     //タイトルのBGM
 	LoadSound("play_BGM.mp3", "playBGM", true);       //プレイ中のBGM
 	LoadSound("clear_BGM.mp3", "clearBGM", true);     //クリアリザルトのBGM
 	LoadSound("faild_BGM.mp3", "faildBGM", true);     //失敗リザルトのBGM
 
+	//SE読み込み
 	LoadSound("shot_SE.mp3", "shotSE", false);                 //弾撃った時
 	LoadSound("start_SE.mp3", "startSE", false);               //スタートの文字掃ける音
 	LoadSound("vanish_SE.mp3", "vanishSE", false);             //敵が弾ける音
@@ -20,26 +62,40 @@ void NAudioManager::AllLoad()
 	LoadSound("sceneChange_SE.mp3", "sceneChangeSE", false);   //シーン遷移音
 	LoadSound("dead_SE.mp3", "deadSE", false);                 //プレイヤー死亡音
 	LoadSound("item_get_SE.mp3", "itemGetSE", false);          //アイテム獲得音
+
+	AllSetVolume();	//音量も調節する(音量情報保存するかもだから)
 }
 
 void NAudioManager::SetMasterVolume(float masterVolume)
 {
-	for (auto& sound : sSoundMap)
-	{
-		if (sSoundMap[sound.first].isBGM)
-		{
-			NAudio::GetInstance()->SetVolume(sSoundMap[sound.first].handle, masterVolume * bgmVolume_);
-		}
-		else
-		{
-			NAudio::GetInstance()->SetVolume(sSoundMap[sound.first].handle, masterVolume * seVolume_);
-		}
-	}
+	masterVolume_ = masterVolume;
+
+	AllSetVolume();
+}
+
+void NAudioManager::SetBGMVolume(float bgmVolume)
+{
+	bgmVolume_ = bgmVolume;
+
+	AllSetVolume();
+}
+
+void NAudioManager::SetSEVolume(float seVolume)
+{
+	seVolume_ = seVolume;
+
+	AllSetVolume();
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)
 {
 	return sSoundMap[soundHandle].handle;
+}
+
+NAudioManager* NAudioManager::GetInstance()
+{
+	static NAudioManager instance;
+	return &instance;
 }
 
 void NAudioManager::LoadSound(const std::string& filename, const std::string& soundHandle, bool isBGM)
@@ -62,7 +118,22 @@ void NAudioManager::LoadSound(const std::string& filename, const std::string& so
 
 void NAudioManager::Play(const std::string& soundHandle, bool isRoop, const float volume, const int roopNum)
 {
-	NAudio::GetInstance()->PlayWave(sSoundMap[soundHandle].handle, isRoop, volume, roopNum);
+	if (sSoundMap[soundHandle].isBGM)
+	{
+		NAudio::GetInstance()->PlayWave(
+			sSoundMap[soundHandle].handle, isRoop,
+			volume * masterVolume_ * bgmVolume_,
+			roopNum
+		);
+	}
+	else
+	{
+		NAudio::GetInstance()->PlayWave(
+			sSoundMap[soundHandle].handle,
+			isRoop, volume * masterVolume_ * seVolume_,
+			roopNum
+		);
+	}
 }
 
 void NAudioManager::Destroy(const std::string& soundHandle)
@@ -87,5 +158,16 @@ bool NAudioManager::GetIsPlaying(const std::string& soundHandle)
 
 void NAudioManager::SetVolume(const std::string& soundHandle, const float volume)
 {
-	NAudio::GetInstance()->SetVolume(sSoundMap[soundHandle].handle, volume);
+	sSoundMap[soundHandle].volume = volume;	//音量保存
+
+	if (sSoundMap[soundHandle].isBGM)
+	{
+		//指定された個別の音量 * 全体の音量 * BGMの音量
+		NAudio::GetInstance()->SetVolume(sSoundMap[soundHandle].handle, volume * masterVolume_ * bgmVolume_);
+	}
+	else
+	{
+		//指定された個別の音量 * 全体の音量 * SEの音量
+		NAudio::GetInstance()->SetVolume(sSoundMap[soundHandle].handle, volume * masterVolume_ * seVolume_);
+	}
 }

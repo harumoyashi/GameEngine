@@ -309,7 +309,7 @@ void Player::OnCollision()
 	//当たった相手が敵だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
-		NAudioManager::Play("deadSE");
+		NAudioManager::GetInstance()->Play("deadSE");
 		SetIsAlive(false);
 		NInput::Vibration(0.8f,0.8f,0.3f);
 	}
@@ -319,7 +319,7 @@ void Player::DeadParticle()
 {
 	if (isDraw_)
 	{
-		NAudioManager::Play("explosionSE");
+		NAudioManager::GetInstance()->Play("explosionSE");
 		RadialBlur::Init();		//ラジアルブラーかける
 		
 		deadParticle_.SetPos(obj_->position_);

@@ -29,8 +29,7 @@ void NTitleScene::LoadResources()
 void NTitleScene::Init()
 {
 #pragma region	オーディオ初期化
-	NAudio::GetInstance()->Init();
-	NAudioManager::Play("titleBGM", true, 0.2f);
+	NAudioManager::GetInstance()->Play("titleBGM", true, 0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
@@ -125,6 +124,7 @@ void NTitleScene::Update()
 	//切り替えてﾖｼって言われたら
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
+		NAudioManager::GetInstance()->Destroy("titleBGM");
 		NSceneManager::ChangeScene<NGameScene>();			//タイトルシーンに切り替え
 		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}

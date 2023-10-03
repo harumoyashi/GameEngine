@@ -114,7 +114,7 @@ void IEnemy::OnCollision()
 			uint32_t bulType = MathUtil::Random(0,(uint32_t)BulletType::MaxType);
 			ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
 		}
-		NAudioManager::Play("vanishSE");
+		NAudioManager::GetInstance()->Play("vanishSE");
 	}
 }
 

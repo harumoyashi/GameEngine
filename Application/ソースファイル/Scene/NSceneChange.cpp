@@ -106,7 +106,7 @@ void NSceneChange::Start()
 {
 	if (isSceneChangeNow_ == false)
 	{
-		NAudioManager::Play("sceneChangeSE");
+		NAudioManager::GetInstance()->Play("sceneChangeSE");
 		Init();
 		isSceneChange_ = false;		//‚Ü‚¾‚¾A‚Ü‚¾Ø‚è‘Ö‚¦‚é‚È
 		isSceneChangeNow_ = true;

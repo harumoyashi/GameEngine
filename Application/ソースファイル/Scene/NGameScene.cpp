@@ -28,8 +28,7 @@ void NGameScene::LoadResources()
 void NGameScene::Init()
 {
 #pragma region	オーディオ初期化
-	NAudio::GetInstance()->Init();
-	NAudioManager::Play("playBGM", true, 0.2f);
+	NAudioManager::GetInstance()->Play("playBGM", true, 0.2f);
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
@@ -176,8 +175,8 @@ void NGameScene::Update()
 		if (Player::GetInstance()->GetIsAlive() == false &&
 			Player::GetInstance()->GetDeadEffectEnd())
 		{
-			NAudioManager::Destroy("playBGM");
-			NAudioManager::Play("faildBGM", true, 0.2f);
+			NAudioManager::GetInstance()->Destroy("playBGM");
+			NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
 			scene = SceneMode::Faild;
 			slideTimer_.Reset();
 			slideTimer_ = 0.5f;
@@ -189,8 +188,8 @@ void NGameScene::Update()
 		//ゴールしたらクリアリザルトへ
 		if (Field::GetInstance()->GetIsGoal())
 		{
-			NAudioManager::Destroy("playBGM");
-			NAudioManager::Play("clearBGM", true, 0.2f);
+			NAudioManager::GetInstance()->Destroy("playBGM");
+			NAudioManager::GetInstance()->Play("clearBGM", true, 0.2f);
 			scene = SceneMode::Clear;
 			slideTimer_.Reset();
 			slideTimer_ = 0.5f;
@@ -291,6 +290,8 @@ void NGameScene::Update()
 	//切り替えてﾖｼって言われたら
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
+		NAudioManager::GetInstance()->Destroy("clearBGM");
+		NAudioManager::GetInstance()->Destroy("faildBGM");
 		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
 		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}

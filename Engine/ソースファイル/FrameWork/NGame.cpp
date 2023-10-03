@@ -31,7 +31,7 @@ void NGame::Init()
 #pragma region オーディオ初期化
 	audio_ = NAudio::GetInstance();
 	audio_->Init();
-	NAudioManager::AllLoad();
+	NAudioManager::GetInstance()->AllLoad();
 #pragma endregion
 #pragma region モデル初期化
 	NModelManager::AllLoad();

@@ -242,7 +242,7 @@ void Field::Update()
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
-				NAudioManager::Play("startSE");
+				NAudioManager::GetInstance()->Play("startSE");
 				lines_[i].isSlide = false;	//スライドしちゃだめにする
 			}
 		}
@@ -262,7 +262,7 @@ void Field::Update()
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
-				NAudioManager::Play("startSE");
+				NAudioManager::GetInstance()->Play("startSE");
 				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする
 			}
 		}

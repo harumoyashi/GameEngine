@@ -76,6 +76,6 @@ void Item::OnCollision()
 	{
 		isAlive_ = false;
 		Player::GetInstance()->LevelUp(bulletType_);
-		NAudioManager::Play("itemGetSE");
+		NAudioManager::GetInstance()->Play("itemGetSE");
 	}
 }
