@@ -68,7 +68,7 @@ uint32_t NUtil::StringToInt(const std::string& string)
 	return (uint32_t)atoi(string.c_str());
 }
 
-std::string NUtil::IntToString(uint32_t num)
+float NUtil::StringToFloat(const std::string& string)
 {
-	return  std::to_string(num);
+	return (float)std::stod(string.c_str());
 }

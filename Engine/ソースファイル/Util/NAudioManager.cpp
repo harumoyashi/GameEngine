@@ -1,6 +1,10 @@
 #include "NAudioManager.h"
 #include "NUtil.h"
 
+#include <fstream>
+#include <string>
+#include <sstream>
+
 #include <functional>
 #include "NImGuiManager.h"
 #include "imgui.h"
@@ -60,7 +64,8 @@ void NAudioManager::AllLoad()
 	LoadSound("dead_SE.mp3", "deadSE", false);                 //プレイヤー死亡音
 	LoadSound("item_get_SE.mp3", "itemGetSE", false);          //アイテム獲得音
 
-	AllSetVolume();	//音量も調節する(音量情報保存するかもだから)
+	LoadVolume();	//保存してた音量データ読み込んで
+	AllSetVolume();	//音量を調節する
 }
 
 void NAudioManager::SetMasterVolume(float masterVolume)
@@ -86,12 +91,64 @@ void NAudioManager::SetSEVolume(float seVolume)
 
 void NAudioManager::LoadVolume()
 {
+	//ファイル入力処理
+	std::ifstream readingFile;
 
+	readingFile.open("./Resources/Data/volume.txt");
+	//ファイルオープン失敗をチェック
+	if (readingFile.fail())
+	{
+		assert(0);
+	}
+
+	std::string line;
+
+	int i = 0;
+	bool ispalletNum = false;
+	while (getline(readingFile, line))
+	{
+		switch (i)
+		{
+		case 0:
+			masterVolume_ = NUtil::StringToFloat(line);
+			break;
+
+		case 1:
+			bgmVolume_ = NUtil::StringToFloat(line);
+			break;
+
+		case 2:
+			seVolume_ = NUtil::StringToFloat(line);
+			break;
+
+		default:
+			break;
+		}
+
+		i++;
+	}
 }
 
 void NAudioManager::SaveVolume()
 {
+	//ファイル出力処理
+	std::ofstream writingFile;
 
+	std::string filename = "";
+	filename = "./Resources/Data/volume.txt";
+
+	writingFile.open(filename, std::ios::out);
+
+	writingFile << masterVolume_;
+	writingFile << "," << std::endl;
+
+	writingFile << bgmVolume_;
+	writingFile << "," << std::endl;
+
+	writingFile << seVolume_;
+	writingFile << "," << std::endl;
+
+	writingFile.close();
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)

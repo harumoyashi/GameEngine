@@ -6,6 +6,7 @@
 #include "NSceneChange.h"
 #include "GaussianBlur.h"
 #include "RadialBlur.h"
+#include "NAudioManager.h"
 
 void NGame::Init()
 {
@@ -100,6 +101,7 @@ void NGame::Draw()
 void NGame::Finalize()
 {
 #pragma region ŒãŽn––
+	NAudioManager::GetInstance()->SaveVolume();
 	audio_->Finalize();
 	win_->Finalize();
 	NImGuiManager::GetInstance()->Finalize();
