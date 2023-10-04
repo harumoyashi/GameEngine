@@ -30,4 +30,8 @@ struct NUtil
 	static std::string GetExtension(const std::string& path);
 	//Šg’£q’u‚«Š·‚¦ˆ—
 	static std::wstring ReplaceExtension(const std::wstring& origin, const char* ext);
+	//•¶š—ñ‚©‚çuint32_tŒ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
+	static uint32_t StringToInt(const std::string& string);
+	//uint32_tŒ^‚©‚ç•¶š—ñ‚É•ÏŠ·‚µ‚Ä•Ô‚·
+	static std::string IntToString(uint32_t num);
 };

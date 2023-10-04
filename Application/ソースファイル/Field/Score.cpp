@@ -1,94 +1,144 @@
 #include "Score.h"
 
+#include <fstream>
+#include <string>
+#include <sstream>
+
 #include "NImGuiManager.h"
 #include "imgui.h"
 
-uint32_t Score::nowScore_;
-uint32_t Score::topScore_;
-std::vector<NumDrower> Score::scoreTex_{ 3 };
-std::unique_ptr<NSprite> Score::topTex_;
+uint32_t Score::sNowScore;	//現在のスコア
+uint32_t Score::sTopScore;	//一番高いスコア
+std::vector<NumDrower> Score::sScoreTex{ 3 };	//スコア表示用
+std::unique_ptr<NSprite> Score::sTopTex;		//TOPテクスチャ
+bool Score::sIsAddScore;	//スコア加算してOKかフラグ
 
 void Score::Init()
 {
-	nowScore_ = 0;
-	for (size_t i = 0; i < scoreTex_.size(); i++)
+	LoadScore();
+
+	sNowScore = 0;
+	for (size_t i = 0; i < sScoreTex.size(); i++)
 	{
-		scoreTex_[i].Create(5);
+		sScoreTex[i].Create(5);
 	}
 
-	scoreTex_[(uint32_t)TexType::Now].SetPos({ 50.f,50.f });
-	scoreTex_[(uint32_t)TexType::Now].SetSize({ 45.f,50.f });
-	scoreTex_[(uint32_t)TexType::Now].SetNum(nowScore_);
-	scoreTex_[(uint32_t)TexType::Result].SetPos(
-		{ NWindows::kWin_width * 0.5f - scoreTex_[(uint32_t)TexType::Result].GetSize().x * 2.5f,-500.f });
-	scoreTex_[(uint32_t)TexType::Result].SetIndent(1.f);
-	scoreTex_[(uint32_t)TexType::Result].SetSize({ 70.f,80.f });
-	scoreTex_[(uint32_t)TexType::Result].SetNum(nowScore_);
-	scoreTex_[(uint32_t)TexType::Top].SetPos(
+	sScoreTex[(uint32_t)TexType::Now].SetPos({ 50.f,50.f });
+	sScoreTex[(uint32_t)TexType::Now].SetSize({ 45.f,50.f });
+	sScoreTex[(uint32_t)TexType::Now].SetNum(sNowScore);
+	sScoreTex[(uint32_t)TexType::Result].SetPos(
+		{ NWindows::kWin_width * 0.5f - sScoreTex[(uint32_t)TexType::Result].GetSize().x * 2.5f,-500.f });
+	sScoreTex[(uint32_t)TexType::Result].SetIndent(1.f);
+	sScoreTex[(uint32_t)TexType::Result].SetSize({ 70.f,80.f });
+	sScoreTex[(uint32_t)TexType::Result].SetNum(sNowScore);
+	sScoreTex[(uint32_t)TexType::Top].SetPos(
 		{ NWindows::kWin_width * 0.5f,-500.f });
-	scoreTex_[(uint32_t)TexType::Top].SetIndent(1.f);
-	scoreTex_[(uint32_t)TexType::Top].SetSize({ 35.f,40.f });
-	scoreTex_[(uint32_t)TexType::Top].SetNum(topScore_);
+	sScoreTex[(uint32_t)TexType::Top].SetIndent(1.f);
+	sScoreTex[(uint32_t)TexType::Top].SetSize({ 35.f,40.f });
+	sScoreTex[(uint32_t)TexType::Top].SetNum(sTopScore);
 
-	topTex_ = std::make_unique<NSprite>();
-	topTex_->CreateSprite("top",{0,0});
-	topTex_->SetPos(Score::GetPos(TexType::Result).x, -500.f);
-	topTex_->SetSize(Score::GetSize(TexType::Top).x * 3.f, Score::GetSize(TexType::Top).y);
+	sTopTex = std::make_unique<NSprite>();
+	sTopTex->CreateSprite("top", { 0,0 });
+	sTopTex->SetPos(Score::GetPos(TexType::Result).x, -500.f);
+	sTopTex->SetSize(Score::GetSize(TexType::Top).x * 3.f, Score::GetSize(TexType::Top).y);
+
+	sIsAddScore = true;
 }
 
 void Score::Update()
 {
-	//ハイスコアの更新あったら
-	if (topScore_ < nowScore_)
-	{
-		topScore_ = nowScore_;
-		scoreTex_[(uint32_t)TexType::Top].SetNum(topScore_);
-	}
-	topTex_->SetPos(Score::GetPos(TexType::Result).x, Score::GetPos(TexType::Top).y);
+	sTopTex->SetPos(Score::GetPos(TexType::Result).x, Score::GetPos(TexType::Top).y);
 
-	for (size_t i = 0; i < scoreTex_.size(); i++)
+	for (size_t i = 0; i < sScoreTex.size(); i++)
 	{
-		scoreTex_[i].Update();
+		sScoreTex[i].Update();
 	}
-	topTex_->Update();
+	sTopTex->Update();
 }
 
 void Score::Draw()
 {
-	for (size_t i = 0; i < scoreTex_.size(); i++)
+	for (size_t i = 0; i < sScoreTex.size(); i++)
 	{
-		scoreTex_[i].Draw();
+		sScoreTex[i].Draw();
 	}
-	topTex_->Draw();
+	sTopTex->Draw();
 }
 
 void Score::DrawImGui()
 {
 	ImGui::Begin("Score");
-	ImGui::Text("nowScore:%d", nowScore_);
+	ImGui::Text("nowScore:%d", sNowScore);
 	ImGui::End();
+}
+
+void Score::LoadScore()
+{
+	//ファイル入力処理
+	std::ifstream readingFile;
+
+	readingFile.open("./Resources/Data/score.txt");
+	//ファイルオープン失敗をチェック
+	if (readingFile.fail())
+	{
+		assert(0);
+	}
+
+	std::string line;
+	getline(readingFile, line);
+
+	sTopScore = NUtil::StringToInt(line);
+}
+
+void Score::SaveScore()
+{
+	//ハイスコアの更新なかったら処理スキップ
+	if (sTopScore >= sNowScore)
+	{
+		return;
+	}
+
+	sTopScore = sNowScore;
+	sScoreTex[(uint32_t)TexType::Top].SetNum(sTopScore);
+
+	//ファイル出力処理
+	std::ofstream writingFile;
+
+	std::string filename = "";
+	filename = "./Resources/Data/score.txt";
+
+	writingFile.open(filename, std::ios::out);
+
+	writingFile << sTopScore << std::endl;
+
+	writingFile.close();
+
+	sIsAddScore = false;	//これ以上スコア入らないようにする
 }
 
 void Score::AddScore(uint32_t score)
 {
-	nowScore_ += score;
-	for (uint32_t i = 0; i < 2; i++)
+	if (sIsAddScore)
 	{
-		scoreTex_[i].SetNum(nowScore_);
+		sNowScore += score;
+		for (uint32_t i = 0; i < 2; i++)
+		{
+			sScoreTex[i].SetNum(sNowScore);
+		}
 	}
 }
 
 void Score::SetPos(const NVec2& pos, TexType type)
 {
-	scoreTex_[(uint32_t)type].SetPos(pos);
+	sScoreTex[(uint32_t)type].SetPos(pos);
 }
 
 void Score::SetSize(const NVec2& size, TexType type)
 {
-	scoreTex_[(uint32_t)type].SetSize(size);
+	sScoreTex[(uint32_t)type].SetSize(size);
 }
 
 void Score::SetColor(const NColor& color, TexType type)
 {
-	scoreTex_[(uint32_t)type].SetColor(color);
+	sScoreTex[(uint32_t)type].SetColor(color);
 }

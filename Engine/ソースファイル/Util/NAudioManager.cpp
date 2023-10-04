@@ -39,10 +39,7 @@ void NAudioManager::ImGuiDraw()
 	ImGui::SliderFloat("MasterVolume",&masterVolume_,0.f,1.f);
 	ImGui::SliderFloat("bgmVolume",&bgmVolume_,0.f,1.f);
 	ImGui::SliderFloat("seVolume",&seVolume_,0.f,1.f);
-	if (ImGui::Button("SetVolume"))
-	{
-		AllSetVolume();
-	}
+	AllSetVolume();
 	ImGui::End();
 }
 
@@ -85,6 +82,16 @@ void NAudioManager::SetSEVolume(float seVolume)
 	seVolume_ = seVolume;
 
 	AllSetVolume();
+}
+
+void NAudioManager::LoadVolume()
+{
+
+}
+
+void NAudioManager::SaveVolume()
+{
+
 }
 
 uint32_t NAudioManager::GetSound(const std::string& soundHandle)

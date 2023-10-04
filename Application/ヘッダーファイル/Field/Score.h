@@ -14,11 +14,13 @@ public:
 	};
 
 private:
-	static uint32_t nowScore_;	//現在のスコア
-	static uint32_t topScore_;	//一番高いスコア
+	static uint32_t sNowScore;	//現在のスコア
+	static uint32_t sTopScore;	//一番高いスコア
 
-	static std::vector<NumDrower> scoreTex_;	//スコア表示用
-	static std::unique_ptr<NSprite> topTex_;	//TOPテクスチャ
+	static std::vector<NumDrower> sScoreTex;	//スコア表示用
+	static std::unique_ptr<NSprite> sTopTex;	//TOPテクスチャ
+
+	static bool sIsAddScore;	//スコア加算してOKかフラグ
 
 public:
 	static void Create();
@@ -27,11 +29,14 @@ public:
 	static void Draw();
 	static void DrawImGui();
 
+	static void LoadScore();
+	static void SaveScore();
+
 	static void AddScore(uint32_t score);
 
 	// ゲッター //
-	static NVec2 GetPos(TexType type) { return scoreTex_[(uint32_t)type].GetPos(); }
-	static NVec2 GetSize(TexType type) { return scoreTex_[(uint32_t)type].GetSize(); }
+	static NVec2 GetPos(TexType type) { return sScoreTex[(uint32_t)type].GetPos(); }
+	static NVec2 GetSize(TexType type) { return sScoreTex[(uint32_t)type].GetSize(); }
 
 	// セッター //
 	static void SetPos(const NVec2& pos, TexType type);

@@ -38,6 +38,10 @@ public:
 	void SetBGMVolume(float bgmVolume);
 	//SEの音量調整
 	void SetSEVolume(float seVolume);
+	//音量設定読み込み
+	void LoadVolume();
+	//音量設定保存
+	void SaveVolume();
 
 	//サウンドデータの取得
 	uint32_t GetSound(const std::string& soundHandle);

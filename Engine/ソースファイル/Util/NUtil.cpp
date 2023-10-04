@@ -62,3 +62,13 @@ std::wstring NUtil::ReplaceExtension(const std::wstring& origin, const char* ext
 	std::filesystem::path p = origin.c_str();
 	return p.replace_extension(ext).c_str();
 }
+
+uint32_t NUtil::StringToInt(const std::string& string)
+{
+	return (uint32_t)atoi(string.c_str());
+}
+
+std::string NUtil::IntToString(uint32_t num)
+{
+	return  std::to_string(num);
+}

@@ -182,6 +182,7 @@ void NGameScene::Update()
 			slideTimer_ = 0.5f;
 			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
 			Player::GetInstance()->SetIsElapseAnime(false);
+			Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
 
@@ -194,6 +195,7 @@ void NGameScene::Update()
 			slideTimer_.Reset();
 			slideTimer_ = 0.5f;
 			Player::GetInstance()->SetIsElapseAnime(false);
+			Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
 
