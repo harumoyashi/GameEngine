@@ -211,8 +211,8 @@ void NTextureManager::SetTBResource()
 
 	texResDesc_.Width = metadata_.width;	//ïù
 	texResDesc_.Height = (uint32_t)metadata_.height;	//çÇÇ≥
-	texResDesc_.DepthOrArraySize = (uint32_t)metadata_.arraySize;
-	texResDesc_.MipLevels = (uint32_t)metadata_.mipLevels;
+	texResDesc_.DepthOrArraySize = (UINT16)metadata_.arraySize;
+	texResDesc_.MipLevels = (UINT16)metadata_.mipLevels;
 	texResDesc_.SampleDesc.Count = 1;
 }
 

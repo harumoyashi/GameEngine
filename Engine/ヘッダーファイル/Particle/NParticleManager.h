@@ -20,9 +20,9 @@ public:
 	void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
 		//“¯‚¶–¼‘O‚Ì‚â‚Â‚ª“o˜^‚³‚ê‚Ä‚½‚ç’Ç‰Á‚¹‚¸‚Éˆ—I—¹
-		for (auto& emitter : emitters_)
+		for (auto& emit : emitters_)
 		{
-			if (emitter.first == key)
+			if (emit.first == key)
 			{
 				return;
 			}

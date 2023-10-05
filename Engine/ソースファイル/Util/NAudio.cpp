@@ -52,8 +52,8 @@ void NAudio::Finalize() {
 	//Media Foundation落とす
 	MFShutdown();
 	// 音声データ解放
-	for (auto& soundData_ : soundDatas_) {
-		Unload(&soundData_);
+	for (auto& soundData : soundDatas_) {
+		Unload(&soundData);
 	}
 }
 
@@ -292,8 +292,8 @@ void NAudio::DestroyWave(const uint32_t voiceHandle)
 	}
 }
 
-void NAudio::StopWave(const uint32_t voiceHandle) {
-
+void NAudio::StopWave(const uint32_t voiceHandle)
+{
 	// 再生中リストから検索
 	auto it = std::find_if(
 		voices_.begin(), voices_.end(), [&](Voice* voice) { return voice->handle == voiceHandle; });

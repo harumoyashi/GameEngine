@@ -104,7 +104,6 @@ void NAudioManager::LoadVolume()
 	std::string line;
 
 	int i = 0;
-	bool ispalletNum = false;
 	while (getline(readingFile, line))
 	{
 		switch (i)

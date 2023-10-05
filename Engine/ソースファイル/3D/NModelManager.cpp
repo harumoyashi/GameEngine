@@ -17,6 +17,7 @@ std::string NModelManager::sDirectoryPath = "Resources/Model/";
 void NModelManager::AllLoad()
 {
 	LoadObjModel("sphere", "sphere");
+	LoadObjModel("sphere", "sphere");
 	LoadObjModel("Cube", "cube");
 	LoadObjModel("plane", "plane");
 	LoadObjModel("busterSword", "busterSword");
@@ -36,17 +37,15 @@ IModel* NModelManager::GetModel(const std::string& modelHandle)
 
 IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::string& modelHandle)
 {
-	uint32_t handle = sIndexModelData;
+	for (auto &modelMap : sModelMap)
+	{
+		if (modelMap.first.c_str() == modelHandle)
+		{
+			return sModelMap[modelHandle].get();
+		}
+	}
 
-	//// 読み込み済みモデルデータを検索
-	//auto it = std::find_if(sModelDatas.begin(), sModelDatas.end(), [&](const auto& model->) {
-	//	return model->.name == modelname;
-	//	});
-	//if (it != sModelDatas.end()) {
-	//	// 読み込み済みモデルデータの要素番号を取得
-	//	handle = static_cast<uint32_t>(std::distance(sModelDatas.begin(), it));
-	//	return handle;
-	//}
+	uint32_t handle = sIndexModelData;
 
 	//ファイルストリーム
 	std::ifstream file;
@@ -82,10 +81,10 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 		if (key == "mtllib")
 		{
 			//マテリアルのファイル名読み込み
-			std::string filename;
-			line_stream >> filename;
+			std::string filenameMat;
+			line_stream >> filenameMat;
 			//マテリアル読み込み
-			model->material = NMtllib::Load(directoryPath, filename);
+			model->material = NMtllib::Load(directoryPath, filenameMat);
 		}
 
 		//先頭文字列がvなら頂点座標

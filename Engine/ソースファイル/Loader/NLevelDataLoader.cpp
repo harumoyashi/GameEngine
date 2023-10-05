@@ -100,10 +100,6 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 	}
 }
 
-void NLevelDataLoader::TraversalCamera(nlohmann::json& camera, LevelData* levelData)
-{
-}
-
 void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>>& obj)
 {
 	//レベルデータからオブジェクトを生成、配置

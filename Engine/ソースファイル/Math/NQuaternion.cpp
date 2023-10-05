@@ -127,11 +127,11 @@ float NQuaternion::Dot(const NQuaternion& q0, const NQuaternion& q1)
 
 NVec3 NQuaternion::Cross(const NQuaternion& q0, const NQuaternion& q1)
 {
-	float x = q0.y * q1.z - q0.z * q1.y;
-	float y = q0.z * q1.x - q0.x * q1.z;
-	float z = q0.x * q1.y - q0.y * q1.x;
+	float crossX = q0.y * q1.z - q0.z * q1.y;
+	float crossY = q0.z * q1.x - q0.x * q1.z;
+	float crossZ = q0.x * q1.y - q0.y * q1.x;
 
-	return { x,y,z };
+	return { crossX,crossY,crossZ };
 }
 
 NQuaternion NQuaternion::Normalize()
@@ -201,11 +201,11 @@ NQuaternion NQuaternion::MakeAxisAngle(const NVec3& axis, const float angle)
 
 NQuaternion NQuaternion::EulerToQuaternion(const NVec3& rot) const
 {
-	NQuaternion x = MakeAxisAngle({ 1.f, 0.f, 0.f }, rot.x);
-	NQuaternion y = MakeAxisAngle({ 0.f, 1.f, 0.f }, rot.y);
-	NQuaternion z = MakeAxisAngle({ 0.f, 0.f, 1.f }, rot.z);
+	NQuaternion angleX = MakeAxisAngle({ 1.f, 0.f, 0.f }, rot.x);
+	NQuaternion angleY = MakeAxisAngle({ 0.f, 1.f, 0.f }, rot.y);
+	NQuaternion angleZ = MakeAxisAngle({ 0.f, 0.f, 1.f }, rot.z);
 
-	NQuaternion q = z * x * y;
+	NQuaternion q = angleZ * angleX * angleY;
 
 	return q;
 }

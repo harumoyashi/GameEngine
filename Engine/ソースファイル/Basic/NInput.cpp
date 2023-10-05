@@ -360,7 +360,7 @@ void NInput::VibUpdate()
 	sVibTimer.Update();
 	//タイマーに応じて振動弱めてく
 	float vibTimer = 1.f - sVibTimer.GetTimeRate();
-	sVibration.wLeftMotorSpeed = (int)(sVibPower.x * 65535.0f * vibTimer);
-	sVibration.wRightMotorSpeed = (int)(sVibPower.y * 65535.0f * vibTimer);
+	sVibration.wLeftMotorSpeed = (WORD)(sVibPower.x * 65535.0f * vibTimer);
+	sVibration.wRightMotorSpeed = (WORD)(sVibPower.y * 65535.0f * vibTimer);
 	XInputSetState(0, &sVibration);
 }

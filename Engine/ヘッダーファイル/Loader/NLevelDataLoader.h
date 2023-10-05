@@ -33,8 +33,6 @@ public:
 	//走査
 	void Traversal(nlohmann::json& object, LevelData* levelData);
 
-	void TraversalCamera(nlohmann::json& camera, LevelData* levelData);
-
 	//レベルエディタから出力された読み込み済オブジェクトを配置していく
 	void SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj);
 

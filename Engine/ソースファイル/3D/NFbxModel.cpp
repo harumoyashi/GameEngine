@@ -53,11 +53,11 @@ void FbxModel::PlayAnimation(bool isElapse)
 	}
 }
 
-aiNodeAnim* FbxModel::FindNodeAnimation(const std::string& nodeName, aiAnimation* animation)
+aiNodeAnim* FbxModel::FindNodeAnimation(const std::string& nodeName, aiAnimation* anime)
 {
-	for (unsigned int i = 0; i < animation->mNumChannels; i++)
+	for (unsigned int i = 0; i < anime->mNumChannels; i++)
 	{
-		aiNodeAnim* nodeAnim = animation->mChannels[i];
+		aiNodeAnim* nodeAnim = anime->mChannels[i];
 		if (nodeAnim->mNodeName.data == nodeName)
 		{
 			return nodeAnim;
@@ -244,7 +244,7 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const uint32_t index,
 
 	// ノードアニメーションを取得する
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = scene->mAnimations[index];  // 適切なアニメーションを選択する必要があります
+	aiAnimation* animation = scene->mAnimations[index];  // 適切なアニメーションを選択する必要がある
 
 	const aiNodeAnim* nodeAnim = FindNodeAnimation(nodeName, animation);
 
