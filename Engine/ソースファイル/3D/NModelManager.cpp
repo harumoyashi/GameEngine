@@ -37,6 +37,7 @@ IModel* NModelManager::GetModel(const std::string& modelHandle)
 
 IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::string& modelHandle)
 {
+	//事前に検索かけて、読み込み済みならそのモデルを返す
 	for (auto &modelMap : sModelMap)
 	{
 		if (modelMap.first.c_str() == modelHandle)
@@ -63,7 +64,7 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 	std::unique_ptr<IModel> model = std::make_unique<ObjModel>();
 
 	std::vector<NVec3>positions;	//頂点座標
-	std::vector<NVec3>normals;	//法線ベクトル
+	std::vector<NVec3>normals;		//法線ベクトル
 	std::vector<NVec2>texcoords;	//テクスチャUV
 
 	//1行ずつ読み込む
