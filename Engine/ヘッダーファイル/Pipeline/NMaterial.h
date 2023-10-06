@@ -11,15 +11,15 @@ template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 struct NMaterial
 {
-	std::string name;	//ƒ}ƒeƒŠƒAƒ‹
-	NVec3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒg‰e‹¿“x
-	NVec3 diffuse;	//ƒfƒBƒtƒ…[ƒY‰e‹¿“x
-	NVec3 specular;	//ƒXƒyƒLƒ…ƒ‰[‰e‹¿“x
-	float alpha;		//ƒ¿’l
-	std::string textureFilename;	//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+	std::string name;	//ãƒãƒ†ãƒªã‚¢ãƒ«
+	NVec3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆå½±éŸ¿åº¦
+	NVec3 diffuse;	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºå½±éŸ¿åº¦
+	NVec3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼å½±éŸ¿åº¦
+	float alpha;		//Î±å€¤
+	std::string textureFilename;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
 	NTexture texture;
 
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	NMaterial();
 	~NMaterial();
 };

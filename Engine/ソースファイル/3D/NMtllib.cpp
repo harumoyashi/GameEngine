@@ -9,55 +9,55 @@ NMaterial NMtllib::Load(const std::string& directoryPath, const std::string& fil
     NMaterial material;
     material.texture = NTextureManager::GetInstance()->CreateErrorTexture();
 
-    //ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+    //ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
     std::ifstream file;
-    //ƒ}ƒeƒŠƒAƒ‹î•ñ‘‚¢‚Ä‚éƒtƒ@ƒCƒ‹‚ðŠJ‚­
+    //ãƒžãƒ†ãƒªã‚¢ãƒ«æƒ…å ±æ›¸ã„ã¦ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
     file.open((directoryPath + filename));
-    //ƒtƒ@ƒCƒ‹ŠJ‚¯‚È‚©‚Á‚½‚çƒGƒ‰[
+    //ãƒ•ã‚¡ã‚¤ãƒ«é–‹ã‘ãªã‹ã£ãŸã‚‰ã‚¨ãƒ©ãƒ¼
     if (file.fail()) {
         assert(0);
     }
 
-    //ˆês‚¸‚Â“Ç‚Ýž‚Þ
+    //ä¸€è¡Œãšã¤èª­ã¿è¾¼ã‚€
     std::string line;
     while (getline(file, line)) {
-        //1s•ª‚Ì•¶Žš—ñ‚ðƒXƒgƒŠ[ƒ€‚É•ÏŠ·
+        //1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›
         std::istringstream line_stream(line);
 
-        //”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶Žš—ñ‚ðŽæ“¾
+        //åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
         std::string key;
         getline(line_stream, key, ' ');
 
-        //æ“ª‚Ìƒ^ƒu•¶Žš‚Í–³Ž‹‚·‚é
+        //å…ˆé ­ã®ã‚¿ãƒ–æ–‡å­—ã¯ç„¡è¦–ã™ã‚‹
         if (key[0] == '\t') {
-            key.erase(key.begin()); //æ“ª‚Ì•¶Žš‚ðíœ
+            key.erase(key.begin()); //å…ˆé ­ã®æ–‡å­—ã‚’å‰Šé™¤
         }
-        //æ“ª‚Ì•¶Žš‚ªnewmtl‚È‚çƒ}ƒeƒŠƒAƒ‹–¼
+        //å…ˆé ­ã®æ–‡å­—ãŒnewmtlãªã‚‰ãƒžãƒ†ãƒªã‚¢ãƒ«å
         if (key == "newmtl") {
-            //ƒ}ƒeƒŠƒAƒ‹–¼“Ç‚Ýž‚Ý
+            //ãƒžãƒ†ãƒªã‚¢ãƒ«åèª­ã¿è¾¼ã¿
             line_stream >> material.name;
         }
-        //æ“ª‚Ì•¶Žš‚ªKa‚È‚çƒAƒ“ƒrƒGƒ“ƒgF(ŠÂ‹«Œõ)
+        //å…ˆé ­ã®æ–‡å­—ãŒKaãªã‚‰ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆè‰²(ç’°å¢ƒå…‰)
         if (key == "Ka") {
             line_stream >> material.ambient.x;
             line_stream >> material.ambient.y;
             line_stream >> material.ambient.z;
         }
-        //æ“ª‚Ì•¶Žš‚ªKd‚È‚çƒfƒBƒtƒ…[ƒYF(ŠgŽU”½ŽËŒõ)
+        //å…ˆé ­ã®æ–‡å­—ãŒKdãªã‚‰ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºè‰²(æ‹¡æ•£åå°„å…‰)
         if (key == "Kd") {
             line_stream >> material.diffuse.x;
             line_stream >> material.diffuse.y;
             line_stream >> material.diffuse.z;
         }
-        //æ“ª‚Ì•¶Žš‚ªKs‚È‚çƒXƒyƒLƒ…ƒ‰[F(‹¾–Ê”½ŽËŒõ)
+        //å…ˆé ­ã®æ–‡å­—ãŒKsãªã‚‰ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼è‰²(é¡é¢åå°„å…‰)
         if (key == "Ks") {
             line_stream >> material.specular.x;
             line_stream >> material.specular.y;
             line_stream >> material.specular.z;
         }
-        //æ“ª‚Ì•¶Žš‚ªmap_Kd‚È‚çƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+        //å…ˆé ­ã®æ–‡å­—ãŒmap_Kdãªã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
         if (key == "map_Kd") {
-            //ƒeƒNƒXƒ`ƒƒ‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚Ýž‚Ý
+            //ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ•ã‚¡ã‚¤ãƒ«åèª­ã¿è¾¼ã¿
             line_stream >> material.textureFilename;
             std::string texFileName = (directoryPath + material.textureFilename);
             material.texture = NTextureManager::GetInstance()->LoadTexture(texFileName, material.textureFilename);

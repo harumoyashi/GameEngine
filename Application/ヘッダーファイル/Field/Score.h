@@ -14,13 +14,13 @@ public:
 	};
 
 private:
-	static uint32_t sNowScore;	//Œ»Ý‚ÌƒXƒRƒA
-	static uint32_t sTopScore;	//ˆê”Ô‚‚¢ƒXƒRƒA
+	static uint32_t sNowScore;	//ç¾åœ¨ã®ã‚¹ã‚³ã‚¢
+	static uint32_t sTopScore;	//ä¸€ç•ªé«˜ã„ã‚¹ã‚³ã‚¢
 
-	static std::vector<NumDrower> sScoreTex;	//ƒXƒRƒA•\Ž¦—p
-	static std::unique_ptr<NSprite> sTopTex;	//TOPƒeƒNƒXƒ`ƒƒ
+	static std::vector<NumDrower> sScoreTex;	//ã‚¹ã‚³ã‚¢è¡¨ç¤ºç”¨
+	static std::unique_ptr<NSprite> sTopTex;	//TOPãƒ†ã‚¯ã‚¹ãƒãƒ£
 
-	static bool sIsAddScore;	//ƒXƒRƒA‰ÁŽZ‚µ‚ÄOK‚©ƒtƒ‰ƒO
+	static bool sIsAddScore;	//ã‚¹ã‚³ã‚¢åŠ ç®—ã—ã¦OKã‹ãƒ•ãƒ©ã‚°
 
 public:
 	static void Create();
@@ -34,11 +34,11 @@ public:
 
 	static void AddScore(uint32_t score);
 
-	// ƒQƒbƒ^[ //
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
 	static NVec2 GetPos(TexType type) { return sScoreTex[(uint32_t)type].GetPos(); }
 	static NVec2 GetSize(TexType type) { return sScoreTex[(uint32_t)type].GetSize(); }
 
-	// ƒZƒbƒ^[ //
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
 	static void SetPos(const NVec2& pos, TexType type);
 	static void SetSize(const NVec2& size, TexType type);
 	static void SetColor(const NColor& color, TexType type);

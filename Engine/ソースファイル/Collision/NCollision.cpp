@@ -29,13 +29,13 @@ bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1, c
 
 bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollider& plane)
 {
-	//���W�n�̌��_���狅�̒��S���W�ւ̋���
+	//座標系の原点から球の中心座標への距離
 	float distV = sphere.GetCenterPos().Dot(plane.GetNormal());
 
-	//���ʂ̌��_���������Z���邱�ƂŁA���ʂƋ��̒��S�Ƃ̋������o��
+	//平面の原点距離を減算することで、平面と球の中心との距離を出す
 	float dist = distV - plane.GetDistance();
 
-	//�����̐�Βl�����a���傫����Γ������ĂȂ�
+	//距離の絶対値が半径より大きければ当たってない
 	if (fabsf(dist) > sphere.GetRadius())
 	{
 		return false;
@@ -46,28 +46,28 @@ bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollid
 
 bool NCollision::Ray2PlaneCol(const RayCollider& ray, const PlaneCollider& plane)
 {
-	const float epsilon = 1.0e-5f;	//�덷�z���p�̋ɏ��̒l
-	//�ʖ@���ƃ��C�̕����x�N�g���̓���
+	const float epsilon = 1.0e-5f;	//誤差吸収用の極小の値
+	//面法線とレイの方向ベクトルの内積
 	float d1 = plane.GetNormal().Dot(ray.GetDirVec());
-	//���ʂɂ͓�����Ȃ�
+	//裏面には当たらない
 	if (d1 > -epsilon)
 	{
 		return false;
 	}
-	//�n�_�ƌ��_�̋���(���ʂ̖@������)
-	//�ʖ@���ƃ��C�̎n�_���W(�ʒu�x�N�g��)�̓���
+	//始点と原点の距離(平面の法線方向)
+	//面法線とレイの始点座標(位置ベクトル)の内積
 	float d2 = plane.GetNormal().Dot(ray.GetStartPos());
-	//�n�_�ƕ��ʂ̋���(���ʂ̖@������)
+	//始点と平面の距離(平面の法線方向)
 	float dist = d2 - plane.GetDistance();
-	//�n�_�ƕ��ʂ̋���(���C����)
+	//始点と平面の距離(レイ方向)
 	float t = dist / -d1;
-	//��_���n�_�����ɂ���̂ŁA������Ȃ�
+	//交点が始点より後ろにあるので、当たらない
 	if (t < 0)
 	{
 		return false;
 	}
-	//��_���v�Z
-	
+	//交点を計算
+
 
 	return true;
 }

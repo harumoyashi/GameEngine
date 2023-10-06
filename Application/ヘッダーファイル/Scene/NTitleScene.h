@@ -19,18 +19,18 @@ class NTitleScene final :
 	public IScene
 {
 private:
-	//ƒIƒuƒWƒFƒNƒg
-	
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	//”wŒiƒXƒvƒ‰ƒCƒg
-	std::unique_ptr<NSprite> backSprite_;	//”wŒiƒXƒvƒ‰ƒCƒg
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg
-	std::unique_ptr<NSprite> titleLogo_;						//ƒ^ƒCƒgƒ‹ƒƒS
-	std::vector<std::unique_ptr<NSprite>> aButton_{ 2 };		//Aƒ{ƒ^ƒ“UI
-	NEasing::EaseTimer flashingTimer_ = 1.0f;					//“_–Åƒ^ƒCƒ}[
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	std::unique_ptr<NSprite> backSprite_;	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	//ƒ‰ƒCƒg‚½‚¿
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	std::unique_ptr<NSprite> titleLogo_;						//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
+	std::vector<std::unique_ptr<NSprite>> aButton_{ 2 };		//Aãƒœã‚¿ãƒ³UI
+	NEasing::EaseTimer flashingTimer_ = 1.0f;					//ç‚¹æ»…ã‚¿ã‚¤ãƒãƒ¼
+
+	//ãƒ©ã‚¤ãƒˆãŸã¡
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
@@ -40,14 +40,14 @@ public:
 	void LoadResources();
 	void Init() override;
 	void Update() override;
-	//”wŒiƒXƒvƒ‰ƒCƒg
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawBackSprite()override;
-	//”wŒi3DƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void DrawBack3D()override;
-	//3DƒIƒuƒWƒFƒNƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void Draw3D() override;
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	void DrawParticle() override;
-	//‘OŒiƒXƒvƒ‰ƒCƒg
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawForeSprite() override;
 };

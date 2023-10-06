@@ -9,39 +9,39 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	uint32_t bbIndex_;
-	D3D12_RESOURCE_BARRIER barrierDesc_{};		//���\�[�X�o���A
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_{};	//�����_�[�^�[�Q�b�g�r���[�n���h��
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_{};	//�f�X�N���v�^�n���h��
+	D3D12_RESOURCE_BARRIER barrierDesc_{};		//リソースバリア
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_{};	//レンダーターゲットビューハンドル
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_{};	//デスクリプタハンドル
 
-	D3D12_VIEWPORT viewport_{};	//�r���[�|�[�g
-	D3D12_RECT scissorRect_{};	//�V�U�[��`
+	D3D12_VIEWPORT viewport_{};	//ビューポート
+	D3D12_RECT scissorRect_{};	//シザー矩形
 
 public:
-	//���\�[�X�o���A�ŏ������݉\�ɕύX
+	//リソースバリアで書き込み可能に変更
 	void SetResBarrier();
-	//�`���̕ύX
+	//描画先の変更
 	void SetRenderTarget();
-	//��ʃN���ARGBA
+	//画面クリアRGBA
 	void ClearScreen();
-	//�r���[�|�[�g�ݒ�
+	//ビューポート設定
 	void SetViewport();
-	//�V�U�[��`�ݒ�
+	//シザー矩形設定
 	void SetScissorRect();
 
-	//�o���A����
+	//バリア解除
 	void BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc);
-	//���߂̃N���[�Y
-	//�����R�}���h���X�g�ɐςނ̂����܂�
+	//命令のクローズ
+	//もうコマンドリストに積むのおしまい
 	void CmdListClose();
-	// �R�}���h���X�g�̎��s
+	// コマンドリストの実行
 	void ExecuteCmdList();
-	// ��ʂɕ\������o�b�t�@���t���b�v(���\�̓��ւ�)
+	// 画面に表示するバッファをフリップ(裏表の入替え)
 	void BufferSwap();
-	// �R�}���h�̎��s������҂�
+	// コマンドの実行完了を待つ
 	void CommandWait(UINT64& fenceVal);
-	// �L���[���N���A
+	// キューをクリア
 	void ClearQueue();
-	// �ĂуR�}���h���X�g�𒙂߂鏀��
+	// 再びコマンドリストを貯める準備
 	void CmdListReset();
 };
 

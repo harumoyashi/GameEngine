@@ -5,7 +5,7 @@
 #include <memory>
 #include "NFbxModel.h"
 
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 struct aiMesh;
 struct aiScene;
 struct aiNode;
@@ -13,22 +13,22 @@ struct aiNode;
 class NAssimpLoader final
 {
 private:
-	void ParseMesh(FbxModel* model, aiMesh* mesh);								//ƒƒbƒVƒ…‚Ì‰ğÍ
-	void ParseVertex(FbxModel* model, aiMesh* mesh);							//’¸“_‚Ì‰ğÍ
-	void ParseFace(FbxModel* model, aiMesh* mesh);								//ƒtƒFƒCƒX‚Ì‰ğÍ
-	void ParseSkin(FbxModel* model, aiMesh* mesh);								//ƒXƒLƒ“‚Ì‰ğÍ
-	
-public:
-	void ParseMaterial(FbxModel* model, const aiScene* scene);					//ƒ}ƒeƒŠƒAƒ‹‚Ì‰ğÍ
-	void ParseNodeRecursive(FbxModel* model, Node* parent,const aiNode* node);	//‰ğÍ
+	void ParseMesh(FbxModel* model, aiMesh* mesh);								//ãƒ¡ãƒƒã‚·ãƒ¥ã®è§£æ
+	void ParseVertex(FbxModel* model, aiMesh* mesh);							//é ‚ç‚¹ã®è§£æ
+	void ParseFace(FbxModel* model, aiMesh* mesh);								//ãƒ•ã‚§ã‚¤ã‚¹ã®è§£æ
+	void ParseSkin(FbxModel* model, aiMesh* mesh);								//ã‚¹ã‚­ãƒ³ã®è§£æ
 
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	void ParseMaterial(FbxModel* model, const aiScene* scene);					//ãƒãƒ†ãƒªã‚¢ãƒ«ã®è§£æ
+	void ParseNodeRecursive(FbxModel* model, Node* parent, const aiNode* node);	//è§£æ
+
+public:
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NAssimpLoader* GetInstance();
-	bool Load(const std::string& filePath, FbxModel* model);	//ƒ‚ƒfƒ‹‚ğƒ[ƒh‚·‚é
-	//Assimp‚ÌMat4‚ğ©ìMat4Œ^‚É•ÏŠ·
+	bool Load(const std::string& filePath, FbxModel* model);	//ãƒ¢ãƒ‡ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã™ã‚‹
+	//Assimpã®Mat4ã‚’è‡ªä½œMat4å‹ã«å¤‰æ›
 	static NMatrix4 AssimpMatToMat4(const aiMatrix4x4& mat);
-	//ƒtƒ@ƒCƒ‹–¼Ø‚èæ‚Á‚Ä•Ô‚·
+	//ãƒ•ã‚¡ã‚¤ãƒ«ååˆ‡ã‚Šå–ã£ã¦è¿”ã™
 	std::string ExractFileName(const std::string& path);
 
 private:

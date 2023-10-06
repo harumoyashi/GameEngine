@@ -5,41 +5,41 @@ class IPostEffect
 	: public NSprite
 {
 protected:
-	static NVertexBuff<NVertexUV> vertexBuff_;		//’¸“_ƒoƒbƒtƒ@
+	static NVertexBuff<NVertexUV> vertexBuff_;		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 
-	//’è”ƒoƒbƒtƒ@‚Ü‚í‚è//
-	static std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D•ÏŠ·s—ñ
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¾ã‚ã‚Š//
+	static std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2Då¤‰æ›è¡Œåˆ—
 	static std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
 
-	//s—ñ//
-	static NMatrix4 matWorld_;		//•ÏŠ·s—ñ
-	static NMatrix4 matProjection_;	//•½s“Š‰e•ÛŠÇ—p
+	//è¡Œåˆ—//
+	static NMatrix4 matWorld_;		//å¤‰æ›è¡Œåˆ—
+	static NMatrix4 matProjection_;	//å¹³è¡ŒæŠ•å½±ä¿ç®¡ç”¨
 
-	//•ÏŠ·—p//
-	static float rotation_;		//Z²‚Ì‰ñ“]Šp
-	static NVec2 position_;		//À•W
-	static NColor color_;		//F
+	//å¤‰æ›ç”¨//
+	static float rotation_;		//Zè»¸ã®å›è»¢è§’
+	static NVec2 position_;		//åº§æ¨™
+	static NColor color_;		//è‰²
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	static const uint32_t texNum_ = 2;
 	static ComPtr<ID3D12Resource> texBuff_[texNum_];
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	static ComPtr<ID3D12DescriptorHeap> descHeapSRV_;
 
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	static ComPtr<ID3D12Resource> depthBuff_;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	static ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	static ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
-	//‰æ–ÊƒNƒŠƒAƒJƒ‰[
+	//ç”»é¢ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
 	static const float kClearColor[4];
 
-	//ƒpƒCƒvƒ‰ƒCƒ“‚Ì–¼‘O
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®åå‰
 	static std::string pipelineName_;
 
-	static bool isActive_;	//ƒ|ƒXƒgƒGƒtƒFƒNƒg—LŒøƒtƒ‰ƒO
+	static bool isActive_;	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæœ‰åŠ¹ãƒ•ãƒ©ã‚°
 
 public:
 	IPostEffect();
@@ -48,23 +48,23 @@ public:
 	static void Init();
 	static void Update();
 
-	//ƒeƒNƒXƒ`ƒƒ¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”Ÿæˆ
 	static void CreateTexture();
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[¶¬
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”Ÿæˆ
 	static void CreateRTV();
-	//[“xƒoƒbƒtƒ@¶¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	static void CreateDepthBuff();
-	//ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒrƒ…[¶¬
+	//ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”Ÿæˆ
 	static void CreateDSV();
 	static void Draw();
 
 	static void PreDrawScene();
 	static void PostDrawScene();
 
-	// ƒQƒbƒ^[ //
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
 	static bool GetIsActive() { return isActive_; }
 
-	// ƒZƒbƒ^[ //
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg—LŒøƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæœ‰åŠ¹ãƒ•ãƒ©ã‚°è¨­å®š
 	static void SetIsActive(bool isActive) { isActive_ = isActive; }
 };

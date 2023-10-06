@@ -21,7 +21,7 @@ void IBullet::Generate(const NVec3& pos, const float moveAngle)
 	obj_->scale_ = Player::GetInstance()->GetScale() * 0.5f;
 	obj_->color_ = NColor::kWhite;
 
-	//ƒRƒ‰ƒCƒ_[Ý’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨­å®š
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
 	collider_.SetColID("bullet");
@@ -33,10 +33,10 @@ void IBullet::Generate(const NVec3& pos, const float moveAngle)
 
 void IBullet::Update()
 {
-	//Œo‰ßŽžŠÔ‚ð“K—p
+	//çµŒéŽæ™‚é–“ã‚’é©ç”¨
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
-	//¶‘¶ŽžŠÔ‰ß‚¬‚½‚çŽ€‚ñ‚¾”»’è‚É
+	//ç”Ÿå­˜æ™‚é–“éŽãŽãŸã‚‰æ­»ã‚“ã åˆ¤å®šã«
 	lifeTimer_.Update(elapseSpeed_);
 	if (lifeTimer_.GetStarted() == false)
 	{
@@ -47,22 +47,22 @@ void IBullet::Update()
 		isAlive_ = false;
 	}
 
-	//’e‚ÌˆÚ“®
-	//ˆÚ“®—Ê = i‚Þ•ûŒü * ƒXƒs[ƒh * Œo‰ßŽžŠÔ
+	//å¼¾ã®ç§»å‹•
+	//ç§»å‹•é‡ = é€²ã‚€æ–¹å‘ * ã‚¹ãƒ”ãƒ¼ãƒ‰ * çµŒéŽæ™‚é–“
 	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 
-	//ˆÚ“®
+	//ç§»å‹•
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
 
 	obj_->Update();
 	collider_.Update(obj_.get());
 
-	//OnCollision()‚ÅŒÄ‚Ô‚ÆA‚»‚ÌƒtƒŒ[ƒ€‚Å‚Ì‘“–‚½‚è‚É‰e‹¿‚ªo‚é‚©‚ç‚±‚±‚ÅÁ‚µ‚Ä‚é
+	//OnCollision()ã§å‘¼ã¶ã¨ã€ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®ç·å½“ãŸã‚Šã«å½±éŸ¿ãŒå‡ºã‚‹ã‹ã‚‰ã“ã“ã§æ¶ˆã—ã¦ã‚‹
 	if (isAlive_ == false)
 	{
-		//ƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚©‚çíœ
+		//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰å‰Šé™¤
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 	}
 }
@@ -76,7 +76,7 @@ void IBullet::Draw()
 
 void IBullet::OnCollision()
 {
-	//“–‚½‚Á‚½‘ŠŽè‚ª’e‚¾‚Á‚½Žž‚Ìˆ—
+	//å½“ãŸã£ãŸç›¸æ‰‹ãŒå¼¾ã ã£ãŸæ™‚ã®å‡¦ç†
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
 		isAlive_ = false;

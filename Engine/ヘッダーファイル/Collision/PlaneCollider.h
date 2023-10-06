@@ -5,8 +5,8 @@ class PlaneCollider final :
 	public NBaseCollider
 {
 private:
-	NVec3 normal_;		//–@ü
-	float distance_;	//Œ´“_‚©‚ç‚Ì‹——£
+	NVec3 normal_;		//æ³•ç·š
+	float distance_;	//åŸç‚¹ã‹ã‚‰ã®è·é›¢
 
 public:
 	PlaneCollider(NVec3 normal = NVec3::up, float distance = 0.f) :
@@ -17,16 +17,16 @@ public:
 
 	void Update(NObj3d* obj)override;
 
-	// ƒQƒbƒ^[ //
-	//Œ´“_‚©‚ç‚Ì‹——£æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢å–å¾—
 	float GetDistance()const { return distance_; }
-	//–@üæ“¾
+	//æ³•ç·šå–å¾—
 	const NVec3& GetNormal()const { return normal_; }
 
-	// ƒZƒbƒ^[ //
-	//Œ´“_‚©‚ç‚Ì‹——£İ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢è¨­å®š
 	void SetDistance(float distance) { distance_ = distance; }
-	//–@üİ’è
+	//æ³•ç·šè¨­å®š
 	void SetNormal(const NVec3& normal) { normal_ = normal; }
 };
 

@@ -9,37 +9,37 @@
 class NPointLight final
 {
 public:
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	std::unique_ptr<NConstBuff<ConstBuffDataPointLight>> cbPointLight;
 
-private://Ã“Iƒƒ“ƒo•Ï”
-	NVec3 lightpos_ = NVec3::zero;		// ƒ‰ƒCƒgÀ•W(ƒ[ƒ‹ƒh)
-	NVec3 lightcolor_ = NVec3::one;	// ƒ‰ƒCƒgF
-	NVec3 lightatten_ = { 0.2f,0.2f,0.2f };	// ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	NVec3 lightpos_ = NVec3::zero;		// ãƒ©ã‚¤ãƒˆåº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰)
+	NVec3 lightcolor_ = NVec3::one;	// ãƒ©ã‚¤ãƒˆè‰²
+	NVec3 lightatten_ = { 0.2f,0.2f,0.2f };	// ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool isDirty_ = false;
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool isActive_ = false;
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 	NPointLight();
 	~NPointLight();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
 
-	//ƒ‰ƒCƒg‚ÌÀ•W‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightPos(const NVec3& lightpos);
 	const NVec3& GetLightPos()const { return lightpos_; }
-	//ƒ‰ƒCƒg‚ÌF‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightColor(const NVec3& lightcolor);
 	const NVec3& GetLightColor()const { return lightcolor_; }
-	//ƒ‰ƒCƒg‚ÌŒ¸ŠŒW”‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®æ¸›è¡°ä¿‚æ•°ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightAtten(const NVec3& lightatten);
 	const NVec3& GetLightAtten()const { return lightatten_; }
-	//—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	void SetActive(bool isActive) { isActive_ = isActive; }
-	//—LŒøƒtƒ‰ƒO‚ğæ“¾
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’å–å¾—
 	bool GetActive()const { return isActive_; }
 };

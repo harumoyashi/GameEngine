@@ -5,28 +5,28 @@ class SphereCollider final :
 	public NBaseCollider
 {
 private:
-	NVec3 centerPos_;	//ƒRƒ‰ƒCƒ_[‚Ì’†SÀ•W
-	NVec3 offset_;		//ƒIƒuƒWƒFƒNƒg’†S‚©‚ç‚ÌƒIƒtƒZƒbƒg
-	float radius_;		//”¼Œa
+	NVec3 centerPos_;	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ä¸­å¿ƒåº§æ¨™
+	NVec3 offset_;		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸­å¿ƒã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+	float radius_;		//åŠå¾„
 
 public:
 	SphereCollider(NVec3 offset = NVec3::zero, float radius = 1.0f) :
 		offset_(offset), radius_(radius)
 	{
-		shapeType_ = COL_SPHERE;	//Œ`óİ’è
+		shapeType_ = COL_SPHERE;	//å½¢çŠ¶è¨­å®š
 	}
 
 	void Update(NObj3d* obj)override;
 
-	// ƒQƒbƒ^[ //
-	//”¼Œaæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//åŠå¾„å–å¾—
 	float GetRadius()const { return radius_; }
-	//ƒRƒ‰ƒCƒ_[‚Ì’†SÀ•Wæ“¾
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ä¸­å¿ƒåº§æ¨™å–å¾—
 	const NVec3& GetCenterPos()const { return centerPos_; }
 
-	// ƒZƒbƒ^[ //
-	//”¼Œaİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//åŠå¾„è¨­å®š
 	void SetRadius(float radius) { radius_ = radius; }
-	//ƒRƒ‰ƒCƒ_[‚Ì’†SÀ•Wİ’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ä¸­å¿ƒåº§æ¨™è¨­å®š
 	void SetCenterPos(const NVec3& centerPos) { centerPos_ = centerPos; }
 };

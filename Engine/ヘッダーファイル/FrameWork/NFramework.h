@@ -2,7 +2,7 @@
 class NFramework
 {
 private:
-	//ƒQ[ƒ€I—¹ƒtƒ‰ƒO
+	//ã‚²ãƒ¼ãƒ çµ‚äº†ãƒ•ãƒ©ã‚°
 	bool isGameEnd_ = false;
 
 public:
@@ -12,11 +12,11 @@ public:
 	virtual void Draw() = 0;
 	virtual void Finalize();
 
-	//Às
+	//å®Ÿè¡Œ
 	void Run();
 
-	//ƒQ[ƒ€I—¹ƒtƒ‰ƒOæ“¾
+	//ã‚²ãƒ¼ãƒ çµ‚äº†ãƒ•ãƒ©ã‚°å–å¾—
 	virtual bool GetIsGameEnd()const { return isGameEnd_; }
-	//ƒQ[ƒ€I—¹ƒtƒ‰ƒOİ’è
+	//ã‚²ãƒ¼ãƒ çµ‚äº†ãƒ•ãƒ©ã‚°è¨­å®š
 	virtual void SetIsGameEnd(bool flag) { isGameEnd_ = flag; }
 };

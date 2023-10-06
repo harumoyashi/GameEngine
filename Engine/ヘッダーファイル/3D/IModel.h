@@ -5,10 +5,10 @@
 
 struct IModel
 {
-	std::string name;	//ƒ‚ƒfƒ‹–¼
-	NMesh mesh;			//ƒƒbƒVƒ…
-	NMaterial material;	//ƒ}ƒeƒŠƒAƒ‹
-	ModelFormat format;	//ƒ‚ƒfƒ‹‚Ìí—Ş
+	std::string name;	//ãƒ¢ãƒ‡ãƒ«å
+	NMesh mesh;			//ãƒ¡ãƒƒã‚·ãƒ¥
+	NMaterial material;	//ãƒãƒ†ãƒªã‚¢ãƒ«
+	ModelFormat format;	//ãƒ¢ãƒ‡ãƒ«ã®ç¨®é¡
 
 	virtual ~IModel() = default;
 };

@@ -16,6 +16,6 @@ public:
 	virtual void DrawParticle() = 0;
 	virtual void DrawForeSprite() = 0;
 
-	//���݂̃V�[�����ǂ������f����ϐ�(�ϐ����̂͌X�̃V�[�����ŏ���������)
+	//現在のシーンがどこか判断する変数(変数自体は個々のシーン内で書き換える)
 	std::string sceneID = "";
 };

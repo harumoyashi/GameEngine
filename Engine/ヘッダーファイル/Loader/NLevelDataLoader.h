@@ -27,16 +27,16 @@ private:
 
 
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NLevelDataLoader* GetInstance();
 	std::unique_ptr<LevelData> Load(const std::string& filename);
-	//‘–¸
+	//èµ°æŸ»
 	void Traversal(nlohmann::json& object, LevelData* levelData);
 
-	//ƒŒƒxƒ‹ƒGƒfƒBƒ^‚©‚ço—Í‚³‚ê‚½“Ç‚İ‚İÏƒIƒuƒWƒFƒNƒg‚ğ”z’u‚µ‚Ä‚¢‚­
-	void SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>> &obj);
+	//ãƒ¬ãƒ™ãƒ«ã‚¨ãƒ‡ã‚£ã‚¿ã‹ã‚‰å‡ºåŠ›ã•ã‚ŒãŸèª­ã¿è¾¼ã¿æ¸ˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’é…ç½®ã—ã¦ã„ã
+	void SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>>& obj);
 
-	//ƒJƒƒ‰‚ğİ’è‚·‚é
+	//ã‚«ãƒ¡ãƒ©ã‚’è¨­å®šã™ã‚‹
 	NCamera SetCamera(const LevelData* levelData);
 
 private:

@@ -14,7 +14,7 @@ IEmitter3D::IEmitter3D()
 
 void IEmitter3D::Init()
 {
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbTrans_->Init();
 
@@ -26,21 +26,21 @@ void IEmitter3D::Init()
 	maxScale_ = 0;
 	minScale_ = 0;
 	scaling_ = 0;
-	texture_ = NTextureManager::GetInstance()->textureMap_["white"];	//‚Æ‚è‚Ü^‚Á”’‚ÈƒeƒNƒXƒ`ƒƒŠ„‚è“–‚Ä‚Æ‚­
+	texture_ = NTextureManager::GetInstance()->textureMap_["white"];	//ã¨ã‚Šã¾çœŸã£ç™½ãªãƒ†ã‚¯ã‚¹ãƒãƒ£å‰²ã‚Šå½“ã¦ã¨ã
 
-	//XVˆ—‚ÅƒTƒCƒY‚ª•Ï‚í‚Á‚¿‚á‚¤‚©‚çA‚ ‚ç‚©‚¶‚ßÅ‘å”•ªì‚é
+	//æ›´æ–°å‡¦ç†ã§ã‚µã‚¤ã‚ºãŒå¤‰ã‚ã£ã¡ã‚ƒã†ã‹ã‚‰ã€ã‚ã‚‰ã‹ã˜ã‚æœ€å¤§æ•°åˆ†ä½œã‚‹
 	vertices_.resize(maxParticle_);
-	//‚»‚ê‚É‚æ‚Á‚Äƒoƒbƒtƒ@‚Ì‰Šú‰»‚ğ‚·‚é
+	//ãã‚Œã«ã‚ˆã£ã¦ãƒãƒƒãƒ•ã‚¡ã®åˆæœŸåŒ–ã‚’ã™ã‚‹
 	vertexBuff_.Init(vertices_);
 
-	isActive_ = true;	//¶¬‚É‚Í—LŒøƒtƒ‰ƒO—§‚Ä‚é
+	isActive_ = true;	//ç”Ÿæˆæ™‚ã«ã¯æœ‰åŠ¹ãƒ•ãƒ©ã‚°ç«‹ã¦ã‚‹
 }
 
 void IEmitter3D::Update()
 {
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
-	//õ–½‚ªs‚«‚½ƒp[ƒeƒBƒNƒ‹‚ğ‘Síœ
+	//å¯¿å‘½ãŒå°½ããŸãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å…¨å‰Šé™¤
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
 		if (particles_[i].aliveTimer.GetEnd())
@@ -50,25 +50,25 @@ void IEmitter3D::Update()
 		}
 	}
 
-	//‘Sƒp[ƒeƒBƒNƒ‹XV
+	//å…¨ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æ›´æ–°
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
-		//¶‘¶ŠÔ‚ÆƒC[ƒWƒ“ƒO—pƒ^ƒCƒ}[‚ÌXV
+		//ç”Ÿå­˜æ™‚é–“ã¨ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼ã®æ›´æ–°
 		particles_[i].aliveTimer.Update(elapseSpeed_);
 		particles_[i].easeTimer.Update(elapseSpeed_);
 
-		//ƒXƒP[ƒ‹‚ÌüŒ`•âŠÔ
+		//ã‚¹ã‚±ãƒ¼ãƒ«ã®ç·šå½¢è£œé–“
 		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].easeTimer.GetTimeRate());
 
-		//‰Á‘¬“x‚ğ‘¬“x‚É‰ÁZ
+		//åŠ é€Ÿåº¦ã‚’é€Ÿåº¦ã«åŠ ç®—
 		particles_[i].velo += particles_[i].accel;
 
-		//‰Šú‚Ìƒ‰ƒ“ƒ_ƒ€Šp“x‚ğ‚à‚Æ‚É‰ñ‚·
+		//åˆæœŸã®ãƒ©ãƒ³ãƒ€ãƒ è§’åº¦ã‚’ã‚‚ã¨ã«å›ã™
 		if (isRotation_)
 		{
 			particles_[i].rot += particles_[i].plusRot * elapseSpeed_;
 
-			//ˆê‰ñ“]‚µ‚½‚ç0‚É–ß‚µ‚Ä‚ ‚°‚é
+			//ä¸€å›è»¢ã—ãŸã‚‰0ã«æˆ»ã—ã¦ã‚ã’ã‚‹
 			if (abs(particles_[i].rot.x) >= PI2)
 			{
 				particles_[i].rot.x = 0.0f;
@@ -85,35 +85,35 @@ void IEmitter3D::Update()
 			}
 		}
 
-		//d—Í‰ÁZ
+		//é‡åŠ›åŠ ç®—
 		if (isGravity_)
 		{
 			particles_[i].velo.y += particles_[i].gravity * elapseSpeed_;
 		}
 
-		//‘¬“x‚É‚æ‚éˆÚ“®
+		//é€Ÿåº¦ã«ã‚ˆã‚‹ç§»å‹•
 		particles_[i].pos += particles_[i].velo * elapseSpeed_;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
-	//ƒp[ƒeƒBƒNƒ‹‚Ìî•ñ‚ğ1‚Â‚¸‚Â”½‰f
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æƒ…å ±ã‚’1ã¤ãšã¤åæ˜ 
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
 		NVertexParticle vertex;
 
-		//À•W
+		//åº§æ¨™
 		vertex.pos = particles_[i].pos;
-		//‰ñ“]
+		//å›è»¢
 		vertex.rot = particles_[i].rot;
-		//F
+		//è‰²
 		vertex.color = particles_[i].color;
-		//ƒXƒP[ƒ‹
+		//ã‚¹ã‚±ãƒ¼ãƒ«
 		vertex.scale = particles_[i].scale;
 
 		vertices_.at(i) = vertex;
 	}
 
-	//–ˆ‰ñ’¸“_”‚ª•Ï‚í‚é‚Ì‚Å‰Šú‰»‚µ‚È‚¨‚·
+	//æ¯å›é ‚ç‚¹æ•°ãŒå¤‰ã‚ã‚‹ã®ã§åˆæœŸåŒ–ã—ãªãŠã™
 	vertexBuff_.TransferBuffer(vertices_);
 
 	UpdateMatrix();
@@ -121,8 +121,8 @@ void IEmitter3D::Update()
 
 void IEmitter3D::CommonBeginDraw()
 {
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
-	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); // “_
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST); // ç‚¹
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
@@ -130,7 +130,7 @@ void IEmitter3D::CommonBeginDraw()
 
 void IEmitter3D::SetBlendMode(BlendMode blendMode)
 {
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	switch (blendMode)
 	{
 	case BlendMode::None:
@@ -152,50 +152,50 @@ void IEmitter3D::SetBlendMode(BlendMode blendMode)
 
 void IEmitter3D::Draw()
 {
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚É3D•ÏŠ·s—ñ‚Ì’è”ƒoƒbƒtƒ@‚ğ“n‚·
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«3Då¤‰æ›è¡Œåˆ—ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbTrans_->constBuff_->GetGPUVirtualAddress());
 
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuff_.GetView());
 
-	//SRV‚Ìİ’è
+	//SRVã®è¨­å®š
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, texture_.gpuHandle_);
 
-	//ƒ‰ƒCƒg‚Ì•`‰æ
+	//ãƒ©ã‚¤ãƒˆã®æç”»
 	sLightGroup->Draw(3);
 
-	// •`‰æƒRƒ}ƒ“ƒh
+	// æç”»ã‚³ãƒãƒ³ãƒ‰
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced((UINT)std::distance(particles_.begin(), particles_.end()), 1, 0, 0);
 }
 
 void IEmitter3D::UpdateMatrix()
 {
-	//ƒ[ƒ‹ƒhs—ñ
-	NMatrix4 matScale;	//ƒXƒP[ƒŠƒ“ƒOs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+	NMatrix4 matScale;	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
 	matScale = matScale.Scale(scale_);
 
-	NMatrix4 matRot;		//‰ñ“]s—ñ
+	NMatrix4 matRot;		//å›è»¢è¡Œåˆ—
 	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rot_.z));
 	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rot_.x));
 	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rot_.y));
-	matRot *= matZ;	//Z²ü‚è‚É‰ñ“]‚µ‚Ä‚©‚ç
-	matRot *= matX;	//X²ü‚è‚É‰ñ“]‚µ‚Ä
-	matRot *= matY;	//Y²ü‚è‚É‰ñ“]
+	matRot *= matZ;	//Zè»¸å‘¨ã‚Šã«å›è»¢ã—ã¦ã‹ã‚‰
+	matRot *= matX;	//Xè»¸å‘¨ã‚Šã«å›è»¢ã—ã¦
+	matRot *= matY;	//Yè»¸å‘¨ã‚Šã«å›è»¢
 
-	NMatrix4 matTrans;	//•½sˆÚ“®s—ñ
+	NMatrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 	matTrans = matTrans.Translation(pos_);
 
-	matWorld_ = NMatrix4::Identity();	//’PˆÊs—ñ‘ã“ü
-	matWorld_ *= matScale;	//ƒ[ƒ‹ƒhÀ•W‚ÉƒXƒP[ƒŠƒ“ƒO‚ğ”½‰f
-	matWorld_ *= matRot;		//ƒ[ƒ‹ƒhÀ•W‚É‰ñ“]‚ğ”½‰f
-	matWorld_ *= matTrans;	//ƒ[ƒ‹ƒhÀ•W‚É•½sˆÚ“®‚ğ”½‰f
+	matWorld_ = NMatrix4::Identity();	//å˜ä½è¡Œåˆ—ä»£å…¥
+	matWorld_ *= matScale;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld_ *= matRot;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å›è»¢ã‚’åæ˜ 
+	matWorld_ *= matTrans;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	TransferMatrix();
 }
 
 void IEmitter3D::TransferMatrix()
 {
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	cbTrans_->constMap_ = nullptr;
 	cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
 
@@ -211,40 +211,40 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= maxParticle_)
 		{
 			return;
 		}
 
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		Particle3D& p = particles_.back();
-		//ƒGƒ~ƒbƒ^[‚Ì’†‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÅÀ•W‚ğŒˆ’è
+		//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®ä¸­ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§åº§æ¨™ã‚’æ±ºå®š
 		float pX = MathUtil::Randomf(-scale_.x, scale_.x);
 		float pY = MathUtil::Randomf(-scale_.y, scale_.y);
 		float pZ = MathUtil::Randomf(-scale_.z, scale_.z);
 		NVec3 randomPos(pX, pY, pZ);
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç‘å‚«‚³ƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰å¤§ãã•ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
 		float sX = MathUtil::Randomf(minScale, maxScale);
 		float sY = MathUtil::Randomf(minScale, maxScale);
 		float sZ = MathUtil::Randomf(minScale, maxScale);
 		NVec3 randomScale(sX, sY, sZ);
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç”ò‚Î‚·•ûŒüƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰é£›ã°ã™æ–¹å‘ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
 		float vX = MathUtil::Randomf(minVelo.x, maxVelo.x);
 		float vY = MathUtil::Randomf(minVelo.y, maxVelo.y);
 		float vZ = MathUtil::Randomf(minVelo.z, maxVelo.z);
 		NVec3 randomVelo(vX, vY, vZ);
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç‰ñ“]‚ğƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰å›è»¢ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
 		float rX = MathUtil::Randomf(minRot.x, maxRot.x);
 		float rY = MathUtil::Randomf(minRot.y, maxRot.y);
 		float rZ = MathUtil::Randomf(minRot.z, maxRot.z);
 		NVec3 randomRot(rX, rY, rZ);
 
-		//Œˆ‚Ü‚Á‚½À•W‚ÉƒGƒ~ƒbƒ^[©‘Ì‚ÌÀ•W‚ğ‘«‚µ‚Ä³‚µ‚¢ˆÊ’u‚É
+		//æ±ºã¾ã£ãŸåº§æ¨™ã«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼è‡ªä½“ã®åº§æ¨™ã‚’è¶³ã—ã¦æ­£ã—ã„ä½ç½®ã«
 		p.pos = randomPos + pos_;
-		//”ò‚ñ‚Å‚­•ûŒü‚É‡‚í‚¹‚Ä‰ñ“]
+		//é£›ã‚“ã§ãæ–¹å‘ã«åˆã‚ã›ã¦å›è»¢
 		p.rot = randomRot;
 		p.plusRot = p.rot;
 		p.velo = randomVelo;
@@ -255,7 +255,7 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 		p.startScale = p.scale;
 		p.endScale = 0.0f;
 		p.color = color;
-		//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[‚ğİ’èAŠJn
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼ã‚’è¨­å®šã€é–‹å§‹
 		p.easeTimer.maxTime_ = life;
 		p.easeTimer.Start();
 	}
@@ -264,7 +264,7 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 void IEmitter3D::SetScale(const NVec3& scale)
 {
 	scale_ = scale;
-	originalScale_ = scale_;			//Šgk—p‚ÉŒ³‚ÌƒTƒCƒY‚ğ•ÛŠÇ
+	originalScale_ = scale_;			//æ‹¡ç¸®ç”¨ã«å…ƒã®ã‚µã‚¤ã‚ºã‚’ä¿ç®¡
 }
 
 void IEmitter3D::SetScalingTimer(float easeTimer)
@@ -276,10 +276,10 @@ void IEmitter3D::StartScalingTimer(bool isRun)
 {
 	if (isRun)
 	{
-		scalingTimer_.Start();	//İ’è‚Æ“¯‚Éƒ^ƒCƒ}[‚àƒXƒ^[ƒg
+		scalingTimer_.Start();	//è¨­å®šã¨åŒæ™‚ã«ã‚¿ã‚¤ãƒãƒ¼ã‚‚ã‚¹ã‚¿ãƒ¼ãƒˆ
 	}
 	else
 	{
-		scalingTimer_.ReverseStart();	//İ’è‚Æ“¯‚Éƒ^ƒCƒ}[‚àƒXƒ^[ƒg
+		scalingTimer_.ReverseStart();	//è¨­å®šã¨åŒæ™‚ã«ã‚¿ã‚¤ãƒãƒ¼ã‚‚ã‚¹ã‚¿ãƒ¼ãƒˆ
 	}
 }

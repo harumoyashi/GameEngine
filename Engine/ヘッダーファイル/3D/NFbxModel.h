@@ -30,7 +30,7 @@ typedef struct Node final
 	Node* parent = nullptr;
 }Node;
 
-//‘O•ûéŒ¾
+//å‰æ–¹å®£è¨€
 struct aiNodeAnim;
 struct aiAnimation;
 struct aiNode;
@@ -48,7 +48,7 @@ struct FbxModel final
 
 	FbxModel();
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌÄ¶
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®å†ç”Ÿ
 	void PlayAnimation(bool isElapse);
 	//
 	aiNodeAnim* FindNodeAnimation(const std::string& nodeName, aiAnimation* anime);
@@ -60,16 +60,16 @@ struct FbxModel final
 	//
 	uint32_t FindPosIndex(const aiNodeAnim* nodeAnim, const float nowTime);
 
-	//ƒXƒP[ƒŠƒ“ƒO‚ğ•âŠ®
+	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’è£œå®Œ
 	NVec3 CalcCurrentScale(const aiNodeAnim* nodeAnim, const float nowTime);
-	//‰ñ“]‚ğ•âŠ®
+	//å›è»¢ã‚’è£œå®Œ
 	NQuaternion CalcCurrentRot(const aiNodeAnim* nodeAnim, const float nowTime);
-	//À•W‚ğ•âŠ®
+	//åº§æ¨™ã‚’è£œå®Œ
 	NVec3 CalcCurrentPos(const aiNodeAnim* nodeAnim, const float nowTime);
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒL[‚É‰‚¶‚Ä•ÏŒ`
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ã‚­ãƒ¼ã«å¿œã˜ã¦å¤‰å½¢
 	void ParseNodeHeirarchy(const float nowTime, const uint32_t index, const NMatrix4& parentMat, const aiNode* rootNode);
 
-	// ƒZƒbƒ^[ //
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsPlayAnime(bool isPlay) { animation.isPlay = isPlay; }
 };

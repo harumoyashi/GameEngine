@@ -13,7 +13,7 @@ void NTextureManager::Init()
 	std::string directryPass = "Resources/Texture/";
 
 	CreateErrorTexture();
-	//‚±‚±‚ÅˆêŠ‡“Ç‚İ‚İ
+	//ã“ã“ã§ä¸€æ‹¬èª­ã¿è¾¼ã¿
 	LoadTexture(directryPass + "white64x64.png", "white");
 	LoadTexture(directryPass + "start.png", "start");
 	LoadTexture(directryPass + "goal.png", "goal");
@@ -40,37 +40,37 @@ NTexture NTextureManager::CreateErrorTexture()
 {
 	if (textureMap_["error"].texBuff_ == nullptr)
 	{
-		NTexture texture;	//¬‰Ê•¨ˆê•Û‘¶—p
+		NTexture texture;	//æˆæœç‰©ä¸€æ™‚ä¿å­˜ç”¨
 
-		//ˆê•Ó‚ÌƒsƒNƒZƒ‹”
+		//ä¸€è¾ºã®ãƒ”ã‚¯ã‚»ãƒ«æ•°
 		const size_t textureLen = 256;
-		//”z—ñ‚Ì—v‘f”
+		//é…åˆ—ã®è¦ç´ æ•°
 		const size_t imageDataCount = textureLen * textureLen;
-		//‰æ‘œƒCƒ[ƒWƒf[ƒ^”z—ñ
+		//ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿é…åˆ—
 		std::vector<NVec4> imageData;
 
-		//‘SƒsƒNƒZƒ‹‚ÌF‚ğ‰Šú‰»
+		//å…¨ãƒ”ã‚¯ã‚»ãƒ«ã®è‰²ã‚’åˆæœŸåŒ–
 		for (size_t i = 0; i < imageDataCount; i++)
 		{
 			size_t x = i % textureLen;
 			size_t y = i / textureLen;
 
-			//¶ã‚Æ‰E‰º‚ğƒsƒ“ƒN‚É
+			//å·¦ä¸Šã¨å³ä¸‹ã‚’ãƒ”ãƒ³ã‚¯ã«
 			if ((x < textureLen / 2 && y < textureLen / 2)
 				|| (x >= textureLen / 2 && y >= textureLen / 2)) {
 				imageData.emplace_back(NVec4(1, 0, 1, 1));
 			}
-			else {	//‚»‚êˆÈŠO‚Í•‚É
+			else {	//ãã‚Œä»¥å¤–ã¯é»’ã«
 				imageData.emplace_back(NVec4(0, 0, 0, 1));
 			}
 		}
 
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š
 		SetTBHeap();
 		texResDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 		texResDesc_.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-		texResDesc_.Width = textureLen;	//•
-		texResDesc_.Height = textureLen;	//‚‚³
+		texResDesc_.Width = textureLen;	//å¹…
+		texResDesc_.Height = textureLen;	//é«˜ã•
 		texResDesc_.DepthOrArraySize = 1;
 		texResDesc_.MipLevels = 1;
 		texResDesc_.SampleDesc.Count = 1;
@@ -85,23 +85,23 @@ NTexture NTextureManager::CreateErrorTexture()
 			IID_PPV_ARGS(&texture.texBuff_)
 		);
 
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 		result = texture.texBuff_->WriteToSubresource(
 			0,
-			nullptr,	//‘S—Ìˆæ‚ÖƒRƒs[
-			imageData.data(),	//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-			sizeof(NVec4) * textureLen,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-			sizeof(NVec4) * imageDataCount	//‘SƒTƒCƒY
+			nullptr,	//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+			imageData.data(),	//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+			sizeof(NVec4) * textureLen,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+			sizeof(NVec4) * imageDataCount	//å…¨ã‚µã‚¤ã‚º
 		);
 
-		//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
+		//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 		SetSRV();
 		texture = CreateSRV(texture);
 
-		//–¼‘O“o˜^
+		//åå‰ç™»éŒ²
 		texture.fileName_ = "error";
 
-		//ÅŒã‚É¬‰Ê•¨‚ğŠi”[
+		//æœ€å¾Œã«æˆæœç‰©ã‚’æ ¼ç´
 		textureMap_["error"] = texture;
 
 		return texture;
@@ -114,7 +114,7 @@ NTexture NTextureManager::LoadTexture(const std::string& pictureName, const std:
 {
 	if (textureMap_[handle].texBuff_ == nullptr)
 	{
-		NTexture texture;	//¬‰Ê•¨ˆê•Û‘¶—p
+		NTexture texture;	//æˆæœç‰©ä¸€æ™‚ä¿å­˜ç”¨
 
 		if (!Load(pictureName))
 		{
@@ -122,19 +122,19 @@ NTexture NTextureManager::LoadTexture(const std::string& pictureName, const std:
 		}
 
 		CreateMipmap();
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š
 		SetTBHeap();
 		SetTBResource();
 		texture.texBuff_ = CreateTexBuff();
 		TexBuffMaping(texture.texBuff_.Get());
-		//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
+		//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 		SetSRV();
 		texture = CreateSRV(texture);
 
-		//–¼‘O“o˜^
+		//åå‰ç™»éŒ²
 		texture.fileName_ = handle;
 
-		//ÅŒã‚É¬‰Ê•¨‚ğŠi”[
+		//æœ€å¾Œã«æˆæœç‰©ã‚’æ ¼ç´
 		textureMap_[handle] = texture;
 
 		return texture;
@@ -145,12 +145,12 @@ NTexture NTextureManager::LoadTexture(const std::string& pictureName, const std:
 bool NTextureManager::Load(const std::string& pictureName)
 {
 	HRESULT result;
-	//ˆê‰ñ•Ê‚Ì•¶š—ñŒ^‚É•ÏŠ·‚µ‚Ä
+	//ä¸€å›åˆ¥ã®æ–‡å­—åˆ—å‹ã«å¤‰æ›ã—ã¦
 	std::wstring wPictureName(pictureName.begin(), pictureName.end());
 
-	//Šg’£q‚ğ’Šo‚µ‚Ä‚»‚ê‚É‰‚¶‚½•û‚Å“Ç‚İ‚İ
+	//æ‹¡å¼µå­ã‚’æŠ½å‡ºã—ã¦ãã‚Œã«å¿œã˜ãŸæ–¹ã§èª­ã¿è¾¼ã¿
 	std::string ext = NUtil::GetExtension(pictureName);
-	//.psd‚¾‚Á‚½ê‡‚Í.tga‚É•ÏX(“¯‚¶ƒtƒHƒ‹ƒ_“à‚É.psd‚Æ“¯‚¶–¼‘O‚Ì.tgaƒtƒ@ƒCƒ‹‚ª‚È‚¢‚Æ‚¾‚ß)
+	//.psdã ã£ãŸå ´åˆã¯.tgaã«å¤‰æ›´(åŒã˜ãƒ•ã‚©ãƒ«ãƒ€å†…ã«.psdã¨åŒã˜åå‰ã®.tgaãƒ•ã‚¡ã‚¤ãƒ«ãŒãªã„ã¨ã ã‚)
 	if (ext == "psd")
 	{
 		wPictureName = NUtil::ReplaceExtension(wPictureName, "tga");
@@ -160,13 +160,13 @@ bool NTextureManager::Load(const std::string& pictureName)
 	if (ext == "tga")
 	{
 		result = LoadFromTGAFile(
-			wPictureName.c_str(),	//‚±‚±‚Å•¶šŒ^‚É
+			wPictureName.c_str(),	//ã“ã“ã§æ–‡å­—å‹ã«
 			&metadata_, scratchImg_);
 	}
 	else
 	{
 		result = LoadFromWICFile(
-			wPictureName.c_str(),	//‚±‚±‚Å•¶šŒ^‚É
+			wPictureName.c_str(),	//ã“ã“ã§æ–‡å­—å‹ã«
 			DirectX::WIC_FLAGS_NONE,
 			&metadata_, scratchImg_);
 	}
@@ -191,7 +191,7 @@ void NTextureManager::CreateMipmap()
 		metadata_ = scratchImg_.GetMetadata();
 	}
 
-	//“Ç‚İ‚ñ‚¾ƒfƒBƒtƒ…[ƒYƒeƒNƒXƒ`ƒƒ‚ğSRGB‚Æ‚µ‚Äˆµ‚¤
+	//èª­ã¿è¾¼ã‚“ã ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’SRGBã¨ã—ã¦æ‰±ã†
 	metadata_.format = DirectX::MakeSRGB(metadata_.format);
 }
 
@@ -199,8 +199,8 @@ void NTextureManager::SetTBHeap()
 {
 	texHeapProp_.Type = D3D12_HEAP_TYPE_CUSTOM;
 	texHeapProp_.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	texHeapProp_.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	//“]‘—‚ÍCPU‘¤(L0)‚©‚ç’¼Ús‚¤
-	texHeapProp_.CreationNodeMask = 0;							//’PˆêƒAƒ_ƒvƒ^[‚¾‚©‚ç0
+	texHeapProp_.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;	//è»¢é€ã¯CPUå´(L0)ã‹ã‚‰ç›´æ¥è¡Œã†
+	texHeapProp_.CreationNodeMask = 0;							//å˜ä¸€ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã ã‹ã‚‰0
 	texHeapProp_.VisibleNodeMask = 0;
 }
 
@@ -209,8 +209,8 @@ void NTextureManager::SetTBResource()
 	texResDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	texResDesc_.Format = metadata_.format;
 
-	texResDesc_.Width = metadata_.width;	//•
-	texResDesc_.Height = (uint32_t)metadata_.height;	//‚‚³
+	texResDesc_.Width = metadata_.width;	//å¹…
+	texResDesc_.Height = (uint32_t)metadata_.height;	//é«˜ã•
 	texResDesc_.DepthOrArraySize = (UINT16)metadata_.arraySize;
 	texResDesc_.MipLevels = (UINT16)metadata_.mipLevels;
 	texResDesc_.SampleDesc.Count = 1;
@@ -236,18 +236,18 @@ void NTextureManager::TexBuffMaping(ID3D12Resource* texBuff)
 {
 	HRESULT result;
 
-	//‘Sƒ~ƒbƒvƒ}ƒbƒv‚É‚Â‚¢‚Ä
+	//å…¨ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ã«ã¤ã„ã¦
 	for (size_t i = 0; i < metadata_.mipLevels; i++)
 	{
-		//ƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ğw’è‚µ‚ÄƒCƒ[ƒW‚ğæ“¾
+		//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã‚’æŒ‡å®šã—ã¦ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’å–å¾—
 		const DirectX::Image* img = scratchImg_.GetImage(i, 0, 0);
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 		result = texBuff->WriteToSubresource(
 			(uint32_t)i,
-			nullptr,				//‘S—Ìˆæ‚ÖƒRƒs[
-			img->pixels,			//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-			(uint32_t)img->rowPitch,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-			(uint32_t)img->slicePitch	//‘SƒTƒCƒY
+			nullptr,				//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+			img->pixels,			//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+			(uint32_t)img->rowPitch,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+			(uint32_t)img->slicePitch	//å…¨ã‚µã‚¤ã‚º
 		);
 		assert(SUCCEEDED(result));
 	}
@@ -257,21 +257,21 @@ void NTextureManager::SetSRV()
 {
 	srvDesc_.Format = texResDesc_.Format;		//RGBA float
 	srvDesc_.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+	srvDesc_.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	srvDesc_.Texture2D.MipLevels = texResDesc_.MipLevels;
 }
 
 NTexture NTextureManager::CreateSRV(NTexture& tex)
 {
-	//SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	tex.cpuHandle_ = NDX12::GetInstance()->GetSRVHeap()->GetCPUDescriptorHandleForHeapStart();
 	tex.gpuHandle_ = NDX12::GetInstance()->GetSRVHeap()->GetGPUDescriptorHandleForHeapStart();
-	//w’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ”Ô†‚É‰‚¶‚Äƒnƒ“ƒhƒ‹‚ği‚ß‚é
+	//æŒ‡å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·ã«å¿œã˜ã¦ãƒãƒ³ãƒ‰ãƒ«ã‚’é€²ã‚ã‚‹
 	uint32_t incrementSize = NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	tex.cpuHandle_.ptr += incrementSize * (uint32_t)textureMap_.size();
 	tex.gpuHandle_.ptr += incrementSize * (uint32_t)textureMap_.size();
 
-	//ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[ì¬
+	//ãƒãƒ³ãƒ‰ãƒ«ã®æŒ‡ã™ä½ç½®ã«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
 	NDX12::GetInstance()->GetDevice()->CreateShaderResourceView(tex.texBuff_.Get(), &srvDesc_, tex.cpuHandle_);
 
 	return tex;

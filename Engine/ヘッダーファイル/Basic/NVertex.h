@@ -15,7 +15,7 @@ struct NVertex
 		: pos(pos) {}
 };
 
-//position,uv‚Ì2—v‘f
+//position,uvã®2è¦ç´ 
 struct NVertexUV
 {
 	NVec3 pos = { 0, 0, 0 };
@@ -27,7 +27,7 @@ struct NVertexUV
 	bool operator==(const NVertexUV& a) const;
 };
 
-//position,normal,uv‚Ì3—v‘f
+//position,normal,uvã®3è¦ç´ 
 struct NVertexPNU
 {
 	NVec3 pos = { 0, 0, 0 };
@@ -40,14 +40,14 @@ struct NVertexPNU
 	bool operator==(const NVertexPNU& a) const;
 
 	/// <summary>
-	/// –@üƒxƒNƒgƒ‹‚ğŒvZ
+	/// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 	/// </summary>
-	/// <param name="vertices">ŒvZ‚·‚é’¸“_ŒQ</param>
-	/// <param name="indices">ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgiOŠpŒ`A‘S‚ÄŒv‰ñ‚è‚Å‚ ‚é‚±‚Æj</param>
+	/// <param name="vertices">è¨ˆç®—ã™ã‚‹é ‚ç‚¹ç¾¤</param>
+	/// <param name="indices">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆï¼ˆä¸‰è§’å½¢ã€å…¨ã¦æ™‚è¨ˆå›ã‚Šã§ã‚ã‚‹ã“ã¨ï¼‰</param>
 	static void CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<uint32_t>& indices);
 };
 
-//position,scale,color‚Ì3—v‘f
+//position,scale,colorã®3è¦ç´ 
 struct NVertexParticle
 {
 	NVec3 pos = { 0, 0, 0 };
@@ -62,7 +62,7 @@ struct NVertexParticle
 	bool operator==(const NVertexParticle& a) const;
 };
 
-//position,normal,uv,boneIndex,boneWeight‚Ì5—v‘f
+//position,normal,uv,boneIndex,boneWeightã®5è¦ç´ 
 struct NVertexFbx
 {
 	NVec3 pos = { 0, 0, 0 };
@@ -74,9 +74,9 @@ struct NVertexFbx
 	bool operator==(const NVertexFbx& a) const;
 
 	/// <summary>
-	/// –@üƒxƒNƒgƒ‹‚ğŒvZ
+	/// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—
 	/// </summary>
-	/// <param name="vertices">ŒvZ‚·‚é’¸“_ŒQ</param>
-	/// <param name="indices">ƒCƒ“ƒfƒbƒNƒXƒŠƒXƒgiOŠpŒ`A‘S‚ÄŒv‰ñ‚è‚Å‚ ‚é‚±‚Æj</param>
+	/// <param name="vertices">è¨ˆç®—ã™ã‚‹é ‚ç‚¹ç¾¤</param>
+	/// <param name="indices">ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒªã‚¹ãƒˆï¼ˆä¸‰è§’å½¢ã€å…¨ã¦æ™‚è¨ˆå›ã‚Šã§ã‚ã‚‹ã“ã¨ï¼‰</param>
 	static void CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<uint32_t>& indices);
 };

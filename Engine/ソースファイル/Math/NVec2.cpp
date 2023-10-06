@@ -68,8 +68,8 @@ NVec2& NVec2::operator/=(const float s)
 	return *this;
 }
 
-// NVec2 ƒNƒ‰ƒX‚É‘®‚³‚È‚¢ŠÖ”ŒR
-// “ñ€‰‰Zq
+// NVec2 ã‚¯ãƒ©ã‚¹ã«å±ã•ãªã„é–¢æ•°è»
+// äºŒé …æ¼”ç®—å­
 const NVec2 operator+(const NVec2& v1, const NVec2& v2)
 {
 	NVec2 temp(v1);

@@ -28,33 +28,33 @@ void NTitleScene::LoadResources()
 
 void NTitleScene::Init()
 {
-#pragma region	ƒI[ƒfƒBƒI‰Šú‰»
+#pragma region	ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªåˆæœŸåŒ–
 	NAudioManager::GetInstance()->Play("titleBGM", true, 0.2f);
 #pragma endregion
-#pragma region	ƒJƒƒ‰‰Šú‰»
+#pragma region	ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	NCameraManager::GetInstance()->Init();
 	NCameraManager::GetInstance()->ChangeCameara(CameraType::Title);
 #pragma endregion
-#pragma region •`‰æ‰Šú‰»ˆ—
+#pragma region æç”»åˆæœŸåŒ–å‡¦ç†
 
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì‰Šú’lİ’è
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸå€¤è¨­å®š
 
 #pragma endregion
 	Player::GetInstance()->Init();
 
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì‰Šú’lİ’è
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸå€¤è¨­å®š
 
 #pragma endregion
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	backSprite_ = std::make_unique<NSprite>();
 	backSprite_->CreateSprite("white");
 	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
 	backSprite_->SetPos(
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
-	backSprite_->color_.SetColor255(10,10,10);
+	backSprite_->color_.SetColor255(10, 10, 10);
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg¶¬
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	titleLogo_ = std::make_unique<NSprite>();
 	titleLogo_->CreateSprite("logo");
 	titleLogo_->SetPos(
@@ -74,23 +74,23 @@ void NTitleScene::Init()
 	}
 
 #pragma endregion
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, false, false, false);
 	lightGroup_->TransferConstBuffer();
-	// 3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	NObj3d::SetLightGroup(lightGroup_.get());
 
-	//IPostEffect::SetIsActive(false);	//ƒ|ƒXƒgƒGƒtƒFƒNƒgÁ‚·
+	//IPostEffect::SetIsActive(false);	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæ¶ˆã™
 	Bloom::Init();
 }
 
 void NTitleScene::Update()
 {
-	//ƒ‰ƒCƒg‚½‚¿‚ÌXV
+	//ãƒ©ã‚¤ãƒˆãŸã¡ã®æ›´æ–°
 	lightGroup_->Update();
 
-#pragma region ƒJƒƒ‰
+#pragma region ã‚«ãƒ¡ãƒ©
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
 	backSprite_->Update();
@@ -115,18 +115,18 @@ void NTitleScene::Update()
 	Player::GetInstance()->SetIsMove(false);
 	Player::GetInstance()->Update();
 
-	//ƒV[ƒ“Ø‚è‘Ö‚¦
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
-		NSceneChange::GetInstance()->Start();	//ƒV[ƒ“‘JˆÚŠJn
+		NSceneChange::GetInstance()->Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹
 	}
 
-	//Ø‚è‘Ö‚¦‚ÄÖ¼‚Á‚ÄŒ¾‚í‚ê‚½‚ç
+	//åˆ‡ã‚Šæ›¿ãˆã¦ï¾–ï½¼ã£ã¦è¨€ã‚ã‚ŒãŸã‚‰
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
 		NAudioManager::GetInstance()->Destroy("titleBGM");
-		NSceneManager::ChangeScene<NGameScene>();			//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉØ‚è‘Ö‚¦
-		NSceneChange::GetInstance()->SetIsChange(false);	//Ø‚è‘Ö‚¦‚¿‚áÀŞÒ°
+		NSceneManager::ChangeScene<NGameScene>();			//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆ
+		NSceneChange::GetInstance()->SetIsChange(false);	//åˆ‡ã‚Šæ›¿ãˆã¡ã‚ƒï¾€ï¾ï¾’ï½°
 	}
 }
 

@@ -36,7 +36,7 @@ NVec4 NVec4::operator+() const
 
 NVec4 NVec4::operator-() const
 {
-	return NVec4(-x, -y, -z,-w);
+	return NVec4(-x, -y, -z, -w);
 }
 
 NVec4 NVec4::operator*(const NVec4& v)

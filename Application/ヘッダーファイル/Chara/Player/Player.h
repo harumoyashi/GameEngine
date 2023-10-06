@@ -9,114 +9,114 @@ class Player final
 {
 private:
 	std::unique_ptr<NObj3d> obj_;
-	SphereCollider collider_;	//ƒvƒŒƒCƒ„[‚Ì“–‚½‚è”»’è
+	SphereCollider collider_;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å½“ãŸã‚Šåˆ¤å®š
 
-	bool isAlive_;				//¶‚«‚Ä‚é‚©ƒtƒ‰ƒO
-	bool isDraw_;				//•`‰æ‚·‚é‚©ƒtƒ‰ƒO
+	bool isAlive_;				//ç”Ÿãã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	bool isDraw_;				//æç”»ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
-	//------------------------ ˆÚ“®ŠÖ˜A ------------------------//
-	bool isMove_;				//“®‚¢‚Ä‚é‚©ƒtƒ‰ƒO
-	NVec2 moveVelo_;			//ˆÚ“®—Ê
-	float moveSpeed_;			//ˆÚ“®‘¬“x
+	//------------------------ ç§»å‹•é–¢é€£ ------------------------//
+	bool isMove_;				//å‹•ã„ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	NVec2 moveVelo_;			//ç§»å‹•é‡
+	float moveSpeed_;			//ç§»å‹•é€Ÿåº¦
 
-	float moveAngle_;			//‰ñ“]Šp“x
+	float moveAngle_;			//å›è»¢è§’åº¦
 
-	float elapseSpeed_;			//Œo‰ßŠÔ(‚±‚¢‚Â‚ª‘S‚Ä‚É‰e‹¿‚ğ‹y‚Ú‚·)
+	float elapseSpeed_;			//çµŒéæ™‚é–“(ã“ã„ã¤ãŒå…¨ã¦ã«å½±éŸ¿ã‚’åŠã¼ã™)
 
-	//------------------------ ƒ_ƒ[ƒWŠÖ˜A ------------------------//
-	bool isGodmode_;			//–³“Gó‘Ô‚©
-	bool isFlashing_;			//ƒ`ƒJƒ`ƒJ‚³‚¹‚é‚½‚ß—p
-	NEasing::EaseTimer godmodeTimer_;		//–³“GŠÔ
+	//------------------------ ãƒ€ãƒ¡ãƒ¼ã‚¸é–¢é€£ ------------------------//
+	bool isGodmode_;			//ç„¡æ•µçŠ¶æ…‹ã‹
+	bool isFlashing_;			//ãƒã‚«ãƒã‚«ã•ã›ã‚‹ãŸã‚ç”¨
+	NEasing::EaseTimer godmodeTimer_;		//ç„¡æ•µæ™‚é–“
 
-	//------------------------ ’eŠÖ˜A ------------------------//
-	const uint32_t maxBulLevel_ = 5;	//’e‚ÌÅ‚ƒŒƒxƒ‹(‹¤’Ê)
-	uint32_t lineLevel_;				//’Êí’e‚ÌƒŒƒxƒ‹
-	uint32_t sideLevel_;				//‰¡•ûŒü‚Éo‚é’e‚ÌƒŒƒxƒ‹
-	uint32_t wideLevel_;				//¶‰E‚ÉŠp“x‚Â‚¯‚Äo‚é’e‚ÌƒŒƒxƒ‹
-	uint32_t roketLevel_;				//ƒƒPƒbƒg’e‚ÌƒŒƒxƒ‹
+	//------------------------ å¼¾é–¢é€£ ------------------------//
+	const uint32_t maxBulLevel_ = 5;	//å¼¾ã®æœ€é«˜ãƒ¬ãƒ™ãƒ«(å…±é€š)
+	uint32_t lineLevel_;				//é€šå¸¸å¼¾ã®ãƒ¬ãƒ™ãƒ«
+	uint32_t sideLevel_;				//æ¨ªæ–¹å‘ã«å‡ºã‚‹å¼¾ã®ãƒ¬ãƒ™ãƒ«
+	uint32_t wideLevel_;				//å·¦å³ã«è§’åº¦ã¤ã‘ã¦å‡ºã‚‹å¼¾ã®ãƒ¬ãƒ™ãƒ«
+	uint32_t roketLevel_;				//ãƒ­ã‚±ãƒƒãƒˆå¼¾ã®ãƒ¬ãƒ™ãƒ«
 
-	//------------------------ €‚ñ‚¾‚Æ‚«ŠÖ˜A ------------------------//
-	SimpleParticle deadParticle_;				//€‚ñ‚¾‚Æ‚«‚Éo‚éƒp[ƒeƒBƒNƒ‹
-	NEasing::EaseTimer deadEffectTimer_;		//€–S‰‰o‚Ç‚Ì‚­‚ç‚¢‚ÅØ‚èã‚°‚é‚©ƒ^ƒCƒ}[
-	float slowElapseTime_ = 0.01f;				//€‚ñ‚¾‚Æ‚«‚ÌƒXƒ[‚ª‚Ç‚Ì‚­‚ç‚¢‚©
-	NVec3 deadPos_;								//€‚ñ‚¾À•W•Û‘¶—p
+	//------------------------ æ­»ã‚“ã ã¨ãé–¢é€£ ------------------------//
+	SimpleParticle deadParticle_;				//æ­»ã‚“ã ã¨ãã«å‡ºã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
+	NEasing::EaseTimer deadEffectTimer_;		//æ­»äº¡æ¼”å‡ºã©ã®ãã‚‰ã„ã§åˆ‡ã‚Šä¸Šã’ã‚‹ã‹ã‚¿ã‚¤ãƒãƒ¼
+	float slowElapseTime_ = 0.01f;				//æ­»ã‚“ã ã¨ãã®ã‚¹ãƒ­ãƒ¼ãŒã©ã®ãã‚‰ã„ã‹
+	NVec3 deadPos_;								//æ­»ã‚“ã åº§æ¨™ä¿å­˜ç”¨
 
-	//------------------------ ‚»‚Ì‘¼ ------------------------//
-	NEasing::EaseTimer faildEffectTimer_;		//¸”s‰‰o—pƒ^ƒCƒ}[
+	//------------------------ ãã®ä»– ------------------------//
+	NEasing::EaseTimer faildEffectTimer_;		//å¤±æ•—æ¼”å‡ºç”¨ã‚¿ã‚¤ãƒãƒ¼
 
-	SimpleParticle clearParticle_;					//ƒNƒŠƒA‚Éo‚éƒp[ƒeƒBƒNƒ‹
-	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//ƒNƒŠƒA‚Éo‚éƒp[ƒeƒBƒNƒ‹—pƒ^ƒCƒ}[
+	SimpleParticle clearParticle_;					//ã‚¯ãƒªã‚¢æ™‚ã«å‡ºã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
+	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//ã‚¯ãƒªã‚¢æ™‚ã«å‡ºã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ã‚¿ã‚¤ãƒãƒ¼
 
 public:
 	Player();
 	~Player();
 	static Player* GetInstance();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	bool Init();
-	//XV
+	//æ›´æ–°
 	void Update();
-	//ƒNƒŠƒAê—p‚ÌXV
+	//ã‚¯ãƒªã‚¢æ™‚å°‚ç”¨ã®æ›´æ–°
 	void ClearUpdate();
-	//¸”sê—p‚ÌXV
+	//å¤±æ•—æ™‚å°‚ç”¨ã®æ›´æ–°
 	void FaildUpdate();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//ˆÚ“®ˆ—
+	//ç§»å‹•å‡¦ç†
 	void Move();
-	//ËŒ‚
+	//å°„æ’ƒ
 	void Shot();
 
-	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
+	//ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void OnCollision();
 
-	//€‚ñ‚¾‚Æ‚«‚Ìƒp[ƒeƒBƒNƒ‹‚ğo‚·
+	//æ­»ã‚“ã ã¨ãã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å‡ºã™
 	void DeadParticle();
 
-	//w’è‚³‚ê‚½’e‚Ìí—Ş‚ÌƒŒƒxƒ‹‚ğ1ã‚°‚é
+	//æŒ‡å®šã•ã‚ŒãŸå¼¾ã®ç¨®é¡ã®ãƒ¬ãƒ™ãƒ«ã‚’1ä¸Šã’ã‚‹
 	void LevelUp(BulletType bulletType);
 
-	// ƒQƒbƒ^[ //
-	//À•Wæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//åº§æ¨™å–å¾—
 	NVec3 GetPos()const { return obj_->position_; }
-	//’‹“_—p‚É‚¿‚å‚¢‚‚ß‚ÌÀ•Wæ“¾
+	//æ³¨è¦–ç‚¹ç”¨ã«ã¡ã‚‡ã„é«˜ã‚ã®åº§æ¨™å–å¾—
 	NVec3 GetHeadPos()const { return { obj_->position_.x,obj_->position_.y + obj_->scale_.y,obj_->position_.z }; }
-	//‘O•ûÀ•Wæ“¾
+	//å‰æ–¹åº§æ¨™å–å¾—
 	float GetFrontPosZ()const { return obj_->position_.z + obj_->scale_.z; }
-	//‘å‚«‚³æ“¾
+	//å¤§ãã•å–å¾—
 	NVec3 GetScale()const { return obj_->scale_; }
-	//–³“Gó‘Ôæ“¾
+	//ç„¡æ•µçŠ¶æ…‹å–å¾—
 	bool GetIsGodmode()const { return isGodmode_; }
-	//¶‚«‚Ä‚é‚©ƒtƒ‰ƒOæ“¾
+	//ç”Ÿãã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsAlive()const { return isAlive_; }
-	//“®‚¯‚é‚©ƒtƒ‰ƒOæ“¾
+	//å‹•ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsMove()const { return isMove_; }
-	//ƒRƒ‰ƒCƒ_[æ“¾
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	const SphereCollider& GetPlayerCollider()const { return collider_; }
-	//ˆÚ“®—Êæ“¾
+	//ç§»å‹•é‡å–å¾—
 	NVec2 GetMoveVelo()const { return moveVelo_; }
-	//Œo‰ßŠÔæ“¾
+	//çµŒéæ™‚é–“å–å¾—
 	float GetElapseSpeed()const { return elapseSpeed_; }
-	//ƒIƒuƒWƒFƒNƒg‚ÌFæ“¾
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è‰²å–å¾—
 	NColor& GetColor()const { return obj_->color_; }
-	//€–S‰‰o‚ªI‚í‚Á‚½‚©‚Ç‚¤‚©æ“¾
+	//æ­»äº¡æ¼”å‡ºãŒçµ‚ã‚ã£ãŸã‹ã©ã†ã‹å–å¾—
 	bool GetDeadEffectEnd()const { return deadEffectTimer_.GetEnd(); }
 
-	// ƒZƒbƒ^[ //
-	//À•Wİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//åº§æ¨™è¨­å®š
 	void SetPos(const NVec3& pos) { obj_->position_ = pos; }
-	//‘å‚«‚³İ’è
+	//å¤§ãã•è¨­å®š
 	void SetScale(const NVec3& scale) { obj_->scale_ = scale; }
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÉŒo‰ßŠÔ‚Ì‰e‹¿‚ğó‚¯‚é‚©ƒtƒ‰ƒOİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«çµŒéæ™‚é–“ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsElapseAnime(bool isElapseAnime) { obj_->SetIsElapseAnime(isElapseAnime); }
-	//–³“Gó‘Ôİ’è
+	//ç„¡æ•µçŠ¶æ…‹è¨­å®š
 	void SetIsGodmode(bool isGodmode) { isGodmode_ = isGodmode; }
-	//¶‚«‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	//ç”Ÿãã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsAlive(bool isAlive);
-	//“®‚¯‚é‚©ƒtƒ‰ƒOİ’è
+	//å‹•ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
-	//Œo‰ßŠÔƒXƒs[ƒhİ’è
+	//çµŒéæ™‚é–“ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 
 private:

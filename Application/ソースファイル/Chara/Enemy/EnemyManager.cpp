@@ -23,13 +23,13 @@ void EnemyManager::Init()
 
 void EnemyManager::Update()
 {
-	//õ–½‚ªs‚«‚½{€–Sƒp[ƒeƒBƒNƒ‹o‚µØ‚Á‚½“G‚ğ‘Síœ
+	//å¯¿å‘½ãŒå°½ããŸï¼‹æ­»äº¡ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å‡ºã—åˆ‡ã£ãŸæ•µã‚’å…¨å‰Šé™¤
 	for (size_t i = 0; i < enemys_.size(); i++)
 	{
 		if (enemys_[i]->GetisAlive() == false && enemys_[i]->GetParticlesDead())
 		{
 			enemys_.erase(enemys_.begin() + i);
-			//ƒGƒ~ƒbƒ^[ŒQ‚©‚çíœ
+			//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç¾¤ã‹ã‚‰å‰Šé™¤
 			NParticleManager::GetInstance()->enemyEmitters_.erase(
 				NParticleManager::GetInstance()->enemyEmitters_.begin() + i);
 			i = (size_t)-1;
@@ -37,7 +37,7 @@ void EnemyManager::Update()
 		}
 	}
 
-	//ƒŠƒYƒ€æ‚ç‚¹‚Æ‚­
+	//ãƒªã‚ºãƒ ä¹—ã‚‰ã›ã¨ã
 	float size = 0.f;
 	if (beatInTimer_.GetRun())
 	{
@@ -60,17 +60,17 @@ void EnemyManager::Update()
 		}
 	}
 
-	//‘«‚·•ª‚ÌƒXƒP[ƒ‹‚ğ“K—p
+	//è¶³ã™åˆ†ã®ã‚¹ã‚±ãƒ¼ãƒ«ã‚’é©ç”¨
 	for (auto& enemy : enemys_)
 	{
 		enemy->SetAddScale(size * Player::GetInstance()->GetScale().x);
 	}
 
-	if (isEnemyDead)	//‚à‚µ’N‚©€‚ñ‚¾‚ç
+	if (isEnemyDead)	//ã‚‚ã—èª°ã‹æ­»ã‚“ã ã‚‰
 	{
 		for (uint32_t i = 0; i < enemys_.size(); i++)
 		{
-			//“G‚Ì¯•Ê”Ô†‚ğÄ“o˜^
+			//æ•µã®è­˜åˆ¥ç•ªå·ã‚’å†ç™»éŒ²
 			EnemyManager::GetInstance()->enemys_[i]->SetEnemyNum(i);
 		}
 		isEnemyDead = false;

@@ -3,7 +3,7 @@
 
 #pragma comment(lib,"winmm.lib")
 
-//‚±‚±•Ï‚¦‚é‚Æ“{‚ç‚ê‚é‚Ì‚Åæ¶‚É•·‚­
+//ã“ã“å¤‰ãˆã‚‹ã¨æ€’ã‚‰ã‚Œã‚‹ã®ã§å…ˆç”Ÿã«èã
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t msg, WPARAM wParam, LPARAM lParam);
 
 NWindows* NWindows::GetInstance()
@@ -12,72 +12,72 @@ NWindows* NWindows::GetInstance()
 	return &instance;
 }
 
-//ƒEƒBƒ“ƒhƒvƒƒV[ƒWƒƒ
-//–Ê“|‚¾‚¯‚Ç‘‚©‚È‚«‚á‚¢‚¯‚È‚¢ŠÖ”
+//ã‚¦ã‚£ãƒ³ãƒ‰ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
+//é¢å€’ã ã‘ã©æ›¸ã‹ãªãã‚ƒã„ã‘ãªã„é–¢æ•°
 LRESULT NWindows::WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam)
 {
-	//ImGui—pƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒŒÄ‚Ño‚µ
-	if (ImGui_ImplWin32_WndProcHandler(hwnd,msg,wparam,lparam))
+	//ImGuiç”¨ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£å‘¼ã³å‡ºã—
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
 	{
 		return true;
 	}
 
 	switch (msg)
 	{
-		//ƒEƒBƒ“ƒhƒE‚ª”jŠü‚³‚ê‚½‚çŒÄ‚Î‚ê‚é
+		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒç ´æ£„ã•ã‚ŒãŸã‚‰å‘¼ã°ã‚Œã‚‹
 	case WM_DESTROY:
-		PostQuitMessage(0);	//OS‚É‘Î‚µ‚Äu‚à‚¤‚±‚ÌƒAƒvƒŠ‚ÍI‚í‚év‚Æ“`‚¦‚é
+		PostQuitMessage(0);	//OSã«å¯¾ã—ã¦ã€Œã‚‚ã†ã“ã®ã‚¢ãƒ—ãƒªã¯çµ‚ã‚ã‚‹ã€ã¨ä¼ãˆã‚‹
 		return 0;
 	}
-	return DefWindowProc(hwnd, msg, wparam, lparam);	//Šù’è‚Ìˆ—‚ğs‚¤
+	return DefWindowProc(hwnd, msg, wparam, lparam);	//æ—¢å®šã®å‡¦ç†ã‚’è¡Œã†
 }
 
-//WindowƒNƒ‰ƒX‚Ìİ’è
+//Windowã‚¯ãƒ©ã‚¹ã®è¨­å®š
 void NWindows::Set()
 {
 	win_.cbSize = sizeof(WNDCLASSEX);
-	win_.lpfnWndProc = (WNDPROC)WindowProc;		//ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ‚ğİ’è
-	win_.lpszClassName = L"DX12Sample";			//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒNƒ‰ƒX–¼
-	win_.hInstance = GetModuleHandle(nullptr);		//ƒnƒ“ƒhƒ‹‚Ìæ“¾
-	win_.hCursor = LoadCursor(NULL, IDC_ARROW);	//ƒJ[ƒ\ƒ‹w’è
+	win_.lpfnWndProc = (WNDPROC)WindowProc;		//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã‚’è¨­å®š
+	win_.lpszClassName = L"DX12Sample";			//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹å
+	win_.hInstance = GetModuleHandle(nullptr);		//ãƒãƒ³ãƒ‰ãƒ«ã®å–å¾—
+	win_.hCursor = LoadCursor(NULL, IDC_ARROW);	//ã‚«ãƒ¼ã‚½ãƒ«æŒ‡å®š
 
-	RegisterClassEx(&win_);	//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒNƒ‰ƒXiƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ìw’è‚ğOS‚É“`‚¦‚éj
+	RegisterClassEx(&win_);	//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚¯ãƒ©ã‚¹ï¼ˆã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®æŒ‡å®šã‚’OSã«ä¼ãˆã‚‹ï¼‰
 
-	wrc_ = { 0,0,kWin_width,kWin_height };	//ƒEƒBƒ“ƒhƒEƒTƒCƒY‚ğŒˆ‚ß‚é
+	wrc_ = { 0,0,kWin_width,kWin_height };	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºã‚’æ±ºã‚ã‚‹
 
-	//ŠÖ”‚ğg‚Á‚ÄƒEƒBƒ“ƒhƒE‚ÌƒTƒCƒY‚ğ•â³‚·‚é
+	//é–¢æ•°ã‚’ä½¿ã£ã¦ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®ã‚µã‚¤ã‚ºã‚’è£œæ­£ã™ã‚‹
 	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 
-	//ƒVƒXƒeƒ€ƒ^ƒCƒ}[‚Ì•ª‰ğ“x‚ğã‚°‚é
+	//ã‚·ã‚¹ãƒ†ãƒ ã‚¿ã‚¤ãƒãƒ¼ã®åˆ†è§£åº¦ã‚’ä¸Šã’ã‚‹
 	timeBeginPeriod(1);
 }
 
-//ƒRƒ“ƒ\[ƒ‹‚Ö‚Ì•¶šo—Í
+//ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã¸ã®æ–‡å­—å‡ºåŠ›
 void NWindows::DebugText(const std::string& text)
 {
 	OutputDebugStringA(text.c_str());
 }
 
-//ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
+//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 void NWindows::CreateWindowObj()
 {
-	//ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 	hwnd_ = CreateWindow(
-		win_.lpszClassName,		//ƒNƒ‰ƒX–¼w’è
-		L"DX12ƒeƒXƒg",			//ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶š
-		WS_OVERLAPPEDWINDOW,	//ƒ^ƒCƒgƒ‹ƒo[‚Æ‹«ŠEü‚ª‚ ‚éƒEƒBƒ“ƒhƒE
-		CW_USEDEFAULT,			//•\¦xÀ•W‚ÍOS‚É‚¨”C‚¹
-		CW_USEDEFAULT,			//•\¦yÀ•W‚ÍOS‚É‚¨”C‚¹
-		wrc_.right - wrc_.left,	//ƒEƒBƒ“ƒhƒE•
-		wrc_.bottom - wrc_.top,	//ƒEƒBƒ“ƒhƒE‚
-		nullptr,				//eƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		nullptr,				//ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		win_.hInstance,			//ŒÄ‚Ño‚µƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹
-		nullptr					//’Ç‰Áƒpƒ‰ƒ[ƒ^[
+		win_.lpszClassName,		//ã‚¯ãƒ©ã‚¹åæŒ‡å®š
+		L"DX12ãƒ†ã‚¹ãƒˆ",			//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®æ–‡å­—
+		WS_OVERLAPPEDWINDOW,	//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã¨å¢ƒç•Œç·šãŒã‚ã‚‹ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦
+		CW_USEDEFAULT,			//è¡¨ç¤ºxåº§æ¨™ã¯OSã«ãŠä»»ã›
+		CW_USEDEFAULT,			//è¡¨ç¤ºyåº§æ¨™ã¯OSã«ãŠä»»ã›
+		wrc_.right - wrc_.left,	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦å¹…
+		wrc_.bottom - wrc_.top,	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦é«˜
+		nullptr,				//è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		nullptr,				//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		win_.hInstance,			//å‘¼ã³å‡ºã—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ³ãƒ‰ãƒ«
+		nullptr					//è¿½åŠ ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼
 	);
 }
 
-//ƒEƒBƒ“ƒhƒE•\¦
+//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 void NWindows::Display()
 {
 	ShowWindow(hwnd_, SW_SHOW);
@@ -87,14 +87,14 @@ bool NWindows::WindowMessage()
 {
 	if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
 	{
-		TranslateMessage(&msg_);	//ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-		DispatchMessage(&msg_);	//ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+		TranslateMessage(&msg_);	//ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+		DispatchMessage(&msg_);	//ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 	}
 
-	//ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ªI‚í‚é‚Æ‚«‚Émwssage‚ªWM_QUIT‚É‚È‚é
+	//ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãŒçµ‚ã‚ã‚‹ã¨ãã«mwssageãŒWM_QUITã«ãªã‚‹
 	if (msg_.message == WM_QUIT)
 	{
-		return true;	//I—¹ƒƒbƒZ[ƒW‚ª—ˆ‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+		return true;	//çµ‚äº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 	}
 
 	return false;
@@ -102,6 +102,6 @@ bool NWindows::WindowMessage()
 
 void NWindows::Finalize()
 {
-	//‚à‚¤ƒNƒ‰ƒX‚Íg‚í‚È‚¢‚Ì‚Å“o˜^‰ğœ‚·‚é
+	//ã‚‚ã†ã‚¯ãƒ©ã‚¹ã¯ä½¿ã‚ãªã„ã®ã§ç™»éŒ²è§£é™¤ã™ã‚‹
 	UnregisterClass(win_.lpszClassName, win_.hInstance);
 }

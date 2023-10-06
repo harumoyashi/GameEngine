@@ -1,13 +1,13 @@
 #include "NVec3.h"
 #include <cmath>
 
-const NVec3 NVec3::zero(0,0,0);
-const NVec3 NVec3::one(1.f,1.f,1.f);
-const NVec3 NVec3::up(0,1.f,0);
-const NVec3 NVec3::front(0,0,1.f);
-const NVec3 NVec3::right(1.f,0,0);
+const NVec3 NVec3::zero(0, 0, 0);
+const NVec3 NVec3::one(1.f, 1.f, 1.f);
+const NVec3 NVec3::up(0, 1.f, 0);
+const NVec3 NVec3::front(0, 0, 1.f);
+const NVec3 NVec3::right(1.f, 0, 0);
 
-NVec3::NVec3():x(0),y(0),z(0) {
+NVec3::NVec3() :x(0), y(0), z(0) {
 
 }
 
@@ -138,8 +138,8 @@ NVec3& NVec3::operator=(float num)
 	return *this;
 }
 
-//NVec3ƒNƒ‰ƒX‚É‘®‚³‚È‚¢ŠÖ”ŒQ
-// “ñ€‰‰Zq
+//NVec3ã‚¯ãƒ©ã‚¹ã«å±ã•ãªã„é–¢æ•°ç¾¤
+// äºŒé …æ¼”ç®—å­
 const NVec3 operator+(const NVec3& v1, const NVec3& v2)
 {
 	NVec3 temp(v1);

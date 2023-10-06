@@ -19,35 +19,35 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 	switch (type)
 	{
 	case BulletType::LineBullet:
-		if (line_.GetIsCanShot())	//Œ‚‚Ä‚é‚È‚ç
+		if (line_.GetIsCanShot())	//æ’ƒã¦ã‚‹ãªã‚‰
 		{
-			//ƒŒƒxƒ‹Ši”[‚µ‚Ä(ƒŒƒxƒ‹—p‚Ìˆ—–¢‘Î‰)
+			//ãƒ¬ãƒ™ãƒ«æ ¼ç´ã—ã¦(ãƒ¬ãƒ™ãƒ«ç”¨ã®å‡¦ç†æœªå¯¾å¿œ)
 			line_.SetLevel(level);
 			for (uint32_t i = 0; i < line_.GetLevel(); i++)
 			{
-				//ƒŒƒxƒ‹‚É‰‚¶‚Ä’Ç‰Á
+				//ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ã¦è¿½åŠ 
 				BulletManager::GetInstance()->bullets_.emplace_back();
 
-				//‘Î‰‚µ‚½í—Ş‚ÉŠ—LŒ ‚½‚¹‚Ä¶¬
+				//å¯¾å¿œã—ãŸç¨®é¡ã«æ‰€æœ‰æ¨©æŒãŸã›ã¦ç”Ÿæˆ
 				BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
 
-				//Šï”‚©‹ô”‚©‚Å¶‰E‚ÉU‚è•ª‚¯e•û
+				//å¥‡æ•°ã‹å¶æ•°ã‹ã§å·¦å³ã«æŒ¯ã‚Šåˆ†ã‘è¦ªæ–¹
 				if (i % 2 == 0)
 				{
-					//Šî€‚Æ‚È‚éÀ•W‚©‚ç‰¡‚É‚¸‚ç‚µ‚Ä¶¬
+					//åŸºæº–ã¨ãªã‚‹åº§æ¨™ã‹ã‚‰æ¨ªã«ãšã‚‰ã—ã¦ç”Ÿæˆ
 					NVec3 generatePos = pos;
 					generatePos.x += (float)(i / 2) * 0.3f;
 					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
 				}
 				else
 				{
-					//1‘«‚µ‚Ä‚ ‚°‚È‚¢‚Æ2‚Ì0‚Åd‚È‚Á‚¿‚á‚¤
+					//1è¶³ã—ã¦ã‚ã’ãªã„ã¨2ã®æ™‚0ã§é‡ãªã£ã¡ã‚ƒã†
 					NVec3 generatePos = pos;
 					generatePos.x -= (float)(i / 2 + 1) * 0.3f;
 					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
 				}
 			}
-			//¶¬‚ªI‚í‚Á‚½‚çƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+			//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã¨ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
 			line_.SetIsCanShot(false);
 			line_.ReSetShotCoolTimer();
 
@@ -56,38 +56,38 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 
 		break;
 	case BulletType::SideBullet:
-		if (side_.GetIsCanShot())	//Œ‚‚Ä‚é‚È‚ç
+		if (side_.GetIsCanShot())	//æ’ƒã¦ã‚‹ãªã‚‰
 		{
-			//Œ‚‚Á‚½‰ñ”ƒJƒEƒ“ƒg—p
+			//æ’ƒã£ãŸå›æ•°ã‚«ã‚¦ãƒ³ãƒˆç”¨
 			static uint32_t shotCount;
-			//ƒŒƒxƒ‹‚É‰‚¶‚Ä’Ç‰Á
-			if (side_.GetIsShortCanShot())	//Œ‚‚Ä‚é‚È‚ç
+			//ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ã¦è¿½åŠ 
+			if (side_.GetIsShortCanShot())	//æ’ƒã¦ã‚‹ãªã‚‰
 			{
-				//2”­•ª‰ñ‚·(Œã‚ÅƒŒƒxƒ‹‚É‘Î‰‚µ‚½for•¶‚³‚ç‚É‰ñ‚·)
+				//2ç™ºåˆ†å›ã™(å¾Œã§ãƒ¬ãƒ™ãƒ«ã«å¯¾å¿œã—ãŸforæ–‡ã•ã‚‰ã«å›ã™)
 				for (size_t j = 0; j < side_.GetAllAtOnceNum(); j++)
 				{
-					//‚Æ‚è‚ ‚¦‚¸’Ç‰Á
+					//ã¨ã‚Šã‚ãˆãšè¿½åŠ 
 					BulletManager::GetInstance()->bullets_.emplace_back();
-					//ƒŒƒxƒ‹Ši”[‚µ‚Ä(ƒŒƒxƒ‹—p‚Ìˆ—–¢‘Î‰)
+					//ãƒ¬ãƒ™ãƒ«æ ¼ç´ã—ã¦(ãƒ¬ãƒ™ãƒ«ç”¨ã®å‡¦ç†æœªå¯¾å¿œ)
 					side_.SetLevel(level);
-					//‘Î‰‚µ‚½í—Ş‚ÉŠ—LŒ ‚½‚¹‚Ä¶¬
+					//å¯¾å¿œã—ãŸç¨®é¡ã«æ‰€æœ‰æ¨©æŒãŸã›ã¦ç”Ÿæˆ
 					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
-					//¶‰E‚Éo‚·‚æ‚¤‚É
+					//å·¦å³ã«å‡ºã™ã‚ˆã†ã«
 					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(90.0f + 180.0f * j));
 				}
-				//¶¬‚ªI‚í‚Á‚½‚çƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+				//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã¨ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
 				side_.SetIsShortCanShot(false);
 				side_.ReSetShortShotCoolTimer();
-				shotCount++;	//Œ‚‚Á‚½‰ñ”‚ğ‰ÁZ‚µ‚Ä‚­
+				shotCount++;	//æ’ƒã£ãŸå›æ•°ã‚’åŠ ç®—ã—ã¦ã
 
 				NAudioManager::GetInstance()->Play("shotSE", false, 0.5f);
 			}
 
-			//Œ‚‚Á‚½‰ñ”‚ª’eƒŒƒxƒ‹‚É’B‚µ‚½‚çI‚í‚è
+			//æ’ƒã£ãŸå›æ•°ãŒå¼¾ãƒ¬ãƒ™ãƒ«ã«é”ã—ãŸã‚‰çµ‚ã‚ã‚Š
 			if (shotCount >= side_.GetLevel())
 			{
 				shotCount = 0;
-				//¶¬‚ªI‚í‚Á‚½‚çƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+				//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã¨ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
 				side_.SetIsCanShot(false);
 				side_.ReSetShotCoolTimer();
 			}
@@ -96,38 +96,38 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 		break;
 
 	case BulletType::WideBullet:
-		if (wide_.GetIsCanShot())	//Œ‚‚Ä‚é‚È‚ç
+		if (wide_.GetIsCanShot())	//æ’ƒã¦ã‚‹ãªã‚‰
 		{
-			//Œ‚‚Á‚½‰ñ”ƒJƒEƒ“ƒg—p
+			//æ’ƒã£ãŸå›æ•°ã‚«ã‚¦ãƒ³ãƒˆç”¨
 			static uint32_t shotCount;
-			//ƒŒƒxƒ‹‚É‰‚¶‚Ä’Ç‰Á
-			if (wide_.GetIsShortCanShot())	//Œ‚‚Ä‚é‚È‚ç
+			//ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ã¦è¿½åŠ 
+			if (wide_.GetIsShortCanShot())	//æ’ƒã¦ã‚‹ãªã‚‰
 			{
-				//2”­•ª‰ñ‚·(Œã‚ÅƒŒƒxƒ‹‚É‘Î‰‚µ‚½for•¶‚³‚ç‚É‰ñ‚·)
+				//2ç™ºåˆ†å›ã™(å¾Œã§ãƒ¬ãƒ™ãƒ«ã«å¯¾å¿œã—ãŸforæ–‡ã•ã‚‰ã«å›ã™)
 				for (size_t j = 0; j < wide_.GetAllAtOnceNum(); j++)
 				{
-					//‚Æ‚è‚ ‚¦‚¸’Ç‰Á
+					//ã¨ã‚Šã‚ãˆãšè¿½åŠ 
 					BulletManager::GetInstance()->bullets_.emplace_back();
-					//ƒŒƒxƒ‹Ši”[‚µ‚Ä(ƒŒƒxƒ‹—p‚Ìˆ—–¢‘Î‰)
+					//ãƒ¬ãƒ™ãƒ«æ ¼ç´ã—ã¦(ãƒ¬ãƒ™ãƒ«ç”¨ã®å‡¦ç†æœªå¯¾å¿œ)
 					wide_.SetLevel(level);
-					//‘Î‰‚µ‚½í—Ş‚ÉŠ—LŒ ‚½‚¹‚Ä¶¬
+					//å¯¾å¿œã—ãŸç¨®é¡ã«æ‰€æœ‰æ¨©æŒãŸã›ã¦ç”Ÿæˆ
 					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
-					//¶‰E‚Éo‚·‚æ‚¤‚É
+					//å·¦å³ã«å‡ºã™ã‚ˆã†ã«
 					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(-45.0f + 90.0f * j));
 				}
-				//¶¬‚ªI‚í‚Á‚½‚çƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+				//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã¨ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
 				wide_.SetIsShortCanShot(false);
 				wide_.ReSetShortShotCoolTimer();
-				shotCount++;	//Œ‚‚Á‚½‰ñ”‚ğ‰ÁZ‚µ‚Ä‚­
+				shotCount++;	//æ’ƒã£ãŸå›æ•°ã‚’åŠ ç®—ã—ã¦ã
 
 				NAudioManager::GetInstance()->Play("shotSE", false, 0.5f);
 			}
 
-			//Œ‚‚Á‚½‰ñ”‚ª’eƒŒƒxƒ‹‚É’B‚µ‚½‚çI‚í‚è
+			//æ’ƒã£ãŸå›æ•°ãŒå¼¾ãƒ¬ãƒ™ãƒ«ã«é”ã—ãŸã‚‰çµ‚ã‚ã‚Š
 			if (shotCount >= wide_.GetLevel())
 			{
 				shotCount = 0;
-				//¶¬‚ªI‚í‚Á‚½‚çƒ^ƒCƒ}[‚Æƒtƒ‰ƒO‚ğƒŠƒZƒbƒg
+				//ç”ŸæˆãŒçµ‚ã‚ã£ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ã¨ãƒ•ãƒ©ã‚°ã‚’ãƒªã‚»ãƒƒãƒˆ
 				wide_.SetIsCanShot(false);
 				wide_.ReSetShotCoolTimer();
 			}

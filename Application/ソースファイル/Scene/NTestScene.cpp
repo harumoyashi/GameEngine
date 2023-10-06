@@ -29,24 +29,24 @@ void NTestScene::LoadResources()
 
 void NTestScene::Init()
 {
-#pragma region	ƒI[ƒfƒBƒI‰Šú‰»
+#pragma region	ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªåˆæœŸåŒ–
 
 #pragma endregion
-#pragma region	ƒJƒƒ‰‰Šú‰»
+#pragma region	ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	NCameraManager::GetInstance()->Init();
 	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
 #pragma endregion
-#pragma region •`‰æ‰Šú‰»ˆ—
-	//ƒIƒuƒWƒFƒNƒg
+#pragma region æç”»åˆæœŸåŒ–å‡¦ç†
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	obj_ = std::make_unique<NObj3d>();
 	obj_->SetModel("catWalk");
 	obj_->Init();
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì‰Šú’lİ’è
-	obj_->color_.SetColor255(240, 30, 20, 255);	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
-	obj_->SetIsElapseAnime(false);	//Œo‰ßŠÔ–³‹‚µ‚Ä‚¨‚­
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸå€¤è¨­å®š
+	obj_->color_.SetColor255(240, 30, 20, 255);	//ã‚ªãƒ¬ãƒ³ã‚¸ã£ã½ã
+	obj_->SetIsElapseAnime(false);	//çµŒéæ™‚é–“ç„¡è¦–ã—ã¦ãŠã
 	obj_->Update();
 #pragma endregion
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	backSprite_ = std::make_unique<NSprite>();
 	backSprite_->CreateSprite("logo");
 	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
@@ -55,13 +55,13 @@ void NTestScene::Init()
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	//backSprite_->color_.SetColor255(50, 50, 50);
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg¶¬
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 
 #pragma endregion
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init();
-	// 3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	NObj3d::SetLightGroup(lightGroup_.get());
 	//NAssimpModel::SetLightGroup(lightGroup_.get());
 }
@@ -104,30 +104,30 @@ void NTestScene::Update()
 	}
 
 	ImGui::End();
-#endif _DEBUG //ƒ|ƒXƒgƒGƒtƒFƒNƒgImGui
+#endif _DEBUG //ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆImGui
 
-#pragma region ƒJƒƒ‰
+#pragma region ã‚«ãƒ¡ãƒ©
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-#pragma region ƒXƒvƒ‰ƒCƒg
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	backSprite_->Update();
 #pragma endregion
 	obj_->Update();
 
-	//ƒ‰ƒCƒg‚½‚¿‚ÌXV
+	//ãƒ©ã‚¤ãƒˆãŸã¡ã®æ›´æ–°
 	lightGroup_->Update();
 
-	//ƒV[ƒ“Ø‚è‘Ö‚¦
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 	{
-		NSceneChange::GetInstance()->Start();	//ƒV[ƒ“‘JˆÚŠJn
+		NSceneChange::GetInstance()->Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹
 	}
 
-	//Ø‚è‘Ö‚¦‚ÄÖ¼‚Á‚ÄŒ¾‚í‚ê‚½‚ç
+	//åˆ‡ã‚Šæ›¿ãˆã¦ï¾–ï½¼ã£ã¦è¨€ã‚ã‚ŒãŸã‚‰
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
-		NSceneManager::ChangeScene<NTitleScene>();			//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉØ‚è‘Ö‚¦
-		NSceneChange::GetInstance()->SetIsChange(false);	//Ø‚è‘Ö‚¦‚¿‚áÀŞÒ°
+		NSceneManager::ChangeScene<NTitleScene>();			//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆ
+		NSceneChange::GetInstance()->SetIsChange(false);	//åˆ‡ã‚Šæ›¿ãˆã¡ã‚ƒï¾€ï¾ï¾’ï½°
 	}
 }
 

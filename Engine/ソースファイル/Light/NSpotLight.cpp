@@ -21,7 +21,7 @@ void NSpotLight::Init()
 
 void NSpotLight::SetLightDir(const NVec3& lightdir)
 {
-	//³‹K‰»‚µ‚ÄƒZƒbƒg
+	//æ­£è¦åŒ–ã—ã¦ã‚»ãƒƒãƒˆ
 	lightdir_ = lightdir.Normalize();
 	isDirty_ = true;
 }

@@ -10,31 +10,31 @@ class NShader final
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<ID3DBlob> vsBlob_;		// ���_�V�F�[�_�I�u�W�F�N�g
-	ComPtr<ID3DBlob> psBlob_;		// �s�N�Z���V�F�[�_�I�u�W�F�N�g
-	ComPtr<ID3DBlob> gsBlob_;		// �W�I���g���V�F�[�_�I�u�W�F�N�g
-	ComPtr<ID3DBlob> csBlob_;		// �R���s���[�g�V�F�[�_�I�u�W�F�N�g
-	ComPtr<ID3DBlob> errorBlob_;	// �G���[�I�u�W�F�N�g
+	ComPtr<ID3DBlob> vsBlob_;		// 頂点シェーダオブジェクト
+	ComPtr<ID3DBlob> psBlob_;		// ピクセルシェーダオブジェクト
+	ComPtr<ID3DBlob> gsBlob_;		// ジオメトリシェーダオブジェクト
+	ComPtr<ID3DBlob> csBlob_;		// コンピュートシェーダオブジェクト
+	ComPtr<ID3DBlob> errorBlob_;	// エラーオブジェクト
 
 	static std::map<std::string, NShader> shaderMap_;
 
 public:
-	//�p�X�ɍ��킹�����_�V�F�[�_�[�̓ǂݍ���
+	//パスに合わせた頂点シェーダーの読み込み
 	void LoadVS(std::string vsPath);
-	//�p�X�ɍ��킹���s�N�Z���V�F�[�_�[�̓ǂݍ���
+	//パスに合わせたピクセルシェーダーの読み込み
 	void LoadPS(std::string psPath);
-	//�p�X�ɍ��킹���W�I���g���V�F�[�_�[�̓ǂݍ���
+	//パスに合わせたジオメトリシェーダーの読み込み
 	void LoadGS(std::string gsPath);
-	//�p�X�ɍ��킹���R���s���[�g�V�F�[�_�[�̓ǂݍ���
+	//パスに合わせたコンピュートシェーダーの読み込み
 	void LoadCS(std::string csPath);
 
-	//�V�F�[�_�[�𐶐����ă}�b�v�ɓo�^
-	//id:�V�F�[�_�[�}�b�v�ɓo�^���閼�O
-	//path:�V�F�[�_�[�}�b�v�ɓo�^����V�F�[�_�[�̃p�X
-	//isLoadGS:�W�I���g���V�F�[�_�[�ǂݍ��ނ�
-	//isLoadCS:�R���s���[�g�V�F�[�_�[�ǂݍ��ނ�
+	//シェーダーを生成してマップに登録
+	//id:シェーダーマップに登録する名前
+	//path:シェーダーマップに登録するシェーダーのパス
+	//isLoadGS:ジオメトリシェーダー読み込むか
+	//isLoadCS:コンピュートシェーダー読み込むか
 	static void CreateShader(std::string id, std::string path, bool isLoadGS = false, bool isLoadCS = false);
-	//�w�肵��id�̃V�F�[�_�[���擾
+	//指定したidのシェーダーを取得
 	static NShader* GetShader(std::string id);
 
 	ID3DBlob* GetVSBlob() { return vsBlob_.Get(); }

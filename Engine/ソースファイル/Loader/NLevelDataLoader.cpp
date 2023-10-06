@@ -11,45 +11,45 @@ NLevelDataLoader* NLevelDataLoader::GetInstance()
 
 std::unique_ptr<LevelData> NLevelDataLoader::Load(const std::string& filename)
 {
-	//˜AŒ‹‚µ‚Äƒtƒ‹ƒpƒX‚ğŒ©‚é
+	//é€£çµã—ã¦ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’è¦‹ã‚‹
 	const std::string fullpath = filename;
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
 
 	file.open(fullpath);
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	//JSON•¶š—ñ‚©‚ç‰ğ“€‚µ‚½ƒf[ƒ^
+	//JSONæ–‡å­—åˆ—ã‹ã‚‰è§£å‡ã—ãŸãƒ‡ãƒ¼ã‚¿
 	nlohmann::json deserialized;
 
-	//‰ğ“€
+	//è§£å‡
 	file >> deserialized;
 
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	//"name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	//"name"ã‚’æ–‡å­—åˆ—ã¨ã—ã¦å–å¾—
 	std::string name =
 		deserialized["name"].get<std::string>();
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(name.compare("scene") == 0);
 
-	//ƒŒƒxƒ‹ƒf[ƒ^Ši”[—pƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	std::unique_ptr<LevelData> levelData = std::make_unique<LevelData>();
 
-	//"objects"‚ÌƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"objects"ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	for (nlohmann::json& object : deserialized["objects"])
 	{
 		Traversal(object, levelData.get());
 
-		//Ä‹NŒÄ‚Ño‚µ‚Å}‚ğ‘–¸‚·‚é
+		//å†èµ·å‘¼ã³å‡ºã—ã§æã‚’èµ°æŸ»ã™ã‚‹
 		for (nlohmann::json& c : object["children"])
 		{
 			Traversal(c, levelData.get());
@@ -62,28 +62,28 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 {
 	assert(object.contains("type"));
 
-	//í•Ê‚ğæ“¾
+	//ç¨®åˆ¥ã‚’å–å¾—
 	std::string type = object["type"].get<std::string>();
 
-	//í—Ş‚²‚Æ‚Ìˆ—
+	//ç¨®é¡ã”ã¨ã®å‡¦ç†
 	//MESH
 	if (type.compare("MESH") == 0)
 	{
-		//—v‘f’Ç‰Á
+		//è¦ç´ è¿½åŠ 
 		levelData->objects.emplace_back(LevelData::ObjectData{});
-		//¡’Ç‰Á‚µ‚½—v‘f‚ÌQÆ‚ğ“¾‚é
+		//ä»Šè¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§ã‚’å¾—ã‚‹
 		LevelData::ObjectData& objectData = levelData->objects.back();
 
 		if (object.contains("file_name"))
 		{
-			//ƒtƒ@ƒCƒ‹–¼
+			//ãƒ•ã‚¡ã‚¤ãƒ«å
 			objectData.filename = object["file_name"];
 		}
 
-		//ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+		//ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 		nlohmann::json& transform = object["transform"];
 
-		//ˆê’UVec3‚É’u‚«Š·‚¦‚é
+		//ä¸€æ—¦Vec3ã«ç½®ãæ›ãˆã‚‹
 		objectData.trans = { (float)transform["translation"][1],(float)transform["translation"][2],-(float)transform["translation"][0] };
 		objectData.rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
 		objectData.scale = { (float)transform["scaling"][1],(float)transform["scaling"][2],(float)transform["scaling"][0] };
@@ -91,7 +91,7 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 	else if (type.compare("CAMERA") == 0)
 	{
 		nlohmann::json& transform = object["transform"];
-		//ƒtƒ@ƒCƒ‹–¼
+		//ãƒ•ã‚¡ã‚¤ãƒ«å
 		NVec3 eye = { (float)transform["translation"][1],(float)transform["translation"][2],-(float)transform["translation"][0] };
 		NVec3 rot = { -(float)transform["rotation"][1],-(float)transform["rotation"][2],(float)transform["rotation"][0] };
 		levelData->camera.Init();
@@ -102,11 +102,11 @@ void NLevelDataLoader::Traversal(nlohmann::json& object, LevelData* levelData)
 
 void NLevelDataLoader::SetObject(const LevelData* levelData, std::vector<std::unique_ptr<NObj3d>>& obj)
 {
-	//ƒŒƒxƒ‹ƒf[ƒ^‚©‚çƒIƒuƒWƒFƒNƒg‚ğ¶¬A”z’u
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã€é…ç½®
 	for (auto& objectData : levelData->objects)
 	{
-		//ƒ‚ƒfƒ‹‚ğw’è‚µ‚Ä3DƒIƒuƒWƒFƒNƒg‚ğ¶¬(‚Å‚«‚Ä‚È‚¢)
-		//”z—ñ‚É“o˜^‚µ‚Ä‚­
+		//ãƒ¢ãƒ‡ãƒ«ã‚’æŒ‡å®šã—ã¦3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ(ã§ãã¦ãªã„)
+		//é…åˆ—ã«ç™»éŒ²ã—ã¦ã
 		obj.emplace_back(std::make_unique<NObj3d>());
 		obj.back()->Init();
 		obj.back()->SetModel(objectData.filename);

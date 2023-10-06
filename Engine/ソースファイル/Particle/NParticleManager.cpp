@@ -12,8 +12,8 @@ void NParticleManager::Init()
 	for (auto& emitter : emitters_)
 	{
 		emitter.second->ClearParticles();
-		emitter.second->Init();			//ƒQ[ƒ€ƒV[ƒ“‚Éƒp[ƒeƒBƒNƒ‹Ž‚½‚¹‚½‚çî•ñ•ÛŽ‚Å‚«‚È‚¢‚Æ‚«‚ª‚ ‚Á‚Ä‰Šú‰»Žž‚ÉƒGƒ‰[‹N‚±‚Á‚½
-										//ƒvƒŒƒCƒ„[‚ÉŽ‚½‚¹‚Ä‚¨‚¯‚Î‘åä•v‚»‚¤‚¾‚¯‚Ç‚È‚ñ‚Å‚È‚Ì‚©‚í‚©‚ç‚È‚¢‚©‚çæ¶‚É•·‚­
+		emitter.second->Init();			//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã«ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æŒãŸã›ãŸã‚‰æƒ…å ±ä¿æŒã§ããªã„ã¨ããŒã‚ã£ã¦åˆæœŸåŒ–æ™‚ã«ã‚¨ãƒ©ãƒ¼èµ·ã“ã£ãŸ
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«æŒãŸã›ã¦ãŠã‘ã°å¤§ä¸ˆå¤«ãã†ã ã‘ã©ãªã‚“ã§ãªã®ã‹ã‚ã‹ã‚‰ãªã„ã‹ã‚‰å…ˆç”Ÿã«èžã
 	}
 
 	for (auto& eneEmitter : enemyEmitters_)
@@ -27,7 +27,7 @@ void NParticleManager::Update()
 {
 	for (auto& emitter : emitters_)
 	{
-		//ƒp[ƒeƒBƒNƒ‹‚ª‚ ‚é‚Æ‚«‚¾‚¯XVˆ—‰ñ‚·
+		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒã‚ã‚‹ã¨ãã ã‘æ›´æ–°å‡¦ç†å›žã™
 		if (emitter.second->GetParticlesDead() == false)
 		{
 			emitter.second->Update();
@@ -44,7 +44,7 @@ void NParticleManager::Draw()
 {
 	for (auto& emitter : emitters_)
 	{
-		//ƒp[ƒeƒBƒNƒ‹‚ª‚ ‚é‚Æ‚«‚¾‚¯•`‰æˆ—‰ñ‚·
+		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒã‚ã‚‹ã¨ãã ã‘æç”»å‡¦ç†å›žã™
 		if (emitter.second->GetParticlesDead() == false)
 		{
 			emitter.second->Draw();

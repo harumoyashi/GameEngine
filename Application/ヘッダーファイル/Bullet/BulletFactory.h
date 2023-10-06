@@ -4,21 +4,21 @@
 #include "SideBullet.h"
 #include "WideBullet.h"
 
-//’e¶¬Hê
-//zŠÂQÆ‚ª‹N‚«‚È‚¢‚æ‚¤‚ÉBulletManager‚Æ•ª‚¯‚Ä‚é
+//å¼¾ç”Ÿæˆå·¥å ´
+//å¾ªç’°å‚ç…§ãŒèµ·ããªã„ã‚ˆã†ã«BulletManagerã¨åˆ†ã‘ã¦ã‚‹
 class BulletFactory final
 {
 private:
-	LineBullet line_;	//’Êí’e
-	SideBullet side_;	//ƒTƒCƒh’e
-	WideBullet wide_;	//ƒƒCƒh’e
+	LineBullet line_;	//é€šå¸¸å¼¾
+	SideBullet side_;	//ã‚µã‚¤ãƒ‰å¼¾
+	WideBullet wide_;	//ãƒ¯ã‚¤ãƒ‰å¼¾
 
 public:
 	static BulletFactory* GetInstance();
 
 	void Update();
-	//’e‚Ì¶¬
-	void Create(BulletType type,NVec3 pos,uint32_t level);
+	//å¼¾ã®ç”Ÿæˆ
+	void Create(BulletType type, NVec3 pos, uint32_t level);
 
 private:
 	BulletFactory() = default;

@@ -11,149 +11,149 @@
 
 class IEmitter3D
 {
-	//—±q1—±
+	//ç²’å­1ç²’
 	struct Particle3D
 	{
-		//À•W
+		//åº§æ¨™
 		NVec3 pos;
-		//‘å‚«‚³
+		//å¤§ãã•
 		float scale;
-		float startScale;	//ŠJn‚Ì‘å‚«‚³
-		float endScale;		//I—¹‚Ì‘å‚«‚³
-		//Šp“x
+		float startScale;	//é–‹å§‹æ™‚ã®å¤§ãã•
+		float endScale;		//çµ‚äº†æ™‚ã®å¤§ãã•
+		//è§’åº¦
 		NVec3 rot;
-		NVec3 plusRot;	//XVˆ—‚Å‰ñ“]‚³‚¹‚é‚Æ‚«‚Ég‚¤—p
-		//‘¬“x
+		NVec3 plusRot;	//æ›´æ–°å‡¦ç†ã§å›è»¢ã•ã›ã‚‹ã¨ãã«ä½¿ã†ç”¨
+		//é€Ÿåº¦
 		NVec3 velo;
-		//‰Á‘¬“x
+		//åŠ é€Ÿåº¦
 		NVec3 accel;
-		//d—Í
+		//é‡åŠ›
 		float gravity = 0.98f;
 
-		//F
+		//è‰²
 		NColor color;
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		NEasing::EaseTimer aliveTimer;
 
-		//ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ}[
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼
 		NEasing::EaseTimer easeTimer = 1.0f;
 
-		//ƒGƒ~ƒbƒ^[À•W‚©‚ç‚Ì‹——£
+		//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼åº§æ¨™ã‹ã‚‰ã®è·é›¢
 		float radius = 0;
-		float startRadius = 0;	//ŠJn‚Ì‹——£
+		float startRadius = 0;	//é–‹å§‹æ™‚ã®è·é›¢
 
-		//‰æ‘œ
+		//ç”»åƒ
 		//TextureHandle key;
 	};
 
 private:
-	//’è”ƒoƒbƒtƒ@//
-	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;	//3D•ÏŠ·s—ñ
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡//
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;	//3Då¤‰æ›è¡Œåˆ—
 
-	std::vector<NVertexParticle>vertices_;		//’¸“_ŒQ
-	NVertexBuff<NVertexParticle> vertexBuff_;	//’¸“_ƒoƒbƒtƒ@
+	std::vector<NVertexParticle>vertices_;		//é ‚ç‚¹ç¾¤
+	NVertexBuff<NVertexParticle> vertexBuff_;	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 
-	NMatrix4 matWorld_;	//3D•ÏŠ·s—ñ
+	NMatrix4 matWorld_;	//3Då¤‰æ›è¡Œåˆ—
 
-	// ƒ‰ƒCƒg
+	// ãƒ©ã‚¤ãƒˆ
 	static NLightGroup* sLightGroup;
 
-	//À•W
+	//åº§æ¨™
 	NVec3 pos_{};
-	//Šp“x
+	//è§’åº¦
 	NVec3 rot_{};
-	//‘å‚«‚³
-	NVec3 scale_{ 0.1f,0.1f,0.1f };	//‚±‚ê0‚É‚·‚é‚Æ‚¢‚©‚ê‚é(Œ´ˆö•s–¾)
-	float minScale_;	//ƒp[ƒeƒBƒNƒ‹‚ÌÅ¬ƒTƒCƒY
-	float maxScale_;	//ƒp[ƒeƒBƒNƒ‹‚ÌÅ‘åƒTƒCƒY
-	//Œ³‚Ì‘å‚«‚³
+	//å¤§ãã•
+	NVec3 scale_{ 0.1f,0.1f,0.1f };	//ã“ã‚Œ0ã«ã™ã‚‹ã¨ã„ã‹ã‚Œã‚‹(åŸå› ä¸æ˜)
+	float minScale_;	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æœ€å°ã‚µã‚¤ã‚º
+	float maxScale_;	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æœ€å¤§ã‚µã‚¤ã‚º
+	//å…ƒã®å¤§ãã•
 	NVec3 originalScale_;
-	//Šgk—p”{—¦
+	//æ‹¡ç¸®ç”¨å€ç‡
 	float scaling_;
-	//Šgk—pƒ^ƒCƒ}[
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	NEasing::EaseTimer scalingTimer_ = 1.0f;
-	//ƒp[ƒeƒBƒNƒ‹o‚·ƒ^ƒCƒ~ƒ“ƒO—pƒ^ƒCƒ}[
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å‡ºã™ã‚¿ã‚¤ãƒŸãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	uint32_t particleTimer_ = 0;
-	//‰½ƒtƒŒ[ƒ€‚Éˆê‰ñƒp[ƒeƒBƒNƒ‹’Ç‰Á‚·‚é‚©
+	//ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ã«ä¸€å›ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ ã™ã‚‹ã‹
 	uint32_t addInterval_;
 
-	//Œo‰ßŠÔ‚ÌƒXƒs[ƒh(ƒXƒ[ƒ‚[ƒVƒ‡ƒ“—p)
+	//çµŒéæ™‚é–“ã®ã‚¹ãƒ”ãƒ¼ãƒ‰(ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
 	float elapseSpeed_;
 
-	const uint32_t maxParticle_ = 256;		//Å‘å”
-	std::vector<Particle3D> particles_;		//ƒp[ƒeƒBƒNƒ‹”z—ñ
+	const uint32_t maxParticle_ = 256;		//æœ€å¤§æ•°
+	std::vector<Particle3D> particles_;		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é…åˆ—
 
-	bool isActive_ = true;					//—LŒø‚É‚·‚é‚©ƒtƒ‰ƒO
+	bool isActive_ = true;					//æœ‰åŠ¹ã«ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
-	bool isGravity_ = false;				//d—Í‚Ì‰e‹¿ó‚¯‚é‚©ƒtƒ‰ƒO
-	bool isRotation_ = false;				//‰ñ‚·‚©ƒtƒ‰ƒO
+	bool isGravity_ = false;				//é‡åŠ›ã®å½±éŸ¿å—ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	bool isRotation_ = false;				//å›ã™ã‹ãƒ•ãƒ©ã‚°
 
-	NTexture texture_;						//ƒeƒNƒXƒ`ƒƒ(g‚¤‚©‚í‚©‚ç‚ñ)
+	NTexture texture_;						//ãƒ†ã‚¯ã‚¹ãƒãƒ£(ä½¿ã†ã‹ã‚ã‹ã‚‰ã‚“)
 
 public:
 	IEmitter3D();
 	virtual ~IEmitter3D() = default;
 
-	//‰Šú‰»
-	//‚±‚Ì‚Ü‚Ü‚Ìˆ—‚ğŒÄ‚Ñ‚½‚¢‚È‚çŒp³æ‚Å‚±‚ê‚ğŒÄ‚Ô
+	//åˆæœŸåŒ–
+	//ã“ã®ã¾ã¾ã®å‡¦ç†ã‚’å‘¼ã³ãŸã„ãªã‚‰ç¶™æ‰¿å…ˆã§ã“ã‚Œã‚’å‘¼ã¶
 	virtual void Init();
-	//XV
-	//‚±‚Ì‚Ü‚Ü‚Ìˆ—‚ğŒÄ‚Ñ‚½‚¢‚È‚çŒp³æ‚Å‚±‚ê‚ğŒÄ‚Ô
+	//æ›´æ–°
+	//ã“ã®ã¾ã¾ã®å‡¦ç†ã‚’å‘¼ã³ãŸã„ãªã‚‰ç¶™æ‰¿å…ˆã§ã“ã‚Œã‚’å‘¼ã¶
 	virtual void Update();
-	//‹¤’ÊƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh
+	//å…±é€šã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰
 	static void CommonBeginDraw();
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	static void SetBlendMode(BlendMode blendMode);
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
 	void UpdateMatrix();
-	//’è”ƒoƒbƒtƒ@‚Ö‘—M
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸é€ä¿¡
 	void TransferMatrix();
 
-	//ƒp[ƒeƒBƒNƒ‹’Ç‰Á(ŒÅ—Lˆ—‚É‚µ‚½‚©‚Á‚½‚çoverride‚Åã‘‚«‚·‚é)
-	//life:•b”w’è‚È‚Ì‚Å’ˆÓ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ (å›ºæœ‰å‡¦ç†ã«ã—ãŸã‹ã£ãŸã‚‰overrideã§ä¸Šæ›¸ãã™ã‚‹)
+	//life:ç§’æ•°æŒ‡å®šãªã®ã§æ³¨æ„
 	virtual void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
 		NVec3 minVelo, NVec3 maxVelo, NVec3 accel = {}, NVec3 minRot = {}, NVec3 maxRot = {}) = 0;
-	//ƒp[ƒeƒBƒNƒ‹‘SÁ‚µ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…¨æ¶ˆã—
 	void ClearParticles() { particles_.clear(); }
 
-	//ƒQƒbƒ^[//
-	//À•Wæ“¾
+	//ã‚²ãƒƒã‚¿ãƒ¼//
+	//åº§æ¨™å–å¾—
 	NVec3 GetPos()const { return pos_; }
-	//‘å‚«‚³æ“¾
+	//å¤§ãã•å–å¾—
 	NVec3 GetScale()const { return scale_; }
-	//ƒp[ƒeƒBƒNƒ‹‘S•”€‚ñ‚¾‚©æ“¾
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…¨éƒ¨æ­»ã‚“ã ã‹å–å¾—
 	bool GetParticlesDead()const { return particles_.empty(); }
-	//‰½ŒÂƒp[ƒeƒBƒNƒ‹‚ ‚é‚©æ“¾
+	//ä½•å€‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚ã‚‹ã‹å–å¾—
 	size_t GetParticlesSize()const { return particles_.size(); }
-	//—LŒøƒtƒ‰ƒOæ“¾
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsActive()const { return isActive_; }
 
-	//ƒZƒbƒ^[//
-	//À•Wİ’è
+	//ã‚»ãƒƒã‚¿ãƒ¼//
+	//åº§æ¨™è¨­å®š
 	void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
 	void SetPos(const NVec3& pos) { pos_ = pos; }
-	//‘å‚«‚³İ’è
+	//å¤§ãã•è¨­å®š
 	void SetScale(const NVec3& scale);
-	//Šp“xİ’è
+	//è§’åº¦è¨­å®š
 	void SetRot(float rot) { rot_ = rot; }
-	//ƒ‰ƒCƒg‚ğİ’è
+	//ãƒ©ã‚¤ãƒˆã‚’è¨­å®š
 	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
-	//—LŒøƒtƒ‰ƒOİ’è
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsActive(bool isActive) { isActive_ = isActive; }
-	//d—Íƒtƒ‰ƒOİ’è
+	//é‡åŠ›ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
-	//‰ñ“]ƒtƒ‰ƒOİ’è
+	//å›è»¢ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsRotation(bool isRotation) { isRotation_ = isRotation; }
 
-	//Šgk—pƒ^ƒCƒ}[‚ªØ‚è‘Ö‚í‚éŠÔİ’è(•b)
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼ãŒåˆ‡ã‚Šæ›¿ã‚ã‚‹æ™‚é–“è¨­å®š(ç§’)
 	void SetScalingTimer(float timer);
-	//Šgk—pƒ^ƒCƒ}[ŠJn
-	//isRun:true = ƒvƒ‰ƒX‚³‚ê‚Ä‚­,false:ƒ}ƒCƒiƒX‚³‚ê‚Ä‚­
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
+	//isRun:true = ãƒ—ãƒ©ã‚¹ã•ã‚Œã¦ã,false:ãƒã‚¤ãƒŠã‚¹ã•ã‚Œã¦ã
 	void StartScalingTimer(bool isRun = true);
 
-	//Œo‰ßŠÔƒXƒs[ƒhİ’è
+	//çµŒéæ™‚é–“ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

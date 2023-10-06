@@ -6,29 +6,29 @@ class NBaseCollider
 public:
 	enum ColShapeType
 	{
-		SHAPE_UNKNOWN = -1,		//–¢’è‹`
-		COL_SPHERE,				//‹…
-		COL_PLANE,				//•½–Ê
-		COL_RAY,				//ƒŒƒC
+		SHAPE_UNKNOWN = -1,		//æœªå®šç¾©
+		COL_SPHERE,				//çƒ
+		COL_PLANE,				//å¹³é¢
+		COL_RAY,				//ãƒ¬ã‚¤
 	};
 
-	//Õ“Ë‘®«’è‹`
-	const unsigned short COL_TYPE_FIELD = 0b1 << 0;		//’nŒ`
-	const unsigned short COL_TYPE_PLAYER = 0b1 << 1;	//ƒvƒŒƒCƒ„[‚Ü‚í‚è
-	const unsigned short COL_TYPE_ENEMY = 0b1 << 2;		//“G‚Ü‚í‚è
-	const unsigned short COL_TYPE_OBJECT = 0b1 << 3;	//ƒIƒuƒWƒFƒNƒg‚Ü‚í‚è
+	//è¡çªå±æ€§å®šç¾©
+	const unsigned short COL_TYPE_FIELD = 0b1 << 0;		//åœ°å½¢
+	const unsigned short COL_TYPE_PLAYER = 0b1 << 1;	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¾ã‚ã‚Š
+	const unsigned short COL_TYPE_ENEMY = 0b1 << 2;		//æ•µã¾ã‚ã‚Š
+	const unsigned short COL_TYPE_OBJECT = 0b1 << 3;	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¾ã‚ã‚Š
 
 protected:
-	NObj3d* obj_ = nullptr;							//ƒIƒuƒWƒFƒNƒg
-	ColShapeType shapeType_ = SHAPE_UNKNOWN;		//Œ`óƒ^ƒCƒv
-	bool isCollision_;								//“–‚½‚Á‚½‚©ƒtƒ‰ƒO
+	NObj3d* obj_ = nullptr;							//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ColShapeType shapeType_ = SHAPE_UNKNOWN;		//å½¢çŠ¶ã‚¿ã‚¤ãƒ—
+	bool isCollision_;								//å½“ãŸã£ãŸã‹ãƒ•ãƒ©ã‚°
 
-	NBaseCollider* colInfo_;						//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
-	std::string colID;								//ƒRƒ‰ƒCƒ_[‚Ì¯•ÊID
-	NVec3 inter_;									//Õ“Ë“_
-	unsigned short colType_ = 0b0000000000000000;	//Õ“Ë‘®«
+	NBaseCollider* colInfo_;						//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	std::string colID;								//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è­˜åˆ¥ID
+	NVec3 inter_;									//è¡çªç‚¹
+	unsigned short colType_ = 0b0000000000000000;	//è¡çªå±æ€§
 
-	std::function<void(void)>onCollision_;			//ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒ|ƒCƒ“ƒ^•Ï”
+	std::function<void(void)>onCollision_;			//ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿å¤‰æ•°
 
 public:
 	NBaseCollider() = default;
@@ -36,40 +36,40 @@ public:
 
 	virtual void Update(NObj3d* obj) = 0;
 
-	// ƒQƒbƒ^[ //
-	//ƒIƒuƒWƒFƒNƒgæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå–å¾—
 	NObj3d* GetObj3d() { return obj_; }
-	//Œ`óƒ^ƒCƒvæ“¾
+	//å½¢çŠ¶ã‚¿ã‚¤ãƒ—å–å¾—
 	ColShapeType GetShapeType() { return shapeType_; }
-	//“–‚½‚Á‚Ä‚é‚©ƒtƒ‰ƒOæ“¾
+	//å½“ãŸã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsCol() { return isCollision_; }
-	//ƒRƒ‰ƒCƒ_[©g‚ğæ“¾
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è‡ªèº«ã‚’å–å¾—
 	NBaseCollider* GetCollider() { return this; }
 
 public:
-	// ƒQƒbƒ^[ //
-	//ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒ|ƒCƒ“ƒ^•Ï”æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿å¤‰æ•°å–å¾—
 	std::function<void(void)> GetOnCollision()const { return onCollision_; }
-	//ƒRƒ‰ƒCƒ_[‚Ì¯•ÊIDæ“¾
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è­˜åˆ¥IDå–å¾—
 	std::string GetColID()const { return colID; }
-	//Õ“Ë‘Šè‚Ìæ“¾
+	//è¡çªç›¸æ‰‹ã®å–å¾—
 	NBaseCollider* GetColInfo()const { return colInfo_; }
 
-	// ƒZƒbƒ^[ //
-	//ƒIƒuƒWƒFƒNƒgİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¨­å®š
 	void SetObj(NObj3d* obj) { obj_ = obj; }
-	//“–‚½‚Á‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	//å½“ãŸã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsCol(bool isCol) { isCollision_ = isCol; }
-	//ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒ|ƒCƒ“ƒ^•Ï”İ’è
+	//ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿å¤‰æ•°è¨­å®š
 	void SetOnCollision(const std::function<void(void)>& onCollision) { onCollision_ = onCollision; }
-	//ƒRƒ‰ƒCƒ_[‚Ì¯•ÊIDİ’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è­˜åˆ¥IDè¨­å®š
 	void SetColID(std::string id) { colID = id; }
-	//Õ“Ë‘Šè‚Ìİ’è
+	//è¡çªç›¸æ‰‹ã®è¨­å®š
 	void SetColInfo(NBaseCollider* colInfo) { colInfo_ = colInfo; }
-	//Õ“Ë‘®«‚Ìİ’è
+	//è¡çªå±æ€§ã®è¨­å®š
 	void SetColType(unsigned short colType) { colType_ = colType; }
-	//Õ“Ë‘®«‚Ì’Ç‰Á
+	//è¡çªå±æ€§ã®è¿½åŠ 
 	void AddColType(unsigned short colType) { colType_ |= colType; }
-	//Õ“Ë‘®«‚Ìíœ
+	//è¡çªå±æ€§ã®å‰Šé™¤
 	void RemoveColType(unsigned short colType) { colType_ &= !colType; }
 };

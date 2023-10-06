@@ -8,7 +8,7 @@ void NumDrower::Create(uint32_t spriteNum, float indent)
 		{
 			numSprite_.emplace_back();
 			numSprite_[i] = std::make_unique<NSprite>();
-			//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚Í¶ã
+			//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã¯å·¦ä¸Š
 			numSprite_[i]->CreateClipSprite("number", { 0, 0 }, { scale_,scale_ }, { 0,0 });
 		}
 	}
@@ -68,19 +68,19 @@ void NumDrower::SetColor(const NColor& color)
 
 void NumDrower::SetNum(uint32_t num)
 {
-	uint32_t result = num;	//‰e‹¿o‚È‚¢‚æ‚¤‚É•Ê‚Ì•Ï”‚ÉŠi”[
-	uint32_t divide = (uint32_t)pow(10, numSprite_.size() - 1);	//Å‘åŒ…”‹‚ß‚é
+	uint32_t result = num;	//å½±éŸ¿å‡ºãªã„ã‚ˆã†ã«åˆ¥ã®å¤‰æ•°ã«æ ¼ç´
+	uint32_t divide = (uint32_t)pow(10, numSprite_.size() - 1);	//æœ€å¤§æ¡æ•°æ±‚ã‚ã‚‹
 
-	//Œ…”•ª‰ñ‚·
+	//æ¡æ•°åˆ†å›ã™
 	for (size_t i = 0; i < numSprite_.size(); i++)
 	{
 		digit_.emplace_back();
-		digit_[i] = result / divide;  //ŠeŒ…‚²‚Æ‚Ì’l‚ğ‡‚ÉŠi”[
-		result = result % divide;     //Ši”[‚µ‚½Œ…‚ÍƒoƒCƒoƒC
-		divide /= 10;                 //Ÿ‚ÌŒvZ‚Ì‚½‚ß‚ÉŒ…—‚Æ‚·
-		//‘Î‰‚µ‚½ƒeƒNƒXƒ`ƒƒ‚ğİ’è‚µ‚È‚¨‚·
+		digit_[i] = result / divide;  //å„æ¡ã”ã¨ã®å€¤ã‚’é †ã«æ ¼ç´
+		result = result % divide;     //æ ¼ç´ã—ãŸæ¡ã¯ãƒã‚¤ãƒã‚¤
+		divide /= 10;                 //æ¬¡ã®è¨ˆç®—ã®ãŸã‚ã«æ¡è½ã¨ã™
+		//å¯¾å¿œã—ãŸãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’è¨­å®šã—ãªãŠã™
 		numSprite_[i]->CreateClipSprite("number", { scale_ * digit_[i], 0 }, { scale_,scale_ }, { 0,0 });
-		//•Û‘¶‚µ‚Ä‚½İ’è‚ğ”½‰f
+		//ä¿å­˜ã—ã¦ãŸè¨­å®šã‚’åæ˜ 
 		float posX = pos_.x + numSprite_[i]->GetSize().x * indent_ * (float)i;
 		numSprite_[i]->SetPos(posX, pos_.y);
 		numSprite_[i]->SetSize(size_.x, size_.y);

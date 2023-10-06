@@ -18,19 +18,19 @@ struct PipelineDesc
 	} shader;
 
 	struct Blend {
-		//–Ô—…—¦l—¶‚µ‚ÄƒuƒŒƒ“ƒh‚·‚é‚©
+		//ç¶²ç¾…çŽ‡è€ƒæ…®ã—ã¦ãƒ–ãƒ¬ãƒ³ãƒ‰ã™ã‚‹ã‹
 		bool isAlphaToCoverage = false;
-		//‚»‚ê‚¼‚ê‚ÌƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É•ÊX‚ÌƒuƒŒƒ“ƒh‚·‚é‚©
+		//ãã‚Œãžã‚Œã®ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆ¥ã€…ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ã™ã‚‹ã‹
 		bool isIndependentBlend = false;
-		//ƒ}ƒXƒN’lFRBGA‘S‚Ä‚Ìƒ`ƒƒƒ“ƒlƒ‹‚ð•`‰æ
+		//ãƒžã‚¹ã‚¯å€¤ï¼šRBGAå…¨ã¦ã®ãƒãƒ£ãƒ³ãƒãƒ«ã‚’æç”»
 		UINT8 RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-		//ƒuƒŒƒ“ƒh‚ð—LŒø‚É‚·‚é‚©ƒtƒ‰ƒO
+		//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
 		bool isBlend = true;
-		//˜_—‰‰ŽZ‚ð—LŒø‚É‚·‚é‚©ƒtƒ‰ƒO
+		//è«–ç†æ¼”ç®—ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
 		bool isLogicOp = false;
 
-		//ƒuƒŒƒ“ƒhî•ñ
-		struct BlendDesc {			//‰½‚à‚¢‚¶‚ç‚ñ‚Æƒ¿ƒuƒŒƒ“ƒh‚É‚È‚é
+		//ãƒ–ãƒ¬ãƒ³ãƒ‰æƒ…å ±
+		struct BlendDesc {			//ä½•ã‚‚ã„ã˜ã‚‰ã‚“ã¨Î±ãƒ–ãƒ¬ãƒ³ãƒ‰ã«ãªã‚‹
 			D3D12_BLEND_OP BlendOpAlpha = D3D12_BLEND_OP_ADD;
 			D3D12_BLEND SrcBlendAlpha = D3D12_BLEND_ONE;
 			D3D12_BLEND DestBlendAlpha = D3D12_BLEND_ZERO;
@@ -39,56 +39,56 @@ struct PipelineDesc
 			D3D12_BLEND SrcBlend = D3D12_BLEND_SRC_ALPHA;
 			D3D12_BLEND DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 
-			//Žw’è‚µ‚½ƒuƒŒƒ“ƒhƒ‚[ƒh‚ÌƒuƒŒƒ“ƒhî•ñ‚ðŽæ“¾
+			//æŒ‡å®šã—ãŸãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã®ãƒ–ãƒ¬ãƒ³ãƒ‰æƒ…å ±ã‚’å–å¾—
 			static PipelineDesc::Blend::BlendDesc GetBlendMode(BlendMode blendMode);
 		}blendDesc;
 	} blend;
 
 	struct Render {
-		//ƒgƒ‰ƒCƒAƒ“ƒOƒ‹ƒXƒgƒŠƒbƒv‚ðØ‚è—£‚·‚©‚Ç‚¤‚©
+		//ãƒˆãƒ©ã‚¤ã‚¢ãƒ³ã‚°ãƒ«ã‚¹ãƒˆãƒªãƒƒãƒ—ã‚’åˆ‡ã‚Šé›¢ã™ã‹ã©ã†ã‹
 		D3D12_INDEX_BUFFER_STRIP_CUT_VALUE IBStripCutValue =
-			D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;		//ƒJƒbƒg‚È‚µ
-		//ƒgƒ|ƒƒW[Žw’è
+			D3D12_INDEX_BUFFER_STRIP_CUT_VALUE_DISABLED;		//ã‚«ãƒƒãƒˆãªã—
+		//ãƒˆãƒãƒ­ã‚¸ãƒ¼æŒ‡å®š
 		D3D12_PRIMITIVE_TOPOLOGY_TYPE PrimitiveTopologyType =
 			D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
-		//-------------------- ƒTƒ“ƒvƒ‹ƒ}ƒXƒN --------------------//
-		UINT SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // •W€Ý’è
-		//-------------------- ƒ‰ƒXƒ^ƒ‰ƒCƒU --------------------//
+		//-------------------- ã‚µãƒ³ãƒ—ãƒ«ãƒžã‚¹ã‚¯ --------------------//
+		UINT SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // æ¨™æº–è¨­å®š
+		//-------------------- ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ --------------------//
 		D3D12_RASTERIZER_DESC RasterizerState = D3D12_RASTERIZER_DESC{
-			D3D12_FILL_MODE_SOLID,	// ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ(D3D12_FILL_MODE_WIREFRAME‚É‚·‚é‚ÆƒƒCƒ„[ƒtƒŒ[ƒ€‚É)
-			D3D12_CULL_MODE_NONE,	// ”w–ÊƒJƒŠƒ“ƒO‚µ‚È‚¢
+			D3D12_FILL_MODE_SOLID,	// ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—(D3D12_FILL_MODE_WIREFRAMEã«ã™ã‚‹ã¨ãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã«)
+			D3D12_CULL_MODE_NONE,	// èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã—ãªã„
 			0,
 			0,
 			0.f,
 			0.f,
-			true,					// [“xƒNƒŠƒbƒsƒ“ƒO‚ð—LŒø‚É
+			true,					// æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
 			0,
 			0,
 			0,
 			D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF
 		};
 
-		//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”
-		UINT NumRenderTargets = 1;	//•`‰æ‘ÎÛ1‚Â(ƒ}ƒ‹ƒ`ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚â‚é‚È‚ç‘‚â‚·)
-		//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”‚É‚æ‚Á‚Ä‘‚â‚·‰Â”\«‚ ‚è
-		DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255Žw’è‚ÌRGBA
-		//ƒAƒ“ƒ`ƒGƒCƒŠƒAƒVƒ“ƒO‚Ì‚½‚ß‚ÌƒTƒ“ƒvƒ‹”
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°
+		UINT NumRenderTargets = 1;	//æç”»å¯¾è±¡1ã¤(ãƒžãƒ«ãƒãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚„ã‚‹ãªã‚‰å¢—ã‚„ã™)
+		//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°ã«ã‚ˆã£ã¦å¢—ã‚„ã™å¯èƒ½æ€§ã‚ã‚Š
+		DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//0~255æŒ‡å®šã®RGBA
+		//ã‚¢ãƒ³ãƒã‚¨ã‚¤ãƒªã‚¢ã‚·ãƒ³ã‚°ã®ãŸã‚ã®ã‚µãƒ³ãƒ—ãƒ«æ•°
 		DXGI_SAMPLE_DESC SampleDesc = DXGI_SAMPLE_DESC{
-			1,	//1ƒsƒNƒZƒ‹‚É‚Â‚«1‰ñƒTƒ“ƒvƒŠƒ“ƒO
-			0	//Å’áƒNƒIƒŠƒeƒB
+			1,	//1ãƒ”ã‚¯ã‚»ãƒ«ã«ã¤ã1å›žã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
+			0	//æœ€ä½Žã‚¯ã‚ªãƒªãƒ†ã‚£
 		};
 
-		//‚±‚±‚ÍƒpƒCƒvƒ‰ƒCƒ“ƒ}ƒl[ƒWƒƒ[‘¤‚ÅÝ’è‚·‚é
+		//ã“ã“ã¯ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼å´ã§è¨­å®šã™ã‚‹
 		D3D12_INPUT_LAYOUT_DESC InputLayout{};
 	} render;
 
 	struct Depth {
-		//-------------------- ƒfƒvƒXƒXƒeƒ“ƒVƒ‹ƒXƒe[ƒg --------------------//
+		//-------------------- ãƒ‡ãƒ—ã‚¹ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ã‚¹ãƒ†ãƒ¼ãƒˆ --------------------//
 		D3D12_DEPTH_STENCIL_DESC DepthStencilState = D3D12_DEPTH_STENCIL_DESC{
-			true,							//[“xƒeƒXƒg‚·‚é‚©
-			D3D12_DEPTH_WRITE_MASK_ALL,		//‘‚«ž‚Ý‹–‰Â
-			D3D12_COMPARISON_FUNC_LESS,		//¬‚³‚¯‚ê‚Î‡Ši
+			true,							//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹ã‹
+			D3D12_DEPTH_WRITE_MASK_ALL,		//æ›¸ãè¾¼ã¿è¨±å¯
+			D3D12_COMPARISON_FUNC_LESS,		//å°ã•ã‘ã‚Œã°åˆæ ¼
 			false,
 			0,
 			0,
@@ -96,7 +96,7 @@ struct PipelineDesc
 			D3D12_DEPTH_STENCILOP_DESC{}
 		};
 
-		DXGI_FORMAT DSVFormat = DXGI_FORMAT_D32_FLOAT;	//[“x’lƒtƒH[ƒ}ƒbƒg
+		DXGI_FORMAT DSVFormat = DXGI_FORMAT_D32_FLOAT;	//æ·±åº¦å€¤ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 	} depth;
 
 	NRootSignature rootSig;
@@ -105,13 +105,13 @@ struct PipelineDesc
 class NGPipeline final
 {
 public:
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒfƒXƒN
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒ‡ã‚¹ã‚¯
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psDesc_{};
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ
 	ComPtr<ID3D12PipelineState> pso_ = nullptr;
 
 public:
-	//’¸“_ƒŒƒCƒAƒEƒg‚½‚¿(•K—v‚È•ª‚¾‚¯—pˆÓ‚·‚é)
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆãŸã¡(å¿…è¦ãªåˆ†ã ã‘ç”¨æ„ã™ã‚‹)
 	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutFbx_[5];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
@@ -120,36 +120,36 @@ public:
 	D3D12_INPUT_ELEMENT_DESC vertLayoutGPUParticle_[5];
 
 public:
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬AŽw’è‚µ‚½ID‚Å“o˜^
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆã€æŒ‡å®šã—ãŸIDã§ç™»éŒ²
 	static void Create(PipelineDesc desc, std::string id);
-	//Žw’è‚µ‚½ID‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒfƒXƒN‚ðŽæ“¾
+	//æŒ‡å®šã—ãŸIDã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒ‡ã‚¹ã‚¯ã‚’å–å¾—
 	static D3D12_GRAPHICS_PIPELINE_STATE_DESC* GetDesc(std::string id);
-	//Žw’è‚µ‚½ID‚ÌƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚ðŽæ“¾
+	//æŒ‡å®šã—ãŸIDã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚’å–å¾—
 	static ID3D12PipelineState* GetState(std::string id);
-	//Žw’è‚µ‚½ID‚ÌƒpƒCƒvƒ‰ƒCƒ“‚ðŽæ“¾
+	//æŒ‡å®šã—ãŸIDã®ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚’å–å¾—
 	static NGPipeline* GetGPipeline(std::string id);
 
 	NGPipeline() {};
 
 private:
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	void Create();
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒfƒXƒN‚ÌÝ’è
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ãƒ‡ã‚¹ã‚¯ã®è¨­å®š
 	void SetDesc(PipelineDesc desc);
 
 public:
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ü‚í‚è
-	//objŒ`Ž®—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã¾ã‚ã‚Š
+	//objå½¢å¼ç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutObj();
-	//FBXŒ`Ž®—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+	//FBXå½¢å¼ç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutFbx();
-	//ƒXƒvƒ‰ƒCƒg—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutSprite();
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutPostEffect();
-	//3Dƒp[ƒeƒBƒNƒ‹—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+	//3Dãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutParticle();
-	//GPUƒp[ƒeƒBƒNƒ‹—p’¸“_ƒŒƒCƒAƒEƒgÝ’è
+	//GPUãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	void SetVertLayoutGPUParticle();
 #pragma endregion
 };
@@ -159,7 +159,7 @@ class PipeLineManager final
 {
 public:
 	static PipeLineManager* GetInstance();
-	//ƒpƒCƒvƒ‰ƒCƒ“‘SŽí‚Â‚­‚é
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³å…¨ç¨®ã¤ãã‚‹
 	void CreateAll();
 
 private:

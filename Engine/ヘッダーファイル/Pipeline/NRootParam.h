@@ -11,7 +11,7 @@ private:
 
 public:
 	~NRootParam();
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^[‚Ìİ’è
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã®è¨­å®š
 	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);
 };
 

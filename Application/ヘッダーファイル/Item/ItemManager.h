@@ -5,7 +5,7 @@
 class ItemManager
 {
 private:
-	std::vector< std::unique_ptr<Item>> items_;	//ƒAƒCƒeƒ€ŒQ
+	std::vector< std::unique_ptr<Item>> items_;	//ã‚¢ã‚¤ãƒ†ãƒ ç¾¤
 
 public:
 	static ItemManager* GetInstance();
@@ -14,7 +14,7 @@ public:
 	void Update();
 	void Draw();
 
-	//¶¬
+	//ç”Ÿæˆ
 	void Generate(const NVec3& pos, BulletType bulletType);
 
 private:

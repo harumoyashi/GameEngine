@@ -23,9 +23,9 @@ void Item::Generate(const NVec3& pos)
 	obj_->rotation_.z = 45.f;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 2.0f;
 
-	//ƒRƒ‰ƒCƒ_[Ý’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨­å®š
 	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(obj_->scale_.x * 2.5f);	//‚¿‚å‚¢‘å‚«‚ß‚É”»’èŽæ‚é
+	collider_.SetRadius(obj_->scale_.x * 2.5f);	//ã¡ã‚‡ã„å¤§ãã‚ã«åˆ¤å®šå–ã‚‹
 	collider_.SetColID("item");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Item::OnCollision, this));
@@ -35,26 +35,26 @@ void Item::Generate(const NVec3& pos)
 
 void Item::Update()
 {
-	//Œo‰ßŽžŠÔ‚ð“K—p
+	//çµŒéŽæ™‚é–“ã‚’é©ç”¨
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
-	//‚­‚é‚­‚é‚Ü‚í‚·
+	//ãã‚‹ãã‚‹ã¾ã‚ã™
 	obj_->rotation_.y += 5.f * elapseSpeed_;
 
-	//“®‚©‚·
+	//å‹•ã‹ã™
 	obj_->position_.y += moveVelo_.y * elapseSpeed_;
-	//d—Í‰ÁŽZ
+	//é‡åŠ›åŠ ç®—
 	moveVelo_.y -= 0.1f * elapseSpeed_;
-	//s‚«‚·‚¬‚È‚¢‚æ‚¤‚É
+	//è¡Œãã™ãŽãªã„ã‚ˆã†ã«
 	obj_->position_.y = MathUtil::Clamp(obj_->position_.y, collider_.GetRadius(), 100.f);
 
 	obj_->Update();
 	collider_.Update(obj_.get());
 
-	//OnCollision()‚ÅŒÄ‚Ô‚ÆA‚»‚ÌƒtƒŒ[ƒ€‚Å‚Ì‘“–‚½‚è‚É‰e‹¿‚ªo‚é‚©‚ç‚±‚±‚ÅÁ‚µ‚Ä‚é
+	//OnCollision()ã§å‘¼ã¶ã¨ã€ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®ç·å½“ãŸã‚Šã«å½±éŸ¿ãŒå‡ºã‚‹ã‹ã‚‰ã“ã“ã§æ¶ˆã—ã¦ã‚‹
 	if (isAlive_ == false)
 	{
-		//ƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚©‚çíœ
+		//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰å‰Šé™¤
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 	}
 }
@@ -71,7 +71,7 @@ void Item::Draw()
 
 void Item::OnCollision()
 {
-	//“–‚½‚Á‚½‘ŠŽè‚ªƒvƒŒƒCƒ„[‚¾‚Á‚½Žž‚Ìˆ—
+	//å½“ãŸã£ãŸç›¸æ‰‹ãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã ã£ãŸæ™‚ã®å‡¦ç†
 	if (collider_.GetColInfo()->GetColID() == "player")
 	{
 		isAlive_ = false;

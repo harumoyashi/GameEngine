@@ -12,7 +12,7 @@ UIManager* UIManager::GetInstance()
 
 void UIManager::Init()
 {
-	//“Ç‚İ‚İ`
+	//èª­ã¿è¾¼ã¿ï½
 	ui_[(uint32_t)UIType::Abutton].sprite.CreateClipSprite("Abutton", { 0.f,0 }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0 }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::Lstick].sprite.CreateSprite("stick");
@@ -24,10 +24,10 @@ void UIManager::Init()
 		uiBul_[i].sprite.CreateSprite();
 	}
 
-	//‚±‚Á‚¿‘¤‚Å‰Šú’lİ’è‚·‚é‚â‚Â
+	//ã“ã£ã¡å´ã§åˆæœŸå€¤è¨­å®šã™ã‚‹ã‚„ã¤
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		uiBul_[i].sprite.SetSize(250.f, 25.f);	//”ä—¦10:1
+		uiBul_[i].sprite.SetSize(250.f, 25.f);	//æ¯”ç‡10:1
 		uiBul_[i].sprite.SetPos(-150.f, 150.f);
 		uiBul_[i].easeTimer = 0.2f;
 		uiBul_[i].keepTimer = 2.f;
@@ -159,7 +159,7 @@ void UIManager::PlusUIBul(const std::string& texName)
 
 void UIManager::Draw(UIType uiType)
 {
-	//w’è‚³‚ê‚½UI‚ğ•`‰æ
+	//æŒ‡å®šã•ã‚ŒãŸUIã‚’æç”»
 	ui_[(uint32_t)uiType].sprite.Draw();
 }
 

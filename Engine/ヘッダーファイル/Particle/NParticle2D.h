@@ -6,115 +6,115 @@
 
 class Emitter2D final
 {
-	//—±q1—±
+	//ç²’å­1ç²’
 	struct Particle2D
 	{
-		//À•W
+		//åº§æ¨™
 		NVec2 pos;
-		//‘å‚«‚³
+		//å¤§ãã•
 		NVec2 scale;
-		NVec2 startScale;	//ŠJn‚Ì‘å‚«‚³
-		NVec2 endScale;		//I—¹‚Ì‘å‚«‚³
-		//Šp“x
+		NVec2 startScale;	//é–‹å§‹æ™‚ã®å¤§ãã•
+		NVec2 endScale;		//çµ‚äº†æ™‚ã®å¤§ãã•
+		//è§’åº¦
 		float rot = 0;
-		//‘¬“x
+		//é€Ÿåº¦
 		NVec2 velo;
-		//‰Á‘¬“x
+		//åŠ é€Ÿåº¦
 		NVec2 accel;
-		//d—Í
+		//é‡åŠ›
 		float gravity = 0.98f;
 
-		//F
+		//è‰²
 		NColor color;
-		//Œ»İƒtƒŒ[ƒ€
+		//ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ 
 		uint32_t frame = 0;
-		//I—¹ƒtƒŒ[ƒ€
+		//çµ‚äº†ãƒ•ãƒ¬ãƒ¼ãƒ 
 		uint32_t num_frame = 0;
 
-		//ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ}[
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼
 		NEasing::EaseTimer timer = 1.0f;
 
-		//‹——£
+		//è·é›¢
 		float radius = 0;
-		float startRadius = 0;	//ŠJn‚Ì‹——£
+		float startRadius = 0;	//é–‹å§‹æ™‚ã®è·é›¢
 
-		//‰æ‘œ
+		//ç”»åƒ
 		TextureHandle key;
 	};
 
 private:
-	//À•W
+	//åº§æ¨™
 	NVec2 pos_;
-	//Šp“x
+	//è§’åº¦
 	float rot_ = 0.0f;
-	//‘å‚«‚³
+	//å¤§ãã•
 	NVec2 scale_{ 1.f,1.f };
-	float minScale_;	//ƒGƒ~ƒbƒ^[‚ÌÅ¬ƒTƒCƒY(”ä—¦)
-	float maxScale_;	//ƒGƒ~ƒbƒ^[‚ÌÅ‘åƒTƒCƒY(”ä—¦)
-	//Œ³‚Ì‘å‚«‚³
+	float minScale_;	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®æœ€å°ã‚µã‚¤ã‚º(æ¯”ç‡)
+	float maxScale_;	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®æœ€å¤§ã‚µã‚¤ã‚º(æ¯”ç‡)
+	//å…ƒã®å¤§ãã•
 	NVec2 originalScale_;
-	//Šgk—p”{—¦
+	//æ‹¡ç¸®ç”¨å€ç‡
 	float scaling_;
-	//Šgk—pƒ^ƒCƒ}[
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	NEasing::EaseTimer scalingTimer_ = 1.0f;
-	//ƒp[ƒeƒBƒNƒ‹o‚·ƒ^ƒCƒ~ƒ“ƒO—pƒ^ƒCƒ}[
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å‡ºã™ã‚¿ã‚¤ãƒŸãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	uint32_t particleTimer_ = 0;
-	//‰½ƒtƒŒ[ƒ€‚Éˆê‰ñƒp[ƒeƒBƒNƒ‹’Ç‰Á‚·‚é‚©
+	//ä½•ãƒ•ãƒ¬ãƒ¼ãƒ ã«ä¸€å›ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ ã™ã‚‹ã‹
 	uint32_t addInterval_;
 
-	//‰æ‘œ
+	//ç”»åƒ
 	TextureHandle key_;
 
-	static const uint32_t maxCount_ = 256;	//Å‘å”
-	std::vector<Particle2D> particles_;	//ƒp[ƒeƒBƒNƒ‹”z—ñ
+	static const uint32_t maxCount_ = 256;	//æœ€å¤§æ•°
+	std::vector<Particle2D> particles_;	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é…åˆ—
 
 	bool isActive_ = false;
 
 public:
 	Emitter2D();
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//XV
+	//æ›´æ–°
 	void Update(bool isGravity = false);
-	//•`‰æ
+	//æç”»
 	void DrawBox();
 	void DrawGraph();
 
-	//ƒp[ƒeƒBƒNƒ‹’Ç‰Á
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«è¿½åŠ 
 	void Add(uint32_t addNum, float life, float minScale, float maxScale, NVec2 minVelo, NVec2 maxVelo,
 		NVec2 accel = { 0,0 }, float minRot = 0.0f, float maxRot = 0.0f, NColor color = NColor::kWhite);
-	//ƒp[ƒeƒBƒNƒ‹‘SÁ‚µ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…¨æ¶ˆã—
 	void ClearParticles() { particles_.clear(); }
 
-	//ƒQƒbƒ^[//
-	//À•Wæ“¾
+	//ã‚²ãƒƒã‚¿ãƒ¼//
+	//åº§æ¨™å–å¾—
 	NVec2 GetPos()const { return pos_; }
-	//‘å‚«‚³æ“¾
+	//å¤§ãã•å–å¾—
 	NVec2 GetScale()const { return scale_; }
 
-	//ƒp[ƒeƒBƒNƒ‹‘S•”€‚ñ‚¾‚©æ“¾
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…¨éƒ¨æ­»ã‚“ã ã‹å–å¾—
 	bool GetParticlesDead()const { return particles_.empty(); }
 
-	//‰½ŒÂƒp[ƒeƒBƒNƒ‹‚ ‚é‚©æ“¾
+	//ä½•å€‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚ã‚‹ã‹å–å¾—
 	size_t GetParticlesSize()const { return particles_.size(); }
 
-	//ƒZƒbƒ^[//
-	//À•Wİ’è
+	//ã‚»ãƒƒã‚¿ãƒ¼//
+	//åº§æ¨™è¨­å®š
 	void SetPos(float x, float y) { pos_ = { x,y }; }
 	void SetPos(NVec2& pos) { pos_ = pos; }
-	//‘å‚«‚³İ’è
+	//å¤§ãã•è¨­å®š
 	void SetScale(NVec2& scale);
-	//Šp“xİ’è
+	//è§’åº¦è¨­å®š
 	void SetRot(float rot) { rot_ = rot; }
 
-	//—LŒøƒtƒ‰ƒOİ’è
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsActive(bool isActive) { isActive_ = isActive; }
-	//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	void SetTextureKey(TextureHandle& key) { key_ = key; }
 
-	//Šgk—pƒ^ƒCƒ}[‚ªØ‚è‘Ö‚í‚éŠÔİ’è(•b)
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼ãŒåˆ‡ã‚Šæ›¿ã‚ã‚‹æ™‚é–“è¨­å®š(ç§’)
 	void SetScalingTimer(float timer);
-	//Šgk—pƒ^ƒCƒ}[ŠJn
-	//isRun:true = ƒvƒ‰ƒX‚³‚ê‚Ä‚­,false:ƒ}ƒCƒiƒX‚³‚ê‚Ä‚­
+	//æ‹¡ç¸®ç”¨ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
+	//isRun:true = ãƒ—ãƒ©ã‚¹ã•ã‚Œã¦ã,false:ãƒã‚¤ãƒŠã‚¹ã•ã‚Œã¦ã
 	void StartScalingTimer(bool isRun = true);
 };

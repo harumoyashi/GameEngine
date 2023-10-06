@@ -12,10 +12,10 @@ NCamera* NCamera::sCurrentCamera = sNCamera.get();
 
 void NCamera::Init()
 {
-	eye_ = { 0, 10.0f, -30.0f };	//‹“_À•W
-	target_ = { 0, 0, 0 };			//’‹“_À•W
-	up_ = { 0, 1.0f, 0 };			//ã•ûŒüƒxƒNƒgƒ‹
-	rot_ = NVec3::zero;				//ƒJƒƒ‰‚Ì‰ñ“]Šp
+	eye_ = { 0, 10.0f, -30.0f };	//è¦–ç‚¹åº§æ¨™
+	target_ = { 0, 0, 0 };			//æ³¨è¦–ç‚¹åº§æ¨™
+	up_ = { 0, 1.0f, 0 };			//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
+	rot_ = NVec3::zero;				//ã‚«ãƒ¡ãƒ©ã®å›è»¢è§’
 	nearZ_ = 0.1f;
 	farZ_ = 1000.0f;
 
@@ -49,7 +49,7 @@ void NCamera::DebugCameraUpdate()
 		cosf(sCurrentCamera->rot_.y),
 	};
 
-	// ‰ñ“]
+	// å›è»¢
 	if (NInput::PushMouse(NInput::MouseLeft))
 	{
 		if (NInput::GetMouseMove().x != 0 || NInput::GetMouseMove().y != 0)
@@ -61,7 +61,7 @@ void NCamera::DebugCameraUpdate()
 		}
 	}
 
-	// •½sˆÚ“®
+	// å¹³è¡Œç§»å‹•
 	if (NInput::PushMouse(NInput::MouseMiddle))
 	{
 		if (NInput::GetMouseMove().x != 0 || NInput::GetMouseMove().y != 0)
@@ -73,7 +73,7 @@ void NCamera::DebugCameraUpdate()
 		}
 	}
 
-	// ‰œs
+	// å¥¥è¡Œ
 	if (NInput::GetMouseMove().z != 0)
 	{
 		const float moveSpeed = 0.025f;
@@ -83,7 +83,7 @@ void NCamera::DebugCameraUpdate()
 
 	ProjectiveProjection();
 
-	//‚±‚±‚ÅŒˆ‚ß‚È‚¢‚Æƒrƒ…[•ÏŠ·‚Å•Ï‚í‚Á‚Ä‚ª‚­‚ª‚­‚µ‚¿‚á‚¤
+	//ã“ã“ã§æ±ºã‚ãªã„ã¨ãƒ“ãƒ¥ãƒ¼å¤‰æ›ã§å¤‰ã‚ã£ã¦ãŒããŒãã—ã¡ã‚ƒã†
 	up_.x = matView_.m[1][0];
 	up_.y = matView_.m[1][1];
 	up_.z = matView_.m[1][2];

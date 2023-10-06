@@ -6,9 +6,9 @@
 struct NMesh final
 {
 public:
-	NVertexBuff<NVertexFbx> vertexBuff;		//’¸“_ƒoƒbƒtƒ@
-	NIndexBuff indexBuff;					//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	NVertexBuff<NVertexFbx> vertexBuff;		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
+	NIndexBuff indexBuff;					//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 
-	std::vector<NVertexFbx> vertices;		//’¸“_ŒQ
-	std::vector<uint32_t> indices;			//ƒCƒ“ƒfƒbƒNƒXŒQ
+	std::vector<NVertexFbx> vertices;		//é ‚ç‚¹ç¾¤
+	std::vector<uint32_t> indices;			//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç¾¤
 };

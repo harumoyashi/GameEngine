@@ -16,8 +16,8 @@ void Wave::Init()
 {
 	scaleZ_ = 20.0f;
 	posZ_ = Field::GetInstance()->GetStartPos() - 15.0f - scaleZ_;
-	moveSpeed_ = 0.02f;		//ƒvƒŒƒCƒ„[‚ª0.05f‚Ìê‡
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì¶¬,İ’è
+	moveSpeed_ = 0.02f;		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒ0.05fã®å ´åˆ
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ,è¨­å®š
 	for (uint32_t i = 0; i < waveDivide_; i++)
 	{
 		obj_.emplace_back();
@@ -25,7 +25,7 @@ void Wave::Init()
 		obj_.back()->Init();
 
 		obj_.back()->SetModel("plane");
-		//ƒtƒB[ƒ‹ƒh‚Ì‰¡•‚ğ‚à‚Æ‚É•ªŠ„‚·‚é
+		//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®æ¨ªå¹…ã‚’ã‚‚ã¨ã«åˆ†å‰²ã™ã‚‹
 		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
 		obj_.back()->scale_ =
 		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
@@ -40,7 +40,7 @@ void Wave::Init()
 		waveTimer_.back() = MathUtil::Randomf(0.5f, 2.0f);
 	}
 #pragma endregion
-#pragma region ƒXƒvƒ‰ƒCƒg‚Ì¶¬,İ’è
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ç”Ÿæˆ,è¨­å®š
 	waveUI_ = std::make_unique<NSprite>();
 	waveUI_->CreateSprite("waveUI", { 0.5f,0.5f });
 	waveUI_->SetSize(100.f, 100.f);
@@ -50,7 +50,7 @@ void Wave::Init()
 	meterUI_ = std::make_unique<NSprite>();
 	meterUI_->CreateSprite("meter");
 	meterUI_->SetPos(NWindows::kWin_width * 0.5f + 30.f, 582.f);
-	meterUI_->SetSize(20.f,15.f);
+	meterUI_->SetSize(20.f, 15.f);
 
 	player2WaveLen_ = 0;
 	meterTex_.Create(3, 0.3f);
@@ -61,7 +61,7 @@ void Wave::Init()
 
 void Wave::Update()
 {
-	//ƒvƒŒƒC’†‚©‚ÂƒXƒ^[ƒg‚µ‚Ä‚½‚ç“®‚­‚æ‚¤‚É
+	//ãƒ—ãƒ¬ã‚¤ä¸­ã‹ã¤ã‚¹ã‚¿ãƒ¼ãƒˆã—ã¦ãŸã‚‰å‹•ãã‚ˆã†ã«
 	if (NGameScene::GetIsPlay() == false || Field::GetInstance()->GetIsStart() == false)
 	{
 		moveSpeed_ = 0.0f;
@@ -99,9 +99,9 @@ void Wave::Update()
 	waveUI_->Update();
 	meterUI_->Update();
 
-	//ƒvƒŒƒCƒ„[‚Æ”g‚Ì‹——£æ‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ³¢ã®è·é›¢å–ã‚‹
 	player2WaveLen_ = (uint32_t)(Player::GetInstance()->GetFrontPosZ() - GetFrontPosZ());
-	player2WaveLen_ = MathUtil::Clamp(player2WaveLen_,0U,999U);	//ƒ}ƒCƒiƒX‚É‚È‚ç‚È‚¢‚æ‚¤‚É
+	player2WaveLen_ = MathUtil::Clamp(player2WaveLen_, 0U, 999U);	//ãƒã‚¤ãƒŠã‚¹ã«ãªã‚‰ãªã„ã‚ˆã†ã«
 	meterTex_.SetNum(player2WaveLen_);
 	meterTex_.Update();
 }
@@ -118,7 +118,7 @@ void Wave::DrawObj()
 
 void Wave::DrawSprite()
 {
-	//”g‚ª’Ç‚Á‚©‚¯‚Ä‚­‚é‚¾‚¯•\¦
+	//æ³¢ãŒè¿½ã£ã‹ã‘ã¦ãã‚‹æ™‚ã ã‘è¡¨ç¤º
 	if (NGameScene::GetIsPlay() && Field::GetInstance()->GetIsStart())
 	{
 		waveUI_->Draw();

@@ -2,19 +2,19 @@
 
 void NPreDraw::SetResBarrier()
 {
-	// ƒoƒbƒNƒoƒbƒtƒ@‚Ì”Ô†‚ğæ“¾(2‚Â‚È‚Ì‚Å0”Ô‚©1”Ô)
+	// ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ç•ªå·ã‚’å–å¾—(2ã¤ãªã®ã§0ç•ªã‹1ç•ª)
 	bbIndex_ = NDX12::GetInstance()->GetSwapchain()->GetCurrentBackBufferIndex();
-	// 1.ƒŠƒ\[ƒXƒoƒŠƒA‚Å‘‚«‚İ‰Â”\‚É•ÏX
-	barrierDesc_.Transition.pResource = NDX12::GetInstance()->backBuffers_[bbIndex_].Get(); // ƒoƒbƒNƒoƒbƒtƒ@‚ğw’è
-	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // •\¦ó‘Ô‚©‚ç
-	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æó‘Ô‚Ö
+	// 1.ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã§æ›¸ãè¾¼ã¿å¯èƒ½ã«å¤‰æ›´
+	barrierDesc_.Transition.pResource = NDX12::GetInstance()->backBuffers_[bbIndex_].Get(); // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’æŒ‡å®š
+	barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // è¡¨ç¤ºçŠ¶æ…‹ã‹ã‚‰
+	barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // æç”»çŠ¶æ…‹ã¸
 	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc_);
 }
 
 void NPreDraw::SetRenderTarget()
 {
-	// 2.•`‰ææ‚Ì•ÏX
-	// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	// 2.æç”»å…ˆã®å¤‰æ›´
+	// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	rtvHandle_ = NDX12::GetInstance()->GetRTVHeap()->GetCPUDescriptorHandleForHeapStart();
 	rtvHandle_.ptr += bbIndex_ * NDX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(
 		NDX12::GetInstance()->GetRTVHeapDesc().Type);
@@ -24,8 +24,8 @@ void NPreDraw::SetRenderTarget()
 
 void NPreDraw::ClearScreen()
 {
-	// 3.‰æ–ÊƒNƒŠƒA R G B A
-	std::vector<FLOAT> clearColor = { 0.1f,0.25f,0.5f,0.0f }; // Â‚Á‚Û‚¢F
+	// 3.ç”»é¢ã‚¯ãƒªã‚¢ R G B A
+	std::vector<FLOAT> clearColor = { 0.1f,0.25f,0.5f,0.0f }; // é’ã£ã½ã„è‰²
 	NDX12::GetInstance()->GetCommandList()->ClearRenderTargetView(rtvHandle_, clearColor.data(), 0, nullptr);
 	NDX12::GetInstance()->GetCommandList()->ClearDepthStencilView(dsvHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
@@ -36,27 +36,27 @@ void NPreDraw::SetViewport()
 	viewport_.Height = NWindows::kWin_height;
 	viewport_.TopLeftX = 0;
 	viewport_.TopLeftY = 0;
-	viewport_.MinDepth = 0.0f;	//Å¬k“x
-	viewport_.MaxDepth = 1.0f;	//Å‘å[“x
-	// ƒrƒ…[ƒ|[ƒgİ’èƒRƒ}ƒ“ƒh‚ğAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Ş
+	viewport_.MinDepth = 0.0f;	//æœ€å°éœ‡åº¦
+	viewport_.MaxDepth = 1.0f;	//æœ€å¤§æ·±åº¦
+	// ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¨­å®šã‚³ãƒãƒ³ãƒ‰ã‚’ã€ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	NDX12::GetInstance()->GetCommandList()->RSSetViewports(1, &viewport_);
 }
 
 void NPreDraw::SetScissorRect()
 {
-	scissorRect_.left = 0; // Ø‚è”²‚«À•W¶
-	scissorRect_.right = scissorRect_.left + NWindows::kWin_width; // Ø‚è”²‚«À•W‰E
-	scissorRect_.top = 0; // Ø‚è”²‚«À•Wã
-	scissorRect_.bottom = scissorRect_.top + NWindows::kWin_height; // Ø‚è”²‚«À•W‰º
-	// ƒVƒU[‹éŒ`İ’èƒRƒ}ƒ“ƒh‚ğAƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÉÏ‚Ş
+	scissorRect_.left = 0; // åˆ‡ã‚ŠæŠœãåº§æ¨™å·¦
+	scissorRect_.right = scissorRect_.left + NWindows::kWin_width; // åˆ‡ã‚ŠæŠœãåº§æ¨™å³
+	scissorRect_.top = 0; // åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸Š
+	scissorRect_.bottom = scissorRect_.top + NWindows::kWin_height; // åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸‹
+	// ã‚·ã‚¶ãƒ¼çŸ©å½¢è¨­å®šã‚³ãƒãƒ³ãƒ‰ã‚’ã€ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã«ç©ã‚€
 	NDX12::GetInstance()->GetCommandList()->RSSetScissorRects(1, &scissorRect_);
 }
 
 void NPreDraw::BarrierReset(D3D12_RESOURCE_BARRIER& barrierDesc)
 {
-	// 5.ƒŠƒ\[ƒXƒoƒŠƒA‚ğ–ß‚·
-	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//•`‰æó‘Ô‚©‚ç
-	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//•\¦ó‘Ô‚Ö
+	// 5.ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’æˆ»ã™
+	barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;	//æç”»çŠ¶æ…‹ã‹ã‚‰
+	barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;			//è¡¨ç¤ºçŠ¶æ…‹ã¸
 	NDX12::GetInstance()->GetCommandList()->ResourceBarrier(1, &barrierDesc);
 }
 
@@ -70,7 +70,7 @@ void NPreDraw::CmdListClose()
 
 void NPreDraw::ExecuteCmdList()
 {
-	std::vector<ID3D12CommandList*> commandLists = { NDX12::GetInstance()->GetCommandList()};
+	std::vector<ID3D12CommandList*> commandLists = { NDX12::GetInstance()->GetCommandList() };
 	NDX12::GetInstance()->GetCommandQueue()->ExecuteCommandLists(1, commandLists.data());
 }
 

@@ -15,7 +15,7 @@ void Emitter2D::Init()
 
 void Emitter2D::Update(bool isGravity)
 {
-	//õ–½‚ªs‚«‚½ƒp[ƒeƒBƒNƒ‹‚ğ‘Síœ
+	//å¯¿å‘½ãŒå°½ããŸãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å…¨å‰Šé™¤
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
 		if (particles_[i].frame >= particles_[i].num_frame)
@@ -25,28 +25,28 @@ void Emitter2D::Update(bool isGravity)
 		}
 	}
 
-	//‘Sƒp[ƒeƒBƒNƒ‹XV
+	//å…¨ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æ›´æ–°
 	for (size_t i = 0; i < particles_.size(); i++)
 	{
 		particles_[i].timer.Update();
 
-		//Œo‰ßƒtƒŒ[ƒ€‚ğƒJƒEƒ“ƒg
+		//çµŒéãƒ•ãƒ¬ãƒ¼ãƒ ã‚’ã‚«ã‚¦ãƒ³ãƒˆ
 		particles_[i].frame++;
 
-		//ƒXƒP[ƒ‹‚ÌüŒ`•âŠÔ
+		//ã‚¹ã‚±ãƒ¼ãƒ«ã®ç·šå½¢è£œé–“
 		particles_[i].scale.x = NEasing::lerp(particles_[i].startScale.x, particles_[i].endScale.x, particles_[i].timer.GetTimeRate());
 		particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
 
-		//‰Á‘¬“x‚ğ‘¬“x‚É‰ÁZ
+		//åŠ é€Ÿåº¦ã‚’é€Ÿåº¦ã«åŠ ç®—
 		particles_[i].velo += particles_[i].accel;
 
-		//d—Í‰ÁZ
+		//é‡åŠ›åŠ ç®—
 		if (isGravity)
 		{
 			particles_[i].velo.y += particles_[i].gravity;
 		}
 
-		//‘¬“x‚É‚æ‚éˆÚ“®
+		//é€Ÿåº¦ã«ã‚ˆã‚‹ç§»å‹•
 		particles_[i].pos += particles_[i].velo;
 	}
 }
@@ -55,7 +55,7 @@ void Emitter2D::DrawBox()
 {
 	for (auto& p : particles_)
 	{
-		//•Ê‚Ì‚Æ‚±‚ÅDrawBoxì‚Á‚Ä‚±‚±‚Åg‚¤;
+		//åˆ¥ã®ã¨ã“ã§DrawBoxä½œã£ã¦ã“ã“ã§ä½¿ã†;
 	}
 }
 
@@ -63,7 +63,7 @@ void Emitter2D::DrawGraph()
 {
 	for (auto& p : particles_)
 	{
-		//Œã‚Å‚â‚ë‚¤;
+		//å¾Œã§ã‚„ã‚ã†;
 	}
 }
 
@@ -71,33 +71,33 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
-		//w’è‚µ‚½Å‘å”’´‚¦‚Ä‚½‚ç¶¬‚µ‚È‚¢
+		//æŒ‡å®šã—ãŸæœ€å¤§æ•°è¶…ãˆã¦ãŸã‚‰ç”Ÿæˆã—ãªã„
 		if (particles_.size() >= maxCount_)
 		{
 			return;
 		}
 
-		//ƒŠƒXƒg‚É—v‘f‚ğ’Ç‰Á
+		//ãƒªã‚¹ãƒˆã«è¦ç´ ã‚’è¿½åŠ 
 		particles_.emplace_back();
-		//’Ç‰Á‚µ‚½—v‘f‚ÌQÆ
+		//è¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§
 		Particle2D& p = particles_.back();
-		//ƒGƒ~ƒbƒ^[‚Ì’†‚©‚çƒ‰ƒ“ƒ_ƒ€‚ÅÀ•W‚ğŒˆ’è
+		//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®ä¸­ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§åº§æ¨™ã‚’æ±ºå®š
 		float x = (float)MathUtil::Random((uint32_t)-scale_.x, (uint32_t)scale_.x);
 		float y = (float)MathUtil::Random((uint32_t)-scale_.y, (uint32_t)scale_.y);
 		NVec2 randomPos(x, y);
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç‘å‚«‚³ƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰å¤§ãã•ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
 		float scale_ = (float)MathUtil::Random((uint32_t)minScale, (uint32_t)maxScale);
 		NVec2 randomScale(scale_, scale_);
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç”ò‚Î‚·•ûŒüƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
-		NVec2 velo = { 
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰é£›ã°ã™æ–¹å‘ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
+		NVec2 velo = {
 			(float)MathUtil::Random((uint32_t)minVelo.x,(uint32_t)maxVelo.x),
 			(float)MathUtil::Random((uint32_t)minVelo.y,(uint32_t)maxVelo.y) };
-		//ˆø”‚Ì”ÍˆÍ‚©‚ç‰ñ“]‚ğƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
+		//å¼•æ•°ã®ç¯„å›²ã‹ã‚‰å›è»¢ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§æ±ºå®š
 		float rot = (float)MathUtil::Random((uint32_t)minRot, (uint32_t)maxRot);
 
-		//Œˆ‚Ü‚Á‚½À•W‚ÉƒGƒ~ƒbƒ^[©‘Ì‚ÌÀ•W‚ğ‘«‚µ‚Ä³‚µ‚¢ˆÊ’u‚É
+		//æ±ºã¾ã£ãŸåº§æ¨™ã«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼è‡ªä½“ã®åº§æ¨™ã‚’è¶³ã—ã¦æ­£ã—ã„ä½ç½®ã«
 		p.pos = randomPos + pos_;
-		//”ò‚ñ‚Å‚­•ûŒü‚É‡‚í‚¹‚Ä‰ñ“]
+		//é£›ã‚“ã§ãæ–¹å‘ã«åˆã‚ã›ã¦å›è»¢
 		p.rot = rot;
 		p.velo = velo;
 		p.accel = accel;
@@ -106,7 +106,7 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 		p.startScale = randomScale;
 		p.endScale = { 0,0 };
 		p.color = color;
-		//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[‚ğİ’èAŠJn
+		//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼ã‚’è¨­å®šã€é–‹å§‹
 		p.timer.maxTime_ = life;
 		p.timer.Start();
 	}
@@ -115,7 +115,7 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 void Emitter2D::SetScale(NVec2& scale)
 {
 	scale_ = scale;
-	originalScale_ = scale_;			//Šgk—p‚ÉŒ³‚ÌƒTƒCƒY‚ğ•ÛŠÇ
+	originalScale_ = scale_;			//æ‹¡ç¸®ç”¨ã«å…ƒã®ã‚µã‚¤ã‚ºã‚’ä¿ç®¡
 }
 
 void Emitter2D::SetScalingTimer(float timer)
@@ -127,10 +127,10 @@ void Emitter2D::StartScalingTimer(bool isRun)
 {
 	if (isRun)
 	{
-		scalingTimer_.Start();	//İ’è‚Æ“¯‚Éƒ^ƒCƒ}[‚àƒXƒ^[ƒg
+		scalingTimer_.Start();	//è¨­å®šã¨åŒæ™‚ã«ã‚¿ã‚¤ãƒãƒ¼ã‚‚ã‚¹ã‚¿ãƒ¼ãƒˆ
 	}
 	else
 	{
-		scalingTimer_.ReverseStart();	//İ’è‚Æ“¯‚Éƒ^ƒCƒ}[‚àƒXƒ^[ƒg
+		scalingTimer_.ReverseStart();	//è¨­å®šã¨åŒæ™‚ã«ã‚¿ã‚¤ãƒãƒ¼ã‚‚ã‚¹ã‚¿ãƒ¼ãƒˆ
 	}
 }

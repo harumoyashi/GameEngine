@@ -5,7 +5,7 @@ class Mouse final :
     public IEnemy
 {
 public:
-    std::string modelname = "mouse";     //ƒ‚ƒfƒ‹–¼
+    std::string modelname = "mouse";     //ãƒ¢ãƒ‡ãƒ«å
 
     Mouse();
 };

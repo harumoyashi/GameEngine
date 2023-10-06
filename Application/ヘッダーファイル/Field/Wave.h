@@ -7,20 +7,20 @@
 class Wave final
 {
 private:
-	std::vector<std::unique_ptr<NObj3d>> obj_;	//ƒIƒuƒWƒFƒNƒgŒQ
-	std::vector<float> randomPosZ_;				//Še”g‚Ì‚¤‚É‚å‚¤‚É‚å
-	const uint32_t waveDivide_ = 200;			//”g‚Ì•ªŠ„”
+	std::vector<std::unique_ptr<NObj3d>> obj_;	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç¾¤
+	std::vector<float> randomPosZ_;				//å„æ³¢ã®ã†ã«ã‚‡ã†ã«ã‚‡
+	const uint32_t waveDivide_ = 200;			//æ³¢ã®åˆ†å‰²æ•°
 
-	float scaleZ_;								//”g‚Ì‘å‚«‚³(z‚¾‚¯)
-	float posZ_;								//”g‘S‘Ì‚Ì‹¤’ÊÀ•W(zÀ•W)
-	float moveSpeed_;							//ˆÚ“®‘¬“x
+	float scaleZ_;								//æ³¢ã®å¤§ãã•(zã ã‘)
+	float posZ_;								//æ³¢å…¨ä½“ã®å…±é€šåº§æ¨™(zåº§æ¨™)
+	float moveSpeed_;							//ç§»å‹•é€Ÿåº¦
 
-	std::vector<NEasing::EaseTimer> waveTimer_;	//”g‚Ì‚¤‚Ë‚è—pƒ^ƒCƒ}[
+	std::vector<NEasing::EaseTimer> waveTimer_;	//æ³¢ã®ã†ã­ã‚Šç”¨ã‚¿ã‚¤ãƒãƒ¼
 
-	std::unique_ptr<NSprite> waveUI_;			//”g‚ª”—‚Á‚Ä‚é‚©’m‚ç‚¹‚éUI
-	std::unique_ptr<NSprite> meterUI_;			//”g‚ª‚Ç‚Ì‚­‚ç‚¢”—‚Á‚Ä‚é‚©’m‚ç‚¹‚éUI
-	uint32_t player2WaveLen_;					//ƒvƒŒƒCƒ„[‚Æ”g‚Ì‹——£
-	NumDrower meterTex_;						//ƒvƒŒƒCƒ„[‚Æ”g‚Ì‹——£•\¦
+	std::unique_ptr<NSprite> waveUI_;			//æ³¢ãŒè¿«ã£ã¦ã‚‹ã‹çŸ¥ã‚‰ã›ã‚‹UI
+	std::unique_ptr<NSprite> meterUI_;			//æ³¢ãŒã©ã®ãã‚‰ã„è¿«ã£ã¦ã‚‹ã‹çŸ¥ã‚‰ã›ã‚‹UI
+	uint32_t player2WaveLen_;					//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ³¢ã®è·é›¢
+	NumDrower meterTex_;						//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨æ³¢ã®è·é›¢è¡¨ç¤º
 
 public:
 	static Wave* GetInstance();
@@ -30,11 +30,11 @@ public:
 	void DrawObj();
 	void DrawSprite();
 
-	// ƒQƒbƒ^[ //
-	//”g‚Ì‘O•ûÀ•Wæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//æ³¢ã®å‰æ–¹åº§æ¨™å–å¾—
 	float GetFrontPosZ() const { return posZ_ + scaleZ_; }
 
-	// ƒZƒbƒ^[ //
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
 
 private:
 	Wave() = default;

@@ -9,15 +9,15 @@
 class NCollision final
 {
 public:
-	//‰~“¯m‚Ì“–‚½‚è”»’è
-	static bool CircleCol(const Circle& c0, const Circle& c1,const NVec2& inter = NVec2(0, 0));
+	//å††åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
+	static bool CircleCol(const Circle& c0, const Circle& c1, const NVec2& inter = NVec2(0, 0));
 
-	//‹…“¯m‚Ì“–‚½‚è”»’è
+	//çƒåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool SphereCol(const SphereCollider& s0, const SphereCollider& s1, const NVec3& inter = NVec3(0, 0, 0));
-	
-	//‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
-	static bool Sphere2PlaneCol(const SphereCollider& sphere,const PlaneCollider& plane);
 
-	//ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	//çƒã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
+	static bool Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollider& plane);
+
+	//ãƒ¬ã‚¤ã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	static bool Ray2PlaneCol(const RayCollider& ray, const PlaneCollider& plane);
 };

@@ -11,23 +11,23 @@ private:
 
 	ComPtr<ID3D12Resource> buff_ = nullptr;
 	D3D12_VERTEX_BUFFER_VIEW view_{};
-	T* vertMap_;		//ƒ}ƒbƒsƒ“ƒO—p
+	T* vertMap_;		//ãƒãƒƒãƒ”ãƒ³ã‚°ç”¨
 
 public:
-	NVertexBuff() {};	//Šù’è‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	NVertexBuff() {};	//æ—¢å®šã®ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 
-	//’¸“_‚Ìƒ|ƒCƒ“ƒ^‚ÆƒTƒCƒY‚Å‰Šú‰»
+	//é ‚ç‚¹ã®ãƒã‚¤ãƒ³ã‚¿ã¨ã‚µã‚¤ã‚ºã§åˆæœŸåŒ–
 	void Init(T* vertices, const uint32_t size)
 	{
 		HRESULT result;
 
-		// ƒq[ƒvƒvƒƒpƒeƒB
+		// ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 		D3D12_HEAP_PROPERTIES heapProp{};
-		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPU‚Ö‚Ì“]‘——p
+		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUã¸ã®è»¢é€ç”¨
 
 		uint32_t dataSize = static_cast<uint32_t>(sizeof(T) * size);
 
-		//’¸“_ƒoƒbƒtƒ@ƒŠƒ\[ƒXİ’è
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_DESC resDesc{};
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 		resDesc.Width = dataSize;
@@ -37,48 +37,48 @@ public:
 		resDesc.SampleDesc.Count = 1;
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-			&heapProp, // ƒq[ƒvİ’è
+			&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&resDesc, // ƒŠƒ\[ƒXİ’è
+			&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&buff_));
 		assert(SUCCEEDED(result));
 
-		// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+		// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 		vertMap_ = nullptr;
 		result = buff_->Map(0, nullptr, (void**)&vertMap_);
 		assert(SUCCEEDED(result));
-		//‘S’¸“_‚É‘Î‚µ‚Ä
+		//å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 		for (uint32_t i = 0; i < size; i++) {
 			vertMap_[i] = vertices[i];
 		}
-		// Œq‚ª‚è‚ğ‰ğœ
+		// ç¹‹ãŒã‚Šã‚’è§£é™¤
 		buff_->Unmap(0, nullptr);
 
-		// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
-		// GPU‰¼‘zƒAƒhƒŒƒX
-		//‚±‚ê“n‚·‚±‚Æ‚ÅAGPU‘¤‚ª‚Ç‚Ìƒf[ƒ^Œ©‚ê‚Î‚¢‚¢‚©‚í‚©‚é‚æ‚¤‚É‚È‚é
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+		// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
+		//ã“ã‚Œæ¸¡ã™ã“ã¨ã§ã€GPUå´ãŒã©ã®ãƒ‡ãƒ¼ã‚¿è¦‹ã‚Œã°ã„ã„ã‹ã‚ã‹ã‚‹ã‚ˆã†ã«ãªã‚‹
 		view_.BufferLocation = buff_->GetGPUVirtualAddress();
-		// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 		view_.SizeInBytes = dataSize;
-		// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+		// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 		view_.StrideInBytes = size;
 	}
-	//’¸“_‚Ì”z—ñ‚Å‰Šú‰»
+	//é ‚ç‚¹ã®é…åˆ—ã§åˆæœŸåŒ–
 	void Init(const std::vector<T>& vertices)
 	{
 		HRESULT result;
 
-		// ƒq[ƒvƒvƒƒpƒeƒB
+		// ãƒ’ãƒ¼ãƒ—ãƒ—ãƒ­ãƒ‘ãƒ†ã‚£
 		D3D12_HEAP_PROPERTIES heapProp{};
-		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPU‚Ö‚Ì“]‘——p
+		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD; //GPUã¸ã®è»¢é€ç”¨
 
 		uint32_t dataSize = static_cast<unsigned int>(sizeof(T) * vertices.size());
 
-		//’¸“_ƒoƒbƒtƒ@ƒŠƒ\[ƒXİ’è
+		//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 		D3D12_RESOURCE_DESC resDesc{};
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 		resDesc.Width = dataSize;
@@ -88,47 +88,47 @@ public:
 		resDesc.SampleDesc.Count = 1;
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		// ’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-			&heapProp, // ƒq[ƒvİ’è
+			&heapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&resDesc, // ƒŠƒ\[ƒXİ’è
+			&resDesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&buff_));
 		assert(SUCCEEDED(result));
 
-		// GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ(ƒƒCƒ“ƒƒ‚ƒŠã)‚ğæ“¾
+		// GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒª(ãƒ¡ã‚¤ãƒ³ãƒ¡ãƒ¢ãƒªä¸Š)ã‚’å–å¾—
 		vertMap_ = nullptr;
 		result = buff_->Map(0, nullptr, (void**)&vertMap_);
 		assert(SUCCEEDED(result));
-		//‘S’¸“_‚É‘Î‚µ‚Ä
+		//å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
 		for (uint32_t i = 0; i < vertices.size(); i++) {
 			vertMap_[i] = vertices[i];
 		}
-		// Œq‚ª‚è‚ğ‰ğœ
+		// ç¹‹ãŒã‚Šã‚’è§£é™¤
 		buff_->Unmap(0, nullptr);
 
-		// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
-		// GPU‰¼‘zƒAƒhƒŒƒX
-		//‚±‚ê“n‚·‚±‚Æ‚ÅAGPU‘¤‚ª‚Ç‚Ìƒf[ƒ^Œ©‚ê‚Î‚¢‚¢‚©‚í‚©‚é‚æ‚¤‚É‚È‚é
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+		// GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
+		//ã“ã‚Œæ¸¡ã™ã“ã¨ã§ã€GPUå´ãŒã©ã®ãƒ‡ãƒ¼ã‚¿è¦‹ã‚Œã°ã„ã„ã‹ã‚ã‹ã‚‹ã‚ˆã†ã«ãªã‚‹
 		view_.BufferLocation = buff_->GetGPUVirtualAddress();
-		// ’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+		// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 		view_.SizeInBytes = dataSize;
-		// ’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
+		// é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 		view_.StrideInBytes = sizeof(vertices[0]);
 	}
 
-	//’¸“_î•ñ‚Ì“]‘—
+	//é ‚ç‚¹æƒ…å ±ã®è»¢é€
 	void TransferBuffer(const std::vector<T>& vertices)
 	{
-		// ‘S’¸“_‚É‘Î‚µ‚ÄƒRƒs[
+		// å…¨é ‚ç‚¹ã«å¯¾ã—ã¦ã‚³ãƒ”ãƒ¼
 		copy(vertices.begin(), vertices.end(), vertMap_);
 	}
 
-	// ƒQƒbƒ^[ //
-	//ƒoƒbƒtƒ@[æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ãƒãƒƒãƒ•ã‚¡ãƒ¼å–å¾—
 	ID3D12Resource* GetBuffer() { return buff_.Get(); }
-	//ƒrƒ…[æ“¾
+	//ãƒ“ãƒ¥ãƒ¼å–å¾—
 	D3D12_VERTEX_BUFFER_VIEW* GetView() { return &view_; }
 };

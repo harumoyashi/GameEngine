@@ -7,13 +7,13 @@
 WideBullet::WideBullet()
 {
 	bulletType = BulletType::SideBullet;
-	shotCoolTimer_ = 1.0f;					//’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
+	shotCoolTimer_ = 1.0f;					//å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
 	shortShotCoolTimer_ =
-		shotCoolTimer_.maxTime_ / 10.0f;	//1ƒ‹[ƒv‚Å“ñ‰ñˆÈã‘Å‚Â‚É’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
-	isCanShot_ = false;						//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
-	isShortCanShot_ = false;				//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO(’Z‚¢”Å)
-	level_ = 0;								//’e‚Ì‹­‰»ƒŒƒxƒ‹
-	allAtOnceNum_ = 2;						//ˆê“x‚ÉŒ‚‚Â’e‚Ì”
+		shotCoolTimer_.maxTime_ / 10.0f;	//1ãƒ«ãƒ¼ãƒ—ã§äºŒå›ä»¥ä¸Šæ‰“ã¤æ™‚ã«å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
+	isCanShot_ = false;						//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	isShortCanShot_ = false;				//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°(çŸ­ã„ç‰ˆ)
+	level_ = 0;								//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«
+	allAtOnceNum_ = 2;						//ä¸€åº¦ã«æ’ƒã¤å¼¾ã®æ•°
 }
 
 void WideBullet::WideUpdate()
@@ -22,7 +22,7 @@ void WideBullet::WideUpdate()
 
 	shotCoolTimer_.Update(elapseSpeed_);
 	shortShotCoolTimer_.Update(elapseSpeed_);
-	//ƒ^ƒCƒ}[ƒ‹[ƒv
+	//ã‚¿ã‚¤ãƒãƒ¼ãƒ«ãƒ¼ãƒ—
 	if (shotCoolTimer_.GetStarted() == false)
 	{
 		shotCoolTimer_.Start();
@@ -33,7 +33,7 @@ void WideBullet::WideUpdate()
 		shotCoolTimer_.Reset();
 	}
 
-	//ƒ^ƒCƒ}[ƒ‹[ƒv
+	//ã‚¿ã‚¤ãƒãƒ¼ãƒ«ãƒ¼ãƒ—
 	if (shortShotCoolTimer_.GetStarted() == false)
 	{
 		shortShotCoolTimer_.Start();
@@ -47,7 +47,7 @@ void WideBullet::WideUpdate()
 #ifdef _DEBUG
 	static float coolTimer = 1.0f;
 	ImGui::Begin("WideBulletParameter");
-	//0•b~10•b‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
+	//0ç§’~10ç§’ã¾ã§ã®é–“ã«ã¨ã©ã‚ã‚‹
 	ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 0.0f, 10.0f);
 	ImGui::End();
 	shotCoolTimer_.maxTime_ = coolTimer;

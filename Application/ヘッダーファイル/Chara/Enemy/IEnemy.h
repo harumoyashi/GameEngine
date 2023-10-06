@@ -8,99 +8,100 @@
 class IEnemy
 {
 public:
-	//‚±‚±‚Ìƒ^ƒCƒv‚É‰‚¶‚Äƒtƒ@ƒNƒgƒŠ[‚Å”z’u‚µ‚Ä¶¬‚·‚é
+	//ã“ã“ã®ã‚¿ã‚¤ãƒ—ã«å¿œã˜ã¦ãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã§é…ç½®ã—ã¦ç”Ÿæˆã™ã‚‹
 	enum class EnemyType
 	{
-		MouseSide,	//‰¡‚©‚ç‚­‚é‚Ë‚¸‚İ‚½‚¿
-		MouseFront,	//³–Ê‚©‚ç‚­‚é‚Ë‚¸‚İ‚½‚¿
+		MouseSide,	//æ¨ªã‹ã‚‰ãã‚‹ã­ãšã¿ãŸã¡
+		MouseFront,	//æ­£é¢ã‹ã‚‰ãã‚‹ã­ãšã¿ãŸã¡
 	};
 
 protected:
-	std::unique_ptr<NObj3d> obj_;	//ƒIƒuƒWƒFƒNƒg
-	SphereCollider collider_;		//ƒRƒ‰ƒCƒ_[
-	NVec3 oriScale_;				//Œ³‚ÌƒXƒP[ƒ‹•Û‘¶—p(ƒŠƒYƒ€æ‚ç‚·‚Æ‚«‚¸‚ç‚·‚©‚ç)
-	NVec3 addScale_;				//ƒXƒP[ƒ‹‚¢‚¶‚é—p(ƒŠƒYƒ€æ‚ç‚·‚Æ‚«‚¸‚ç‚·‚©‚ç)
-	NVec2 moveVelo_;				//ˆÚ“®—Ê
-	float moveAngle_;				//ˆÚ“®—pŠp“x
-	float moveSpeed_;				//ˆÚ“®ƒXƒs[ƒh
+	std::unique_ptr<NObj3d> obj_;	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	SphereCollider collider_;		//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
+	NVec3 oriScale_;				//å…ƒã®ã‚¹ã‚±ãƒ¼ãƒ«ä¿å­˜ç”¨(ãƒªã‚ºãƒ ä¹—ã‚‰ã™ã¨ããšã‚‰ã™ã‹ã‚‰)
+	NVec3 addScale_;				//ã‚¹ã‚±ãƒ¼ãƒ«ã„ã˜ã‚‹ç”¨(ãƒªã‚ºãƒ ä¹—ã‚‰ã™ã¨ããšã‚‰ã™ã‹ã‚‰)
+	NVec2 moveVelo_;				//ç§»å‹•é‡
+	float moveAngle_;				//ç§»å‹•ç”¨è§’åº¦
+	float moveSpeed_;				//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰
 
-	bool isAlive_;					//¶‘¶ƒtƒ‰ƒO
-	uint32_t maxHP_;				//Å‘å‘Ì—Í
-	uint32_t hp_;					//Œ»İ‚Ì‘Ì—Í
-	uint32_t score_;				//“|‚·‚±‚Æ‚ÅŠl“¾‚Å‚«‚é“¾“_(–{‰Æ‚Ì10”{‚É‚·‚é)
+	bool isAlive_;					//ç”Ÿå­˜ãƒ•ãƒ©ã‚°
+	uint32_t maxHP_;				//æœ€å¤§ä½“åŠ›
+	uint32_t hp_;					//ç¾åœ¨ã®ä½“åŠ›
+	uint32_t score_;				//å€’ã™ã“ã¨ã§ç²å¾—ã§ãã‚‹å¾—ç‚¹(æœ¬å®¶ã®10å€ã«ã™ã‚‹)
 
-	float elapseSpeed_;				//Œo‰ßŠÔ‚ÌƒXƒs[ƒh(ƒXƒ[ƒ‚[ƒVƒ‡ƒ“—p)
+	float elapseSpeed_;				//çµŒéæ™‚é–“ã®ã‚¹ãƒ”ãƒ¼ãƒ‰(ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
 
-	std::string enemyTypeName_;		//“G‚Ìí‘°–¼
-	uint32_t enemyNum_;				//“G‚Ì¯•Ê”Ô†
-	SimpleParticle deadParticle_;	//€‚ñ‚¾‚Æ‚«‚Éo‚·ƒp[ƒeƒBƒNƒ‹
+	std::string enemyTypeName_;		//æ•µã®ç¨®æ—å
+	uint32_t enemyNum_;				//æ•µã®è­˜åˆ¥ç•ªå·
+	SimpleParticle deadParticle_;	//æ­»ã‚“ã ã¨ãã«å‡ºã™ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 
-	bool isItem_;					//ƒAƒCƒeƒ€‚Á‚Ä‚é‚©ƒtƒ‰ƒO
+	bool isItem_;					//ã‚¢ã‚¤ãƒ†ãƒ æŒã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
 public:
 	IEnemy();
 	virtual ~IEnemy();
 
-	//¶¬
-	//pos:”z’u‚·‚éÀ•W
-	//moveAngle:ˆÚ“®‚·‚éŠp“x
-	//modelname:ƒ‚ƒfƒ‹‚Ì–¼‘O(ID)
+	//ç”Ÿæˆ
+	//pos:é…ç½®ã™ã‚‹åº§æ¨™
+	//moveAngle:ç§»å‹•ã™ã‚‹è§’åº¦
+	//modelname:ãƒ¢ãƒ‡ãƒ«ã®åå‰(ID)
 	void Generate(const NVec3& pos, const float moveAngle, const std::string& modelname);
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	virtual void Init();
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
+	//ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void OnCollision();
 
-	//ƒGƒ~ƒbƒ^[‚Ì“o˜^
-	//enemyNum:“G‚Ì¯•Ê”Ô†
+	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã®ç™»éŒ²
+	//enemyNum:æ•µã®è­˜åˆ¥ç•ªå·
 	void AddEmitter(uint32_t eneNum);
-	//€‚ñ‚¾‚Æ‚«‚Ìƒp[ƒeƒBƒNƒ‹‚ğo‚·
+	//æ­»ã‚“ã ã¨ãã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å‡ºã™
 	void DeadParticle();
 
-	//---------------------------- Œp³‚·‚é‚â‚Â‚ç ----------------------------//
-	//ˆÚ“®
+	//---------------------------- ç¶™æ‰¿ã™ã‚‹ã‚„ã¤ã‚‰ ----------------------------//
+	//ç§»å‹•
 	virtual void Move();
 
-	// ƒQƒbƒ^[ //
-	//ƒRƒ‰ƒCƒ_[æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	const SphereCollider GetCollider()const { return collider_; }
-	//¶‘¶ƒtƒ‰ƒOæ“¾
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetisAlive()const { return isAlive_; }
-	//ˆÚ“®ƒXƒs[ƒhæ“¾
+	//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰å–å¾—
 	float GetMoveSpeed()const { return moveSpeed_; }
-	//À•Wæ“¾
+	//åº§æ¨™å–å¾—
 	NVec3& GetPos()const { return obj_->position_; }
-	//‘å‚«‚³æ“¾
+	//å¤§ãã•å–å¾—
 	NVec3& GetScale()const { return obj_->scale_; }
-	//ˆÚ“®—pŠp“xæ“¾
+	//ç§»å‹•ç”¨è§’åº¦å–å¾—
 	float GetMoveAngle()const { return moveAngle_; }
-	//ƒp[ƒeƒBƒNƒ‹‚ª1‚Â‚ào‚Ä‚È‚¢‚©ƒtƒ‰ƒOæ“¾
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒ1ã¤ã‚‚å‡ºã¦ãªã„ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetParticlesDead()const { return deadParticle_.GetParticlesDead(); }
 
-	// ƒZƒbƒ^[ //
-	//¶‘¶ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
-	//À•Wİ’è
+	//åº§æ¨™è¨­å®š
 	void SetPos(const NVec3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
-	//‘å‚«‚³İ’è
+	//å¤§ãã•è¨­å®š
 	void SetScale(const float scale) {
-		obj_->scale_ = scale;  collider_.SetRadius(scale); }
-	//ƒXƒP[ƒ‹‚¢‚¶‚é—p•Ï”İ’è
-	void SetAddScale(const float scale) {addScale_ = scale;}
-	//ˆÚ“®Šp“xİ’è
+		obj_->scale_ = scale;  collider_.SetRadius(scale);
+	}
+	//ã‚¹ã‚±ãƒ¼ãƒ«ã„ã˜ã‚‹ç”¨å¤‰æ•°è¨­å®š
+	void SetAddScale(const float scale) { addScale_ = scale; }
+	//ç§»å‹•è§’åº¦è¨­å®š
 	void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
-	//ˆÚ“®ƒXƒs[ƒhİ’è
+	//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
-	//Œo‰ßŠÔƒXƒs[ƒhİ’è
+	//çµŒéæ™‚é–“ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
-	//“G‚Ì¯•Ê”Ô†İ’è
+	//æ•µã®è­˜åˆ¥ç•ªå·è¨­å®š
 	void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
-	//ƒAƒCƒeƒ€‚Á‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	//ã‚¢ã‚¤ãƒ†ãƒ æŒã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetisItem(bool isItem);
 };

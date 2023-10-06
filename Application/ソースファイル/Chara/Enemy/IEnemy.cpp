@@ -9,10 +9,10 @@
 #include "ItemManager.h"
 #include "Score.h"
 
-//�X�s�[�h�͊�{�v���C���[��肿�傢�x��
+//スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
-	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_),score_(10), isItem_(false)
+	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_), score_(10), isItem_(false)
 {
 }
 
@@ -48,20 +48,20 @@ void IEnemy::Init()
 
 void IEnemy::Update()
 {
-	//�o�ߎ��Ԃ�K�p
+	//経過時間を適用
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
-	
-	//���Y����点�邩��X�P�[������ɍX�V
+
+	//リズム乗らせるからスケールを常に更新
 	obj_->scale_ = oriScale_ + addScale_;
 
-	//�ړ�
+	//移動
 	Move();
 
-	// �u2D�ɒ������s���͈�+��ʒ[���W�v���u2D�ɒ������G�̍��W+�G�̔��a�v���������ꍇ�E�� //
-	float borderLineRight, borderLineLeft;	//�������玀�ʂƂ�
+	// 「2Dに直した行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
+	float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
 
-	//�u2D�ɒ������s���͈�+��ʒ[���W�v
-	//�s���͈͂��X�N���[�����W�ɕϊ����ăE�B���h�E���W�Ƒ���
+	//「2Dに直した行動範囲+画面端座標」
+	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
 	NMatrix4 matWorldRight, matWorldLeft;
 
 	matWorldRight = matWorldRight.Translation(NVec3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
@@ -70,10 +70,10 @@ void IEnemy::Update()
 	matWorldLeft = matWorldLeft.Translation(NVec3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
 	borderLineLeft = MathUtil::WorldToScreen(NVec3(), matWorldLeft).x - NWindows::kWin_width * 0.5f;
 
-	float objRight, objLeft;	//�I�u�W�F�̉E�[���[
+	float objRight, objLeft;	//オブジェの右端左端
 	objRight = MathUtil::WorldToScreen(obj_->position_ + obj_->scale_, obj_->GetMatWorld()).x;
 	objLeft = MathUtil::WorldToScreen(obj_->position_ - obj_->scale_, obj_->GetMatWorld()).x;
-	//�{�[�_�[���C����������E��
+	//ボーダーライン超えたら殺す
 	if (borderLineRight < objLeft || borderLineLeft > objRight)
 	{
 		isAlive_ = false;
@@ -82,10 +82,10 @@ void IEnemy::Update()
 	obj_->Update();
 	collider_.Update(obj_.get());
 
-	//OnCollision()�ŌĂԂƁA���̃t���[���ł̑�������ɉe�����o�邩�炱���ŏ����Ă�
+	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
 	{
-		//�R���C�_�[�}�l�[�W���[����폜
+		//コライダーマネージャーから削除
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 	}
 }
@@ -102,16 +102,16 @@ void IEnemy::Draw()
 
 void IEnemy::OnCollision()
 {
-	//�����������肪�e���������̏���
+	//当たった相手が弾だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "bullet")
 	{
 		DeadParticle();
 		isAlive_ = false;
 		Score::AddScore(score_);
-		//�A�C�e�������Ă�t���O�����Ă���A�C�e�����Ƃ�
+		//アイテム持ってるフラグ立ってたらアイテム落とす
 		if (isItem_)
 		{
-			uint32_t bulType = MathUtil::Random(0,(uint32_t)BulletType::MaxType);
+			uint32_t bulType = MathUtil::Random(0, (uint32_t)BulletType::MaxType);
 			ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
 		}
 		NAudioManager::GetInstance()->Play("vanishSE");
@@ -120,9 +120,9 @@ void IEnemy::OnCollision()
 
 void IEnemy::AddEmitter(uint32_t eneNum)
 {
-	//���ʔԍ�������
+	//識別番号をつける
 	enemyNum_ = eneNum;
-	//�p�[�e�B�N���G�~�b�^�[���}�l�[�W���[�ɓo�^
+	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->enemyEmitters_.emplace_back();
 	NParticleManager::GetInstance()->enemyEmitters_.back() = &deadParticle_;
 }
@@ -142,16 +142,16 @@ void IEnemy::Move()
 	moveVelo_.x = sinf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 	moveVelo_.y = cosf(moveAngle_) * moveSpeed_ * elapseSpeed_;
 
-	//�ړ�
+	//移動
 	obj_->position_.x += moveVelo_.x;
 	obj_->position_.z += moveVelo_.y;
 
-	//��]
+	//回転
 	obj_->rotation_.y = moveAngle_ * 360 / PI2;
 }
 
 void IEnemy::SetisItem(bool isItem)
 {
 	isItem_ = isItem;
-	obj_->color_ = NColor::kYellow;	//�A�C�e�������Ă�G�͉��F�ɂ���
+	obj_->color_ = NColor::kYellow;	//アイテム持ってる敵は黄色にする
 }

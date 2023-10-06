@@ -103,7 +103,7 @@ NQuaternion NQuaternion::Identity()
 NQuaternion NQuaternion::Conjugate(const NQuaternion& q)
 {
 	NQuaternion result = q;
-	//‹••”‚ğ‘S‚Ä”½“]
+	//è™šéƒ¨ã‚’å…¨ã¦åè»¢
 	result.x = -result.x;
 	result.y = -result.y;
 	result.z = -result.z;
@@ -153,8 +153,8 @@ NQuaternion NQuaternion::Inverse(const NQuaternion& q)
 {
 	NQuaternion result = q;
 	float norm = Norm(result);
-	result = Conjugate(result);	//‹¤–ğ‚ğ
-	result /= (norm * norm);	//norm‚Ì2æ(ƒXƒJƒ‰[)‚ÅŠ„‚é‚Æ‹tƒNƒH[ƒ^ƒjƒIƒ“
+	result = Conjugate(result);	//å…±å½¹ã‚’
+	result /= (norm * norm);	//normã®2ä¹—(ã‚¹ã‚«ãƒ©ãƒ¼)ã§å‰²ã‚‹ã¨é€†ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 	return result;
 }
 
@@ -282,15 +282,15 @@ NQuaternion NQuaternion::Slarp(const NQuaternion& q0, const NQuaternion& q1, con
 
 NQuaternion NQuaternion::VecToVecRota(const NVec3& u, const NVec3& v)
 {
-	//³‹K‰»‚µ‚Ä“àÏ‚ğ‹‚ß‚é
+	//æ­£è¦åŒ–ã—ã¦å†…ç©ã‚’æ±‚ã‚ã‚‹
 	float dot = u.Normalize().Dot(v.Normalize());
 
-	//²‚ğ‹‚ß‚é(ŠOÏ‚ÌŒ‹‰Ê‚ª’PˆÊƒxƒNƒgƒ‹‚Æ‚ÍŒÀ‚ç‚È‚¢‚Ì‚Å³‹K‰»•K{)
+	//è»¸ã‚’æ±‚ã‚ã‚‹(å¤–ç©ã®çµæœãŒå˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã¨ã¯é™ã‚‰ãªã„ã®ã§æ­£è¦åŒ–å¿…é ˆ)
 	NVec3 axis = u.Cross(v).Normalize();
 
-	//’PˆÊƒxƒNƒgƒ‹‚Å“àÏ‚ğæ‚Á‚½‚Ì‚Åacos‚ÅŠp“x‚ğ‹‚ß‚é
+	//å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã§å†…ç©ã‚’å–ã£ãŸã®ã§acosã§è§’åº¦ã‚’æ±‚ã‚ã‚‹
 	float theta = acosf(dot);
 
-	//‹‚ß‚½²‚ÆŠp“x‚ğg‚Á‚Ä”CˆÓ²‰ñ“]‚ğ•Ô‚·
+	//æ±‚ã‚ãŸè»¸ã¨è§’åº¦ã‚’ä½¿ã£ã¦ä»»æ„è»¸å›è»¢ã‚’è¿”ã™
 	return MakeAxisAngle(axis, theta);
 }

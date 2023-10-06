@@ -11,7 +11,7 @@ NMatrix4 MathUtil::MatViewLockTo(const NVec3& eye, const NVec3& front, const NVe
 {
 	NMatrix4 mat;
 
-	//ŠOÏg‚Á‚ÄŒü‚¢‚Ä‚é•ûŒü‚É‘Î‚µ‚Ä‚Ì‰EƒxƒNƒgƒ‹‹‚ß‚é
+	//å¤–ç©ä½¿ã£ã¦å‘ã„ã¦ã‚‹æ–¹å‘ã«å¯¾ã—ã¦ã®å³ãƒ™ã‚¯ãƒˆãƒ«æ±‚ã‚ã‚‹
 	NVec3 rightVec = up.Cross(front);
 	rightVec = rightVec.Normalize();
 
@@ -56,7 +56,7 @@ NMatrix4 MathUtil::ParallelProjection(const float WIN_WIDTH, const float WIN_HEI
 
 NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, const float nearZ, const float farZ)
 {
-	// ’PˆÊs—ñ‚Å‰Šú‰»
+	// å˜ä½è¡Œåˆ—ã§åˆæœŸåŒ–
 	NMatrix4 perspective = perspective.Zero();
 
 	float scaleY = 1 / tanf(fov / 2);
@@ -139,14 +139,14 @@ NMatrix4 MathUtil::CalculateWorldMat(const NVec3& pos, const NVec3& scale, const
 {
 	NMatrix4 result = NMatrix4::Identity();
 
-	// •½sˆÚ“®AƒXƒP[ƒŠƒ“ƒOA‰ñ“]s—ñì¬
+	// å¹³è¡Œç§»å‹•ã€ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã€å›è»¢è¡Œåˆ—ä½œæˆ
 	NMatrix4 transMat = NMatrix4::Identity();
 	NMatrix4 scaleMat = NMatrix4::Identity();
 	NMatrix4 rotMat = NMatrix4::Identity();
 
-	transMat = NMatrix4::Translation(pos);		//•½sˆÚ“®
-	scaleMat = NMatrix4::Scale(scale);			//ƒXƒP[ƒŠƒ“ƒO
-	rotMat = NMatrix4::RotateQuaternion(rot);	//‰ñ“]
+	transMat = NMatrix4::Translation(pos);		//å¹³è¡Œç§»å‹•
+	scaleMat = NMatrix4::Scale(scale);			//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
+	rotMat = NMatrix4::RotateQuaternion(rot);	//å›è»¢
 
 	result = scaleMat * rotMat * transMat;
 

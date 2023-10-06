@@ -9,24 +9,24 @@ class NRootSignature final
 private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<ID3D12RootSignature> entity_;			//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
-	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc_{};	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒƒfƒXƒN
-	
-	D3D12_STATIC_SAMPLER_DESC samplerDesc_{};		//ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[
+	ComPtr<ID3D12RootSignature> entity_;			//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
+	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc_{};	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ãƒ‡ã‚¹ã‚¯
 
-	std::vector<D3D12_ROOT_PARAMETER> rootParam_;			//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^
-	std::vector<D3D12_DESCRIPTOR_RANGE> descriptorRange_{};	//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
+	D3D12_STATIC_SAMPLER_DESC samplerDesc_{};		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µãƒ³ãƒ—ãƒ©ãƒ¼
+
+	std::vector<D3D12_ROOT_PARAMETER> rootParam_;			//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+	std::vector<D3D12_DESCRIPTOR_RANGE> descriptorRange_{};	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸
 
 public:
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 	void Create();
-	//ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
-	//isTiling:ƒ^ƒCƒŠƒ“ƒO‚·‚é‚©ƒtƒ‰ƒO
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®è¨­å®š
+	//isTiling:ã‚¿ã‚¤ãƒªãƒ³ã‚°ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
 	void SetSamplerDesc(bool isTiling);
 
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^æ“¾
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å–å¾—
 	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒæ“¾
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£å–å¾—
 	ID3D12RootSignature* GetRootSignature()const { return entity_.Get(); }
 };
 

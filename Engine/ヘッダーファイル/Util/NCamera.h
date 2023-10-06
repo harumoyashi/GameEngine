@@ -13,32 +13,32 @@ public:
 	static NCamera* sCurrentCamera;
 
 private:
-	//•ÏŠ·—ps—ñ
+	//å¤‰æ›ç”¨è¡Œåˆ—
 	NMatrix4 matProjection_{};
 	NMatrix4 matView_{};
 
-	//ƒJƒƒ‰
-	NVec3 eye_ = { 0, 10.0f, -30.0f };	//‹“_À•W
-	NVec3 target_ = { 0, 0, 0 };			//’‹“_À•W
-	NVec3 up_ = { 0, 1.0f, 0 };			//ã•ûŒüƒxƒNƒgƒ‹
-	NVec3 rot_ = NVec3::zero;				//ƒJƒƒ‰‚Ì‰ñ“]Šp
+	//ã‚«ãƒ¡ãƒ©
+	NVec3 eye_ = { 0, 10.0f, -30.0f };	//è¦–ç‚¹åº§æ¨™
+	NVec3 target_ = { 0, 0, 0 };			//æ³¨è¦–ç‚¹åº§æ¨™
+	NVec3 up_ = { 0, 1.0f, 0 };			//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
+	NVec3 rot_ = NVec3::zero;				//ã‚«ãƒ¡ãƒ©ã®å›è»¢è§’
 	float nearZ_ = 0.1f;
 	float farZ_ = 1000.0f;
 	float fov_ = 45.0f;
 
 private:
-	//ƒrƒ…[•ÏŠ·s—ñì¬
+	//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ä½œæˆ
 	void CreateMatView();
-	//Ë‰e“Š‰e•ÏŠ·//
+	//å°„å½±æŠ•å½±å¤‰æ›//
 	void ProjectiveProjection();
 
 public:
 	void Init();
 	void Update();
-	//ƒfƒoƒbƒOƒJƒƒ‰—p‚ÌˆÚ“®ˆ—
+	//ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ç”¨ã®ç§»å‹•å‡¦ç†
 	void DebugCameraUpdate();
 
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetEye(const NVec3& eye) { eye_ = eye; }
 	void SetTarget(const NVec3& target) { target_ = target; }
 	void SetUpVec(const NVec3& up) { up_ = up; }
@@ -47,14 +47,14 @@ public:
 	void SetNearFar(const float nearZ, const float farZ);
 	void SetFov(const float fov) { fov_ = fov; }
 
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	const NMatrix4& GetMatProjection()const { return matProjection_; }
 	const NMatrix4& GetMatView()const { return matView_; }
-	//eyeÀ•Wæ“¾
+	//eyeåº§æ¨™å–å¾—
 	const NVec3& GetPos()const { return eye_; }
-	//’‹“_À•Wæ“¾
+	//æ³¨è¦–ç‚¹åº§æ¨™å–å¾—
 	const NVec3& GetTarget()const { return target_; }
-	//ãƒxƒNƒgƒ‹æ“¾
+	//ä¸Šãƒ™ã‚¯ãƒˆãƒ«å–å¾—
 	const NVec3& GetUpVec()const { return up_; }
 
 	const float GetFov()const { return fov_; }

@@ -3,7 +3,7 @@
 
 NSprite::NSprite()
 {
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
 	cbTrans_->Init();
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
@@ -17,11 +17,11 @@ NSprite::~NSprite()
 void NSprite::CreateSprite(const std::string& texHandle)
 {
 	SetTexHandle(texHandle);
-	//’¸“_
+	//é ‚ç‚¹
 	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
 	TransferVertex();
 
-	//•½s“Š‰e‚ğ‘ã“ü
+	//å¹³è¡ŒæŠ•å½±ã‚’ä»£å…¥
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
 		static_cast<float>(NWindows::kWin_height)
@@ -33,14 +33,14 @@ void NSprite::CreateSprite(const std::string& texHandle,
 	const NVec2& anchorPoint, bool isFlipX, bool isFlipY)
 {
 	SetTexHandle(texHandle);
-	//’¸“_
+	//é ‚ç‚¹
 	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
 	anchorPoint_ = anchorPoint;
 	isFlipX_ = isFlipX;
 	isFlipY_ = isFlipY;
 	TransferVertex();
 
-	//•½s“Š‰e‚ğ‘ã“ü
+	//å¹³è¡ŒæŠ•å½±ã‚’ä»£å…¥
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
 		static_cast<float>(NWindows::kWin_height)
@@ -53,7 +53,7 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 	bool isFlipX, bool isFlipY)
 {
 	SetTexHandle(texHandle);
-	//’¸“_
+	//é ‚ç‚¹
 	SetTexSize(NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_);
 	anchorPoint_ = anchorPoint;
 	isFlipX_ = isFlipX;
@@ -61,7 +61,7 @@ void NSprite::CreateClipSprite(const std::string& texHandle,
 	SetClipRange(texLeftTop, texSize);
 	TransferVertex();
 
-	//•½s“Š‰e‚ğ‘ã“ü
+	//å¹³è¡ŒæŠ•å½±ã‚’ä»£å…¥
 	matProjection_ = cbTrans_->constMap_->mat = MathUtil::ParallelProjection(
 		static_cast<float>(NWindows::kWin_width),
 		static_cast<float>(NWindows::kWin_height)
@@ -73,7 +73,7 @@ void NSprite::SetTexSize(const ComPtr<ID3D12Resource>& texBuff)
 {
 	resDescVert_ = texBuff->GetDesc();
 	texSize_ = { (float)resDescVert_.Width,(float)resDescVert_.Height };
-	//ƒeƒNƒXƒ`ƒƒ‚ÌƒTƒCƒY‚ÆƒXƒvƒ‰ƒCƒg‚ÌƒTƒCƒYˆê‚É
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ã‚µã‚¤ã‚ºã¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ã‚µã‚¤ã‚ºä¸€ç·’ã«
 	size_ = texSize_;
 }
 
@@ -108,80 +108,80 @@ void NSprite::SetTexHandle(const std::string& texHandle)
 
 void NSprite::Update()
 {
-	//ƒ[ƒ‹ƒhs—ñ
-	NMatrix4 matRot;	//‰ñ“]s—ñ
-	matRot = matRot.RotateZ(MathUtil::Degree2Radian(rotation_));	//Z²ü‚è‚É‰ñ“]
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+	NMatrix4 matRot;	//å›è»¢è¡Œåˆ—
+	matRot = matRot.RotateZ(MathUtil::Degree2Radian(rotation_));	//Zè»¸å‘¨ã‚Šã«å›è»¢
 
-	NMatrix4 matTrans;	//•½sˆÚ“®s—ñ
+	NMatrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 	matTrans = matTrans.Translation({ position_.x, position_.y, 0 });
 
-	matWorld_ = NMatrix4::Identity();	//’PˆÊs—ñ‘ã“ü
-	matWorld_ *= matRot;		//ƒ[ƒ‹ƒhÀ•W‚É‰ñ“]‚ğ”½‰f
-	matWorld_ *= matTrans;	//ƒ[ƒ‹ƒhÀ•W‚É•½sˆÚ“®‚ğ”½‰f
+	matWorld_ = NMatrix4::Identity();	//å˜ä½è¡Œåˆ—ä»£å…¥
+	matWorld_ *= matRot;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å›è»¢ã‚’åæ˜ 
+	matWorld_ *= matTrans;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	cbTrans_->constMap_->mat = matWorld_ * matProjection_;
 	cbColor_->constMap_->color = color_;
 }
 
 void NSprite::TransferVertex()
 {
-	//UV‚¾‚¯ƒfƒtƒHƒ‹ƒg‚Åİ’è
+	//UVã ã‘ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã§è¨­å®š
 	std::vector<NVertexUV> vert = {
 		//		u	v
-		{{}, {0.0f,1.0f}},	// ¶‰º
-		{{}, {0.0f,0.0f}},	// ¶ã
-		{{}, {1.0f,1.0f}},	// ‰E‰º
-		{{}, {1.0f,0.0f}},	// ‰Eã
+		{{}, {0.0f,1.0f}},	// å·¦ä¸‹
+		{{}, {0.0f,0.0f}},	// å·¦ä¸Š
+		{{}, {1.0f,1.0f}},	// å³ä¸‹
+		{{}, {1.0f,0.0f}},	// å³ä¸Š
 	};
 
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒgİ’è
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆè¨­å®š
 	float left = (0.0f - anchorPoint_.x) * size_.x;
 	float right = (1.0f - anchorPoint_.x) * size_.x;
 	float top = (0.0f - anchorPoint_.y) * size_.y;
 	float bottom = (1.0f - anchorPoint_.y) * size_.y;
 
-	//¶‰E”½“]
+	//å·¦å³åè»¢
 	if (isFlipX_)
 	{
 		left = -left;
 		right = -right;
 	}
-	//ã‰º”½“]
+	//ä¸Šä¸‹åè»¢
 	if (isFlipY_)
 	{
 		top = -top;
 		bottom = -bottom;
 	}
 
-	//İ’è‚µ‚½ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚É‡‚í‚¹‚Ä’¸“_İ’è‚µ‚È‚¨‚·
-	vert[0].pos = { left ,bottom,0.0f };	// ¶‰º
-	vert[1].pos = { left ,top   ,0.0f };	// ¶ã
-	vert[2].pos = { right,bottom,0.0f };	// ‰E‰º
-	vert[3].pos = { right,top   ,0.0f };	// ‰Eã
+	//è¨­å®šã—ãŸã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã«åˆã‚ã›ã¦é ‚ç‚¹è¨­å®šã—ãªãŠã™
+	vert[0].pos = { left ,bottom,0.0f };	// å·¦ä¸‹
+	vert[1].pos = { left ,top   ,0.0f };	// å·¦ä¸Š
+	vert[2].pos = { right,bottom,0.0f };	// å³ä¸‹
+	vert[3].pos = { right,top   ,0.0f };	// å³ä¸Š
 
 	resDescVert_ = NTextureManager::GetInstance()->textureMap_[texHandle_].texBuff_->GetDesc();
 
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğ‚à‚Æ‚ÉØ‚èæ‚é•”•ª‚Ìuv‚ğŒvZ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’ã‚‚ã¨ã«åˆ‡ã‚Šå–ã‚‹éƒ¨åˆ†ã®uvã‚’è¨ˆç®—
 	float tex_left = texLeftTop_.x / resDescVert_.Width;
 	float tex_right = (texLeftTop_.x + texSize_.x) / resDescVert_.Width;
 	float tex_top = texLeftTop_.y / resDescVert_.Height;
 	float tex_bottom = (texLeftTop_.y + texSize_.y) / resDescVert_.Height;
 
-	//ŒvZ‚µ‚½uv‚É‡‚í‚¹‚Äİ’è‚µ‚È‚¨‚·
-	vert[0].uv = { tex_left ,tex_bottom };	// ¶‰º
-	vert[1].uv = { tex_left ,tex_top };	// ¶ã
-	vert[2].uv = { tex_right,tex_bottom };	// ‰E‰º
-	vert[3].uv = { tex_right,tex_top };	// ‰Eã
+	//è¨ˆç®—ã—ãŸuvã«åˆã‚ã›ã¦è¨­å®šã—ãªãŠã™
+	vert[0].uv = { tex_left ,tex_bottom };	// å·¦ä¸‹
+	vert[1].uv = { tex_left ,tex_top };	// å·¦ä¸Š
+	vert[2].uv = { tex_right,tex_bottom };	// å³ä¸‹
+	vert[3].uv = { tex_right,tex_top };	// å³ä¸Š
 
-	//İ’è‚µ‚½‚ç‘¼‚Å‚àg‚¦‚é•Ï”‚É‘ã“ü
+	//è¨­å®šã—ãŸã‚‰ä»–ã§ã‚‚ä½¿ãˆã‚‹å¤‰æ•°ã«ä»£å…¥
 	vertices_ = vert;
 
-	//’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY‚ğ‘ã“ü
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚ºã‚’ä»£å…¥
 	singleSizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]));
 	singleVB_ = static_cast<uint32_t>(sizeof(vertices_));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	vertexBuff_.Init(vert);
 }
 
@@ -199,8 +199,8 @@ void NSprite::SetPos(const float x, const float y)
 
 void NSprite::CommonBeginDraw()
 {
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
-	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // OŠpŒ`ƒXƒgƒŠƒbƒv
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP); // ä¸‰è§’å½¢ã‚¹ãƒˆãƒªãƒƒãƒ—
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
@@ -208,7 +208,7 @@ void NSprite::CommonBeginDraw()
 
 void NSprite::SetBlendMode(BlendMode blendMode)
 {
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	switch (blendMode)
 	{
 	case BlendMode::None:
@@ -238,21 +238,21 @@ void NSprite::SetBlendMode(BlendMode blendMode)
 
 void NSprite::Draw()
 {
-	//”ñ•\¦ƒtƒ‰ƒO—§‚Á‚Ä‚½‚ç•`‰æ‚¹‚¸‚Éˆ—”²‚¯‚é
+	//éè¡¨ç¤ºãƒ•ãƒ©ã‚°ç«‹ã£ã¦ãŸã‚‰æç”»ã›ãšã«å‡¦ç†æŠœã‘ã‚‹
 	if (isInvisible_)
 	{
 		return;
 	}
 
-	//ƒnƒ“ƒhƒ‹‚ğw’è
+	//ãƒãƒ³ãƒ‰ãƒ«ã‚’æŒ‡å®š
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = NTextureManager::GetInstance()->textureMap_[texHandle_].gpuHandle_;
 
-	//w’è‚Ìƒq[ƒv‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^0”Ô‚Éİ’è
+	//æŒ‡å®šã®ãƒ’ãƒ¼ãƒ—ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿0ç•ªã«è¨­å®š
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, srvGpuHandle);
 
 	NDX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, vertexBuff_.GetView());
 
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚É’è”ƒoƒbƒtƒ@‚ğ“n‚·
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
 	NDX12::GetInstance()->GetCommandList()->DrawInstanced(4, 1, 0, 0);

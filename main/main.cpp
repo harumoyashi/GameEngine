@@ -2,9 +2,9 @@
 #include "NFramework.h"
 #include "NGame.h"
 
-//WindowsƒAƒvƒŠ‚Å‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg(mainŠÖ”)
+//Windowsã‚¢ãƒ—ãƒªã§ã®ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆ(mainé–¢æ•°)
 int32_t WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int32_t) {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	std::unique_ptr<NFramework> game = std::make_unique<NGame>();
 	game->Run();
 	return 0;

@@ -1,35 +1,35 @@
 #pragma once
 #include "IBullet.h"
 
-//’Êí‚Ì’e
-//‹­‰»‚Å–{”‚ª‘‚¦‚é
+//é€šå¸¸ã®å¼¾
+//å¼·åŒ–ã§æœ¬æ•°ãŒå¢—ãˆã‚‹
 class LineBullet final :
 	public IBullet
 {
 private:
-	NEasing::EaseTimer shotCoolTimer_;		//’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
-	bool isCanShot_;						//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
-	uint32_t level_;						//’e‚Ì‹­‰»ƒŒƒxƒ‹
+	NEasing::EaseTimer shotCoolTimer_;		//å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
+	bool isCanShot_;						//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	uint32_t level_;						//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«
 
 public:
 	LineBullet();
 
-	//’Êí’eê—pƒAƒbƒvƒf[ƒg
+	//é€šå¸¸å¼¾å°‚ç”¨ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
 	void LineUpdate();
 
-	//’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ‚ğƒŠƒZƒbƒg
+	//å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆ
 	void ReSetShotCoolTimer() { shotCoolTimer_.Reset(); }
 
-	// ƒQƒbƒ^[ //
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsCanShot() const { return isCanShot_; }
-	//’e‚Ì‹­‰»ƒŒƒxƒ‹æ“¾
+	//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«å–å¾—
 	uint32_t GetLevel() const { return level_; }
 
-	// ƒZƒbƒ^[ //
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsCanShot(bool isCanShot) { isCanShot_ = isCanShot; }
-	//’e‚Ì‹­‰»ƒŒƒxƒ‹İ’è
+	//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«è¨­å®š
 	void SetLevel(uint32_t level) { level_ = level; }
 };
 

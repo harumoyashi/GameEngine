@@ -18,87 +18,87 @@ class NObj3d
 protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	D3D12_HEAP_PROPERTIES heapProp_{};	//ƒq[ƒv
-	D3D12_RESOURCE_DESC resDesc_{};		//ƒŠƒ\[ƒX
+	D3D12_HEAP_PROPERTIES heapProp_{};	//ãƒ’ãƒ¼ãƒ—
+	D3D12_RESOURCE_DESC resDesc_{};		//ãƒªã‚½ãƒ¼ã‚¹
 
-	//’è”ƒoƒbƒtƒ@//
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡//
 	std::unique_ptr<NConstBuff<ConstBuffDataTransform>> cbTrans_;
 	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;
 	std::unique_ptr<NConstBuff<ConstBuffDataMaterial>> cbMaterial_;
 	std::unique_ptr<NConstBuff<ConstBuffDataSkin>> cbSkin_;
 
-	NMatrix4 matWorld_;	//3D•ÏŠ·s—ñ
+	NMatrix4 matWorld_;	//3Då¤‰æ›è¡Œåˆ—
 
-	NTexture* texture_;				//ƒeƒNƒXƒ`ƒƒ
-	IModel* model_;					//ƒ‚ƒfƒ‹
-	std::string objName_;			//ƒfƒoƒbƒO—p‚É–¼‘O‚Â‚¯‚é
+	NTexture* texture_;				//ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	IModel* model_;					//ãƒ¢ãƒ‡ãƒ«
+	std::string objName_;			//ãƒ‡ãƒãƒƒã‚°ç”¨ã«åå‰ã¤ã‘ã‚‹
 
-	bool isElapseAnime_;			//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÉŒo‰ßŠÔ‚Ì‰e‹¿‚ğó‚¯‚é‚©ƒtƒ‰ƒO
+	bool isElapseAnime_;			//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«çµŒéæ™‚é–“ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
-	// ƒ‰ƒCƒg
+	// ãƒ©ã‚¤ãƒˆ
 	static NLightGroup* sLightGroup;
 
 public:
-	NVec3 scale_ = { 1.0f,1.0f,1.0f };		//ƒXƒP[ƒŠƒ“ƒO”{—¦
-	NVec3 rotation_ = { 0.0f,0.0f,0.0f };	//‰ñ“]Šp
-	NVec3 position_ = { 0.0f,0.0f,0.0f };	//À•W
+	NVec3 scale_ = { 1.0f,1.0f,1.0f };		//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°å€ç‡
+	NVec3 rotation_ = { 0.0f,0.0f,0.0f };	//å›è»¢è§’
+	NVec3 position_ = { 0.0f,0.0f,0.0f };	//åº§æ¨™
 
-	NObj3d* parent_ = nullptr;	//e‚Ìƒ|ƒCƒ“ƒ^
-	NColor color_;				//F
+	NObj3d* parent_ = nullptr;	//è¦ªã®ãƒã‚¤ãƒ³ã‚¿
+	NColor color_;				//è‰²
 
 public:
 	NObj3d();
 	virtual ~NObj3d();
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	virtual bool Init();
-#pragma region XV‚Ü‚í‚è
-	//XV
+#pragma region æ›´æ–°ã¾ã‚ã‚Š
+	//æ›´æ–°
 	virtual void Update();
-	//ƒL[ƒ{[ƒh‘€ì
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æ“ä½œ
 	void MoveKey();
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
 	void UpdateMatrix();
-	//’è”ƒoƒbƒtƒ@‚Ö‘—M
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸é€ä¿¡
 	void TransferMatrix();
-	//Fî•ñ“]‘—
+	//è‰²æƒ…å ±è»¢é€
 	void TransferColor();
-	//Œõî•ñ“]‘—
+	//å…‰æƒ…å ±è»¢é€
 	void TransferMaterial();
-	//ƒXƒLƒ“î•ñ“]‘—(FBX‚Ì‚İ)
+	//ã‚¹ã‚­ãƒ³æƒ…å ±è»¢é€(FBXã®ã¿)
 	void TransferSkin();
 #pragma endregion
-#pragma region •`‰æ‚Ü‚í‚è
-	//‹¤’ÊƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh
+#pragma region æç”»ã¾ã‚ã‚Š
+	//å…±é€šã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰
 	static void CommonBeginDraw();
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	void SetBlendMode(BlendMode blendMode);
-	//•`‰æ
+	//æç”»
 	virtual void Draw();
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	void SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle);
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	void SetVB(const D3D12_VERTEX_BUFFER_VIEW* vbView);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	void SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	void SetCBV();
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	void DrawCommand(const uint32_t indexSize);
 #pragma endregion
 
-	// ƒQƒbƒ^[ //
-	//ƒ[ƒ‹ƒhs—ñæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—å–å¾—
 	const NMatrix4& GetMatWorld() { return matWorld_; }
 
-	// ƒZƒbƒ^[ //
-	//ƒ‚ƒfƒ‹‚Ìİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ãƒ¢ãƒ‡ãƒ«ã®è¨­å®š
 	void SetModel(const std::string& modelname);
-	//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	void SetTexture(const std::string& texname);
-	//ƒ[ƒ‹ƒhs—ñİ’è
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—è¨­å®š
 	void SetMatWorld(const NMatrix4& matWorld) { matWorld_ = matWorld; }
-	//ƒ‰ƒCƒg‚ğİ’è
+	//ãƒ©ã‚¤ãƒˆã‚’è¨­å®š
 	static void SetLightGroup(NLightGroup* lightGroup) { sLightGroup = lightGroup; }
-	//ƒAƒjƒ[ƒVƒ‡ƒ“‚ÉŒo‰ßŠÔ‚Ì‰e‹¿‚ğó‚¯‚é‚©ƒtƒ‰ƒOİ’è
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã«çµŒéæ™‚é–“ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsElapseAnime(bool isElapseAnime) { isElapseAnime_ = isElapseAnime; }
 };

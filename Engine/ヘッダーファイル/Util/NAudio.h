@@ -13,20 +13,20 @@
 #include <mfidl.h>
 #include <mfreadwrite.h>
 
-//‰¹ºƒf[ƒ^
+//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 struct SoundData
 {
-	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	WAVEFORMATEX wfex{};
-	//ƒoƒbƒtƒ@‚Ìæ“ªƒAƒhƒŒƒX
+	//ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 	std::vector<BYTE> pBuffer{};
-	//ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+	//ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 	uint32_t bufferSize{};
-	//–¼‘O
+	//åå‰
 	std::string name{};
 };
 
-// Ä¶ƒf[ƒ^
+// å†ç”Ÿãƒ‡ãƒ¼ã‚¿
 struct Voice {
 	uint32_t handle = 0u;
 	IXAudio2SourceVoice* sourceVoice = nullptr;
@@ -35,28 +35,28 @@ struct Voice {
 class NAudio final
 {
 private:
-	// ƒTƒEƒ“ƒhƒf[ƒ^‚ÌÅ‘å”
+	// ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®æœ€å¤§æ•°
 	static const uint32_t kMaxSoundData_ = 256;
 
-	//ƒ`ƒƒƒ“ƒNƒwƒbƒ_[
+	//ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€ãƒ¼
 	struct ChunkHeader
 	{
-		char id[4];		//ƒ`ƒƒƒ“ƒN–ˆ‚ÌID
-		int32_t size;	//ƒ`ƒƒƒ“ƒNƒTƒCƒY
+		char id[4];		//ãƒãƒ£ãƒ³ã‚¯æ¯ã®ID
+		int32_t size;	//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 	};
 
-	//RIFFƒwƒbƒ_[ƒ`ƒƒƒ“ƒN
+	//RIFFãƒ˜ãƒƒãƒ€ãƒ¼ãƒãƒ£ãƒ³ã‚¯
 	struct RiffHeader
 	{
 		ChunkHeader chunk;	//"RIFF"
 		char type[4];		//"WAVE"
 	};
 
-	//FMTƒ`ƒƒƒ“ƒN
+	//FMTãƒãƒ£ãƒ³ã‚¯
 	struct FormatChunk
 	{
 		ChunkHeader chunk;	//"fmt"
-		WAVEFORMATEX fmt;	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		WAVEFORMATEX fmt;	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	};
 
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -64,100 +64,100 @@ private:
 	ComPtr<IXAudio2> xAudio2_;
 	IXAudio2MasteringVoice* masterVoice_;
 
-	std::ifstream file_;			//ƒtƒ@ƒCƒ‹“ü—ÍƒXƒgƒŠ[ƒ€‚ÌƒCƒ“ƒXƒ^ƒ“ƒX
-	FormatChunk format_ = {};	//ƒtƒH[ƒ}ƒbƒgƒ`ƒƒƒ“ƒN
-	ChunkHeader data_;			//ƒf[ƒ^ƒ`ƒƒƒ“ƒN
+	std::ifstream file_;			//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ›ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+	FormatChunk format_ = {};	//ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆãƒãƒ£ãƒ³ã‚¯
+	ChunkHeader data_;			//ãƒ‡ãƒ¼ã‚¿ãƒãƒ£ãƒ³ã‚¯
 	char* pBuffer_;
-	SoundData soundData_ = {};	//‰¹ºƒf[ƒ^
+	SoundData soundData_ = {};	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 
 	// MediaFoundation
 	ComPtr<IMFSourceReader> mFSourceReader_;
 	ComPtr<IMFMediaType> mFMediaType_;
 
-	//ƒI[ƒfƒBƒIƒR[ƒ‹ƒoƒbƒN
+	//ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	class XAudio2VoiceCallback final
 		: public IXAudio2VoiceCallback {
 	public:
-		// ƒ{ƒCƒXˆ—ƒpƒX‚ÌŠJn
+		// ãƒœã‚¤ã‚¹å‡¦ç†ãƒ‘ã‚¹ã®é–‹å§‹æ™‚
 		STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ uint32_t BytesRequired) {};
-		// ƒ{ƒCƒXˆ—ƒpƒX‚ÌI—¹
+		// ãƒœã‚¤ã‚¹å‡¦ç†ãƒ‘ã‚¹ã®çµ‚äº†æ™‚
 		STDMETHOD_(void, OnVoiceProcessingPassEnd)(THIS) {};
-		// ƒoƒbƒtƒ@ƒXƒgƒŠ[ƒ€‚ÌÄ¶‚ªI—¹‚µ‚½
+		// ãƒãƒƒãƒ•ã‚¡ã‚¹ãƒˆãƒªãƒ¼ãƒ ã®å†ç”ŸãŒçµ‚äº†ã—ãŸæ™‚
 		STDMETHOD_(void, OnStreamEnd)(THIS) {};
-		// ƒoƒbƒtƒ@‚Ìg—pŠJn
+		// ãƒãƒƒãƒ•ã‚¡ã®ä½¿ç”¨é–‹å§‹æ™‚
 		STDMETHOD_(void, OnBufferStart)(THIS_ void* pBuffer_Context) {};
-		// ƒoƒbƒtƒ@‚Ì––”ö‚É’B‚µ‚½
+		// ãƒãƒƒãƒ•ã‚¡ã®æœ«å°¾ã«é”ã—ãŸæ™‚
 		STDMETHOD_(void, OnBufferEnd)(THIS_ void* pBuffer_Context);
-		// Ä¶‚ªƒ‹[ƒvˆÊ’u‚É’B‚µ‚½
+		// å†ç”ŸãŒãƒ«ãƒ¼ãƒ—ä½ç½®ã«é”ã—ãŸæ™‚
 		STDMETHOD_(void, OnLoopEnd)(THIS_ void* pBuffer_Context) {};
-		// ƒ{ƒCƒX‚ÌÀsƒGƒ‰[
+		// ãƒœã‚¤ã‚¹ã®å®Ÿè¡Œã‚¨ãƒ©ãƒ¼æ™‚
 		STDMETHOD_(void, OnVoiceError)(THIS_ void* pBuffer_Context, HRESULT Error) {};
 	};
 
 public:
 	static NAudio* GetInstance();
 
-	//‰Šú‰»
-	//ƒfƒBƒŒƒNƒgƒŠƒpƒX‚ğw’è‚µ‚È‚¢‚Æ"Resources/sound/"‚É‚È‚é
+	//åˆæœŸåŒ–
+	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã‚’æŒ‡å®šã—ãªã„ã¨"Resources/sound/"ã«ãªã‚‹
 	void Init(const std::string& directoryPath = "Resources/sound/");
 
-	//I—¹ˆ—
+	//çµ‚äº†å‡¦ç†
 	void Finalize();
-	//WAV‰¹º“Ç‚İ‚İ
-	//"filename" = WAVƒtƒ@ƒCƒ‹–¼
-	//return ƒTƒEƒ“ƒhƒf[ƒ^ƒnƒ“ƒhƒ‹
+	//WAVéŸ³å£°èª­ã¿è¾¼ã¿
+	//"filename" = WAVãƒ•ã‚¡ã‚¤ãƒ«å
+	//return ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ãƒãƒ³ãƒ‰ãƒ«
 	uint32_t LoadWave(const std::string& filename);
 
-	//mp3‰¹º“Ç‚İ‚İ
-	//"filename" = mp3ƒtƒ@ƒCƒ‹–¼
-	//return ƒTƒEƒ“ƒhƒf[ƒ^ƒnƒ“ƒhƒ‹
+	//mp3éŸ³å£°èª­ã¿è¾¼ã¿
+	//"filename" = mp3ãƒ•ã‚¡ã‚¤ãƒ«å
+	//return ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ãƒãƒ³ãƒ‰ãƒ«
 	uint32_t LoadMP3(const std::string& filename);
 
-	//ƒTƒEƒ“ƒhƒf[ƒ^‚Ì‰ğ•ú
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®è§£æ”¾
 	void Unload(SoundData* soundData);
 
-	//‰¹ºÄ¶
-	//"soundDataHandle" ƒTƒEƒ“ƒhƒf[ƒ^ƒnƒ“ƒhƒ‹
-	//"loopFlag" ƒ‹[ƒvÄ¶ƒtƒ‰ƒO
-	//"volume" ƒ{ƒŠƒ…[ƒ€
-	//"roopNum" ƒ‹[ƒv‚·‚é‰ñ”B0‚¾‚Æƒ‹[ƒv‚Í‚¹‚¸ˆê“x‚¾‚¯—¬‚ê‚é
-	//0‚Å–³‰¹A1‚ªƒfƒtƒHƒ‹ƒg‰¹—ÊB‚ ‚Ü‚è‘å‚«‚­‚µ‚·‚¬‚é‚Æ‰¹Š„‚ê‚·‚é
-	//return Ä¶ƒnƒ“ƒhƒ‹
+	//éŸ³å£°å†ç”Ÿ
+	//"soundDataHandle" ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ãƒãƒ³ãƒ‰ãƒ«
+	//"loopFlag" ãƒ«ãƒ¼ãƒ—å†ç”Ÿãƒ•ãƒ©ã‚°
+	//"volume" ãƒœãƒªãƒ¥ãƒ¼ãƒ 
+	//"roopNum" ãƒ«ãƒ¼ãƒ—ã™ã‚‹å›æ•°ã€‚0ã ã¨ãƒ«ãƒ¼ãƒ—ã¯ã›ãšä¸€åº¦ã ã‘æµã‚Œã‚‹
+	//0ã§ç„¡éŸ³ã€1ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆéŸ³é‡ã€‚ã‚ã¾ã‚Šå¤§ããã—ã™ãã‚‹ã¨éŸ³å‰²ã‚Œã™ã‚‹
+	//return å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
 	uint32_t PlayWave(const uint32_t soundDataHandle, bool loopFlag = false, const float volume = 1.0f, const int roopNum = 0);
 
-	//‰¹ºíœ
-	//"voiceHandle" Ä¶ƒnƒ“ƒhƒ‹
+	//éŸ³å£°å‰Šé™¤
+	//"voiceHandle" å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
 	void DestroyWave(const uint32_t voiceHandle);
 
-	//‰¹ºˆê’â~
-	//"voiceHandle" Ä¶ƒnƒ“ƒhƒ‹
+	//éŸ³å£°ä¸€æ™‚åœæ­¢
+	//"voiceHandle" å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
 	void StopWave(const uint32_t voiceHandle);
 
-	//ˆê’â~‚µ‚½‰¹º‚ğÄ¶
-	//"voiceHandle" Ä¶ƒnƒ“ƒhƒ‹
+	//ä¸€æ™‚åœæ­¢ã—ãŸéŸ³å£°ã‚’å†ç”Ÿ
+	//"voiceHandle" å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
 	void StartWave(const uint32_t voiceHandle);
 
-	//‰¹ºÄ¶’†‚©‚Ç‚¤‚©
-	//"voiceHandle" Ä¶ƒnƒ“ƒhƒ‹
+	//éŸ³å£°å†ç”Ÿä¸­ã‹ã©ã†ã‹
+	//"voiceHandle" å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
 	bool IsPlaying(const uint32_t voiceHandle);
 
-	//‰¹—Êİ’è
-	//"voiceHandle" Ä¶ƒnƒ“ƒhƒ‹
-	//"volume" ƒ{ƒŠƒ…[ƒ€
-	//0‚Å–³‰¹A1‚ªƒfƒtƒHƒ‹ƒg‰¹—ÊB‚ ‚Ü‚è‘å‚«‚­‚µ‚·‚¬‚é‚Æ‰¹Š„‚ê‚·‚é
+	//éŸ³é‡è¨­å®š
+	//"voiceHandle" å†ç”Ÿãƒãƒ³ãƒ‰ãƒ«
+	//"volume" ãƒœãƒªãƒ¥ãƒ¼ãƒ 
+	//0ã§ç„¡éŸ³ã€1ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆéŸ³é‡ã€‚ã‚ã¾ã‚Šå¤§ããã—ã™ãã‚‹ã¨éŸ³å‰²ã‚Œã™ã‚‹
 	void SetVolume(const uint32_t voiceHandle, const float volume);
 
 private:
-	// ƒTƒEƒ“ƒhƒf[ƒ^ƒRƒ“ƒeƒi
+	// ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	std::array<SoundData, kMaxSoundData_> soundDatas_;
-	// Ä¶’†ƒf[ƒ^ƒRƒ“ƒeƒi
+	// å†ç”Ÿä¸­ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	std::set<Voice*> voices_;
-	// ƒTƒEƒ“ƒhŠi”[ƒfƒBƒŒƒNƒgƒŠ
+	// ã‚µã‚¦ãƒ³ãƒ‰æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	std::string directoryPath_;
-	// Ÿ‚Ég‚¤ƒTƒEƒ“ƒhƒf[ƒ^‚Ì”Ô†
+	// æ¬¡ã«ä½¿ã†ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®ç•ªå·
 	uint32_t indexSoundData_ = 0u;
-	// Ÿ‚Ég‚¤Ä¶’†ƒf[ƒ^‚Ì”Ô†
+	// æ¬¡ã«ä½¿ã†å†ç”Ÿä¸­ãƒ‡ãƒ¼ã‚¿ã®ç•ªå·
 	uint32_t indexVoice_ = 0u;
-	// ƒI[ƒfƒBƒIƒR[ƒ‹ƒoƒbƒN
+	// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	XAudio2VoiceCallback voiceCallback_;
 };

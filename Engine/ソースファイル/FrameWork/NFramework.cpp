@@ -14,9 +14,9 @@ void NFramework::Finalize()
 
 void NFramework::Run()
 {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	Init();
-	//ƒQ[ƒ€ƒ‹[ƒv
+	//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	while (true)
 	{
 		Update();

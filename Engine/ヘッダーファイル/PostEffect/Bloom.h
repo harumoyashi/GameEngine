@@ -2,7 +2,7 @@
 #include "IPostEffect.h"
 
 class Bloom :
-    public IPostEffect
+	public IPostEffect
 {
 public:
 	static void Init();

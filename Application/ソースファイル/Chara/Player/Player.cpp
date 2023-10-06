@@ -19,7 +19,7 @@ Player::Player()
 	obj_ = std::make_unique<NObj3d>();
 	obj_->SetModel("catWalk");
 
-	//ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[‚ğƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã‚’ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 	deadParticle_.SetIsRotation(true);
 
@@ -29,7 +29,7 @@ Player::Player()
 
 Player::~Player()
 {
-	//ƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚©‚çíœ
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰å‰Šé™¤
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 }
 
@@ -43,8 +43,8 @@ bool Player::Init()
 {
 	obj_->position_ = {};
 	obj_->scale_ = 0.1f;
-	obj_->color_ = NColor::kPlayer;	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
-	obj_->SetIsElapseAnime(false);	//Œo‰ßŠÔ–³‹‚µ‚Ä‚¨‚­
+	obj_->color_ = NColor::kPlayer;	//ã‚ªãƒ¬ãƒ³ã‚¸ã£ã½ã
+	obj_->SetIsElapseAnime(false);	//çµŒéæ™‚é–“ç„¡è¦–ã—ã¦ãŠã
 	obj_->Update();
 
 	isAlive_ = true;
@@ -59,20 +59,20 @@ bool Player::Init()
 	isMove_ = true;
 	elapseSpeed_ = 0.0f;
 
-	//’e‚ÌƒŒƒxƒ‹‚½‚¿
+	//å¼¾ã®ãƒ¬ãƒ™ãƒ«ãŸã¡
 	lineLevel_ = 1;
 	sideLevel_ = 0;
 	wideLevel_ = 0;
 	roketLevel_ = 0;
 
-	//ƒRƒ‰ƒCƒ_[İ’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨­å®š
 	collider_.SetCenterPos(obj_->position_);
 	collider_.SetRadius(obj_->scale_.x);
 	collider_.SetColID("player");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));
 
-	deadEffectTimer_ = 1.5f;	//ƒXƒ[‚Íl—¶‚¹‚¸‚É‰½•b‚©
+	deadEffectTimer_ = 1.5f;	//ã‚¹ãƒ­ãƒ¼ã¯è€ƒæ…®ã›ãšã«ä½•ç§’ã‹
 	deadEffectTimer_.Reset();
 
 	faildEffectTimer_ = 3.0f;
@@ -85,17 +85,17 @@ bool Player::Init()
 
 void Player::Update()
 {
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	deadEffectTimer_.Update();
 
 	if (isAlive_)
 	{
-		//ƒJƒƒ‰‘JˆÚ‚ªI‚í‚Á‚Ä‚½‚ç“®‚«o‚µ‚Ä‚¨‚‹
+		//ã‚«ãƒ¡ãƒ©é·ç§»ãŒçµ‚ã‚ã£ã¦ãŸã‚‰å‹•ãå‡ºã—ã¦ãŠï½‹
 		if (NCameraManager::GetInstance()->GetIsNormalCameraChanged())
 		{
 			Move();
 		}
-		if (isMove_)	//“®‚¯‚È‚¢‚æ”»’è‚Ì‚Í’e‚ğŒ‚‚½‚È‚¢‚æ‚¤‚É
+		if (isMove_)	//å‹•ã‘ãªã„ã‚ˆåˆ¤å®šã®æ™‚ã¯å¼¾ã‚’æ’ƒãŸãªã„ã‚ˆã†ã«
 		{
 			Shot();
 		}
@@ -104,7 +104,7 @@ void Player::Update()
 	obj_->Update();
 	collider_.Update(obj_.get());
 
-	//OnCollision()‚ÅŒÄ‚Ô‚ÆA‚»‚ÌƒtƒŒ[ƒ€‚Å‚Ì‘“–‚½‚è‚É‰e‹¿‚ªo‚é‚©‚ç‚±‚±‚ÅÁ‚µ‚Ä‚é
+	//OnCollision()ã§å‘¼ã¶ã¨ã€ãã®ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®ç·å½“ãŸã‚Šã«å½±éŸ¿ãŒå‡ºã‚‹ã‹ã‚‰ã“ã“ã§æ¶ˆã—ã¦ã‚‹
 	if (isAlive_ == false)
 	{
 		if (deadEffectTimer_.GetStarted() == false)
@@ -112,12 +112,12 @@ void Player::Update()
 			deadEffectTimer_.Start();
 		}
 
-		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//€–S‰‰o‚Ì2Š„‚ÍƒqƒbƒgƒXƒgƒbƒv‚Ég‚¤
+		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//æ­»äº¡æ¼”å‡ºã®2å‰²ã¯ãƒ’ãƒƒãƒˆã‚¹ãƒˆãƒƒãƒ—ã«ä½¿ã†
 		{
 			isFlashing_ = ((int)(deadEffectTimer_.GetTimeRate() * 100.0f) % 2 == 0);
 			if (isFlashing_ ^ obj_->color_ == NColor::kWhite)
 			{
-				obj_->color_ = NColor::kPlayer;	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
+				obj_->color_ = NColor::kPlayer;	//ã‚ªãƒ¬ãƒ³ã‚¸ã£ã½ã
 			}
 			else
 			{
@@ -127,39 +127,39 @@ void Player::Update()
 		}
 		else
 		{
-			obj_->color_ = NColor::kPlayer;	//ƒIƒŒƒ“ƒW‚Á‚Û‚­
+			obj_->color_ = NColor::kPlayer;	//ã‚ªãƒ¬ãƒ³ã‚¸ã£ã½ã
 			DeadParticle();
-			elapseSpeed_ = slowElapseTime_;			//ƒqƒbƒgƒXƒgƒbƒvI‚í‚Á‚½‚çƒXƒ[‚É
-			isDraw_ = false;						//’Êí‚Í€‚ñ‚¾‚ç•`‰æ‚µ‚È‚¢
+			elapseSpeed_ = slowElapseTime_;			//ãƒ’ãƒƒãƒˆã‚¹ãƒˆãƒƒãƒ—çµ‚ã‚ã£ãŸã‚‰ã‚¹ãƒ­ãƒ¼ã«
+			isDraw_ = false;						//é€šå¸¸ã¯æ­»ã‚“ã ã‚‰æç”»ã—ãªã„
 		}
 
-		//ƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚©‚çíœ
+		//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã‹ã‚‰å‰Šé™¤
 		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 
-		deadPos_ = GetPos();	//ƒŠƒUƒ‹ƒg—p‚É€‚ñ‚¾À•W‚ğ‹L˜^
+		deadPos_ = GetPos();	//ãƒªã‚¶ãƒ«ãƒˆç”¨ã«æ­»ã‚“ã åº§æ¨™ã‚’è¨˜éŒ²
 	}
 
-	//€–S‚Ìƒp[ƒeƒBƒNƒ‹‚ªo‚Ä‚¢‚È‚¢‚Ì‚Å‚ ‚ê‚Îƒ‰ƒWƒAƒ‹ƒuƒ‰[‚Í‚©‚¯‚È‚¢
+	//æ­»äº¡æ™‚ã®ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒå‡ºã¦ã„ãªã„ã®ã§ã‚ã‚Œã°ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã¯ã‹ã‘ãªã„
 	if (deadParticle_.GetParticlesDead())
 	{
-		Bloom::Init();		//ƒ‰ƒWƒAƒ‹ƒuƒ‰[Ø‚Á‚Äƒuƒ‹[ƒ€‚É–ß‚·
+		Bloom::Init();		//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼åˆ‡ã£ã¦ãƒ–ãƒ«ãƒ¼ãƒ ã«æˆ»ã™
 	}
 }
 
 void Player::ClearUpdate()
 {
-	isDraw_ = true;						//â‘Î•`‰æ‚³‚¹‚é
-	Bloom::Init();						//ƒ‰ƒWƒAƒ‹ƒuƒ‰[Ø‚Á‚Äƒuƒ‹[ƒ€‚É–ß‚·
-	obj_->rotation_.y = 0.0f;			//‘O‚ÉŒü‚©‚¹‚é
-	obj_->position_.z += 0.05f;			//‘O‚ÉŒü‚©‚Á‚Ä‘–‚è‘±‚¯‚é
+	isDraw_ = true;						//çµ¶å¯¾æç”»ã•ã›ã‚‹
+	Bloom::Init();						//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼åˆ‡ã£ã¦ãƒ–ãƒ«ãƒ¼ãƒ ã«æˆ»ã™
+	obj_->rotation_.y = 0.0f;			//å‰ã«å‘ã‹ã›ã‚‹
+	obj_->position_.z += 0.05f;			//å‰ã«å‘ã‹ã£ã¦èµ°ã‚Šç¶šã‘ã‚‹
 
 	obj_->Update();
 
-	//ƒNƒŠƒAƒp[ƒeƒBƒNƒ‹—pƒ^ƒCƒ}[ŠJn
+	//ã‚¯ãƒªã‚¢æ™‚ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 	clearParticleTimer_.Roop();
 	clearParticleTimer_.Update();
 
-	//ƒNƒŠƒA‚ÉƒNƒ‰ƒbƒJ[‚İ‚½‚¢‚Èƒp[ƒeƒBƒNƒ‹‚ª’Ê‚è“¹‚Éo‚é‚â‚Â
+	//ã‚¯ãƒªã‚¢æ™‚ã«ã‚¯ãƒ©ãƒƒã‚«ãƒ¼ã¿ãŸã„ãªãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒé€šã‚Šé“ã«å‡ºã‚‹ã‚„ã¤
 	if (clearParticleTimer_.GetTimeRate() <= 0.0f)
 	{
 		for (uint32_t i = 0; i < 7; i++)
@@ -175,14 +175,14 @@ void Player::ClearUpdate()
 
 void Player::FaildUpdate()
 {
-	//ƒ^ƒCƒ}[ƒ‹[ƒv
+	//ã‚¿ã‚¤ãƒãƒ¼ãƒ«ãƒ¼ãƒ—
 	faildEffectTimer_.Roop();
 
-	isDraw_ = true;						//â‘Î•`‰æ‚³‚¹‚é
-	Bloom::Init();						//ƒ‰ƒWƒAƒ‹ƒuƒ‰[Ø‚Á‚Äƒuƒ‹[ƒ€‚É–ß‚·
-	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//€‚ñ‚¾À•W‚ğŠî€‚É“K“–‚È’l‘«‚µ‚Ä‚»‚ê‚Á‚Û‚­‚·‚é
+	isDraw_ = true;						//çµ¶å¯¾æç”»ã•ã›ã‚‹
+	Bloom::Init();						//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼åˆ‡ã£ã¦ãƒ–ãƒ«ãƒ¼ãƒ ã«æˆ»ã™
+	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//æ­»ã‚“ã åº§æ¨™ã‚’åŸºæº–ã«é©å½“ãªå€¤è¶³ã—ã¦ãã‚Œã£ã½ãã™ã‚‹
 
-	//‚»‚Ìê‚Å‰ñ“]‚³‚¹‚é
+	//ãã®å ´ã§å›è»¢ã•ã›ã‚‹
 	obj_->rotation_.y = MathUtil::Radian2Degree(faildEffectTimer_.GetTimeRate() * PI2);
 
 	obj_->Update();
@@ -202,19 +202,19 @@ void Player::Move()
 {
 	if (isMove_)
 	{
-		//ƒpƒbƒhÚ‘±‚³‚ê‚Ä‚é‚È‚ç
+		//ãƒ‘ãƒƒãƒ‰æ¥ç¶šã•ã‚Œã¦ã‚‹ãªã‚‰
 		if (NInput::GetIsConnect())
 		{
-			//ƒXƒeƒBƒbƒNˆÚ“®
+			//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ç§»å‹•
 			moveVelo_ = NInput::GetStick();
-			//ƒC[ƒWƒ“ƒO“I‚ÈŠ´‚¶‚É‚µ‚Ä‘¬“x‚Ì‰Â•Ï–¾Šm‚É
+			//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°çš„ãªæ„Ÿã˜ã«ã—ã¦é€Ÿåº¦ã®å¯å¤‰æ˜ç¢ºã«
 			moveVelo_.x *= moveVelo_.x * NInput::GetStick().x;
 			moveVelo_.y *= moveVelo_.y * NInput::GetStick().y;
 		}
 		else
 		{
 			moveVelo_ = { 0,0 };
-			//‚¢‚¸‚ê‚©‚ÌƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
+			//ã„ãšã‚Œã‹ã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ã
 			if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
 			{
 				if (NInput::IsKey(DIK_W)) { moveVelo_.y = +1.0f; }
@@ -223,26 +223,26 @@ void Player::Move()
 				else if (NInput::IsKey(DIK_A)) { moveVelo_.x = -1.0f; }
 			}
 #ifdef _DEBUG
-			//°‚Æ‚Ì“–‚½‚è”»’èŒ©‚½‚è‚·‚é‚½‚ß‚Ìã‰ºˆÚ“®
+			//åºŠã¨ã®å½“ãŸã‚Šåˆ¤å®šè¦‹ãŸã‚Šã™ã‚‹ãŸã‚ã®ä¸Šä¸‹ç§»å‹•
 			if (NInput::IsKey(DIK_Q)) { obj_->position_.y += 0.1f; }
 			else if (NInput::IsKey(DIK_E)) { obj_->position_.y -= 0.1f; }
 #endif
 		}
 
-		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//ˆÚ“®—Ê‚É‚æ‚Á‚ÄŒo‰ßŠÔ•Ï‰»
+		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//ç§»å‹•é‡ã«ã‚ˆã£ã¦çµŒéæ™‚é–“å¤‰åŒ–
 		elapseSpeed_ = MathUtil::Clamp(elapseSpeed_, 0.0f, 1.0f);
 
-		//ˆÚ“®—Ê‚ğ‰ÁZ
+		//ç§»å‹•é‡ã‚’åŠ ç®—
 		obj_->position_.x += moveVelo_.x * moveSpeed_;
 		obj_->position_.z += moveVelo_.y * moveSpeed_;
-		//‰ÁZŒã‚És“®”ÍˆÍ’´‚¦‚Ä‚éê‡‚Í’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+		//åŠ ç®—å¾Œã«è¡Œå‹•ç¯„å›²è¶…ãˆã¦ã‚‹å ´åˆã¯è¶…ãˆãªã„ã‚ˆã†ã«ã™ã‚‹
 		obj_->position_.x = (std::max)(obj_->position_.x, -Field::GetInstance()->GetActivityAreaX() + obj_->scale_.x);
 		obj_->position_.x = (std::min)(obj_->position_.x, Field::GetInstance()->GetActivityAreaX() - obj_->scale_.x);
 
-		//ˆÚ“®•ûŒü‚É‡‚í‚¹‚Ä‰ñ“]
-		if (moveVelo_.Length() > 0.0f)			//“ü—Í‚³‚ê‚Ä‚½‚ç
+		//ç§»å‹•æ–¹å‘ã«åˆã‚ã›ã¦å›è»¢
+		if (moveVelo_.Length() > 0.0f)			//å…¥åŠ›ã•ã‚Œã¦ãŸã‚‰
 		{
-			NVec2 velo = moveVelo_;	//moveVelo_‚Ì’l‚ª•Ï‚í‚ç‚È‚¢‚æ‚¤‚ÉŠi”[
+			NVec2 velo = moveVelo_;	//moveVelo_ã®å€¤ãŒå¤‰ã‚ã‚‰ãªã„ã‚ˆã†ã«æ ¼ç´
 			velo.Normalize();
 			moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
 			if (velo.x < 0)
@@ -255,12 +255,12 @@ void Player::Move()
 	}
 
 #ifdef _DEBUG
-	//’eƒŒƒxƒ‹‚¢‚¶‚¢‚¶—p•Ï”
+	//å¼¾ãƒ¬ãƒ™ãƒ«ã„ã˜ã„ã˜ç”¨å¤‰æ•°
 	static bool isLevelMane = false;
 	static int lineLv = 1, sideLv = 1, wideLv = 1;
 	ImGui::Begin("PlayerParameter");
-	ImGui::Checkbox("LevelManagement", &isLevelMane);	//’eƒŒƒxƒ‹ŠÇ—‚Å‚«‚é‚·‚é‚©ƒtƒ‰ƒOw’è
-	//’eƒŒƒxƒ‹‚¢‚¶‚¢‚¶
+	ImGui::Checkbox("LevelManagement", &isLevelMane);	//å¼¾ãƒ¬ãƒ™ãƒ«ç®¡ç†ã§ãã‚‹ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°æŒ‡å®š
+	//å¼¾ãƒ¬ãƒ™ãƒ«ã„ã˜ã„ã˜
 	if (isLevelMane)
 	{
 		ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
@@ -270,7 +270,7 @@ void Player::Move()
 		sideLevel_ = sideLv;
 		wideLevel_ = wideLv;
 	}
-	//‚»‚Ì‘¼‚Ìƒpƒ‰ƒ[ƒ^‚¢‚¶‚¢‚¶
+	//ãã®ä»–ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã„ã˜ã„ã˜
 	ImGui::SliderFloat("MoveSpeed", &moveSpeed_, 0.01f, 1.0f);
 	ImGui::Text("MoveVelo:%f,%f", moveVelo_.x, moveVelo_.y);
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
@@ -306,12 +306,12 @@ void Player::Shot()
 
 void Player::OnCollision()
 {
-	//“–‚½‚Á‚½‘Šè‚ª“G‚¾‚Á‚½‚Ìˆ—
+	//å½“ãŸã£ãŸç›¸æ‰‹ãŒæ•µã ã£ãŸæ™‚ã®å‡¦ç†
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
 		NAudioManager::GetInstance()->Play("deadSE");
 		SetIsAlive(false);
-		NInput::Vibration(0.8f,0.8f,0.3f);
+		NInput::Vibration(0.8f, 0.8f, 0.3f);
 	}
 }
 
@@ -320,8 +320,8 @@ void Player::DeadParticle()
 	if (isDraw_)
 	{
 		NAudioManager::GetInstance()->Play("explosionSE");
-		RadialBlur::Init();		//ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚©‚¯‚é
-		
+		RadialBlur::Init();		//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã‹ã‘ã‚‹
+
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
 			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, NVec3::zero, -NVec3::one, NVec3::one);
@@ -330,7 +330,7 @@ void Player::DeadParticle()
 
 void Player::LevelUp(BulletType bulletType)
 {
-	//w’è‚³‚ê‚½’e‚Ìí—Ş‚ÌƒŒƒxƒ‹‚ğ1ã‚°‚é
+	//æŒ‡å®šã•ã‚ŒãŸå¼¾ã®ç¨®é¡ã®ãƒ¬ãƒ™ãƒ«ã‚’1ä¸Šã’ã‚‹
 	switch (bulletType)
 	{
 	case BulletType::LineBullet:
@@ -368,7 +368,7 @@ void Player::LevelUp(BulletType bulletType)
 void Player::SetIsAlive(bool isAlive)
 {
 	isAlive_ = isAlive;
-	//€‚ñ‚¾‚È‚çƒRƒ“ƒgƒ[ƒ‰[U“®‚³‚¹‚é
+	//æ­»ã‚“ã ãªã‚‰ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼æŒ¯å‹•ã•ã›ã‚‹
 	if (isAlive_ == false)
 	{
 		NInput::Vibration(0.8f, 0.8f, 0.3f);

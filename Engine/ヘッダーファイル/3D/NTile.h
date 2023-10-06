@@ -5,27 +5,27 @@ class NTile final :
 	public NObj3d
 {
 private:
-	//’è”ƒoƒbƒtƒ@//
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡//
 	std::unique_ptr<NConstBuff<ConstBuffDataTile>> cbTile_;
 
-	float divide_;			//ƒ^ƒCƒ‹‚Ì•ªŠ„•
-	float activityArea_;	//s“®”ÍˆÍ
+	float divide_;			//ã‚¿ã‚¤ãƒ«ã®åˆ†å‰²å¹…
+	float activityArea_;	//è¡Œå‹•ç¯„å›²
 
 public:
 	bool Init()override;
 	void Update()override;
-	//‹¤’ÊƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh
+	//å…±é€šã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰
 	static void CommonBeginDraw();
-	//•`‰æ
+	//æç”»
 	void Draw()override;
 
-	// ƒZƒbƒ^[ //
-	//ƒ^ƒCƒ‹‚Ì•ªŠ„•İ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ã‚¿ã‚¤ãƒ«ã®åˆ†å‰²å¹…è¨­å®š
 	void SetDivide(float divide) { divide_ = divide; }
-	//s“®”ÍˆÍİ’è
+	//è¡Œå‹•ç¯„å›²è¨­å®š
 	void SetActivityArea(float activityArea) { activityArea_ = activityArea; }
 
 private:
-	//ƒ^ƒCƒ‹—p’è”ƒoƒbƒtƒ@“]‘—
+	//ã‚¿ã‚¤ãƒ«ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡è»¢é€
 	void TransferCBTile();
 };

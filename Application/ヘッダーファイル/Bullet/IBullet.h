@@ -16,65 +16,65 @@ enum class BulletType
 class IBullet
 {
 protected:
-	BulletType bulletType;			//’e‚Ìí—Ş
+	BulletType bulletType;			//å¼¾ã®ç¨®é¡
 
-	std::unique_ptr<NObj3d> obj_;	//’e‚ÌƒIƒuƒWƒFƒNƒg
-	NVec2 moveVelo_;				//ˆÚ“®—Ê
-	float moveAngle_;				//ˆÚ“®—pŠp“x
-	float moveSpeed_;				//ˆÚ“®ƒXƒs[ƒh
+	std::unique_ptr<NObj3d> obj_;	//å¼¾ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	NVec2 moveVelo_;				//ç§»å‹•é‡
+	float moveAngle_;				//ç§»å‹•ç”¨è§’åº¦
+	float moveSpeed_;				//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰
 
-	bool isAlive_;					//¶‘¶ƒtƒ‰ƒO
-	SphereCollider collider_;		//’e‚Ì“–‚½‚è”»’è
+	bool isAlive_;					//ç”Ÿå­˜ãƒ•ãƒ©ã‚°
+	SphereCollider collider_;		//å¼¾ã®å½“ãŸã‚Šåˆ¤å®š
 
-	NEasing::EaseTimer lifeTimer_;	//¶‘¶ŠÔ
+	NEasing::EaseTimer lifeTimer_;	//ç”Ÿå­˜æ™‚é–“
 
-	float damage_;					//—^‚¦‚éƒ_ƒ[ƒW—Ê
+	float damage_;					//ä¸ãˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸é‡
 
-	float elapseSpeed_;				//Œo‰ßŠÔ‚ÌƒXƒs[ƒh(ƒXƒ[ƒ‚[ƒVƒ‡ƒ“—p)
+	float elapseSpeed_;				//çµŒéæ™‚é–“ã®ã‚¹ãƒ”ãƒ¼ãƒ‰(ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
 
 public:
 	IBullet();
 	virtual ~IBullet();
-	//¶¬
-	void Generate(const NVec3& pos,const float moveAngle = 0.0f);
-	//XV
+	//ç”Ÿæˆ
+	void Generate(const NVec3& pos, const float moveAngle = 0.0f);
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
+	//ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void OnCollision();
 
 public:
-	// ƒQƒbƒ^[ //
-	//ƒRƒ‰ƒCƒ_[æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	const SphereCollider& GetIBulletCollider()const { return collider_; }
-	//¶‘¶ƒtƒ‰ƒOæ“¾
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetisAlive()const { return isAlive_; }
-	//ˆÚ“®ƒXƒs[ƒhæ“¾
+	//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰å–å¾—
 	float GetMoveSpeed()const { return moveSpeed_; }
-	//—^‚¦‚éƒ_ƒ[ƒW—Êæ“¾
+	//ä¸ãˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸é‡å–å¾—
 	float GetDamage()const { return damage_; }
-	//À•Wæ“¾
+	//åº§æ¨™å–å¾—
 	NVec3& GetPos()const { return obj_->position_; }
-	//‘å‚«‚³æ“¾
+	//å¤§ãã•å–å¾—
 	NVec3& GetScale()const { return obj_->scale_; }
-	//ˆÚ“®—pŠp“xæ“¾
+	//ç§»å‹•ç”¨è§’åº¦å–å¾—
 	float GetMoveAngle()const { return moveAngle_; }
 
-	// ƒZƒbƒ^[ //
-	//¶‘¶ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
-	//—^‚¦‚éƒ_ƒ[ƒW—Êİ’è
+	//ä¸ãˆã‚‹ãƒ€ãƒ¡ãƒ¼ã‚¸é‡è¨­å®š
 	void SetDamage(const float damage) { damage_ = damage; }
-	//‘å‚«‚³İ’è
+	//å¤§ãã•è¨­å®š
 	void SetScale(const float scale) { obj_->scale_ = scale; collider_.SetRadius(scale); }
-	//ˆÚ“®Šp“xİ’è
+	//ç§»å‹•è§’åº¦è¨­å®š
 	void SetMoveAngle(const float moveAngle) { moveAngle_ = moveAngle; }
-	//ˆÚ“®ƒXƒs[ƒhİ’è
+	//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetMoveSpeed(const float moveSpeed) { moveSpeed_ = moveSpeed; }
-	//¶‘¶ŠÔİ’è
+	//ç”Ÿå­˜æ™‚é–“è¨­å®š
 	void SetLifeTimer(const float lifeTimer) { lifeTimer_ = lifeTimer; }
-	//Œo‰ßŠÔƒXƒs[ƒhİ’è
+	//çµŒéæ™‚é–“ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 };

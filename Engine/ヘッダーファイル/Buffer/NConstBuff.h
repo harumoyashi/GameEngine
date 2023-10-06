@@ -11,8 +11,8 @@ struct NConstBuff
 public:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	ComPtr<ID3D12Resource> constBuff_;		//’è”ƒoƒbƒtƒ@‚ÌGPUƒŠƒ\[ƒX‚Ìƒ|ƒCƒ“ƒ^
-	T* constMap_;	// ƒ}ƒbƒsƒ“ƒO—p
+	ComPtr<ID3D12Resource> constBuff_;		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®GPUãƒªã‚½ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
+	T* constMap_;	// ãƒãƒƒãƒ”ãƒ³ã‚°ç”¨
 
 public:
 	NConstBuff() :constMap_(nullptr) {}
@@ -21,37 +21,37 @@ public:
 	void Init()
 	{
 		HRESULT result;
-		//ƒq[ƒvİ’è
-		D3D12_HEAP_PROPERTIES heapProp{};	//ƒq[ƒv
-		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
-		
-		//ƒŠƒ\[ƒXİ’è
-		D3D12_RESOURCE_DESC resDesc{};		//ƒŠƒ\[ƒX
+		//ãƒ’ãƒ¼ãƒ—è¨­å®š
+		D3D12_HEAP_PROPERTIES heapProp{};	//ãƒ’ãƒ¼ãƒ—
+		heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
+
+		//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+		D3D12_RESOURCE_DESC resDesc{};		//ãƒªã‚½ãƒ¼ã‚¹
 		resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-		resDesc.Width = (sizeof(T) + 0xff) & ~0xff;	//256ƒoƒCƒgƒAƒ‰ƒCƒ“ƒƒ“ƒg
+		resDesc.Width = (sizeof(T) + 0xff) & ~0xff;	//256ãƒã‚¤ãƒˆã‚¢ãƒ©ã‚¤ãƒ³ãƒ¡ãƒ³ãƒˆ
 		resDesc.Height = 1;
 		resDesc.DepthOrArraySize = 1;
 		resDesc.MipLevels = 1;
 		resDesc.SampleDesc.Count = 1;
 		resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-		//’è”ƒoƒbƒtƒ@‚Ì¶¬
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 		result = NDX12::GetInstance()->GetDevice()->CreateCommittedResource(
-			&heapProp,	//ƒq[ƒvİ’è
+			&heapProp,	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 			D3D12_HEAP_FLAG_NONE,
-			&resDesc,	//ƒŠƒ\[ƒXİ’è
+			&resDesc,	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 			D3D12_RESOURCE_STATE_GENERIC_READ,
 			nullptr,
 			IID_PPV_ARGS(&constBuff_)
 		);
 		assert(SUCCEEDED(result));
-		
-		//’è”ƒoƒbƒtƒ@‚Ìƒ}ƒbƒsƒ“ƒO
-		result = constBuff_->Map(0, nullptr, (void**)&constMap_);	//ƒ}ƒbƒsƒ“ƒO
+
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒãƒƒãƒ”ãƒ³ã‚°
+		result = constBuff_->Map(0, nullptr, (void**)&constMap_);	//ãƒãƒƒãƒ”ãƒ³ã‚°
 		assert(SUCCEEDED(result));
 
 		constBuff_->Unmap(0, nullptr);
 	};
 
-	void Unmap(){ constBuff_->Unmap(0, nullptr); }
+	void Unmap() { constBuff_->Unmap(0, nullptr); }
 };

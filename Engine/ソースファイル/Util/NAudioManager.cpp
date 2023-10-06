@@ -20,7 +20,7 @@ void NAudioManager::AllSetVolume()
 	{
 		if (sSoundMap[sound.first].isBGM)
 		{
-			//•Û‘¶‚µ‚Ä‚½ŒÂ•Ê‚Ì‰¹—Ê * ‘S‘Ì‚Ì‰¹—Ê * BGM‚Ì‰¹—Ê
+			//ä¿å­˜ã—ã¦ãŸå€‹åˆ¥ã®éŸ³é‡ * å…¨ä½“ã®éŸ³é‡ * BGMã®éŸ³é‡
 			NAudio::GetInstance()->SetVolume(
 				sSoundMap[sound.first].handle,
 				sSoundMap[sound.first].volume * masterVolume_ * bgmVolume_
@@ -28,7 +28,7 @@ void NAudioManager::AllSetVolume()
 		}
 		else
 		{
-			//•Û‘¶‚µ‚Ä‚½ŒÂ•Ê‚Ì‰¹—Ê * ‘S‘Ì‚Ì‰¹—Ê * SE‚Ì‰¹—Ê
+			//ä¿å­˜ã—ã¦ãŸå€‹åˆ¥ã®éŸ³é‡ * å…¨ä½“ã®éŸ³é‡ * SEã®éŸ³é‡
 			NAudio::GetInstance()->SetVolume(
 				sSoundMap[sound.first].handle,
 				sSoundMap[sound.first].volume * masterVolume_ * seVolume_
@@ -41,9 +41,9 @@ void NAudioManager::ImGuiDraw()
 {
 #ifdef DEBUG_
 	ImGui::Begin("AudioVolume");
-	ImGui::SliderFloat("MasterVolume",&masterVolume_,0.f,1.f);
-	ImGui::SliderFloat("bgmVolume",&bgmVolume_,0.f,1.f);
-	ImGui::SliderFloat("seVolume",&seVolume_,0.f,1.f);
+	ImGui::SliderFloat("MasterVolume", &masterVolume_, 0.f, 1.f);
+	ImGui::SliderFloat("bgmVolume", &bgmVolume_, 0.f, 1.f);
+	ImGui::SliderFloat("seVolume", &seVolume_, 0.f, 1.f);
 	AllSetVolume();
 	ImGui::End();
 #endif // DEBUG_
@@ -51,23 +51,23 @@ void NAudioManager::ImGuiDraw()
 
 void NAudioManager::AllLoad()
 {
-	//BGM“Ç‚Ýž‚Ý
-	LoadSound("title_BGM.mp3", "titleBGM", true);     //ƒ^ƒCƒgƒ‹‚ÌBGM
-	LoadSound("play_BGM.mp3", "playBGM", true);       //ƒvƒŒƒC’†‚ÌBGM
-	LoadSound("clear_BGM.mp3", "clearBGM", true);     //ƒNƒŠƒAƒŠƒUƒ‹ƒg‚ÌBGM
-	LoadSound("faild_BGM.mp3", "faildBGM", true);     //Ž¸”sƒŠƒUƒ‹ƒg‚ÌBGM
+	//BGMèª­ã¿è¾¼ã¿
+	LoadSound("title_BGM.mp3", "titleBGM", true);     //ã‚¿ã‚¤ãƒˆãƒ«ã®BGM
+	LoadSound("play_BGM.mp3", "playBGM", true);       //ãƒ—ãƒ¬ã‚¤ä¸­ã®BGM
+	LoadSound("clear_BGM.mp3", "clearBGM", true);     //ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆã®BGM
+	LoadSound("faild_BGM.mp3", "faildBGM", true);     //å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆã®BGM
 
-	//SE“Ç‚Ýž‚Ý
-	LoadSound("shot_SE.mp3", "shotSE", false);                 //’eŒ‚‚Á‚½Žž
-	LoadSound("start_SE.mp3", "startSE", false);               //ƒXƒ^[ƒg‚Ì•¶Žš‘|‚¯‚é‰¹
-	LoadSound("vanish_SE.mp3", "vanishSE", false);             //“G‚ª’e‚¯‚é‰¹
-	LoadSound("explosion_SE.mp3", "explosionSE", false);       //ƒvƒŒƒCƒ„[‚ª’e‚¯‚é‰¹
-	LoadSound("sceneChange_SE.mp3", "sceneChangeSE", false);   //ƒV[ƒ“‘JˆÚ‰¹
-	LoadSound("dead_SE.mp3", "deadSE", false);                 //ƒvƒŒƒCƒ„[Ž€–S‰¹
-	LoadSound("item_get_SE.mp3", "itemGetSE", false);          //ƒAƒCƒeƒ€Šl“¾‰¹
+	//SEèª­ã¿è¾¼ã¿
+	LoadSound("shot_SE.mp3", "shotSE", false);                 //å¼¾æ’ƒã£ãŸæ™‚
+	LoadSound("start_SE.mp3", "startSE", false);               //ã‚¹ã‚¿ãƒ¼ãƒˆã®æ–‡å­—æŽƒã‘ã‚‹éŸ³
+	LoadSound("vanish_SE.mp3", "vanishSE", false);             //æ•µãŒå¼¾ã‘ã‚‹éŸ³
+	LoadSound("explosion_SE.mp3", "explosionSE", false);       //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå¼¾ã‘ã‚‹éŸ³
+	LoadSound("sceneChange_SE.mp3", "sceneChangeSE", false);   //ã‚·ãƒ¼ãƒ³é·ç§»éŸ³
+	LoadSound("dead_SE.mp3", "deadSE", false);                 //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ­»äº¡éŸ³
+	LoadSound("item_get_SE.mp3", "itemGetSE", false);          //ã‚¢ã‚¤ãƒ†ãƒ ç²å¾—éŸ³
 
-	LoadVolume();	//•Û‘¶‚µ‚Ä‚½‰¹—Êƒf[ƒ^“Ç‚Ýž‚ñ‚Å
-	AllSetVolume();	//‰¹—Ê‚ð’²ß‚·‚é
+	LoadVolume();	//ä¿å­˜ã—ã¦ãŸéŸ³é‡ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã‚“ã§
+	AllSetVolume();	//éŸ³é‡ã‚’èª¿ç¯€ã™ã‚‹
 }
 
 void NAudioManager::SetMasterVolume(float masterVolume)
@@ -93,11 +93,11 @@ void NAudioManager::SetSEVolume(float seVolume)
 
 void NAudioManager::LoadVolume()
 {
-	//ƒtƒ@ƒCƒ‹“ü—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ›å‡¦ç†
 	std::ifstream readingFile;
 
 	readingFile.open("./Resources/Data/volume.txt");
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“Ž¸”s‚ðƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (readingFile.fail())
 	{
 		assert(0);
@@ -132,7 +132,7 @@ void NAudioManager::LoadVolume()
 
 void NAudioManager::SaveVolume()
 {
-	//ƒtƒ@ƒCƒ‹o—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›å‡¦ç†
 	std::ofstream writingFile;
 
 	std::string filename = "";
@@ -165,7 +165,7 @@ NAudioManager* NAudioManager::GetInstance()
 
 void NAudioManager::LoadSound(const std::string& filename, const std::string& soundHandle, bool isBGM)
 {
-	//Šg’£Žq‚ð’Šo‚µ‚Ä‚»‚ê‚É‰ž‚¶‚½•û‚Å“Ç‚Ýž‚Ý
+	//æ‹¡å¼µå­ã‚’æŠ½å‡ºã—ã¦ãã‚Œã«å¿œã˜ãŸæ–¹ã§èª­ã¿è¾¼ã¿
 	std::string ext = NUtil::GetExtension(filename);
 	if (ext == "wav")
 	{
@@ -223,16 +223,16 @@ bool NAudioManager::GetIsPlaying(const std::string& soundHandle)
 
 void NAudioManager::SetVolume(const std::string& soundHandle, const float volume)
 {
-	sSoundMap[soundHandle].volume = volume;	//‰¹—Ê•Û‘¶
+	sSoundMap[soundHandle].volume = volume;	//éŸ³é‡ä¿å­˜
 
 	if (sSoundMap[soundHandle].isBGM)
 	{
-		//Žw’è‚³‚ê‚½ŒÂ•Ê‚Ì‰¹—Ê * ‘S‘Ì‚Ì‰¹—Ê * BGM‚Ì‰¹—Ê
+		//æŒ‡å®šã•ã‚ŒãŸå€‹åˆ¥ã®éŸ³é‡ * å…¨ä½“ã®éŸ³é‡ * BGMã®éŸ³é‡
 		NAudio::GetInstance()->SetVolume(sSoundMap[soundHandle].handle, volume * masterVolume_ * bgmVolume_);
 	}
 	else
 	{
-		//Žw’è‚³‚ê‚½ŒÂ•Ê‚Ì‰¹—Ê * ‘S‘Ì‚Ì‰¹—Ê * SE‚Ì‰¹—Ê
+		//æŒ‡å®šã•ã‚ŒãŸå€‹åˆ¥ã®éŸ³é‡ * å…¨ä½“ã®éŸ³é‡ * SEã®éŸ³é‡
 		NAudio::GetInstance()->SetVolume(sSoundMap[soundHandle].handle, volume * masterVolume_ * seVolume_);
 	}
 }

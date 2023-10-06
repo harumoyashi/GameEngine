@@ -9,8 +9,8 @@ private:
 public:
 	std::vector<std::unique_ptr<IEnemy>> enemys_;
 
-	NEasing::EaseTimer beatInTimer_ = 0.25f;		//ƒŠƒYƒ€‚Éæ‚é—pƒ^ƒCƒ}[(‚Å‚©‚­‚È‚é)
-	NEasing::EaseTimer beatOutTimer_ = 0.25f;		//ƒŠƒYƒ€‚Éæ‚é—pƒ^ƒCƒ}[(k‚Ş)
+	NEasing::EaseTimer beatInTimer_ = 0.25f;		//ãƒªã‚ºãƒ ã«ä¹—ã‚‹ç”¨ã‚¿ã‚¤ãƒãƒ¼(ã§ã‹ããªã‚‹)
+	NEasing::EaseTimer beatOutTimer_ = 0.25f;		//ãƒªã‚ºãƒ ã«ä¹—ã‚‹ç”¨ã‚¿ã‚¤ãƒãƒ¼(ç¸®ã‚€)
 
 	static EnemyManager* GetInstance();
 	void Init();

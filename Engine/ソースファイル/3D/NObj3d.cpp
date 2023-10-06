@@ -19,7 +19,7 @@ NObj3d::~NObj3d()
 
 bool NObj3d::Init()
 {
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbMaterial_ = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
@@ -29,7 +29,7 @@ bool NObj3d::Init()
 	cbColor_->Init();
 	cbSkin_->Init();
 	color_ = NColor::kWhite;
-	isElapseAnime_ = true;	//Œo‰ßŠÔ‚É‰e‹¿‚ğó‚¯‚éó‘Ô‚Å¶¬
+	isElapseAnime_ = true;	//çµŒéæ™‚é–“ã«å½±éŸ¿ã‚’å—ã‘ã‚‹çŠ¶æ…‹ã§ç”Ÿæˆ
 
 	objName_ = typeid(*this).name();
 	return true;
@@ -48,7 +48,7 @@ void NObj3d::Update()
 
 void NObj3d::MoveKey()
 {
-	//‚¢‚¸‚ê‚©‚ÌƒL[‚ğ‰Ÿ‚µ‚½‚Æ‚«
+	//ã„ãšã‚Œã‹ã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã¨ã
 	if (NInput::IsKey(DIK_W) || NInput::IsKey(DIK_S) || NInput::IsKey(DIK_D) || NInput::IsKey(DIK_A))
 	{
 		if (NInput::IsKey(DIK_W)) { position_.y += 0.5f; }
@@ -68,41 +68,41 @@ void NObj3d::MoveKey()
 
 void NObj3d::UpdateMatrix()
 {
-	//ƒ[ƒ‹ƒhs—ñ
-	NMatrix4 matScale;	//ƒXƒP[ƒŠƒ“ƒOs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+	NMatrix4 matScale;	//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°è¡Œåˆ—
 	matScale = matScale.Scale(scale_);
 
-	NMatrix4 matRot;		//‰ñ“]s—ñ
+	NMatrix4 matRot;		//å›è»¢è¡Œåˆ—
 	NMatrix4 matZ = matZ.RotateZ(MathUtil::Degree2Radian(rotation_.z));
 	NMatrix4 matX = matX.RotateX(MathUtil::Degree2Radian(rotation_.x));
 	NMatrix4 matY = matY.RotateY(MathUtil::Degree2Radian(rotation_.y));
-	matRot *= matZ;	//Z²ü‚è‚É‰ñ“]‚µ‚Ä‚©‚ç
-	matRot *= matX;	//X²ü‚è‚É‰ñ“]‚µ‚Ä
-	matRot *= matY;	//Y²ü‚è‚É‰ñ“]
+	matRot *= matZ;	//Zè»¸å‘¨ã‚Šã«å›è»¢ã—ã¦ã‹ã‚‰
+	matRot *= matX;	//Xè»¸å‘¨ã‚Šã«å›è»¢ã—ã¦
+	matRot *= matY;	//Yè»¸å‘¨ã‚Šã«å›è»¢
 
-	NMatrix4 matTrans;	//•½sˆÚ“®s—ñ
+	NMatrix4 matTrans;	//å¹³è¡Œç§»å‹•è¡Œåˆ—
 	matTrans = matTrans.Translation(position_);
 
-	matWorld_ = NMatrix4::Identity();	//’PˆÊs—ñ‘ã“ü
-	matWorld_ *= matScale;	//ƒ[ƒ‹ƒhÀ•W‚ÉƒXƒP[ƒŠƒ“ƒO‚ğ”½‰f
-	matWorld_ *= matRot;	//ƒ[ƒ‹ƒhÀ•W‚É‰ñ“]‚ğ”½‰f
-	matWorld_ *= matTrans;	//ƒ[ƒ‹ƒhÀ•W‚É•½sˆÚ“®‚ğ”½‰f
+	matWorld_ = NMatrix4::Identity();	//å˜ä½è¡Œåˆ—ä»£å…¥
+	matWorld_ *= matScale;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’åæ˜ 
+	matWorld_ *= matRot;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å›è»¢ã‚’åæ˜ 
+	matWorld_ *= matTrans;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 
-	//eƒIƒuƒWƒFƒNƒg‚ª‚ ‚ê‚Î
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒã‚ã‚Œã°
 	if (parent_ != nullptr)
 	{
-		//eƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhs—ñ‚ğ‚©‚¯‚é
+		//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ã‹ã‘ã‚‹
 		matWorld_ *= parent_->matWorld_;
 	}
 
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	TransferMatrix();
 }
 
 void NObj3d::TransferMatrix()
 {
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	cbTrans_->constMap_ = nullptr;
 	result = cbTrans_->constBuff_->Map(0, nullptr, (void**)&cbTrans_->constMap_);
 
@@ -142,8 +142,8 @@ void NObj3d::TransferSkin()
 
 void NObj3d::CommonBeginDraw()
 {
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
-	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // OŠpŒ`ƒŠƒXƒg
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // ä¸‰è§’å½¢ãƒªã‚¹ãƒˆ
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
@@ -151,7 +151,7 @@ void NObj3d::CommonBeginDraw()
 
 void NObj3d::SetBlendMode(BlendMode blendMode)
 {
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	if (model_->format == ModelFormat::Obj)
 	{
 		switch (blendMode)
@@ -216,14 +216,14 @@ void NObj3d::Draw()
 	SetVB(model_->mesh.vertexBuff.GetView());
 	SetIB(*model_->mesh.indexBuff.GetView());
 	SetSRVHeap(texture_->gpuHandle_);
-	//ƒ‰ƒCƒg‚Ì•`‰æ
+	//ãƒ©ã‚¤ãƒˆã®æç”»
 	sLightGroup->Draw(4);
 	DrawCommand((uint32_t)model_->mesh.indices.size());
 }
 
 void NObj3d::SetSRVHeap(const D3D12_GPU_DESCRIPTOR_HANDLE& gpuHandle)
 {
-	//w’è‚Ìƒq[ƒv‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^0”Ô‚Éİ’è
+	//æŒ‡å®šã®ãƒ’ãƒ¼ãƒ—ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿0ç•ªã«è¨­å®š
 	if (gpuHandle.ptr == 0)
 	{
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, NTextureManager::GetInstance()->textureMap_["error"].gpuHandle_);
@@ -246,28 +246,28 @@ void NObj3d::SetIB(const D3D12_INDEX_BUFFER_VIEW& ibView)
 
 void NObj3d::SetCBV()
 {
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ô‚Éƒ}ƒeƒŠƒAƒ‹‚Ì’è”ƒoƒbƒtƒ@‚ğ“n‚·
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«ãƒãƒ†ãƒªã‚¢ãƒ«ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, cbMaterial_->constBuff_->GetGPUVirtualAddress());
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^2”Ô‚ÉFî•ñ‚Ì’è”ƒoƒbƒtƒ@‚ğ“n‚·
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿2ç•ªã«è‰²æƒ…å ±ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(2, cbColor_->constBuff_->GetGPUVirtualAddress());
-	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^3”Ô‚É3D•ÏŠ·s—ñ‚Ì’è”ƒoƒbƒtƒ@‚ğ“n‚·
+	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿3ç•ªã«3Då¤‰æ›è¡Œåˆ—ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cbTrans_->constBuff_->GetGPUVirtualAddress());
 	if (model_->format == ModelFormat::Fbx)
 	{
-		//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^5”Ô‚É3D•ÏŠ·s—ñ‚Ì’è”ƒoƒbƒtƒ@‚ğ“n‚·
+		//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿5ç•ªã«3Då¤‰æ›è¡Œåˆ—ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚’æ¸¡ã™
 		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbSkin_->constBuff_->GetGPUVirtualAddress());
 	}
 }
 
 void NObj3d::DrawCommand(const uint32_t indexSize)
 {
-	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(indexSize, 1, 0, 0, 0); //ƒCƒ“ƒfƒbƒNƒX‚ğg‚Á‚Ä•`‰æ
+	NDX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(indexSize, 1, 0, 0, 0); //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’ä½¿ã£ã¦æç”»
 }
 
 void NObj3d::SetModel(const std::string& modelname)
 {
 	model_ = NModelManager::GetModel(modelname);
-	//‘¼‚Åg‚¤—p‚ÉƒeƒNƒXƒ`ƒƒ‚Æƒ‚ƒfƒ‹Œ`®‚ğ•Ê‚Å•Û‘¶
+	//ä»–ã§ä½¿ã†ç”¨ã«ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¨ãƒ¢ãƒ‡ãƒ«å½¢å¼ã‚’åˆ¥ã§ä¿å­˜
 	texture_ = &model_->material.texture;
 }
 

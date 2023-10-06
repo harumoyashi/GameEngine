@@ -3,10 +3,10 @@
 #include "NVec3.h"
 #include "NObj3d.h"
 
-//‚±‚±‚É‚ ‚é‚â‚Â‚Í‚ ‚­‚Ü‚Å•K—v‚È—v‘f‚ÌQl—p‚ÅA
-//‚»‚ê‚¼‚êNBaseCollider‚ğŒp³‚µ‚½ZZColliderƒNƒ‰ƒX‚ğì‚é
+//ã“ã“ã«ã‚ã‚‹ã‚„ã¤ã¯ã‚ãã¾ã§å¿…è¦ãªè¦ç´ ã®å‚è€ƒç”¨ã§ã€
+//ãã‚Œãã‚ŒNBaseColliderã‚’ç¶™æ‰¿ã—ãŸã€‡ã€‡Colliderã‚¯ãƒ©ã‚¹ã‚’ä½œã‚‹
 
-//‰~ƒRƒ‰ƒCƒ_[//
+//å††ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼//
 struct Circle
 {
 	NVec2 centerPos;
@@ -16,7 +16,7 @@ struct Circle
 	Circle(const NVec2& centerPos, const float radius);
 };
 
-//‹…ƒRƒ‰ƒCƒ_[//
+//çƒã‚³ãƒ©ã‚¤ãƒ€ãƒ¼//
 struct Sphere
 {
 	NVec3 centerPos;
@@ -26,7 +26,7 @@ struct Sphere
 	Sphere(const NVec3& centerPos, const float radius);
 };
 
-//ƒŒƒCƒRƒ‰ƒCƒ_[//
+//ãƒ¬ã‚¤ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼//
 struct Ray
 {
 	NVec3 startPos;
@@ -36,7 +36,7 @@ struct Ray
 	Ray(const NVec3& startPos, const NVec3& dirVec);
 };
 
-//üƒRƒ‰ƒCƒ_[//
+//ç·šã‚³ãƒ©ã‚¤ãƒ€ãƒ¼//
 struct Line
 {
 	NVec3 startPos;
@@ -46,11 +46,11 @@ struct Line
 	Line(const NVec3& startPos, const NVec3& endPos);
 };
 
-//•½–ÊƒRƒ‰ƒCƒ_[//
+//å¹³é¢ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼//
 struct Plane
 {
-	NVec3 normal;	//–@ü
-	float distance;		//Œ´“_‚©‚ç‚Ì‹——£
+	NVec3 normal;	//æ³•ç·š
+	float distance;		//åŸç‚¹ã‹ã‚‰ã®è·é›¢
 
 	Plane();
 	Plane(const NVec3& normal, const float distance);

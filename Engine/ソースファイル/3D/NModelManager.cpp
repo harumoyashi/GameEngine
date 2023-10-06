@@ -37,8 +37,8 @@ IModel* NModelManager::GetModel(const std::string& modelHandle)
 
 IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::string& modelHandle)
 {
-	//–‘O‚ÉŒŸõ‚©‚¯‚ÄA“Ç‚İ‚İÏ‚İ‚È‚ç‚»‚Ìƒ‚ƒfƒ‹‚ğ•Ô‚·
-	for (auto &modelMap : sModelMap)
+	//äº‹å‰ã«æ¤œç´¢ã‹ã‘ã¦ã€èª­ã¿è¾¼ã¿æ¸ˆã¿ãªã‚‰ãã®ãƒ¢ãƒ‡ãƒ«ã‚’è¿”ã™
+	for (auto& modelMap : sModelMap)
 	{
 		if (modelMap.first.c_str() == modelHandle)
 		{
@@ -48,121 +48,121 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 
 	uint32_t handle = sIndexModelData;
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
-	//.objƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//.objãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	const std::string filename = modelname + ".obj";
 	const std::string directoryPath = sDirectoryPath + modelname + "/";
 	file.open(directoryPath + filename);
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail())
 	{
 		assert(0);
 	}
 
-	// ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	std::unique_ptr<IModel> model = std::make_unique<ObjModel>();
 
-	std::vector<NVec3>positions;	//’¸“_À•W
-	std::vector<NVec3>normals;		//–@üƒxƒNƒgƒ‹
-	std::vector<NVec2>texcoords;	//ƒeƒNƒXƒ`ƒƒUV
+	std::vector<NVec3>positions;	//é ‚ç‚¹åº§æ¨™
+	std::vector<NVec3>normals;		//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+	std::vector<NVec2>texcoords;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£UV
 
-	//1s‚¸‚Â“Ç‚İ‚Ş
+	//1è¡Œãšã¤èª­ã¿è¾¼ã‚€
 	std::string line;
 	while (getline(file, line))
 	{
-		//1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+		//1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 		std::istringstream line_stream(line);
 
-		//”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ìæ“ª•¶š—ñ‚ğæ“¾
+		//åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®å…ˆé ­æ–‡å­—åˆ—ã‚’å–å¾—
 		std::string key;
 		getline(line_stream, key, ' ');
 
-		//æ“ª•¶š—ñ‚ªmtllib‚È‚çƒ}ƒeƒŠƒAƒ‹
+		//å…ˆé ­æ–‡å­—åˆ—ãŒmtllibãªã‚‰ãƒãƒ†ãƒªã‚¢ãƒ«
 		if (key == "mtllib")
 		{
-			//ƒ}ƒeƒŠƒAƒ‹‚Ìƒtƒ@ƒCƒ‹–¼“Ç‚İ‚İ
+			//ãƒãƒ†ãƒªã‚¢ãƒ«ã®ãƒ•ã‚¡ã‚¤ãƒ«åèª­ã¿è¾¼ã¿
 			std::string filenameMat;
 			line_stream >> filenameMat;
-			//ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+			//ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 			model->material = NMtllib::Load(directoryPath, filenameMat);
 		}
 
-		//æ“ª•¶š—ñ‚ªv‚È‚ç’¸“_À•W
+		//å…ˆé ­æ–‡å­—åˆ—ãŒvãªã‚‰é ‚ç‚¹åº§æ¨™
 		if (key == "v")
 		{
-			//X,Y,ZÀ•W“Ç‚İ‚İ
+			//X,Y,Zåº§æ¨™èª­ã¿è¾¼ã¿
 			NVec3 position{};
 			line_stream >> position.x;
 			line_stream >> position.y;
 			line_stream >> position.z;
-			//À•Wƒf[ƒ^‚É’Ç‰Á
+			//åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			positions.emplace_back(position);
 		}
 
-		//æ“ª•¶š—ñ‚ªvt‚È‚çƒeƒNƒXƒ`ƒƒ
+		//å…ˆé ­æ–‡å­—åˆ—ãŒvtãªã‚‰ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		if (key == "vt")
 		{
-			//U,V¬•ª“Ç‚İ‚İ
+			//U,Væˆåˆ†èª­ã¿è¾¼ã¿
 			NVec2 texcoord{};
 			line_stream >> texcoord.x;
 			line_stream >> texcoord.y;
-			//V•ûŒü“]Š·
+			//Væ–¹å‘è»¢æ›
 			texcoord.y = 1.0f - texcoord.y;
-			//ƒeƒNƒXƒ`ƒƒÀ•Wƒf[ƒ^‚É’Ç‰Á
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			texcoords.emplace_back(texcoord);
 		}
 
-		//æ“ª•¶š—ñ‚ªvn‚È‚ç–@üƒxƒNƒgƒ‹
+		//å…ˆé ­æ–‡å­—åˆ—ãŒvnãªã‚‰æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 		if (key == "vn")
 		{
-			//X,Y,Z¬•ª“Ç‚İ‚İ
+			//X,Y,Zæˆåˆ†èª­ã¿è¾¼ã¿
 			NVec3 normal{};
 			line_stream >> normal.x;
 			line_stream >> normal.y;
 			line_stream >> normal.z;
-			//ƒeƒNƒXƒ`ƒƒÀ•Wƒf[ƒ^‚É’Ç‰Á
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 			normals.emplace_back(normal);
 		}
 
-		//æ“ª•¶š—ñ‚ªf‚È‚çƒ|ƒŠƒSƒ“
+		//å…ˆé ­æ–‡å­—åˆ—ãŒfãªã‚‰ãƒãƒªã‚´ãƒ³
 		if (key == "f")
 		{
-			//”¼ŠpƒXƒy[ƒX‹æØ‚è‚Ås‚Ì‘±‚«‚ğ“Ç‚İ‚Ş
+			//åŠè§’ã‚¹ãƒšãƒ¼ã‚¹åŒºåˆ‡ã‚Šã§è¡Œã®ç¶šãã‚’èª­ã¿è¾¼ã‚€
 			std::string index_string;
 			while (getline(line_stream, index_string, ' '))
 			{
-				//’¸“_ƒCƒ“ƒfƒbƒNƒX1s•ª‚Ì•¶š—ñ‚ğƒXƒgƒŠ[ƒ€‚É•ÏŠ·‚µ‚Ä‰ğÍ‚µ‚â‚·‚­‚·‚é
+				//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹1è¡Œåˆ†ã®æ–‡å­—åˆ—ã‚’ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«å¤‰æ›ã—ã¦è§£æã—ã‚„ã™ãã™ã‚‹
 				std::stringstream index_stream(index_string);
 				unsigned short indexPosition, indexNormal, indexTexcoord;
 				index_stream >> indexPosition;
-				index_stream.seekg(1, std::ios_base::cur);	//ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, std::ios_base::cur);	//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexTexcoord;
-				index_stream.seekg(1, std::ios_base::cur);	//ƒXƒ‰ƒbƒVƒ…‚ğ”ò‚Î‚·
+				index_stream.seekg(1, std::ios_base::cur);	//ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ã‚’é£›ã°ã™
 				index_stream >> indexNormal;
 
-				//’¸“_ƒf[ƒ^‚É’Ç‰Á
+				//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«è¿½åŠ 
 				NVertexFbx vertex{};
 				vertex.pos = positions[indexPosition - 1];
 				vertex.normal = normals[indexNormal - 1];
 				vertex.uv = texcoords[indexTexcoord - 1];
 				model->mesh.vertices.emplace_back(vertex);
 
-				//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^‚Ì’Ç‰Á
+				//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 				model->mesh.indices.emplace_back((unsigned short)model->mesh.indices.size());
 			}
 		}
 	}
-	//ƒtƒ@ƒCƒ‹•Â‚¶‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«é–‰ã˜ã‚‹
 	file.close();
 
-	//ƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	model->mesh.vertexBuff.Init(model->mesh.vertices);
 	model->mesh.indexBuff.Init(model->mesh.indices);
-	//ƒ‚ƒfƒ‹–¼‚ğ“o˜^‚µ‚Ä
+	//ãƒ¢ãƒ‡ãƒ«åã‚’ç™»éŒ²ã—ã¦
 	model->name = modelname;
 
-	//map‚ÉŠi”[
+	//mapã«æ ¼ç´
 	sModelMap.insert(std::make_pair(modelHandle, std::move(model)));
 
 	return sModelMap[modelHandle].get();
@@ -170,35 +170,35 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 
 IModel* NModelManager::LoadFbxModel(const std::string& modelname, const std::string& modelHandle)
 {
-	// ƒ‚ƒfƒ‹¶¬
+	// ãƒ¢ãƒ‡ãƒ«ç”Ÿæˆ
 	std::unique_ptr<FbxModel> model = std::make_unique<FbxModel>();
 	model->name = modelname;
 
-	// ƒ‚ƒfƒ‹‚Æ“¯‚¶–¼‘O‚ÌƒtƒHƒ‹ƒ_[‚©‚ç“Ç‚İ‚Ş
+	// ãƒ¢ãƒ‡ãƒ«ã¨åŒã˜åå‰ã®ãƒ•ã‚©ãƒ«ãƒ€ãƒ¼ã‹ã‚‰èª­ã¿è¾¼ã‚€
 	std::string path = sDirectoryPath + modelname + "/";
 	std::string fbxfile = modelname + ".fbx";
 	std::string fullPath = path + fbxfile;
 
-	// ƒtƒ‰ƒO
+	// ãƒ•ãƒ©ã‚°
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
-	// ƒV[ƒ“‚Ì“Ç‚İ‚İ
+	// ã‚·ãƒ¼ãƒ³ã®èª­ã¿è¾¼ã¿
 	model->scene = model->importer.ReadFile(fullPath, flags);
 
 	if (model->scene == nullptr)
 	{
-		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ‚ª¸”s‚µ‚Ü‚µ‚½");
+		assert(0 && "ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿ãŒå¤±æ•—ã—ã¾ã—ãŸ");
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰ğÍ
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è§£æ
 	NAssimpLoader::GetInstance()->ParseMaterial(model.get(), model->scene);
 	NAssimpLoader::GetInstance()->ParseNodeRecursive(model.get(), nullptr, model->scene->mRootNode);
 
-	// ƒoƒbƒtƒ@[¶¬
+	// ãƒãƒƒãƒ•ã‚¡ãƒ¼ç”Ÿæˆ
 	model->mesh.vertexBuff.Init(model->mesh.vertices);
 	model->mesh.indexBuff.Init(model->mesh.indices);
 
-	// map‚ÉŠi”[
+	// mapã«æ ¼ç´
 	sModelMap.insert(std::make_pair(modelHandle, std::move(model)));
 
 	return sModelMap[modelHandle].get();

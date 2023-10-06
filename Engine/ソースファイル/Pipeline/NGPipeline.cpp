@@ -1,8 +1,8 @@
 #include "NGPipeline.h"
 
-std::map<std::string, NGPipeline> psoMap;	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ìƒ}ƒbƒv
+std::map<std::string, NGPipeline> psoMap;	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ãƒãƒƒãƒ—
 
-using bDesc = PipelineDesc::Blend::BlendDesc;	//’·‚·‚¬‚é‚©‚çÈ—ª
+using bDesc = PipelineDesc::Blend::BlendDesc;	//é•·ã™ãã‚‹ã‹ã‚‰çœç•¥
 
 void NGPipeline::Create(PipelineDesc desc, std::string id)
 {
@@ -35,59 +35,59 @@ void NGPipeline::Create()
 
 void NGPipeline::SetDesc(PipelineDesc desc)
 {
-	//-------------------------------- ƒVƒF[ƒ_[‚Ìİ’è --------------------------------//
+	//-------------------------------- ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®è¨­å®š --------------------------------//
 	psDesc_.VS.pShaderBytecode = desc.shader.pShader->GetVSBlob()->GetBufferPointer();
 	psDesc_.VS.BytecodeLength = desc.shader.pShader->GetVSBlob()->GetBufferSize();
 	psDesc_.PS.pShaderBytecode = desc.shader.pShader->GetPSBlob()->GetBufferPointer();
 	psDesc_.PS.BytecodeLength = desc.shader.pShader->GetPSBlob()->GetBufferSize();
-	if (desc.shader.pShader->GetGSBlob() != nullptr)	//ƒWƒIƒƒgƒŠƒVƒF[ƒ_[‚ª‚ ‚é‚È‚ç
+	if (desc.shader.pShader->GetGSBlob() != nullptr)	//ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãŒã‚ã‚‹ãªã‚‰
 	{
 		psDesc_.GS.pShaderBytecode = desc.shader.pShader->GetGSBlob()->GetBufferPointer();
 		psDesc_.GS.BytecodeLength = desc.shader.pShader->GetGSBlob()->GetBufferSize();
 	}
 
-	//-------------------------------- }Œ`‚ÌŒ`óİ’è --------------------------------//
-	//ƒgƒ‰ƒCƒAƒ“ƒOƒ‹ƒXƒgƒŠƒbƒv‚ğØ‚è—£‚·‚©‚Ç‚¤‚©
+	//-------------------------------- å›³å½¢ã®å½¢çŠ¶è¨­å®š --------------------------------//
+	//ãƒˆãƒ©ã‚¤ã‚¢ãƒ³ã‚°ãƒ«ã‚¹ãƒˆãƒªãƒƒãƒ—ã‚’åˆ‡ã‚Šé›¢ã™ã‹ã©ã†ã‹
 	psDesc_.IBStripCutValue = desc.render.IBStripCutValue;
-	//ƒgƒ|ƒƒW[w’è
+	//ãƒˆãƒãƒ­ã‚¸ãƒ¼æŒ‡å®š
 	psDesc_.PrimitiveTopologyType = desc.render.PrimitiveTopologyType;
 
-	//-------------------------------- ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è --------------------------------//
-	// ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Ìİ’è
+	//-------------------------------- ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š --------------------------------//
+	// ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã®è¨­å®š
 	psDesc_.SampleMask = desc.render.SampleMask;
-	// ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	// ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
 	psDesc_.RasterizerState.CullMode = desc.render.RasterizerState.CullMode;
 
-	// ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ‚·‚é‚©
+	// ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—ã™ã‚‹ã‹
 	psDesc_.RasterizerState.FillMode = desc.render.RasterizerState.FillMode;
-	// [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É‚·‚é‚©
+	// æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹
 	psDesc_.RasterizerState.DepthClipEnable = desc.render.RasterizerState.DepthClipEnable;
 
-	//-------------------------------- ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‰ñ‚è‚Ìİ’è --------------------------------//
+	//-------------------------------- ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆå›ã‚Šã®è¨­å®š --------------------------------//
 	psDesc_.NumRenderTargets = desc.render.NumRenderTargets;
 	for (uint32_t i = 0; i < (uint32_t)psDesc_.NumRenderTargets; i++)
 	{
 		psDesc_.RTVFormats[i] = desc.render.RTVFormat;
 	}
 
-	//-------------------------------- ƒTƒ“ƒvƒŠƒ“ƒOî•ñ‚Ìİ’è --------------------------------//
+	//-------------------------------- ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°æƒ…å ±ã®è¨­å®š --------------------------------//
 	psDesc_.SampleDesc = desc.render.SampleDesc;
 
-	//-------------------------------- ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è --------------------------------//
+	//-------------------------------- é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š --------------------------------//
 	psDesc_.InputLayout = desc.render.InputLayout;
 
-	//-------------------------------- ƒuƒŒƒ“ƒhƒfƒXƒN‚Ìİ’è --------------------------------//
-	psDesc_.BlendState.AlphaToCoverageEnable = desc.blend.isAlphaToCoverage;		//–Ô—…—¦l—¶‚µ‚ÄƒuƒŒƒ“ƒh‚·‚é‚©
-	psDesc_.BlendState.IndependentBlendEnable = desc.blend.isIndependentBlend;		//‚»‚ê‚¼‚ê‚ÌƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚É•ÊX‚ÌƒuƒŒƒ“ƒh‚·‚é‚©
+	//-------------------------------- ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ‡ã‚¹ã‚¯ã®è¨­å®š --------------------------------//
+	psDesc_.BlendState.AlphaToCoverageEnable = desc.blend.isAlphaToCoverage;		//ç¶²ç¾…ç‡è€ƒæ…®ã—ã¦ãƒ–ãƒ¬ãƒ³ãƒ‰ã™ã‚‹ã‹
+	psDesc_.BlendState.IndependentBlendEnable = desc.blend.isIndependentBlend;		//ãã‚Œãã‚Œã®ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã«åˆ¥ã€…ã®ãƒ–ãƒ¬ãƒ³ãƒ‰ã™ã‚‹ã‹
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ÌƒuƒŒƒ“ƒhİ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®ãƒ–ãƒ¬ãƒ³ãƒ‰è¨­å®š
 	D3D12_RENDER_TARGET_BLEND_DESC& blendDesc = psDesc_.BlendState.RenderTarget[0];
-	blendDesc.BlendEnable = desc.blend.isBlend;				//ƒuƒŒƒ“ƒh‚ğ—LŒø‚É‚·‚é‚©
-	blendDesc.LogicOpEnable = desc.blend.isLogicOp;			//˜_—‰‰Z‚·‚é‚©
+	blendDesc.BlendEnable = desc.blend.isBlend;				//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹
+	blendDesc.LogicOpEnable = desc.blend.isLogicOp;			//è«–ç†æ¼”ç®—ã™ã‚‹ã‹
 	blendDesc.RenderTargetWriteMask =
-		desc.blend.RenderTargetWriteMask;											//ƒ}ƒXƒN’l
+		desc.blend.RenderTargetWriteMask;											//ãƒã‚¹ã‚¯å€¤
 
-	//w’è‚µ‚Ä‚½ƒuƒŒƒ“ƒhî•ñ‚ğİ’è
+	//æŒ‡å®šã—ã¦ãŸãƒ–ãƒ¬ãƒ³ãƒ‰æƒ…å ±ã‚’è¨­å®š
 	blendDesc.BlendOpAlpha = desc.blend.blendDesc.BlendOpAlpha;
 	blendDesc.SrcBlendAlpha = desc.blend.blendDesc.SrcBlendAlpha;
 	blendDesc.DestBlendAlpha = desc.blend.blendDesc.DestBlendAlpha;
@@ -96,38 +96,38 @@ void NGPipeline::SetDesc(PipelineDesc desc)
 	blendDesc.SrcBlend = desc.blend.blendDesc.SrcBlend;
 	blendDesc.DestBlend = desc.blend.blendDesc.DestBlend;
 
-	//İ’è‚µ‚½ƒuƒŒƒ“ƒh‚ğ“K—p(ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚Ì”‚¾‚¯)
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚²‚Æ‚ÉƒuƒŒƒ“ƒhƒ‚[ƒh•Ï‚¦‚ê‚é‚æ‚¤‚É‚µ‚½‚¢‚È`(Šè–])
+	//è¨­å®šã—ãŸãƒ–ãƒ¬ãƒ³ãƒ‰ã‚’é©ç”¨(ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã®æ•°ã ã‘)
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã”ã¨ã«ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰å¤‰ãˆã‚Œã‚‹ã‚ˆã†ã«ã—ãŸã„ãªï½(é¡˜æœ›)
 	for (uint32_t i = 0; i < (uint32_t)psDesc_.NumRenderTargets; i++)
 	{
 		psDesc_.BlendState.RenderTarget[i] = blendDesc;
 	}
 
-	//-------------------------------- [“xî•ñ‚Ìİ’è --------------------------------//
+	//-------------------------------- æ·±åº¦æƒ…å ±ã®è¨­å®š --------------------------------//
 	psDesc_.DepthStencilState.DepthEnable = desc.depth.DepthStencilState.DepthEnable;
 	psDesc_.DepthStencilState.DepthWriteMask = desc.depth.DepthStencilState.DepthWriteMask;
 	psDesc_.DepthStencilState.DepthFunc = desc.depth.DepthStencilState.DepthFunc;
 	psDesc_.DSVFormat = desc.depth.DSVFormat;
 
-	//-------------------------------- ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è@--------------------------------//
+	//-------------------------------- ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã€€--------------------------------//
 	psDesc_.pRootSignature = desc.rootSig.GetRootSignature();
 }
 
 void NGPipeline::SetVertLayoutObj()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutObj_[0] = {
-	"POSITION",										//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
-	//–@üƒxƒNƒgƒ‹
+	"POSITION",										//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	vertLayoutObj_[1] = {
 		"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -144,19 +144,19 @@ void NGPipeline::SetVertLayoutObj()
 
 void NGPipeline::SetVertLayoutFbx()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutFbx_[0] = {
-	"POSITION",										//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
-	//–@üƒxƒNƒgƒ‹
+	"POSITION",										//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	vertLayoutFbx_[1] = {
 		"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0,
 			D3D12_APPEND_ALIGNED_ELEMENT,
@@ -169,14 +169,14 @@ void NGPipeline::SetVertLayoutFbx()
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//œ‚Ì¯•Ê”Ô†
+	//éª¨ã®è­˜åˆ¥ç•ªå·
 	vertLayoutFbx_[3] = {
 		"BONEINDICES",0,
 		DXGI_FORMAT_R32G32B32A32_UINT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//œ‚ª—^‚¦‚é‰e‹¿“x
+	//éª¨ãŒä¸ãˆã‚‹å½±éŸ¿åº¦
 	vertLayoutFbx_[4] = {
 		"BONEWEIGHTS",0,
 		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
@@ -187,18 +187,18 @@ void NGPipeline::SetVertLayoutFbx()
 
 void NGPipeline::SetVertLayoutSprite()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutSprite_[0] = {
-	"POSITION",										//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
+	"POSITION",										//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
 	//UV
 	vertLayoutSprite_[1] = {
 		"TEXCOORD",0,
@@ -210,18 +210,18 @@ void NGPipeline::SetVertLayoutSprite()
 
 void NGPipeline::SetVertLayoutPostEffect()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutPostEffect_[0] = {
-	"SV_POSITION",									//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
+	"SV_POSITION",									//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
 	//UV
 	vertLayoutPostEffect_[1] = {
 		"TEXCOORD",0,
@@ -233,33 +233,33 @@ void NGPipeline::SetVertLayoutPostEffect()
 
 void NGPipeline::SetVertLayoutParticle()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutParticle_[0] = {
-	"POSITION",										//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
-	//‰ñ“]î•ñ
+	"POSITION",										//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
+	//å›è»¢æƒ…å ±
 	vertLayoutParticle_[1] = {
 		"ROT",0,
 		DXGI_FORMAT_R32G32B32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//F
+	//è‰²
 	vertLayoutParticle_[2] = {
 		"COLOR",0,
 		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//‘å‚«‚³
+	//å¤§ãã•
 	vertLayoutParticle_[3] = {
 		"TEXCOORD", 0,
 		DXGI_FORMAT_R32_FLOAT, 0,
@@ -270,18 +270,18 @@ void NGPipeline::SetVertLayoutParticle()
 
 void NGPipeline::SetVertLayoutGPUParticle()
 {
-	// ’¸“_ƒŒƒCƒAƒEƒg
-	//À•W
+	// é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//åº§æ¨™
 	vertLayoutGPUParticle_[0] = {
-	"POSITION",										//ƒZƒ}ƒ“ƒeƒBƒbƒN–¼
-	0,												//“¯–¼‚ÌƒZƒ}ƒ“ƒeƒBƒbƒN‚ª‚ ‚é‚Æ‚«g‚¤ƒCƒ“ƒfƒbƒNƒX
-	DXGI_FORMAT_R32G32B32_FLOAT,					//—v‘f”‚Æƒrƒbƒg”‚ğ•\‚·
-	0,												//“ü—ÍƒXƒƒbƒgƒCƒ“ƒfƒbƒNƒX
-	D3D12_APPEND_ALIGNED_ELEMENT,					//ƒf[ƒ^‚ÌƒIƒtƒZƒbƒg’n(¶‚Ì‚Í©“®İ’è)
-	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//“ü—Íƒf[ƒ^í•Ê
-	0												//ˆê“x‚É•`‰æ‚·‚éƒCƒ“ƒXƒ^ƒ“ƒX”(0‚Å‚æ‚¢)
-	};// (1s‚Å‘‚¢‚½‚Ù‚¤‚ªŒ©‚â‚·‚¢)
-	//À•WˆÈŠO‚ÉFAƒeƒNƒXƒ`ƒƒUV‚È‚Ç‚ğ“n‚·ê‡‚Í‚³‚ç‚É‘±‚¯‚é
+	"POSITION",										//ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯å
+	0,												//åŒåã®ã‚»ãƒãƒ³ãƒ†ã‚£ãƒƒã‚¯ãŒã‚ã‚‹ã¨ãä½¿ã†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	DXGI_FORMAT_R32G32B32_FLOAT,					//è¦ç´ æ•°ã¨ãƒ“ãƒƒãƒˆæ•°ã‚’è¡¨ã™
+	0,												//å…¥åŠ›ã‚¹ãƒ­ãƒƒãƒˆã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	D3D12_APPEND_ALIGNED_ELEMENT,					//ãƒ‡ãƒ¼ã‚¿ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆåœ°(å·¦ã®ã¯è‡ªå‹•è¨­å®š)
+	D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,		//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿ç¨®åˆ¥
+	0												//ä¸€åº¦ã«æç”»ã™ã‚‹ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹æ•°(0ã§ã‚ˆã„)
+	};// (1è¡Œã§æ›¸ã„ãŸã»ã†ãŒè¦‹ã‚„ã™ã„)
+	//åº§æ¨™ä»¥å¤–ã«è‰²ã€ãƒ†ã‚¯ã‚¹ãƒãƒ£UVãªã©ã‚’æ¸¡ã™å ´åˆã¯ã•ã‚‰ã«ç¶šã‘ã‚‹
 	//UV
 	vertLayoutGPUParticle_[1] = {
 		"TEXCOORD",0,
@@ -289,21 +289,21 @@ void NGPipeline::SetVertLayoutGPUParticle()
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//‰ñ“]î•ñ
+	//å›è»¢æƒ…å ±
 	vertLayoutGPUParticle_[2] = {
 		"ROT",0,
 		DXGI_FORMAT_R32G32B32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//F
+	//è‰²
 	vertLayoutGPUParticle_[3] = {
 		"COLOR",0,
 		DXGI_FORMAT_R32G32B32A32_FLOAT,0,
 		D3D12_APPEND_ALIGNED_ELEMENT,
 		D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA,0
 	};
-	//‘å‚«‚³
+	//å¤§ãã•
 	vertLayoutGPUParticle_[4] = {
 		"SCALE", 0,
 		DXGI_FORMAT_R32_FLOAT, 0,
@@ -320,824 +320,824 @@ PipeLineManager* PipeLineManager::GetInstance()
 
 void PipeLineManager::CreateAll()
 {
-	NGPipeline pipeLine;		//’¸“_ƒŒƒCƒAƒEƒgİ’è—p
+	NGPipeline pipeLine;		//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®šç”¨
 	pipeLine.SetVertLayoutObj();
 	pipeLine.SetVertLayoutFbx();
 	pipeLine.SetVertLayoutSprite();
 	pipeLine.SetVertLayoutPostEffect();
 	pipeLine.SetVertLayoutParticle();
 	pipeLine.SetVertLayoutGPUParticle();
-#pragma region ƒfƒtƒHƒ‹ƒg3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	objDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	objDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigObj;
 	rootSigObj.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æº
 	rootSigObj.SetRootParam(1, 4);
 	rootSigObj.Create();
 	objDesc.rootSig = rootSigObj;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	objDesc.shader.pShader = NShader::GetShader("Obj");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	objDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	objDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	objDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	objDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	objDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(objDesc, "ObjNone");
 #pragma endregion
-#pragma region ƒ¿ƒuƒŒƒ“ƒh3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region Î±ãƒ–ãƒ¬ãƒ³ãƒ‰3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objAlphaDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	objAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	objAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigObjAlpha;
 	rootSigObjAlpha.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æº
 	rootSigObjAlpha.SetRootParam(1, 4);
 	rootSigObjAlpha.Create();
 	objAlphaDesc.rootSig = rootSigObjAlpha;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	objAlphaDesc.shader.pShader = NShader::GetShader("Obj");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	objAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	objAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	objAlphaDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	objAlphaDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	objAlphaDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Alpha);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(objAlphaDesc, "ObjAlpha");
 #pragma endregion
-#pragma region ‰ÁZ3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region åŠ ç®—3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objAddDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	objAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	objAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigObjAdd;
 	rootSigObjAdd.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æº
 	rootSigObjAdd.SetRootParam(1, 4);
 	rootSigObjAdd.Create();
 	objAddDesc.rootSig = rootSigObjAdd;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	objAddDesc.shader.pShader = NShader::GetShader("Obj");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	objAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	objAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	objAddDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	objAddDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	objAddDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Add);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(objAddDesc, "ObjAdd");
 #pragma endregion
-#pragma region Œ¸Z3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region æ¸›ç®—3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objSubDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	objSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	objSubDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigObjSub;
 	rootSigObjSub.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æº
 	rootSigObjSub.SetRootParam(1, 4);
 	rootSigObjSub.Create();
 	objSubDesc.rootSig = rootSigObjSub;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	objSubDesc.shader.pShader = NShader::GetShader("Obj");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	objSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	objSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	objSubDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	objSubDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	objSubDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Sub);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(objSubDesc, "ObjSub");
 #pragma endregion
-#pragma region F”½“]3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region è‰²åè»¢3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Obj", "Obj");
 
 	PipelineDesc objInvDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	objInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	objInvDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigObjInv;
 	rootSigObjInv.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æº
 	rootSigObjInv.SetRootParam(1, 4);
 	rootSigObjInv.Create();
 	objInvDesc.rootSig = rootSigObjInv;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	objInvDesc.shader.pShader = NShader::GetShader("Obj");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	objInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	objInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	objInvDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	objInvDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	objInvDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Inv);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(objInvDesc, "ObjInv");
 #pragma endregion
-#pragma region ƒfƒtƒHƒ‹ƒgFBX
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆFBX
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Fbx", "Fbx");
 
 	PipelineDesc fbxDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	fbxDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
 	fbxDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigFbx;
 	rootSigFbx.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹AƒXƒLƒ“
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¹ã‚­ãƒ³
 	rootSigFbx.SetRootParam(1, 5);
 	rootSigFbx.Create();
 	fbxDesc.rootSig = rootSigFbx;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	fbxDesc.shader.pShader = NShader::GetShader("Fbx");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	fbxDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	fbxDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	fbxDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	fbxDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	fbxDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(fbxDesc, "FbxNone");
 #pragma endregion
-	//#pragma region ƒ¿ƒuƒŒƒ“ƒhFBX
-	//	//ƒVƒF[ƒ_[¶¬
+	//#pragma region Î±ãƒ–ãƒ¬ãƒ³ãƒ‰FBX
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	//	NShader::CreateShader("Fbx", "Fbx");
 	//
 	//	PipelineDesc fbxAlphaDesc;
-	//	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	//	fbxAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
 	//	fbxAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
 	//
-	//	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	//	NRootSignature rootSigFbxAlpha;
 	//	rootSigFbxAlpha.SetSamplerDesc(false);
-	//	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹AƒXƒLƒ“
+	//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¹ã‚­ãƒ³
 	//	rootSigFbx.SetRootParam(1, 5);
 	//	rootSigFbxAlpha.Create();
 	//	fbxAlphaDesc.rootSig = rootSigFbxAlpha;
 	//
-	//	//ƒVƒF[ƒ_[İ’è
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	//	fbxAlphaDesc.shader.pShader = NShader::GetShader("Fbx");
 	//
-	//	//ƒJƒŠƒ“ƒOİ’è
-	//	fbxAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	//	fbxAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	//	fbxAlphaDesc.render.NumRenderTargets = 2;
 	//
-	//	//[“xƒeƒXƒg‚·‚é
+	//	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	//	fbxAlphaDesc.depth.DepthStencilState.DepthEnable = true;
 	//
-	//	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	//	fbxAlphaDesc.blend.blendDesc =
 	//		bDesc::GetBlendMode(BlendMode::Alpha);
 	//
-	//	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	//	NGPipeline::Create(fbxAlphaDesc, "FbxAlpha");
 	//#pragma endregion
-	//#pragma region ‰ÁZFBX
-	//	//ƒVƒF[ƒ_[¶¬
+	//#pragma region åŠ ç®—FBX
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	//	NShader::CreateShader("Fbx", "Fbx");
 	//
 	//	PipelineDesc fbxAddDesc;
-	//	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	//	fbxAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
 	//	fbxAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
 	//
-	//	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	//	NRootSignature rootSigFbxAdd;
 	//	rootSigFbxAdd.SetSamplerDesc(false);
-	//	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹AƒXƒLƒ“
+	//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¹ã‚­ãƒ³
 	//	rootSigFbx.SetRootParam(1, 5);
 	//	rootSigFbxAdd.Create();
 	//	fbxAddDesc.rootSig = rootSigFbxAdd;
 	//
-	//	//ƒVƒF[ƒ_[İ’è
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	//	fbxAddDesc.shader.pShader = NShader::GetShader("Fbx");
 	//
-	//	//ƒJƒŠƒ“ƒOİ’è
-	//	fbxAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	//	fbxAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	//	fbxAddDesc.render.NumRenderTargets = 2;
 	//
-	//	//[“xƒeƒXƒg‚·‚é
+	//	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	//	fbxAddDesc.depth.DepthStencilState.DepthEnable = true;
 	//
-	//	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	//	fbxAddDesc.blend.blendDesc =
 	//		bDesc::GetBlendMode(BlendMode::Add);
 	//
-	//	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	//	NGPipeline::Create(fbxAddDesc, "FbxAdd");
 	//#pragma endregion
-	//#pragma region Œ¸ZFBX
-	//	//ƒVƒF[ƒ_[¶¬
+	//#pragma region æ¸›ç®—FBX
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	//	NShader::CreateShader("Fbx", "Fbx");
 	//
 	//	PipelineDesc fbxSubDesc;
-	//	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	//	fbxSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
 	//	fbxSubDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
 	//
-	//	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	//	NRootSignature rootSigFbxSub;
 	//	rootSigFbxSub.SetSamplerDesc(false);
-	//	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹AƒXƒLƒ“
+	//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¹ã‚­ãƒ³
 	//	rootSigFbx.SetRootParam(1, 5);
 	//	rootSigFbxSub.Create();
 	//	fbxSubDesc.rootSig = rootSigFbxSub;
 	//
-	//	//ƒVƒF[ƒ_[İ’è
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	//	fbxSubDesc.shader.pShader = NShader::GetShader("Fbx");
 	//
-	//	//ƒJƒŠƒ“ƒOİ’è
-	//	fbxSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	//	fbxSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	//	fbxSubDesc.render.NumRenderTargets = 2;
 	//
-	//	//[“xƒeƒXƒg‚·‚é
+	//	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	//	fbxSubDesc.depth.DepthStencilState.DepthEnable = true;
 	//
-	//	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	//	fbxSubDesc.blend.blendDesc =
 	//		bDesc::GetBlendMode(BlendMode::Sub);
 	//
-	//	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	//	NGPipeline::Create(fbxSubDesc, "FbxSub");
 	//#pragma endregion
-	//#pragma region F”½“]FBX
-	//	//ƒVƒF[ƒ_[¶¬
+	//#pragma region è‰²åè»¢FBX
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	//	NShader::CreateShader("Fbx", "Fbx");
 	//
 	//	PipelineDesc fbxInvDesc;
-	//	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	//	fbxInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
 	//	fbxInvDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutFbx_);
 	//
-	//	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	//	NRootSignature rootSigFbxInv;
 	//	rootSigFbxInv.SetSamplerDesc(false);
-	//	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹AƒXƒLƒ“
+	//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¹ã‚­ãƒ³
 	//	rootSigFbx.SetRootParam(1, 5);
 	//	rootSigFbxInv.Create();
 	//	fbxInvDesc.rootSig = rootSigFbxInv;
 	//
-	//	//ƒVƒF[ƒ_[İ’è
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	//	fbxInvDesc.shader.pShader = NShader::GetShader("Fbx");
 	//
-	//	//ƒJƒŠƒ“ƒOİ’è
-	//	fbxInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	//	fbxInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	//	fbxInvDesc.render.NumRenderTargets = 2;
 	//
-	//	//[“xƒeƒXƒg‚·‚é
+	//	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	//	fbxInvDesc.depth.DepthStencilState.DepthEnable = true;
 	//
-	//	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	//	fbxInvDesc.blend.blendDesc =
 	//		bDesc::GetBlendMode(BlendMode::Inv);
 	//
-	//	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	//	NGPipeline::Create(fbxInvDesc, "FbxInv");
 	//#pragma endregion
-#pragma region ƒ^ƒCƒŠƒ“ƒO3D(”wŒiƒIƒuƒWƒFƒNƒg‚Æ‚©‚Ég‚¤)
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ã‚¿ã‚¤ãƒªãƒ³ã‚°3D(èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã‹ã«ä½¿ã†)
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Tile", "Tile");
 
 	PipelineDesc tileDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	tileDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
 	tileDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigTile;
 	rootSigTile.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAƒ}ƒeƒŠƒAƒ‹AFAŒõŒ¹Aƒ^ƒCƒ‹—p‚Ìî•ñ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€ãƒãƒ†ãƒªã‚¢ãƒ«ã€è‰²ã€å…‰æºã€ã‚¿ã‚¤ãƒ«ç”¨ã®æƒ…å ±
 	rootSigTile.SetRootParam(1, 5);
 	rootSigTile.Create();
 	tileDesc.rootSig = rootSigTile;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	tileDesc.shader.pShader = NShader::GetShader("Tile");
 
-	//ƒJƒŠƒ“ƒOİ’è
-	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//”w–ÊƒJƒŠƒ“ƒO‚·‚é
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//èƒŒé¢ã‚«ãƒªãƒ³ã‚°ã™ã‚‹
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	tileDesc.render.NumRenderTargets = 2;
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	tileDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	tileDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(tileDesc, "TileObjNone");
 #pragma endregion
-#pragma region ƒfƒtƒHƒ‹ƒg2D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ2D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	spriteDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
 	spriteDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigSprite;
 	rootSigSprite.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigSprite.SetRootParam(1, 2);
 	rootSigSprite.Create();
 	spriteDesc.rootSig = rootSigSprite;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	spriteDesc.shader.pShader = NShader::GetShader("Sprite");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	spriteDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	spriteDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	spriteDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	spriteDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	spriteDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(spriteDesc, "SpriteNone");
 #pragma endregion
-#pragma region ƒ¿ƒuƒŒƒ“ƒh2D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region Î±ãƒ–ãƒ¬ãƒ³ãƒ‰2D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteAlphaDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	spriteAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
 	spriteAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigSpriteAlpha;
 	rootSigSpriteAlpha.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigSpriteAlpha.SetRootParam(1, 2);
 	rootSigSpriteAlpha.Create();
 	spriteAlphaDesc.rootSig = rootSigSpriteAlpha;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	spriteAlphaDesc.shader.pShader = NShader::GetShader("Sprite");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	spriteAlphaDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	spriteAlphaDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	spriteAlphaDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	spriteAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	spriteAlphaDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Alpha);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(spriteAlphaDesc, "SpriteAlpha");
 #pragma endregion
-#pragma region ‰ÁZ2D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region åŠ ç®—2D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteAddDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	spriteAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
 	spriteAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigSpriteAdd;
 	rootSigSpriteAdd.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigSpriteAdd.SetRootParam(1, 2);
 	rootSigSpriteAdd.Create();
 	spriteAddDesc.rootSig = rootSigSpriteAdd;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	spriteAddDesc.shader.pShader = NShader::GetShader("Sprite");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	spriteAddDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	spriteAddDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	spriteAddDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	spriteAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	spriteAddDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Add);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(spriteAddDesc, "SpriteAdd");
 #pragma endregion
-#pragma region Œ¸Z2D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region æ¸›ç®—2D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteSubDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	spriteSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
 	spriteSubDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigSpriteSub;
 	rootSigSpriteSub.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigSpriteSub.SetRootParam(1, 2);
 	rootSigSpriteSub.Create();
 	spriteSubDesc.rootSig = rootSigSpriteSub;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	spriteSubDesc.shader.pShader = NShader::GetShader("Sprite");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	spriteSubDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	spriteSubDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	spriteSubDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	spriteSubDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	spriteSubDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Sub);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(spriteSubDesc, "SpriteSub");
 #pragma endregion
-#pragma region F”½“]2D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region è‰²åè»¢2D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Sprite", "Sprite");
 
 	PipelineDesc spriteInvDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	spriteInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
 	spriteInvDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutSprite_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigSpriteInv;
 	rootSigSpriteInv.SetSamplerDesc(true);
-	//ƒeƒNƒXƒ`ƒƒ1ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£1å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigSpriteInv.SetRootParam(1, 2);
 	rootSigSpriteInv.Create();
 	spriteInvDesc.rootSig = rootSigSpriteInv;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	spriteInvDesc.shader.pShader = NShader::GetShader("Sprite");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	spriteInvDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	spriteInvDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	spriteInvDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	spriteInvDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	spriteInvDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Inv);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(spriteInvDesc, "SpriteInv");
 #pragma endregion
-#pragma region ƒuƒ‹[ƒ€
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ–ãƒ«ãƒ¼ãƒ 
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Bloom", "Bloom");
 
 	PipelineDesc postEffectDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
 	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigPostEffect;
 	rootSigPostEffect.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ2ŒÂAs—ñAF
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£2å€‹ã€è¡Œåˆ—ã€è‰²
 	rootSigPostEffect.SetRootParam(2, 2);
 	rootSigPostEffect.Create();
 	postEffectDesc.rootSig = rootSigPostEffect;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	postEffectDesc.shader.pShader = NShader::GetShader("Bloom");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg”İ’è
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆæ•°è¨­å®š
 	postEffectDesc.render.NumRenderTargets = 2;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	postEffectDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(postEffectDesc, "Bloom");
 #pragma endregion
-#pragma region ƒKƒEƒVƒAƒ“ƒuƒ‰[
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ã‚¬ã‚¦ã‚·ã‚¢ãƒ³ãƒ–ãƒ©ãƒ¼
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Gaussian", "GaussianBlur");
 
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
 	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	postEffectDesc.rootSig = rootSigPostEffect;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	postEffectDesc.shader.pShader = NShader::GetShader("Gaussian");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	postEffectDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(postEffectDesc, "Gaussian");
 #pragma endregion
-#pragma region ƒ‰ƒWƒAƒ‹ƒuƒ‰[
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Radial", "RadialBlur");
 
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	postEffectDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutPostEffect_;
 	postEffectDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutPostEffect_);
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	postEffectDesc.rootSig = rootSigPostEffect;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	postEffectDesc.shader.pShader = NShader::GetShader("Radial");
 
-	//[“xî•ñİ’è
+	//æ·±åº¦æƒ…å ±è¨­å®š
 	postEffectDesc.depth.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
-	//[“xƒeƒXƒg‚µ‚È‚¢
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã—ãªã„
 	postEffectDesc.depth.DepthStencilState.DepthEnable = false;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	postEffectDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	postEffectDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(postEffectDesc, "Radial");
 #pragma endregion
-#pragma region ƒfƒtƒHƒ‹ƒgƒp[ƒeƒBƒNƒ‹3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	particleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
 	particleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutParticle_);
 
 	particleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigParticle;
 	rootSigParticle.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ2ŒÂAs—ñAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£2å€‹ã€è¡Œåˆ—ã€å…‰æº
 	rootSigParticle.SetRootParam(2, 2);
 	rootSigParticle.Create();
 	particleDesc.rootSig = rootSigParticle;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	particleDesc.shader.pShader = NShader::GetShader("Particle3d");
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	particleDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	particleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	particleDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::None);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(particleDesc, "Particle3dNone");
 #pragma endregion
-#pragma region ƒ¿ƒuƒŒƒ“ƒhƒp[ƒeƒBƒNƒ‹3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region Î±ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleAlphaDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	particleAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
 	particleAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutParticle_);
 
 	particleAlphaDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigParticleAlpha;
 	rootSigParticleAlpha.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ2ŒÂAs—ñAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£2å€‹ã€è¡Œåˆ—ã€å…‰æº
 	rootSigParticleAlpha.SetRootParam(2, 2);
 	rootSigParticleAlpha.Create();
 	particleAlphaDesc.rootSig = rootSigParticleAlpha;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	particleAlphaDesc.shader.pShader = NShader::GetShader("Particle3d");
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	particleAlphaDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	particleAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	particleAlphaDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Alpha);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(particleAlphaDesc, "Particle3dAlpha");
 #pragma endregion
-#pragma region ‰ÁZƒp[ƒeƒBƒNƒ‹3D
-	//ƒVƒF[ƒ_[¶¬
+#pragma region åŠ ç®—ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«3D
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
 	NShader::CreateShader("Particle3d", "Particle3D", true);
 
 	PipelineDesc particleAddDesc;
-	//’¸“_ƒŒƒCƒAƒEƒgİ’è
+	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
 	particleAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
 	particleAddDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutParticle_);
 
 	particleAddDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
 
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
 	NRootSignature rootSigParticleAdd;
 	rootSigParticleAdd.SetSamplerDesc(false);
-	//ƒeƒNƒXƒ`ƒƒ2ŒÂAs—ñAŒõŒ¹
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£2å€‹ã€è¡Œåˆ—ã€å…‰æº
 	rootSigParticleAdd.SetRootParam(2, 2);
 	rootSigParticleAdd.Create();
 	particleAddDesc.rootSig = rootSigParticleAdd;
 
-	//ƒVƒF[ƒ_[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
 	particleAddDesc.shader.pShader = NShader::GetShader("Particle3d");
 
-	//[“xƒeƒXƒg‚·‚é
+	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
 	particleAddDesc.depth.DepthStencilState.DepthEnable = true;
 
-	//ƒJƒŠƒ“ƒOİ’è
+	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
 	particleAddDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
 
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	particleAddDesc.blend.blendDesc =
 		bDesc::GetBlendMode(BlendMode::Add);
 
-	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	NGPipeline::Create(particleAddDesc, "Particle3dAdd");
 #pragma endregion
-//#pragma region GPUƒp[ƒeƒBƒNƒ‹
-//	//ƒVƒF[ƒ_[¶¬
-//	NShader::CreateShader("GPUParticle", "GPUParticle", false, true);
-//
-//	PipelineDesc gpuParticleDesc;
-//	//’¸“_ƒŒƒCƒAƒEƒgİ’è
-//	gpuParticleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutGPUParticle_;
-//	gpuParticleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutGPUParticle_);
-//
-//	gpuParticleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
-//
-//	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒİ’è
-//	NRootSignature rootSigGPUParticle;
-//	rootSigGPUParticle.SetSamplerDesc(false);
-//	//ƒeƒNƒXƒ`ƒƒ2ŒÂAs—ñAŒõŒ¹
-//	rootSigGPUParticle.SetRootParam(2, 2);
-//	rootSigGPUParticle.Create();
-//	gpuParticleDesc.rootSig = rootSigGPUParticle;
-//
-//	//ƒVƒF[ƒ_[İ’è
-//	gpuParticleDesc.shader.pShader = NShader::GetShader("GPUParticle");
-//
-//	//[“xƒeƒXƒg‚·‚é
-//	gpuParticleDesc.depth.DepthStencilState.DepthEnable = true;
-//
-//	//ƒJƒŠƒ“ƒOİ’è
-//	gpuParticleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-//
-//	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
-//	gpuParticleDesc.blend.blendDesc =
-//		bDesc::GetBlendMode(BlendMode::None);
-//
-//	//ƒpƒCƒvƒ‰ƒCƒ“¶¬
-//	NGPipeline::Create(gpuParticleDesc, "GPUParticleNone");
-//#pragma endregion
+	//#pragma region GPUãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ç”Ÿæˆ
+	//	NShader::CreateShader("GPUParticle", "GPUParticle", false, true);
+	//
+	//	PipelineDesc gpuParticleDesc;
+	//	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆè¨­å®š
+	//	gpuParticleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutGPUParticle_;
+	//	gpuParticleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutGPUParticle_);
+	//
+	//	gpuParticleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+	//
+	//	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£è¨­å®š
+	//	NRootSignature rootSigGPUParticle;
+	//	rootSigGPUParticle.SetSamplerDesc(false);
+	//	//ãƒ†ã‚¯ã‚¹ãƒãƒ£2å€‹ã€è¡Œåˆ—ã€å…‰æº
+	//	rootSigGPUParticle.SetRootParam(2, 2);
+	//	rootSigGPUParticle.Create();
+	//	gpuParticleDesc.rootSig = rootSigGPUParticle;
+	//
+	//	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼è¨­å®š
+	//	gpuParticleDesc.shader.pShader = NShader::GetShader("GPUParticle");
+	//
+	//	//æ·±åº¦ãƒ†ã‚¹ãƒˆã™ã‚‹
+	//	gpuParticleDesc.depth.DepthStencilState.DepthEnable = true;
+	//
+	//	//ã‚«ãƒªãƒ³ã‚°è¨­å®š
+	//	gpuParticleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+	//
+	//	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
+	//	gpuParticleDesc.blend.blendDesc =
+	//		bDesc::GetBlendMode(BlendMode::None);
+	//
+	//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
+	//	NGPipeline::Create(gpuParticleDesc, "GPUParticleNone");
+	//#pragma endregion
 }
 
 bDesc bDesc::GetBlendMode(BlendMode blendMode)
@@ -1146,37 +1146,37 @@ bDesc bDesc::GetBlendMode(BlendMode blendMode)
 	switch (blendMode)
 	{
 	case BlendMode::None:
-		desc.BlendOp = D3D12_BLEND_OP_ADD;					//‰º2‚Â‚Ì’l‚ğ‘«‚·
-		desc.SrcBlend = D3D12_BLEND_ONE;					//ƒ\[ƒX‚Ì’l‘S•”g‚¤
-		desc.DestBlend = D3D12_BLEND_ZERO;					//ƒfƒXƒg‚Ì’lg‚í‚È‚¢
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//ä¸‹2ã¤ã®å€¤ã‚’è¶³ã™
+		desc.SrcBlend = D3D12_BLEND_ONE;					//ã‚½ãƒ¼ã‚¹ã®å€¤å…¨éƒ¨ä½¿ã†
+		desc.DestBlend = D3D12_BLEND_ZERO;					//ãƒ‡ã‚¹ãƒˆã®å€¤ä½¿ã‚ãªã„
 		break;
 
 	case BlendMode::Alpha:
-		desc.BlendOp = D3D12_BLEND_OP_ADD;					//‰º2‚Â‚Ì’l‚ğ‘«‚·
-		desc.SrcBlend = D3D12_BLEND_SRC_ALPHA;				//ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
-		desc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;			//1.0f-ƒ\[ƒX‚ÌƒAƒ‹ƒtƒ@’l
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//ä¸‹2ã¤ã®å€¤ã‚’è¶³ã™
+		desc.SrcBlend = D3D12_BLEND_SRC_ALPHA;				//ã‚½ãƒ¼ã‚¹ã®ã‚¢ãƒ«ãƒ•ã‚¡å€¤
+		desc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;			//1.0f-ã‚½ãƒ¼ã‚¹ã®ã‚¢ãƒ«ãƒ•ã‚¡å€¤
 		break;
 
 	case BlendMode::Add:
-		desc.BlendOp = D3D12_BLEND_OP_ADD;					//‰º2‚Â‚Ì’l‚ğ‘«‚·
-		desc.SrcBlend = D3D12_BLEND_ONE;					//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-		desc.DestBlend = D3D12_BLEND_ONE;					//ƒfƒXƒg‚Ì’l‚ğ100%g‚¤
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//ä¸‹2ã¤ã®å€¤ã‚’è¶³ã™
+		desc.SrcBlend = D3D12_BLEND_ONE;					//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+		desc.DestBlend = D3D12_BLEND_ONE;					//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’100%ä½¿ã†
 		break;
 
 	case BlendMode::Sub:
-		desc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;			//‰º2‚Â‚Ì’l‚ğˆø‚­
-		desc.SrcBlend = D3D12_BLEND_ONE;					//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-		desc.DestBlend = D3D12_BLEND_ONE;					//ƒfƒXƒg‚Ì’l‚ğ100%g‚¤
+		desc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;			//ä¸‹2ã¤ã®å€¤ã‚’å¼•ã
+		desc.SrcBlend = D3D12_BLEND_ONE;					//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+		desc.DestBlend = D3D12_BLEND_ONE;					//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’100%ä½¿ã†
 
-		desc.BlendOpAlpha = D3D12_BLEND_OP_REV_SUBTRACT;	//‰º2‚Â‚Ì’l‚ğˆø‚­
-		desc.SrcBlendAlpha = D3D12_BLEND_ONE;				//ƒ\[ƒX‚Ì’l‚ğ100%g‚¤
-		desc.DestBlendAlpha = D3D12_BLEND_ONE;				//ƒfƒXƒg‚Ì’l‚ğ100%g‚¤
+		desc.BlendOpAlpha = D3D12_BLEND_OP_REV_SUBTRACT;	//ä¸‹2ã¤ã®å€¤ã‚’å¼•ã
+		desc.SrcBlendAlpha = D3D12_BLEND_ONE;				//ã‚½ãƒ¼ã‚¹ã®å€¤ã‚’100%ä½¿ã†
+		desc.DestBlendAlpha = D3D12_BLEND_ONE;				//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’100%ä½¿ã†
 		break;
 
 	case BlendMode::Inv:
-		desc.BlendOp = D3D12_BLEND_OP_ADD;					//‰º2‚Â‚Ì’l‚ğ‘«‚·
-		desc.SrcBlend = D3D12_BLEND_INV_SRC_COLOR;			//F”½“](1-RGB)
-		desc.DestBlend = D3D12_BLEND_ZERO;					//ƒfƒXƒg‚Ì’l‚ğ0%g‚¤
+		desc.BlendOp = D3D12_BLEND_OP_ADD;					//ä¸‹2ã¤ã®å€¤ã‚’è¶³ã™
+		desc.SrcBlend = D3D12_BLEND_INV_SRC_COLOR;			//è‰²åè»¢(1-RGB)
+		desc.DestBlend = D3D12_BLEND_ZERO;					//ãƒ‡ã‚¹ãƒˆã®å€¤ã‚’0%ä½¿ã†
 		break;
 
 	default:

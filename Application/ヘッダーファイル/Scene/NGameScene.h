@@ -9,54 +9,54 @@
 #include "SimpleParticle.h"
 #include "NEasing.h"
 
-//ƒQ[ƒ€ƒV[ƒ““à‚Å‚ÌƒV[ƒ“•ª‚¯
+//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³å†…ã§ã®ã‚·ãƒ¼ãƒ³åˆ†ã‘
 enum class SceneMode
 {
-	BeforeStart,	//n‚Ü‚é‘O
-	Play,			//ƒvƒŒƒC’†
-	Clear,			//ƒNƒŠƒAƒŠƒUƒ‹ƒg
-	Faild,			//¸”sƒŠƒUƒ‹ƒg
+	BeforeStart,	//å§‹ã¾ã‚‹å‰
+	Play,			//ãƒ—ãƒ¬ã‚¤ä¸­
+	Clear,			//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆ
+	Faild,			//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆ
 };
 
 class NGameScene final :
 	public IScene
 {
 private:
-	//ƒQ[ƒ€“à‚Å‚ÌƒV[ƒ“ó‘Ô
+	//ã‚²ãƒ¼ãƒ å†…ã§ã®ã‚·ãƒ¼ãƒ³çŠ¶æ…‹
 	static SceneMode scene;
 
-	//ƒIƒuƒWƒFƒNƒg
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-	//”wŒiƒXƒvƒ‰ƒCƒg
-	std::unique_ptr<NSprite> backSprite_;	//”wŒiƒXƒvƒ‰ƒCƒg
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	std::unique_ptr<NSprite> backSprite_;	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	//UI—p‚Ì•Ï”
-	NEasing::EaseTimer beforeStartTimer_ = 2.0f;	//n‚Ü‚é‘O‚Ì‰‰oƒ^ƒCƒ}[
-	NEasing::EaseTimer stickRotTimer_ = 2.0f;		//LƒXƒeƒBƒbƒN‚®‚é‚®‚éƒ^ƒCƒ}[
-	float slidePos_ = 0.0f;							//‰¡‚É‘|‚¯‚Ä‚­‚ÌƒXƒ‰ƒCƒhˆÊ’u
-	NEasing::EaseTimer slideTimer_ = 0.1f;			//ƒXƒ‰ƒCƒh‚ÌƒC[ƒWƒ“ƒO—p
-	NEasing::EaseTimer flashingTimer_ = 1.0f;		//“_–Åƒ^ƒCƒ}[
+	//UIç”¨ã®å¤‰æ•°
+	NEasing::EaseTimer beforeStartTimer_ = 2.0f;	//å§‹ã¾ã‚‹å‰ã®æ¼”å‡ºã‚¿ã‚¤ãƒãƒ¼
+	NEasing::EaseTimer stickRotTimer_ = 2.0f;		//Lã‚¹ãƒ†ã‚£ãƒƒã‚¯ãã‚‹ãã‚‹ã‚¿ã‚¤ãƒãƒ¼
+	float slidePos_ = 0.0f;							//æ¨ªã«æƒã‘ã¦ãæ™‚ã®ã‚¹ãƒ©ã‚¤ãƒ‰ä½ç½®
+	NEasing::EaseTimer slideTimer_ = 0.1f;			//ã‚¹ãƒ©ã‚¤ãƒ‰æ™‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
+	NEasing::EaseTimer flashingTimer_ = 1.0f;		//ç‚¹æ»…ã‚¿ã‚¤ãƒãƒ¼
 
-	//ƒ‰ƒCƒg‚½‚¿
+	//ãƒ©ã‚¤ãƒˆãŸã¡
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
 	void LoadResources();
 	void Init() override;
 	void Update() override;
-	//”wŒiƒXƒvƒ‰ƒCƒg
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawBackSprite()override;
-	//”wŒi3DƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void DrawBack3D()override;
-	//3DƒIƒuƒWƒFƒNƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void Draw3D() override;
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	void DrawParticle() override;
-	//‘OŒiƒXƒvƒ‰ƒCƒg
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawForeSprite() override;
 
-	//ƒvƒŒƒC’†‚©‚Ç‚¤‚©æ“¾
+	//ãƒ—ãƒ¬ã‚¤ä¸­ã‹ã©ã†ã‹å–å¾—
 	static bool GetIsPlay() { return scene == SceneMode::Play; }
 };

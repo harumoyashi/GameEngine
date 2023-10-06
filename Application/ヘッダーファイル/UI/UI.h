@@ -6,33 +6,33 @@
 
 enum class UIType
 {
-	Abutton,	//Aƒ{ƒ^ƒ“
-	AbuttonPush,//Aƒ{ƒ^ƒ“‰Ÿ‚³‚ê‚½‚â‚Â
-	Lstick,		//LƒXƒeƒBƒbƒN
-	Shaft,		//ƒXƒeƒBƒbƒN‚Ì²
-	Clear,		//ƒNƒŠƒA
-	Faild,		//¸”s
+	Abutton,	//Aãƒœã‚¿ãƒ³
+	AbuttonPush,//Aãƒœã‚¿ãƒ³æŠ¼ã•ã‚ŒãŸã‚„ã¤
+	Lstick,		//Lã‚¹ãƒ†ã‚£ãƒƒã‚¯
+	Shaft,		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è»¸
+	Clear,		//ã‚¯ãƒªã‚¢
+	Faild,		//å¤±æ•—
 
-	Max			//Å‘å”(for•¶‚Æ‚©‰ñ‚·—p)
+	Max			//æœ€å¤§æ•°(foræ–‡ã¨ã‹å›ã™ç”¨)
 };
 
 struct UI
 {
-	NSprite sprite;						//UI•`‰æ—pƒXƒvƒ‰ƒCƒgŒQ
-	NEasing::EaseTimer easeTimer;		//UI—pƒC[ƒWƒ“ƒOƒ^ƒCƒ}[ŒQ
-	NEasing::EaseTimer keepTimer;		//UI—p‘Ò‹@ƒ^ƒCƒ}[ŒQ
-	NEasing::EaseTimer easeBackTimer;	//UI—pƒC[ƒWƒ“ƒOƒoƒbƒNƒ^ƒCƒ}[ŒQ
-	NVec2 startPos;						//n“_À•W
-	NVec2 endPos;						//I“_À•W
-	bool isActive;						//—LŒøƒtƒ‰ƒO
+	NSprite sprite;						//UIæç”»ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç¾¤
+	NEasing::EaseTimer easeTimer;		//UIç”¨ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¿ã‚¤ãƒãƒ¼ç¾¤
+	NEasing::EaseTimer keepTimer;		//UIç”¨å¾…æ©Ÿã‚¿ã‚¤ãƒãƒ¼ç¾¤
+	NEasing::EaseTimer easeBackTimer;	//UIç”¨ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒãƒƒã‚¯ã‚¿ã‚¤ãƒãƒ¼ç¾¤
+	NVec2 startPos;						//å§‹ç‚¹åº§æ¨™
+	NVec2 endPos;						//çµ‚ç‚¹åº§æ¨™
+	bool isActive;						//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 };
 
 class UIManager
 {
 private:
-	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };	//UIŒQ
+	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };	//UIç¾¤
 	const uint32_t maxUIBul = 3;
-	std::vector<UI> uiBul_{ (maxUIBul) };	//’eæ‚Á‚½‚ÌUIŒQ
+	std::vector<UI> uiBul_{ (maxUIBul) };	//å¼¾å–ã£ãŸæ™‚ã®UIç¾¤
 
 public:
 	UIManager();
@@ -42,29 +42,29 @@ public:
 	void Update();
 	void EaseTimerUpdate();
 
-	//’eæ‚Á‚½UI’Ç‰Á
+	//å¼¾å–ã£ãŸæ™‚UIè¿½åŠ 
 	void PlusUIBul(const std::string& texName);
 
-	//w’è‚³‚ê‚½UI‚ğ•`‰æ
+	//æŒ‡å®šã•ã‚ŒãŸUIã‚’æç”»
 	void Draw(UIType uiType);
-	//’e‚Æ‚Á‚½‚ÌUI•`‰æ
+	//å¼¾ã¨ã£ãŸæ™‚ã®UIæç”»
 	void DrawUIBul();
 
-	//w’è‚³‚ê‚½UI‚Ìƒ^ƒCƒ}[ƒXƒ^[ƒg
+	//æŒ‡å®šã•ã‚ŒãŸUIã®ã‚¿ã‚¤ãƒãƒ¼ã‚¹ã‚¿ãƒ¼ãƒˆ
 	void StartEaseTimer(UIType uiType) { ui_[(uint32_t)uiType].easeTimer.Start(); }
 
-	//w’è‚³‚ê‚½UI‚Ì•`‰æÀ•Wİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®æç”»åº§æ¨™è¨­å®š
 	void SetPos(UIType uiType, const NVec2& pos);
-	//w’è‚³‚ê‚½UI‚Ì•`‰æƒTƒCƒYİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®æç”»ã‚µã‚¤ã‚ºè¨­å®š
 	void SetSize(UIType uiType, const NVec2& size);
-	//w’è‚³‚ê‚½UI‚Ì•`‰æŠî€“_İ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®æç”»åŸºæº–ç‚¹è¨­å®š
 	void SetAncorPoint(UIType uiType, const NVec2& ancorPoint);
-	//w’è‚³‚ê‚½UI‚Ì•`‰æFİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®æç”»è‰²è¨­å®š
 	void SetColor(UIType uiType, const NColor& color);
-	//w’è‚³‚ê‚½UI‚Ì”ñ•\¦ƒtƒ‰ƒOİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®éè¡¨ç¤ºãƒ•ãƒ©ã‚°è¨­å®š
 	void SetInvisible(UIType uiType, bool isInvisible);
-	//w’è‚³‚ê‚½UI‚ÌƒeƒNƒXƒ`ƒƒİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®ãƒ†ã‚¯ã‚¹ãƒãƒ£è¨­å®š
 	void SetTexture(UIType uiType, const std::string& texName);
-	//w’è‚³‚ê‚½UI‚Ì—LŒøƒtƒ‰ƒOİ’è
+	//æŒ‡å®šã•ã‚ŒãŸUIã®æœ‰åŠ¹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsActive(UIType uiType, bool isActive);
 };

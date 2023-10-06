@@ -7,24 +7,24 @@ class EnemyFactory final
 private:
 	Mouse mouse;
 
-	NVec3 offset;				//ƒGƒ~ƒbƒ^[“à‚Å‚Ç‚ê‚¾‚¯oŒ»ˆÊ’u‚¸‚ç‚·‚©
-	bool isCollision = false;	//“G“¯m‚ª”í‚Á‚Ä‚é‚©ƒtƒ‰ƒO
+	NVec3 offset;				//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼å†…ã§ã©ã‚Œã ã‘å‡ºç¾ä½ç½®ãšã‚‰ã™ã‹
+	bool isCollision = false;	//æ•µåŒå£«ãŒè¢«ã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
 
-	uint32_t mouseSideNum = 10;				//‚Ë‚¸‚İŒQ(‰¡)‚ÌoŒ»”
-	NVec2 mouseSideEmitter = {2.0f,1.0f};	//‚Ë‚¸‚İŒQ(‰¡)‚ÌoŒ»”ÍˆÍ
+	uint32_t mouseSideNum = 10;				//ã­ãšã¿ç¾¤(æ¨ª)ã®å‡ºç¾æ•°
+	NVec2 mouseSideEmitter = { 2.0f,1.0f };	//ã­ãšã¿ç¾¤(æ¨ª)ã®å‡ºç¾ç¯„å›²
 
-	uint32_t mouseFrontNum = 8;				//‚Ë‚¸‚İŒQ(³–Ê)‚ÌoŒ»”
-	NVec2 mouseFrontEmitter = { 6.0f,1.0f };//‚Ë‚¸‚İŒQ(³–Ê)‚ÌoŒ»”ÍˆÍ
+	uint32_t mouseFrontNum = 8;				//ã­ãšã¿ç¾¤(æ­£é¢)ã®å‡ºç¾æ•°
+	NVec2 mouseFrontEmitter = { 6.0f,1.0f };//ã­ãšã¿ç¾¤(æ­£é¢)ã®å‡ºç¾ç¯„å›²
 
 public:
 	static EnemyFactory* GetInstance();
 
 	void Update();
-	//“G‚Ì¶¬
-	//type:“G‚Ìí—Ş
-	//pos:¶¬‚ÌŠî€À•W
-	//isItem:ƒAƒCƒeƒ€‚ğ‚Á‚½“G‚ğ¶¬‚·‚é‚©
-	void Create(IEnemy::EnemyType type, NVec3 pos,bool isItem);
+	//æ•µã®ç”Ÿæˆ
+	//type:æ•µã®ç¨®é¡
+	//pos:ç”Ÿæˆã®åŸºæº–åº§æ¨™
+	//isItem:ã‚¢ã‚¤ãƒ†ãƒ ã‚’æŒã£ãŸæ•µã‚’ç”Ÿæˆã™ã‚‹ã‹
+	void Create(IEnemy::EnemyType type, NVec3 pos, bool isItem);
 
 private:
 	EnemyFactory() = default;

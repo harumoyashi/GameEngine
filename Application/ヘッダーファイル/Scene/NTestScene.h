@@ -20,22 +20,22 @@ class NTestScene final :
 	public IScene
 {
 private:
-	//ƒIƒuƒWƒFƒNƒg
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	std::unique_ptr<NObj3d> obj_;
-	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//ƒŒƒxƒ‹ƒf[ƒ^‚©‚ç“Ç‚İ‚ñ‚¾ƒIƒuƒWƒFƒNƒg
+	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰èª­ã¿è¾¼ã‚“ã ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 	bool isCol_ = false;
 
-	//”wŒiƒXƒvƒ‰ƒCƒg
-	std::unique_ptr<NSprite> backSprite_;	//”wŒiƒXƒvƒ‰ƒCƒg
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	std::unique_ptr<NSprite> backSprite_;	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg
-	std::unique_ptr<NSprite> foreSprite_;	//‘OŒiƒXƒvƒ‰ƒCƒg
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	std::unique_ptr<NSprite> foreSprite_;	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-	//blender‚ÌƒŒƒxƒ‹ƒf[ƒ^
+	//blenderã®ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿
 	std::unique_ptr<LevelData> levelData_;
 
-	//ƒ‰ƒCƒg‚½‚¿
+	//ãƒ©ã‚¤ãƒˆãŸã¡
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
@@ -45,14 +45,14 @@ public:
 	void LoadResources();
 	void Init() override;
 	void Update() override;
-	//”wŒiƒXƒvƒ‰ƒCƒg
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawBackSprite()override;
-	//”wŒi3DƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void DrawBack3D()override;
-	//3DƒIƒuƒWƒFƒNƒg
+	//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	void Draw3D() override;
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	void DrawParticle() override;
-	//‘OŒiƒXƒvƒ‰ƒCƒg
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	void DrawForeSprite() override;
 };

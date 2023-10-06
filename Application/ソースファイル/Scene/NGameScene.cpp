@@ -27,15 +27,15 @@ void NGameScene::LoadResources()
 
 void NGameScene::Init()
 {
-#pragma region	ƒI[ƒfƒBƒI‰Šú‰»
+#pragma region	ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªåˆæœŸåŒ–
 	NAudioManager::GetInstance()->Play("playBGM", true, 0.2f);
 #pragma endregion
-#pragma region	ƒJƒƒ‰‰Šú‰»
+#pragma region	ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	NCameraManager::GetInstance()->Init();
 	NCameraManager::GetInstance()->ChangeCameara(CameraType::BeforeStart);
 #pragma endregion
-#pragma region •`‰æ‰Šú‰»ˆ—
-	//ƒIƒuƒWƒFƒNƒg
+#pragma region æç”»åˆæœŸåŒ–å‡¦ç†
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	NParticleManager::GetInstance()->Init();
 	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
@@ -45,11 +45,11 @@ void NGameScene::Init()
 	ItemManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì‰Šú’lİ’è
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸå€¤è¨­å®š
 
 
 #pragma endregion
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	backSprite_ = std::make_unique<NSprite>();
 	backSprite_->CreateSprite("white");
 	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
@@ -58,10 +58,10 @@ void NGameScene::Init()
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	backSprite_->color_.SetColor255(10, 10, 10);
 
-	//‘OŒiƒXƒvƒ‰ƒCƒg¶¬
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 
 	Score::Init();
-#pragma region ŠeƒXƒvƒ‰ƒCƒg‚Ìİ’è
+#pragma region å„ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®è¨­å®š
 	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
 	UIManager::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
 	UIManager::GetInstance()->SetSize(UIType::Lstick, { 100.0f,100.0f });
@@ -73,7 +73,7 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetPos(UIType::AbuttonPush,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
 
-	//Aƒ{ƒ^ƒ“‚ÍƒvƒŒƒC’†g‚í‚È‚¢‚©‚çŒ©‚¹‚È‚¢
+	//Aãƒœã‚¿ãƒ³ã¯ãƒ—ãƒ¬ã‚¤ä¸­ä½¿ã‚ãªã„ã‹ã‚‰è¦‹ã›ãªã„
 	UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
 	UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
@@ -83,15 +83,15 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
 #pragma endregion
 #pragma endregion
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init();
-	// 3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	NObj3d::SetLightGroup(lightGroup_.get());
 
 	IEmitter3D::SetLightGroup(lightGroup_.get());
 
-	//IPostEffect::SetIsActive(false);	//ƒ|ƒXƒgƒGƒtƒFƒNƒgÁ‚·
+	//IPostEffect::SetIsActive(false);	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæ¶ˆã™
 	Bloom::Init();
 
 	scene = SceneMode::BeforeStart;
@@ -105,10 +105,10 @@ void NGameScene::Init()
 
 void NGameScene::Update()
 {
-#pragma region ƒJƒƒ‰
+#pragma region ã‚«ãƒ¡ãƒ©
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
-#pragma region ƒXƒvƒ‰ƒCƒg
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	backSprite_->Update();
 	Score::Update();
 #pragma endregion
@@ -120,27 +120,27 @@ void NGameScene::Update()
 
 	NParticleManager::GetInstance()->Update();
 
-	//ƒ‰ƒCƒg‚½‚¿‚ÌXV
+	//ãƒ©ã‚¤ãƒˆãŸã¡ã®æ›´æ–°
 	lightGroup_->Update();
 
-	//‚±‚±‚ÍƒQ[ƒ€n‚Ü‚é‘O‚ÌƒV[ƒ“
-	if (scene == SceneMode::BeforeStart)	//n‚Ü‚é‘O‚Ìˆ—
+	//ã“ã“ã¯ã‚²ãƒ¼ãƒ å§‹ã¾ã‚‹å‰ã®ã‚·ãƒ¼ãƒ³
+	if (scene == SceneMode::BeforeStart)	//å§‹ã¾ã‚‹å‰ã®å‡¦ç†
 	{
 		beforeStartTimer_.Update();
-		//‰‰oI‚í‚Á‚½‚çƒvƒŒƒCƒV[ƒ“‚ÉˆÚs
+		//æ¼”å‡ºçµ‚ã‚ã£ãŸã‚‰ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³ã«ç§»è¡Œ
 		if (beforeStartTimer_.GetEnd())
 		{
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 			scene = SceneMode::Play;
 		}
 	}
-	else if (scene == SceneMode::Play)	//ƒvƒŒƒC’†‚Ìˆ—
+	else if (scene == SceneMode::Play)	//ãƒ—ãƒ¬ã‚¤ä¸­ã®å‡¦ç†
 	{
 		Player::GetInstance()->Update();
 
 		if (Field::GetInstance()->GetIsStart())
 		{
-			//ƒXƒ^[ƒgüƒXƒ‰ƒCƒhƒ^ƒCƒ}[ŠJn
+			//ã‚¹ã‚¿ãƒ¼ãƒˆç·šã‚¹ãƒ©ã‚¤ãƒ‰ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 			if (slideTimer_.GetStarted() == false)
 			{
 				slideTimer_.Start();
@@ -155,23 +155,23 @@ void NGameScene::Update()
 		stickRotTimer_.Roop();
 		NVec2 stickVec = { sinf(stickRotTimer_.GetTimeRate() * PI2),cosf(stickRotTimer_.GetTimeRate() * PI2) };
 		stickVec *= 10.f;
-		//Y‚ÍƒXƒeƒBƒbƒN‚¾‚Æã‚ª³‚Ì’l‚È‚Ì‚Åˆø‚­
+		//Yã¯ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã ã¨ä¸ŠãŒæ­£ã®å€¤ãªã®ã§å¼•ã
 		UIManager::GetInstance()->SetPos(UIType::Lstick,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
 
 		if (Field::GetInstance()->GetIsStart())
 		{
-			//ƒvƒŒƒCƒ„[‚ª”g‚Éˆù‚İ‚Ü‚ê‚½‚çE‚·
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ³¢ã«é£²ã¿è¾¼ã¾ã‚ŒãŸã‚‰æ®ºã™
 			if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
 			{
-				if (Player::GetInstance()->GetIsAlive())	//¶‚«‚Ä‚é‚È‚çE‚·
+				if (Player::GetInstance()->GetIsAlive())	//ç”Ÿãã¦ã‚‹ãªã‚‰æ®ºã™
 				{
 					Player::GetInstance()->SetIsAlive(false);
 				}
 			}
 		}
 
-		//ƒvƒŒƒCƒ„[‚ª€‚ñ‚ÅA€–S‰‰o‚ªI‚í‚Á‚½‚ç¸”sƒŠƒUƒ‹ƒg‚Ö
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒæ­»ã‚“ã§ã€æ­»äº¡æ¼”å‡ºãŒçµ‚ã‚ã£ãŸã‚‰å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆã¸
 		if (Player::GetInstance()->GetIsAlive() == false &&
 			Player::GetInstance()->GetDeadEffectEnd())
 		{
@@ -180,13 +180,13 @@ void NGameScene::Update()
 			scene = SceneMode::Faild;
 			slideTimer_.Reset();
 			slideTimer_ = 0.5f;
-			Player::GetInstance()->FaildUpdate();	//‚±‚±‚ÅƒvƒŒƒCƒ„[‚ÌÀ•W•Ï‚¦‚Ä‚ ‚°‚È‚¢‚ÆƒJƒƒ‰‚ÌÀ•W‚ª€‚ñ‚¾À•WŠî€‚É‚È‚Á‚¿‚á‚¤
+			Player::GetInstance()->FaildUpdate();	//ã“ã“ã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™å¤‰ãˆã¦ã‚ã’ãªã„ã¨ã‚«ãƒ¡ãƒ©ã®åº§æ¨™ãŒæ­»ã‚“ã åº§æ¨™åŸºæº–ã«ãªã£ã¡ã‚ƒã†
 			Player::GetInstance()->SetIsElapseAnime(false);
-			Score::SaveScore();	//€–S‰‰oI‚í‚é‚Ü‚Å‚ÍƒXƒRƒA“ü‚ê‚½‚°‚é
+			Score::SaveScore();	//æ­»äº¡æ¼”å‡ºçµ‚ã‚ã‚‹ã¾ã§ã¯ã‚¹ã‚³ã‚¢å…¥ã‚ŒãŸã’ã‚‹
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
 		}
 
-		//ƒS[ƒ‹‚µ‚½‚çƒNƒŠƒAƒŠƒUƒ‹ƒg‚Ö
+		//ã‚´ãƒ¼ãƒ«ã—ãŸã‚‰ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆã¸
 		if (Field::GetInstance()->GetIsGoal())
 		{
 			NAudioManager::GetInstance()->Destroy("playBGM");
@@ -195,29 +195,29 @@ void NGameScene::Update()
 			slideTimer_.Reset();
 			slideTimer_ = 0.5f;
 			Player::GetInstance()->SetIsElapseAnime(false);
-			Score::SaveScore();	//€–S‰‰oI‚í‚é‚Ü‚Å‚ÍƒXƒRƒA“ü‚ê‚½‚°‚é
+			Score::SaveScore();	//æ­»äº¡æ¼”å‡ºçµ‚ã‚ã‚‹ã¾ã§ã¯ã‚¹ã‚³ã‚¢å…¥ã‚ŒãŸã’ã‚‹
 			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
 		}
 
-		//“–‚½‚è”»’è‘“–‚½‚è
+		//å½“ãŸã‚Šåˆ¤å®šç·å½“ãŸã‚Š
 		NCollisionManager::GetInstance()->CheckAllCollision();
 	}
-	else if (scene == SceneMode::Clear)	//ƒNƒŠƒAƒŠƒUƒ‹ƒg‚Ìˆ—
+	else if (scene == SceneMode::Clear)	//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆã®å‡¦ç†
 	{
 		Player::GetInstance()->ClearUpdate();
 
-		//ƒXƒ^[ƒgüƒXƒ‰ƒCƒhƒ^ƒCƒ}[ŠJn
+		//ã‚¹ã‚¿ãƒ¼ãƒˆç·šã‚¹ãƒ©ã‚¤ãƒ‰ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 		if (slideTimer_.GetStarted() == false)
 		{
 			slideTimer_.Start();
 		}
 		slideTimer_.Update();
-		//ƒNƒŠƒAƒeƒLƒXƒgƒXƒ‰ƒCƒh
+		//ã‚¯ãƒªã‚¢ãƒ†ã‚­ã‚¹ãƒˆã‚¹ãƒ©ã‚¤ãƒ‰
 		slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
 		UIManager::GetInstance()->SetPos(UIType::Clear,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
-		//ƒŠƒUƒ‹ƒgƒXƒRƒA‚ªã‚©‚ç—‚¿‚Ä‚­‚é
+		//ãƒªã‚¶ãƒ«ãƒˆã‚¹ã‚³ã‚¢ãŒä¸Šã‹ã‚‰è½ã¡ã¦ãã‚‹
 		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
 		Score::SetPos(
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
@@ -226,7 +226,7 @@ void NGameScene::Update()
 			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
 			Score::TexType::Top);
 
-		//Aƒ{ƒ^ƒ““_–Å
+		//Aãƒœã‚¿ãƒ³ç‚¹æ»…
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
@@ -239,28 +239,28 @@ void NGameScene::Update()
 			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 		{
-			NSceneChange::GetInstance()->Start();	//ƒV[ƒ“‘JˆÚŠJn
+			NSceneChange::GetInstance()->Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹
 		}
 	}
-	else if (scene == SceneMode::Faild)	//¸”sƒŠƒUƒ‹ƒg‚Ìˆ—
+	else if (scene == SceneMode::Faild)	//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆã®å‡¦ç†
 	{
 		Player::GetInstance()->FaildUpdate();
 
-		//ƒXƒ^[ƒgüƒXƒ‰ƒCƒhƒ^ƒCƒ}[ŠJn
+		//ã‚¹ã‚¿ãƒ¼ãƒˆç·šã‚¹ãƒ©ã‚¤ãƒ‰ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 		if (slideTimer_.GetStarted() == false)
 		{
 			slideTimer_.Start();
 		}
 		slideTimer_.Update();
-		//¸”sƒeƒLƒXƒgƒXƒ‰ƒCƒh
+		//å¤±æ•—ãƒ†ã‚­ã‚¹ãƒˆã‚¹ãƒ©ã‚¤ãƒ‰
 		slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
 		UIManager::GetInstance()->SetPos(UIType::Faild,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
-		//ƒŠƒUƒ‹ƒgƒXƒRƒA‚ªã‚©‚ç—‚¿‚Ä‚­‚é
+		//ãƒªã‚¶ãƒ«ãƒˆã‚¹ã‚³ã‚¢ãŒä¸Šã‹ã‚‰è½ã¡ã¦ãã‚‹
 		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
 		Score::SetPos(
 			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
@@ -269,7 +269,7 @@ void NGameScene::Update()
 			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
 			Score::TexType::Top);
 
-		//Aƒ{ƒ^ƒ““_–Å
+		//Aãƒœã‚¿ãƒ³ç‚¹æ»…
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
@@ -282,42 +282,42 @@ void NGameScene::Update()
 			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 		{
-			NSceneChange::GetInstance()->Start();	//ƒV[ƒ“‘JˆÚŠJn
+			NSceneChange::GetInstance()->Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹
 		}
 	}
 
-	//Ø‚è‘Ö‚¦‚ÄÖ¼‚Á‚ÄŒ¾‚í‚ê‚½‚ç
+	//åˆ‡ã‚Šæ›¿ãˆã¦ï¾–ï½¼ã£ã¦è¨€ã‚ã‚ŒãŸã‚‰
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
 		NAudioManager::GetInstance()->Destroy("clearBGM");
 		NAudioManager::GetInstance()->Destroy("faildBGM");
-		NSceneManager::ChangeScene<NTitleScene>();			//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉØ‚è‘Ö‚¦
-		NSceneChange::GetInstance()->SetIsChange(false);	//Ø‚è‘Ö‚¦‚¿‚áÀŞÒ°
+		NSceneManager::ChangeScene<NTitleScene>();			//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«åˆ‡ã‚Šæ›¿ãˆ
+		NSceneChange::GetInstance()->SetIsChange(false);	//åˆ‡ã‚Šæ›¿ãˆã¡ã‚ƒï¾€ï¾ï¾’ï½°
 	}
 
 #ifdef _DEBUG
-	//ƒV[ƒ“Ø‚è‘Ö‚¦(ƒfƒoƒbƒO—p)
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ(ãƒ‡ãƒãƒƒã‚°ç”¨)
 	if (NInput::IsKeyDown(DIK_RETURN) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))
 	{
-		NSceneChange::GetInstance()->Start();	//ƒV[ƒ“‘JˆÚŠJn
+		NSceneChange::GetInstance()->Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹
 	}
 
-	//ƒŠƒZƒbƒgƒ{ƒ^ƒ“(ƒfƒoƒbƒO—p)
+	//ãƒªã‚»ãƒƒãƒˆãƒœã‚¿ãƒ³(ãƒ‡ãƒãƒƒã‚°ç”¨)
 	if (NInput::IsKeyDown(DIK_R) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 	{
 		NSceneManager::ChangeScene<NGameScene>();
 	}
 
-	//ƒAƒCƒeƒ€o‚·ƒ{ƒ^ƒ“(ƒfƒoƒbƒO—p)
+	//ã‚¢ã‚¤ãƒ†ãƒ å‡ºã™ãƒœã‚¿ãƒ³(ãƒ‡ãƒãƒƒã‚°ç”¨)
 	if (NInput::IsKeyDown(DIK_I))
 	{
 		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
 #endif
-	}
+}
 
 void NGameScene::DrawBackSprite()
 {

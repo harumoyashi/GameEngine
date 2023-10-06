@@ -2,5 +2,5 @@
 
 Mouse::Mouse()
 {
-	enemyTypeName_ = "mouse";	//Ží‘°–¼Œˆ‚ß‚é(ƒzƒ“ƒg‚Íƒ‚ƒfƒ‹ƒl[ƒ€‚Æ“ˆê‚µ‚½‚¢)
+	enemyTypeName_ = "mouse";	//ç¨®æ—åæ±ºã‚ã‚‹(ãƒ›ãƒ³ãƒˆã¯ãƒ¢ãƒ‡ãƒ«ãƒãƒ¼ãƒ ã¨çµ±ä¸€ã—ãŸã„)
 }

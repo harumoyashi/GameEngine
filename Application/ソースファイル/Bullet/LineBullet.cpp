@@ -7,10 +7,10 @@
 LineBullet::LineBullet()
 {
     bulletType = BulletType::LineBullet;
-    shotCoolTimer_ = 0.1f;      //’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
-    isCanShot_ = false;			//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
-    level_ = 1;                 //’e‚Ì‹­‰»ƒŒƒxƒ‹
-    
+    shotCoolTimer_ = 0.1f;      //å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
+    isCanShot_ = false;			//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+    level_ = 1;                 //å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«
+
     SetDamage(1.0f);
 }
 
@@ -19,7 +19,7 @@ void LineBullet::LineUpdate()
     SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
     shotCoolTimer_.Update(elapseSpeed_);
-    //ƒ^ƒCƒ}[ƒ‹[ƒv
+    //ã‚¿ã‚¤ãƒãƒ¼ãƒ«ãƒ¼ãƒ—
     if (shotCoolTimer_.GetStarted() == false)
     {
         shotCoolTimer_.Start();
@@ -33,7 +33,7 @@ void LineBullet::LineUpdate()
 #ifdef _DEBUG
     static float coolTimer = 0.1f;
     ImGui::Begin("LineBulletParameter");
-    //0•b~10•b‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
+    //0ç§’~10ç§’ã¾ã§ã®é–“ã«ã¨ã©ã‚ã‚‹
     ImGui::SliderFloat("ShotCoolTimer", &coolTimer, 0.0f, 10.0f);
     ImGui::End();
     shotCoolTimer_.maxTime_ = coolTimer;

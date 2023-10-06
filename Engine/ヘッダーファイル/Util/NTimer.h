@@ -1,6 +1,6 @@
 #pragma once
 
-//ŠÔæ“¾‚ÌÛ‚Ég‚¤ŠÔ‚Ìí—Ş
+//æ™‚é–“å–å¾—ã®éš›ã«ä½¿ã†æ™‚é–“ã®ç¨®é¡
 enum class TimeType
 {
 	MilliSecond,
@@ -11,33 +11,33 @@ enum class TimeType
 class NTimer final
 {
 private:
-	float timer_;		//ƒ^ƒCƒ}[
-	float maxTimer_;	//ƒ^ƒCƒ}[‚ÌÅ‘å’l
-	bool isTimeOut_;	//ƒ^ƒCƒ}[‚ªÅ‘å’l‚É’B‚µ‚½‚©ƒtƒ‰ƒO
+	float timer_;		//ã‚¿ã‚¤ãƒãƒ¼
+	float maxTimer_;	//ã‚¿ã‚¤ãƒãƒ¼ã®æœ€å¤§å€¤
+	bool isTimeOut_;	//ã‚¿ã‚¤ãƒãƒ¼ãŒæœ€å¤§å€¤ã«é”ã—ãŸã‹ãƒ•ãƒ©ã‚°
 
 public:
-	NTimer() : timer_(0), maxTimer_(0), isTimeOut_(false){}
+	NTimer() : timer_(0), maxTimer_(0), isTimeOut_(false) {}
 	NTimer(const float maxTimer) : timer_(0), maxTimer_(maxTimer), isTimeOut_(false) {}
 
-	//ƒ^ƒCƒ}[ƒŠƒZƒbƒg
+	//ã‚¿ã‚¤ãƒãƒ¼ãƒªã‚»ãƒƒãƒˆ
 	void Reset();
-	//XV(ƒ^ƒCƒ}[‘«‚³‚ê‚Ä‚­)
-	//elapseTimer:Œo‰ßŠÔBƒ^ƒCƒ}[‰ÁZ—Ê‚É‰e‹¿‚·‚éBƒXƒ[ƒ‚[ƒVƒ‡ƒ“—p
-	void Update(const bool isRoop,const float elapseTimer = 1.0f);
-	//w’è‚µ‚½’l•ªƒ^ƒCƒ}[‚ğŒ¸‚ç‚µ‚Ä‚­
+	//æ›´æ–°(ã‚¿ã‚¤ãƒãƒ¼è¶³ã•ã‚Œã¦ã)
+	//elapseTimer:çµŒéæ™‚é–“ã€‚ã‚¿ã‚¤ãƒãƒ¼åŠ ç®—é‡ã«å½±éŸ¿ã™ã‚‹ã€‚ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨
+	void Update(const bool isRoop, const float elapseTimer = 1.0f);
+	//æŒ‡å®šã—ãŸå€¤åˆ†ã‚¿ã‚¤ãƒãƒ¼ã‚’æ¸›ã‚‰ã—ã¦ã
 	void SubTimer(const float subTimer, const float elapseTimer = 1.0f);
 
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetTimer(const float timer) { timer_ = timer; }
 	void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
 	void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
 
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	bool GetisTimeOut()const { return isTimeOut_; }
 	const float GetMaxTimer()const { return (float)maxTimer_; }
 	const float GetTimer()const { return (float)timer_; }
-	//ƒ^ƒCƒ}[‚Ìi‚İ‹ï‡‚ğæ“¾
+	//ã‚¿ã‚¤ãƒãƒ¼ã®é€²ã¿å…·åˆã‚’å–å¾—
 	const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
-	//ƒVƒXƒeƒ€‚ªŠJn‚³‚ê‚Ä‚©‚ç‚ÌŠÔ‚ğæ“¾
+	//ã‚·ã‚¹ãƒ†ãƒ ãŒé–‹å§‹ã•ã‚Œã¦ã‹ã‚‰ã®æ™‚é–“ã‚’å–å¾—
 	float GetNowTime(const TimeType& timeType);
 };

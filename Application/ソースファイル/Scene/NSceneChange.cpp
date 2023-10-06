@@ -42,17 +42,17 @@ void NSceneChange::Update()
 {
 	if (isSceneChangeNow_)
 	{
-		//ƒ^ƒCƒ}[XV
+		//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 		inTimer_.Update();
 		outTimer_.Update();
 
-		//‚Ü‚¾ƒ^ƒCƒ}[ƒXƒ^[ƒg‚µ‚Ä‚È‚¢‚È‚ç‹N“®
+		//ã¾ã ã‚¿ã‚¤ãƒãƒ¼ã‚¹ã‚¿ãƒ¼ãƒˆã—ã¦ãªã„ãªã‚‰èµ·å‹•
 		if (inTimer_.GetStarted() == false)
 		{
 			inTimer_.Start();
 		}
 
-		//‘O”¼‚Ìƒ^ƒCƒ}[‚ª“®‚¢‚Ä‚é
+		//å‰åŠã®ã‚¿ã‚¤ãƒãƒ¼ãŒå‹•ã„ã¦ã‚‹æ™‚
 		if (inTimer_.GetRun())
 		{
 			pos_.x = NEasing::InOutBack(
@@ -61,14 +61,14 @@ void NSceneChange::Update()
 				inTimer_.GetTimeRate());
 		}
 
-		//‘O”¼‚ªI‚í‚Á‚½‚È‚çŒã”¼ƒXƒ^[ƒg
+		//å‰åŠãŒçµ‚ã‚ã£ãŸãªã‚‰å¾ŒåŠã‚¹ã‚¿ãƒ¼ãƒˆ
 		if (inTimer_.GetEnd() && outTimer_.GetStarted() == false)
 		{
 			outTimer_.Start();
-			isSceneChange_ = true;		//ƒV[ƒ“Ø‚è‘Ö‚¦‚ÄÖ¼!!!
+			isSceneChange_ = true;		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã¦ï¾–ï½¼!!!
 		}
 
-		//Œã”¼‚Ìƒ^ƒCƒ}[‚ª“®‚¢‚Ä‚é
+		//å¾ŒåŠã®ã‚¿ã‚¤ãƒãƒ¼ãŒå‹•ã„ã¦ã‚‹æ™‚
 		if (outTimer_.GetRun())
 		{
 			pos_.x = NEasing::InQuad(
@@ -77,7 +77,7 @@ void NSceneChange::Update()
 				outTimer_.GetTimeRate());
 		}
 
-		//I‚í‚è
+		//çµ‚ã‚ã‚Š
 		if (outTimer_.GetEnd())
 		{
 			isSceneChange_ = false;
@@ -108,7 +108,7 @@ void NSceneChange::Start()
 	{
 		NAudioManager::GetInstance()->Play("sceneChangeSE");
 		Init();
-		isSceneChange_ = false;		//‚Ü‚¾‚¾A‚Ü‚¾Ø‚è‘Ö‚¦‚é‚È
+		isSceneChange_ = false;		//ã¾ã ã ã€ã¾ã åˆ‡ã‚Šæ›¿ãˆã‚‹ãª
 		isSceneChangeNow_ = true;
 	}
 }

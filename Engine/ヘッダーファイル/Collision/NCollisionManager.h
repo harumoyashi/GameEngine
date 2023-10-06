@@ -14,21 +14,21 @@ private:
 public:
 	static NCollisionManager* GetInstance();
 
-	//‰Šú‰»(ƒRƒ‰ƒCƒ_[ŒQ‘Síœ)
+	//åˆæœŸåŒ–(ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ç¾¤å…¨å‰Šé™¤)
 	void Init();
 
-	//ƒRƒ‰ƒCƒ_[‚ğƒŠƒXƒg‚É’Ç‰Á
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚¹ãƒˆã«è¿½åŠ 
 	void AddCollider(NBaseCollider* collider)
 	{
 		colliders_.emplace_front(collider);
 	}
-	//ƒRƒ‰ƒCƒ_[‚ğƒŠƒXƒg‚©‚çíœ
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ãƒªã‚¹ãƒˆã‹ã‚‰å‰Šé™¤
 	void RemoveCollider(NBaseCollider* collider)
 	{
 		colliders_.remove(collider);
 	}
 
-	//‘S‚Ä‚ÌÕ“Ëƒ`ƒFƒbƒN
+	//å…¨ã¦ã®è¡çªãƒã‚§ãƒƒã‚¯
 	void CheckAllCollision();
 
 private:
@@ -37,8 +37,8 @@ private:
 	~NCollisionManager() = default;
 	NCollisionManager& operator=(const NCollisionManager&) = delete;
 
-	//‹…‘Ì“¯m‚Ì“–‚½‚è”»’è
+	//çƒä½“åŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
 	void SphereCol();
-	//‹…‘Ì‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	//çƒä½“ã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	void Sphere2PlaneCol();
 };

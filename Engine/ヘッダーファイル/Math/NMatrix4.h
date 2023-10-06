@@ -7,71 +7,71 @@ struct NMatrix4
 {
 	float m[4][4];
 
-	//’PˆÊs—ñ‚Å¶¬
+	//å˜ä½è¡Œåˆ—ã§ç”Ÿæˆ
 	NMatrix4() :
 		m{
 			1,0,0,0,
 			0,1,0,0,
 			0,0,1,0,
-			0,0,0,1 }{}
+			0,0,0,1 } {}
 	NMatrix4(
 		float _00, float _01, float _02, float _03,
 		float _10, float _11, float _12, float _13,
 		float _20, float _21, float _22, float _23,
-		float _30, float _31, float _32, float _33):
-		m {
+		float _30, float _31, float _32, float _33) :
+		m{
 			_00, _01, _02, _03,
 			_10, _11, _12, _13,
 			_20, _21, _22, _23,
-			_30, _31, _32, _33}{}
+			_30, _31, _32, _33 } {}
 
-	//‹ts—ñ
+	//é€†è¡Œåˆ—
 	NMatrix4 operator-() const;
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
-	//‰ÁZ
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+	//åŠ ç®—
 	NMatrix4 operator+(const NMatrix4& m) const;
-	//‰ÁZ
+	//åŠ ç®—
 	NMatrix4& operator+=(const NMatrix4& m);
-	//Œ¸Z
+	//æ¸›ç®—
 	NMatrix4 operator-(const NMatrix4& m) const;
-	//Œ¸Z
+	//æ¸›ç®—
 	NMatrix4& operator-=(const NMatrix4& m);
-	//æZ
+	//ä¹—ç®—
 	NMatrix4 operator*(const NMatrix4& m) const;
-	//æZ
+	//ä¹—ç®—
 	NMatrix4& operator*=(const NMatrix4& m);
 
-	//‘S‚Ä‚Ì—v‘f‚ª0‚Ìs—ñ
+	//å…¨ã¦ã®è¦ç´ ãŒ0ã®è¡Œåˆ—
 	static NMatrix4 Zero();
-	//’PˆÊs—ñ
+	//å˜ä½è¡Œåˆ—
 	static NMatrix4 Identity();
-	//Šgks—ñ‚Ìİ’è
+	//æ‹¡ç¸®è¡Œåˆ—ã®è¨­å®š
 	static NMatrix4 Scale(const NVec3& s);
-	//‰ñ“]s—ñ‚Ìİ’è
+	//å›è»¢è¡Œåˆ—ã®è¨­å®š
 	static NMatrix4 RotateX(const float angle);
 	static NMatrix4 RotateY(const float angle);
 	static NMatrix4 RotateZ(const float angle);
-	//ƒNƒH[ƒ^ƒjƒIƒ“‚©‚ç‰ñ“]s—ñ‚É•ÏŠ·
+	//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‹ã‚‰å›è»¢è¡Œåˆ—ã«å¤‰æ›
 	static NMatrix4 RotateQuaternion(const NQuaternion& q);
-	//•½sˆÚ“®s—ñ‚Ìì¬
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®ä½œæˆ
 	static NMatrix4 Translation(const NVec3& t);
-	//À•W•ÏŠ·iƒxƒNƒgƒ‹‚Æs—ñ‚ÌŠ|‚¯Zj
+	//åº§æ¨™å¤‰æ›ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã¨è¡Œåˆ—ã®æ›ã‘ç®—ï¼‰
 	static NVec3 Transform(const NVec3& v, const NMatrix4& m);
-	//wœZ‚ğg‚Á‚½À•W•ÏŠ·
+	//wé™¤ç®—ã‚’ä½¿ã£ãŸåº§æ¨™å¤‰æ›
 	static NVec3 WTransform(const NVec3& v, const NMatrix4& m);
 	NVec4 Vec4MulMat(const NVec4& v, const NMatrix4& m)const;
 
-	//ƒIƒCƒ‰[Šp‚Ö‚Ì•ÏŠ·
-	//Ql:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf#%E5%9B%9E%E8%BB%A2%E8%A1%8C%E5%88%97%E3%81%8B%E3%82%89%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC%E8%A7%92
+	//ã‚ªã‚¤ãƒ©ãƒ¼è§’ã¸ã®å¤‰æ›
+	//å‚è€ƒ:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf#%E5%9B%9E%E8%BB%A2%E8%A1%8C%E5%88%97%E3%81%8B%E3%82%89%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC%E8%A7%92
 	NVec3 ToEuler() const;
 
-	//“]’us—ñ
+	//è»¢ç½®è¡Œåˆ—
 	NMatrix4 Transpose();
 
-	//s—ñ‚©‚çƒ[ƒ‹ƒhÀ•Wî•ñ‚ğ’Šo
+	//è¡Œåˆ—ã‹ã‚‰ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™æƒ…å ±ã‚’æŠ½å‡º
 	NVec3 GetWorldPos() const;
-	//s—ñ‚©‚çƒXƒP[ƒ‹î•ñ‚ğ’Šo
+	//è¡Œåˆ—ã‹ã‚‰ã‚¹ã‚±ãƒ¼ãƒ«æƒ…å ±ã‚’æŠ½å‡º
 	NVec3 GetScale() const;
 };
 

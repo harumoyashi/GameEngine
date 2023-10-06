@@ -7,11 +7,11 @@
 #include "NImGuiManager.h"
 #include "imgui.h"
 
-uint32_t Score::sNowScore;	//Œ»Ý‚ÌƒXƒRƒA
-uint32_t Score::sTopScore;	//ˆê”Ô‚‚¢ƒXƒRƒA
-std::vector<NumDrower> Score::sScoreTex{ 3 };	//ƒXƒRƒA•\Ž¦—p
-std::unique_ptr<NSprite> Score::sTopTex;		//TOPƒeƒNƒXƒ`ƒƒ
-bool Score::sIsAddScore;	//ƒXƒRƒA‰ÁŽZ‚µ‚ÄOK‚©ƒtƒ‰ƒO
+uint32_t Score::sNowScore;	//ç¾åœ¨ã®ã‚¹ã‚³ã‚¢
+uint32_t Score::sTopScore;	//ä¸€ç•ªé«˜ã„ã‚¹ã‚³ã‚¢
+std::vector<NumDrower> Score::sScoreTex{ 3 };	//ã‚¹ã‚³ã‚¢è¡¨ç¤ºç”¨
+std::unique_ptr<NSprite> Score::sTopTex;		//TOPãƒ†ã‚¯ã‚¹ãƒãƒ£
+bool Score::sIsAddScore;	//ã‚¹ã‚³ã‚¢åŠ ç®—ã—ã¦OKã‹ãƒ•ãƒ©ã‚°
 
 void Score::Init()
 {
@@ -74,11 +74,11 @@ void Score::DrawImGui()
 
 void Score::LoadScore()
 {
-	//ƒtƒ@ƒCƒ‹“ü—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å…¥åŠ›å‡¦ç†
 	std::ifstream readingFile;
 
 	readingFile.open("./Resources/Data/score.txt");
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“Ž¸”s‚ðƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (readingFile.fail())
 	{
 		assert(0);
@@ -92,7 +92,7 @@ void Score::LoadScore()
 
 void Score::SaveScore()
 {
-	//ƒnƒCƒXƒRƒA‚ÌXV‚È‚©‚Á‚½‚çˆ—ƒXƒLƒbƒv
+	//ãƒã‚¤ã‚¹ã‚³ã‚¢ã®æ›´æ–°ãªã‹ã£ãŸã‚‰å‡¦ç†ã‚¹ã‚­ãƒƒãƒ—
 	if (sTopScore >= sNowScore)
 	{
 		return;
@@ -101,7 +101,7 @@ void Score::SaveScore()
 	sTopScore = sNowScore;
 	sScoreTex[(uint32_t)TexType::Top].SetNum(sTopScore);
 
-	//ƒtƒ@ƒCƒ‹o—Íˆ—
+	//ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›å‡¦ç†
 	std::ofstream writingFile;
 
 	std::string filename = "";
@@ -113,7 +113,7 @@ void Score::SaveScore()
 
 	writingFile.close();
 
-	sIsAddScore = false;	//‚±‚êˆÈãƒXƒRƒA“ü‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+	sIsAddScore = false;	//ã“ã‚Œä»¥ä¸Šã‚¹ã‚³ã‚¢å…¥ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
 }
 
 void Score::AddScore(uint32_t score)

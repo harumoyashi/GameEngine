@@ -6,7 +6,7 @@
 class BulletManager final
 {
 public:
-	std::vector<std::unique_ptr<IBullet>> bullets_;	//íeÇ«Ç‡
+	std::vector<std::unique_ptr<IBullet>> bullets_;	//Âºæ„Å©„ÇÇ
 
 public:
 	static BulletManager* GetInstance();

@@ -2,7 +2,7 @@
 
 bool NTile::Init()
 {
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbMaterial_ = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
@@ -27,12 +27,12 @@ void NTile::Update()
 
 void NTile::CommonBeginDraw()
 {
-	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Æƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’èƒRƒ}ƒ“ƒh
+	// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã¨ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjNone"));
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjNone")->pRootSignature);
 
-	// ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
-	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // OŠpŒ`ƒŠƒXƒg
+	// ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // ä¸‰è§’å½¢ãƒªã‚¹ãƒˆ
 
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { NDX12::GetInstance()->GetSRVHeap() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
@@ -41,12 +41,12 @@ void NTile::CommonBeginDraw()
 void NTile::Draw()
 {
 	SetCBV();
-	//ƒ^ƒCƒ‹—p‚Ì’è”ƒoƒbƒtƒ@“n‚·
+	//ã‚¿ã‚¤ãƒ«ç”¨ã®å®šæ•°ãƒãƒƒãƒ•ã‚¡æ¸¡ã™
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbTile_->constBuff_->GetGPUVirtualAddress());
 	SetVB(model_->mesh.vertexBuff.GetView());
 	SetIB(*model_->mesh.indexBuff.GetView());
 	SetSRVHeap(texture_->gpuHandle_);
-	//ƒ‰ƒCƒg‚Ì•`‰æ
+	//ãƒ©ã‚¤ãƒˆã®æç”»
 	sLightGroup->Draw(4);
 	DrawCommand((uint32_t)model_->mesh.indices.size());
 }

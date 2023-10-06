@@ -12,40 +12,40 @@ void NGame::Init()
 {
 	NFramework::Init();
 
-#pragma region WindowsAPI‰Šú‰»
+#pragma region WindowsAPIåˆæœŸåŒ–
 	win_ = NWindows::GetInstance();
 	win_->Set();
 	win_->CreateWindowObj();
 	win_->Display();
 #pragma endregion
-#pragma region DirectX‰Šú‰»
+#pragma region DirectXåˆæœŸåŒ–
 	dx12_ = NDX12::GetInstance();
 	dx12_->Init(win_);
-	//input‰Šú‰»
+	//inputåˆæœŸåŒ–
 	NInput::MouseInit(win_->GetHInstance(), win_->GetHwnd());
 	NInput::KeyInit(win_->GetHInstance(), win_->GetHwnd());
 	NInput::GetInstance()->PadInit();
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‰Šú‰»
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³åˆæœŸåŒ–
 	pipeline_ = PipeLineManager::GetInstance();
 	pipeline_->CreateAll();
 #pragma endregion
-#pragma region ƒI[ƒfƒBƒI‰Šú‰»
+#pragma region ã‚ªãƒ¼ãƒ‡ã‚£ã‚ªåˆæœŸåŒ–
 	audio_ = NAudio::GetInstance();
 	audio_->Init();
 	NAudioManager::GetInstance()->AllLoad();
 #pragma endregion
-#pragma region ƒ‚ƒfƒ‹‰Šú‰»
+#pragma region ãƒ¢ãƒ‡ãƒ«åˆæœŸåŒ–
 	NModelManager::AllLoad();
 #pragma endregion
-#pragma region ƒeƒNƒXƒ`ƒƒƒ}ƒl[ƒWƒƒ[‰Šú‰»
+#pragma region ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼åˆæœŸåŒ–
 	texManager_ = NTextureManager::GetInstance();
 	texManager_->Init();
 #pragma endregion
-#pragma region ƒQ[ƒ€ƒV[ƒ“‰Šú‰»
+#pragma region ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³åˆæœŸåŒ–
 	sceneMane_ = NSceneManager::GetInstance();
 	sceneMane_->Init();
 #pragma endregion
-#pragma region ImGui‰Šú‰»
+#pragma region ImGuiåˆæœŸåŒ–
 	NImGuiManager::GetInstance()->Init();
 #pragma endregion
 }
@@ -53,16 +53,16 @@ void NGame::Init()
 void NGame::Update()
 {
 	NImGuiManager::GetInstance()->Begin();
-	//ImGui::ShowDemoWindow();‚ÅImGui‚ÌƒTƒ“ƒvƒ‹Œ©‚ê‚é//
+	//ImGui::ShowDemoWindow();ã§ImGuiã®ã‚µãƒ³ãƒ—ãƒ«è¦‹ã‚Œã‚‹//
 
-#ifdef _DEBUG //ƒ|ƒXƒgƒGƒtƒFƒNƒgImGui
+#ifdef _DEBUG //ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆImGui
 #endif // DEBUG
 
 	NFramework::Update();
-#pragma region ƒEƒBƒ“ƒhƒEƒƒbƒZ[ƒWˆ—
+#pragma region ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†
 	if (win_->WindowMessage()) { NFramework::SetIsGameEnd(true); }
 #pragma endregion
-#pragma region DirectX–ˆƒtƒŒ[ƒ€ˆ—
+#pragma region DirectXæ¯Žãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	NInput::MouseUpdate();
 	NInput::KeyUpdate();
 	NInput::GetInstance()->PadUpdate();
@@ -79,28 +79,28 @@ void NGame::Draw()
 {
 	if (IPostEffect::GetIsActive())
 	{
-		IPostEffect::PreDrawScene();			//ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ‚Ì€”õ(‘‚«ž‚Ýê—pó‘Ô‚É‚·‚é)
-		sceneMane_->Draw();						//ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ‚ÉƒQ[ƒ€ƒV[ƒ“‚Ì•`‰æ
-		IPostEffect::PostDrawScene();			//“Ç‚Ýž‚Ýê—pó‘Ô‚É‚µ‚ÄI—¹
+		IPostEffect::PreDrawScene();			//ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æº–å‚™(æ›¸ãè¾¼ã¿å°‚ç”¨çŠ¶æ…‹ã«ã™ã‚‹)
+		sceneMane_->Draw();						//ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æç”»
+		IPostEffect::PostDrawScene();			//èª­ã¿è¾¼ã¿å°‚ç”¨çŠ¶æ…‹ã«ã—ã¦çµ‚äº†
 
-		NDX12::GetInstance()->PreDraw();		//ƒoƒbƒNƒoƒbƒtƒ@‚Ì“ü‚ê‘Ö‚¦
-		IPostEffect::Draw();					//ƒoƒbƒNƒoƒbƒtƒ@‚Éƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ì•`‰æ
-		NSceneChange::GetInstance()->Draw();	//ˆÃ–‹‚Íƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ìã‚©‚ç•`‰æ‚µ’¼‚·
-		NImGuiManager::GetInstance()->Draw();	//ImGui•`‰æ
-		NDX12::GetInstance()->PostDraw();		//ƒoƒbƒNƒoƒbƒtƒ@‚Ì‚É•`‰æ‚µ‚½‚Ì‚ð•\Ž¦‚É
+		NDX12::GetInstance()->PreDraw();		//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®å…¥ã‚Œæ›¿ãˆ
+		IPostEffect::Draw();					//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã«ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æç”»
+		NSceneChange::GetInstance()->Draw();	//æš—å¹•ã¯ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ä¸Šã‹ã‚‰æç”»ã—ç›´ã™
+		NImGuiManager::GetInstance()->Draw();	//ImGuiæç”»
+		NDX12::GetInstance()->PostDraw();		//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã«æç”»ã—ãŸã®ã‚’è¡¨ç¤ºã«
 	}
 	else
 	{
-		NDX12::GetInstance()->PreDraw();		//ƒoƒbƒNƒoƒbƒtƒ@‚Ì“ü‚ê‘Ö‚¦
-		sceneMane_->Draw();						//ƒQ[ƒ€ƒV[ƒ“‚Ì•`‰æ
-		NImGuiManager::GetInstance()->Draw();	//ImGui•`‰æ
-		NDX12::GetInstance()->PostDraw();		//ƒoƒbƒNƒoƒbƒtƒ@‚Ì‚É•`‰æ‚µ‚½‚Ì‚ð•\Ž¦‚É
+		NDX12::GetInstance()->PreDraw();		//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®å…¥ã‚Œæ›¿ãˆ
+		sceneMane_->Draw();						//ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®æç”»
+		NImGuiManager::GetInstance()->Draw();	//ImGuiæç”»
+		NDX12::GetInstance()->PostDraw();		//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã®ã«æç”»ã—ãŸã®ã‚’è¡¨ç¤ºã«
 	}
 }
 
 void NGame::Finalize()
 {
-#pragma region ŒãŽn––
+#pragma region å¾Œå§‹æœ«
 	NAudioManager::GetInstance()->SaveVolume();
 	audio_->Finalize();
 	win_->Finalize();

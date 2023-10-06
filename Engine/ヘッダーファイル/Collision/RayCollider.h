@@ -17,16 +17,16 @@ public:
 
 	void Update(NObj3d* obj)override;
 
-	// ƒQƒbƒ^[ //
-	//Œ´“_‚©‚ç‚Ì‹——£æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢å–å¾—
 	const NVec3& GetStartPos()const { return startPos_; }
-	//–@üæ“¾
+	//æ³•ç·šå–å¾—
 	const NVec3& GetDirVec()const { return dirVec_; }
 
-	// ƒZƒbƒ^[ //
-	//Œ´“_‚©‚ç‚Ì‹——£İ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//åŸç‚¹ã‹ã‚‰ã®è·é›¢è¨­å®š
 	void SetStartPos(const NVec3& startPos) { startPos_ = startPos; }
-	//–@üİ’è
+	//æ³•ç·šè¨­å®š
 	void SetDirVec(const NVec3& dirVec) { dirVec_ = dirVec; }
 };
 

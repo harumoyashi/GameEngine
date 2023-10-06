@@ -5,35 +5,35 @@
 class NSceneChange
 {
 private:
-	std::unique_ptr<NSprite> titleLogo_;	//ƒ^ƒCƒgƒ‹ƒƒS
-	std::unique_ptr<NSprite> blackBack_;	//”wŒi‚Ì•‚¢“z
+	std::unique_ptr<NSprite> titleLogo_;	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
+	std::unique_ptr<NSprite> blackBack_;	//èƒŒæ™¯ã®é»’ã„å¥´
 
-	bool isSceneChange_;	//ƒV[ƒ“Ø‚è‘Ö‚¦‚é‚©ƒtƒ‰ƒO
-	bool isSceneChangeNow_;	//ƒV[ƒ“‘JˆÚ’†‚©ƒtƒ‰ƒO
+	bool isSceneChange_;	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚‹ã‹ãƒ•ãƒ©ã‚°
+	bool isSceneChangeNow_;	//ã‚·ãƒ¼ãƒ³é·ç§»ä¸­ã‹ãƒ•ãƒ©ã‚°
 
-	NEasing::EaseTimer inTimer_ = 0.5f;		//“ü‚Á‚Ä‚­‚é‚Æ‚«‚Ìƒ^ƒCƒ}[
-	NEasing::EaseTimer outTimer_ = 0.5f;	//o‚Ä‚­‚Æ‚«‚Ìƒ^ƒCƒ}[
+	NEasing::EaseTimer inTimer_ = 0.5f;		//å…¥ã£ã¦ãã‚‹ã¨ãã®ã‚¿ã‚¤ãƒãƒ¼
+	NEasing::EaseTimer outTimer_ = 0.5f;	//å‡ºã¦ãã¨ãã®ã‚¿ã‚¤ãƒãƒ¼
 
-	NVec2 pos_;	//ˆÃ–‹‚ÌÀ•W
+	NVec2 pos_;	//æš—å¹•ã®åº§æ¨™
 
 public:
 	NSceneChange();
 	static NSceneChange* GetInstance();
 
-	void Init();	//‰Šú‰»
-	void Update();	//XV
-	void Draw();	//•`‰æ
+	void Init();	//åˆæœŸåŒ–
+	void Update();	//æ›´æ–°
+	void Draw();	//æç”»
 
-	void Start();	//ƒV[ƒ“‘JˆÚŠJnI
+	void Start();	//ã‚·ãƒ¼ãƒ³é·ç§»é–‹å§‹ï¼
 
-	// ƒQƒbƒ^[ //
-	//ƒV[ƒ“Ø‚è‘Ö‚¦‚é‚©ƒtƒ‰ƒOæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsChange()const { return isSceneChange_; }
-	//ƒV[ƒ“‘JˆÚ’†‚©ƒtƒ‰ƒOæ“¾
+	//ã‚·ãƒ¼ãƒ³é·ç§»ä¸­ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsChangeNow()const { return isSceneChangeNow_; }
 
-	// ƒZƒbƒ^[ //
-	//ƒV[ƒ“Ø‚è‘Ö‚¦‚é‚©ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsChange(bool isChange) { this->isSceneChange_ = isChange; }
 
 private:

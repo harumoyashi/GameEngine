@@ -5,14 +5,14 @@ static const int maxBoneIndices = 4;
 
 enum class BlendMode
 {
-	None,	//‚»‚Ì‚Ü‚Ü
-	Alpha,	//ƒ¿ƒuƒŒƒ“ƒh
-	Add,	//‰ÁZ
-	Sub,	//Œ¸Z
-	Inv,	//”½“]
+	None,	//ãã®ã¾ã¾
+	Alpha,	//Î±ãƒ–ãƒ¬ãƒ³ãƒ‰
+	Add,	//åŠ ç®—
+	Sub,	//æ¸›ç®—
+	Inv,	//åè»¢
 };
 
-// ƒ‚ƒfƒ‹‚ÌƒtƒH[ƒ}ƒbƒg
+// ãƒ¢ãƒ‡ãƒ«ã®ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 enum class ModelFormat
 {
 	Obj,
@@ -21,19 +21,19 @@ enum class ModelFormat
 
 struct NUtil
 {
-	//wstringŒ^‚ğstringŒ^‚É•ÏŠ·
+	//wstringå‹ã‚’stringå‹ã«å¤‰æ›
 	static std::string ToUTF8(const std::wstring& value);
-	
-	//ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ‚ğƒƒCƒh•¶š—ñ‚É•ÏŠ·
+
+	//ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—ã‚’ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—ã«å¤‰æ›
 	static std::wstring ToWideString(const std::string& mString);
-	//Šg’£q’Šo
+	//æ‹¡å¼µå­æŠ½å‡º
 	static std::string GetExtension(const std::string& path);
-	//Šg’£q’u‚«Š·‚¦ˆ—
+	//æ‹¡å¼µå­ç½®ãæ›ãˆå‡¦ç†
 	static std::wstring ReplaceExtension(const std::wstring& origin, const char* ext);
-	//•¶š—ñ‚©‚çuint32_tŒ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
-	//‹t‚â‚è‚½‚¢‚Æ‚«‚Ístd::to_string()g‚¦‚Î‚¢‚¢
+	//æ–‡å­—åˆ—ã‹ã‚‰uint32_tå‹ã«å¤‰æ›ã—ã¦è¿”ã™
+	//é€†ã‚„ã‚ŠãŸã„ã¨ãã¯std::to_string()ä½¿ãˆã°ã„ã„
 	static uint32_t StringToInt(const std::string& string);
-	//•¶š—ñ‚©‚çfloatŒ^‚É•ÏŠ·‚µ‚Ä•Ô‚·
-	//‹t‚â‚è‚½‚¢‚Æ‚«‚Ístd::to_string()g‚¦‚Î‚¢‚¢
+	//æ–‡å­—åˆ—ã‹ã‚‰floatå‹ã«å¤‰æ›ã—ã¦è¿”ã™
+	//é€†ã‚„ã‚ŠãŸã„ã¨ãã¯std::to_string()ä½¿ãˆã°ã„ã„
 	static float StringToFloat(const std::string& string);
 };

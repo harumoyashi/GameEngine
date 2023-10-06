@@ -20,7 +20,7 @@ void NPostEffectManager::Init()
 
 void NPostEffectManager::Update()
 {
-	//それぞれアクティブ状態なら更新処理を行う
+	//縺昴ｌ縺槭ｌ繧｢繧ｯ繝�繧｣繝也憾諷九↑繧画峩譁ｰ蜃ｦ逅�繧定｡後≧
 	/*if (gaussian_->GetIsActive())
 	{
 		gaussian_->Update();

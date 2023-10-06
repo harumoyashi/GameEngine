@@ -19,7 +19,7 @@ void Field::Init()
 	isStart_ = false;
 	isGoal_ = false;
 
-#pragma region ƒIƒuƒWƒFƒNƒg‚Ì¶¬
+#pragma region ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 	fieldObj_ = std::make_unique<NTile>();
 	fieldObj_->Init();
 	fieldObj_->SetModel("plane");
@@ -30,14 +30,14 @@ void Field::Init()
 	fieldObj_->SetDivide(tileDivide_);
 	fieldObj_->SetActivityArea(activityAreaX_);
 
-	//ƒRƒ‰ƒCƒ_[İ’è
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼è¨­å®š
 	collider_.SetNormal(NVec3::up);
 	collider_.SetDistance(0.f);
 	collider_.SetColID("field");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Field::OnCollision, this));
 
-	lines_.clear();	//ˆê‰ñ‘S•”Á‚µ‚Ä‚©‚ç¶¬‚µ’¼‚·
+	lines_.clear();	//ä¸€å›å…¨éƒ¨æ¶ˆã—ã¦ã‹ã‚‰ç”Ÿæˆã—ç›´ã™
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
 	{
 		lines_.emplace_back();
@@ -55,7 +55,7 @@ void Field::Init()
 		lines_.back().slideTimer.Reset();
 	}
 
-	checkPoints_.clear();	//ˆê‰ñ‘S•”Á‚µ‚Ä‚©‚ç¶¬‚µ’¼‚·
+	checkPoints_.clear();	//ä¸€å›å…¨éƒ¨æ¶ˆã—ã¦ã‹ã‚‰ç”Ÿæˆã—ç›´ã™
 	for (uint32_t i = 0; i < checkPointNum; i++)
 	{
 		checkPoints_.emplace_back();
@@ -74,7 +74,7 @@ void Field::Init()
 		checkPoints_.back().slideTimer.Reset();
 	}
 #pragma endregion
-#pragma region ŠeƒIƒuƒWƒFƒNƒg‚Ìİ’è
+#pragma region å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è¨­å®š
 	lines_[(uint32_t)LineType::Start].text->SetTexture("start");
 	lines_[(uint32_t)LineType::Start].offset = 6.0f;
 	lines_[(uint32_t)LineType::Start].text->position_ = { lines_[(uint32_t)LineType::Start].offset,0, startPosZ_ - 0.5f };
@@ -109,7 +109,7 @@ void Field::Init()
 
 void Field::Update()
 {
-#pragma region À•W‚ğ“K—p
+#pragma region åº§æ¨™ã‚’é©ç”¨
 	lines_[(uint32_t)LineType::Start].line->position_ =
 	{
 		Player::GetInstance()->GetPos().x + lines_[(uint32_t)LineType::Start].slidePos,0, startPosZ_
@@ -136,7 +136,7 @@ void Field::Update()
 
 	for (uint32_t i = 0; i < checkPointNum; i++)
 	{
-		//ƒXƒ^[ƒg‚©‚çƒS[ƒ‹‚Ü‚Å‚ğn+1“™•ª‚µ‚ÄA1~n-1”Ô–Ú‚Ìü‚ÉƒXƒ^[ƒgˆÊ’u‘«‚µ‚½À•W‚ğƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚É‚·‚é
+		//ã‚¹ã‚¿ãƒ¼ãƒˆã‹ã‚‰ã‚´ãƒ¼ãƒ«ã¾ã§ã‚’n+1ç­‰åˆ†ã—ã¦ã€1~n-1ç•ªç›®ã®ç·šã«ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®è¶³ã—ãŸåº§æ¨™ã‚’ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆã«ã™ã‚‹
 		float posZ = startPosZ_ + (goalPosZ_ - startPosZ_) / (float)(checkPointNum + 1) * (float)(i + 1);
 		checkPoints_[i].line->position_ =
 		{
@@ -151,10 +151,10 @@ void Field::Update()
 		};
 	}
 #pragma endregion 
-	//ƒXƒ^[ƒg‚µ‚Ä‚È‚¢‚Æ‚«
+	//ã‚¹ã‚¿ãƒ¼ãƒˆã—ã¦ãªã„ã¨ã
 	if (isStart_ == false)
 	{
-		//ü‚ğ’´‚¦‚½‚çƒXƒ^[ƒg‚µ‚½”»’ètrue‚É
+		//ç·šã‚’è¶…ãˆãŸã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸåˆ¤å®štrueã«
 		if (startPosZ_ <= Player::GetInstance()->GetPos().z)
 		{
 			isStart_ = true;
@@ -162,30 +162,30 @@ void Field::Update()
 		}
 	}
 
-	//ƒXƒ^[ƒg‚µ‚½‚È‚ç
+	//ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸãªã‚‰
 	if (isStart_)
 	{
-		//‰æ–Ê¶ŠO‚Ü‚Å‚Ô‚Á”ò‚Î‚·
+		//ç”»é¢å·¦å¤–ã¾ã§ã¶ã£é£›ã°ã™
 		lines_[(uint32_t)LineType::Start].slidePos =
 			NEasing::InQuad(0.0f,
 				-fieldObj_->scale_.x,
 				lines_[(uint32_t)LineType::Start].slideTimer.GetTimeRate());
-		//‰æ–Ê¶ŠO‚Ü‚Å‚Ô‚Á”ò‚Î‚·
+		//ç”»é¢å·¦å¤–ã¾ã§ã¶ã£é£›ã°ã™
 		for (uint32_t i = 0; i < checkPointNum; i++)
 		{
 			checkPoints_[i].slidePos =
 				NEasing::InQuad(0.0f, -fieldObj_->scale_.x, checkPoints_[i].slideTimer.GetTimeRate());
 		}
 
-		//ƒXƒ‰ƒCƒh‚µ‚«‚Á‚½‚ç
+		//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ãã£ãŸã‚‰
 		if (lines_[(uint32_t)LineType::Start].slideTimer.GetEnd())
 		{
 		}
 
-		//ü‚ğ’´‚¦‚½‚çƒXƒ^[ƒg‚µ‚½”»’ètrue‚É
+		//ç·šã‚’è¶…ãˆãŸã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸåˆ¤å®štrueã«
 		for (uint32_t i = 0; i < checkPointNum; i++)
 		{
-			//ƒXƒ^[ƒg‚©‚çƒS[ƒ‹‚Ü‚Å‚ğn+1“™•ª‚µ‚ÄA1~n-1”Ô–Ú‚Ìü‚ÉƒXƒ^[ƒgˆÊ’u‘«‚µ‚½À•W‚ğƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚É‚·‚é
+			//ã‚¹ã‚¿ãƒ¼ãƒˆã‹ã‚‰ã‚´ãƒ¼ãƒ«ã¾ã§ã‚’n+1ç­‰åˆ†ã—ã¦ã€1~n-1ç•ªç›®ã®ç·šã«ã‚¹ã‚¿ãƒ¼ãƒˆä½ç½®è¶³ã—ãŸåº§æ¨™ã‚’ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆã«ã™ã‚‹
 			float posZ = startPosZ_ + (goalPosZ_ - startPosZ_) / (float)(checkPointNum + 1) * (float)(i + 1);
 			if (posZ <= Player::GetInstance()->GetPos().z)
 			{
@@ -193,9 +193,9 @@ void Field::Update()
 			}
 		}
 
-		//------------------------------------- “G‚Ì¶¬ˆ— -------------------------------------//
+		//------------------------------------- æ•µã®ç”Ÿæˆå‡¦ç† -------------------------------------//
 #ifdef _DEBUG
-		//“Go‚µ‚¿‚á‚¤‚æƒ{ƒ^ƒ“
+		//æ•µå‡ºã—ã¡ã‚ƒã†ã‚ˆãƒœã‚¿ãƒ³
 		if (NInput::IsKeyDown(DIK_C))
 		{
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
@@ -203,10 +203,10 @@ void Field::Update()
 #endif
 	}
 
-	//ƒS[ƒ‹‚µ‚Ä‚È‚¢‚Æ‚«
+	//ã‚´ãƒ¼ãƒ«ã—ã¦ãªã„ã¨ã
 	if (isGoal_ == false)
 	{
-		//ü‚ğ’´‚¦‚½‚çƒXƒ^[ƒg‚µ‚½”»’ètrue‚É
+		//ç·šã‚’è¶…ãˆãŸã‚‰ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸåˆ¤å®štrueã«
 		if (goalPosZ_ <= Player::GetInstance()->GetPos().z)
 		{
 			isGoal_ = true;
@@ -214,27 +214,27 @@ void Field::Update()
 		}
 	}
 
-	//ƒS[ƒ‹‚µ‚½‚È‚ç
+	//ã‚´ãƒ¼ãƒ«ã—ãŸãªã‚‰
 	if (isGoal_)
 	{
-		//‰æ–Ê¶ŠO‚Ü‚Å‚Ô‚Á”ò‚Î‚·
+		//ç”»é¢å·¦å¤–ã¾ã§ã¶ã£é£›ã°ã™
 		lines_[(uint32_t)LineType::Goal].slidePos =
 			NEasing::InQuad(0.0f,
 				-fieldObj_->scale_.x,
 				lines_[(uint32_t)LineType::Goal].slideTimer.GetTimeRate());
 
-		//ƒXƒ‰ƒCƒh‚µ‚«‚Á‚½‚ç
+		//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ãã£ãŸã‚‰
 		if (lines_[(uint32_t)LineType::Goal].slideTimer.GetEnd())
 		{
 		}
 	}
 
-	//ƒXƒ‰ƒCƒh‚µ‚Ä‚¢‚¢‚È‚ç
+	//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ã¦ã„ã„ãªã‚‰
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
 	{
 		if (lines_[i].isSlide)
 		{
-			//ƒXƒ^[ƒgüƒXƒ‰ƒCƒhƒ^ƒCƒ}[ŠJn
+			//ã‚¹ã‚¿ãƒ¼ãƒˆç·šã‚¹ãƒ©ã‚¤ãƒ‰ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 			if (lines_[i].slideTimer.GetStarted() == false)
 			{
 				lines_[i].slideTimer.Start();
@@ -243,18 +243,18 @@ void Field::Update()
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");
-				lines_[i].isSlide = false;	//ƒXƒ‰ƒCƒh‚µ‚¿‚á‚¾‚ß‚É‚·‚é
+				lines_[i].isSlide = false;	//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ã¡ã‚ƒã ã‚ã«ã™ã‚‹
 			}
 		}
-		//ƒ^ƒCƒ}[XV
+		//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 		lines_[i].slideTimer.Update();
 	}
-	//ƒXƒ‰ƒCƒh‚µ‚Ä‚¢‚¢‚È‚ç
+	//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ã¦ã„ã„ãªã‚‰
 	for (uint32_t i = 0; i < checkPointNum; i++)
 	{
 		if (checkPoints_[i].isSlide)
 		{
-			//ƒXƒ^[ƒgüƒXƒ‰ƒCƒhƒ^ƒCƒ}[ŠJn
+			//ã‚¹ã‚¿ãƒ¼ãƒˆç·šã‚¹ãƒ©ã‚¤ãƒ‰ã‚¿ã‚¤ãƒãƒ¼é–‹å§‹
 			if (checkPoints_[i].slideTimer.GetStarted() == false)
 			{
 				checkPoints_[i].slideTimer.Start();
@@ -263,14 +263,14 @@ void Field::Update()
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");
-				checkPoints_[i].isSlide = false;	//ƒXƒ‰ƒCƒh‚µ‚¿‚á‚¾‚ß‚É‚·‚é
+				checkPoints_[i].isSlide = false;	//ã‚¹ãƒ©ã‚¤ãƒ‰ã—ã¡ã‚ƒã ã‚ã«ã™ã‚‹
 			}
 		}
-		//ƒ^ƒCƒ}[XV
+		//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 		checkPoints_[i].slideTimer.Update();
 	}
 
-	//ƒIƒuƒWƒFƒNƒg‚ÌXV
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	fieldObj_->SetDivide(tileDivide_);
 	fieldObj_->SetActivityArea(activityAreaX_);
 	fieldObj_->Update();
@@ -289,7 +289,7 @@ void Field::Update()
 
 #ifdef _DEBUG
 	ImGui::Begin("FieldParameter");
-	//1F~180F‚Ü‚Å‚ÌŠÔ‚É‚Æ‚Ç‚ß‚é
+	//1F~180Fã¾ã§ã®é–“ã«ã¨ã©ã‚ã‚‹
 	ImGui::SliderFloat("StartPosZ", &startPosZ_, 1.0f, 180.0f);
 	ImGui::SliderFloat("GoalPosZ", &goalPosZ_, 1.0f, 180.0f);
 	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
@@ -300,7 +300,7 @@ void Field::Update()
 
 void Field::Draw()
 {
-	//°‚¾‚¯ƒ^ƒCƒŠƒ“ƒO‚·‚é
+	//åºŠã ã‘ã‚¿ã‚¤ãƒªãƒ³ã‚°ã™ã‚‹
 	NTile::CommonBeginDraw();
 	fieldObj_->Draw();
 

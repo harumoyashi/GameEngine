@@ -8,34 +8,34 @@
 
 class NDirectionalLight final
 {
-private://Ã“Iƒƒ“ƒo•Ï”
-	NVec3 lightdir_ = { 1,0,0 };	 // ƒ‰ƒCƒgŒõü•ûŒü
-	NVec3 lightcolor_ = NVec3::one; // ƒ‰ƒCƒgF
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	NVec3 lightdir_ = { 1,0,0 };	 // ãƒ©ã‚¤ãƒˆå…‰ç·šæ–¹å‘
+	NVec3 lightcolor_ = NVec3::one; // ãƒ©ã‚¤ãƒˆè‰²
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool isDirty_ = false;
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool isActive_ = false;
 
 public:
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	std::unique_ptr<NConstBuff<ConstBuffDataLight>> cbLight;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	NDirectionalLight();
 	~NDirectionalLight();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
 
-	//ƒ‰ƒCƒg‚Ì•ûŒü‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®æ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightDir(const NVec3& lightdir);
 	const NVec3& GetLightDir()const { return lightdir_; }
-	//ƒ‰ƒCƒg‚ÌF‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightColor(const NVec3& lightcolor);
 	const NVec3& GetLightColor()const { return lightcolor_; }
-	//—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	void SetActive(bool isActive) { isActive_ = isActive; }
-	//—LŒøƒtƒ‰ƒO‚ğæ“¾
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’å–å¾—
 	bool GetActive()const { return isActive_; }
 };

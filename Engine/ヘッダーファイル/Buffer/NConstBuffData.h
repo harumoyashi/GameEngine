@@ -4,49 +4,49 @@
 #include "NColor.h"
 #include <array>
 
-//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì//
+//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“//
 
-//3D•ÏŠ·s—ñ
+//3Då¤‰æ›è¡Œåˆ—
 struct  ConstBuffDataTransform
 {
-	//NMatrix4 mat;	//3D•ÏŠ·s—ñ
-	NMatrix4 viewproj;	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-	NMatrix4 world;		// ƒ[ƒ‹ƒhs—ñ
-	NVec3 cameraPos;	// ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhÀ•W)
+	//NMatrix4 mat;	//3Då¤‰æ›è¡Œåˆ—
+	NMatrix4 viewproj;	// ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+	NMatrix4 world;		// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+	NVec3 cameraPos;	// ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 };
 
-//2D•ÏŠ·s—ñ
+//2Då¤‰æ›è¡Œåˆ—
 struct ConstBuffDataTransform2D
 {
-	NMatrix4 mat;	//3D•ÏŠ·s—ñ
+	NMatrix4 mat;	//3Då¤‰æ›è¡Œåˆ—
 };
 
-//ƒrƒ‹ƒ{[ƒh•ÏŠ·s—ñ
+//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰å¤‰æ›è¡Œåˆ—
 struct ConstBuffDataBillboard
 {
-	NMatrix4 mat;	//3D•ÏŠ·s—ñ
-	NMatrix4 matBillboard;	//ƒrƒ‹ƒ{[ƒhs—ñ
+	NMatrix4 mat;	//3Då¤‰æ›è¡Œåˆ—
+	NMatrix4 matBillboard;	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 };
 
-//F
+//è‰²
 struct ConstBuffDataColor
 {
-	NColor color;	//F
+	NColor color;	//è‰²
 };
 
 //ADS
 struct ConstBuffDataMaterial
 {
-	NVec3 ambient;	// ƒAƒ“ƒrƒGƒ“ƒgŒW”
+	NVec3 ambient;	// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
 	float pad1;
-	NVec3 diffuse;	// ƒfƒBƒtƒ…[ƒYŒW”
+	NVec3 diffuse;	// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
 	float pad2;
-	NVec3 specular;	// ƒXƒyƒLƒ…ƒ‰[ŒW”
+	NVec3 specular;	// ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
 	float pad3;
-	float alpha;	// ƒAƒ‹ƒtƒ@
+	float alpha;	// ã‚¢ãƒ«ãƒ•ã‚¡
 };
 
-//•½sŒõŒ¹
+//å¹³è¡Œå…‰æº
 struct ConstBuffDataLight
 {
 	NVec3 dir;
@@ -55,7 +55,7 @@ struct ConstBuffDataLight
 	uint32_t active;
 };
 
-//ƒ|ƒCƒ“ƒgƒ‰ƒCƒg
+//ãƒã‚¤ãƒ³ãƒˆãƒ©ã‚¤ãƒˆ
 struct ConstBuffDataPointLight
 {
 	NVec3 pos;
@@ -66,7 +66,7 @@ struct ConstBuffDataPointLight
 	uint32_t active;
 };
 
-//ƒXƒ|ƒbƒgƒ‰ƒCƒg
+//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
 struct ConstBuffDataSpotLight
 {
 	NVec3 dir;
@@ -82,7 +82,7 @@ struct ConstBuffDataSpotLight
 	float pad5;
 };
 
-//ŠÛ‰e
+//ä¸¸å½±
 struct ConstBuffDataCircleShadow
 {
 	NVec3 dir;
@@ -96,16 +96,16 @@ struct ConstBuffDataCircleShadow
 	float pad3;
 };
 
-//ƒ^ƒCƒ‹
+//ã‚¿ã‚¤ãƒ«
 struct ConstBuffDataTile
 {
-	float divide;		//•ªŠ„•
-	float activityArea;	//s“®”ÍˆÍ
+	float divide;		//åˆ†å‰²å¹…
+	float activityArea;	//è¡Œå‹•ç¯„å›²
 };
 
-//ƒXƒLƒ“î•ñ
+//ã‚¹ã‚­ãƒ³æƒ…å ±
 static const int maxBones = 32;
 struct ConstBuffDataSkin
 {
-	std::array<NMatrix4,maxBones> bones;
+	std::array<NMatrix4, maxBones> bones;
 };

@@ -12,30 +12,30 @@ FbxModel::FbxModel()
 
 void FbxModel::PlayAnimation(bool isElapse)
 {
-	// ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶‚µ‚È‚¢
+	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿã—ãªã„
 	if (animation.isPlay == false)
 	{
-		//ƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ}[‚ğ‹­§“I‚É0‚É‚µ‚ÄÄ¶‚³‚ê‚È‚¢‚æ‚¤‚É
+		//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒãƒ¼ã‚’å¼·åˆ¶çš„ã«0ã«ã—ã¦å†ç”Ÿã•ã‚Œãªã„ã‚ˆã†ã«
 		ParseNodeHeirarchy(0.f, 0, NMatrix4::Identity(), scene->mRootNode);
 		return;
 	}
 
-	//ƒ^ƒCƒ}[ƒZƒbƒg
+	//ã‚¿ã‚¤ãƒãƒ¼ã‚»ãƒƒãƒˆ
 	if (animation.timer.GetMaxTimer() == 0.0f)
 	{
 		animation.timer.SetMaxTimer((float)scene->mAnimations[animation.index]->mDuration);
 	}
 
-	// Å‘åŠÔ‚ÆŒ»İ‚ÌŠÔæ“¾
+	// æœ€å¤§æ™‚é–“ã¨ç¾åœ¨ã®æ™‚é–“å–å¾—
 	float maxTime = (float)scene->mAnimations[animation.index]->mDuration;
 	float nowTime = animation.timer.GetTimeRate() * maxTime;
 
-	//æ“¾‚µ‚½Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ}[‚ğg‚Á‚ÄƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+	//å–å¾—ã—ãŸç¾åœ¨ã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒãƒ¼ã‚’ä½¿ã£ã¦ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã•ã›ã‚‹
 	ParseNodeHeirarchy(nowTime, animation.index, NMatrix4::Identity(), scene->mRootNode);
 
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒ^ƒCƒ}[‰ñ‚µ‘±‚¯‚Æ‚­
-	//ˆË‘¶ŠÖŒW‚â‚Î‚¢‚¯‚ÇAƒ‚ƒfƒ‹‚âƒIƒuƒWƒF‚Éelapse‚½‚¹‚ñ‚Ì‚à‚¨‚©‚µ‚¢‚µAˆø”‚ÅŒq‚¬‚Ü‚­‚é‚Æ‚»‚ê‚Í‚»‚ê‚Å‚«‚à‚¢‚©‚ç
-	//‚±‚±‚ÅPlayerŒÄ‚Ô‚±‚Æ‚Å‘¼‚Ì‚Æ‚±‚É‚È‚é‚×‚­‰e‹¿‚Å‚È‚¢‚æ‚¤‚É
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒãƒ¼å›ã—ç¶šã‘ã¨ã
+	//ä¾å­˜é–¢ä¿‚ã‚„ã°ã„ã‘ã©ã€ãƒ¢ãƒ‡ãƒ«ã‚„ã‚ªãƒ–ã‚¸ã‚§ã«elapseæŒãŸã›ã‚“ã®ã‚‚ãŠã‹ã—ã„ã—ã€å¼•æ•°ã§ç¹‹ãã¾ãã‚‹ã¨ãã‚Œã¯ãã‚Œã§ãã‚‚ã„ã‹ã‚‰
+	//ã“ã“ã§Playerå‘¼ã¶ã“ã¨ã§ä»–ã®ã¨ã“ã«ãªã‚‹ã¹ãå½±éŸ¿ã§ãªã„ã‚ˆã†ã«
 	if (isElapse)
 	{
 		animation.timer.Update(true, Player::GetInstance()->GetElapseSpeed());
@@ -45,7 +45,7 @@ void FbxModel::PlayAnimation(bool isElapse)
 		animation.timer.Update(true);
 	}
 
-	//ƒŠƒZƒbƒg‚©‚©‚Á‚½‚ÉˆêuŒ`•ö‚ê‚é‚Ì–h~
+	//ãƒªã‚»ãƒƒãƒˆã‹ã‹ã£ãŸæ™‚ã«ä¸€ç¬å½¢å´©ã‚Œã‚‹ã®é˜²æ­¢
 	if (nowTime >= maxTime)
 	{
 		nowTime = animation.timer.GetTimeRate() * maxTime;
@@ -242,25 +242,25 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const uint32_t index,
 
 	NMatrix4 currentPoseMat = NAssimpLoader::AssimpMatToMat4(aiMat).Transpose();
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ğæ“¾‚·‚é
+	// ãƒãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—ã™ã‚‹
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = scene->mAnimations[index];  // “KØ‚ÈƒAƒjƒ[ƒVƒ‡ƒ“‚ğ‘I‘ğ‚·‚é•K—v‚ª‚ ‚é
+	aiAnimation* animation = scene->mAnimations[index];  // é©åˆ‡ãªã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’é¸æŠã™ã‚‹å¿…è¦ãŒã‚ã‚‹
 
 	const aiNodeAnim* nodeAnim = FindNodeAnimation(nodeName, animation);
 
-	// ƒm[ƒhƒAƒjƒ[ƒVƒ‡ƒ“‚ª‚ ‚éê‡Aƒm[ƒh‚Ì•ÏŠ·s—ñ‚ğ•âŠ®‚·‚é
+	// ãƒãƒ¼ãƒ‰ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒã‚ã‚‹å ´åˆã€ãƒãƒ¼ãƒ‰ã®å¤‰æ›è¡Œåˆ—ã‚’è£œå®Œã™ã‚‹
 	if (nodeAnim)
 	{
-		// ƒXƒP[ƒŠƒ“ƒO‚ğ•âŠ®
+		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°ã‚’è£œå®Œ
 		NVec3 scale = CalcCurrentScale(nodeAnim, currentTime);
 
-		// ‰ñ“]‚ğ•âŠ®
+		// å›è»¢ã‚’è£œå®Œ
 		NQuaternion rot = CalcCurrentRot(nodeAnim, currentTime);
 
-		// À•W‚ğ•âŠ®
+		// åº§æ¨™ã‚’è£œå®Œ
 		NVec3 pos = CalcCurrentPos(nodeAnim, currentTime);
 
-		// s—ñ‚Ì‡¬
+		// è¡Œåˆ—ã®åˆæˆ
 		currentPoseMat = MathUtil::CalculateWorldMat(pos, scale, rot);
 	}
 

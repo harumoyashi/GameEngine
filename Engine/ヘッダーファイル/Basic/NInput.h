@@ -1,5 +1,5 @@
 #pragma once
-#define DIRECTINPUT_VERSION 0x0800 // DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECTINPUT_VERSION 0x0800 // DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 #include <dinput.h>
 #include <Xinput.h>
 #include <stdint.h>
@@ -18,7 +18,7 @@ private:
 	struct MouseMove {
 		LONG lX;
 		LONG lY;
-		LONG lZ;	//‚±‚±‚Íƒ}ƒEƒXƒzƒC[ƒ‹
+		LONG lZ;	//ã“ã“ã¯ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«
 	};
 	static ComPtr<IDirectInputDevice8> sDevMouse;
 	static DIMOUSESTATE2 sStateMouse;
@@ -32,29 +32,29 @@ public:
 		MouseMiddle,
 	};
 
-	//mouse‰Šú‰»
+	//mouseåˆæœŸåŒ–
 	static void MouseInit(const HINSTANCE& hInstance, const HWND& hwnd);
-	//mouseXV
+	//mouseæ›´æ–°
 	static void MouseUpdate();
 
-	// ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“‰Ÿ‰º‚ğƒ`ƒFƒbƒN
-	// w’è‚µ‚½ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚é‚©ƒ`ƒFƒbƒN
+	// ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
+	// æŒ‡å®šã—ãŸãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	static bool PushMouse(const MouseButton button = MouseLeft);
 
-	// ƒ}ƒEƒX‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
-	// w’è‚µ‚½ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚é‚©ƒ`ƒFƒbƒN
+	// ãƒã‚¦ã‚¹ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
+	// æŒ‡å®šã—ãŸãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	static bool TriggerMouse(const MouseButton button = MouseLeft);
 
 	/// <summary>
-	/// ƒ}ƒEƒXˆÚ“®—Ê‚ğæ“¾
+	/// ãƒã‚¦ã‚¹ç§»å‹•é‡ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒ}ƒEƒXˆÚ“®—Ê</returns>
+	/// <returns>ãƒã‚¦ã‚¹ç§»å‹•é‡</returns>
 	static NVec3 GetMouseMove(bool isNowState = true);
 
-	//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğ”½‰f
+	//ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’åæ˜ 
 	static void SetMouseMove(NVec2& mouseVec);
 
-	//ƒ}ƒEƒXƒzƒC[ƒ‹‚ÌˆÚ“®—Ê‚ğ”½‰f
+	//ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç§»å‹•é‡ã‚’åæ˜ 
 	static void SetWheelMove(float wheelMove);
 
 private:
@@ -64,69 +64,69 @@ private:
 public:
 	static NInput* GetInstance();
 
-	//key‰Šú‰»
+	//keyåˆæœŸåŒ–
 	static void KeyInit(const HINSTANCE& hInstance, const HWND& hwnd);
-	//keyXV
+	//keyæ›´æ–°
 	static void KeyUpdate();
 
-	//ƒL[ƒ{[ƒh“ü—Íˆ——p (•Ô‚è’l0,1)
-	//‰Ÿ‚µ‚Á‚Ï‚È‚µ
-	static bool IsKey(const uint8_t key);	//UINT‚Íƒrƒbƒg”w’è‚µ‚½‚çŒ^©—R‚Û‚¢
-	//‰Ÿ‚µ‚½uŠÔ
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰å…¥åŠ›å‡¦ç†ç”¨ (è¿”ã‚Šå€¤0,1)
+	//æŠ¼ã—ã£ã±ãªã—
+	static bool IsKey(const uint8_t key);	//UINTã¯ãƒ“ãƒƒãƒˆæ•°æŒ‡å®šã—ãŸã‚‰å‹è‡ªç”±ã½ã„
+	//æŠ¼ã—ãŸç¬é–“
 	static bool IsKeyDown(const uint8_t key);
-	//—£‚µ‚½uŠÔ
+	//é›¢ã—ãŸç¬é–“
 	static bool IsKeyRelease(const uint8_t key);
 
 private:
-	//XINPUT_STATE \‘¢‘Ì‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬
+	//XINPUT_STATE æ§‹é€ ä½“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆ
 	static XINPUT_STATE sStatePad;
 	static XINPUT_STATE sPrevPad;
 
-	//Ú‘±‚³‚ê‚Ä‚é‚©
+	//æ¥ç¶šã•ã‚Œã¦ã‚‹ã‹
 	static bool sIsConnect;
 
-	//U“®
+	//æŒ¯å‹•
 	static XINPUT_VIBRATION sVibration;
-	static NEasing::EaseTimer sVibTimer;	//U“®ŠÔŒˆ‚ß‚éƒ^ƒCƒ}[
-	static NVec2 sVibPower;					//U“®‚Ì‘å‚«‚³(X‚ª¶Y‚ª‰E‚ÌU“®)
+	static NEasing::EaseTimer sVibTimer;	//æŒ¯å‹•æ™‚é–“æ±ºã‚ã‚‹ã‚¿ã‚¤ãƒãƒ¼
+	static NVec2 sVibPower;					//æŒ¯å‹•ã®å¤§ãã•(XãŒå·¦YãŒå³ã®æŒ¯å‹•)
 
 public:
-	//pad‰Šú‰»
+	//padåˆæœŸåŒ–
 	void PadInit();
-	//padXV
+	//padæ›´æ–°
 	void PadUpdate();
 
-	//‰Ÿ‚µ‚Á‚Ï‚È‚µ
-	static bool IsButton(const uint32_t button);    //UINT‚Íƒrƒbƒg”w’è‚µ‚½‚çŒ^©—R‚Û‚¢
-	//‰Ÿ‚µ‚½uŠÔ
+	//æŠ¼ã—ã£ã±ãªã—
+	static bool IsButton(const uint32_t button);    //UINTã¯ãƒ“ãƒƒãƒˆæ•°æŒ‡å®šã—ãŸã‚‰å‹è‡ªç”±ã½ã„
+	//æŠ¼ã—ãŸç¬é–“
 	static bool IsButtonDown(const uint32_t button);
-	//—£‚µ‚½uŠÔ
+	//é›¢ã—ãŸç¬é–“
 	static bool IsButtonRelease(const uint32_t button);
 
-	//ƒgƒŠƒK[‚Ì‰Ÿ‚µ‚İ‹ï‡æ“¾
-	//isLeft:‰E¶‚Ç‚Á‚¿I
+	//ãƒˆãƒªã‚¬ãƒ¼ã®æŠ¼ã—è¾¼ã¿å…·åˆå–å¾—
+	//isLeft:å³å·¦ã©ã£ã¡ï¼
 	static uint32_t GetTrigger(bool isLeft = true);
 
-	//ƒfƒbƒhƒ][ƒ“‚Ìİ’è
+	//ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã®è¨­å®š
 	static void SetDeadZone();
 
-	//ƒXƒeƒBƒbƒN‚ÌŒX‚«‹ï‡æ“¾(0.0f~1.0f)
-	//isLeft:‰E¶‚Ç‚Á‚¿I
+	//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãå…·åˆå–å¾—(0.0f~1.0f)
+	//isLeft:å³å·¦ã©ã£ã¡ï¼
 	static NVec2 GetStick(bool isLeft = true);
 
-	//isVertical:‚’¼•ûŒü‚©
-	//isLstick:LƒXƒeƒBƒbƒN‚©
-	//ãA¶‚Í‚È‚ç-1
-	//‰ºA‰E‚È‚ç+1‚ª•Ô‚Á‚Ä‚­‚é
+	//isVertical:å‚ç›´æ–¹å‘ã‹
+	//isLstick:Lã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‹
+	//ä¸Šã€å·¦ã¯ãªã‚‰-1
+	//ä¸‹ã€å³ãªã‚‰+1ãŒè¿”ã£ã¦ãã‚‹
 	static uint32_t StickTriggered(bool isVertical, bool isLstick = true);
 
-	//ƒRƒ“ƒgƒ[ƒ‰[‚ÌU“®‚ğİ’è
-	//ƒpƒ[‚Í0.0f~1.0f‚Å“ü—Í‚µ‚Ä‚Ë
-	static void Vibration(float leftVibrationPower, float rightVibrationPower,float timer);
-	//ƒRƒ“ƒgƒ[ƒ‰[‚ÌU“®—pXVˆ—
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®æŒ¯å‹•ã‚’è¨­å®š
+	//ãƒ‘ãƒ¯ãƒ¼ã¯0.0f~1.0fã§å…¥åŠ›ã—ã¦ã­
+	static void Vibration(float leftVibrationPower, float rightVibrationPower, float timer);
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®æŒ¯å‹•ç”¨æ›´æ–°å‡¦ç†
 	static void VibUpdate();
 
-	//Ú‘±î•ñæ“¾
+	//æ¥ç¶šæƒ…å ±å–å¾—
 	static bool GetIsConnect() { return sIsConnect; }
 
 private:

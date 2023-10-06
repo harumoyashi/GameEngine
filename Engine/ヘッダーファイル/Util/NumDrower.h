@@ -5,25 +5,25 @@ class NumDrower final
 {
 private:
 	std::vector<std::unique_ptr<NSprite>> numSprite_;
-	NVec2 pos_;						//À•W•Û‘¶—p
-	NVec2 size_;					//ƒTƒCƒY•Û‘¶—p
-	NColor color_;					//F•Û‘¶—p
-	std::vector<uint32_t> digit_;	//ŠeŒ…‚Ì”ŽšŠi”[—p
-	const float scale_ = 64.f;		//•¶Žš‚Ì‘å‚«‚³
-	float indent_;					//”Žš“¯Žm‚Ì•
+	NVec2 pos_;						//åº§æ¨™ä¿å­˜ç”¨
+	NVec2 size_;					//ã‚µã‚¤ã‚ºä¿å­˜ç”¨
+	NColor color_;					//è‰²ä¿å­˜ç”¨
+	std::vector<uint32_t> digit_;	//å„æ¡ã®æ•°å­—æ ¼ç´ç”¨
+	const float scale_ = 64.f;		//æ–‡å­—ã®å¤§ãã•
+	float indent_;					//æ•°å­—åŒå£«ã®å¹…
 
 public:
-	//¶¬
-	//spriteNum:Šm•Û‚·‚éƒXƒvƒ‰ƒCƒg‚Ì”
+	//ç”Ÿæˆ
+	//spriteNum:ç¢ºä¿ã™ã‚‹ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®æ•°
 	void Create(uint32_t spriteNum, float indent = 0.8f);
 	void Update();
 	void Draw();
 
-	// ƒQƒbƒ^[ //
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
 	NVec2 GetPos()const { return pos_; }
 	NVec2 GetSize()const { return size_; }
 
-	// ƒZƒbƒ^[ //
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
 	void SetPos(const NVec2& pos);
 	void SetSize(const NVec2& size);
 	void SetIndent(float indent);

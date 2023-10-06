@@ -17,7 +17,7 @@ void BulletManager::Init()
 
 void BulletManager::Update()
 {
-	//Žõ–½‚ªs‚«‚½ƒp[ƒeƒBƒNƒ‹‚ð‘Síœ
+	//å¯¿å‘½ãŒå°½ããŸãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’å…¨å‰Šé™¤
 	for (size_t i = 0; i < bullets_.size(); i++)
 	{
 		if (bullets_[i]->GetisAlive() == false)

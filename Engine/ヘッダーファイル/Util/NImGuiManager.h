@@ -13,11 +13,11 @@ public:
 	void Init();
 	void Finalize();
 
-	//ImGuió•tŠJn
+	//ImGuiå—ä»˜é–‹å§‹
 	void Begin();
-	//ImGuió•tI—¹
+	//ImGuiå—ä»˜çµ‚äº†
 	void End();
-	//‰æ–Ê‚Ö‚Ì•`‰æ
+	//ç”»é¢ã¸ã®æç”»
 	void Draw();
 
 private:

@@ -10,46 +10,46 @@
 
 class NCircleShadow final
 {
-public://ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	std::unique_ptr<NConstBuff<ConstBuffDataCircleShadow>> cbCircleShadow_;
 
-private://Ã“Iƒƒ“ƒo•Ï”
-	NVec3 dir_ = { 1,0,0 };			// •ûŒü
-	float distanceCasterLight_ = 100.0f;	// ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£
-	NVec3 casterPos_ = NVec3::zero;		// ƒLƒƒƒXƒ^[À•W(ƒ[ƒ‹ƒh)
-	NVec3 atten_ = { 0.5f,0.6f,0 };			// ‹——£Œ¸ŠŒW”
-	NVec2 factorAngleCos_ = { 0.2f,0.5f };	// Œ¸ŠŠp“x
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	NVec3 dir_ = { 1,0,0 };			// æ–¹å‘
+	float distanceCasterLight_ = 100.0f;	// ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢
+	NVec3 casterPos_ = NVec3::zero;		// ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰)
+	NVec3 atten_ = { 0.5f,0.6f,0 };			// è·é›¢æ¸›è¡°ä¿‚æ•°
+	NVec2 factorAngleCos_ = { 0.2f,0.5f };	// æ¸›è¡°è§’åº¦
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool isDirty_ = false;
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool isActive_ = false;
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 	NCircleShadow();
 	~NCircleShadow();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
 
-	//‰e‚Ì•ûŒü‚ğƒZƒbƒg
+	//å½±ã®æ–¹å‘ã‚’ã‚»ãƒƒãƒˆ
 	void SetDir(const NVec3& dir);
 	const NVec3& GetDir()const { return dir_; }
-	//À•W‚ğƒZƒbƒg
+	//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	void SetCasterPos(const NVec3& casterPos);
 	const NVec3& GetCasterPos()const { return casterPos_; }
-	//ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£‚ğƒZƒbƒg
+	//ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢ã‚’ã‚»ãƒƒãƒˆ
 	void SetDistanceCasterLight(const float distanceCasterLight);
 	const float GetDistanceCasterLight()const { return distanceCasterLight_; }
-	//Œ¸ŠŒW”‚ğƒZƒbƒg
+	//æ¸›è¡°ä¿‚æ•°ã‚’ã‚»ãƒƒãƒˆ
 	void SetAtten(const NVec3& atten);
 	const NVec3& GetAtten()const { return atten_; }
-	//Œ¸ŠŠp“x‚ğƒZƒbƒg
+	//æ¸›è¡°è§’åº¦ã‚’ã‚»ãƒƒãƒˆ
 	void SetFactorAngle(const NVec2& factorAngle);
 	const NVec2& GetFactorAngle()const { return factorAngleCos_; }
-	//—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	void SetActive(bool isActive) { isActive_ = isActive; }
-	//—LŒøƒtƒ‰ƒO‚ğæ“¾
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’å–å¾—
 	bool GetActive()const { return isActive_; }
 };

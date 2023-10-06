@@ -12,9 +12,9 @@ struct NTexture final
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	ComPtr<ID3D12Resource> texBuff_;
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle_ = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRV‚Ìƒnƒ“ƒhƒ‹(CPU‘¤)
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle_ = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRV‚Ìƒnƒ“ƒhƒ‹(GPU‘¤)
-	std::string fileName_; //ƒtƒ@ƒCƒ‹–¼
+	D3D12_CPU_DESCRIPTOR_HANDLE cpuHandle_ = D3D12_CPU_DESCRIPTOR_HANDLE(); //SRVã®ãƒãƒ³ãƒ‰ãƒ«(CPUå´)
+	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle_ = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVã®ãƒãƒ³ãƒ‰ãƒ«(GPUå´)
+	std::string fileName_; //ãƒ•ã‚¡ã‚¤ãƒ«å
 
 	NTexture();
 	~NTexture();
@@ -28,48 +28,48 @@ public:
 	DirectX::TexMetadata metadata_{};
 	DirectX::ScratchImage scratchImg_{};
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
-	D3D12_HEAP_PROPERTIES texHeapProp_{};	//ƒq[ƒv
-	D3D12_RESOURCE_DESC texResDesc_{};		//ƒŠƒ\[ƒX
-	static const size_t kMaxSRVCount = 2056;	//SRV‚ÌÅ‘åŒÂ”
-	DirectX::ScratchImage mipChain_{};				//ƒ~ƒbƒvƒ}ƒbƒv
+	D3D12_HEAP_PROPERTIES texHeapProp_{};	//ãƒ’ãƒ¼ãƒ—
+	D3D12_RESOURCE_DESC texResDesc_{};		//ãƒªã‚½ãƒ¼ã‚¹
+	static const size_t kMaxSRVCount = 2056;	//SRVã®æœ€å¤§å€‹æ•°
+	DirectX::ScratchImage mipChain_{};				//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—
 
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//İ’è\‘¢‘Ì
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};	//è¨­å®šæ§‹é€ ä½“
 
-	std::unordered_map<TextureHandle, NTexture> textureMap_;	//ƒeƒNƒXƒ`ƒƒŒQ
-	ComPtr<ID3D12Resource> tb_;	//“]‘——p‚ÌƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	std::unordered_map<TextureHandle, NTexture> textureMap_;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç¾¤
+	ComPtr<ID3D12Resource> tb_;	//è»¢é€ç”¨ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 
 public:
-	//TextureManager‚ğæ“¾‚·‚é
+	//TextureManagerã‚’å–å¾—ã™ã‚‹
 	static NTextureManager* GetInstance();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
 
-	//ƒGƒ‰[ƒeƒNƒXƒ`ƒƒ‚ğ¶¬‚·‚é
+	//ã‚¨ãƒ©ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿæˆã™ã‚‹
 	NTexture CreateErrorTexture();
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	//index‚ğ“ü‚ê‚È‚©‚Á‚½‚ç0”Ô–Ú‚ÉŠi”[
-	//“Ç‚İ‚Ş‚½‚Ñ‚É‘‚«•Ï‚í‚é‚©‚çAˆê‰ñ‚«‚è‚Ì‚¾‚¯‚É‚µ‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	//indexã‚’å…¥ã‚Œãªã‹ã£ãŸã‚‰0ç•ªç›®ã«æ ¼ç´
+	//èª­ã¿è¾¼ã‚€ãŸã³ã«æ›¸ãå¤‰ã‚ã‚‹ã‹ã‚‰ã€ä¸€å›ãã‚Šã®æ™‚ã ã‘ã«ã—ã¦
 	NTexture LoadTexture(const std::string& pictureName, const std::string& handle = "");
 
 private:
-	//WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	//WICãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 	bool Load(const std::string& pictureName);
-	//ƒ~ƒbƒvƒ}ƒbƒv¶¬
+	//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆ
 	void CreateMipmap();
 
-	//ƒq[ƒvİ’è
+	//ãƒ’ãƒ¼ãƒ—è¨­å®š
 	void SetTBHeap();
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	void SetTBResource();
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ID3D12Resource* CreateTexBuff();
-	//ƒ~ƒbƒvƒ}ƒbƒvƒf[ƒ^‚Ì“]‘—
+	//ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã®è»¢é€
 	void TexBuffMaping(ID3D12Resource* texBuff);
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
 	void SetSRV();
-	//ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[¶¬
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ç”Ÿæˆ
 	NTexture CreateSRV(NTexture& tex);
 };
 

@@ -16,87 +16,87 @@ class NSprite
 protected:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-	//’¸“_‚Ü‚í‚è//
-	uint32_t singleSizeVB_;						//’¸“_ƒoƒbƒtƒ@1ŒÂ“–‚½‚è‚ÌƒTƒCƒY
-	uint32_t singleVB_;							//’¸“_ƒoƒbƒtƒ@‘S‘Ì‚ÌƒTƒCƒY
-	std::vector<NVertexUV> vertices_{ 4 };		//’¸“_‘ã“ü—p
-	D3D12_HEAP_PROPERTIES heapPropVert_{};		//ƒq[ƒv
-	D3D12_RESOURCE_DESC resDescVert_{};			//ƒŠƒ\[ƒX
-	NVertexBuff<NVertexUV> vertexBuff_;			//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ã¾ã‚ã‚Š//
+	uint32_t singleSizeVB_;						//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡1å€‹å½“ãŸã‚Šã®ã‚µã‚¤ã‚º
+	uint32_t singleVB_;							//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡å…¨ä½“ã®ã‚µã‚¤ã‚º
+	std::vector<NVertexUV> vertices_{ 4 };		//é ‚ç‚¹ä»£å…¥ç”¨
+	D3D12_HEAP_PROPERTIES heapPropVert_{};		//ãƒ’ãƒ¼ãƒ—
+	D3D12_RESOURCE_DESC resDescVert_{};			//ãƒªã‚½ãƒ¼ã‚¹
+	NVertexBuff<NVertexUV> vertexBuff_;			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 
-	//’è”ƒoƒbƒtƒ@‚Ü‚í‚è//
-	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2D•ÏŠ·s—ñ
-	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;	//F
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¾ã‚ã‚Š//
+	std::unique_ptr<NConstBuff<ConstBuffDataTransform2D>> cbTrans_;	//2Då¤‰æ›è¡Œåˆ—
+	std::unique_ptr<NConstBuff<ConstBuffDataColor>> cbColor_;	//è‰²
 
-	//s—ñ//
-	NMatrix4 matWorld_{};		//•ÏŠ·s—ñ
-	NMatrix4 matProjection_{};	//•½s“Š‰e•ÛŠÇ—p
+	//è¡Œåˆ—//
+	NMatrix4 matWorld_{};		//å¤‰æ›è¡Œåˆ—
+	NMatrix4 matProjection_{};	//å¹³è¡ŒæŠ•å½±ä¿ç®¡ç”¨
 
-	//¶¬‚Ìİ’è—p//
-	NVec2 anchorPoint_ = { 0.5f,0.5f };	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg(0.0f~1.0f‚¶‚á‚È‚¢‚Æ‰æ‘œ‚©‚ço‚é)
-	bool isFlipX_ = false;	//¶‰E”½“]ƒtƒ‰ƒO
-	bool isFlipY_ = false;	//ã‰º”½“]ƒtƒ‰ƒO
-	NVec2 texLeftTop_ = { 0,0 };			//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
-	NVec2 texSize_ = { 100,100 };		//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
+	//ç”Ÿæˆæ™‚ã®è¨­å®šç”¨//
+	NVec2 anchorPoint_ = { 0.5f,0.5f };	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ(0.0f~1.0fã˜ã‚ƒãªã„ã¨ç”»åƒã‹ã‚‰å‡ºã‚‹)
+	bool isFlipX_ = false;	//å·¦å³åè»¢ãƒ•ãƒ©ã‚°
+	bool isFlipY_ = false;	//ä¸Šä¸‹åè»¢ãƒ•ãƒ©ã‚°
+	NVec2 texLeftTop_ = { 0,0 };			//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
+	NVec2 texSize_ = { 100,100 };		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 
-	NVec2 size_ = { 100,100 };			//ƒXƒvƒ‰ƒCƒg‚Ì‘å‚«‚³
+	NVec2 size_ = { 100,100 };			//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å¤§ãã•
 
 public:
-	//•ÏŠ·—p//
-	float rotation_ = 0.0f;	//Z²‚Ì‰ñ“]Šp
-	NVec2 position_ = { 0.0f,0.0f };	//À•W
-	bool isInvisible_ = false;	//”ñ•\¦‚É‚·‚éƒtƒ‰ƒO
+	//å¤‰æ›ç”¨//
+	float rotation_ = 0.0f;	//Zè»¸ã®å›è»¢è§’
+	NVec2 position_ = { 0.0f,0.0f };	//åº§æ¨™
+	bool isInvisible_ = false;	//éè¡¨ç¤ºã«ã™ã‚‹ãƒ•ãƒ©ã‚°
 
-	std::string texHandle_ = "";	//ƒeƒNƒXƒ`ƒƒw’è—p
+	std::string texHandle_ = "";	//ãƒ†ã‚¯ã‚¹ãƒãƒ£æŒ‡å®šç”¨
 	NColor color_;
 
 public:
 	NSprite();
 	~NSprite();
-#pragma region ‰Šú‰»
-	//ƒXƒvƒ‰ƒCƒg¶¬
+#pragma region åˆæœŸåŒ–
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	void CreateSprite(const std::string& texHandle = "error");
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚É‡‚í‚¹‚ÄƒXƒvƒ‰ƒCƒg¶¬
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚àİ’è‚Å‚«‚é(İ’è‚µ‚È‚¢‚Æ’†S‚É‚È‚é)
-	//ã‰º¶‰E‚Ì”½“]ƒtƒ‰ƒO‚àİ’è‚Å‚«‚é(İ’è‚µ‚È‚¢‚Æ”½“]‚µ‚È‚¢)
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã«åˆã‚ã›ã¦ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚‚è¨­å®šã§ãã‚‹(è¨­å®šã—ãªã„ã¨ä¸­å¿ƒã«ãªã‚‹)
+	//ä¸Šä¸‹å·¦å³ã®åè»¢ãƒ•ãƒ©ã‚°ã‚‚è¨­å®šã§ãã‚‹(è¨­å®šã—ãªã„ã¨åè»¢ã—ãªã„)
 	void CreateSprite(const std::string& texHandle,
 		const NVec2& anchorPoint, bool isFlipX = false, bool isFlipY = false);
-	//ƒeƒNƒXƒ`ƒƒ‚ğØ‚èæ‚Á‚ÄƒXƒvƒ‰ƒCƒg¶¬(ƒAƒjƒ[ƒVƒ‡ƒ“AƒtƒHƒ“ƒg‚È‚Ç)
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚àİ’è‚Å‚«‚é(İ’è‚µ‚È‚¢‚Æ’†S‚É‚È‚é)
-	//ã‰º¶‰E‚Ì”½“]ƒtƒ‰ƒO‚àİ’è‚Å‚«‚é(İ’è‚µ‚È‚¢‚Æ”½“]‚µ‚È‚¢)
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’åˆ‡ã‚Šå–ã£ã¦ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã€ãƒ•ã‚©ãƒ³ãƒˆãªã©)
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚‚è¨­å®šã§ãã‚‹(è¨­å®šã—ãªã„ã¨ä¸­å¿ƒã«ãªã‚‹)
+	//ä¸Šä¸‹å·¦å³ã®åè»¢ãƒ•ãƒ©ã‚°ã‚‚è¨­å®šã§ãã‚‹(è¨­å®šã—ãªã„ã¨åè»¢ã—ãªã„)
 	void CreateClipSprite(const std::string& texHandle, const NVec2& texLeftTop,
 		const NVec2& texSize, const NVec2& anchorPoint = { 0.5f,0.5f }, bool isFlipX = false, bool isFlipY = false);
 
 private:
-	//ƒeƒNƒXƒ`ƒƒƒTƒCƒY‚ğæ“¾‚µ‚Äİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚ºã‚’å–å¾—ã—ã¦è¨­å®š
 	void SetTexSize(const ComPtr<ID3D12Resource>& texBuff);
-	//Ø‚è”²‚«”ÍˆÍ“K—p
+	//åˆ‡ã‚ŠæŠœãç¯„å›²é©ç”¨
 	void SetClipRange(const NVec2& texLeftTop, const NVec2& texSize);
 
-	//ƒeƒNƒXƒ`ƒƒƒnƒ“ƒhƒ‹‚ğƒZƒbƒg
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒ³ãƒ‰ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	void SetTexHandle(const std::string& texHandle);
 #pragma endregion
 public:
-#pragma region XV
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
+#pragma region æ›´æ–°
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
 	void Update();
-	//’¸“_ƒoƒbƒtƒ@“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡è»¢é€
 	void TransferVertex();
-	//ƒTƒCƒYw’è
+	//ã‚µã‚¤ã‚ºæŒ‡å®š
 	void SetSize(const float x, const float y);
-	//À•Ww’è
+	//åº§æ¨™æŒ‡å®š
 	void SetPos(const float x, const float y);
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg“K—p
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆé©ç”¨
 	void SetAncor(const NVec2& anchorPoint);
-	//ã‰º¶‰E”½“]ƒtƒ‰ƒO“K—p
+	//ä¸Šä¸‹å·¦å³åè»¢ãƒ•ãƒ©ã‚°é©ç”¨
 	void SetIsFlip(bool isFlipX, bool isFlipY);
 #pragma endregion
-#pragma region •`‰æ
-	//‹¤’ÊƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh
+#pragma region æç”»
+	//å…±é€šã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒãƒ³ãƒ‰
 	static void CommonBeginDraw();
-	//ƒuƒŒƒ“ƒhƒ‚[ƒhİ’è
+	//ãƒ–ãƒ¬ãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰è¨­å®š
 	static void SetBlendMode(BlendMode blendMode);
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	void Draw();
 #pragma endregion
 	const NVec2& GetTexSize()const { return texSize_; }

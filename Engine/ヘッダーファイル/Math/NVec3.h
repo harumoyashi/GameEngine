@@ -6,31 +6,31 @@ struct NVec3
 	float y;
 	float z;
 
-	NVec3();								//ƒ[ƒƒxƒNƒgƒ‹‚Æ‚·‚é
-	NVec3(const float x, const float y, const float z);	//x¬•ª,y¬•ª,z¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+	NVec3();								//ã‚¼ãƒ­ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
+	NVec3(const float x, const float y, const float z);	//xæˆåˆ†,yæˆåˆ†,zæˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 
-	//‘ã“üŠy‚·‚é—p
+	//ä»£å…¥æ¥½ã™ã‚‹ç”¨
 	const static NVec3 zero;
 	const static NVec3 one;
 	const static NVec3 up;
 	const static NVec3 front;
 	const static NVec3 right;
 
-	//ƒƒ“ƒoŠÖ”
-	float Length() const;						//ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
-	NVec3 Normalize() const;					//³‹K‰»‚ğ‚·‚é
-	float Dot(const NVec3& v) const;			//“àÏ‚ğ‹‚ß‚é
-	NVec3 Cross(const NVec3& v) const;			//ŠOÏ‚ğ‹‚ß‚é
-	//üŒ`•âŠÔ
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
+	float Length() const;						//ãƒãƒ«ãƒ (é•·ã•)ã‚’æ±‚ã‚ã‚‹
+	NVec3 Normalize() const;					//æ­£è¦åŒ–ã‚’ã™ã‚‹
+	float Dot(const NVec3& v) const;			//å†…ç©ã‚’æ±‚ã‚ã‚‹
+	NVec3 Cross(const NVec3& v) const;			//å¤–ç©ã‚’æ±‚ã‚ã‚‹
+	//ç·šå½¢è£œé–“
 	static NVec3 Lerp(const NVec3 start, const NVec3 end, const float timer);
 
-	//’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	//å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	NVec3 operator+() const;
 	NVec3 operator-() const;
 	NVec3 operator*(const NVec3& v);
 	NVec3 operator/(const NVec3& v);
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	NVec3& operator+=(const NVec3& v);
 	NVec3& operator-=(const NVec3& v);
 	NVec3& operator*=(const NVec3& v);
@@ -41,8 +41,8 @@ struct NVec3
 	NVec3& operator=(float num);
 };
 
-//2€‰‰ZqƒI[ƒo[ƒ[ƒh
-//¦‚¢‚ë‚ñ‚Èˆø”‚Ìƒpƒ^[ƒ“‚É‘Î‰(ˆø”‚Ì‡˜)‚·‚é‚½‚ßAˆÈ‰º‚Ì‚æ‚¤‚É€”õ‚µ‚Ä‚¢‚é
+//2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+//â€»ã„ã‚ã‚“ãªå¼•æ•°ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã«å¯¾å¿œ(å¼•æ•°ã®é †åº)ã™ã‚‹ãŸã‚ã€ä»¥ä¸‹ã®ã‚ˆã†ã«æº–å‚™ã—ã¦ã„ã‚‹
 const NVec3 operator+(const NVec3& v1, const NVec3& v2);
 const NVec3 operator-(const NVec3& v1, const NVec3& v2);
 const NVec3 operator*(const NVec3& v, const float s);

@@ -2,6 +2,6 @@
 
 void SphereCollider::Update(NObj3d* obj)
 {
-	//ƒIƒuƒWƒFƒNƒgî•ñ‚ð‚à‚Æ‚ÉƒRƒ‰ƒCƒ_[‚ÌÀ•W‚àˆÚ“®
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæƒ…å ±ã‚’ã‚‚ã¨ã«ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®åº§æ¨™ã‚‚ç§»å‹•
 	centerPos_ = obj->GetMatWorld().GetWorldPos() + offset_;
 }

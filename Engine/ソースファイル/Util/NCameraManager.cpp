@@ -14,7 +14,7 @@ void NCameraManager::NormalCameraInit()
 	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	nextUpVec_ = NVec3(0, 0, 1);	//‰ºŒ©‰º‚ë‚·Œ`‚É‚·‚é
+	nextUpVec_ = NVec3(0, 0, 1);	//ä¸‹è¦‹ä¸‹ã‚ã™å½¢ã«ã™ã‚‹
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
@@ -28,15 +28,15 @@ void NCameraManager::NormalCameraUpdate()
 		isChange_ = true;
 	}
 
-	//‘O‚ÌƒJƒƒ‰‚©‚ç”XƒC[ƒWƒ“ƒO‚µ‚Ä‚©‚ç‰º‚Ìˆ—‚â‚è‚½‚¢
-	//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[“®‚©‚·
+	//å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰è«¸ã€…ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã—ã¦ã‹ã‚‰ä¸‹ã®å‡¦ç†ã‚„ã‚ŠãŸã„
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒžãƒ¼å‹•ã‹ã™
 	normalCameraMoveEase_.Update();
 	if (normalCameraMoveEase_.GetStarted() == false)
 	{
 		normalCameraMoveEase_.Start();
 	}
 
-	//‘O‚ÌƒJƒƒ‰‚©‚çŒ»Ý‚ÌƒJƒƒ‰‚Ü‚Å‚Ì•âŠÔ
+	//å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã¾ã§ã®è£œé–“
 	if (normalCameraMoveEase_.GetRun())
 	{
 		NVec3 target, pos, upVec;
@@ -97,8 +97,8 @@ void NCameraManager::TitleCameraUpdate()
 		isChange_ = true;
 	}
 
-	//‘O‚ÌƒJƒƒ‰‚©‚ç”XƒC[ƒWƒ“ƒO‚µ‚Ä‚©‚ç‰º‚Ìˆ—‚â‚è‚½‚¢
-	//ƒJƒƒ‰‰ñ“]—p‚Ìƒ^ƒCƒ}[“®‚©‚µ‘±‚¯‚é
+	//å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰è«¸ã€…ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã—ã¦ã‹ã‚‰ä¸‹ã®å‡¦ç†ã‚„ã‚ŠãŸã„
+	//ã‚«ãƒ¡ãƒ©å›žè»¢ç”¨ã®ã‚¿ã‚¤ãƒžãƒ¼å‹•ã‹ã—ç¶šã‘ã‚‹
 	cameraRotEase_.Update();
 	if (cameraRotEase_.GetStarted() == false)
 	{
@@ -109,8 +109,8 @@ void NCameraManager::TitleCameraUpdate()
 		cameraRotEase_.Reset();
 	}
 
-	NVec2 vec2;	//ƒJƒƒ‰‚É‘«‚·ƒxƒNƒgƒ‹
-	//‰~‰^“®‚³‚¹‚é
+	NVec2 vec2;	//ã‚«ãƒ¡ãƒ©ã«è¶³ã™ãƒ™ã‚¯ãƒˆãƒ«
+	//å††é‹å‹•ã•ã›ã‚‹
 	vec2 = MathUtil::CircleMotion(
 		{ titleCamera_.GetTarget().x,titleCamera_.GetTarget().z },
 		length_,
@@ -133,11 +133,11 @@ void NCameraManager::BeforeStartCameraInit()
 	nextTarget_ = { 0,0,Field::GetInstance()->GetGoalPos() };
 
 	currentPos_ = NCamera::sCurrentCamera->GetPos();
-	nextPos_ = nextTarget_ + NVec3(0, length_, -length_*0.8f);
+	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.8f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
-	//‚ ‚¦‚ÄZ•ûŒü‚ðŒ©‚éŒ`‚É‚·‚é‚±‚Æ‚ÅAŒ©‰º‚ë‚·Œ`‚É‘JˆÚ‚µ‚Ä‚­‚Æ‚¢‚¢Š´‚¶‚ÌƒJƒƒ‰ƒ[ƒN‚É‚È‚é
-	//‘½•ª‰ñ“]‚Æ‚©‚Å‚â‚Á‚½‚Ù‚¤‚ª‚¢‚¢‚¯‚Ç‚Ü‚ ‚¢‚¢‚â‚¢‚¢Š´‚¶‚¾‚à‚ñ
+	//ã‚ãˆã¦Zæ–¹å‘ã‚’è¦‹ã‚‹å½¢ã«ã™ã‚‹ã“ã¨ã§ã€è¦‹ä¸‹ã‚ã™å½¢ã«é·ç§»ã—ã¦ãã¨ã„ã„æ„Ÿã˜ã®ã‚«ãƒ¡ãƒ©ãƒ¯ãƒ¼ã‚¯ã«ãªã‚‹
+	//å¤šåˆ†å›žè»¢ã¨ã‹ã§ã‚„ã£ãŸã»ã†ãŒã„ã„ã‘ã©ã¾ã‚ã„ã„ã‚„ã„ã„æ„Ÿã˜ã ã‚‚ã‚“
 	nextUpVec_ = NVec3(0, 1, 0);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
@@ -152,14 +152,14 @@ void NCameraManager::BeforeStartCameraUpdate()
 		isChange_ = true;
 	}
 
-	////ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[“®‚©‚·
+	////ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒžãƒ¼å‹•ã‹ã™
 	//beforeStartCameraMoveEase_.Update();
 	//if (beforeStartCameraMoveEase_.GetStarted() == false)
 	//{
 	//	beforeStartCameraMoveEase_.Start();
 	//}
 
-	////‘O‚ÌƒJƒƒ‰‚©‚çŒ»Ý‚ÌƒJƒƒ‰‚Ü‚Å‚Ì•âŠÔ
+	////å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã¾ã§ã®è£œé–“
 	//if (beforeStartCameraMoveEase_.GetRun())
 	//{
 	//	NVec3 target, pos, upVec;
@@ -170,7 +170,7 @@ void NCameraManager::BeforeStartCameraUpdate()
 	//	beforeStartCamera_.SetTarget(target);
 	//	beforeStartCamera_.SetEye(pos);
 	//	beforeStartCamera_.SetUpVec(upVec);
-	//}	//ƒJƒƒ‰“®‚­‚±‚Æ‚È‚¢‚©‚ç•âŠÔI‚í‚Á‚½‚ç•ú’u
+	//}	//ã‚«ãƒ¡ãƒ©å‹•ãã“ã¨ãªã„ã‹ã‚‰è£œé–“çµ‚ã‚ã£ãŸã‚‰æ”¾ç½®
 
 	beforeStartCamera_.SetTarget(nextTarget_);
 	beforeStartCamera_.SetEye(nextPos_);
@@ -206,17 +206,17 @@ void NCameraManager::FaildCameraUpdate()
 		isChange_ = true;
 	}
 
-	//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[“®‚©‚·
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒžãƒ¼å‹•ã‹ã™
 	faildCameraMoveEase_.Update();
 	if (faildCameraMoveEase_.GetStarted() == false)
 	{
 		faildCameraMoveEase_.Start();
 	}
 
-	//‘O‚ÌƒJƒƒ‰‚©‚çŒ»Ý‚ÌƒJƒƒ‰‚Ü‚Å‚Ì•âŠÔ
+	//å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã¾ã§ã®è£œé–“
 	if (faildCameraMoveEase_.GetRun())
 	{
-		NVec3 target,pos,upVec;
+		NVec3 target, pos, upVec;
 		target = OutQuad(currentTarget_, nextTarget_, faildCameraMoveEase_.GetTimeRate());
 		pos = OutQuad(currentPos_, nextPos_, faildCameraMoveEase_.GetTimeRate());
 		upVec = OutQuad(currentUpVec_, nextUpVec_, faildCameraMoveEase_.GetTimeRate());
@@ -224,7 +224,7 @@ void NCameraManager::FaildCameraUpdate()
 		faildCamera_.SetTarget(target);
 		faildCamera_.SetEye(pos);
 		faildCamera_.SetUpVec(upVec);
-	}	//ƒJƒƒ‰“®‚­‚±‚Æ‚È‚¢‚©‚ç•âŠÔI‚í‚Á‚½‚ç•ú’u
+	}	//ã‚«ãƒ¡ãƒ©å‹•ãã“ã¨ãªã„ã‹ã‚‰è£œé–“çµ‚ã‚ã£ãŸã‚‰æ”¾ç½®
 
 	faildCamera_.Update();
 	NCamera::sCurrentCamera = &faildCamera_;
@@ -256,17 +256,17 @@ void NCameraManager::ClearCameraUpdate()
 		isChange_ = true;
 	}
 
-	//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[“®‚©‚·
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒžãƒ¼å‹•ã‹ã™
 	clearCameraMoveEase_.Update();
 	if (clearCameraMoveEase_.GetStarted() == false)
 	{
 		clearCameraMoveEase_.Start();
 	}
 
-	//‘O‚ÌƒJƒƒ‰‚©‚çŒ»Ý‚ÌƒJƒƒ‰‚Ü‚Å‚Ì•âŠÔ
+	//å‰ã®ã‚«ãƒ¡ãƒ©ã‹ã‚‰ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã¾ã§ã®è£œé–“
 	if (clearCameraMoveEase_.GetRun())
 	{
-		//‚¸‚ê‚ª‹N‚«‚È‚¢‚æ‚¤‚ÉXV‚µ‘±‚¯‚é
+		//ãšã‚ŒãŒèµ·ããªã„ã‚ˆã†ã«æ›´æ–°ã—ç¶šã‘ã‚‹
 		currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 		nextTarget_ = Player::GetInstance()->GetHeadPos();
 		currentPos_ = NCamera::sCurrentCamera->GetPos();
@@ -283,7 +283,7 @@ void NCameraManager::ClearCameraUpdate()
 		clearCamera_.SetUpVec(upVec);
 	}
 
-	//•âŠÔI‚í‚Á‚½Œã‚àƒvƒŒƒCƒ„[‚ª“®‚­‚Ì‚Å’Ç‚¢‚©‚¯‘±‚¯‚é
+	//è£œé–“çµ‚ã‚ã£ãŸå¾Œã‚‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå‹•ãã®ã§è¿½ã„ã‹ã‘ç¶šã‘ã‚‹
 	if (clearCameraMoveEase_.GetEnd())
 	{
 		NVec3 pos;
@@ -339,7 +339,7 @@ void NCameraManager::Init()
 
 void NCameraManager::Update()
 {
-	//’ÊíƒJƒƒ‰‚ÌŽž‚É‰EƒNƒŠƒbƒN‚µ‚½‚çƒfƒoƒbƒOƒJƒƒ‰ƒ‚[ƒh‚ÆØ‚è‘Ö‚í‚é
+	//é€šå¸¸ã‚«ãƒ¡ãƒ©ã®æ™‚ã«å³ã‚¯ãƒªãƒƒã‚¯ã—ãŸã‚‰ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ãƒ¢ãƒ¼ãƒ‰ã¨åˆ‡ã‚Šæ›¿ã‚ã‚‹
 	if (NInput::TriggerMouse(NInput::MouseRight))
 	{
 		if (nowCameraType_ != (uint32_t)CameraType::Debug)
@@ -354,10 +354,10 @@ void NCameraManager::Update()
 		}
 	}
 
-	// ŠÖ”ƒ|ƒCƒ“ƒ^
+	// é–¢æ•°ãƒã‚¤ãƒ³ã‚¿
 	void (NCameraManager:: * pFunc[])() =
 	{
-		// “o˜^
+		// ç™»éŒ²
 		&NCameraManager::NormalCameraUpdate,
 		&NCameraManager::DebugCameraUpdate,
 		&NCameraManager::TitleCameraUpdate,
@@ -366,7 +366,7 @@ void NCameraManager::Update()
 		&NCameraManager::ClearCameraUpdate,
 	};
 
-	// ŽÀs
+	// å®Ÿè¡Œ
 	(this->*pFunc[nowCameraType_])();
 }
 

@@ -19,19 +19,19 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 	case IEnemy::EnemyType::MouseSide:
 		for (uint32_t i = 0; i < mouseSideNum; i++)
 		{
-			//‚Æ‚è‚ ‚¦‚¸’Ç‰Á
+			//ã¨ã‚Šã‚ãˆãšè¿½åŠ 
 			EnemyManager::GetInstance()->enemys_.emplace_back();
-			//‘Î‰‚µ‚½í—Ş‚ÉŠ—LŒ ‚½‚¹‚Ä¶¬
+			//å¯¾å¿œã—ãŸç¨®é¡ã«æ‰€æœ‰æ¨©æŒãŸã›ã¦ç”Ÿæˆ
 			EnemyManager::GetInstance()->enemys_.back() = std::make_unique<Mouse>();
 
-			//ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[‚ğƒ}ƒl[ƒWƒƒ[‚É“o˜^
+			//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã‚’ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 			EnemyManager::GetInstance()->enemys_.back()->AddEmitter((uint32_t)EnemyManager::GetInstance()->enemys_.size() - 1);
 
-			//oŒ»ˆÊ’u‚ğ”ÍˆÍ“à‚©‚çƒ‰ƒ“ƒ_ƒ€‚Åİ’è
+			//å‡ºç¾ä½ç½®ã‚’ç¯„å›²å†…ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§è¨­å®š
 			offset = { MathUtil::Randomf(-mouseSideEmitter.x,mouseSideEmitter.x),
 				0,MathUtil::Randomf(-mouseSideEmitter.y,mouseSideEmitter.y) };
 
-			//”z’uˆÊ’u‚ª’†S‚æ‚è‰E‚©¶‚Åis•ûŒü•Ï‚¦‚é
+			//é…ç½®ä½ç½®ãŒä¸­å¿ƒã‚ˆã‚Šå³ã‹å·¦ã§é€²è¡Œæ–¹å‘å¤‰ãˆã‚‹
 			if (pos.x > 0)
 			{
 				EnemyManager::GetInstance()->enemys_.back()->Generate(
@@ -43,42 +43,42 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 					pos + offset, MathUtil::Degree2Radian(90.0f), mouse.modelname);
 			}
 
-			//ƒAƒCƒeƒ€‚Á‚½“Gì‚éê‡AÅ‰‚Ìˆê‘Ì‚É‚¾‚¯‚½‚¹‚é
+			//ã‚¢ã‚¤ãƒ†ãƒ æŒã£ãŸæ•µä½œã‚‹å ´åˆã€æœ€åˆã®ä¸€ä½“ã«ã ã‘æŒãŸã›ã‚‹
 			if (isItem && i == 0)
 			{
 				EnemyManager::GetInstance()->enemys_.back()->SetisItem(true);
 			}
 		}
 
-		//¶¬ˆÊ’u”í‚ç‚È‚¢‚æ‚¤‚É‚·‚éˆ—
+		//ç”Ÿæˆä½ç½®è¢«ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹å‡¦ç†
 		do
 		{
-			isCollision = false;	//whileˆêü‚²‚Æ‚ÉƒŠƒZƒbƒg
+			isCollision = false;	//whileä¸€å‘¨ã”ã¨ã«ãƒªã‚»ãƒƒãƒˆ
 
 			for (uint32_t i = 0; i < mouseSideNum; i++)
 			{
 				for (uint32_t j = 0; j < mouseSideNum; j++)
 				{
-					if (i != j)		//“¯‚¶ƒIƒuƒWƒFƒNƒg“¯m‚Í”»’è‚µ‚È‚¢
+					if (i != j)		//åŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒå£«ã¯åˆ¤å®šã—ãªã„
 					{
 						size_t enemySize = EnemyManager::GetInstance()->enemys_.size() - 1;
 
-						//¡¶¬‚µ‚½‚â‚Â‚ç“¯m‚Å“–‚½‚è”»’èæ‚é
+						//ä»Šç”Ÿæˆã—ãŸã‚„ã¤ã‚‰åŒå£«ã§å½“ãŸã‚Šåˆ¤å®šå–ã‚‹
 						bool isCol =
 							NCollision::SphereCol(
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetCollider(),
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetCollider());
 
-						//“–‚½‚Á‚Ä‚½‚È‚ç
+						//å½“ãŸã£ã¦ãŸãªã‚‰
 						if (isCol)
 						{
-							//oŒ»ˆÊ’u‚ğ”ÍˆÍ“à‚©‚çƒ‰ƒ“ƒ_ƒ€‚Åİ’è
+							//å‡ºç¾ä½ç½®ã‚’ç¯„å›²å†…ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§è¨­å®š
 							offset = { MathUtil::Randomf(-mouseSideEmitter.x,mouseSideEmitter.x),
 								0,MathUtil::Randomf(-mouseSideEmitter.y,mouseSideEmitter.y) };
-							//À•WÄİ’è
+							//åº§æ¨™å†è¨­å®š
 							EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->SetPos(pos + offset);
 
-							isCollision = true;	//ˆê‰ñ‚Å‚à“–‚½‚Á‚Ä‚½‚È‚ç‚â‚è’¼‚µ
+							isCollision = true;	//ä¸€å›ã§ã‚‚å½“ãŸã£ã¦ãŸãªã‚‰ã‚„ã‚Šç›´ã—
 						}
 					}
 				}
@@ -90,58 +90,58 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 	case IEnemy::EnemyType::MouseFront:
 		for (uint32_t i = 0; i < mouseFrontNum; i++)
 		{
-			//‚Æ‚è‚ ‚¦‚¸’Ç‰Á
+			//ã¨ã‚Šã‚ãˆãšè¿½åŠ 
 			EnemyManager::GetInstance()->enemys_.emplace_back();
-			//‘Î‰‚µ‚½í—Ş‚ÉŠ—LŒ ‚½‚¹‚Ä¶¬
+			//å¯¾å¿œã—ãŸç¨®é¡ã«æ‰€æœ‰æ¨©æŒãŸã›ã¦ç”Ÿæˆ
 			EnemyManager::GetInstance()->enemys_.back() = std::make_unique<Mouse>();
 
-			//ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[‚ğƒ}ƒl[ƒWƒƒ[‚É“o˜^
+			//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã‚’ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 			EnemyManager::GetInstance()->enemys_.back()->AddEmitter((uint32_t)EnemyManager::GetInstance()->enemys_.size() - 1);
 
-			//oŒ»ˆÊ’u‚ğ”ÍˆÍ“à‚©‚çƒ‰ƒ“ƒ_ƒ€‚Åİ’è
+			//å‡ºç¾ä½ç½®ã‚’ç¯„å›²å†…ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§è¨­å®š
 			offset = { MathUtil::Randomf(-mouseFrontEmitter.x,mouseFrontEmitter.x),
 				0,MathUtil::Randomf(-mouseFrontEmitter.y,mouseFrontEmitter.y) };
 
-			//is•ûŒü‰º‚É
+			//é€²è¡Œæ–¹å‘ä¸‹ã«
 			EnemyManager::GetInstance()->enemys_.back()->Generate(
 				pos + offset, MathUtil::Degree2Radian(180.0f), mouse.modelname);
 
-			//ƒAƒCƒeƒ€‚Á‚½“Gì‚éê‡AÅ‰‚Ìˆê‘Ì‚É‚¾‚¯‚½‚¹‚é
+			//ã‚¢ã‚¤ãƒ†ãƒ æŒã£ãŸæ•µä½œã‚‹å ´åˆã€æœ€åˆã®ä¸€ä½“ã«ã ã‘æŒãŸã›ã‚‹
 			if (isItem && i == 0)
 			{
 				EnemyManager::GetInstance()->enemys_.back()->SetisItem(true);
 			}
 		}
 
-		//¶¬ˆÊ’u”í‚ç‚È‚¢‚æ‚¤‚É‚·‚éˆ—
+		//ç”Ÿæˆä½ç½®è¢«ã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹å‡¦ç†
 		do
 		{
-			isCollision = false;	//whileˆêü‚²‚Æ‚ÉƒŠƒZƒbƒg
+			isCollision = false;	//whileä¸€å‘¨ã”ã¨ã«ãƒªã‚»ãƒƒãƒˆ
 
 			for (uint32_t i = 0; i < mouseSideNum; i++)
 			{
 				for (uint32_t j = 0; j < mouseSideNum; j++)
 				{
-					if (i != j)		//“¯‚¶ƒIƒuƒWƒFƒNƒg“¯m‚Í”»’è‚µ‚È‚¢
+					if (i != j)		//åŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåŒå£«ã¯åˆ¤å®šã—ãªã„
 					{
 						size_t enemySize = EnemyManager::GetInstance()->enemys_.size() - 1;
 
-						//¡¶¬‚µ‚½‚â‚Â‚ç“¯m‚Å“–‚½‚è”»’èæ‚é
+						//ä»Šç”Ÿæˆã—ãŸã‚„ã¤ã‚‰åŒå£«ã§å½“ãŸã‚Šåˆ¤å®šå–ã‚‹
 						bool isCol =
 							NCollision::SphereCol(
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetCollider(),
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetCollider());
 
-						//“–‚½‚Á‚Ä‚½‚È‚ç
+						//å½“ãŸã£ã¦ãŸãªã‚‰
 						if (isCol)
 						{
-							//oŒ»ˆÊ’u‚ğ”ÍˆÍ“à‚©‚çƒ‰ƒ“ƒ_ƒ€‚Åİ’è
+							//å‡ºç¾ä½ç½®ã‚’ç¯„å›²å†…ã‹ã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã§è¨­å®š
 							offset = { MathUtil::Randomf(-mouseSideEmitter.x,mouseSideEmitter.x),
 								0,MathUtil::Randomf(-mouseSideEmitter.y,mouseSideEmitter.y) };
-							//À•WÄİ’è
+							//åº§æ¨™å†è¨­å®š
 							EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->SetPos(pos + offset);
 
-							isCollision = true;	//ˆê‰ñ‚Å‚à“–‚½‚Á‚Ä‚½‚È‚ç‚â‚è’¼‚µ
+							isCollision = true;	//ä¸€å›ã§ã‚‚å½“ãŸã£ã¦ãŸãªã‚‰ã‚„ã‚Šç›´ã—
 						}
 					}
 				}

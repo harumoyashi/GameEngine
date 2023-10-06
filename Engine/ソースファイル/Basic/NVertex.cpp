@@ -23,28 +23,28 @@ void NVertexPNU::CalcNormalVec(std::vector<NVertexPNU>& vertices, std::vector<ui
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
-	{//ŽOŠpŒ`1‚Â‚²‚Æ‚ÉŒvŽZ‚µ‚Ä‚¢‚­
-		//ŽOŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ðŽæ‚èo‚µ‚ÄAˆêŽž“I‚È•Ï”‚É‚¢‚ê‚é
+	{//ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—ã—ã¦ã„ã
+		//ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«ã„ã‚Œã‚‹
 		uint32_t index0 = indices[i * 3 + 0];
 		uint32_t index1 = indices[i * 3 + 1];
 		uint32_t index2 = indices[i * 3 + 2];
 
-		//ŽOŠpŒ`‚ð\¬‚·‚é’¸“_À•W‚ðƒxƒNƒgƒ‹‚É‘ã“ü
+		//ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«ä»£å…¥
 		NVec3 p0 = vertices[index0].pos;
 		NVec3 p1 = vertices[index1].pos;
 		NVec3 p2 = vertices[index2].pos;
 
-		//p0¨p1ƒxƒNƒgƒ‹Ap0¨p2ƒxƒNƒgƒ‹‚ðŒvŽZ(ƒxƒNƒgƒ‹‚ÌŒ¸ŽZ)
+		//p0â†’p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0â†’p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—(ãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—)
 		NVec3 v1 = p1 - p0;
 		NVec3 v2 = p2 - p0;
 
-		//ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+		//å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰åž‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 		NVec3 normal = v1.Cross(v2);
 
-		//³‹K‰»
+		//æ­£è¦åŒ–
 		normal = normal.Normalize();
 
-		//‹‚ß‚½–@ü‚ð’¸“_ƒf[ƒ^‚É‘ã“ü
+		//æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 		vertices[index0].normal = normal;
 		vertices[index1].normal = normal;
 		vertices[index2].normal = normal;
@@ -65,13 +65,16 @@ bool NVertexFbx::operator==(const NVertexFbx& a) const
 	{
 		return false;
 	}
-	if (boneIndex != a.boneIndex)
+	for (uint32_t i = 0; i < 4; i++)
 	{
-		return false;
-	}
-	if (boneWeight != a.boneWeight)
-	{
-		return false;
+		if (boneIndex[i] != a.boneIndex[i])
+		{
+			return false;
+		}
+		if (boneWeight[i] != a.boneWeight[i])
+		{
+			return false;
+		}
 	}
 
 	return true;
@@ -81,28 +84,28 @@ void NVertexFbx::CalcNormalVec(std::vector<NVertexFbx>& vertices, std::vector<ui
 {
 	assert(indices.size() % 3 == 0);
 	for (uint32_t i = 0; i < indices.size() / 3; i++)
-	{//ŽOŠpŒ`1‚Â‚²‚Æ‚ÉŒvŽZ‚µ‚Ä‚¢‚­
-		//ŽOŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ðŽæ‚èo‚µ‚ÄAˆêŽž“I‚È•Ï”‚É‚¢‚ê‚é
+	{//ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—ã—ã¦ã„ã
+		//ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«ã„ã‚Œã‚‹
 		uint32_t index0 = indices[i * 3 + 0];
 		uint32_t index1 = indices[i * 3 + 1];
 		uint32_t index2 = indices[i * 3 + 2];
 
-		//ŽOŠpŒ`‚ð\¬‚·‚é’¸“_À•W‚ðƒxƒNƒgƒ‹‚É‘ã“ü
+		//ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™ã‚’ãƒ™ã‚¯ãƒˆãƒ«ã«ä»£å…¥
 		NVec3 p0 = vertices[index0].pos;
 		NVec3 p1 = vertices[index1].pos;
 		NVec3 p2 = vertices[index2].pos;
 
-		//p0¨p1ƒxƒNƒgƒ‹Ap0¨p2ƒxƒNƒgƒ‹‚ðŒvŽZ(ƒxƒNƒgƒ‹‚ÌŒ¸ŽZ)
+		//p0â†’p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0â†’p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—(ãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—)
 		NVec3 v1 = p1 - p0;
 		NVec3 v2 = p2 - p0;
 
-		//ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+		//å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰åž‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 		NVec3 normal = v1.Cross(v2);
 
-		//³‹K‰»
+		//æ­£è¦åŒ–
 		normal = normal.Normalize();
 
-		//‹‚ß‚½–@ü‚ð’¸“_ƒf[ƒ^‚É‘ã“ü
+		//æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 		vertices[index0].normal = normal;
 		vertices[index1].normal = normal;
 		vertices[index2].normal = normal;

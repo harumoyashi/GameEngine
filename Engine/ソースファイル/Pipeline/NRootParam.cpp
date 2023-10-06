@@ -7,13 +7,13 @@ NRootParam::~NRootParam()
 
 void NRootParam::SetRootParam(const uint32_t texNum, const uint32_t constantNum)
 {
-	//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
 	for (uint32_t i = 0; i < texNum; i++)
 	{
 		descriptorRange_.emplace_back();
 		descriptorRange_.back().NumDescriptors = 1;
 		descriptorRange_.back().RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-		descriptorRange_.back().BaseShaderRegister = i;	//ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^”Ô†
+		descriptorRange_.back().BaseShaderRegister = i;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿ç•ªå·
 		descriptorRange_.back().OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 	}
 
@@ -21,21 +21,21 @@ void NRootParam::SetRootParam(const uint32_t texNum, const uint32_t constantNum)
 
 	for (uint32_t i = 0; i < texNum; i++)
 	{
-		//ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^
-		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//í—Ş
-		rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange_[i];		//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW
-		rootParam.DescriptorTable.NumDescriptorRanges = 1;						//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW”
-		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;				//‘S‚Ä‚ÌƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿
+		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;	//ç¨®é¡
+		rootParam.DescriptorTable.pDescriptorRanges = &descriptorRange_[i];		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸
+		rootParam.DescriptorTable.NumDescriptorRanges = 1;						//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸æ•°
+		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;				//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹
 		entity_.push_back(rootParam);
 	}
 
 	for (uint32_t i = 0; i < constantNum; i++)
 	{
-		//’è”ƒoƒbƒtƒ@ƒŒƒWƒXƒ^
-		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//’è”ƒoƒbƒtƒ@ƒrƒ…[
-		rootParam.Descriptor.ShaderRegister = i;					//’è”ƒoƒbƒtƒ@”Ô†
-		rootParam.Descriptor.RegisterSpace = 0;						//ƒfƒtƒHƒ‹ƒg’l
-		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//‘S‚Ä‚ÌƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ¬ã‚¸ã‚¹ã‚¿
+		rootParam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+		rootParam.Descriptor.ShaderRegister = i;					//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+		rootParam.Descriptor.RegisterSpace = 0;						//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
+		rootParam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;	//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹
 		entity_.push_back(rootParam);
 	}
 }

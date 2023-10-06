@@ -7,43 +7,43 @@
 class Item
 {
 private:
-	std::unique_ptr<NObj3d> obj_;	//ƒIƒuƒWƒFƒNƒg
-	NVec2 moveVelo_;				//ˆÚ“®—Ê
-	float moveSpeed_;				//ˆÚ“®ƒXƒs[ƒh
+	std::unique_ptr<NObj3d> obj_;	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	NVec2 moveVelo_;				//ç§»å‹•é‡
+	float moveSpeed_;				//ç§»å‹•ã‚¹ãƒ”ãƒ¼ãƒ‰
 
-	bool isAlive_;					//¶‘¶ƒtƒ‰ƒO
-	SphereCollider collider_;		//“–‚½‚è”»’è
+	bool isAlive_;					//ç”Ÿå­˜ãƒ•ãƒ©ã‚°
+	SphereCollider collider_;		//å½“ãŸã‚Šåˆ¤å®š
 
-	float elapseSpeed_;				//Œo‰ßŠÔ‚ÌƒXƒs[ƒh(ƒXƒ[ƒ‚[ƒVƒ‡ƒ“—p)
+	float elapseSpeed_;				//çµŒéæ™‚é–“ã®ã‚¹ãƒ”ãƒ¼ãƒ‰(ã‚¹ãƒ­ãƒ¼ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³ç”¨)
 
-	BulletType bulletType_;			//’e‚Ìí—Ş
+	BulletType bulletType_;			//å¼¾ã®ç¨®é¡
 
 public:
 	Item();
 	~Item();
 
-	//¶¬
+	//ç”Ÿæˆ
 	void Generate(const NVec3& pos);
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
+	//ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void OnCollision();
 
 public:
-	// ƒQƒbƒ^[ //
-	//ƒRƒ‰ƒCƒ_[æ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
 	const SphereCollider& GetIBulletCollider()const { return collider_; }
-	//¶‘¶ƒtƒ‰ƒOæ“¾
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetisAlive()const { return isAlive_; }
 
-	// ƒZƒbƒ^[ //
-	//¶‘¶ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//ç”Ÿå­˜ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
-	//Œo‰ßŠÔƒXƒs[ƒhİ’è
+	//çµŒéæ™‚é–“ã‚¹ãƒ”ãƒ¼ãƒ‰è¨­å®š
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
-	//’e‚Ìí—Şİ’è
+	//å¼¾ã®ç¨®é¡è¨­å®š
 	void SetBulletType(BulletType bulletType) { bulletType_ = bulletType; }
 };

@@ -17,16 +17,16 @@ private:
 	static std::unique_ptr<IScene> nextScene_;
 
 public:
-	//ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NSceneManager* GetInstance();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
-	//ƒV[ƒ“‚Ì•ÏX
+	//ã‚·ãƒ¼ãƒ³ã®å¤‰æ›´
 	template<typename T>
 	static void ChangeScene()
 	{
@@ -37,7 +37,7 @@ public:
 
 	NSceneManager();
 
-#pragma region ƒQƒbƒ^[
+#pragma region ã‚²ãƒƒã‚¿ãƒ¼
 #pragma endregion
 private:
 	NSceneManager(const NSceneManager&) = delete;

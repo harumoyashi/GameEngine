@@ -9,105 +9,105 @@ struct NQuaternion {
 	float z;
 	float w;
 
-	//’PˆÊƒNƒH[ƒ^ƒjƒIƒ“‚Å‚Ì¶¬
+	//å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã§ã®ç”Ÿæˆ
 	NQuaternion()
 		: x(0.f), y(0.f), z(0.f), w(1.f) {}
 
-	//w’è‚µ‚½’l‚Å‚Ì¶¬
-	//‰ºè‚É’l‚¢‚¶‚è‚½‚­‚È‚¢
+	//æŒ‡å®šã—ãŸå€¤ã§ã®ç”Ÿæˆ
+	//ä¸‹æ‰‹ã«å€¤ã„ã˜ã‚ŠãŸããªã„
 	NQuaternion(const float x, const float y, const float z, const float w)
-		: x(x), y(y), z(z), w(w){}
+		: x(x), y(y), z(z), w(w) {}
 
-	//‘«‚µZ
+	//è¶³ã—ç®—
 	NQuaternion operator+(const NQuaternion& q) const;
-	//ˆø‚«Z
+	//å¼•ãç®—
 	NQuaternion operator-(const NQuaternion& q) const;
-	//Š|‚¯Z(‰ñ“]‚Ì‡¬)
+	//æ›ã‘ç®—(å›è»¢ã®åˆæˆ)
 	NQuaternion operator*(const NQuaternion& q) const;
-	//’l•ÏX‚·‚éƒ^ƒCƒv‚Ì‘«‚µZ
+	//å€¤å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒ—ã®è¶³ã—ç®—
 	NQuaternion operator+=(const NQuaternion& q);
-	//’l•ÏX‚·‚éƒ^ƒCƒv‚Ìˆø‚«Z
+	//å€¤å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒ—ã®å¼•ãç®—
 	NQuaternion operator-=(const NQuaternion& q);
-	//’l•ÏX‚·‚éƒ^ƒCƒv‚ÌŠ|‚¯Z(‰ñ“]‚Ì‡¬)
+	//å€¤å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒ—ã®æ›ã‘ç®—(å›è»¢ã®åˆæˆ)
 	NQuaternion& operator*=(const NQuaternion& q);
-	//‘S‚Ä‚Ì’l”½“](‹¤–ğ‚â‹tƒNƒH[ƒ^ƒjƒIƒ“‚Æ‚Íˆá‚¤)
+	//å…¨ã¦ã®å€¤åè»¢(å…±å½¹ã‚„é€†ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã¨ã¯é•ã†)
 	NQuaternion operator-() const;
-	//ƒXƒJƒ‰[”{
+	//ã‚¹ã‚«ãƒ©ãƒ¼å€
 	NQuaternion operator*(const float s) const;
-	//ƒXƒJƒ‰[‚ÅŠ„‚é
+	//ã‚¹ã‚«ãƒ©ãƒ¼ã§å‰²ã‚‹
 	NQuaternion operator/(const float s) const;
-	//’l•ÏX‚·‚éƒ^ƒCƒv‚ÌƒXƒJƒ‰[”{
+	//å€¤å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒ—ã®ã‚¹ã‚«ãƒ©ãƒ¼å€
 	NQuaternion& operator*=(const float s);
-	//’l•ÏX‚·‚éƒ^ƒCƒv‚ÌƒXƒJƒ‰[‚ÅŠ„‚é
+	//å€¤å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒ—ã®ã‚¹ã‚«ãƒ©ãƒ¼ã§å‰²ã‚‹
 	NQuaternion& operator/=(const float s);
 
-	//‚©‚¯‡‚í‚¹‚éƒNƒH[ƒ^ƒjƒIƒ“‚ğ“ñ‚Â‚Æ‚àˆø”‚É“ü‚ê‚Ä‚ÌŠ|‚¯Z
+	//ã‹ã‘åˆã‚ã›ã‚‹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’äºŒã¤ã¨ã‚‚å¼•æ•°ã«å…¥ã‚Œã¦ã®æ›ã‘ç®—
 	NQuaternion Mul(const NQuaternion& lhs, const NQuaternion& rhs);
-	//’PˆÊƒNƒH[ƒ^ƒjƒIƒ“‚ğ•Ô‚·
+	//å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è¿”ã™
 	NQuaternion Identity();
-	//‹¤–ğƒNƒH[ƒ^ƒjƒIƒ“‚ğ•Ô‚·
+	//å…±å½¹ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è¿”ã™
 	NQuaternion Conjugate(const NQuaternion& q);
-	//norm‚ğæ“¾‚·‚é
+	//normã‚’å–å¾—ã™ã‚‹
 	float GetNorm() const;
-	//norm‚ğ•Ô‚·
+	//normã‚’è¿”ã™
 	float Norm(const NQuaternion& q);
-	//“àÏ
+	//å†…ç©
 	static float Dot(const NQuaternion& q0, const NQuaternion& q1);
-	//ŠOÏ
+	//å¤–ç©
 	NVec3 Cross(const NQuaternion& q0, const NQuaternion& q1);
-	//³‹K‰»‚µ‚½‚Ì‚ğ•Ô‚·
+	//æ­£è¦åŒ–ã—ãŸã®ã‚’è¿”ã™
 	NQuaternion Normalize();
 	NQuaternion Normalize(const NQuaternion& q);
-	//‹tƒNƒH[ƒ^ƒjƒIƒ“‚ğ•Ô‚·
+	//é€†ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’è¿”ã™
 	NQuaternion Inverse(const NQuaternion& q);
-	//üŒ`•âŠÔ
+	//ç·šå½¢è£œé–“
 	static NQuaternion Lerp(const NQuaternion q1, const NQuaternion q2, float t);
 
 	/// <summary>
-	/// ”CˆÓ‚Ì‰ñ“]²‚Åw’è‚µ‚½Šp“x‚¾‚¯‰ñ“]‚µ‚½p¨ƒNƒH[ƒ^ƒjƒIƒ“‚ğ¶¬‚·‚é
+	/// ä»»æ„ã®å›è»¢è»¸ã§æŒ‡å®šã—ãŸè§’åº¦ã ã‘å›è»¢ã—ãŸå§¿å‹¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”Ÿæˆã™ã‚‹
 	/// </summary>
-	/// <param name="axis">‰ñ“]²</param>
-	/// <param name="angle">Šp“x(Radian)</param>
-	/// <returns>p¨ƒNƒH[ƒ^ƒjƒIƒ“</returns>
+	/// <param name="axis">å›è»¢è»¸</param>
+	/// <param name="angle">è§’åº¦(Radian)</param>
+	/// <returns>å§¿å‹¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³</returns>
 	static NQuaternion MakeAxisAngle(const NVec3& axis, const float angle);
 
 	/// <summary>
-	/// ‰ñ“]‚ğİ’è‚·‚é
+	/// å›è»¢ã‚’è¨­å®šã™ã‚‹
 	/// </summary>
-	/// <param name="vec">‰ñ“]²</param>
-	/// <param name="angle">Šp“x(Radian)</param>
-	/// <returns>p¨ƒNƒH[ƒ^ƒjƒIƒ“</returns>
+	/// <param name="vec">å›è»¢è»¸</param>
+	/// <param name="angle">è§’åº¦(Radian)</param>
+	/// <returns>å§¿å‹¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³</returns>
 	static void SetRota(const NVec3& vec, const float angle);
 
 	/// <summary>
-	/// ƒIƒCƒ‰[Šp‚Å•\‚³‚ê‚½‰ñ“]‚ğƒNƒH[ƒ^ƒjƒIƒ“‚Å•\‚·
+	/// ã‚ªã‚¤ãƒ©ãƒ¼è§’ã§è¡¨ã•ã‚ŒãŸå›è»¢ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã§è¡¨ã™
 	/// </summary>
-	/// <param name="rot">ƒIƒCƒ‰[Šp</param>
-	/// <returns>‰ñ“]ƒNƒH[ƒ^ƒjƒIƒ“</returns>
+	/// <param name="rot">ã‚ªã‚¤ãƒ©ãƒ¼è§’</param>
+	/// <returns>å›è»¢ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³</returns>
 	NQuaternion EulerToQuaternion(const NVec3& rot) const;
 
 	/// <summary>
-	/// ƒNƒH[ƒ^ƒjƒIƒ“‚ğ‰ñ“]s—ñ‚É•ÏŠ·
+	/// ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’å›è»¢è¡Œåˆ—ã«å¤‰æ›
 	/// </summary>
-	/// <returns>‰ñ“]s—ñ</returns>
-	/// Ql:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf
+	/// <returns>å›è»¢è¡Œåˆ—</returns>
+	/// å‚è€ƒ:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf
 	NMatrix4 QuaternionToMatrix() const;
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚ğƒNƒH[ƒ^ƒjƒIƒ“‚Å‰ñ“]‚³‚¹‚½Œ‹‰Ê‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã‚’ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã§å›è»¢ã•ã›ãŸçµæœã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹
 	/// </summary>
-	/// <returns>ƒxƒNƒgƒ‹</returns>
-	NVec3 RotateVector(const NVec3& vector,const NQuaternion& quaternion) const;
+	/// <returns>ãƒ™ã‚¯ãƒˆãƒ«</returns>
+	NVec3 RotateVector(const NVec3& vector, const NQuaternion& quaternion) const;
 
 	/// <summary>
-	/// ‹…–ÊüŒ`•âŠÔ
+	/// çƒé¢ç·šå½¢è£œé–“
 	/// </summary>
-	/// <returns>ƒNƒH[ƒ^ƒjƒIƒ“</returns>
-	NQuaternion Slarp(const NQuaternion& q0, const NQuaternion& q1,const float t);
+	/// <returns>ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³</returns>
+	NQuaternion Slarp(const NQuaternion& q0, const NQuaternion& q1, const float t);
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹1‚©‚çƒxƒNƒgƒ‹2‚Ö‚Ì‰ñ“]‚ğ¶¬
+	/// ãƒ™ã‚¯ãƒˆãƒ«1ã‹ã‚‰ãƒ™ã‚¯ãƒˆãƒ«2ã¸ã®å›è»¢ã‚’ç”Ÿæˆ
 	/// </summary>
-	/// <returns>ƒNƒH[ƒ^ƒjƒIƒ“</returns>
+	/// <returns>ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³</returns>
 	NQuaternion VecToVecRota(const NVec3& u, const NVec3& v);
 };

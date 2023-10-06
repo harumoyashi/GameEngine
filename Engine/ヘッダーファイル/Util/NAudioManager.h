@@ -5,74 +5,74 @@
 typedef std::string SoundHandle;
 struct Sound
 {
-	uint32_t handle;	//‰¹ºƒnƒ“ƒhƒ‹
-	bool isBGM;			//BGM‚©ƒtƒ‰ƒO
-	float volume = 1.f;	//‰¹—Ê
+	uint32_t handle;	//éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
+	bool isBGM;			//BGMã‹ãƒ•ãƒ©ã‚°
+	float volume = 1.f;	//éŸ³é‡
 };
 
 class NAudioManager final
 {
 private:
-	static std::unordered_map<SoundHandle, Sound> sSoundMap;	//ƒTƒEƒ“ƒhŒQ
+	static std::unordered_map<SoundHandle, Sound> sSoundMap;	//ã‚µã‚¦ãƒ³ãƒ‰ç¾¤
 
-	static float masterVolume_;	//ƒ}ƒXƒ^[‰¹—Ê•Û‘¶—p
-	static float bgmVolume_;	//BGM‰¹—Ê•Û‘¶—p
-	static float seVolume_;		//SE‰¹—Ê•Û‘¶—p
+	static float masterVolume_;	//ãƒã‚¹ã‚¿ãƒ¼éŸ³é‡ä¿å­˜ç”¨
+	static float bgmVolume_;	//BGMéŸ³é‡ä¿å­˜ç”¨
+	static float seVolume_;		//SEéŸ³é‡ä¿å­˜ç”¨
 
 private:
-	//‘S‚Ä‚Ì‰¹—Êİ’è
+	//å…¨ã¦ã®éŸ³é‡è¨­å®š
 	void AllSetVolume();
 
 public:
-	//ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NAudioManager* GetInstance();
 
 	//ImGui
 	void ImGuiDraw();
 
-	//‘S•”‚Ì‰¹ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	//å…¨éƒ¨ã®éŸ³ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	void AllLoad();
-	//‘S‘Ì‚Ì‰¹—Ê’²®
+	//å…¨ä½“ã®éŸ³é‡èª¿æ•´
 	void SetMasterVolume(float masterVolume);
-	//BGM‚Ì‰¹—Ê’²®
+	//BGMã®éŸ³é‡èª¿æ•´
 	void SetBGMVolume(float bgmVolume);
-	//SE‚Ì‰¹—Ê’²®
+	//SEã®éŸ³é‡èª¿æ•´
 	void SetSEVolume(float seVolume);
-	//‰¹—Êİ’è“Ç‚İ‚İ
+	//éŸ³é‡è¨­å®šèª­ã¿è¾¼ã¿
 	void LoadVolume();
-	//‰¹—Êİ’è•Û‘¶
+	//éŸ³é‡è¨­å®šä¿å­˜
 	void SaveVolume();
 
-	//ƒTƒEƒ“ƒhƒf[ƒ^‚Ìæ“¾
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 	uint32_t GetSound(const std::string& soundHandle);
-	//wav‚©mp3‰¹º“Ç‚İ‚İ
-	//"filename" = ƒtƒ@ƒCƒ‹–¼
-	void LoadSound(const std::string& filename, const std::string& soundHandle,bool isBGM);
-	//‰¹ºÄ¶
-	//"soundHandle" ƒTƒEƒ“ƒhƒf[ƒ^ƒnƒ“ƒhƒ‹
-	//"isRoop" ƒ‹[ƒvÄ¶ƒtƒ‰ƒO
-	//"volume" ƒ{ƒŠƒ…[ƒ€
-	//"roopNum" ƒ‹[ƒv‚·‚é‰ñ”B0‚¾‚Æƒ‹[ƒv‚Í‚¹‚¸ˆê“x‚¾‚¯—¬‚ê‚é
-	//0‚Å–³‰¹A1‚ªƒfƒtƒHƒ‹ƒg‰¹—ÊB‚ ‚Ü‚è‘å‚«‚­‚µ‚·‚¬‚é‚Æ‰¹Š„‚ê‚·‚é
+	//wavã‹mp3éŸ³å£°èª­ã¿è¾¼ã¿
+	//"filename" = ãƒ•ã‚¡ã‚¤ãƒ«å
+	void LoadSound(const std::string& filename, const std::string& soundHandle, bool isBGM);
+	//éŸ³å£°å†ç”Ÿ
+	//"soundHandle" ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ãƒãƒ³ãƒ‰ãƒ«
+	//"isRoop" ãƒ«ãƒ¼ãƒ—å†ç”Ÿãƒ•ãƒ©ã‚°
+	//"volume" ãƒœãƒªãƒ¥ãƒ¼ãƒ 
+	//"roopNum" ãƒ«ãƒ¼ãƒ—ã™ã‚‹å›æ•°ã€‚0ã ã¨ãƒ«ãƒ¼ãƒ—ã¯ã›ãšä¸€åº¦ã ã‘æµã‚Œã‚‹
+	//0ã§ç„¡éŸ³ã€1ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆéŸ³é‡ã€‚ã‚ã¾ã‚Šå¤§ããã—ã™ãã‚‹ã¨éŸ³å‰²ã‚Œã™ã‚‹
 	void Play(const std::string& soundHandle, bool isRoop = false, const float volume = 1.0f, const int roopNum = 0);
-	//‰¹ºíœ
-	//"voiceHandle" ‰¹ºƒnƒ“ƒhƒ‹
+	//éŸ³å£°å‰Šé™¤
+	//"voiceHandle" éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
 	void Destroy(const std::string& soundHandle);
-	//‰¹ºˆê’â~
-	//"voiceHandle" ‰¹ºƒnƒ“ƒhƒ‹
+	//éŸ³å£°ä¸€æ™‚åœæ­¢
+	//"voiceHandle" éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
 	void Stop(const std::string& soundHandle);
-	//ˆê’â~‚µ‚½‰¹º‚ğÄ¶
-	//"voiceHandle" ‰¹ºƒnƒ“ƒhƒ‹
+	//ä¸€æ™‚åœæ­¢ã—ãŸéŸ³å£°ã‚’å†ç”Ÿ
+	//"voiceHandle" éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
 	void Start(const std::string& soundHandle);
 
-	//‰¹ºÄ¶’†‚©‚Ç‚¤‚©
-	//"soundHandle" ‰¹ºƒnƒ“ƒhƒ‹
+	//éŸ³å£°å†ç”Ÿä¸­ã‹ã©ã†ã‹
+	//"soundHandle" éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
 	bool GetIsPlaying(const std::string& soundHandle);
 
-	//‰¹—Êİ’è
-	//"soundHandle" ‰¹ºƒnƒ“ƒhƒ‹
-	//"volume" ƒ{ƒŠƒ…[ƒ€
-	//0‚Å–³‰¹A1‚ªƒfƒtƒHƒ‹ƒg‰¹—ÊB‚ ‚Ü‚è‘å‚«‚­‚µ‚·‚¬‚é‚Æ‰¹Š„‚ê‚·‚é
+	//éŸ³é‡è¨­å®š
+	//"soundHandle" éŸ³å£°ãƒãƒ³ãƒ‰ãƒ«
+	//"volume" ãƒœãƒªãƒ¥ãƒ¼ãƒ 
+	//0ã§ç„¡éŸ³ã€1ãŒãƒ‡ãƒ•ã‚©ãƒ«ãƒˆéŸ³é‡ã€‚ã‚ã¾ã‚Šå¤§ããã—ã™ãã‚‹ã¨éŸ³å‰²ã‚Œã™ã‚‹
 	void SetVolume(const std::string& soundHandle, const float volume);
 };
 

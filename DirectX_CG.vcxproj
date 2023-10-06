@@ -67,8 +67,9 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene;$(ProjectDir)\Application\ヘッダーファイル\Item;$(ProjectDir)\Application\ヘッダーファイル\UI</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -91,7 +92,8 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)\Engine\ヘッダーファイル\2D;$(ProjectDir)\Engine\ヘッダーファイル\3D;$(ProjectDir)\Engine\ヘッダーファイル\Basic;$(ProjectDir)\Engine\ヘッダーファイル\Buffer;$(ProjectDir)\Engine\ヘッダーファイル\Collision;$(ProjectDir)\Engine\ヘッダーファイル\Math;$(ProjectDir)\Engine\ヘッダーファイル\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\ヘッダーファイル\Light;$(ProjectDir)\Engine\ヘッダーファイル\Loader;$(ProjectDir)\Engine\ヘッダーファイル\Particle;$(ProjectDir)\Engine\ヘッダーファイル\Pipeline;$(ProjectDir)\Engine\ヘッダーファイル\PostEffect;$(ProjectDir)\Engine\ヘッダーファイル\Util;$(ProjectDir)\Engine\ヘッダーファイル\Undefined;$(ProjectDir)\Application\ヘッダーファイル\Bullet;$(ProjectDir)\Application\ヘッダーファイル\Chara\Enemy;$(ProjectDir)\Application\ヘッダーファイル\Chara\Player;$(ProjectDir)\Application\ヘッダーファイル\Field;$(ProjectDir)\Application\ヘッダーファイル\Scene;$(ProjectDir)\Application\ヘッダーファイル\Item;$(ProjectDir)\Application\ヘッダーファイル\UI</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

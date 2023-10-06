@@ -69,7 +69,7 @@ void NLightGroup::Init(bool isDirLights, bool isPointLights,
 
 void NLightGroup::Update()
 {
-	//’l‚ÌXV‚ª‚ ‚Á‚½Žž‚¾‚¯’è”ƒoƒbƒtƒ@‚É“]‘—‚·‚é
+	//å€¤ã®æ›´æ–°ãŒã‚ã£ãŸæ™‚ã ã‘å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€ã™ã‚‹
 	if (isDirty)
 	{
 		TransferConstBuffer();
@@ -79,7 +79,7 @@ void NLightGroup::Update()
 
 void NLightGroup::Draw(const uint32_t rootParamIndex)
 {
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚ðƒZƒbƒg
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(
 		(UINT)rootParamIndex,
 		cbLight_->constBuff_->GetGPUVirtualAddress());
@@ -88,7 +88,7 @@ void NLightGroup::Draw(const uint32_t rootParamIndex)
 void NLightGroup::TransferConstBuffer()
 {
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	cbLight_->constMap_ = nullptr;
 	result = cbLight_->constBuff_->Map(0, nullptr, (void**)&cbLight_->constMap_);
 	if (SUCCEEDED(result)) {

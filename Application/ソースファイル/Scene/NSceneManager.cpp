@@ -10,9 +10,9 @@
 #include "UI.h"
 #include "NAudioManager.h"
 
-#pragma region staticƒƒ“ƒo•Ï”‰Šú‰»
+#pragma region staticãƒ¡ãƒ³ãƒå¤‰æ•°åˆæœŸåŒ–
 
-//ƒV[ƒ“•ÏXƒtƒ‰ƒO‚Ì‰Šú‰»
+//ã‚·ãƒ¼ãƒ³å¤‰æ›´ãƒ•ãƒ©ã‚°ã®åˆæœŸåŒ–
 std::unique_ptr<IScene> NSceneManager::currentScene_;
 std::unique_ptr<IScene> NSceneManager::nextScene_;
 

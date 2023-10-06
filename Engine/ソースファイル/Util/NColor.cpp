@@ -20,7 +20,7 @@ void NColor::SetColor255(const uint32_t R, const uint32_t G, const uint32_t B, c
 	Convert01();
 }
 
-void NColor::SetColor(const float R , const float G, const float B , const float A )
+void NColor::SetColor(const float R, const float G, const float B, const float A)
 {
 	r = R;
 	g = G;
@@ -107,7 +107,7 @@ bool NColor::operator!=(const NColor& col) const
 NColor NColor::operator+(const NColor& col) const
 {
 	NColor color;
-	//—¼•û‚Ì’l‚ğ‘«‚µ‚Ä2‚ÅŠ„‚é‚±‚Æ‚Å’†ŠÔ‚ÌF‚Æ‚·‚é
+	//ä¸¡æ–¹ã®å€¤ã‚’è¶³ã—ã¦2ã§å‰²ã‚‹ã“ã¨ã§ä¸­é–“ã®è‰²ã¨ã™ã‚‹
 	color.r = (r + col.r) * 0.5f;
 	color.g = (g + col.g) * 0.5f;
 	color.b = (b + col.b) * 0.5f;

@@ -18,7 +18,7 @@ void NCollisionManager::CheckAllCollision()
 	std::forward_list<NBaseCollider*>::iterator itA;
 	std::forward_list<NBaseCollider*>::iterator itB;
 
-	//‘S‚Ä‚Ì‘g‚İ‡‚í‚¹‚É‚Â‚¢‚Ä‘“–‚½‚è‚Åƒ`ƒFƒbƒN
+	//å…¨ã¦ã®çµ„ã¿åˆã‚ã›ã«ã¤ã„ã¦ç·å½“ãŸã‚Šã§ãƒã‚§ãƒƒã‚¯
 	itA = colliders_.begin();
 	for (; itA != colliders_.end(); ++itA)
 	{
@@ -29,7 +29,7 @@ void NCollisionManager::CheckAllCollision()
 			colA_ = *itA;
 			colB_ = *itB;
 
-			//”äŠr‘ÎÛ‚ª‚ ‚éê‡‚Ì‚İ”»’è‚ğs‚¤
+			//æ¯”è¼ƒå¯¾è±¡ãŒã‚ã‚‹å ´åˆã®ã¿åˆ¤å®šã‚’è¡Œã†
 			if (colA_ != nullptr && colB_ != nullptr)
 			{
 				SphereCol();
@@ -41,20 +41,20 @@ void NCollisionManager::CheckAllCollision()
 
 void NCollisionManager::SphereCol()
 {
-	//‹…“¯m‚¾‚Á‚½ê‡
+	//çƒåŒå£«ã ã£ãŸå ´åˆ
 	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE &&
 		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE)
 	{
-		//Œ^•ÏŠ·
+		//å‹å¤‰æ›
 		SphereCollider* sphereA = static_cast<SphereCollider*>(colA_);
 		SphereCollider* sphereB = static_cast<SphereCollider*>(colB_);
 
-		NVec3 inter; //Œğ·“_(¡‚Íg‚Á‚Ä‚È‚¢)
+		NVec3 inter; //äº¤å·®ç‚¹(ä»Šã¯ä½¿ã£ã¦ãªã„)
 		if (NCollision::SphereCol(*sphereA, *sphereB, inter))
 		{
-			colA_->SetColInfo(colB_);		//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[‚ğ“o˜^
-			colA_->GetOnCollision()();		//ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒ|ƒCƒ“ƒ^‚ÌŒÄ‚Ño‚µBŒã‚ë‚Ì()‚É‚Í–{—ˆˆø”‚ğ“ü‚ê‚é‚ªAˆø”‚ª‚È‚¢‚Ì‚Å‹ó‚É‚µ‚Ä‚éB
-			colA_->SetIsCol(true);			//‚¢‚é‚©‚í‚©‚ç‚È‚¢‚ªˆê‰“–‚½‚Á‚½‚æƒtƒ‰ƒOtrue‚É
+			colA_->SetColInfo(colB_);		//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç™»éŒ²
+			colA_->GetOnCollision()();		//ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã®å‘¼ã³å‡ºã—ã€‚å¾Œã‚ã®()ã«ã¯æœ¬æ¥å¼•æ•°ã‚’å…¥ã‚Œã‚‹ãŒã€å¼•æ•°ãŒãªã„ã®ã§ç©ºã«ã—ã¦ã‚‹ã€‚
+			colA_->SetIsCol(true);			//ã„ã‚‹ã‹ã‚ã‹ã‚‰ãªã„ãŒä¸€å¿œå½“ãŸã£ãŸã‚ˆãƒ•ãƒ©ã‚°trueã«
 
 			colB_->SetColInfo(colA_);
 			colB_->GetOnCollision()();
@@ -65,35 +65,35 @@ void NCollisionManager::SphereCol()
 
 void NCollisionManager::Sphere2PlaneCol()
 {
-	//‹…‚Æ•½–Ê‚©Šm‚©‚ß‚é
+	//çƒã¨å¹³é¢ã‹ç¢ºã‹ã‚ã‚‹
 	SphereCollider* sphere{};
 	PlaneCollider* plane{};
 
 	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE &&
 		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_PLANE)
 	{
-		//Œ^•ÏŠ·
+		//å‹å¤‰æ›
 		sphere = static_cast<SphereCollider*>(colA_);
 		plane = static_cast<PlaneCollider*>(colB_);
 	}
 	else if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_PLANE &&
 		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SPHERE)
 	{
-		//Œ^•ÏŠ·
+		//å‹å¤‰æ›
 		sphere = static_cast<SphereCollider*>(colB_);
 		plane = static_cast<PlaneCollider*>(colA_);
 	}
 	else
 	{
-		return;		//‹…‚Æ•½–Ê‚¶‚á‚È‚¢‚È‚çI‚í‚è
+		return;		//çƒã¨å¹³é¢ã˜ã‚ƒãªã„ãªã‚‰çµ‚ã‚ã‚Š
 	}
 
-	//‹…‚Æ•½–Ê‚¾‚Á‚½ê‡“–‚½‚è”»’è‚ğæ‚é
+	//çƒã¨å¹³é¢ã ã£ãŸå ´åˆå½“ãŸã‚Šåˆ¤å®šã‚’å–ã‚‹
 	if (NCollision::Sphere2PlaneCol(*sphere, *plane))
 	{
-		colA_->SetColInfo(colB_);		//Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[‚ğ“o˜^
-		colA_->GetOnCollision()();		//ƒR[ƒ‹ƒoƒbƒNŠÖ”ƒ|ƒCƒ“ƒ^‚ÌŒÄ‚Ño‚µBŒã‚ë‚Ì()‚É‚Í–{—ˆˆø”‚ğ“ü‚ê‚é‚ªAˆø”‚ª‚È‚¢‚Ì‚Å‹ó‚É‚µ‚Ä‚éB
-		colA_->SetIsCol(true);			//‚¢‚é‚©‚í‚©‚ç‚È‚¢‚ªˆê‰“–‚½‚Á‚½‚æƒtƒ‰ƒOtrue‚É
+		colA_->SetColInfo(colB_);		//è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç™»éŒ²
+		colA_->GetOnCollision()();		//ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯é–¢æ•°ãƒã‚¤ãƒ³ã‚¿ã®å‘¼ã³å‡ºã—ã€‚å¾Œã‚ã®()ã«ã¯æœ¬æ¥å¼•æ•°ã‚’å…¥ã‚Œã‚‹ãŒã€å¼•æ•°ãŒãªã„ã®ã§ç©ºã«ã—ã¦ã‚‹ã€‚
+		colA_->SetIsCol(true);			//ã„ã‚‹ã‹ã‚ã‹ã‚‰ãªã„ãŒä¸€å¿œå½“ãŸã£ãŸã‚ˆãƒ•ãƒ©ã‚°trueã«
 
 		colB_->SetColInfo(colA_);
 		colB_->GetOnCollision()();

@@ -19,7 +19,7 @@ NMatrix4 NMatrix4::operator-() const
 	mat[3][7] = 1;
 
 	for (size_t n = 0; n < 4; n++) {
-		//Å‘å‚Ìâ‘Î’l‚ð’Tõ‚·‚é(‚Æ‚è‚ ‚¦‚¸‘ÎÛ¬•ª‚ðÅ‘å‚Æ‰¼’è‚µ‚Ä‚¨‚­)
+		//æœ€å¤§ã®çµ¶å¯¾å€¤ã‚’æŽ¢ç´¢ã™ã‚‹(ã¨ã‚Šã‚ãˆãšå¯¾è±¡æˆåˆ†ã‚’æœ€å¤§ã¨ä»®å®šã—ã¦ãŠã)
 		float max = abs(mat[n][n]);
 		size_t maxIndex = n;
 
@@ -30,12 +30,12 @@ NMatrix4 NMatrix4::operator-() const
 			}
 		}
 
-		//Å‘å‚Ìâ‘Î’l‚ª0‚¾‚Á‚½‚ç‹ts—ñ‚Í‹‚ß‚ç‚ê‚È‚¢
+		//æœ€å¤§ã®çµ¶å¯¾å€¤ãŒ0ã ã£ãŸã‚‰é€†è¡Œåˆ—ã¯æ±‚ã‚ã‚‰ã‚Œãªã„
 		if (abs(mat[maxIndex][n]) <= 0.000001f) {
-			return result; //‚Æ‚è‚ ‚¦‚¸’PˆÊs—ñ•Ô‚µ‚¿‚á‚¤
+			return result; //ã¨ã‚Šã‚ãˆãšå˜ä½è¡Œåˆ—è¿”ã—ã¡ã‚ƒã†
 		}
 
-		//“ü‚ê‘Ö‚¦
+		//å…¥ã‚Œæ›¿ãˆ
 		if (n != maxIndex) {
 			for (size_t i = 0; i < 8; i++) {
 				float f = mat[maxIndex][i];
@@ -44,15 +44,15 @@ NMatrix4 NMatrix4::operator-() const
 			}
 		}
 
-		//Š|‚¯‚½‚ç1‚É‚È‚é’l‚ðŽZo
+		//æŽ›ã‘ãŸã‚‰1ã«ãªã‚‹å€¤ã‚’ç®—å‡º
 		float mul = 1 / mat[n][n];
 
-		//Š|‚¯‚é
+		//æŽ›ã‘ã‚‹
 		for (size_t i = 0; i < 8; i++) {
 			mat[n][i] *= mul;
 		}
 
-		//‘¼‘S•”0‚É‚·‚é
+		//ä»–å…¨éƒ¨0ã«ã™ã‚‹
 		for (size_t i = 0; i < 4; i++) {
 			if (n == i) {
 				continue;

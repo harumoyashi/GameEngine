@@ -7,8 +7,8 @@ class IEmitter3D;
 class NParticleManager final
 {
 public:
-	std::unordered_map<std::string, IEmitter3D*> emitters_;	//ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[ŒQ
-	std::vector<IEmitter3D*> enemyEmitters_;				//“G—pƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[ŒQ
+	std::unordered_map<std::string, IEmitter3D*> emitters_;	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç¾¤
+	std::vector<IEmitter3D*> enemyEmitters_;				//æ•µç”¨ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ç¾¤
 
 public:
 	static NParticleManager* GetInstance();
@@ -16,10 +16,10 @@ public:
 	void Update();
 	void Draw();
 
-	//ƒGƒ~ƒbƒ^[‚ğunordered_map‚É’Ç‰Á
+	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã‚’unordered_mapã«è¿½åŠ 
 	void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
-		//“¯‚¶–¼‘O‚Ì‚â‚Â‚ª“o˜^‚³‚ê‚Ä‚½‚ç’Ç‰Á‚¹‚¸‚Éˆ—I—¹
+		//åŒã˜åå‰ã®ã‚„ã¤ãŒç™»éŒ²ã•ã‚Œã¦ãŸã‚‰è¿½åŠ ã›ãšã«å‡¦ç†çµ‚äº†
 		for (auto& emit : emitters_)
 		{
 			if (emit.first == key)
@@ -27,15 +27,15 @@ public:
 				return;
 			}
 		}
-		emitter->Init();					//‰Šú‰»‚µ‚Ä‚©‚ç“o˜^
+		emitter->Init();					//åˆæœŸåŒ–ã—ã¦ã‹ã‚‰ç™»éŒ²
 		emitters_.emplace(std::make_pair(key, emitter));
 	}
-	//ƒGƒ~ƒbƒ^[‚ğunordered_map‚©‚çíœ
+	//ã‚¨ãƒŸãƒƒã‚¿ãƒ¼ã‚’unordered_mapã‹ã‚‰å‰Šé™¤
 	void EraseEmitter(const std::string& key)
 	{
 		emitters_.erase(key);
 	}
-	//—LŒøƒtƒ‰ƒO‚ğİ’è
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 	void SetIsActive(const std::string& key, bool isActive)
 	{
 		emitters_[key]->SetIsActive(isActive);

@@ -5,47 +5,47 @@
 #include "NTile.h"
 #include "NEasing.h"
 
-//°
+//åºŠ
 class Field final
 {
 public:
 	enum class LineType
 	{
-		Start,	//ƒXƒ^[ƒg
-		Goal,	//ƒS[ƒ‹
+		Start,	//ã‚¹ã‚¿ãƒ¼ãƒˆ
+		Goal,	//ã‚´ãƒ¼ãƒ«
 
 		MaxSize
 	};
 
-	//ƒtƒB[ƒ‹ƒh‚É‚ ‚éü(ƒXƒ^[ƒgAƒS[ƒ‹Aƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg)
+	//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã‚ã‚‹ç·š(ã‚¹ã‚¿ãƒ¼ãƒˆã€ã‚´ãƒ¼ãƒ«ã€ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆ)
 	struct Line
 	{
-		std::unique_ptr<NObj3d> line;			//ü
-		std::unique_ptr<NObj3d> text;			//•¶š
+		std::unique_ptr<NObj3d> line;			//ç·š
+		std::unique_ptr<NObj3d> text;			//æ–‡å­—
 
-		float linePosZ = 0.0f;					//‰¡ü‚ÌˆÊ’u
-		float offset = 5.0f;					//•¶š‚Ç‚±‚É’u‚­‚©(ü‚©‚ç‚ÌƒIƒtƒZƒbƒg)
+		float linePosZ = 0.0f;					//æ¨ªç·šã®ä½ç½®
+		float offset = 5.0f;					//æ–‡å­—ã©ã“ã«ç½®ãã‹(ç·šã‹ã‚‰ã®ã‚ªãƒ•ã‚»ãƒƒãƒˆ)
 
-		bool isSlide = false;					//ƒXƒ‰ƒCƒh‚·‚é‚©ƒtƒ‰ƒO
-		float slidePos = 0.0f;					//‰¡‚É‘|‚¯‚Ä‚­‚ÌƒXƒ‰ƒCƒhˆÊ’u
-		NEasing::EaseTimer slideTimer = 0.1f;	//ƒXƒ‰ƒCƒh‚ÌƒC[ƒWƒ“ƒO—p
+		bool isSlide = false;					//ã‚¹ãƒ©ã‚¤ãƒ‰ã™ã‚‹ã‹ãƒ•ãƒ©ã‚°
+		float slidePos = 0.0f;					//æ¨ªã«æƒã‘ã¦ãæ™‚ã®ã‚¹ãƒ©ã‚¤ãƒ‰ä½ç½®
+		NEasing::EaseTimer slideTimer = 0.1f;	//ã‚¹ãƒ©ã‚¤ãƒ‰æ™‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
 	};
 
 private:
-	std::unique_ptr<NTile> fieldObj_;			//°
-	PlaneCollider collider_;					//°‚Ì“–‚½‚è”»’è
-	std::vector<Line> lines_;					//ƒtƒB[ƒ‹ƒh‚É‚ ‚éü‚½‚¿
-	std::vector<Line> checkPoints_;				//ƒtƒB[ƒ‹ƒh‚É‚ ‚éƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚½‚¿
+	std::unique_ptr<NTile> fieldObj_;			//åºŠ
+	PlaneCollider collider_;					//åºŠã®å½“ãŸã‚Šåˆ¤å®š
+	std::vector<Line> lines_;					//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã‚ã‚‹ç·šãŸã¡
+	std::vector<Line> checkPoints_;				//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ã‚ã‚‹ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆãŸã¡
 
-	float tileDivide_ = 0.5f;					//ƒ^ƒCƒ‹‚Ì•ªŠ„•
-	float activityAreaX_ = 10.0f;				//s“®”ÍˆÍ§ŒÀ
-	uint32_t checkPointNum = 3;					//ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚Ì”
-	
-	float startPosZ_ = 3.0f;					//ƒXƒ^[ƒg’n“_(c‚¾‚¯)
-	float goalPosZ_ = 20.0f;					//ƒS[ƒ‹’n“_(c‚¾‚¯)
+	float tileDivide_ = 0.5f;					//ã‚¿ã‚¤ãƒ«ã®åˆ†å‰²å¹…
+	float activityAreaX_ = 10.0f;				//è¡Œå‹•ç¯„å›²åˆ¶é™
+	uint32_t checkPointNum = 3;					//ãƒã‚§ãƒƒã‚¯ãƒã‚¤ãƒ³ãƒˆã®æ•°
 
-	bool isStart_ = false;						//ƒXƒ^[ƒg‚µ‚½‚©ƒtƒ‰ƒO
-	bool isGoal_ = false;						//ƒS[ƒ‹‚µ‚½‚©ƒtƒ‰ƒO
+	float startPosZ_ = 3.0f;					//ã‚¹ã‚¿ãƒ¼ãƒˆåœ°ç‚¹(ç¸¦ã ã‘)
+	float goalPosZ_ = 20.0f;					//ã‚´ãƒ¼ãƒ«åœ°ç‚¹(ç¸¦ã ã‘)
+
+	bool isStart_ = false;						//ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‹ãƒ•ãƒ©ã‚°
+	bool isGoal_ = false;						//ã‚´ãƒ¼ãƒ«ã—ãŸã‹ãƒ•ãƒ©ã‚°
 
 public:
 	static Field* GetInstance();
@@ -54,24 +54,24 @@ public:
 	void Update();
 	void Draw();
 
-	//‰½‚©‚É“–‚½‚Á‚½‚Ìˆ—
+	//ä½•ã‹ã«å½“ãŸã£ãŸæ™‚ã®å‡¦ç†
 	void OnCollision();
 
-	// ƒQƒbƒ^[ //
-	//ƒXƒ^[ƒg’n“_À•Wæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//ã‚¹ã‚¿ãƒ¼ãƒˆåœ°ç‚¹åº§æ¨™å–å¾—
 	float GetStartPos() const { return startPosZ_; }
-	//ƒS[ƒ‹’n“_À•Wæ“¾
+	//ã‚´ãƒ¼ãƒ«åœ°ç‚¹åº§æ¨™å–å¾—
 	float GetGoalPos() const { return goalPosZ_; }
-	//ƒtƒB[ƒ‹ƒh‚Ì‘å‚«‚³æ“¾
+	//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®å¤§ãã•å–å¾—
 	NVec3 GetScale() const { return fieldObj_->scale_; }
-	//ƒXƒ^[ƒg‚µ‚½‚©ƒtƒ‰ƒOæ“¾
+	//ã‚¹ã‚¿ãƒ¼ãƒˆã—ãŸã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsStart() const { return isStart_; }
-	//ƒS[ƒ‹‚µ‚½‚©ƒtƒ‰ƒOæ“¾
+	//ã‚´ãƒ¼ãƒ«ã—ãŸã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsGoal() const { return isGoal_; }
-	//s“®”ÍˆÍæ“¾
+	//è¡Œå‹•ç¯„å›²å–å¾—
 	float GetActivityAreaX() const { return activityAreaX_; }
 
-	// ƒZƒbƒ^[ //
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
 
 
 private:

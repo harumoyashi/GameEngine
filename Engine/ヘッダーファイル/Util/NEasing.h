@@ -1,7 +1,7 @@
 #pragma once
 namespace NEasing
 {
-	//ƒC[ƒWƒ“ƒOŒQ
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç¾¤
 	float lerp(float start, float end, float timeRate);
 
 	float InQuad(float timeRate);
@@ -33,59 +33,59 @@ namespace NEasing
 	float InOutBack(float timeRate);
 	float InOutBack(float start, float end, float timeRate);
 
-	//ƒC[ƒWƒ“ƒO—p‚Ìƒ^ƒCƒ}[(•b”)
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼(ç§’æ•°)
 	class EaseTimer
 	{
 	private:
-		//is’†ƒtƒ‰ƒO
+		//é€²è¡Œä¸­ãƒ•ãƒ©ã‚°
 		bool run_ = false;
-		//isI—¹ƒtƒ‰ƒO
+		//é€²è¡Œçµ‚äº†ãƒ•ãƒ©ã‚°
 		bool end_ = false;
-		//Œã‘Ş’†ƒtƒ‰ƒO
+		//å¾Œé€€ä¸­ãƒ•ãƒ©ã‚°
 		bool reverse_ = false;
-		//Œã‘ŞI—¹ƒtƒ‰ƒO
+		//å¾Œé€€çµ‚äº†ãƒ•ãƒ©ã‚°
 		bool reverseend_ = false;
 
 	public:
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		EaseTimer(float maxTime = 1.0f) {
 			maxTime_ = maxTime;
 		}
 
-		float nowTime_ = 0.0f;		// Œ»İ‚ÌŒo‰ßŠÔ
-		float maxTime_ = 1.0f;		// ‰½•b‚©‚¯‚ÄˆÚ“®‚·‚é‚©
+		float nowTime_ = 0.0f;		// ç¾åœ¨ã®çµŒéæ™‚é–“
+		float maxTime_ = 1.0f;		// ä½•ç§’ã‹ã‘ã¦ç§»å‹•ã™ã‚‹ã‹
 
-		//ƒ^ƒCƒ}[‚ªi‚ñ‚Å‚é‚©ƒtƒ‰ƒOæ“¾
+		//ã‚¿ã‚¤ãƒãƒ¼ãŒé€²ã‚“ã§ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetRun()const { return run_; };
-		//ˆê“x‚Å‚àis‚³‚ê‚½‚çtrue‚É‚È‚éƒtƒ‰ƒOæ“¾
+		//ä¸€åº¦ã§ã‚‚é€²è¡Œã•ã‚ŒãŸã‚‰trueã«ãªã‚‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetStarted()const { return run_ || end_; };
-		//ƒ^ƒCƒ}[‚ªi‚İØ‚Á‚½‚©ƒtƒ‰ƒOæ“¾
+		//ã‚¿ã‚¤ãƒãƒ¼ãŒé€²ã¿åˆ‡ã£ãŸã‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetEnd()const { return end_; };
-		//i‚İØ‚Á‚½‚©ƒtƒ‰ƒO‚ğİ’è
+		//é€²ã¿åˆ‡ã£ãŸã‹ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 		void SetEnd(bool end) { end_ = end; };
 
-		//ƒ^ƒCƒ}[‚ª–ß‚Á‚Ä‚é‚©ƒtƒ‰ƒOæ“¾
+		//ã‚¿ã‚¤ãƒãƒ¼ãŒæˆ»ã£ã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetReverse()const { return reverse_; };
-		//ƒ^ƒCƒ}[‚ª–ß‚èØ‚Á‚½‚©ƒtƒ‰ƒOæ“¾
+		//ã‚¿ã‚¤ãƒãƒ¼ãŒæˆ»ã‚Šåˆ‡ã£ãŸã‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetReverseEnd()const { return reverseend_; };
-		//–ß‚èØ‚Á‚½‚©ƒtƒ‰ƒO‚ğİ’è
+		//æˆ»ã‚Šåˆ‡ã£ãŸã‹ãƒ•ãƒ©ã‚°ã‚’è¨­å®š
 		void SetReverseEnd(bool reverseend) { reverseend_ = reverseend; };
-		//ˆê“x‚Å‚àŒã‘Ş‚³‚ê‚½‚çtrue‚É‚È‚éƒtƒ‰ƒOæ“¾
+		//ä¸€åº¦ã§ã‚‚å¾Œé€€ã•ã‚ŒãŸã‚‰trueã«ãªã‚‹ãƒ•ãƒ©ã‚°å–å¾—
 		bool GetReverseStarted()const { return reverse_ || reverseend_; };
 
-		//ƒ^ƒCƒ}[‚Í‹N“®‚µ‚È‚¢‚ª‰Šú‰»‚·‚é
+		//ã‚¿ã‚¤ãƒãƒ¼ã¯èµ·å‹•ã—ãªã„ãŒåˆæœŸåŒ–ã™ã‚‹
 		void Reset();
-		//ŒÄ‚Ño‚µ‚½‚çƒ^ƒCƒ}[‚ªis
+		//å‘¼ã³å‡ºã—ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ãŒé€²è¡Œ
 		void Start();
-		//ŒÄ‚Ño‚µ‚½‚çƒ^ƒCƒ}[‚ªŒã‘Ş
+		//å‘¼ã³å‡ºã—ãŸã‚‰ã‚¿ã‚¤ãƒãƒ¼ãŒå¾Œé€€
 		void ReverseStart();
-		//Œo‰ßŠÔ‚ğXV
+		//çµŒéæ™‚é–“ã‚’æ›´æ–°
 		void Update(const float elapseTimer = 1.0f);
-		//ƒ^ƒCƒ}[XV+–³ŒÀƒ‹[ƒv
+		//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°+ç„¡é™ãƒ«ãƒ¼ãƒ—
 		void Roop(const float elapseTimer = 1.0f);
 		void RoopReverse(const float elapseTimer = 1.0f);
 
-		//Œ»İ‚ªÅ‘å•b”‚Ì‚¤‚¿‚Ç‚ÌŠ„‡‚©‚ğ(0.0f`1.0f)‚Ì’l‚Å•Ô‚·
+		//ç¾åœ¨ãŒæœ€å¤§ç§’æ•°ã®ã†ã¡ã©ã®å‰²åˆã‹ã‚’(0.0fï½1.0f)ã®å€¤ã§è¿”ã™
 		float GetTimeRate();
 	};
 };

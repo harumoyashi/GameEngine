@@ -9,41 +9,41 @@ public:
 	static const uint32_t kWin_height = 720;
 
 private:
-	//ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚Ì¶¬•“o˜^
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®ç”Ÿæˆï¼†ç™»éŒ²
 	WNDCLASSEX win_{};
-	//ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹‚Ì¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«ã®ç”Ÿæˆ
 	HWND hwnd_;
-	//ƒEƒBƒ“ƒhƒEƒTƒCƒY—p‚Ì’·•ûŒ`‚Ì¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚ºç”¨ã®é•·æ–¹å½¢ã®ç”Ÿæˆ
 	RECT wrc_;
-	//ƒƒbƒZ[ƒWî•ñ\‘¢‘Ì‚Ì¶¬
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸æƒ…å ±æ§‹é€ ä½“ã®ç”Ÿæˆ
 	MSG msg_ = {};
 
 public:
-#pragma region ‰Šú‰»
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+#pragma region åˆæœŸåŒ–
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NWindows* GetInstance();
 
-	//ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 	static LRESULT WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam);
-	//WindowƒNƒ‰ƒX‚Ìİ’è
+	//Windowã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	void Set();
-	//ƒRƒ“ƒ\[ƒ‹‚Ö‚Ì•¶šo—Í
+	//ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã¸ã®æ–‡å­—å‡ºåŠ›
 	void DebugText(const std::string& text);
-	//ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
 	void CreateWindowObj();
-	//ƒEƒBƒ“ƒhƒE•\¦
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 	void Display();
 #pragma endregion
-#pragma region XV
-	//ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+#pragma region æ›´æ–°
+	//ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 	bool WindowMessage();
 #pragma endregion
-#pragma region I—¹
-	//I—¹ˆ—
-	//ƒNƒ‰ƒX‚Ì‰ğœ
+#pragma region çµ‚äº†
+	//çµ‚äº†å‡¦ç†
+	//ã‚¯ãƒ©ã‚¹ã®è§£é™¤
 	void Finalize();
 #pragma endregion
-#pragma region ƒQƒbƒ^[
+#pragma region ã‚²ãƒƒã‚¿ãƒ¼
 	const HWND& GetHwnd()const { return hwnd_; }
 	const HINSTANCE& GetHInstance()const { return win_.hInstance; }
 #pragma endregion

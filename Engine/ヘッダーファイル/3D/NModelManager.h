@@ -10,26 +10,26 @@ typedef std::string ModelHandle;
 class NModelManager final
 {
 private:
-	static std::unordered_map<ModelHandle, std::unique_ptr<IModel>> sModelMap;	//ƒ‚ƒfƒ‹ŒQ
-	static std::mutex sMtx;	// ”r‘¼§Œä
+	static std::unordered_map<ModelHandle, std::unique_ptr<IModel>> sModelMap;	//ãƒ¢ãƒ‡ãƒ«ç¾¤
+	static std::mutex sMtx;	// æ’ä»–åˆ¶å¾¡
 
-	// ƒ‚ƒfƒ‹ƒf[ƒ^ƒRƒ“ƒeƒi
+	// ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	static std::vector<IModel> sModelDatas;
-	// Ÿ‚Ég‚¤ƒ‚ƒfƒ‹ƒf[ƒ^‚Ì”Ô†
+	// æ¬¡ã«ä½¿ã†ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®ç•ªå·
 	static uint32_t sIndexModelData;
-	// ƒ‚ƒfƒ‹‚Ì‚ ‚éƒfƒBƒŒƒNƒgƒŠƒpƒX
+	// ãƒ¢ãƒ‡ãƒ«ã®ã‚ã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	static std::string sDirectoryPath;
 
 public:
-	//‘S•”‚Ìƒ‚ƒfƒ‹“Ç‚İ‚İ
+	//å…¨éƒ¨ã®ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	static void AllLoad();
-	//ƒ‚ƒfƒ‹ƒf[ƒ^‚Ìæ“¾
+	//ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã®å–å¾—
 	static IModel* GetModel(const std::string& modelHandle);
-	
-	//objƒ‚ƒfƒ‹“Ç‚İ‚İ
-	//"modelname" = ƒ‚ƒfƒ‹–¼
+
+	//objãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
+	//"modelname" = ãƒ¢ãƒ‡ãƒ«å
 	static IModel* LoadObjModel(const std::string& modelname, const std::string& modelHandle);
-	//fbxƒ‚ƒfƒ‹“Ç‚İ‚İ
-	//"modelname" = ƒ‚ƒfƒ‹–¼
+	//fbxãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
+	//"modelname" = ãƒ¢ãƒ‡ãƒ«å
 	static IModel* LoadFbxModel(const std::string& modelname, const std::string& modelHandle);
 };

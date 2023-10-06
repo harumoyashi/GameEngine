@@ -1,48 +1,48 @@
 #pragma once
 #include "IBullet.h"
 
-//¶‰E“¯‚É2”­Œ‚‚Â
-//‹­‰»‚É‚æ‚èn‰ñ˜A‘±‚ÅŒ‚‚Â
+//å·¦å³åŒæ™‚ã«2ç™ºæ’ƒã¤
+//å¼·åŒ–ã«ã‚ˆã‚Šnå›é€£ç¶šã§æ’ƒã¤
 class SideBullet final :
 	public IBullet
 {
 private:
-    NEasing::EaseTimer shotCoolTimer_;		//’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
-    NEasing::EaseTimer shortShotCoolTimer_;	//1ƒ‹[ƒv‚Å“ñ‰ñˆÈã‘Å‚Â‚É’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ
-    bool isCanShot_;			//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO
-    bool isShortCanShot_;		//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO’Z‚¢”Å
-    uint32_t level_;            //’e‚Ì‹­‰»ƒŒƒxƒ‹
-    uint32_t allAtOnceNum_;     //ˆê“x‚ÉŒ‚‚Â’e‚Ì”
+	NEasing::EaseTimer shotCoolTimer_;		//å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
+	NEasing::EaseTimer shortShotCoolTimer_;	//1ãƒ«ãƒ¼ãƒ—ã§äºŒå›ä»¥ä¸Šæ‰“ã¤æ™‚ã«å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“
+	bool isCanShot_;			//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°
+	bool isShortCanShot_;		//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°çŸ­ã„ç‰ˆ
+	uint32_t level_;            //å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«
+	uint32_t allAtOnceNum_;     //ä¸€åº¦ã«æ’ƒã¤å¼¾ã®æ•°
 
 public:
-    SideBullet();
+	SideBullet();
 
-	//ƒTƒCƒh’eê—pƒAƒbƒvƒf[ƒg
-    void SideUpdate();
+	//ã‚µã‚¤ãƒ‰å¼¾å°‚ç”¨ã‚¢ãƒƒãƒ—ãƒ‡ãƒ¼ãƒˆ
+	void SideUpdate();
 
-	//’eŒ‚‚Â‚Ü‚Å‚ÌŠÔ‚ğƒŠƒZƒbƒg
+	//å¼¾æ’ƒã¤ã¾ã§ã®æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆ
 	void ReSetShotCoolTimer() { shotCoolTimer_.Reset(); }
-	//’eŒ‚‚Â‚Ü‚Å(’Z‚¢‚Ù‚¤)‚ÌŠÔ‚ğƒŠƒZƒbƒg
+	//å¼¾æ’ƒã¤ã¾ã§(çŸ­ã„ã»ã†)ã®æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆ
 	void ReSetShortShotCoolTimer() { shortShotCoolTimer_.Reset(); }
 
-	// ƒQƒbƒ^[ //
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOæ“¾
+	// ã‚²ãƒƒã‚¿ãƒ¼ //
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°å–å¾—
 	bool GetIsCanShot() const { return isCanShot_; }
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒO’Z‚¢”Åæ“¾
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°çŸ­ã„ç‰ˆå–å¾—
 	bool GetIsShortCanShot() const { return isShortCanShot_; }
-	//’e‚Ì‹­‰»ƒŒƒxƒ‹æ“¾
+	//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«å–å¾—
 	uint32_t GetLevel() const { return level_; }
-	//ˆê“x‚ÉŒ‚‚Â’e‚Ì”æ“¾	
+	//ä¸€åº¦ã«æ’ƒã¤å¼¾ã®æ•°å–å¾—	
 	uint32_t GetAllAtOnceNum() const { return allAtOnceNum_; }
 	float GetShotCoolTimer() const { return shotCoolTimer_.nowTime_; }
 
-	// ƒZƒbƒ^[ //
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	// ã‚»ãƒƒã‚¿ãƒ¼ //
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsCanShot(bool isCanShot) { isCanShot_ = isCanShot; }
-	//Œ‚‚Ä‚é‚©ƒtƒ‰ƒOİ’è
+	//æ’ƒã¦ã‚‹ã‹ãƒ•ãƒ©ã‚°è¨­å®š
 	void SetIsShortCanShot(bool isShortCanShot) { isShortCanShot_ = isShortCanShot; }
-	//’e‚Ì‹­‰»ƒŒƒxƒ‹İ’è
+	//å¼¾ã®å¼·åŒ–ãƒ¬ãƒ™ãƒ«è¨­å®š
 	void SetLevel(const uint32_t level) { level_ = level; }
-	//ˆê“x‚ÉŒ‚‚Â’e‚Ì”İ’è
+	//ä¸€åº¦ã«æ’ƒã¤å¼¾ã®æ•°è¨­å®š
 	void SetAllAtOnceNum(const uint32_t allAtOnceNum) { allAtOnceNum_ = allAtOnceNum; }
 };

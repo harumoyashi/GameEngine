@@ -4,7 +4,7 @@ void RadialBlur::Init()
 {
 	if (pipelineName_ != "Radial")
 	{
-		//定数バッファ
+		//螳壽焚繝舌ャ繝輔ぃ
 		cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform2D>>();
 		cbTrans_->Init();
 		cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();

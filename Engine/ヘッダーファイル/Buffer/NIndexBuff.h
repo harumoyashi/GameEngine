@@ -12,21 +12,21 @@ private:
 	D3D12_INDEX_BUFFER_VIEW view_{};
 
 public:
-	NIndexBuff() {};	//����̃R���X�g���N�^
+	NIndexBuff() {};	//既定のコンストラクタ
 
-	//�C���f�b�N�X�̔z��Ƃ��̑傫���Œ��_�o�b�t�@�����
+	//インデックスの配列とその大きさで頂点バッファを作る
 	NIndexBuff(uint32_t* list, const uint32_t size);
-	//�C���f�b�N�X�̔z���vector�Œ��_�o�b�t�@�����
+	//インデックスの配列とvectorで頂点バッファを作る
 	NIndexBuff(const std::vector<uint32_t>& list);
 
-	//�C���f�b�N�X�̔z��Ƃ��̑傫���Œ��_�o�b�t�@�����
+	//インデックスの配列とその大きさで頂点バッファを作る
 	void Init(uint32_t* list, const uint32_t size);
-	//�C���f�b�N�X�̔z���vector�Œ��_�o�b�t�@�����
+	//インデックスの配列とvectorで頂点バッファを作る
 	void Init(const std::vector<uint32_t>& list);
 
-	// �Q�b�^�[ //
-	//�o�b�t�@�[�擾
+	// ゲッター //
+	//バッファー取得
 	ID3D12Resource* GetBuffer() { return buff_.Get(); }
-	//�r���[�擾
+	//ビュー取得
 	D3D12_INDEX_BUFFER_VIEW* GetView() { return &view_; }
 };

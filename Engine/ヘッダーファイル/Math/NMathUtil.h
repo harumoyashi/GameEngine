@@ -10,42 +10,42 @@ const float PI2 = PI * 2.0f;
 
 namespace MathUtil
 {
-	//ƒrƒ…[•ÏŠ·s—ñ¶¬
+	//ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
 	NMatrix4 MatViewLockTo(const NVec3& eye, const NVec3& front, const NVec3& up);
 	NMatrix4 MatViewLockAt(const NVec3& eye, const NVec3& target, const NVec3& up);
-	//•½s“Š‰e•ÏŠ·s—ñ¶¬
+	//å¹³è¡ŒæŠ•å½±å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
 	NMatrix4 ParallelProjection(const float WIN_WIDTH, const float WIN_HEIGHT);
-	//“§‹“Š‰e•ÏŠ·s—ñ¶¬
+	//é€è¦–æŠ•å½±å¤‰æ›è¡Œåˆ—ç”Ÿæˆ
 	NMatrix4 PerspectiveProjection(const float fov, const float aspect, const  float nearZ, const float farZ);
-	//ƒ[ƒ‹ƒhÀ•W‚©‚çƒXƒNƒŠ[ƒ“À•W‚É•ÏŠ·
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‹ã‚‰ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã«å¤‰æ›
 	NVec2 WorldToScreen(const NVec3& pos, const NMatrix4& matWorld);
 
-	//“x”–@¨ƒ‰ƒWƒAƒ“
+	//åº¦æ•°æ³•â†’ãƒ©ã‚¸ã‚¢ãƒ³
 	float Degree2Radian(const float degree);
-	//“x”–@¨ƒ‰ƒWƒAƒ“
+	//åº¦æ•°æ³•â†’ãƒ©ã‚¸ã‚¢ãƒ³
 	float Radian2Degree(const float radian);
-	//•„†•Ô‚·
+	//ç¬¦å·è¿”ã™
 	uint32_t Sign(const uint32_t value);
-	//ƒ‰ƒ“ƒ_ƒ€‚È’l‚ğ•Ô‚·
+	//ãƒ©ãƒ³ãƒ€ãƒ ãªå€¤ã‚’è¿”ã™
 	uint32_t Random(const uint32_t min, const uint32_t max);
 	float Randomf(const float min, const float max);
-	//Å¬AÅ‘å’lİ’è
+	//æœ€å°ã€æœ€å¤§å€¤è¨­å®š
 	template <typename Type>
 	Type Clamp(const Type value, const Type min, const Type max)
 	{
-		// ’l‚ªÅ‘å’l‚ğã‰ñ‚Á‚Ä‚¢‚½‚çÅ‘å’l‚ğ•Ô‚·
+		// å€¤ãŒæœ€å¤§å€¤ã‚’ä¸Šå›ã£ã¦ã„ãŸã‚‰æœ€å¤§å€¤ã‚’è¿”ã™
 		if (value >= max) return max;
 
-		// ’l‚ªÅ¬’l‚ğ‰º‰ñ‚Á‚Ä‚¢‚½‚çÅ¬’l‚ğ•Ô‚·
+		// å€¤ãŒæœ€å°å€¤ã‚’ä¸‹å›ã£ã¦ã„ãŸã‚‰æœ€å°å€¤ã‚’è¿”ã™
 		if (value <= min) return min;
 
-		// ‚Ç‚¿‚ç‚É‚à“–‚Ä‚Í‚Ü‚ç‚È‚©‚Á‚½‚ç’l‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·
+		// ã©ã¡ã‚‰ã«ã‚‚å½“ã¦ã¯ã¾ã‚‰ãªã‹ã£ãŸã‚‰å€¤ã‚’ãã®ã¾ã¾è¿”ã™
 		return static_cast<Type>(value);
 	}
 
-	//s—ñ‚Ì‡¬
+	//è¡Œåˆ—ã®åˆæˆ
 	NMatrix4 CalculateWorldMat(const NVec3& pos, const NVec3& scale, const NQuaternion& rot);
 
-	//‰~‰^“®
+	//å††é‹å‹•
 	NVec2 CircleMotion(NVec2 CenterPoint, float radius, float angle);
 }

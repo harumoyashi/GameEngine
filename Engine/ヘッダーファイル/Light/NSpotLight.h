@@ -11,44 +11,44 @@
 class NSpotLight final
 {
 public:
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	std::unique_ptr<NConstBuff<ConstBuffDataSpotLight>> cbSpotLight;
 
-private://Ã“Iƒƒ“ƒo•Ï”
-	NVec3 lightdir_ = { 0,-1,0 };	// ƒ‰ƒCƒg•ûŒü
-	NVec3 lightpos_ = { 0,10,0 };	// ƒ‰ƒCƒgÀ•W(ƒ[ƒ‹ƒh)
-	NVec3 lightcolor_ = NVec3::one;	// ƒ‰ƒCƒgF
-	NVec3 lightatten_ = NVec3::zero;	// ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
-	NVec2 lightFactorAngleCos_ = { 0.5f,0.2f };	// ƒ‰ƒCƒgŒ¸ŠŠp“x
+private://é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	NVec3 lightdir_ = { 0,-1,0 };	// ãƒ©ã‚¤ãƒˆæ–¹å‘
+	NVec3 lightpos_ = { 0,10,0 };	// ãƒ©ã‚¤ãƒˆåº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰)
+	NVec3 lightcolor_ = NVec3::one;	// ãƒ©ã‚¤ãƒˆè‰²
+	NVec3 lightatten_ = NVec3::zero;	// ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
+	NVec2 lightFactorAngleCos_ = { 0.5f,0.2f };	// ãƒ©ã‚¤ãƒˆæ¸›è¡°è§’åº¦
 
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool isDirty_ = false;
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool isActive_ = false;
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 	NSpotLight();
 	~NSpotLight();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	void Init();
 
 	void SetLightDir(const NVec3& lightdir);
 	const NVec3& GetLightDir()const { return lightdir_; }
-	//ƒ‰ƒCƒg‚ÌÀ•W‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightPos(const NVec3& lightpos);
 	const NVec3& GetLightPos()const { return lightpos_; }
-	//ƒ‰ƒCƒg‚ÌF‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightColor(const NVec3& lightcolor);
 	const NVec3& GetLightColor()const { return lightcolor_; }
-	//ƒ‰ƒCƒg‚ÌŒ¸ŠŒW”‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®æ¸›è¡°ä¿‚æ•°ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightAtten(const NVec3& lightatten);
 	const NVec3& GetLightAtten()const { return lightatten_; }
-	//ƒ‰ƒCƒg‚ÌŒ¸ŠŠp“x‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®æ¸›è¡°è§’åº¦ã‚’ã‚»ãƒƒãƒˆ
 	void SetLightFactorAngle(const NVec2& lightFactorAngle);
 	const NVec2& GetLightFactorAngle()const { return lightFactorAngleCos_; }
-	//—LŒøƒtƒ‰ƒO‚ğƒZƒbƒg
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’ã‚»ãƒƒãƒˆ
 	void SetActive(bool isActive) { isActive_ = isActive; }
-	//—LŒøƒtƒ‰ƒO‚ğæ“¾
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°ã‚’å–å¾—
 	bool GetActive()const { return isActive_; }
 };

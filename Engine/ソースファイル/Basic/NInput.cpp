@@ -2,7 +2,7 @@
 #include "NMathUtil.h"
 #include <cassert>
 
-//xinput.lib ‚ğƒCƒ“ƒ|[ƒg
+//xinput.lib ã‚’ã‚¤ãƒ³ãƒãƒ¼ãƒˆ
 #pragma comment (lib,"xinput.lib")
 #pragma comment(lib,"dinput8.lib")
 #pragma comment(lib,"dxguid.lib")
@@ -15,7 +15,7 @@ NInput* NInput::GetInstance()
 	return &instance;
 }
 
-//---------‚±‚Á‚©‚çƒ}ƒEƒX------------//
+//---------ã“ã£ã‹ã‚‰ãƒã‚¦ã‚¹------------//
 ComPtr<IDirectInputDevice8> NInput::sDevMouse;
 DIMOUSESTATE2 NInput::sStateMouse;
 DIMOUSESTATE2 NInput::sPrevMouse;
@@ -24,21 +24,21 @@ void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
 	HRESULT result = S_FALSE;
 
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputã®åˆæœŸåŒ–
 	result = DirectInput8Create(
 		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&sDirectInput, nullptr);
 	assert(SUCCEEDED(result));
 
-	// ƒ}ƒEƒXƒfƒoƒCƒX‚Ì¶¬
+	// ãƒã‚¦ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = sDirectInput->CreateDevice(GUID_SysMouse, &sDevMouse, NULL);
 	assert(SUCCEEDED(result));
 
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = sDevMouse->SetDataFormat(&c_dfDIMouse2); // •W€Œ`®
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = sDevMouse->SetDataFormat(&c_dfDIMouse2); // æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	// æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result =
 		sDevMouse->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
@@ -47,45 +47,45 @@ void NInput::MouseInit(const HINSTANCE& hInstance, const HWND& hwnd)
 
 void NInput::MouseUpdate()
 {
-	sDevMouse->Acquire(); // ƒ}ƒEƒX“®ìŠJn
+	sDevMouse->Acquire(); // ãƒã‚¦ã‚¹å‹•ä½œé–‹å§‹
 
-	// ‘O‰ñ‚Ì“ü—Í‚ğ•Û‘¶
+	// å‰å›ã®å…¥åŠ›ã‚’ä¿å­˜
 	sPrevMouse = sStateMouse;
 
-	// ƒ}ƒEƒX‚Ì“ü—Í
+	// ãƒã‚¦ã‚¹ã®å…¥åŠ›
 	sDevMouse->GetDeviceState(sizeof(sStateMouse), &sStateMouse);
 }
 
-// ƒ}ƒEƒX‚Ìƒ{ƒ^ƒ“‰Ÿ‰º‚ğƒ`ƒFƒbƒN
-// w’è‚µ‚½ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚é‚©ƒ`ƒFƒbƒN
+// ãƒã‚¦ã‚¹ã®ãƒœã‚¿ãƒ³æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
+// æŒ‡å®šã—ãŸãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 bool NInput::PushMouse(const MouseButton button)
 {
-	// 0‚Å‚È‚¯‚ê‚Î‰Ÿ‚µ‚Ä‚¢‚é
+	// 0ã§ãªã‘ã‚Œã°æŠ¼ã—ã¦ã„ã‚‹
 	if (sStateMouse.rgbButtons[button]) {
 		return true;
 	}
 
-	// ‰Ÿ‚µ‚Ä‚¢‚È‚¢
+	// æŠ¼ã—ã¦ã„ãªã„
 	return false;
 }
 
-// ƒ}ƒEƒX‚ÌƒgƒŠƒK[‚ğƒ`ƒFƒbƒN
-// w’è‚µ‚½ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚Ä‚é‚©ƒ`ƒFƒbƒN
+// ãƒã‚¦ã‚¹ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
+// æŒ‡å®šã—ãŸãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 bool NInput::TriggerMouse(const MouseButton button)
 {
-	// ‘O‰ñ‚ª0‚ÅA¡‰ñ‚ª0‚Å‚È‚¯‚ê‚ÎƒgƒŠƒK[
+	// å‰å›ãŒ0ã§ã€ä»Šå›ãŒ0ã§ãªã‘ã‚Œã°ãƒˆãƒªã‚¬ãƒ¼
 	if (!sPrevMouse.rgbButtons[button] && sStateMouse.rgbButtons[button]) {
 		return true;
 	}
 
-	// ƒgƒŠƒK[‚Å‚È‚¢
+	// ãƒˆãƒªã‚¬ãƒ¼ã§ãªã„
 	return false;
 }
 
 /// <summary>
-/// ƒ}ƒEƒXˆÚ“®—Ê‚ğæ“¾
+/// ãƒã‚¦ã‚¹ç§»å‹•é‡ã‚’å–å¾—
 /// </summary>
-/// <returns>ƒ}ƒEƒXˆÚ“®—Ê</returns>
+/// <returns>ãƒã‚¦ã‚¹ç§»å‹•é‡</returns>
 NVec3 NInput::GetMouseMove(bool isNowState) {
 	NVec3 tmp;
 	if (isNowState)
@@ -103,91 +103,91 @@ NVec3 NInput::GetMouseMove(bool isNowState) {
 	return tmp;
 }
 
-//ƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ğ”½‰f
+//ãƒã‚¦ã‚¹ã®ç§»å‹•é‡ã‚’åæ˜ 
 void NInput::SetMouseMove(NVec2& mouseVec)
 {
 	sStateMouse.lX = (LONG)mouseVec.x;
 	sStateMouse.lY = (LONG)mouseVec.y;
 }
 
-//ƒ}ƒEƒXƒzƒC[ƒ‹‚ÌˆÚ“®—Ê‚ğ”½‰f
+//ãƒã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç§»å‹•é‡ã‚’åæ˜ 
 void NInput::SetWheelMove(float wheelMove)
 {
 	sStateMouse.lZ = (LONG)wheelMove;
 }
 
-//---------‚±‚Á‚©‚çƒL[ƒ{[ƒh------------//
+//---------ã“ã£ã‹ã‚‰ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰------------//
 ComPtr<IDirectInputDevice8> NInput::sKeyboard;
 ComPtr<IDirectInput8> NInput::sDirectInput;
-// ‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+// å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 static BYTE keys[256] = {};
-// ‘SƒL[‚Ì1F‘O‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+// å…¨ã‚­ãƒ¼ã®1Få‰ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 static BYTE prev[256] = {};
 
 void NInput::KeyInit(const HINSTANCE& hInstance, const HWND& hwnd)
 {
 	HRESULT result;
 
-	// DirectInput‚Ì‰Šú‰»
+	// DirectInputã®åˆæœŸåŒ–
 	result = DirectInput8Create(
 		hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&sDirectInput, nullptr);
 	assert(SUCCEEDED(result));
-	// ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	// ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	result = sDirectInput->CreateDevice(GUID_SysKeyboard, &sKeyboard, NULL);
 	assert(SUCCEEDED(result));
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = sKeyboard->SetDataFormat(&c_dfDIKeyboard); // •W€Œ`®
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = sKeyboard->SetDataFormat(&c_dfDIKeyboard); // æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(result));
 
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	// æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = sKeyboard->SetCooperativeLevel(
-		//DISCL_FOREGROUNDF‰æ–Ê‚ªè‘O‚É‚ ‚éê‡‚Ì‚İ“ü—Í‚ğó‚¯•t‚¯‚é
-		//DISCL_NONEXCLUSIVEFƒfƒoƒCƒX‚ğ‚±‚ÌƒAƒvƒŠ‚¾‚¯‚Åê—L‚µ‚È‚¢
-		//DISCL_NOWINKEYFWindowsƒL[‚ğ–³Œø‚É‚·‚é
+		//DISCL_FOREGROUNDï¼šç”»é¢ãŒæ‰‹å‰ã«ã‚ã‚‹å ´åˆã®ã¿å…¥åŠ›ã‚’å—ã‘ä»˜ã‘ã‚‹
+		//DISCL_NONEXCLUSIVEï¼šãƒ‡ãƒã‚¤ã‚¹ã‚’ã“ã®ã‚¢ãƒ—ãƒªã ã‘ã§å°‚æœ‰ã—ãªã„
+		//DISCL_NOWINKEYï¼šWindowsã‚­ãƒ¼ã‚’ç„¡åŠ¹ã«ã™ã‚‹
 		hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 
 void NInput::KeyUpdate()
 {
-	//1F‘O‚ÌƒL[î•ñ‚ÉŒ»İ‚ÌƒL[î•ñ‚ğ“ü‚ê‚Ä‚©‚ç«
+	//1Få‰ã®ã‚­ãƒ¼æƒ…å ±ã«ç¾åœ¨ã®ã‚­ãƒ¼æƒ…å ±ã‚’å…¥ã‚Œã¦ã‹ã‚‰â†“
 	memcpy(prev, keys, sizeof(keys));
 
-	//Œ»İ‚ÌƒL[î•ñ‚Ìæ“¾ŠJn
+	//ç¾åœ¨ã®ã‚­ãƒ¼æƒ…å ±ã®å–å¾—é–‹å§‹
 	sKeyboard->Acquire();
 	sKeyboard->GetDeviceState(sizeof(keys), keys);
 }
 
-//‰Ÿ‚µ‚Á‚Ï‚È‚µ
+//æŠ¼ã—ã£ã±ãªã—
 bool NInput::IsKey(const uint8_t key)
 {
 	return keys[key];
 }
 
-//‰Ÿ‚µ‚½uŠÔ
+//æŠ¼ã—ãŸç¬é–“
 bool NInput::IsKeyDown(const uint8_t key)
 {
 	return keys[key] && !prev[key];
 }
 
-//—£‚µ‚½uŠÔ
+//é›¢ã—ãŸç¬é–“
 bool NInput::IsKeyRelease(const uint8_t key)
 {
 	return !keys[key] && prev[key];
 }
 
-//---------‚±‚Á‚©‚çƒpƒbƒh------------//
-//XINPUT_STATE \‘¢‘Ì‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬
+//---------ã“ã£ã‹ã‚‰ãƒ‘ãƒƒãƒ‰------------//
+//XINPUT_STATE æ§‹é€ ä½“ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆ
 XINPUT_STATE NInput::sStatePad{};
 XINPUT_STATE NInput::sPrevPad{};
-//Ú‘±‚³‚ê‚Ä‚é‚©
+//æ¥ç¶šã•ã‚Œã¦ã‚‹ã‹
 bool NInput::sIsConnect = false;
-//U“®
+//æŒ¯å‹•
 XINPUT_VIBRATION NInput::sVibration{};
-//U“®ŠÔŒˆ‚ß‚éƒ^ƒCƒ}[
+//æŒ¯å‹•æ™‚é–“æ±ºã‚ã‚‹ã‚¿ã‚¤ãƒãƒ¼
 NEasing::EaseTimer NInput::sVibTimer = 0.f;
-//U“®‚Ì‘å‚«‚³
+//æŒ¯å‹•ã®å¤§ãã•
 NVec2 NInput::sVibPower = {};
 
 void NInput::PadInit()
@@ -224,26 +224,26 @@ void NInput::PadUpdate()
 	SetDeadZone();
 }
 
-//‰Ÿ‚µ‚Á‚Ï‚È‚µ
+//æŠ¼ã—ã£ã±ãªã—
 bool NInput::IsButton(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons == button;
 }
 
-//‰Ÿ‚µ‚½uŠÔ
+//æŠ¼ã—ãŸç¬é–“
 bool NInput::IsButtonDown(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons == button && sPrevPad.Gamepad.wButtons != button;
 }
 
-//—£‚µ‚½uŠÔ
+//é›¢ã—ãŸç¬é–“
 bool NInput::IsButtonRelease(const uint32_t button)
 {
 	return sStatePad.Gamepad.wButtons != button && sPrevPad.Gamepad.wButtons == button;
 }
 
-//ƒgƒŠƒK[‚Ì‰Ÿ‚µ‚İ‹ï‡æ“¾
-//isLeft:‰E¶‚Ç‚Á‚¿I
+//ãƒˆãƒªã‚¬ãƒ¼ã®æŠ¼ã—è¾¼ã¿å…·åˆå–å¾—
+//isLeft:å³å·¦ã©ã£ã¡ï¼
 uint32_t NInput::GetTrigger(bool isLeft)
 {
 	if (isLeft)
@@ -256,7 +256,7 @@ uint32_t NInput::GetTrigger(bool isLeft)
 	}
 }
 
-//ƒfƒbƒhƒ][ƒ“‚Ìİ’è
+//ãƒ‡ãƒƒãƒ‰ã‚¾ãƒ¼ãƒ³ã®è¨­å®š
 void NInput::SetDeadZone()
 {
 	if ((sStatePad.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
@@ -278,8 +278,8 @@ void NInput::SetDeadZone()
 	}
 }
 
-//ƒXƒeƒBƒbƒN‚ÌŒX‚«‹ï‡æ“¾(0.0f~1.0f)
-//isLeft:‰E¶‚Ç‚Á‚¿I
+//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãå…·åˆå–å¾—(0.0f~1.0f)
+//isLeft:å³å·¦ã©ã£ã¡ï¼
 NVec2 NInput::GetStick(bool isLeft)
 {
 	if (isLeft)
@@ -298,10 +298,10 @@ NVec2 NInput::GetStick(bool isLeft)
 	}
 }
 
-//isVertical:‚’¼•ûŒü‚©
-//isLstick:LƒXƒeƒBƒbƒN‚©
-//ãA¶‚Í‚È‚ç-1
-//‰ºA‰E‚È‚ç+1‚ª•Ô‚Á‚Ä‚­‚é
+//isVertical:å‚ç›´æ–¹å‘ã‹
+//isLstick:Lã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‹
+//ä¸Šã€å·¦ã¯ãªã‚‰-1
+//ä¸‹ã€å³ãªã‚‰+1ãŒè¿”ã£ã¦ãã‚‹
 uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 {
 	if (isLstick)
@@ -340,17 +340,17 @@ uint32_t NInput::StickTriggered(bool isVertical, bool isLstick)
 	}
 }
 
-//ƒRƒ“ƒgƒ[ƒ‰[‚ÌU“®‚ğİ’è
-//ƒpƒ[‚Í0.0f~1.0f‚Å“ü—Í‚µ‚Ä‚Ë
+//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼ã®æŒ¯å‹•ã‚’è¨­å®š
+//ãƒ‘ãƒ¯ãƒ¼ã¯0.0f~1.0fã§å…¥åŠ›ã—ã¦ã­
 void NInput::Vibration(float leftVibrationPower, float rightVibrationPower, float timer)
 {
 	sVibTimer = timer;
-	sVibTimer.Start();	//ƒ^ƒCƒ}[ƒXƒ^[ƒg
+	sVibTimer.Start();	//ã‚¿ã‚¤ãƒãƒ¼ã‚¹ã‚¿ãƒ¼ãƒˆ
 
 	sVibPower.x = leftVibrationPower;
 	sVibPower.y = rightVibrationPower;
 
-	//‚Í‚İo‚³‚È‚¢‚æ‚¤‚É
+	//ã¯ã¿å‡ºã•ãªã„ã‚ˆã†ã«
 	sVibPower.x = MathUtil::Clamp<float>(leftVibrationPower, 0.0f, 1.0f);
 	sVibPower.y = MathUtil::Clamp<float>(rightVibrationPower, 0.0f, 1.0f);
 }
@@ -358,7 +358,7 @@ void NInput::Vibration(float leftVibrationPower, float rightVibrationPower, floa
 void NInput::VibUpdate()
 {
 	sVibTimer.Update();
-	//ƒ^ƒCƒ}[‚É‰‚¶‚ÄU“®ã‚ß‚Ä‚­
+	//ã‚¿ã‚¤ãƒãƒ¼ã«å¿œã˜ã¦æŒ¯å‹•å¼±ã‚ã¦ã
 	float vibTimer = 1.f - sVibTimer.GetTimeRate();
 	sVibration.wLeftMotorSpeed = (WORD)(sVibPower.x * 65535.0f * vibTimer);
 	sVibration.wRightMotorSpeed = (WORD)(sVibPower.y * 65535.0f * vibTimer);

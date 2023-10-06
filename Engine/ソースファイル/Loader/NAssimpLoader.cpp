@@ -5,14 +5,14 @@
 #include "NAssimpLoader.h"
 #include "NUtil.h"
 
-////ƒfƒBƒŒƒNƒgƒŠƒpƒX‚Ì‚İ‚É‚·‚é
+////ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹ã®ã¿ã«ã™ã‚‹
 //std::wstring GetDirectoryPath(const std::wstring& origin)
 //{
 //	std::filesystem::path p = origin.c_str();
 //	return p.remove_filename().c_str();
 //}
 //
-//// std::string(ƒ}ƒ‹ƒ`ƒoƒCƒg•¶š—ñ)‚©‚çstd::wstring(ƒƒCƒh•¶š—ñ)‚ğ“¾‚é
+//// std::string(ãƒãƒ«ãƒãƒã‚¤ãƒˆæ–‡å­—åˆ—)ã‹ã‚‰std::wstring(ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—)ã‚’å¾—ã‚‹
 //std::wstring ToWideString(const std::string& str)
 //{
 //	auto num1 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, nullptr, 0);
@@ -53,13 +53,13 @@
 //
 //	if (scene == nullptr)
 //	{
-//		// ‚à‚µ“Ç‚İ‚İƒGƒ‰[‚ª‚Å‚½‚ç•\¦‚·‚é
+//		// ã‚‚ã—èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼ãŒã§ãŸã‚‰è¡¨ç¤ºã™ã‚‹
 //		printf(importer.GetErrorString());
 //		printf("\n");
 //		return false;
 //	}
 //
-//	// “Ç‚İ‚ñ‚¾ƒf[ƒ^‚ğ©•ª‚Å’è‹`‚µ‚½Mesh\‘¢‘Ì‚É•ÏŠ·‚·‚é
+//	// èª­ã¿è¾¼ã‚“ã ãƒ‡ãƒ¼ã‚¿ã‚’è‡ªåˆ†ã§å®šç¾©ã—ãŸMeshæ§‹é€ ä½“ã«å¤‰æ›ã™ã‚‹
 //	meshes.clear();
 //	meshes.resize(scene->mNumMeshes);
 //	for (size_t i = 0; i < meshes.size(); ++i)
@@ -90,7 +90,7 @@
 //		auto boneIndex = (src->mBones[i]->mNumWeights);
 //		auto boneWeight = (src->mBones[i]->mWeights);
 //
-//		// ”½“]ƒIƒvƒVƒ‡ƒ“‚ª‚ ‚Á‚½‚çUV‚ğ”½“]‚³‚¹‚é
+//		// åè»¢ã‚ªãƒ—ã‚·ãƒ§ãƒ³ãŒã‚ã£ãŸã‚‰UVã‚’åè»¢ã•ã›ã‚‹
 //		if (inverseU)
 //		{
 //			uv->x = 1 - uv->x;
@@ -163,7 +163,7 @@
 //	aiString path;
 //	if (src->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
 //	{
-//		// ƒeƒNƒXƒ`ƒƒƒpƒX‚Í‘Š‘ÎƒpƒX‚Å“ü‚Á‚Ä‚¢‚é‚Ì‚ÅAƒtƒ@ƒCƒ‹‚ÌêŠ‚Æ‚­‚Á‚Â‚¯‚é
+//		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ‘ã‚¹ã¯ç›¸å¯¾ãƒ‘ã‚¹ã§å…¥ã£ã¦ã„ã‚‹ã®ã§ã€ãƒ•ã‚¡ã‚¤ãƒ«ã®å ´æ‰€ã¨ãã£ã¤ã‘ã‚‹
 //		auto dir_ = GetDirectoryPath(filename);
 //		auto file = std::string(path.C_Str());
 //		dst.textureName = dir_ + ToWideString(file);
@@ -184,23 +184,23 @@ void NAssimpLoader::ParseMesh(FbxModel* model, aiMesh* mesh)
 void NAssimpLoader::ParseVertex(FbxModel* model, aiMesh* mesh)
 {
 	std::vector<NVertexFbx>& vertex = model->mesh.vertices;
-	vertex.resize(mesh->mNumVertices);	//ƒƒbƒVƒ…‚Ì’¸“_”‚É‡‚í‚¹‚Ä—v‘fŠm•Û‚·‚é
+	vertex.resize(mesh->mNumVertices);	//ãƒ¡ãƒƒã‚·ãƒ¥ã®é ‚ç‚¹æ•°ã«åˆã‚ã›ã¦è¦ç´ ç¢ºä¿ã™ã‚‹
 
 	for (uint32_t i = 0; i < mesh->mNumVertices; i++)
 	{
-		// ’¸“_À•W
+		// é ‚ç‚¹åº§æ¨™
 		vertex[i].pos.x = mesh->mVertices[i].x;
 		vertex[i].pos.y = mesh->mVertices[i].y;
 		vertex[i].pos.z = mesh->mVertices[i].z;
 
-		// –@üƒxƒNƒgƒ‹
+		// æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 		vertex[i].normal.x = mesh->mNormals[i].x;
 		vertex[i].normal.y = mesh->mNormals[i].y;
 		vertex[i].normal.z = mesh->mNormals[i].z;
 
-		// uvÀ•W
+		// uvåº§æ¨™
 		vertex[i].uv.x = mesh->mTextureCoords[0][i].x;
-		vertex[i].uv.y = -mesh->mTextureCoords[0][i].y;	//fbx‚Ív‚ª”½“]‚µ‚Ä‚é‚Á‚Û‚¢‚©‚ç’¼‚µ‚Ä‚ ‚°‚é
+		vertex[i].uv.y = -mesh->mTextureCoords[0][i].y;	//fbxã¯vãŒåè»¢ã—ã¦ã‚‹ã£ã½ã„ã‹ã‚‰ç›´ã—ã¦ã‚ã’ã‚‹
 	}
 }
 
@@ -209,7 +209,7 @@ void NAssimpLoader::ParseFace(FbxModel* model, aiMesh* mesh)
 	std::vector<uint32_t>& indices = model->mesh.indices;
 	indices.resize(mesh->mNumFaces * 3);
 
-	// ƒtƒFƒCƒX
+	// ãƒ•ã‚§ã‚¤ã‚¹
 	for (uint32_t i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
@@ -223,56 +223,56 @@ void NAssimpLoader::ParseFace(FbxModel* model, aiMesh* mesh)
 
 void NAssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 {
-	// ƒXƒLƒjƒ“ƒOî•ñ‚ğ‚ÂƒƒbƒVƒ…‚©‚Ç‚¤‚©Šm”F
+	// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã‚’æŒã¤ãƒ¡ãƒƒã‚·ãƒ¥ã‹ã©ã†ã‹ç¢ºèª
 	if (mesh->HasBones() == true)
 	{
-		// ƒ{[ƒ“”Ô†‚ÆƒXƒLƒ“ƒEƒFƒCƒg‚ÌƒyƒA
+		// ãƒœãƒ¼ãƒ³ç•ªå·ã¨ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢
 		struct WeightSet
 		{
 			uint32_t index;
 			float weight;
 		};
 
-		// “ñŸŒ³”z—ñiƒWƒƒƒO”z—ñj list:’¸“_‚ª‰e‹¿‚ğó‚¯‚éƒ{[ƒ“‚Ì‘SƒŠƒXƒg vector:‚»‚ê‚ğ‘S’¸“_•ª
+		// äºŒæ¬¡å…ƒé…åˆ—ï¼ˆã‚¸ãƒ£ã‚°é…åˆ—ï¼‰ list:é ‚ç‚¹ãŒå½±éŸ¿ã‚’å—ã‘ã‚‹ãƒœãƒ¼ãƒ³ã®å…¨ãƒªã‚¹ãƒˆ vector:ãã‚Œã‚’å…¨é ‚ç‚¹åˆ†
 		std::vector<std::list<WeightSet>> weightLists(model->mesh.vertices.size());
 
-		// ƒ{[ƒ“‚ÌÅ‘å”İ’è
+		// ãƒœãƒ¼ãƒ³ã®æœ€å¤§æ•°è¨­å®š
 		model->bones.resize(mesh->mNumBones);
 
-		// ƒXƒLƒjƒ“ƒOî•ñ‚Ìˆ—
+		// ã‚¹ã‚­ãƒ‹ãƒ³ã‚°æƒ…å ±ã®å‡¦ç†
 		for (uint32_t i = 0; i < mesh->mNumBones; i++)
 		{
-			//ƒ{[ƒ“î•ñŠi”[
+			//ãƒœãƒ¼ãƒ³æƒ…å ±æ ¼ç´
 			aiBone* bone = mesh->mBones[i];
 
-			// ƒ{[ƒ“‚Ì–¼‘O“o˜^
+			// ãƒœãƒ¼ãƒ³ã®åå‰ç™»éŒ²
 			model->bones[i].name = bone->mName.C_Str();
 
-			// ƒ{[ƒ“‚Ì‰Šúp¨s—ñ(ƒoƒCƒ“ƒhƒ|[ƒYs—ñ)
-			NMatrix4 initalMat = AssimpMatToMat4(bone->mOffsetMatrix);	//©ì‚ÌŒ^‚É•ÏŠ·
-			model->bones[i].offsetMat = initalMat.Transpose();	//ƒoƒCƒ“ƒhƒ|[ƒYs—ñ‚Ì“]’us—ñ(‹ts—ñ‚©‚à)
+			// ãƒœãƒ¼ãƒ³ã®åˆæœŸå§¿å‹¢è¡Œåˆ—(ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºè¡Œåˆ—)
+			NMatrix4 initalMat = AssimpMatToMat4(bone->mOffsetMatrix);	//è‡ªä½œã®å‹ã«å¤‰æ›
+			model->bones[i].offsetMat = initalMat.Transpose();	//ãƒã‚¤ãƒ³ãƒ‰ãƒãƒ¼ã‚ºè¡Œåˆ—ã®è»¢ç½®è¡Œåˆ—(é€†è¡Œåˆ—ã‹ã‚‚)
 
-			// ƒEƒFƒCƒg‚Ì“Ç‚İæ‚è
+			// ã‚¦ã‚§ã‚¤ãƒˆã®èª­ã¿å–ã‚Š
 			for (uint32_t j = 0; j < bone->mNumWeights; j++)
 			{
-				// ’¸“_”Ô†
+				// é ‚ç‚¹ç•ªå·
 				uint32_t vertexIndex = bone->mWeights[j].mVertexId;
-				// ƒXƒLƒ“ƒEƒFƒCƒg
+				// ã‚¹ã‚­ãƒ³ã‚¦ã‚§ã‚¤ãƒˆ
 				float weight = bone->mWeights[j].mWeight;
-				// ‚»‚Ì’¸“_‚Ì‰e‹¿‚ğó‚¯‚éƒ{[ƒ“ƒŠƒXƒg‚ÉAƒ{[ƒ“‚ÆƒEƒFƒCƒg‚ÌƒyƒA‚ğ’Ç‰Á
+				// ãã®é ‚ç‚¹ã®å½±éŸ¿ã‚’å—ã‘ã‚‹ãƒœãƒ¼ãƒ³ãƒªã‚¹ãƒˆã«ã€ãƒœãƒ¼ãƒ³ã¨ã‚¦ã‚§ã‚¤ãƒˆã®ãƒšã‚¢ã‚’è¿½åŠ 
 				weightLists[vertexIndex].emplace_back(WeightSet{ i,weight });
 			}
 		}
 
-		// ƒEƒFƒCƒg‚Ì®— //
-		// ƒƒbƒVƒ…‚Ì’¸“_î•ñŠi”[
+		// ã‚¦ã‚§ã‚¤ãƒˆã®æ•´ç† //
+		// ãƒ¡ãƒƒã‚·ãƒ¥ã®é ‚ç‚¹æƒ…å ±æ ¼ç´
 		auto& vertices = model->mesh.vertices;
-		// Še’¸“_‚É‚Â‚¢‚Äˆ—
+		// å„é ‚ç‚¹ã«ã¤ã„ã¦å‡¦ç†
 		for (uint32_t i = 0; i < vertices.size(); i++)
 		{
-			// ’¸“_‚ÌƒEƒFƒCƒg‚©‚çÅ‚à‘å‚«‚¢4‚Â‚ğ‘I‘ğ
+			// é ‚ç‚¹ã®ã‚¦ã‚§ã‚¤ãƒˆã‹ã‚‰æœ€ã‚‚å¤§ãã„4ã¤ã‚’é¸æŠ
 			auto& weightList = weightLists[i];
-			// ‘å¬”äŠr—p‚Ìƒ‰ƒ€ƒ_®‚ğw’è‚µ‚Ä~‡‚Éƒ\[ƒg
+			// å¤§å°æ¯”è¼ƒç”¨ã®ãƒ©ãƒ ãƒ€å¼ã‚’æŒ‡å®šã—ã¦é™é †ã«ã‚½ãƒ¼ãƒˆ
 			weightList.sort(
 				[](auto const& lhs, auto const& rhs)
 				{
@@ -280,22 +280,22 @@ void NAssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 				});
 
 			uint32_t weightArrayIndex = 0;
-			// ~‡ƒ\[ƒgÏ‚İ‚ÌƒEƒFƒCƒgƒŠƒXƒg‚©‚ç
+			// é™é †ã‚½ãƒ¼ãƒˆæ¸ˆã¿ã®ã‚¦ã‚§ã‚¤ãƒˆãƒªã‚¹ãƒˆã‹ã‚‰
 			for (auto& weightSet : weightList)
 			{
-				// ’¸“_ƒf[ƒ^‚É‘‚«‚İ
+				// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«æ›¸ãè¾¼ã¿
 				vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
 				vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
-				// 4‚Â‚É’B‚µ‚½‚çI—¹
+				// 4ã¤ã«é”ã—ãŸã‚‰çµ‚äº†
 				if (++weightArrayIndex >= maxBoneIndices)
 				{
 					float weight = 0.f;
-					// 2”Ô–ÚˆÈ~‚ÌƒEƒFƒCƒg‚ğ‡Œv
+					// 2ç•ªç›®ä»¥é™ã®ã‚¦ã‚§ã‚¤ãƒˆã‚’åˆè¨ˆ
 					for (size_t j = 1; j < maxBoneIndices; j++)
 					{
 						weight += vertices[i].boneWeight[j];
 					}
-					// ‡Œv‚Å1.0f(100%)‚É‚È‚é‚æ‚¤‚É’²®
+					// åˆè¨ˆã§1.0f(100%)ã«ãªã‚‹ã‚ˆã†ã«èª¿æ•´
 					vertices[i].boneWeight[0] = 1.f - weight;
 					break;
 				}
@@ -310,14 +310,14 @@ void NAssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 	{
 		aiMaterial* material = scene->mMaterials[i];
 
-		// ƒ}ƒeƒŠƒAƒ‹–¼
+		// ãƒãƒ†ãƒªã‚¢ãƒ«å
 		aiString materialName;
 		if (material->Get(AI_MATKEY_NAME, materialName) == AI_SUCCESS)
 		{
 			model->material.name = materialName.C_Str();
 		}
 
-		// ƒAƒ“ƒrƒGƒ“ƒgƒJƒ‰[
+		// ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆã‚«ãƒ©ãƒ¼
 		aiColor3D ambientColor;
 		if (material->Get(AI_MATKEY_COLOR_AMBIENT, ambientColor) == AI_SUCCESS)
 		{
@@ -326,7 +326,7 @@ void NAssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 			model->material.ambient.z = ambientColor.b;
 		}
 
-		// ƒfƒBƒtƒ…[ƒYƒJƒ‰[
+		// ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºã‚«ãƒ©ãƒ¼
 		aiColor3D diffuseColor;
 		if (material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuseColor) == AI_SUCCESS)
 		{
@@ -335,7 +335,7 @@ void NAssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 			model->material.diffuse.z = diffuseColor.b;
 		}
 
-		// ƒeƒNƒXƒ`ƒƒ[
+		// ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¼
 		uint32_t textureCount = material->GetTextureCount(aiTextureType_DIFFUSE);
 		for (uint32_t i = 0; i < textureCount; i++)
 		{
@@ -351,7 +351,7 @@ void NAssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 				std::string fullPath = baseDirectory + model->name + "/" + name;
 				std::string textureTag = model->name + "Tex";
 
-				// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 				model->material.texture = NTextureManager::GetInstance()->LoadTexture(fullPath, textureTag);
 			}
 		}
@@ -362,22 +362,22 @@ void NAssimpLoader::ParseNodeRecursive(FbxModel* model, Node* parent, const aiNo
 {
 	aiString nodeName = node->mName;
 
-	// ƒ‚ƒfƒ‹‚Éƒm[ƒh‚ğ’Ç‰Á
+	// ãƒ¢ãƒ‡ãƒ«ã«ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ 
 	model->nodes.emplace_back();
 	Node& modelNode = model->nodes.back();
 
-	// ƒm[ƒh–¼‚ğæ“¾
+	// ãƒãƒ¼ãƒ‰åã‚’å–å¾—
 	modelNode.name = node->mName.C_Str();
 
-	// ƒ[ƒJƒ‹s—ñ
+	// ãƒ­ãƒ¼ã‚«ãƒ«è¡Œåˆ—
 	modelNode.localTransformMat = AssimpMatToMat4(node->mTransformation);
 
-	// ƒOƒ[ƒoƒ‹s—ñ
+	// ã‚°ãƒ­ãƒ¼ãƒãƒ«è¡Œåˆ—
 	modelNode.globalTransformMat = modelNode.localTransformMat;
 	if (parent)
 	{
 		modelNode.parent = parent;
-		// e‚Ìs—ñ‚ğŠ|‚¯‚Ä‚ ‚°‚é
+		// è¦ªã®è¡Œåˆ—ã‚’æ›ã‘ã¦ã‚ã’ã‚‹
 		modelNode.globalTransformMat *= parent->globalTransformMat;
 	}
 
@@ -390,7 +390,7 @@ void NAssimpLoader::ParseNodeRecursive(FbxModel* model, Node* parent, const aiNo
 		}
 	}
 
-	// Ä‹A
+	// å†å¸°
 	for (uint32_t i = 0; i < node->mNumChildren; i++)
 	{
 		ParseNodeRecursive(model, &modelNode, node->mChildren[i]);
@@ -405,19 +405,19 @@ NAssimpLoader* NAssimpLoader::GetInstance()
 
 bool NAssimpLoader::Load(const std::string& filePath, FbxModel* model)
 {
-	// ƒtƒ‰ƒO
+	// ãƒ•ãƒ©ã‚°
 	uint32_t flags = aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs;
 
-	// ƒV[ƒ“‚Ì“Ç‚İ‚İ
+	// ã‚·ãƒ¼ãƒ³ã®èª­ã¿è¾¼ã¿
 	model->scene = model->importer.ReadFile(filePath, flags);
 
 	if (model->scene == nullptr)
 	{
-		assert(0 && "ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ‚É¸”s‚µ‚Ü‚µ‚½");
+		assert(0 && "ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ");
 		return false;
 	}
 
-	// ƒ}ƒeƒŠƒAƒ‹‚Ì‰ğÍ
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ã®è§£æ
 	ParseMaterial(model, model->scene);
 
 	ParseNodeRecursive(model, nullptr, model->scene->mRootNode);
@@ -443,13 +443,13 @@ NMatrix4 NAssimpLoader::AssimpMatToMat4(const aiMatrix4x4& mat)
 std::string NAssimpLoader::ExractFileName(const std::string& path)
 {
 	size_t pos1;
-	// ‹æØ‚è•¶š '\\' ‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	// åŒºåˆ‡ã‚Šæ–‡å­— '\\' ãŒå‡ºã¦ãã‚‹ä¸€ç•ªæœ€å¾Œã®éƒ¨åˆ†ã‚’æ¤œç´¢
 	pos1 = path.rfind('\\');
 	if (pos1 != std::string::npos)
 	{
 		return path.substr(pos1 + 1, path.size() - pos1 - 1);
 	}
-	// ‹æØ‚è•¶š '/' ‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	// åŒºåˆ‡ã‚Šæ–‡å­— '/' ãŒå‡ºã¦ãã‚‹ä¸€ç•ªæœ€å¾Œã®éƒ¨åˆ†ã‚’æ¤œç´¢
 	pos1 = path.rfind('/');
 	if (pos1 != std::string::npos)
 	{

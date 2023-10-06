@@ -5,28 +5,28 @@
 
 std::string NUtil::ToUTF8(const std::wstring& value)
 {
-    auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
-    auto buffer = new char[length];
+	auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
+	auto buffer = new char[length];
 
-    WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
+	WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
 
-    std::string result(buffer);
-    delete[] buffer;
-    buffer = nullptr;
+	std::string result(buffer);
+	delete[] buffer;
+	buffer = nullptr;
 
-    return result;
+	return result;
 }
 
 std::wstring NUtil::ToWideString(const std::string& mString)
 {
-	//ƒƒCƒh•¶š—ñ‚É•ÏŠ·‚µ‚½Û‚Ì•¶š”‚ğŒvZ
+	//ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—ã«å¤‰æ›ã—ãŸéš›ã®æ–‡å­—æ•°ã‚’è¨ˆç®—
 	int buffSize = MultiByteToWideChar(CP_ACP, 0U, mString.c_str(), -1, nullptr, 0);
 
-	//ƒƒCƒh•¶š—ñ
+	//ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—
 	std::wstring wString;
 	wString.resize(buffSize);
 
-	//ƒƒCƒh•¶š—ñ‚É•ÏŠ·
+	//ãƒ¯ã‚¤ãƒ‰æ–‡å­—åˆ—ã«å¤‰æ›
 	MultiByteToWideChar(CP_ACP, 0, mString.c_str(), -1, &wString[0], buffSize);
 
 	return wString;

@@ -19,40 +19,40 @@ public:
 	static std::unique_ptr<NCircleShadow> sCircleShadows[kCircleShadowNum];
 
 private:
-	//NConstBuffData.h‚Å’è‹`‚µ‚Ä‚¢‚È‚¢‚Ì‚Í
-	//ã‹L‚Ì’è”‚ª‚È‚¢‚Æ’è‹`‚Å‚«‚È‚¢‚½‚ßA‚±‚±‚Å‚â‚Á‚Ä‚é
+	//NConstBuffData.hã§å®šç¾©ã—ã¦ã„ãªã„ã®ã¯
+	//ä¸Šè¨˜ã®å®šæ•°ãŒãªã„ã¨å®šç¾©ã§ããªã„ãŸã‚ã€ã“ã“ã§ã‚„ã£ã¦ã‚‹
 	struct ConstBuffDataLightGroup
 	{
-		NVec3 ambientcolor;	//ŠÂ‹«Œõ‚ÌF
-		float pad1;	//ƒpƒfƒBƒ“ƒO
-		ConstBuffDataLight dirLights[kDirLightNum];					//•½sŒõŒ¹—p
-		ConstBuffDataPointLight pointLights[kPointLightNum];		//“_ŒõŒ¹—p
-		ConstBuffDataSpotLight spotLights[kSpotLightNum];			//ƒXƒ|ƒbƒgƒ‰ƒCƒg—p
-		ConstBuffDataCircleShadow circleShadows[kCircleShadowNum];	//ŠÛ‰e—p
+		NVec3 ambientcolor;	//ç’°å¢ƒå…‰ã®è‰²
+		float pad1;	//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+		ConstBuffDataLight dirLights[kDirLightNum];					//å¹³è¡Œå…‰æºç”¨
+		ConstBuffDataPointLight pointLights[kPointLightNum];		//ç‚¹å…‰æºç”¨
+		ConstBuffDataSpotLight spotLights[kSpotLightNum];			//ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆç”¨
+		ConstBuffDataCircleShadow circleShadows[kCircleShadowNum];	//ä¸¸å½±ç”¨
 	};
 
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	std::unique_ptr<NConstBuff<ConstBuffDataLightGroup>> cbLight_;
 
-	NVec3 ambientcolor = NVec3::one;				//ŠÂ‹«Œõ‚ÌF
-	
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	NVec3 ambientcolor = NVec3::one;				//ç’°å¢ƒå…‰ã®è‰²
+
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool isDirty = false;
 
-public://Ã“Iƒƒ“ƒoŠÖ”
-	//‚»‚ê‚¼‚ê‚Ìƒ‰ƒCƒg‚ğg‚¤‚©Œˆ‚ß‚é
-	//‰½‚àw’è‚µ‚È‚¯‚ê‚Î•½sŒõŒ¹‚ÆŠÛ‰e‚ª—LŒø‚É‚È‚é
+public://é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
+	//ãã‚Œãã‚Œã®ãƒ©ã‚¤ãƒˆã‚’ä½¿ã†ã‹æ±ºã‚ã‚‹
+	//ä½•ã‚‚æŒ‡å®šã—ãªã‘ã‚Œã°å¹³è¡Œå…‰æºã¨ä¸¸å½±ãŒæœ‰åŠ¹ã«ãªã‚‹
 	void Init(bool isDirLights = true, bool isPointLights = false,
 		bool isSpotLights = false, bool isCircleShadows = false);
 	void Update();
-	//rootParamIndex:ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ì‰½”Ô–Ú‚©
+	//rootParamIndex:ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®ä½•ç•ªç›®ã‹
 	void Draw(const uint32_t rootParamIndex);
 
 	void TransferConstBuffer();
 
 	void SetAmbientColor(const NVec3& color);
 
-	//ƒ‰ƒCƒg‚ÌF‚ğƒZƒbƒg
+	//ãƒ©ã‚¤ãƒˆã®è‰²ã‚’ã‚»ãƒƒãƒˆ
 	void SetDirLightColor(const NVec3& lightcolor);
 	void SetPointLightColor(const NVec3& lightcolor);
 	void SetSpotLightColor(const NVec3& lightcolor);

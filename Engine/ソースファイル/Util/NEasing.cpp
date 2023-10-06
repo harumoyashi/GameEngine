@@ -210,12 +210,12 @@ void NEasing::EaseTimer::Update(const float elapseTimer)
 	if (reverse_) {
 		nowTime_ -= NDX12::GetInstance()->GetDelta() * elapseTimer;
 	}
-	// �o�ߎ��Ԃ��o�߂���������t���O��܂�
+	// 経過時間が経過しきったらフラグを折る
 	if (GetTimeRate() >= 1.0f && run_) {
 		run_ = false;
 		end_ = true;
 	}
-	//���r���[�ȂƂ���Ŏ~�܂����Ⴄ���ǁA�Ƃ肠����0.1�ȉ��ɂȂ�����~�߂�
+	//中途半端なところで止まっちゃうけど、とりあえず0.1以下になったら止める
 	if (GetTimeRate() <= 0.001f && reverse_) {
 		nowTime_ = 0.0f;
 		reverse_ = false;
@@ -256,6 +256,6 @@ void NEasing::EaseTimer::RoopReverse(const float elapseTimer)
 float NEasing::EaseTimer::GetTimeRate()
 {
 	float timeRate = 0.0f;
-	timeRate = MathUtil::Clamp(timeRate,nowTime_ / maxTime_, 1.0f);
+	timeRate = MathUtil::Clamp(timeRate, nowTime_ / maxTime_, 1.0f);
 	return timeRate;
 }

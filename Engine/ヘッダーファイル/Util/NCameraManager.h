@@ -2,99 +2,99 @@
 #include "NCamera.h"
 #include "NEasing.h"
 
-//‚±‚±‚ÉƒJƒƒ‰‚Ìí—Ş“o˜^
+//ã“ã“ã«ã‚«ãƒ¡ãƒ©ã®ç¨®é¡ç™»éŒ²
 enum class CameraType
 {
-	Normal,			//’Êí(ƒvƒŒƒC’†)
-	Debug,			//ƒfƒoƒbƒO—p
-	Title,			//ƒ^ƒCƒgƒ‹—p
-	BeforeStart,	//n‚Ü‚é‘O‚ÉƒS[ƒ‹Œ©‚¹‚é—p
-	Faild,			//¸”sƒŠƒUƒ‹ƒg—p
-	Clear,			//ƒNƒŠƒAƒŠƒUƒ‹ƒg—p
+	Normal,			//é€šå¸¸(ãƒ—ãƒ¬ã‚¤ä¸­)
+	Debug,			//ãƒ‡ãƒãƒƒã‚°ç”¨
+	Title,			//ã‚¿ã‚¤ãƒˆãƒ«ç”¨
+	BeforeStart,	//å§‹ã¾ã‚‹å‰ã«ã‚´ãƒ¼ãƒ«è¦‹ã›ã‚‹ç”¨
+	Faild,			//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆç”¨
+	Clear,			//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆç”¨
 };
 
 class NCameraManager final
 {
 private:
-	uint32_t nowCameraType_;	//Œ»İ‚ÌƒJƒƒ‰‚Ìí—Ş
-	uint32_t prevCameraType_;	//ƒfƒoƒbƒOƒJƒƒ‰‚ÉØ‚è‘Ö‚¦‚é‘O‚ÌƒJƒƒ‰‚Ìí—Ş
+	uint32_t nowCameraType_;	//ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã®ç¨®é¡
+	uint32_t prevCameraType_;	//ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©ã«åˆ‡ã‚Šæ›¿ãˆã‚‹å‰ã®ã‚«ãƒ¡ãƒ©ã®ç¨®é¡
 
-	NCamera nowCamera_;			//¡‚ÌƒJƒƒ‰î•ñŠi”[—p
+	NCamera nowCamera_;			//ä»Šã®ã‚«ãƒ¡ãƒ©æƒ…å ±æ ¼ç´ç”¨
 
-	//’Êí‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera normalCamera_;							//’Êí‚ÌƒJƒƒ‰
-	NEasing::EaseTimer normalCameraMoveEase_;		//’ÊíƒJƒƒ‰‚É‚Á‚Ä‚­‚½‚ß‚ÌƒC[ƒWƒ“ƒO
-	//ƒfƒoƒbƒO‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera debugCamera_;							//ƒfƒoƒbƒO—pƒJƒƒ‰
-	//ƒ^ƒCƒgƒ‹‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera titleCamera_;							//ƒ^ƒCƒgƒ‹‚ÌƒJƒƒ‰
-	NEasing::EaseTimer titleCameraMoveEase_;		//ƒ^ƒCƒgƒ‹ƒJƒƒ‰‚É‚Á‚Ä‚­‚½‚ß‚ÌƒC[ƒWƒ“ƒO
-	NEasing::EaseTimer cameraRotEase_;				//ƒJƒƒ‰‚ğ‰ñ“]‚³‚¹‚é—p‚Ìƒ^ƒCƒ}[
-	//n‚Ü‚é‘O‚ÉƒS[ƒ‹Œ©‚¹‚é‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera beforeStartCamera_;						//n‚Ü‚é‘O‚ÉƒS[ƒ‹Œ©‚¹‚éƒJƒƒ‰
-	NEasing::EaseTimer beforeStartCameraMoveEase_;	//n‚Ü‚é‘O‚ÉƒS[ƒ‹Œ©‚¹‚éƒJƒƒ‰‚É‚Á‚Ä‚­‚½‚ß‚ÌƒC[ƒWƒ“ƒO
-	//¸”sƒŠƒUƒ‹ƒg‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera faildCamera_;							//¸”sƒŠƒUƒ‹ƒg‚ÌƒJƒƒ‰
-	NEasing::EaseTimer faildCameraMoveEase_;		//¸”sƒŠƒUƒ‹ƒgƒJƒƒ‰‚É‚Á‚Ä‚­‚½‚ß‚ÌƒC[ƒWƒ“ƒO
-	//ƒNƒŠƒAƒŠƒUƒ‹ƒg‚ÌƒJƒƒ‰ŠÖ˜A
-	NCamera clearCamera_;							//ƒNƒŠƒAƒŠƒUƒ‹ƒg‚ÌƒJƒƒ‰
-	NEasing::EaseTimer clearCameraMoveEase_;		//ƒNƒŠƒAƒŠƒUƒ‹ƒgƒJƒƒ‰‚É‚Á‚Ä‚­‚½‚ß‚ÌƒC[ƒWƒ“ƒO
+	//é€šå¸¸æ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera normalCamera_;							//é€šå¸¸ã®ã‚«ãƒ¡ãƒ©
+	NEasing::EaseTimer normalCameraMoveEase_;		//é€šå¸¸ã‚«ãƒ¡ãƒ©ã«æŒã£ã¦ããŸã‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
+	//ãƒ‡ãƒãƒƒã‚°æ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera debugCamera_;							//ãƒ‡ãƒãƒƒã‚°ç”¨ã‚«ãƒ¡ãƒ©
+	//ã‚¿ã‚¤ãƒˆãƒ«æ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera titleCamera_;							//ã‚¿ã‚¤ãƒˆãƒ«ã®ã‚«ãƒ¡ãƒ©
+	NEasing::EaseTimer titleCameraMoveEase_;		//ã‚¿ã‚¤ãƒˆãƒ«ã‚«ãƒ¡ãƒ©ã«æŒã£ã¦ããŸã‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
+	NEasing::EaseTimer cameraRotEase_;				//ã‚«ãƒ¡ãƒ©ã‚’å›è»¢ã•ã›ã‚‹ç”¨ã®ã‚¿ã‚¤ãƒãƒ¼
+	//å§‹ã¾ã‚‹å‰ã«ã‚´ãƒ¼ãƒ«è¦‹ã›ã‚‹æ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera beforeStartCamera_;						//å§‹ã¾ã‚‹å‰ã«ã‚´ãƒ¼ãƒ«è¦‹ã›ã‚‹ã‚«ãƒ¡ãƒ©
+	NEasing::EaseTimer beforeStartCameraMoveEase_;	//å§‹ã¾ã‚‹å‰ã«ã‚´ãƒ¼ãƒ«è¦‹ã›ã‚‹ã‚«ãƒ¡ãƒ©ã«æŒã£ã¦ããŸã‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
+	//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆæ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera faildCamera_;							//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆã®ã‚«ãƒ¡ãƒ©
+	NEasing::EaseTimer faildCameraMoveEase_;		//å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆã‚«ãƒ¡ãƒ©ã«æŒã£ã¦ããŸã‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
+	//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆæ™‚ã®ã‚«ãƒ¡ãƒ©é–¢é€£
+	NCamera clearCamera_;							//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆã®ã‚«ãƒ¡ãƒ©
+	NEasing::EaseTimer clearCameraMoveEase_;		//ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆã‚«ãƒ¡ãƒ©ã«æŒã£ã¦ããŸã‚ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 
-	// p¨§ŒäŠÖ˜A
+	// å§¿å‹¢åˆ¶å¾¡é–¢é€£
 	NVec3 frontVec_;
 	NVec3 upVec_;
 	NVec3 rightVec_;
 
-	bool isChange_;				//ƒJƒƒ‰‚Ìí—ŞØ‚è‘Ö‚¦ƒtƒ‰ƒO
+	bool isChange_;				//ã‚«ãƒ¡ãƒ©ã®ç¨®é¡åˆ‡ã‚Šæ›¿ãˆãƒ•ãƒ©ã‚°
 	bool isActive_;
 
-	//‹¤’Ê‚ÌƒJƒƒ‰‚É•K—v‚Èî•ñ
-	NVec3 currentPos_;		//Œ»İ‚ÌƒJƒƒ‰À•W
-	NVec3 nextPos_;			//‚Á‚Ä‚¢‚«‚½‚¢ƒJƒƒ‰À•W
-	NVec3 currentTarget_;	//Œ»İ‚ÌƒJƒƒ‰‚Ì’‹“_À•W
-	NVec3 nextTarget_;		//‚Á‚Ä‚¢‚«‚½‚¢ƒJƒƒ‰‚Ì’‹“_À•W
-	NVec3 currentUpVec_;	//Œ»İ‚ÌƒJƒƒ‰‚Ì’‹“_À•W
-	NVec3 nextUpVec_;		//‚Á‚Ä‚¢‚«‚½‚¢ƒJƒƒ‰‚Ì’‹“_À•W
-	float currentFov_;		//Œ»İ‚ÌƒJƒƒ‰‹–ì
-	float nextFov_;			//‚Á‚Ä‚¢‚«‚½‚¢ƒJƒƒ‰‹–ì
-	float length_;			//Œ©‚é‚à‚Ì‚Æ‚Ì‹——£
+	//å…±é€šã®ã‚«ãƒ¡ãƒ©ã«å¿…è¦ãªæƒ…å ±
+	NVec3 currentPos_;		//ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©åº§æ¨™
+	NVec3 nextPos_;			//æŒã£ã¦ã„ããŸã„ã‚«ãƒ¡ãƒ©åº§æ¨™
+	NVec3 currentTarget_;	//ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åº§æ¨™
+	NVec3 nextTarget_;		//æŒã£ã¦ã„ããŸã„ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åº§æ¨™
+	NVec3 currentUpVec_;	//ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åº§æ¨™
+	NVec3 nextUpVec_;		//æŒã£ã¦ã„ããŸã„ã‚«ãƒ¡ãƒ©ã®æ³¨è¦–ç‚¹åº§æ¨™
+	float currentFov_;		//ç¾åœ¨ã®ã‚«ãƒ¡ãƒ©è¦–é‡
+	float nextFov_;			//æŒã£ã¦ã„ããŸã„ã‚«ãƒ¡ãƒ©è¦–é‡
+	float length_;			//è¦‹ã‚‹ã‚‚ã®ã¨ã®è·é›¢
 
 private:
-	//ƒJƒƒ‰ŒÅ—L‚Ì‰Šú‰»AXVˆ—
-	// ’Êí
+	//ã‚«ãƒ¡ãƒ©å›ºæœ‰ã®åˆæœŸåŒ–ã€æ›´æ–°å‡¦ç†
+	// é€šå¸¸æ™‚
 	void NormalCameraInit();
 	void NormalCameraUpdate();
-	// ƒfƒoƒbƒOƒJƒƒ‰
+	// ãƒ‡ãƒãƒƒã‚°ã‚«ãƒ¡ãƒ©æ™‚
 	void DebugCameraUpdate();
-	// ƒ^ƒCƒgƒ‹
+	// ã‚¿ã‚¤ãƒˆãƒ«æ™‚
 	void TitleCameraInit();
 	void TitleCameraUpdate();
-	// n‚Ü‚é‘O‚ÉƒS[ƒ‹Œ©‚¹‚é
+	// å§‹ã¾ã‚‹å‰ã«ã‚´ãƒ¼ãƒ«è¦‹ã›ã‚‹æ™‚
 	void BeforeStartCameraInit();
 	void BeforeStartCameraUpdate();
-	// ¸”sƒŠƒUƒ‹ƒg
+	// å¤±æ•—ãƒªã‚¶ãƒ«ãƒˆæ™‚
 	void FaildCameraInit();
 	void FaildCameraUpdate();
-	// ƒNƒŠƒAƒŠƒUƒ‹ƒg
+	// ã‚¯ãƒªã‚¢ãƒªã‚¶ãƒ«ãƒˆæ™‚
 	void ClearCameraInit();
 	void ClearCameraUpdate();
 
-	//Vec3‚ÌƒC[ƒWƒ“ƒO—p
-	NVec3 InQuad(const NVec3& start,const NVec3& end,float timerate);
-	NVec3 OutQuad(const NVec3& start,const NVec3& end,float timerate);
+	//Vec3ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨
+	NVec3 InQuad(const NVec3& start, const NVec3& end, float timerate);
+	NVec3 OutQuad(const NVec3& start, const NVec3& end, float timerate);
 
 public:
-	//ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	static NCameraManager* GetInstance();
 
 	void Init();
 	void Update();
 
-	//w’è‚µ‚½ƒJƒƒ‰‚É•ÏX
+	//æŒ‡å®šã—ãŸã‚«ãƒ¡ãƒ©ã«å¤‰æ›´
 	void ChangeCameara(const CameraType cameraType);
 
 	bool GetIsActive() { return isActive_; }
-	//’ÊíƒJƒƒ‰‚Ö‚Ì‘JˆÚ‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©æ“¾
+	//é€šå¸¸ã‚«ãƒ¡ãƒ©ã¸ã®é·ç§»ãŒå®Œäº†ã—ãŸã‹ã©ã†ã‹å–å¾—
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
 
 	void SetDebugCamera(NCamera& camera);

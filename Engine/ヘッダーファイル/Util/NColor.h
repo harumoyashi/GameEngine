@@ -9,16 +9,16 @@ struct NColor
 	NColor(const float r, const float g, const float b) : r(r), g(g), b(b), a(1.0f) {}
 	NColor(const float r, const float g, const float b, const float a) : r(r), g(g), b(b), a(a) {}
 
-	//Fî•ñ•ÏX(uint32_tŒ^0~255)
+	//è‰²æƒ…å ±å¤‰æ›´(uint32_tå‹0~255)
 	void SetColor255(const uint32_t R = 255, const uint32_t G = 255, const uint32_t B = 255, const uint32_t A = 255);
 	void SetColor(const float R = 1.0f, const float G = 1.0f, const float B = 1.0f, const float A = 1.0f);
 	void SetColor(const NColor& col);
-	//0.0f~1.0f‚É’¼‚·
+	//0.0f~1.0fã«ç›´ã™
 	void Convert01();
-	//0.0f~255.0f‚É’¼‚·
+	//0.0f~255.0fã«ç›´ã™
 	void Convert255();
 
-	//’è”‚É‚Íukv‚ğ‚Â‚¯‚é(ƒhƒCƒcŒê‚Ìkonstant—R—ˆ)
+	//å®šæ•°ã«ã¯ã€Œkã€ã‚’ã¤ã‘ã‚‹(ãƒ‰ã‚¤ãƒ„èªã®konstantç”±æ¥)
 	const static NColor kRed;
 	const static NColor kGreen;
 	const static NColor kBlue;
@@ -31,7 +31,7 @@ struct NColor
 
 	NColor& operator++();
 
-	//’P€‰‰Zq
+	//å˜é …æ¼”ç®—å­
 	NColor operator+(const float num) const;
 	NColor operator-(const float num) const;
 	NColor operator*(const float num) const;
