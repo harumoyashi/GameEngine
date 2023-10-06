@@ -62,25 +62,25 @@ void NGameScene::Init()
 
 	Score::Init();
 #pragma region 各スプライトの設定
-	UI::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
-	UI::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
-	UI::GetInstance()->SetSize(UIType::Lstick, { 100.0f,100.0f });
-	UI::GetInstance()->SetPos(UIType::Lstick, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
+	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
+	UIManager::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
+	UIManager::GetInstance()->SetSize(UIType::Lstick, { 100.0f,100.0f });
+	UIManager::GetInstance()->SetPos(UIType::Lstick, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
 
 
-	UI::GetInstance()->SetPos(UIType::Abutton,
+	UIManager::GetInstance()->SetPos(UIType::Abutton,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
-	UI::GetInstance()->SetPos(UIType::AbuttonPush,
+	UIManager::GetInstance()->SetPos(UIType::AbuttonPush,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f });
 
 	//Aボタンはプレイ中使わないから見せない
-	UI::GetInstance()->SetInvisible(UIType::Abutton, true);
-	UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+	UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+	UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
-	UI::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
-	UI::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
-	UI::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
-	UI::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
+	UIManager::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
+	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
+	UIManager::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
+	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
 #pragma endregion
 #pragma endregion
 	// ライト生成
@@ -148,7 +148,7 @@ void NGameScene::Update()
 			slideTimer_.Update();
 
 			slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer_.GetTimeRate());
-			UI::GetInstance()->SetPos(UIType::Shaft,
+			UIManager::GetInstance()->SetPos(UIType::Shaft,
 				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f });
 		}
 
@@ -156,7 +156,7 @@ void NGameScene::Update()
 		NVec2 stickVec = { sinf(stickRotTimer_.GetTimeRate() * PI2),cosf(stickRotTimer_.GetTimeRate() * PI2) };
 		stickVec *= 10.f;
 		//Yはスティックだと上が正の値なので引く
-		UI::GetInstance()->SetPos(UIType::Lstick,
+		UIManager::GetInstance()->SetPos(UIType::Lstick,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
 
 		if (Field::GetInstance()->GetIsStart())
@@ -214,7 +214,7 @@ void NGameScene::Update()
 		slideTimer_.Update();
 		//クリアテキストスライド
 		slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		UI::GetInstance()->SetPos(UIType::Clear,
+		UIManager::GetInstance()->SetPos(UIType::Clear,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
 		//リザルトスコアが上から落ちてくる
@@ -230,13 +230,13 @@ void NGameScene::Update()
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
-			UI::GetInstance()->SetInvisible(UIType::Abutton, true);
-			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
+			UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 		}
 		else
 		{
-			UI::GetInstance()->SetInvisible(UIType::Abutton, false);
-			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+			UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
+			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
 		//シーン切り替え
@@ -257,7 +257,7 @@ void NGameScene::Update()
 		slideTimer_.Update();
 		//失敗テキストスライド
 		slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		UI::GetInstance()->SetPos(UIType::Faild,
+		UIManager::GetInstance()->SetPos(UIType::Faild,
 			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
 		//リザルトスコアが上から落ちてくる
@@ -273,13 +273,13 @@ void NGameScene::Update()
 		flashingTimer_.Roop();
 		if (flashingTimer_.GetTimeRate() > 0.7f)
 		{
-			UI::GetInstance()->SetInvisible(UIType::Abutton, true);
-			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
+			UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 		}
 		else
 		{
-			UI::GetInstance()->SetInvisible(UIType::Abutton, false);
-			UI::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+			UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
+			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 		}
 
 		//シーン切り替え
@@ -347,15 +347,13 @@ void NGameScene::DrawForeSprite()
 {
 	Wave::GetInstance()->DrawSprite();
 
-	UI::GetInstance()->Draw(UIType::Abutton);
-	UI::GetInstance()->Draw(UIType::AbuttonPush);
-	UI::GetInstance()->Draw(UIType::Clear);
-	UI::GetInstance()->Draw(UIType::Faild);
-	UI::GetInstance()->Draw(UIType::Shaft);
-	UI::GetInstance()->Draw(UIType::Lstick);
-	UI::GetInstance()->Draw(UIType::Line);
-	UI::GetInstance()->Draw(UIType::Side);
-	UI::GetInstance()->Draw(UIType::Wide);
+	UIManager::GetInstance()->Draw(UIType::Abutton);
+	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
+	UIManager::GetInstance()->Draw(UIType::Clear);
+	UIManager::GetInstance()->Draw(UIType::Faild);
+	UIManager::GetInstance()->Draw(UIType::Shaft);
+	UIManager::GetInstance()->Draw(UIType::Lstick);
+	UIManager::GetInstance()->DrawUIBul();
 
 	Score::Draw();
 }

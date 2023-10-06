@@ -33,14 +33,14 @@ void NSceneManager::Init()
 	NAudio::GetInstance()->Init();
 	currentScene_->Init();
 	NSceneChange::GetInstance()->Init();
-	UI::GetInstance()->Init();
+	UIManager::GetInstance()->Init();
 }
 
 void NSceneManager::Update()
 {
 	currentScene_->Update();
 	NSceneChange::GetInstance()->Update();
-	UI::GetInstance()->Update();
+	UIManager::GetInstance()->Update();
 	NAudioManager::GetInstance()->ImGuiDraw();
 }
 

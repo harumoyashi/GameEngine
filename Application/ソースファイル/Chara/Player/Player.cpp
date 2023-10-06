@@ -337,21 +337,21 @@ void Player::LevelUp(BulletType bulletType)
 		if (lineLevel_ < maxBulLevel_)
 		{
 			lineLevel_ += 1;
-			UI::GetInstance()->StartEaseTimer(UIType::Line);
+			UIManager::GetInstance()->PlusUIBul("lineUI");
 		}
 		break;
 	case BulletType::SideBullet:
 		if (sideLevel_ < maxBulLevel_)
 		{
 			sideLevel_ += 1;
-			UI::GetInstance()->StartEaseTimer(UIType::Side);
+			UIManager::GetInstance()->PlusUIBul("sideUI");
 		}
 		break;
 	case BulletType::WideBullet:
 		if (wideLevel_ < maxBulLevel_)
 		{
 			wideLevel_ += 1;
-			UI::GetInstance()->StartEaseTimer(UIType::Wide);
+			UIManager::GetInstance()->PlusUIBul("wideUI");
 		}
 		break;
 		/*case BulletType::Roket:

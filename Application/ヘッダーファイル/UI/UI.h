@@ -10,35 +10,48 @@ enum class UIType
 	AbuttonPush,//Aボタン押されたやつ
 	Lstick,		//Lスティック
 	Shaft,		//スティックの軸
-	Line,		//ライン弾取った時UI
-	Side,		//サイド弾取った時UI
-	Wide,		//ワイド弾取った時UI
 	Clear,		//クリア
 	Faild,		//失敗
 
 	Max			//最大数(for文とか回す用)
 };
 
-class UI
+struct UI
+{
+	NSprite sprite;						//UI描画用スプライト群
+	NEasing::EaseTimer easeTimer;		//UI用イージングタイマー群
+	NEasing::EaseTimer keepTimer;		//UI用待機タイマー群
+	NEasing::EaseTimer easeBackTimer;	//UI用イージングバックタイマー群
+	NVec2 startPos;						//始点座標
+	NVec2 endPos;						//終点座標
+	bool isActive;						//有効フラグ
+};
+
+class UIManager
 {
 private:
-	std::vector<NSprite> uiSprite_{ ((uint32_t)UIType::Max) };		//UI描画用スプライト群
-	std::vector<NEasing::EaseTimer> easeTimer_;						//UI用イージングタイマー群
-	std::vector<NEasing::EaseTimer> keepTimer_;						//UI用待機タイマー群
-	std::vector<NEasing::EaseTimer> easeBackTimer_;					//UI用イージングバックタイマー群
+	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };	//UI群
+	const uint32_t maxUIBul = 3;
+	std::vector<UI> uiBul_{ (maxUIBul) };	//弾取った時のUI群
 
 public:
-	UI();
-	static UI* GetInstance();
+	UIManager();
+	static UIManager* GetInstance();
 
 	void Init();
 	void Update();
+	void EaseTimerUpdate();
+
+	//弾取った時UI追加
+	void PlusUIBul(const std::string& texName);
 
 	//指定されたUIを描画
 	void Draw(UIType uiType);
+	//弾とった時のUI描画
+	void DrawUIBul();
 
 	//指定されたUIのタイマースタート
-	void StartEaseTimer(UIType uiType) { easeTimer_[(uint32_t)uiType].Start(); }
+	void StartEaseTimer(UIType uiType) { ui_[(uint32_t)uiType].easeTimer.Start(); }
 
 	//指定されたUIの描画座標設定
 	void SetPos(UIType uiType, const NVec2& pos);
@@ -50,4 +63,8 @@ public:
 	void SetColor(UIType uiType, const NColor& color);
 	//指定されたUIの非表示フラグ設定
 	void SetInvisible(UIType uiType, bool isInvisible);
+	//指定されたUIのテクスチャ設定
+	void SetTexture(UIType uiType, const std::string& texName);
+	//指定されたUIの有効フラグ設定
+	void SetIsActive(UIType uiType, bool isActive);
 };

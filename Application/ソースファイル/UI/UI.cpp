@@ -1,132 +1,203 @@
 #include "UI.h"
 
-UI::UI()
+UIManager::UIManager()
 {
 }
 
-UI* UI::GetInstance()
+UIManager* UIManager::GetInstance()
 {
-	static UI instance;
+	static UIManager instance;
 	return &instance;
 }
 
-void UI::Init()
+void UIManager::Init()
 {
 	//読み込み～
-	uiSprite_[(uint32_t)UIType::Abutton].CreateClipSprite("Abutton", { 0.f,0 }, { 192.f,192.f });
-	uiSprite_[(uint32_t)UIType::AbuttonPush].CreateClipSprite("Abutton", { 192.f,0 }, { 192.f,192.f });
-	uiSprite_[(uint32_t)UIType::Lstick].CreateSprite("stick");
-	uiSprite_[(uint32_t)UIType::Shaft].CreateSprite("shaft");
-	uiSprite_[(uint32_t)UIType::Line].CreateSprite("lineUI");
-	uiSprite_[(uint32_t)UIType::Side].CreateSprite("sideUI");
-	uiSprite_[(uint32_t)UIType::Wide].CreateSprite("wideUI");
-	uiSprite_[(uint32_t)UIType::Clear].CreateSprite("clear");
-	uiSprite_[(uint32_t)UIType::Faild].CreateSprite("faild");
+	ui_[(uint32_t)UIType::Abutton].sprite.CreateClipSprite("Abutton", { 0.f,0 }, { 192.f,192.f });
+	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0 }, { 192.f,192.f });
+	ui_[(uint32_t)UIType::Lstick].sprite.CreateSprite("stick");
+	ui_[(uint32_t)UIType::Shaft].sprite.CreateSprite("shaft");
+	ui_[(uint32_t)UIType::Clear].sprite.CreateSprite("clear");
+	ui_[(uint32_t)UIType::Faild].sprite.CreateSprite("faild");
+	for (uint32_t i = 0; i < maxUIBul; i++)
+	{
+		uiBul_[i].sprite.CreateSprite();
+	}
 
 	//こっち側で初期値設定するやつ
-	uiSprite_[(uint32_t)UIType::Line].SetSize(250.f, 25.f);	//比率10:1
-	uiSprite_[(uint32_t)UIType::Side].SetSize(250.f, 25.f);
-	uiSprite_[(uint32_t)UIType::Wide].SetSize(250.f, 25.f);
-
-	uiSprite_[(uint32_t)UIType::Line].SetPos(-150.f, 150.f);
-	uiSprite_[(uint32_t)UIType::Side].SetPos(-150.f, 150.f);
-	uiSprite_[(uint32_t)UIType::Wide].SetPos(-150.f, 150.f);
-
-	//要素確保
-	for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
+	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		easeTimer_.emplace_back();
-		keepTimer_.emplace_back();
-		easeBackTimer_.emplace_back();
+		uiBul_[i].sprite.SetSize(250.f, 25.f);	//比率10:1
+		uiBul_[i].sprite.SetPos(-150.f, 150.f);
+		uiBul_[i].easeTimer = 0.2f;
+		uiBul_[i].keepTimer = 2.f;
+		uiBul_[i].easeBackTimer = 0.2f;
+		uiBul_[i].startPos = { -150.f,150.f + 30.f * i };
+		uiBul_[i].endPos = { 180.f,150.f + 30.f * i };
 	}
-
-	//タイマー初期化
-	easeTimer_[(uint32_t)UIType::Line] = 0.2f;
-	easeTimer_[(uint32_t)UIType::Side] = 0.2f;
-	easeTimer_[(uint32_t)UIType::Wide] = 0.2f;
-
-	keepTimer_[(uint32_t)UIType::Line] = 2.f;
-	keepTimer_[(uint32_t)UIType::Side] = 2.f;
-	keepTimer_[(uint32_t)UIType::Wide] = 2.f;
-
-	easeBackTimer_[(uint32_t)UIType::Line] = 0.2f;
-	easeBackTimer_[(uint32_t)UIType::Side] = 0.2f;
-	easeBackTimer_[(uint32_t)UIType::Wide] = 0.2f;
 }
 
-void UI::Update()
+void UIManager::Update()
 {
 	for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
 	{
-		uiSprite_[i].Update();
+		ui_[i].sprite.Update();
+	}
+	for (uint32_t i = 0; i < maxUIBul; i++)
+	{
+		uiBul_[i].sprite.Update();
+	}
 
-		if (easeTimer_[i].GetStarted() && easeTimer_[i].GetEnd() == false)
+	EaseTimerUpdate();
+}
+
+void UIManager::EaseTimerUpdate()
+{
+	for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
+	{
+		if (ui_[i].easeTimer.GetStarted() && ui_[i].easeTimer.GetEnd() == false)
 		{
-			easeTimer_[i].Update();
+			ui_[i].easeTimer.Update();
 
-			float posX = NEasing::OutQuad(-150.f, 180.f, easeTimer_[i].GetTimeRate());
-			uiSprite_[i].SetPos(posX, 150.f);
+			float posX = NEasing::OutQuad(ui_[i].startPos.x, ui_[i].endPos.x, ui_[i].easeTimer.GetTimeRate());
+			float posY = NEasing::OutQuad(ui_[i].startPos.y, ui_[i].endPos.y, ui_[i].easeTimer.GetTimeRate());
+			ui_[i].sprite.SetPos(posX, posY);
 
-			if (easeTimer_[i].GetEnd())
+			if (ui_[i].easeTimer.GetEnd())
 			{
-				keepTimer_[i].Start();
+				ui_[i].keepTimer.Start();
 			}
 		}
 
-		if (keepTimer_[i].GetStarted() && keepTimer_[i].GetEnd() == false)
+		if (ui_[i].keepTimer.GetStarted() && ui_[i].keepTimer.GetEnd() == false)
 		{
-			keepTimer_[i].Update();
+			ui_[i].keepTimer.Update();
 
-			if (keepTimer_[i].GetEnd())
+			if (ui_[i].keepTimer.GetEnd())
 			{
-				easeBackTimer_[i].Start();
+				ui_[i].easeBackTimer.Start();
 			}
 		}
 
-		if (easeBackTimer_[i].GetStarted() && easeBackTimer_[i].GetEnd() == false)
+		if (ui_[i].easeBackTimer.GetStarted() && ui_[i].easeBackTimer.GetEnd() == false)
 		{
-			easeBackTimer_[i].Update();
+			ui_[i].easeBackTimer.Update();
 
-			float posX = NEasing::InQuad(180.f, -150.f, easeBackTimer_[i].GetTimeRate());
-			uiSprite_[i].SetPos(posX, 150.f);
+			float posX = NEasing::OutQuad(ui_[i].endPos.x, ui_[i].startPos.x, ui_[i].easeBackTimer.GetTimeRate());
+			float posY = NEasing::OutQuad(ui_[i].endPos.y, ui_[i].startPos.y, ui_[i].easeBackTimer.GetTimeRate());
+			ui_[i].sprite.SetPos(posX, posY);
 
-			if (easeBackTimer_[i].GetEnd())
+			if (ui_[i].easeBackTimer.GetEnd())
 			{
-				easeTimer_[i].Reset();
-				keepTimer_[i].Reset();
-				easeBackTimer_[i].Reset();
+				ui_[i].easeTimer.Reset();
+				ui_[i].keepTimer.Reset();
+				ui_[i].easeBackTimer.Reset();
+			}
+		}
+	}
+
+	for (uint32_t i = 0; i < maxUIBul; i++)
+	{
+		if (uiBul_[i].easeTimer.GetStarted() && uiBul_[i].easeTimer.GetEnd() == false)
+		{
+			uiBul_[i].easeTimer.Update();
+
+			float posX = NEasing::OutQuad(uiBul_[i].startPos.x, uiBul_[i].endPos.x, uiBul_[i].easeTimer.GetTimeRate());
+			float posY = NEasing::OutQuad(uiBul_[i].startPos.y, uiBul_[i].endPos.y, uiBul_[i].easeTimer.GetTimeRate());
+			uiBul_[i].sprite.SetPos(posX, posY);
+
+			if (uiBul_[i].easeTimer.GetEnd())
+			{
+				uiBul_[i].keepTimer.Start();
+			}
+		}
+
+		if (uiBul_[i].keepTimer.GetStarted() && uiBul_[i].keepTimer.GetEnd() == false)
+		{
+			uiBul_[i].keepTimer.Update();
+
+			if (uiBul_[i].keepTimer.GetEnd())
+			{
+				uiBul_[i].easeBackTimer.Start();
+			}
+		}
+
+		if (uiBul_[i].easeBackTimer.GetStarted() && uiBul_[i].easeBackTimer.GetEnd() == false)
+		{
+			uiBul_[i].easeBackTimer.Update();
+
+			float posX = NEasing::OutQuad(uiBul_[i].endPos.x, uiBul_[i].startPos.x, uiBul_[i].easeBackTimer.GetTimeRate());
+			float posY = NEasing::OutQuad(uiBul_[i].endPos.y, uiBul_[i].startPos.y, uiBul_[i].easeBackTimer.GetTimeRate());
+			uiBul_[i].sprite.SetPos(posX, posY);
+
+			if (uiBul_[i].easeBackTimer.GetEnd())
+			{
+				uiBul_[i].easeTimer.Reset();
+				uiBul_[i].keepTimer.Reset();
+				uiBul_[i].easeBackTimer.Reset();
+				uiBul_[i].isActive = false;
 			}
 		}
 	}
 }
 
-void UI::Draw(UIType uiType)
+void UIManager::PlusUIBul(const std::string& texName)
+{
+	for (uint32_t i = 0; i < maxUIBul; i++)
+	{
+		if (uiBul_[i].isActive == false)
+		{
+			uiBul_[i].sprite.texHandle_ =
+				NTextureManager::GetInstance()->textureMap_[texName].fileName_;
+			uiBul_[i].isActive = true;
+			uiBul_[i].easeTimer.Start();
+
+			break;
+		}
+	}
+}
+
+void UIManager::Draw(UIType uiType)
 {
 	//指定されたUIを描画
-	uiSprite_[(uint32_t)uiType].Draw();
+	ui_[(uint32_t)uiType].sprite.Draw();
 }
 
-void UI::SetPos(UIType uiType, const NVec2& pos)
+void UIManager::DrawUIBul()
 {
-	uiSprite_[(uint32_t)uiType].SetPos(pos.x, pos.y);
+	for (uint32_t i = 0; i < maxUIBul; i++)
+	{
+		uiBul_[i].sprite.Draw();
+	}
 }
 
-void UI::SetSize(UIType uiType, const NVec2& size)
+void UIManager::SetPos(UIType uiType, const NVec2& pos)
 {
-	uiSprite_[(uint32_t)uiType].SetSize(size.x, size.y);
+	ui_[(uint32_t)uiType].sprite.SetPos(pos.x, pos.y);
 }
 
-void UI::SetAncorPoint(UIType uiType, const NVec2& ancorPoint)
+void UIManager::SetSize(UIType uiType, const NVec2& size)
 {
-	uiSprite_[(uint32_t)uiType].SetAncor(ancorPoint);
+	ui_[(uint32_t)uiType].sprite.SetSize(size.x, size.y);
 }
 
-void UI::SetColor(UIType uiType, const NColor& color)
+void UIManager::SetAncorPoint(UIType uiType, const NVec2& ancorPoint)
 {
-	uiSprite_[(uint32_t)uiType].color_ = color;
+	ui_[(uint32_t)uiType].sprite.SetAncor(ancorPoint);
 }
 
-void UI::SetInvisible(UIType uiType, bool isInvisible)
+void UIManager::SetColor(UIType uiType, const NColor& color)
 {
-	uiSprite_[(uint32_t)uiType].isInvisible_ = isInvisible;
+	ui_[(uint32_t)uiType].sprite.color_ = color;
+}
+
+void UIManager::SetInvisible(UIType uiType, bool isInvisible)
+{
+	ui_[(uint32_t)uiType].sprite.isInvisible_ = isInvisible;
+}
+
+void UIManager::SetTexture(UIType uiType, const std::string& texName)
+{
+	ui_[(uint32_t)uiType].sprite.texHandle_ =
+		NTextureManager::GetInstance()->textureMap_[texName].fileName_;
 }
