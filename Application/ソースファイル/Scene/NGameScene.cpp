@@ -112,192 +112,205 @@ void NGameScene::Update()
 	backSprite_->Update();
 	Score::Update();
 #pragma endregion
-	BulletManager::GetInstance()->Update();
-	EnemyManager::GetInstance()->Update();
-	ItemManager::GetInstance()->Update();
-	Field::GetInstance()->Update();
-	Wave::GetInstance()->Update();
-
-	NParticleManager::GetInstance()->Update();
-
-	//ライトたちの更新
-	lightGroup_->Update();
-
-	//ここはゲーム始まる前のシーン
-	if (scene == SceneMode::BeforeStart)	//始まる前の処理
+	if (scene == SceneMode::Pause)	//始まる前の処理
 	{
-		beforeStartTimer_.Update();
-		//演出終わったらプレイシーンに移行
-		if (beforeStartTimer_.GetEnd())
+		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
-			NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
-			scene = SceneMode::Play;
+			scene = SceneMode::Play;	//ポーズ画面に切り替え
 		}
 	}
-	else if (scene == SceneMode::Play)	//プレイ中の処理
+	else	//ポーズ画面以外の処理
 	{
-		Player::GetInstance()->Update();
-
-		if (Field::GetInstance()->GetIsStart())
+		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
+			scene = SceneMode::Pause;	//ポーズ画面に切り替え
+		}
+
+		BulletManager::GetInstance()->Update();
+		EnemyManager::GetInstance()->Update();
+		ItemManager::GetInstance()->Update();
+		Field::GetInstance()->Update();
+		Wave::GetInstance()->Update();
+
+		NParticleManager::GetInstance()->Update();
+
+		//ライトたちの更新
+		lightGroup_->Update();
+
+		if (scene == SceneMode::BeforeStart)	//始まる前の処理
+		{
+			beforeStartTimer_.Update();
+			//演出終わったらプレイシーンに移行
+			if (beforeStartTimer_.GetEnd())
+			{
+				NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+				scene = SceneMode::Play;
+			}
+		}
+		else if (scene == SceneMode::Play)	//プレイ中の処理
+		{
+			Player::GetInstance()->Update();
+
+			if (Field::GetInstance()->GetIsStart())
+			{
+				//スタート線スライドタイマー開始
+				if (slideTimer_.GetStarted() == false)
+				{
+					slideTimer_.Start();
+				}
+				slideTimer_.Update();
+
+				slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer_.GetTimeRate());
+				UIManager::GetInstance()->SetPos(UIType::Shaft,
+					{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f });
+			}
+
+			stickRotTimer_.Roop();
+			NVec2 stickVec = { sinf(stickRotTimer_.GetTimeRate() * PI2),cosf(stickRotTimer_.GetTimeRate() * PI2) };
+			stickVec *= 10.f;
+			//Yはスティックだと上が正の値なので引く
+			UIManager::GetInstance()->SetPos(UIType::Lstick,
+				{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
+
+			if (Field::GetInstance()->GetIsStart())
+			{
+				//プレイヤーが波に飲み込まれたら殺す
+				if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+				{
+					if (Player::GetInstance()->GetIsAlive())	//生きてるなら殺す
+					{
+						Player::GetInstance()->SetIsAlive(false);
+					}
+				}
+			}
+
+			//プレイヤーが死んで、死亡演出が終わったら失敗リザルトへ
+			if (Player::GetInstance()->GetIsAlive() == false &&
+				Player::GetInstance()->GetDeadEffectEnd())
+			{
+				NAudioManager::GetInstance()->Destroy("playBGM");
+				NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
+				scene = SceneMode::Faild;
+				slideTimer_.Reset();
+				slideTimer_ = 0.5f;
+				Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
+				Player::GetInstance()->SetIsElapseAnime(false);
+				Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
+				NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
+			}
+
+			//ゴールしたらクリアリザルトへ
+			if (Field::GetInstance()->GetIsGoal())
+			{
+				NAudioManager::GetInstance()->Destroy("playBGM");
+				NAudioManager::GetInstance()->Play("clearBGM", true, 0.2f);
+				scene = SceneMode::Clear;
+				slideTimer_.Reset();
+				slideTimer_ = 0.5f;
+				Player::GetInstance()->SetIsElapseAnime(false);
+				Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
+				NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
+			}
+
+			//当たり判定総当たり
+			NCollisionManager::GetInstance()->CheckAllCollision();
+		}
+		else if (scene == SceneMode::Clear)	//クリアリザルトの処理
+		{
+			Player::GetInstance()->ClearUpdate();
+
 			//スタート線スライドタイマー開始
 			if (slideTimer_.GetStarted() == false)
 			{
 				slideTimer_.Start();
 			}
 			slideTimer_.Update();
+			//クリアテキストスライド
+			slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
+			UIManager::GetInstance()->SetPos(UIType::Clear,
+				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
-			slidePos_ = NEasing::InQuad(0.0f, -(float)NWindows::GetInstance()->kWin_width, slideTimer_.GetTimeRate());
-			UIManager::GetInstance()->SetPos(UIType::Shaft,
-				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 500.0f });
-		}
+			//リザルトスコアが上から落ちてくる
+			float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
+			Score::SetPos(
+				{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
+				Score::TexType::Result);
+			Score::SetPos(
+				{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
+				Score::TexType::Top);
 
-		stickRotTimer_.Roop();
-		NVec2 stickVec = { sinf(stickRotTimer_.GetTimeRate() * PI2),cosf(stickRotTimer_.GetTimeRate() * PI2) };
-		stickVec *= 10.f;
-		//Yはスティックだと上が正の値なので引く
-		UIManager::GetInstance()->SetPos(UIType::Lstick,
-			{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
-
-		if (Field::GetInstance()->GetIsStart())
-		{
-			//プレイヤーが波に飲み込まれたら殺す
-			if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
+			//Aボタン点滅
+			flashingTimer_.Roop();
+			if (flashingTimer_.GetTimeRate() > 0.7f)
 			{
-				if (Player::GetInstance()->GetIsAlive())	//生きてるなら殺す
-				{
-					Player::GetInstance()->SetIsAlive(false);
-				}
+				UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+				UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
+			}
+			else
+			{
+				UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
+				UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+			}
+
+			//シーン切り替え
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+				NSceneChange::GetInstance()->Start();	//シーン遷移開始
+			}
+		}
+		else if (scene == SceneMode::Faild)	//失敗リザルトの処理
+		{
+			Player::GetInstance()->FaildUpdate();
+
+			//スタート線スライドタイマー開始
+			if (slideTimer_.GetStarted() == false)
+			{
+				slideTimer_.Start();
+			}
+			slideTimer_.Update();
+			//失敗テキストスライド
+			slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
+			UIManager::GetInstance()->SetPos(UIType::Faild,
+				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
+
+			//リザルトスコアが上から落ちてくる
+			float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
+			Score::SetPos(
+				{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
+				Score::TexType::Result);
+			Score::SetPos(
+				{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
+				Score::TexType::Top);
+
+			//Aボタン点滅
+			flashingTimer_.Roop();
+			if (flashingTimer_.GetTimeRate() > 0.7f)
+			{
+				UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+				UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
+			}
+			else
+			{
+				UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
+				UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
+			}
+
+			//シーン切り替え
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
 		}
 
-		//プレイヤーが死んで、死亡演出が終わったら失敗リザルトへ
-		if (Player::GetInstance()->GetIsAlive() == false &&
-			Player::GetInstance()->GetDeadEffectEnd())
+		//切り替えてﾖｼって言われたら
+		if (NSceneChange::GetInstance()->GetIsChange() == true)
 		{
-			NAudioManager::GetInstance()->Destroy("playBGM");
-			NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
-			scene = SceneMode::Faild;
-			slideTimer_.Reset();
-			slideTimer_ = 0.5f;
-			Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
-			Player::GetInstance()->SetIsElapseAnime(false);
-			Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
-			NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
-		}
-
-		//ゴールしたらクリアリザルトへ
-		if (Field::GetInstance()->GetIsGoal())
-		{
-			NAudioManager::GetInstance()->Destroy("playBGM");
-			NAudioManager::GetInstance()->Play("clearBGM", true, 0.2f);
-			scene = SceneMode::Clear;
-			slideTimer_.Reset();
-			slideTimer_ = 0.5f;
-			Player::GetInstance()->SetIsElapseAnime(false);
-			Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
-			NCameraManager::GetInstance()->ChangeCameara(CameraType::Clear);
-		}
-
-		//当たり判定総当たり
-		NCollisionManager::GetInstance()->CheckAllCollision();
-	}
-	else if (scene == SceneMode::Clear)	//クリアリザルトの処理
-	{
-		Player::GetInstance()->ClearUpdate();
-
-		//スタート線スライドタイマー開始
-		if (slideTimer_.GetStarted() == false)
-		{
-			slideTimer_.Start();
-		}
-		slideTimer_.Update();
-		//クリアテキストスライド
-		slidePos_ = NEasing::InOutBack(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		UIManager::GetInstance()->SetPos(UIType::Clear,
-			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
-
-		//リザルトスコアが上から落ちてくる
-		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
-		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
-			Score::TexType::Result);
-		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
-			Score::TexType::Top);
-
-		//Aボタン点滅
-		flashingTimer_.Roop();
-		if (flashingTimer_.GetTimeRate() > 0.7f)
-		{
-			UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
-			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
-		}
-		else
-		{
-			UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
-			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
-		}
-
-		//シーン切り替え
-		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-		{
-			NSceneChange::GetInstance()->Start();	//シーン遷移開始
+			NAudioManager::GetInstance()->Destroy("clearBGM");
+			NAudioManager::GetInstance()->Destroy("faildBGM");
+			NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+			NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 		}
 	}
-	else if (scene == SceneMode::Faild)	//失敗リザルトの処理
-	{
-		Player::GetInstance()->FaildUpdate();
-
-		//スタート線スライドタイマー開始
-		if (slideTimer_.GetStarted() == false)
-		{
-			slideTimer_.Start();
-		}
-		slideTimer_.Update();
-		//失敗テキストスライド
-		slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-		UIManager::GetInstance()->SetPos(UIType::Faild,
-			{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
-
-		//リザルトスコアが上から落ちてくる
-		float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
-		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
-			Score::TexType::Result);
-		Score::SetPos(
-			{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
-			Score::TexType::Top);
-
-		//Aボタン点滅
-		flashingTimer_.Roop();
-		if (flashingTimer_.GetTimeRate() > 0.7f)
-		{
-			UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
-			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
-		}
-		else
-		{
-			UIManager::GetInstance()->SetInvisible(UIType::Abutton, false);
-			UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
-		}
-
-		//シーン切り替え
-		if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-		{
-			NSceneChange::GetInstance()->Start();	//シーン遷移開始
-		}
-	}
-
-	//切り替えてﾖｼって言われたら
-	if (NSceneChange::GetInstance()->GetIsChange() == true)
-	{
-		NAudioManager::GetInstance()->Destroy("clearBGM");
-		NAudioManager::GetInstance()->Destroy("faildBGM");
-		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
-		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
-	}
-
 #ifdef _DEBUG
 	//シーン切り替え(デバッグ用)
 	if (NInput::IsKeyDown(DIK_RETURN) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_X))

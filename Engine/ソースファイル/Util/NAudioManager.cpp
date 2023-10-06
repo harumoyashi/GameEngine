@@ -39,14 +39,14 @@ void NAudioManager::AllSetVolume()
 
 void NAudioManager::ImGuiDraw()
 {
-#ifdef DEBUG_
+#ifdef _DEBUG
 	ImGui::Begin("AudioVolume");
 	ImGui::SliderFloat("MasterVolume", &masterVolume_, 0.f, 1.f);
 	ImGui::SliderFloat("bgmVolume", &bgmVolume_, 0.f, 1.f);
 	ImGui::SliderFloat("seVolume", &seVolume_, 0.f, 1.f);
 	AllSetVolume();
 	ImGui::End();
-#endif // DEBUG_
+#endif // DEBUG
 }
 
 void NAudioManager::AllLoad()

@@ -14,6 +14,7 @@ enum class SceneMode
 {
 	BeforeStart,	//始まる前
 	Play,			//プレイ中
+	Pause,			//ポーズ
 	Clear,			//クリアリザルト
 	Faild,			//失敗リザルト
 };
