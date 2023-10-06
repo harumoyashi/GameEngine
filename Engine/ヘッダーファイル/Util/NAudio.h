@@ -78,6 +78,9 @@ private:
 	class XAudio2VoiceCallback final
 		: public IXAudio2VoiceCallback {
 	public:
+#pragma warning(push)
+		//C4100の警告を見なかったことにする
+#pragma warning(disable:4100)
 		// ボイス処理パスの開始時
 		STDMETHOD_(void, OnVoiceProcessingPassStart)(THIS_ uint32_t BytesRequired) {};
 		// ボイス処理パスの終了時
@@ -92,6 +95,7 @@ private:
 		STDMETHOD_(void, OnLoopEnd)(THIS_ void* pBuffer_Context) {};
 		// ボイスの実行エラー時
 		STDMETHOD_(void, OnVoiceError)(THIS_ void* pBuffer_Context, HRESULT Error) {};
+#pragma warning(pop)
 	};
 
 public:

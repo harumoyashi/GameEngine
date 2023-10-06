@@ -53,18 +53,12 @@ void Emitter2D::Update(bool isGravity)
 
 void Emitter2D::DrawBox()
 {
-	for (auto& p : particles_)
-	{
-		//別のとこでDrawBox作ってここで使う;
-	}
+	
 }
 
 void Emitter2D::DrawGraph()
 {
-	for (auto& p : particles_)
-	{
-		//後でやろう;
-	}
+	
 }
 
 void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale, NVec2 minVelo, NVec2 maxVelo, NVec2 accel, float minRot, float maxRot, NColor color)
@@ -86,8 +80,8 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 		float y = (float)MathUtil::Random((uint32_t)-scale_.y, (uint32_t)scale_.y);
 		NVec2 randomPos(x, y);
 		//引数の範囲から大きさランダムで決定
-		float scale_ = (float)MathUtil::Random((uint32_t)minScale, (uint32_t)maxScale);
-		NVec2 randomScale(scale_, scale_);
+		float scale = (float)MathUtil::Random((uint32_t)minScale, (uint32_t)maxScale);
+		NVec2 randomScale(scale, scale);
 		//引数の範囲から飛ばす方向ランダムで決定
 		NVec2 velo = {
 			(float)MathUtil::Random((uint32_t)minVelo.x,(uint32_t)maxVelo.x),

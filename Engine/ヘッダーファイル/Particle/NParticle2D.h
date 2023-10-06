@@ -48,7 +48,7 @@ private:
 	//角度
 	float rot_ = 0.0f;
 	//大きさ
-	NVec2 scale_{ 1.f,1.f };
+	NVec2 scale_ = { 1.f,1.f };
 	float minScale_;	//エミッターの最小サイズ(比率)
 	float maxScale_;	//エミッターの最大サイズ(比率)
 	//元の大きさ

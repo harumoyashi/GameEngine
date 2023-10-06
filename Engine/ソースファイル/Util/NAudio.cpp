@@ -28,14 +28,14 @@ void NAudio::Init(const std::string& directoryPath) {
 	directoryPath_ = directoryPath;
 
 	HRESULT result;
-	IXAudio2MasteringVoice* masterVoice_;
+	IXAudio2MasteringVoice* masterVoice;
 
 	// XNAudioエンジンのインスタンスを生成
 	result = XAudio2Create(&xAudio2_, 0, XAUDIO2_DEFAULT_PROCESSOR);
 	assert(SUCCEEDED(result));
 
 	// マスターボイスを生成
-	result = xAudio2_->CreateMasteringVoice(&masterVoice_);
+	result = xAudio2_->CreateMasteringVoice(&masterVoice);
 	assert(SUCCEEDED(result));
 
 	//Media Foundationの初期化
