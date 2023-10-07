@@ -10,7 +10,8 @@ enum class UIType
 	AbuttonPush,//Aボタン押されたやつ
 	Lstick,		//Lスティック
 	Shaft,		//スティックの軸
-	Menubutton,	//メニューボタン
+	Menu,		//メニュー
+	Back,		//メニューからもどる
 	Clear,		//クリア
 	Faild,		//失敗
 

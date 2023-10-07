@@ -20,10 +20,13 @@ void Field::Init()
 	isGoal_ = false;
 
 #pragma region オブジェクトの生成
-	fieldObj_ = std::make_unique<NTile>();
-	fieldObj_->Init();
-	fieldObj_->SetModel("plane");
-	fieldObj_->SetTexture("tile");
+	if (fieldObj_ == nullptr)
+	{
+		fieldObj_ = std::make_unique<NTile>();
+		fieldObj_->Init();
+		fieldObj_->SetModel("plane");
+		fieldObj_->SetTexture("tile");
+	}
 	fieldObj_->color_.SetColor255(5, 5, 5, 255);
 	fieldObj_->scale_ = { 100.0f,0.01f,1000.0f };
 	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };

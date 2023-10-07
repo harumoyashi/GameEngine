@@ -24,7 +24,7 @@ class NGameScene final :
 {
 private:
 	//ゲーム内でのシーン状態
-	static SceneMode scene;
+	static SceneMode sScene;
 
 	//オブジェクト
 
@@ -39,6 +39,9 @@ private:
 	float slidePos_ = 0.0f;							//横に掃けてく時のスライド位置
 	NEasing::EaseTimer slideTimer_ = 0.1f;			//スライド時のイージング用
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー
+
+	//ポーズ画面用
+	bool isRetry_ = true;
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
@@ -59,5 +62,5 @@ public:
 	void DrawForeSprite() override;
 
 	//プレイ中かどうか取得
-	static bool GetIsPlay() { return scene == SceneMode::Play; }
+	static bool GetIsPlay() { return sScene == SceneMode::Play; }
 };

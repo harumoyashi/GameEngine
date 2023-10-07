@@ -20,24 +20,28 @@ void Wave::Init()
 #pragma region オブジェクトの生成,設定
 	for (uint32_t i = 0; i < waveDivide_; i++)
 	{
-		obj_.emplace_back();
-		obj_.back() = std::make_unique<NObj3d>();
-		obj_.back()->Init();
+		//もうあるなら作らない
+		if ((uint32_t)obj_.size() < waveDivide_)
+		{
+			obj_.emplace_back();
+			obj_[i] = std::make_unique<NObj3d>();
+			obj_[i]->Init();
+			obj_[i]->SetModel("plane");
 
-		obj_.back()->SetModel("plane");
+			randomPosZ_.emplace_back();
+			randomPosZ_[i] = MathUtil::Randomf(0.5f, 1.5f);
+
+			waveTimer_.emplace_back();
+			waveTimer_[i] = MathUtil::Randomf(0.5f, 2.0f);
+		}
+
 		//フィールドの横幅をもとに分割する
 		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
-		obj_.back()->scale_ =
+		obj_[i]->scale_ =
 		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
-		obj_.back()->position_ =
-		{ obj_.back()->scale_.x * 2.0f * i - obj_.back()->scale_.x - waveScaleX, 0,  posZ_ };
-		obj_.back()->color_.SetColor255(5, 5, 255);
-
-		randomPosZ_.emplace_back();
-		randomPosZ_.back() = MathUtil::Randomf(0.5f, 1.5f);
-
-		waveTimer_.emplace_back();
-		waveTimer_.back() = MathUtil::Randomf(0.5f, 2.0f);
+		obj_[i]->position_ =
+		{ obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX, 0,  posZ_ };
+		obj_[i]->color_.SetColor255(5, 5, 255);
 	}
 #pragma endregion
 #pragma region スプライトの生成,設定

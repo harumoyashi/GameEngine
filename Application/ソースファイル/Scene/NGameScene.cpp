@@ -19,7 +19,7 @@
 #include "Score.h"
 #include "UI.h"
 
-SceneMode NGameScene::scene = SceneMode::Play;
+SceneMode NGameScene::sScene = SceneMode::Play;
 
 void NGameScene::LoadResources()
 {
@@ -77,10 +77,29 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
 	UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
+	//仮で置いてあるけどClearがリトライ、Faildがタイトルへ
 	UIManager::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
 	UIManager::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
+
+	UIManager::GetInstance()->SetAncorPoint(UIType::Menu, { 0.f, 0.f });
+	UIManager::GetInstance()->SetPos(UIType::Menu,
+		{ 20.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
+
+	UIManager::GetInstance()->SetAncorPoint(UIType::Back, { 0.f, 0.f });
+	UIManager::GetInstance()->SetPos(UIType::Back,
+		{ 20.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
+
+	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f,100.f });
+	UIManager::GetInstance()->SetPos(UIType::Clear,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 50.0f });
+
+	UIManager::GetInstance()->SetSize(UIType::Faild, { 175.f,50.f });
+	UIManager::GetInstance()->SetPos(UIType::Faild,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f + 50.0f });
 #pragma endregion
 #pragma endregion
 #pragma region	ライト生成
@@ -94,17 +113,13 @@ void NGameScene::Init()
 #pragma region	その他設定
 	Bloom::Init();
 
-	scene = SceneMode::BeforeStart;
+	sScene = SceneMode::BeforeStart;
 
 	beforeStartTimer_.Start();
 	stickRotTimer_.Reset();
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
 	slideTimer_ = 0.1f;
-
-	UIManager::GetInstance()->SetSize(UIType::Menubutton, { 80.f, 80.f });
-	UIManager::GetInstance()->SetPos(UIType::Menubutton,
-		{ 80.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
 #pragma endregion
 }
 
@@ -117,11 +132,56 @@ void NGameScene::Update()
 	backSprite_->Update();
 	Score::Update();
 #pragma endregion
-	if (scene == SceneMode::Pause)	//始まる前の処理
+	if (sScene == SceneMode::Pause)		//ポーズ画面
 	{
+		//リトライかタイトル戻るか選択
+		if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W) ||
+			NInput::GetInstance()->StickTriggered(true) == -1)
+		{
+			isRetry_ = true;
+		}
+		else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S) ||
+			NInput::GetInstance()->StickTriggered(true) == +1)
+		{
+			isRetry_ = false;
+		}
+
+		//リトライ側選ばれてる時
+		if (isRetry_)
+		{
+			UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f,100.f });
+			UIManager::GetInstance()->SetSize(UIType::Faild, { 175.f,50.f });
+
+			//シーン切り替え
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+				NSceneChange::GetInstance()->Start();	//シーン遷移開始
+			}
+
+			//切り替えてﾖｼって言われたら
+			if (NSceneChange::GetInstance()->GetIsChange() == true)
+			{
+				NAudioManager::GetInstance()->Destroy("playBGM");
+				NSceneManager::ChangeScene<NGameScene>();			//ゲームシーンに切り替え
+				NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
+			}
+		}
+		//タイトル戻る側選ばれてる時
+		else if (isRetry_ == false)
+		{
+			UIManager::GetInstance()->SetSize(UIType::Clear, { 175.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f,100.f });
+
+			//シーン切り替え
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+				NSceneChange::GetInstance()->Start();	//シーン遷移開始
+			}
+		}
+
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
-			scene = SceneMode::Play;	//プレイに戻る
+			sScene = SceneMode::Play;	//プレイに戻る
 			NAudioManager::GetInstance()->SetVolume("playBGM", 0.2f);
 		}
 	}
@@ -129,7 +189,7 @@ void NGameScene::Update()
 	{
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
-			scene = SceneMode::Pause;	//ポーズ画面に切り替え
+			sScene = SceneMode::Pause;	//ポーズ画面に切り替え
 			NAudioManager::GetInstance()->SetVolume("playBGM", 0.05f);
 		}
 
@@ -144,17 +204,17 @@ void NGameScene::Update()
 		//ライトたちの更新
 		lightGroup_->Update();
 
-		if (scene == SceneMode::BeforeStart)	//始まる前の処理
+		if (sScene == SceneMode::BeforeStart)	//始まる前の処理
 		{
 			beforeStartTimer_.Update();
 			//演出終わったらプレイシーンに移行
 			if (beforeStartTimer_.GetEnd())
 			{
 				NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
-				scene = SceneMode::Play;
+				sScene = SceneMode::Play;
 			}
 		}
-		else if (scene == SceneMode::Play)	//プレイ中の処理
+		else if (sScene == SceneMode::Play)	//プレイ中の処理
 		{
 			Player::GetInstance()->Update();
 
@@ -197,7 +257,7 @@ void NGameScene::Update()
 			{
 				NAudioManager::GetInstance()->Destroy("playBGM");
 				NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
-				scene = SceneMode::Faild;
+				sScene = SceneMode::Faild;
 				slideTimer_.Reset();
 				slideTimer_ = 0.5f;
 				Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
@@ -211,7 +271,7 @@ void NGameScene::Update()
 			{
 				NAudioManager::GetInstance()->Destroy("playBGM");
 				NAudioManager::GetInstance()->Play("clearBGM", true, 0.2f);
-				scene = SceneMode::Clear;
+				sScene = SceneMode::Clear;
 				slideTimer_.Reset();
 				slideTimer_ = 0.5f;
 				Player::GetInstance()->SetIsElapseAnime(false);
@@ -222,7 +282,7 @@ void NGameScene::Update()
 			//当たり判定総当たり
 			NCollisionManager::GetInstance()->CheckAllCollision();
 		}
-		else if (scene == SceneMode::Clear)	//クリアリザルトの処理
+		else if (sScene == SceneMode::Clear)	//クリアリザルトの処理
 		{
 			Player::GetInstance()->ClearUpdate();
 
@@ -265,7 +325,7 @@ void NGameScene::Update()
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
 		}
-		else if (scene == SceneMode::Faild)	//失敗リザルトの処理
+		else if (sScene == SceneMode::Faild)	//失敗リザルトの処理
 		{
 			Player::GetInstance()->FaildUpdate();
 
@@ -308,15 +368,16 @@ void NGameScene::Update()
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
 		}
+	}
 
-		//切り替えてﾖｼって言われたら
-		if (NSceneChange::GetInstance()->GetIsChange() == true)
-		{
-			NAudioManager::GetInstance()->Destroy("clearBGM");
-			NAudioManager::GetInstance()->Destroy("faildBGM");
-			NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
-			NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
-		}
+	//切り替えてﾖｼって言われたら
+	if (NSceneChange::GetInstance()->GetIsChange() == true)
+	{
+		NAudioManager::GetInstance()->Destroy("playBGM");
+		NAudioManager::GetInstance()->Destroy("clearBGM");
+		NAudioManager::GetInstance()->Destroy("faildBGM");
+		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
 #ifdef _DEBUG
 	//シーン切り替え(デバッグ用)
@@ -365,13 +426,29 @@ void NGameScene::DrawParticle()
 
 void NGameScene::DrawForeSprite()
 {
+	if (sScene == SceneMode::Pause)	//ポーズ画面
+	{
+		UIManager::GetInstance()->Draw(UIType::Back);
+		UIManager::GetInstance()->Draw(UIType::Clear);
+		UIManager::GetInstance()->Draw(UIType::Faild);
+	}
+	else
+	{
+		UIManager::GetInstance()->Draw(UIType::Menu);
+	}
+
 	Wave::GetInstance()->DrawSprite();
 
 	UIManager::GetInstance()->Draw(UIType::Abutton);
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
-	UIManager::GetInstance()->Draw(UIType::Menubutton);
-	UIManager::GetInstance()->Draw(UIType::Clear);
-	UIManager::GetInstance()->Draw(UIType::Faild);
+	if (sScene == SceneMode::Clear)
+	{
+		UIManager::GetInstance()->Draw(UIType::Clear);
+	}
+	else if (sScene == SceneMode::Faild)
+	{
+		UIManager::GetInstance()->Draw(UIType::Faild);
+	}
 	UIManager::GetInstance()->Draw(UIType::Shaft);
 	UIManager::GetInstance()->Draw(UIType::Lstick);
 	UIManager::GetInstance()->DrawUIBul();
