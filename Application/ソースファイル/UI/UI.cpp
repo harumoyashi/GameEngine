@@ -17,8 +17,11 @@ void UIManager::Init()
 	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0.f }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::Lstick].sprite.CreateSprite("stick");
 	ui_[(uint32_t)UIType::Shaft].sprite.CreateSprite("shaft");
-	ui_[(uint32_t)UIType::Menu].sprite.CreateSprite("menu");
-	ui_[(uint32_t)UIType::Back].sprite.CreateSprite("back");
+	ui_[(uint32_t)UIType::Menu].sprite.CreateSprite("menuUI");
+	ui_[(uint32_t)UIType::Back].sprite.CreateSprite("backUI");
+	ui_[(uint32_t)UIType::Retry].sprite.CreateSprite("retryUI");
+	ui_[(uint32_t)UIType::Title].sprite.CreateSprite("titleUI");
+	ui_[(uint32_t)UIType::Option].sprite.CreateSprite("optionUI");
 	ui_[(uint32_t)UIType::Clear].sprite.CreateSprite("clear");
 	ui_[(uint32_t)UIType::Faild].sprite.CreateSprite("faild");
 	for (uint32_t i = 0; i < maxUIBul; i++)

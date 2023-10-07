@@ -12,6 +12,9 @@ enum class UIType
 	Shaft,		//スティックの軸
 	Menu,		//メニュー
 	Back,		//メニューからもどる
+	Retry,		//リトライ
+	Title,		//タイトルへ
+	Option,		//オプション
 	Clear,		//クリア
 	Faild,		//失敗
 

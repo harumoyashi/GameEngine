@@ -22,10 +22,13 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "Abutton_UI.png", "Abutton");
 	LoadTexture(directryPass + "Bbutton_UI.png", "Bbutton");
 	LoadTexture(directryPass + "Menubutton_UI.png", "Menubutton");
-	LoadTexture(directryPass + "menu.png", "menu");
-	LoadTexture(directryPass + "back.png", "back");
-	LoadTexture(directryPass + "shaft.png", "shaft");
-	LoadTexture(directryPass + "stick.png", "stick");
+	LoadTexture(directryPass + "menu_UI.png", "menuUI");
+	LoadTexture(directryPass + "back_UI.png", "backUI");
+	LoadTexture(directryPass + "retry_UI.png", "retryUI");
+	LoadTexture(directryPass + "title_UI.png", "titleUI");
+	LoadTexture(directryPass + "option_UI.png", "optionUI");
+	LoadTexture(directryPass + "shaft_UI.png", "shaft");
+	LoadTexture(directryPass + "stick_UI.png", "stick");
 	LoadTexture(directryPass + "checkpoint.png", "checkpoint");
 	LoadTexture(directryPass + "clear.png", "clear");
 	LoadTexture(directryPass + "faild.png", "faild");

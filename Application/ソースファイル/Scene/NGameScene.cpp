@@ -77,12 +77,12 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
 	UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, true);
 
-	//仮で置いてあるけどClearがリトライ、Faildがタイトルへ
 	UIManager::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
 	UIManager::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
 
+	//ポーズメニュー関連
 	UIManager::GetInstance()->SetAncorPoint(UIType::Menu, { 0.f, 0.f });
 	UIManager::GetInstance()->SetPos(UIType::Menu,
 		{ 20.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
@@ -91,15 +91,20 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetPos(UIType::Back,
 		{ 20.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
 
-	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f,100.f });
-	UIManager::GetInstance()->SetPos(UIType::Clear,
+	UIManager::GetInstance()->SetSize(UIType::Retry, { 500.f,100.f });
+	UIManager::GetInstance()->SetPos(UIType::Retry,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
-		(float)NWindows::GetInstance()->kWin_height * 0.5f - 50.0f });
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 100.0f });
 
-	UIManager::GetInstance()->SetSize(UIType::Faild, { 175.f,50.f });
-	UIManager::GetInstance()->SetPos(UIType::Faild,
+	UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
+	UIManager::GetInstance()->SetPos(UIType::Title,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
-		(float)NWindows::GetInstance()->kWin_height * 0.5f + 50.0f });
+		(float)NWindows::GetInstance()->kWin_height * 0.5f });
+
+	UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
+	UIManager::GetInstance()->SetPos(UIType::Option,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f + 100.0f });
 #pragma endregion
 #pragma endregion
 #pragma region	ライト生成
@@ -135,22 +140,36 @@ void NGameScene::Update()
 	if (sScene == SceneMode::Pause)		//ポーズ画面
 	{
 		//リトライかタイトル戻るか選択
-		if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W) ||
-			NInput::GetInstance()->StickTriggered(true) == -1)
+		//スティックで選択
+		if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry) &&
+			pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
 		{
-			isRetry_ = true;
+			pauseScene_ =
+				(PauseSceneMode)((uint32_t)pauseScene_ +
+					NInput::GetInstance()->StickTriggered(true));
 		}
-		else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S) ||
-			NInput::GetInstance()->StickTriggered(true) == +1)
+		//キーボードで選択
+		if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W))
 		{
-			isRetry_ = false;
+			if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+			{
+				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+			}
+		}
+		else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S))
+		{
+			if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+			{
+				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+			}
 		}
 
-		//リトライ側選ばれてる時
-		if (isRetry_)
+		//「リトライ」が選ばれてる時
+		if (pauseScene_ == PauseSceneMode::Retry)
 		{
-			UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f,100.f });
-			UIManager::GetInstance()->SetSize(UIType::Faild, { 175.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Retry, { 500.f,100.f });
+			UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
 
 			//シーン切り替え
 			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
@@ -166,16 +185,29 @@ void NGameScene::Update()
 				NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 			}
 		}
-		//タイトル戻る側選ばれてる時
-		else if (isRetry_ == false)
+		//「タイトルへ」が選ばれてる時
+		else if (pauseScene_ == PauseSceneMode::Title)
 		{
-			UIManager::GetInstance()->SetSize(UIType::Clear, { 175.f,50.f });
-			UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f,100.f });
+			UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Title, { 500.f,100.f });
+			UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
 
 			//シーン切り替え
 			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 			{
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
+			}
+		}
+		//「オプション」が選ばれてる時
+		else if (pauseScene_ == PauseSceneMode::Option)
+		{
+			UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
+			UIManager::GetInstance()->SetSize(UIType::Option, { 500.f,100.f });
+
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+
 			}
 		}
 
@@ -429,8 +461,9 @@ void NGameScene::DrawForeSprite()
 	if (sScene == SceneMode::Pause)	//ポーズ画面
 	{
 		UIManager::GetInstance()->Draw(UIType::Back);
-		UIManager::GetInstance()->Draw(UIType::Clear);
-		UIManager::GetInstance()->Draw(UIType::Faild);
+		UIManager::GetInstance()->Draw(UIType::Retry);
+		UIManager::GetInstance()->Draw(UIType::Title);
+		UIManager::GetInstance()->Draw(UIType::Option);
 	}
 	else
 	{
@@ -441,14 +474,8 @@ void NGameScene::DrawForeSprite()
 
 	UIManager::GetInstance()->Draw(UIType::Abutton);
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
-	if (sScene == SceneMode::Clear)
-	{
-		UIManager::GetInstance()->Draw(UIType::Clear);
-	}
-	else if (sScene == SceneMode::Faild)
-	{
-		UIManager::GetInstance()->Draw(UIType::Faild);
-	}
+	UIManager::GetInstance()->Draw(UIType::Clear);
+	UIManager::GetInstance()->Draw(UIType::Faild);
 	UIManager::GetInstance()->Draw(UIType::Shaft);
 	UIManager::GetInstance()->Draw(UIType::Lstick);
 	UIManager::GetInstance()->DrawUIBul();

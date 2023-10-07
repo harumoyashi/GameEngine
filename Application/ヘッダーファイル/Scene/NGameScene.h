@@ -19,6 +19,13 @@ enum class SceneMode
 	Faild,			//失敗リザルト
 };
 
+enum class PauseSceneMode
+{
+	Retry,
+	Title,
+	Option
+};
+
 class NGameScene final :
 	public IScene
 {
@@ -41,7 +48,7 @@ private:
 	NEasing::EaseTimer flashingTimer_ = 1.0f;		//点滅タイマー
 
 	//ポーズ画面用
-	bool isRetry_ = true;
+	PauseSceneMode pauseScene_ = PauseSceneMode::Retry;
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
@@ -62,5 +69,5 @@ public:
 	void DrawForeSprite() override;
 
 	//プレイ中かどうか取得
-	static bool GetIsPlay() { return sScene == SceneMode::Play; }
+	static bool GetIsPlay() { return sScene == SceneMode::Play; };
 };
