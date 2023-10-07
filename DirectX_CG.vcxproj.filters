@@ -191,6 +191,7 @@
     <ClCompile Include="Engine\ソースファイル\PostEffect\Bloom.cpp" />
     <ClCompile Include="Application\ソースファイル\UI\UI.cpp" />
     <ClCompile Include="Engine\ソースファイル\Particle\NGPUParticle.cpp" />
+    <ClCompile Include="PauseScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\ソースファイル\Math\NMatrix4.cpp">
@@ -519,5 +520,6 @@
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\Bloom.h" />
     <ClInclude Include="Application\ヘッダーファイル\UI\UI.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NGPUParticle.h" />
+    <ClInclude Include="PauseScene.h" />
   </ItemGroup>
 </Project>

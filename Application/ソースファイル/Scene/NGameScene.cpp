@@ -83,15 +83,15 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
 #pragma endregion
 #pragma endregion
-	// ライト生成
+#pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
 	IEmitter3D::SetLightGroup(lightGroup_.get());
-
-	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
+#pragma endregion
+#pragma region	その他設定
 	Bloom::Init();
 
 	scene = SceneMode::BeforeStart;
@@ -101,6 +101,11 @@ void NGameScene::Init()
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
 	slideTimer_ = 0.1f;
+
+	UIManager::GetInstance()->SetSize(UIType::Menubutton, { 80.f, 80.f });
+	UIManager::GetInstance()->SetPos(UIType::Menubutton,
+		{ 80.f, (float)NWindows::GetInstance()->kWin_height - 80.0f });
+#pragma endregion
 }
 
 void NGameScene::Update()
@@ -116,7 +121,8 @@ void NGameScene::Update()
 	{
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
-			scene = SceneMode::Play;	//ポーズ画面に切り替え
+			scene = SceneMode::Play;	//プレイに戻る
+			NAudioManager::GetInstance()->SetVolume("playBGM", 0.2f);
 		}
 	}
 	else	//ポーズ画面以外の処理
@@ -124,6 +130,7 @@ void NGameScene::Update()
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
 			scene = SceneMode::Pause;	//ポーズ画面に切り替え
+			NAudioManager::GetInstance()->SetVolume("playBGM", 0.05f);
 		}
 
 		BulletManager::GetInstance()->Update();
@@ -362,6 +369,7 @@ void NGameScene::DrawForeSprite()
 
 	UIManager::GetInstance()->Draw(UIType::Abutton);
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
+	UIManager::GetInstance()->Draw(UIType::Menubutton);
 	UIManager::GetInstance()->Draw(UIType::Clear);
 	UIManager::GetInstance()->Draw(UIType::Faild);
 	UIManager::GetInstance()->Draw(UIType::Shaft);

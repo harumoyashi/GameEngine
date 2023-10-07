@@ -183,11 +183,12 @@ void NAudioManager::LoadSound(const std::string& filename, const std::string& so
 
 void NAudioManager::Play(const std::string& soundHandle, bool isRoop, const float volume, const int roopNum)
 {
+	SetVolume(soundHandle, volume);
 	if (sSoundMap[soundHandle].isBGM)
 	{
 		NAudio::GetInstance()->PlayWave(
 			sSoundMap[soundHandle].handle, isRoop,
-			volume * masterVolume_ * bgmVolume_,
+			sSoundMap[soundHandle].volume * masterVolume_ * bgmVolume_,
 			roopNum
 		);
 	}

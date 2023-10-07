@@ -13,10 +13,11 @@ UIManager* UIManager::GetInstance()
 void UIManager::Init()
 {
 	//読み込み～
-	ui_[(uint32_t)UIType::Abutton].sprite.CreateClipSprite("Abutton", { 0.f,0 }, { 192.f,192.f });
-	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0 }, { 192.f,192.f });
+	ui_[(uint32_t)UIType::Abutton].sprite.CreateClipSprite("Abutton", { 0.f,0.f }, { 192.f,192.f });
+	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0.f }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::Lstick].sprite.CreateSprite("stick");
 	ui_[(uint32_t)UIType::Shaft].sprite.CreateSprite("shaft");
+	ui_[(uint32_t)UIType::Menubutton].sprite.CreateClipSprite("Menubutton", { 0.f,0.f }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::Clear].sprite.CreateSprite("clear");
 	ui_[(uint32_t)UIType::Faild].sprite.CreateSprite("faild");
 	for (uint32_t i = 0; i < maxUIBul; i++)

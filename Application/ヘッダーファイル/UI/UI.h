@@ -10,6 +10,7 @@ enum class UIType
 	AbuttonPush,//Aボタン押されたやつ
 	Lstick,		//Lスティック
 	Shaft,		//スティックの軸
+	Menubutton,	//メニューボタン
 	Clear,		//クリア
 	Faild,		//失敗
 
@@ -65,6 +66,4 @@ public:
 	void SetInvisible(UIType uiType, bool isInvisible);
 	//指定されたUIのテクスチャ設定
 	void SetTexture(UIType uiType, const std::string& texName);
-	//指定されたUIの有効フラグ設定
-	void SetIsActive(UIType uiType, bool isActive);
 };

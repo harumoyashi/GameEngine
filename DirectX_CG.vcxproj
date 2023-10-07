@@ -198,6 +198,7 @@
     <ClInclude Include="Engine\ヘッダーファイル\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\ヘッダーファイル\Particle\NGPUParticle.h" />
     <ClInclude Include="Application\ヘッダーファイル\UI\UI.h" />
+    <ClInclude Include="PauseScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
@@ -289,6 +290,7 @@
     <ClCompile Include="Engine\ソースファイル\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\ソースファイル\Particle\NGPUParticle.cpp" />
     <ClCompile Include="Application\ソースファイル\UI\UI.cpp" />
+    <ClCompile Include="PauseScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
