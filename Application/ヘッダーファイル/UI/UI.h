@@ -17,6 +17,9 @@ enum class UIType
 	Option,		//オプション
 	Clear,		//クリア
 	Faild,		//失敗
+	All,		//全部の音量
+	BGM,		//BGMの音量
+	SE,			//SEの音量
 
 	Max			//最大数(for文とか回す用)
 };

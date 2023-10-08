@@ -40,6 +40,10 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "line_UI.png", "lineUI");
 	LoadTexture(directryPass + "sideshot_UI.png", "sideUI");
 	LoadTexture(directryPass + "wideshot_UI.png", "wideUI");
+	LoadTexture(directryPass + "all_UI.png", "allUI");
+	LoadTexture(directryPass + "bgm_UI.png", "bgmUI");
+	LoadTexture(directryPass + "se_UI.png", "seUI");
+	LoadTexture(directryPass + "volume_point.png", "volumePoint");
 }
 
 NTexture NTextureManager::CreateErrorTexture()

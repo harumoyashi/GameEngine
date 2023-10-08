@@ -105,6 +105,21 @@ void NGameScene::Init()
 	UIManager::GetInstance()->SetPos(UIType::Option,
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f + 100.0f });
+
+	UIManager::GetInstance()->SetSize(UIType::All, { 150.f,50.f });
+	UIManager::GetInstance()->SetPos(UIType::All,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 160.0f });
+
+	UIManager::GetInstance()->SetSize(UIType::BGM, { 150.f,50.f });
+	UIManager::GetInstance()->SetPos(UIType::BGM,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f -20.f });
+
+	UIManager::GetInstance()->SetSize(UIType::SE, { 150.f,50.f});
+	UIManager::GetInstance()->SetPos(UIType::SE,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f + 140.0f });
 #pragma endregion
 #pragma endregion
 #pragma region	ライト生成
@@ -207,8 +222,13 @@ void NGameScene::Update()
 
 			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
 			{
-
+				isOption_ = true;
 			}
+		}
+
+		if (isOption_)
+		{
+
 		}
 
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
@@ -460,14 +480,27 @@ void NGameScene::DrawForeSprite()
 {
 	if (sScene == SceneMode::Pause)	//ポーズ画面
 	{
-		UIManager::GetInstance()->Draw(UIType::Back);
-		UIManager::GetInstance()->Draw(UIType::Retry);
-		UIManager::GetInstance()->Draw(UIType::Title);
-		UIManager::GetInstance()->Draw(UIType::Option);
+		if (isOption_ == false)
+		{
+			UIManager::GetInstance()->Draw(UIType::Back);
+			UIManager::GetInstance()->Draw(UIType::Retry);
+			UIManager::GetInstance()->Draw(UIType::Title);
+			UIManager::GetInstance()->Draw(UIType::Option);
+		}
+
+		if (isOption_)
+		{
+			UIManager::GetInstance()->Draw(UIType::All);
+			UIManager::GetInstance()->Draw(UIType::BGM);
+			UIManager::GetInstance()->Draw(UIType::SE);
+		}
 	}
 	else
 	{
 		UIManager::GetInstance()->Draw(UIType::Menu);
+
+		UIManager::GetInstance()->Draw(UIType::Shaft);
+		UIManager::GetInstance()->Draw(UIType::Lstick);
 	}
 
 	Wave::GetInstance()->DrawSprite();
@@ -476,8 +509,6 @@ void NGameScene::DrawForeSprite()
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
 	UIManager::GetInstance()->Draw(UIType::Clear);
 	UIManager::GetInstance()->Draw(UIType::Faild);
-	UIManager::GetInstance()->Draw(UIType::Shaft);
-	UIManager::GetInstance()->Draw(UIType::Lstick);
 	UIManager::GetInstance()->DrawUIBul();
 
 	Score::Draw();
