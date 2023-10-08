@@ -42,7 +42,7 @@ private:
 	const uint32_t maxUIBul = 3;
 	std::vector<UI> uiBul_{ (maxUIBul) };	//弾取った時のUI群
 	const uint32_t maxUIVol = 3;
-	std::vector<UI> uiVol_{(maxUIVol)};		//音量調節UI群
+	std::vector<std::array<UI,3>> uiVol_{(maxUIVol)};		//音量調節UI群
 
 public:
 	UIManager();
