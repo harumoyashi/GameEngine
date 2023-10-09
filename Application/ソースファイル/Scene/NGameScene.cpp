@@ -106,20 +106,7 @@ void NGameScene::Init()
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f + 100.0f });
 
-	UIManager::GetInstance()->SetSize(UIType::All, { 150.f,50.f });
-	UIManager::GetInstance()->SetPos(UIType::All,
-		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
-		(float)NWindows::GetInstance()->kWin_height * 0.5f - 160.0f });
-
-	UIManager::GetInstance()->SetSize(UIType::BGM, { 150.f,50.f });
-	UIManager::GetInstance()->SetPos(UIType::BGM,
-		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
-		(float)NWindows::GetInstance()->kWin_height * 0.5f -20.f });
-
-	UIManager::GetInstance()->SetSize(UIType::SE, { 150.f,50.f});
-	UIManager::GetInstance()->SetPos(UIType::SE,
-		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
-		(float)NWindows::GetInstance()->kWin_height * 0.5f + 140.0f });
+	UIManager::GetInstance()->SetUIVol();
 #pragma endregion
 #pragma endregion
 #pragma region	ライト生成
@@ -140,6 +127,17 @@ void NGameScene::Init()
 	slidePos_ = 0.0f;
 	slideTimer_.Reset();
 	slideTimer_ = 0.1f;
+
+	if (volume_.size() < 3)
+	{
+		for (uint32_t i = 0; i < 3; i++)
+		{
+			volume_.emplace_back();
+		}
+	}
+	volume_[0] = NAudioManager::GetInstance()->GetMasterVolume();
+	volume_[1] = NAudioManager::GetInstance()->GetBGMVolume();
+	volume_[2] = NAudioManager::GetInstance()->GetSEVolume();
 #pragma endregion
 }
 
@@ -154,14 +152,21 @@ void NGameScene::Update()
 #pragma endregion
 	if (sScene == SceneMode::Pause)		//ポーズ画面
 	{
-		//リトライかタイトル戻るか選択
+		//リトライかタイトル戻るかオプションか選択
 		//スティックで選択
-		if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry) &&
-			pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+		if (NInput::GetInstance()->StickTriggered(true) == -1)
 		{
-			pauseScene_ =
-				(PauseSceneMode)((uint32_t)pauseScene_ +
-					NInput::GetInstance()->StickTriggered(true));
+			if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+			{
+				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+			}
+		}
+		else if (NInput::GetInstance()->StickTriggered(true) == 1)
+		{
+			if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+			{
+				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+			}
 		}
 		//キーボードで選択
 		if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W))
@@ -228,23 +233,88 @@ void NGameScene::Update()
 
 		if (isOption_)
 		{
+			//どの音量調節するか選択
+			//スティックで選択
+			if (NInput::StickTriggered(true) == -1)
+			{
+				if (volumeType_ > 0)
+				{
+					volumeType_--;
+				}
+			}
+			else if (NInput::StickTriggered(true) == 1)
+			{
+				if (volumeType_ < 2)
+				{
+					volumeType_++;
+				}
+			}
+			//キーボードで選択
+			if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W))
+			{
+				if (volumeType_ > 0)
+				{
+					volumeType_--;
+				}
+			}
+			else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S))
+			{
+				if (volumeType_ < 2)
+				{
+					volumeType_++;
+				}
+			}
 
+			//-------------------------- 音量調整 --------------------------//
+			//スティックで調整
+			volume_[volumeType_] += powf(NInput::GetStick().x, 2.f) * 0.01f * MathUtil::Signf(NInput::GetStick().x);
+
+			//キーボードで調整
+			if (NInput::IsKeyDown(DIK_LEFT) || NInput::IsKeyDown(DIK_A))
+			{
+				volume_[volumeType_] -= 0.05f;
+			}
+			else if (NInput::IsKeyDown(DIK_RIGHT) || NInput::IsKeyDown(DIK_D))
+			{
+				volume_[volumeType_] += 0.05f;
+			}
+
+			//超えないように調整
+			volume_[volumeType_] = MathUtil::Clamp(volume_[volumeType_], 0.f, 1.f);
+
+			//UIに反映
+			for (uint32_t i = 0; i < 3; i++)
+			{
+				if (i == volumeType_)
+				{
+					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 70.f);
+				}
+				else
+				{
+					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 35.f);
+				}
+			}
+			//音量に反映
+			NAudioManager::GetInstance()->SetMasterVolume(volume_[0]);
+			NAudioManager::GetInstance()->SetBGMVolume(volume_[1]);
+			NAudioManager::GetInstance()->SetSEVolume(volume_[2]);
 		}
 
 		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 		{
-			sScene = SceneMode::Play;	//プレイに戻る
-			NAudioManager::GetInstance()->SetVolume("playBGM", 0.2f);
+			if (isOption_)
+			{
+				isOption_ = false;
+			}
+			else
+			{
+				sScene = SceneMode::Play;	//プレイに戻る
+				NAudioManager::GetInstance()->SetVolume("playBGM", 0.2f);
+			}
 		}
 	}
 	else	//ポーズ画面以外の処理
 	{
-		if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
-		{
-			sScene = SceneMode::Pause;	//ポーズ画面に切り替え
-			NAudioManager::GetInstance()->SetVolume("playBGM", 0.05f);
-		}
-
 		BulletManager::GetInstance()->Update();
 		EnemyManager::GetInstance()->Update();
 		ItemManager::GetInstance()->Update();
@@ -268,6 +338,12 @@ void NGameScene::Update()
 		}
 		else if (sScene == SceneMode::Play)	//プレイ中の処理
 		{
+			if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
+			{
+				sScene = SceneMode::Pause;	//ポーズ画面に切り替え
+				NAudioManager::GetInstance()->SetVolume("playBGM", 0.05f);
+			}
+
 			Player::GetInstance()->Update();
 
 			if (Field::GetInstance()->GetIsStart())
@@ -438,12 +514,6 @@ void NGameScene::Update()
 		NSceneChange::GetInstance()->Start();	//シーン遷移開始
 	}
 
-	//リセットボタン(デバッグ用)
-	if (NInput::IsKeyDown(DIK_R) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
-	{
-		NSceneManager::ChangeScene<NGameScene>();
-	}
-
 	//アイテム出すボタン(デバッグ用)
 	if (NInput::IsKeyDown(DIK_I))
 	{
@@ -490,9 +560,7 @@ void NGameScene::DrawForeSprite()
 
 		if (isOption_)
 		{
-			UIManager::GetInstance()->Draw(UIType::All);
-			UIManager::GetInstance()->Draw(UIType::BGM);
-			UIManager::GetInstance()->Draw(UIType::SE);
+			UIManager::GetInstance()->DrawUIVol();
 		}
 	}
 	else

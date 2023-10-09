@@ -32,17 +32,18 @@ struct UI
 	NEasing::EaseTimer easeBackTimer;	//UI用イージングバックタイマー群
 	NVec2 startPos;						//始点座標
 	NVec2 endPos;						//終点座標
-	bool isActive;						//有効フラグ
+	bool isActive = true;				//有効フラグ
 };
 
 class UIManager
 {
 private:
-	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };	//UI群
+	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };		//UI群
 	const uint32_t maxUIBul = 3;
-	std::vector<UI> uiBul_{ (maxUIBul) };	//弾取った時のUI群
+	std::vector<UI> uiBul_{ (maxUIBul) };				//弾取った時のUI群
 	const uint32_t maxUIVol = 3;
-	std::vector<std::array<UI,3>> uiVol_{(maxUIVol)};		//音量調節UI群
+	//背景box,ゲージbox,点の3つで構成されるからarrayとの二重配列にしてる
+	std::vector<std::array<UI,3>> uiVol_{(maxUIVol)};	//音量調節UI群
 
 public:
 	UIManager();
@@ -59,6 +60,16 @@ public:
 	void Draw(UIType uiType);
 	//弾とった時のUI描画
 	void DrawUIBul();
+	//音量調節UIの値設定
+	void SetUIVol();
+	//音量調節UI描画
+	void DrawUIVol();
+
+	//音量調節UIの値設定
+	//volType:調整する音量の種類(0:全体,1:BGM,2:SE)
+	//volume:音量(0.0f~1.0f)
+	//size:一辺の大きさ
+	void SetUIVolPoint(uint32_t volType,float volume,float size);
 
 	//指定されたUIのタイマースタート
 	void StartEaseTimer(UIType uiType) { ui_[(uint32_t)uiType].easeTimer.Start(); }

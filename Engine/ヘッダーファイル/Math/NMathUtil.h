@@ -18,7 +18,7 @@ namespace MathUtil
 	//透視投影変換行列生成
 	NMatrix4 PerspectiveProjection(const float fov, const float aspect, const  float nearZ, const float farZ);
 	//ワールド座標からスクリーン座標に変換
-	NVec2 WorldToScreen(const NVec3& pos, const NMatrix4& matWorld);
+	NVec2 WorldToScreen(const NMatrix4& matWorld);
 
 	//度数法→ラジアン
 	float Degree2Radian(const float degree);
@@ -26,6 +26,7 @@ namespace MathUtil
 	float Radian2Degree(const float radian);
 	//符号返す
 	uint32_t Sign(const uint32_t value);
+	float Signf(const float value);
 	//ランダムな値を返す
 	uint32_t Random(const uint32_t min, const uint32_t max);
 	float Randomf(const float min, const float max);

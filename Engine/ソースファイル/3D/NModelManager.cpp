@@ -46,8 +46,6 @@ IModel* NModelManager::LoadObjModel(const std::string& modelname, const std::str
 		}
 	}
 
-	uint32_t handle = sIndexModelData;
-
 	//ファイルストリーム
 	std::ifstream file;
 	//.objファイルを開く

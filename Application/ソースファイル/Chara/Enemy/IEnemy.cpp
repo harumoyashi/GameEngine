@@ -65,14 +65,14 @@ void IEnemy::Update()
 	NMatrix4 matWorldRight, matWorldLeft;
 
 	matWorldRight = matWorldRight.Translation(NVec3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
-	borderLineRight = MathUtil::WorldToScreen(NVec3(), matWorldRight).x + NWindows::kWin_width * 0.5f;
+	borderLineRight = MathUtil::WorldToScreen(matWorldRight).x + NWindows::kWin_width * 0.5f;
 
 	matWorldLeft = matWorldLeft.Translation(NVec3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
-	borderLineLeft = MathUtil::WorldToScreen(NVec3(), matWorldLeft).x - NWindows::kWin_width * 0.5f;
+	borderLineLeft = MathUtil::WorldToScreen(matWorldLeft).x - NWindows::kWin_width * 0.5f;
 
 	float objRight, objLeft;	//オブジェの右端左端
-	objRight = MathUtil::WorldToScreen(obj_->position_ + obj_->scale_, obj_->GetMatWorld()).x;
-	objLeft = MathUtil::WorldToScreen(obj_->position_ - obj_->scale_, obj_->GetMatWorld()).x;
+	objRight = MathUtil::WorldToScreen(obj_->GetMatWorld()).x;
+	objLeft = MathUtil::WorldToScreen(obj_->GetMatWorld()).x;
 	//ボーダーライン超えたら殺す
 	if (borderLineRight < objLeft || borderLineLeft > objRight)
 	{

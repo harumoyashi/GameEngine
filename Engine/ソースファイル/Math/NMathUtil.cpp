@@ -73,7 +73,7 @@ NMatrix4 MathUtil::PerspectiveProjection(const float fov, const float aspect, co
 	return perspective;
 }
 
-NVec2 MathUtil::WorldToScreen(const NVec3& pos, const NMatrix4& matWorld)
+NVec2 MathUtil::WorldToScreen(const NMatrix4& matWorld)
 {
 	NVec2 result;
 	NVec4 p = { 0,0,0,1 };
@@ -113,11 +113,27 @@ uint32_t MathUtil::Sign(const uint32_t value)
 	}
 	else if (value < 0)
 	{
-		return -1;
+		return (uint32_t)-1;	//明示的にキャストしないと警告出る
 	}
 	else
 	{
 		return 0;
+	}
+}
+
+float MathUtil::Signf(const float value)
+{
+	if (value > 0.f)
+	{
+		return 1.f;
+	}
+	else if (value < 0.f)
+	{
+		return -1.f;
+	}
+	else
+	{
+		return 0.f;
 	}
 }
 

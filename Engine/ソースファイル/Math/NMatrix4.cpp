@@ -58,7 +58,7 @@ NMatrix4 NMatrix4::operator-() const
 				continue;
 			}
 
-			float mul = -mat[i][n];
+			mul = -mat[i][n];
 
 			for (size_t j = 0; j < 8; j++) {
 				mat[i][j] += mat[n][j] * mul;
@@ -75,48 +75,48 @@ NMatrix4 NMatrix4::operator-() const
 	return result;
 }
 
-NMatrix4 NMatrix4::operator+(const NMatrix4& m) const
+NMatrix4 NMatrix4::operator+(const NMatrix4& mat) const
 {
 	NMatrix4 result(*this);
-	result += m;
+	result += mat;
 	return result;
 }
 
-NMatrix4& NMatrix4::operator+=(const NMatrix4& m)
+NMatrix4& NMatrix4::operator+=(const NMatrix4& mat)
 {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
-			this->m[i][j] += m.m[i][j];
+			this->m[i][j] += mat.m[i][j];
 		}
 	}
 	return *this;
 }
 
-NMatrix4 NMatrix4::operator-(const NMatrix4& m) const
+NMatrix4 NMatrix4::operator-(const NMatrix4& mat) const
 {
 	NMatrix4 result(*this);
-	result -= m;
+	result -= mat;
 	return result;
 }
 
-NMatrix4& NMatrix4::operator-=(const NMatrix4& m)
+NMatrix4& NMatrix4::operator-=(const NMatrix4& mat)
 {
 	for (size_t i = 0; i < 4; i++) {
 		for (size_t j = 0; j < 4; j++) {
-			this->m[i][j] -= m.m[i][j];
+			this->m[i][j] -= mat.m[i][j];
 		}
 	}
 	return *this;
 }
 
-NMatrix4 NMatrix4::operator*(const NMatrix4& m) const
+NMatrix4 NMatrix4::operator*(const NMatrix4& mat) const
 {
 	NMatrix4 result(*this);
-	result *= m;
+	result *= mat;
 	return result;
 }
 
-NMatrix4& NMatrix4::operator*=(const NMatrix4& m)
+NMatrix4& NMatrix4::operator*=(const NMatrix4& mat)
 {
 	NMatrix4 result = *this;
 
@@ -127,7 +127,7 @@ NMatrix4& NMatrix4::operator*=(const NMatrix4& m)
 			float f = 0;
 			for (size_t k = 0; k < 4; k++)
 			{
-				f += result.m[i][k] * m.m[k][j];
+				f += result.m[i][k] * mat.m[k][j];
 			}
 			this->m[i][j] = f;
 		}
@@ -238,44 +238,44 @@ NMatrix4 NMatrix4::Translation(const NVec3& t)
 	return result;
 }
 
-NVec3 NMatrix4::Transform(const NVec3& v, const NMatrix4& m)
+NVec3 NMatrix4::Transform(const NVec3& v, const NMatrix4& mat)
 {
-	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
+	float w = v.x * mat.m[0][3] + v.y * mat.m[1][3] + v.z * mat.m[2][3] + mat.m[3][3];
 
 	NVec3 result
 	{
-		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0] * 0.0f) / w,
-		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1] * 0.0f) / w,
-		(v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2] * 0.0f) / w
+		(v.x * mat.m[0][0] + v.y * mat.m[1][0] + v.z * mat.m[2][0] + mat.m[3][0] * 0.0f) / w,
+		(v.x * mat.m[0][1] + v.y * mat.m[1][1] + v.z * mat.m[2][1] + mat.m[3][1] * 0.0f) / w,
+		(v.x * mat.m[0][2] + v.y * mat.m[1][2] + v.z * mat.m[2][2] + mat.m[3][2] * 0.0f) / w
 	};
 
 	return result;
 }
 
-NVec3 NMatrix4::WTransform(const NVec3& v, const NMatrix4& m)
+NVec3 NMatrix4::WTransform(const NVec3& v, const NMatrix4& mat)
 {
-	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
+	float w = v.x * mat.m[0][3] + v.y * mat.m[1][3] + v.z * mat.m[2][3] + mat.m[3][3];
 
 	NVec3 result
 	{
-		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + m.m[3][0]) / w,
-		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + m.m[3][1]) / w,
-		(v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + m.m[3][2]) / w
+		(v.x * mat.m[0][0] + v.y * mat.m[1][0] + v.z * mat.m[2][0] + mat.m[3][0]) / w,
+		(v.x * mat.m[0][1] + v.y * mat.m[1][1] + v.z * mat.m[2][1] + mat.m[3][1]) / w,
+		(v.x * mat.m[0][2] + v.y * mat.m[1][2] + v.z * mat.m[2][2] + mat.m[3][2]) / w
 	};
 
 	return result;
 }
 
-NVec4 NMatrix4::Vec4MulMat(const NVec4& v, const NMatrix4& m) const
+NVec4 NMatrix4::Vec4MulMat(const NVec4& v, const NMatrix4& mat) const
 {
-	float w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3];
+	float w = v.x * mat.m[0][3] + v.y * mat.m[1][3] + v.z * mat.m[2][3] + mat.m[3][3];
 
 	NVec4 result
 	{
-		(v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + v.w * m.m[3][0]) / w,
-		(v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + v.w * m.m[3][1]) / w,
-		(v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + v.w * m.m[3][2]) / w,
-		(v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + m.m[3][3]) / w
+		(v.x * mat.m[0][0] + v.y * mat.m[1][0] + v.z * mat.m[2][0] + v.w * mat.m[3][0]) / w,
+		(v.x * mat.m[0][1] + v.y * mat.m[1][1] + v.z * mat.m[2][1] + v.w * mat.m[3][1]) / w,
+		(v.x * mat.m[0][2] + v.y * mat.m[1][2] + v.z * mat.m[2][2] + v.w * mat.m[3][2]) / w,
+		(v.x * mat.m[0][3] + v.y * mat.m[1][3] + v.z * mat.m[2][3] + mat.m[3][3]) / w
 	};
 
 	return result;
@@ -340,35 +340,35 @@ NVec3 NMatrix4::GetScale() const
 	return scale;
 }
 
-const NMatrix4 operator*(const NMatrix4& m1, const NMatrix4& m2)
+const NMatrix4 operator*(const NMatrix4& mat1, const NMatrix4& mat2)
 {
-	NMatrix4 result = m1;
+	NMatrix4 result = mat1;
 
-	return result *= m2;
+	return result *= mat2;
 }
 
-NVec3 operator*(const NVec3& v, const NMatrix4& m)
+NVec3 operator*(const NVec3& v, const NMatrix4& mat)
 {
 	NVec3 result = v;
-	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0];
-	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1];
-	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2];
+	result.x = v.x * mat.m[0][0] + v.y * mat.m[1][0] + v.z * mat.m[2][0];
+	result.y = v.x * mat.m[0][1] + v.y * mat.m[1][1] + v.z * mat.m[2][1];
+	result.z = v.x * mat.m[0][2] + v.y * mat.m[1][2] + v.z * mat.m[2][2];
 	return result;
 }
 
-NVec4 operator*(const NVec4& v, const NMatrix4& m)
+NVec4 operator*(const NVec4& v, const NMatrix4& mat)
 {
 	NVec4 result = v;
-	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + v.w * m.m[3][0];
-	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + v.w * m.m[3][1];
-	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + v.w * m.m[3][2];
-	result.w = v.x * m.m[0][3] + v.y * m.m[1][3] + v.z * m.m[2][3] + v.w * m.m[3][3];
+	result.x = v.x * mat.m[0][0] + v.y * mat.m[1][0] + v.z * mat.m[2][0] + v.w * mat.m[3][0];
+	result.y = v.x * mat.m[0][1] + v.y * mat.m[1][1] + v.z * mat.m[2][1] + v.w * mat.m[3][1];
+	result.z = v.x * mat.m[0][2] + v.y * mat.m[1][2] + v.z * mat.m[2][2] + v.w * mat.m[3][2];
+	result.w = v.x * mat.m[0][3] + v.y * mat.m[1][3] + v.z * mat.m[2][3] + v.w * mat.m[3][3];
 	return result;
 }
 
-NVec3& operator*=(NVec3& v, const NMatrix4& m)
+NVec3& operator*=(NVec3& v, const NMatrix4& mat)
 {
-	NVec3 result = v * m;
+	NVec3 result = v * mat;
 	v = result;
 	return v;
 }

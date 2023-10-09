@@ -13,11 +13,11 @@ struct Sound
 class NAudioManager final
 {
 private:
-	static std::unordered_map<SoundHandle, Sound> sSoundMap;	//サウンド群
+	std::unordered_map<SoundHandle, Sound> sSoundMap;	//サウンド群
 
-	static float masterVolume_;	//マスター音量保存用
-	static float bgmVolume_;	//BGM音量保存用
-	static float seVolume_;		//SE音量保存用
+	float masterVolume_;	//マスター音量保存用
+	float bgmVolume_;		//BGM音量保存用
+	float seVolume_;		//SE音量保存用
 
 private:
 	//全ての音量設定
@@ -32,12 +32,21 @@ public:
 
 	//全部の音ファイル読み込み
 	void AllLoad();
+
 	//全体の音量調整
 	void SetMasterVolume(float masterVolume);
 	//BGMの音量調整
 	void SetBGMVolume(float bgmVolume);
 	//SEの音量調整
 	void SetSEVolume(float seVolume);
+
+	//全体の音量取得
+	float GetMasterVolume() { return masterVolume_; }
+	//BGMの音量取得
+	float GetBGMVolume() { return bgmVolume_; }
+	//SEの音量取得
+	float GetSEVolume() { return seVolume_; }
+
 	//音量設定読み込み
 	void LoadVolume();
 	//音量設定保存

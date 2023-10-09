@@ -27,9 +27,17 @@ void UIManager::Init()
 	ui_[(uint32_t)UIType::All].sprite.CreateSprite("allUI");
 	ui_[(uint32_t)UIType::BGM].sprite.CreateSprite("bgmUI");
 	ui_[(uint32_t)UIType::SE].sprite.CreateSprite("seUI");
+	//弾取った時に
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
 		uiBul_[i].sprite.CreateSprite();
+	}
+	//四角2つと点1つで構成される
+	for (uint32_t i = 0; i < maxUIVol; i++)
+	{
+		uiVol_[i].at(0).sprite.CreateSprite("white");
+		uiVol_[i].at(1).sprite.CreateSprite("white");
+		uiVol_[i].at(2).sprite.CreateSprite("volumePoint");
 	}
 
 	//こっち側で初期値設定するやつ
@@ -168,15 +176,88 @@ void UIManager::PlusUIBul(const std::string& texName)
 void UIManager::Draw(UIType uiType)
 {
 	//指定されたUIを描画
-	ui_[(uint32_t)uiType].sprite.Draw();
+	if (ui_[(uint32_t)uiType].isActive)
+	{
+		ui_[(uint32_t)uiType].sprite.Draw();
+	}
 }
 
 void UIManager::DrawUIBul()
 {
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		uiBul_[i].sprite.Draw();
+		if (uiBul_[i].isActive)
+		{
+			uiBul_[i].sprite.Draw();
+		}
 	}
+}
+
+void UIManager::SetUIVol()
+{
+	SetSize(UIType::All, { 150.f,50.f });
+	SetPos(UIType::All,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 220.0f });
+
+	SetSize(UIType::BGM, { 150.f,50.f });
+	SetPos(UIType::BGM,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 70.f });
+
+	SetSize(UIType::SE, { 150.f,50.f });
+	SetPos(UIType::SE,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f + 80.0f });
+
+	for (uint32_t i = 0; i < maxUIVol; i++)
+	{
+		for (uint32_t j = 0; j < 2; j++)
+		{
+			uiVol_[i].at(j).sprite.SetAncor({ 0,0.5f });
+			uiVol_[i].at(j).sprite.SetSize(400.f, 10.f);
+			uiVol_[i].at(j).sprite.SetPos(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f - uiVol_[i].at(j).sprite.GetSize().x * 0.5f,
+				(float)NWindows::GetInstance()->kWin_height * 0.5f - 150.0f + i * 150.f);
+		}
+
+		uiVol_[i].at(2).sprite.SetPos(
+			(float)NWindows::GetInstance()->kWin_width * 0.5f + uiVol_[i].at(0).sprite.GetSize().x * 0.5f,
+			(float)NWindows::GetInstance()->kWin_height * 0.5f - 150.0f + i * 150.f);
+
+		uiVol_[i].at(0).sprite.color_ = NColor(1.0f, 0.0f, 0.0f);	//なぜか色が変わらない
+		uiVol_[i].at(1).sprite.color_ = NColor(0.0f, 1.0f, 0.0f);	//なぜか色が変わらない
+		uiVol_[i].at(2).sprite.color_ = NColor(0.0f, 0.0f, 1.0f);
+	}
+}
+
+void UIManager::DrawUIVol()
+{
+	for (uint32_t i = 0; i < maxUIVol; i++)
+	{
+		for (uint32_t j = 0; j < 3; j++)
+		{
+			if (uiVol_[i].at(j).isActive)
+			{
+				uiVol_[i].at(j).sprite.Draw();
+			}
+		}
+	}
+
+	ui_[(uint32_t)UIType::All].sprite.Draw();
+	ui_[(uint32_t)UIType::BGM].sprite.Draw();
+	ui_[(uint32_t)UIType::SE].sprite.Draw();
+}
+
+void UIManager::SetUIVolPoint(uint32_t volType, float volume, float size)
+{
+	float volPosX = volume * 2.f - 1.f;
+	uiVol_[volType].at(2).sprite.SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f + uiVol_[volType].at(0).sprite.GetSize().x * 0.5f * volPosX,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f - 150.0f + volType * 150.f);
+
+	uiVol_[volType].at(2).sprite.SetSize(size, size);
+	uiVol_[volType].at(1).sprite.SetSize(volume * 400.f, 10.f);
 }
 
 void UIManager::SetPos(UIType uiType, const NVec2& pos)

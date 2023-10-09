@@ -337,11 +337,11 @@ void NAssimpLoader::ParseMaterial(FbxModel* model, const aiScene* scene)
 
 		// テクスチャー
 		uint32_t textureCount = material->GetTextureCount(aiTextureType_DIFFUSE);
-		for (uint32_t i = 0; i < textureCount; i++)
+		for (uint32_t j = 0; j < textureCount; j++)
 		{
 			aiString texturePath;
 
-			if (material->GetTexture(aiTextureType_DIFFUSE, i, &texturePath) == AI_SUCCESS)
+			if (material->GetTexture(aiTextureType_DIFFUSE, j, &texturePath) == AI_SUCCESS)
 			{
 				const std::string filePath = texturePath.C_Str();
 

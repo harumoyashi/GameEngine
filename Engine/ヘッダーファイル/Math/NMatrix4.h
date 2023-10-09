@@ -30,17 +30,17 @@ struct NMatrix4
 
 	//代入演算子オーバーロード
 	//加算
-	NMatrix4 operator+(const NMatrix4& m) const;
+	NMatrix4 operator+(const NMatrix4& mat) const;
 	//加算
-	NMatrix4& operator+=(const NMatrix4& m);
+	NMatrix4& operator+=(const NMatrix4& mat);
 	//減算
-	NMatrix4 operator-(const NMatrix4& m) const;
+	NMatrix4 operator-(const NMatrix4& mat) const;
 	//減算
-	NMatrix4& operator-=(const NMatrix4& m);
+	NMatrix4& operator-=(const NMatrix4& mat);
 	//乗算
-	NMatrix4 operator*(const NMatrix4& m) const;
+	NMatrix4 operator*(const NMatrix4& mat) const;
 	//乗算
-	NMatrix4& operator*=(const NMatrix4& m);
+	NMatrix4& operator*=(const NMatrix4& mat);
 
 	//全ての要素が0の行列
 	static NMatrix4 Zero();
@@ -57,10 +57,10 @@ struct NMatrix4
 	//平行移動行列の作成
 	static NMatrix4 Translation(const NVec3& t);
 	//座標変換（ベクトルと行列の掛け算）
-	static NVec3 Transform(const NVec3& v, const NMatrix4& m);
+	static NVec3 Transform(const NVec3& v, const NMatrix4& mat);
 	//w除算を使った座標変換
-	static NVec3 WTransform(const NVec3& v, const NMatrix4& m);
-	NVec4 Vec4MulMat(const NVec4& v, const NMatrix4& m)const;
+	static NVec3 WTransform(const NVec3& v, const NMatrix4& mat);
+	NVec4 Vec4MulMat(const NVec4& v, const NMatrix4& mat)const;
 
 	//オイラー角への変換
 	//参考:https://qiita.com/aa_debdeb/items/3d02e28fb9ebfa357eaf#%E5%9B%9E%E8%BB%A2%E8%A1%8C%E5%88%97%E3%81%8B%E3%82%89%E3%82%AA%E3%82%A4%E3%83%A9%E3%83%BC%E8%A7%92
@@ -75,6 +75,6 @@ struct NMatrix4
 	NVec3 GetScale() const;
 };
 
-NVec3 operator*(const NVec3& v, const NMatrix4& m);
-NVec4 operator*(const NVec4& v, const NMatrix4& m);
-NVec3& operator*=(NVec3& v, const NMatrix4& m);
+NVec3 operator*(const NVec3& v, const NMatrix4& mat);
+NVec4 operator*(const NVec4& v, const NMatrix4& mat);
+NVec3& operator*=(NVec3& v, const NMatrix4& mat);

@@ -2,5 +2,5 @@
 
 void PlaneCollider::Update(NObj3d* obj)
 {
-
+	obj->Update();
 }

@@ -244,9 +244,9 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const uint32_t index,
 
 	// ノードアニメーションを取得する
 	std::string nodeName = rootNode->mName.C_Str();
-	aiAnimation* animation = scene->mAnimations[index];  // 適切なアニメーションを選択する必要がある
+	aiAnimation* anime = scene->mAnimations[index];  // 適切なアニメーションを選択する必要がある
 
-	const aiNodeAnim* nodeAnim = FindNodeAnimation(nodeName, animation);
+	const aiNodeAnim* nodeAnim = FindNodeAnimation(nodeName, anime);
 
 	// ノードアニメーションがある場合、ノードの変換行列を補完する
 	if (nodeAnim)

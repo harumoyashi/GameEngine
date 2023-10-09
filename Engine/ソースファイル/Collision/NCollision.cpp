@@ -11,6 +11,8 @@ bool NCollision::CircleCol(const Circle& c0, const Circle& c1, const NVec2& inte
 		return true;
 	}
 	return false;
+
+	static_cast<void> (inter);	//引数をなかったことにする
 }
 
 bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1, const NVec3& inter)
@@ -25,6 +27,8 @@ bool NCollision::SphereCol(const SphereCollider& s0, const SphereCollider& s1, c
 		return true;
 	}
 	return false;
+
+	static_cast<void> (inter);	//引数をなかったことにする
 }
 
 bool NCollision::Sphere2PlaneCol(const SphereCollider& sphere, const PlaneCollider& plane)
