@@ -153,78 +153,80 @@ void NGameScene::Update()
 {
 	if (sScene == SceneMode::Pause)		//ポーズ画面
 	{
-		//リトライかタイトル戻るかオプションか選択
-		//スティックで選択
-		if (NInput::GetInstance()->StickTriggered(true) == -1)
+		if (isOption_ == false)
 		{
-			if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+			//リトライかタイトル戻るかオプションか選択
+			//スティックで選択
+			if (NInput::GetInstance()->StickTriggered(true) == -1)
 			{
-				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+				if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+				{
+					pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+				}
 			}
-		}
-		else if (NInput::GetInstance()->StickTriggered(true) == 1)
-		{
-			if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+			else if (NInput::GetInstance()->StickTriggered(true) == 1)
 			{
-				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+				if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+				{
+					pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+				}
 			}
-		}
-		//キーボードで選択
-		if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W))
-		{
-			if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+			//キーボードで選択
+			if (NInput::IsKeyDown(DIK_UP) || NInput::IsKeyDown(DIK_W))
 			{
-				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+				if (pauseScene_ > (PauseSceneMode)((uint32_t)PauseSceneMode::Retry))
+				{
+					pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ - 1);
+				}
 			}
-		}
-		else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S))
-		{
-			if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+			else if (NInput::IsKeyDown(DIK_DOWN) || NInput::IsKeyDown(DIK_S))
 			{
-				pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+				if (pauseScene_ < (PauseSceneMode)((uint32_t)PauseSceneMode::Option))
+				{
+					pauseScene_ = (PauseSceneMode)((uint32_t)pauseScene_ + 1);
+				}
 			}
-		}
 
-		//「リトライ」が選ばれてる時
-		if (pauseScene_ == PauseSceneMode::Retry)
-		{
-			UIManager::GetInstance()->SetSize(UIType::Retry, { 500.f,100.f });
-			UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
-			UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
-
-			//シーン切り替え
-			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			//「リトライ」が選ばれてる時
+			if (pauseScene_ == PauseSceneMode::Retry)
 			{
-				NSceneChange::GetInstance()->Start();	//シーン遷移開始
+				UIManager::GetInstance()->SetSize(UIType::Retry, { 500.f,100.f });
+				UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
+				UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
+
+				//シーン切り替え
+				if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+				{
+					NSceneChange::GetInstance()->Start();	//シーン遷移開始
+				}
+			}
+			//「タイトルへ」が選ばれてる時
+			else if (pauseScene_ == PauseSceneMode::Title)
+			{
+				UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
+				UIManager::GetInstance()->SetSize(UIType::Title, { 500.f,100.f });
+				UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
+
+				//シーン切り替え
+				if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+				{
+					NSceneChange::GetInstance()->Start();	//シーン遷移開始
+				}
+			}
+			//「オプション」が選ばれてる時
+			else if (pauseScene_ == PauseSceneMode::Option)
+			{
+				UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
+				UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
+				UIManager::GetInstance()->SetSize(UIType::Option, { 500.f,100.f });
+
+				if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+				{
+					isOption_ = true;
+				}
 			}
 		}
-		//「タイトルへ」が選ばれてる時
-		else if (pauseScene_ == PauseSceneMode::Title)
-		{
-			UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
-			UIManager::GetInstance()->SetSize(UIType::Title, { 500.f,100.f });
-			UIManager::GetInstance()->SetSize(UIType::Option, { 250.f,50.f });
-
-			//シーン切り替え
-			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-			{
-				NSceneChange::GetInstance()->Start();	//シーン遷移開始
-			}
-		}
-		//「オプション」が選ばれてる時
-		else if (pauseScene_ == PauseSceneMode::Option)
-		{
-			UIManager::GetInstance()->SetSize(UIType::Retry, { 250.f,50.f });
-			UIManager::GetInstance()->SetSize(UIType::Title, { 250.f,50.f });
-			UIManager::GetInstance()->SetSize(UIType::Option, { 500.f,100.f });
-
-			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
-			{
-				isOption_ = true;
-			}
-		}
-
-		if (isOption_)
+		else if (isOption_)
 		{
 			//どの音量調節するか選択
 			//スティックで選択
