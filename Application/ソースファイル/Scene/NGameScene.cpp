@@ -235,18 +235,21 @@ void NGameScene::Update()
 		{
 			//どの音量調節するか選択
 			//スティックで選択
-			if (NInput::StickTriggered(true) == -1)
+			if (abs(NInput::GetStick().x) < 0.1f)	//横入力がある程度小さいとき
 			{
-				if (volumeType_ > 0)
+				if (NInput::StickTriggered(true) == -1)
 				{
-					volumeType_--;
+					if (volumeType_ > 0)
+					{
+						volumeType_--;
+					}
 				}
-			}
-			else if (NInput::StickTriggered(true) == 1)
-			{
-				if (volumeType_ < 2)
+				else if (NInput::StickTriggered(true) == 1)
 				{
-					volumeType_++;
+					if (volumeType_ < 2)
+					{
+						volumeType_++;
+					}
 				}
 			}
 			//キーボードで選択
@@ -287,11 +290,11 @@ void NGameScene::Update()
 			{
 				if (i == volumeType_)
 				{
-					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 70.f);
+					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 60.f);
 				}
 				else
 				{
-					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 35.f);
+					UIManager::GetInstance()->SetUIVolPoint(i, volume_[i], 30.f);
 				}
 			}
 			//音量に反映

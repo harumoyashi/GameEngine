@@ -63,6 +63,13 @@ void UIManager::Update()
 	{
 		uiBul_[i].sprite.Update();
 	}
+	for (uint32_t i = 0; i < maxUIVol; i++)
+	{
+		for (uint32_t j = 0; j < 3; j++)
+		{
+			uiVol_[i].at(j).sprite.Update();
+		}
+	}
 
 	EaseTimerUpdate();
 }
@@ -225,9 +232,7 @@ void UIManager::SetUIVol()
 			(float)NWindows::GetInstance()->kWin_width * 0.5f + uiVol_[i].at(0).sprite.GetSize().x * 0.5f,
 			(float)NWindows::GetInstance()->kWin_height * 0.5f - 150.0f + i * 150.f);
 
-		uiVol_[i].at(0).sprite.color_ = NColor(1.0f, 0.0f, 0.0f);	//なぜか色が変わらない
-		uiVol_[i].at(1).sprite.color_ = NColor(0.0f, 1.0f, 0.0f);	//なぜか色が変わらない
-		uiVol_[i].at(2).sprite.color_ = NColor(0.0f, 0.0f, 1.0f);
+		uiVol_[i].at(0).sprite.color_ = NColor(0.2f, 0.2f, 0.2f);	//後ろの枠は灰色に
 	}
 }
 
