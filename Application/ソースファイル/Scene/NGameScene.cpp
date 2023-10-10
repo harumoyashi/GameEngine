@@ -35,7 +35,7 @@ void NGameScene::Init()
 	NCameraManager::GetInstance()->ChangeCameara(CameraType::BeforeStart);
 #pragma endregion
 #pragma region 描画初期化処理
-	//オブジェクト
+#pragma region オブジェクト生成
 	NParticleManager::GetInstance()->Init();
 	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
@@ -45,11 +45,12 @@ void NGameScene::Init()
 	ItemManager::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
+#pragma endregion
 #pragma region オブジェクトの初期値設定
 
 
 #pragma endregion
-	//背景スプライト生成
+#pragma region 背景スプライト生成
 	backSprite_ = std::make_unique<NSprite>();
 	backSprite_->CreateSprite("white");
 	backSprite_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
@@ -57,10 +58,16 @@ void NGameScene::Init()
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	backSprite_->color_.SetColor255(10, 10, 10);
-
-	//前景スプライト生成
-
-	Score::Init();
+#pragma endregion
+#pragma region 前景スプライト生成
+	darken_ = std::make_unique<NSprite>();
+	darken_->CreateSprite("white");
+	darken_->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height);
+	darken_->SetPos(
+		(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	darken_->color_.SetColor255(0, 0, 0, 180);
+#pragma endregion
 #pragma region 各スプライトの設定
 	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
 	UIManager::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
@@ -118,6 +125,7 @@ void NGameScene::Init()
 	IEmitter3D::SetLightGroup(lightGroup_.get());
 #pragma endregion
 #pragma region	その他設定
+	Score::Init();
 	Bloom::Init();
 
 	sScene = SceneMode::BeforeStart;
@@ -148,6 +156,7 @@ void NGameScene::Update()
 #pragma endregion
 #pragma region スプライト
 	backSprite_->Update();
+	darken_->Update();
 	Score::Update();
 #pragma endregion
 	if (sScene == SceneMode::Pause)		//ポーズ画面
@@ -553,6 +562,8 @@ void NGameScene::DrawForeSprite()
 {
 	if (sScene == SceneMode::Pause)	//ポーズ画面
 	{
+		darken_->Draw();
+
 		if (isOption_ == false)
 		{
 			UIManager::GetInstance()->Draw(UIType::Back);
