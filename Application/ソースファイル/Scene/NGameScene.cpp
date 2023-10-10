@@ -197,14 +197,6 @@ void NGameScene::Update()
 			{
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
-
-			////切り替えてﾖｼって言われたら
-			//if (NSceneChange::GetInstance()->GetIsChange() == true)
-			//{
-			//	NAudioManager::GetInstance()->Destroy("playBGM");
-			//	NSceneManager::ChangeScene<NGameScene>();			//ゲームシーンに切り替え
-			//	NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
-			//}
 		}
 		//「タイトルへ」が選ばれてる時
 		else if (pauseScene_ == PauseSceneMode::Title)
@@ -274,14 +266,22 @@ void NGameScene::Update()
 			volume_[volumeType_] += powf(NInput::GetStick().x, 2.f) * 0.01f * MathUtil::Signf(NInput::GetStick().x);
 
 			//キーボードで調整
-			if (NInput::IsKeyDown(DIK_LEFT) || NInput::IsKeyDown(DIK_A))
+			if (NInput::IsKeyDown(DIK_LEFT) || NInput::IsKeyDown(DIK_A) ||
+				NInput::IsKeyDown(DIK_RIGHT) || NInput::IsKeyDown(DIK_D))
 			{
-				volume_[volumeType_] -= 0.05f;
+				volEaseTimer_.Start();	//調節キー押したらイージングタイマー開始
 			}
-			else if (NInput::IsKeyDown(DIK_RIGHT) || NInput::IsKeyDown(DIK_D))
+
+			//押してから徐々に足される値が大きくなるため調整しやすくなってる
+			if (NInput::IsKey(DIK_LEFT) || NInput::IsKey(DIK_A))
 			{
-				volume_[volumeType_] += 0.05f;
+				volume_[volumeType_] -= 0.01f * NEasing::InQuad(volEaseTimer_.GetTimeRate());
 			}
+			else if (NInput::IsKey(DIK_RIGHT) || NInput::IsKey(DIK_D))
+			{
+				volume_[volumeType_] += 0.01f * NEasing::InQuad(volEaseTimer_.GetTimeRate());
+			}
+			volEaseTimer_.Update();
 
 			//超えないように調整
 			volume_[volumeType_] = MathUtil::Clamp(volume_[volumeType_], 0.f, 1.f);
