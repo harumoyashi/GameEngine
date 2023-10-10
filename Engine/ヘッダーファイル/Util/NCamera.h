@@ -51,7 +51,7 @@ public:
 	const NMatrix4& GetMatProjection()const { return matProjection_; }
 	const NMatrix4& GetMatView()const { return matView_; }
 	//eye座標取得
-	const NVec3& GetPos()const { return eye_; }
+	const NVec3& GetEye()const { return eye_; }
 	//注視点座標取得
 	const NVec3& GetTarget()const { return target_; }
 	//上ベクトル取得

@@ -151,14 +151,6 @@ void NGameScene::Init()
 
 void NGameScene::Update()
 {
-#pragma region カメラ
-	NCameraManager::GetInstance()->Update();
-#pragma endregion
-#pragma region スプライト
-	backSprite_->Update();
-	darken_->Update();
-	Score::Update();
-#pragma endregion
 	if (sScene == SceneMode::Pause)		//ポーズ画面
 	{
 		//リトライかタイトル戻るかオプションか選択
@@ -206,13 +198,13 @@ void NGameScene::Update()
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
 
-			//切り替えてﾖｼって言われたら
-			if (NSceneChange::GetInstance()->GetIsChange() == true)
-			{
-				NAudioManager::GetInstance()->Destroy("playBGM");
-				NSceneManager::ChangeScene<NGameScene>();			//ゲームシーンに切り替え
-				NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
-			}
+			////切り替えてﾖｼって言われたら
+			//if (NSceneChange::GetInstance()->GetIsChange() == true)
+			//{
+			//	NAudioManager::GetInstance()->Destroy("playBGM");
+			//	NSceneManager::ChangeScene<NGameScene>();			//ゲームシーンに切り替え
+			//	NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
+			//}
 		}
 		//「タイトルへ」が選ばれてる時
 		else if (pauseScene_ == PauseSceneMode::Title)
@@ -327,6 +319,14 @@ void NGameScene::Update()
 	}
 	else	//ポーズ画面以外の処理
 	{
+#pragma region カメラ
+		NCameraManager::GetInstance()->Update();
+#pragma endregion
+#pragma region スプライト
+		backSprite_->Update();
+		darken_->Update();
+		Score::Update();
+#pragma endregion
 		BulletManager::GetInstance()->Update();
 		EnemyManager::GetInstance()->Update();
 		ItemManager::GetInstance()->Update();
@@ -516,7 +516,15 @@ void NGameScene::Update()
 		NAudioManager::GetInstance()->Destroy("playBGM");
 		NAudioManager::GetInstance()->Destroy("clearBGM");
 		NAudioManager::GetInstance()->Destroy("faildBGM");
-		NSceneManager::ChangeScene<NTitleScene>();			//タイトルシーンに切り替え
+		//「リトライ」が選ばれてる時
+		if (pauseScene_ == PauseSceneMode::Retry)
+		{
+			NSceneManager::ChangeScene<NGameScene>();		//ゲームシーンに切り替え
+		}
+		else
+		{
+			NSceneManager::ChangeScene<NTitleScene>();		//タイトルシーンに切り替え
+		}
 		NSceneChange::GetInstance()->SetIsChange(false);	//切り替えちゃﾀﾞﾒｰ
 	}
 #ifdef _DEBUG

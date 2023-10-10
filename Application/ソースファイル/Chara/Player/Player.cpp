@@ -309,6 +309,7 @@ void Player::OnCollision()
 	//当たった相手が敵だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "enemy")
 	{
+		NCameraManager::GetInstance()->ShakeStart(2.f,0.3f);
 		NAudioManager::GetInstance()->Play("deadSE");
 		SetIsAlive(false);
 		NInput::Vibration(0.8f, 0.8f, 0.3f);

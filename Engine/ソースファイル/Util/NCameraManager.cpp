@@ -10,7 +10,7 @@ void NCameraManager::NormalCameraInit()
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
 
-	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.5f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
@@ -55,6 +55,8 @@ void NCameraManager::NormalCameraUpdate()
 		normalCamera_.SetUpVec(nextUpVec_);
 	}
 
+	normalCamera_.SetEye(normalCamera_.GetEye() + shakeVec_);
+
 	normalCamera_.Update();
 	NCamera::sCurrentCamera = &normalCamera_;
 }
@@ -79,7 +81,7 @@ void NCameraManager::TitleCameraInit()
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetPos();
 
-	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	nextPos_ = nextTarget_ + NVec3(-length_, 0, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
@@ -120,6 +122,8 @@ void NCameraManager::TitleCameraUpdate()
 	titleCamera_.SetEye(NVec3(vec2.x, length_, vec2.y));
 	titleCamera_.SetUpVec(nextUpVec_);
 
+	titleCamera_.SetEye(titleCamera_.GetEye() + shakeVec_);
+
 	titleCamera_.Update();
 	NCamera::sCurrentCamera = &titleCamera_;
 }
@@ -132,7 +136,7 @@ void NCameraManager::BeforeStartCameraInit()
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = { 0,0,Field::GetInstance()->GetGoalPos() };
 
-	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.8f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
@@ -176,6 +180,8 @@ void NCameraManager::BeforeStartCameraUpdate()
 	beforeStartCamera_.SetEye(nextPos_);
 	beforeStartCamera_.SetUpVec(nextUpVec_);
 
+	beforeStartCamera_.SetEye(beforeStartCamera_.GetEye() + shakeVec_);
+
 	beforeStartCamera_.Update();
 	NCamera::sCurrentCamera = &beforeStartCamera_;
 }
@@ -188,7 +194,7 @@ void NCameraManager::FaildCameraInit()
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
-	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	nextPos_ = Player::GetInstance()->GetPos() + NVec3(0, length_ * 0.5f, -length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
@@ -226,6 +232,8 @@ void NCameraManager::FaildCameraUpdate()
 		faildCamera_.SetUpVec(upVec);
 	}	//カメラ動くことないから補間終わったら放置
 
+	faildCamera_.SetEye(faildCamera_.GetEye() + shakeVec_);
+
 	faildCamera_.Update();
 	NCamera::sCurrentCamera = &faildCamera_;
 }
@@ -238,7 +246,7 @@ void NCameraManager::ClearCameraInit()
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
-	currentPos_ = NCamera::sCurrentCamera->GetPos();
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	nextPos_ = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
@@ -269,7 +277,7 @@ void NCameraManager::ClearCameraUpdate()
 		//ずれが起きないように更新し続ける
 		currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 		nextTarget_ = Player::GetInstance()->GetHeadPos();
-		currentPos_ = NCamera::sCurrentCamera->GetPos();
+		currentPos_ = NCamera::sCurrentCamera->GetEye();
 		nextPos_ = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
 		currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 
@@ -292,8 +300,42 @@ void NCameraManager::ClearCameraUpdate()
 		clearCamera_.SetTarget(Player::GetInstance()->GetHeadPos());
 	}
 
+	clearCamera_.SetEye(clearCamera_.GetEye() + shakeVec_);
+
 	clearCamera_.Update();
 	NCamera::sCurrentCamera = &clearCamera_;
+}
+
+void NCameraManager::ShakeStart(float shakePower, float shakeTime)
+{
+	shakeTimer_ = shakeTime;
+	shakeTimer_.Start();
+	shakePower_ = shakePower;
+	shakePrevPos = NCamera::sCurrentCamera->GetEye();
+}
+
+void NCameraManager::ShakeUpdate()
+{
+	if (shakeTimer_.GetStarted())
+	{
+		float shakeVecRand = MathUtil::Randomf(-1.f, 1.f);	//ランダムで揺らす方向決める
+
+		shakeVec_ =
+		{
+			shakeVecRand,
+			shakeVecRand,
+			shakeVecRand
+		};
+		//大きさかけて、タイマーが進むごとに揺れ小さくなってく
+		shakeVec_ *= shakePower_ * (1.f - shakeTimer_.GetTimeRate());
+		shakeTimer_.Update();
+	}
+	else if(shakeTimer_.GetEnd())
+	{
+		//終わったら揺れる前の位置に戻してあげて、揺れの値も0に
+		shakeVec_ = NVec3::zero;
+		NCamera::sCurrentCamera->SetEye(shakePrevPos);
+	}
 }
 
 NVec3 NCameraManager::InQuad(const NVec3& start, const NVec3& end, float timerate)
@@ -339,6 +381,8 @@ void NCameraManager::Init()
 
 void NCameraManager::Update()
 {
+	ShakeUpdate();
+
 	//通常カメラの時に右クリックしたらデバッグカメラモードと切り替わる
 	if (NInput::TriggerMouse(NInput::MouseRight))
 	{

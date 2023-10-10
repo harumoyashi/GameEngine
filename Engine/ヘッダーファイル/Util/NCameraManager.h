@@ -58,6 +58,11 @@ private:
 	float currentFov_;		//現在のカメラ視野
 	float nextFov_;			//持っていきたいカメラ視野
 	float length_;			//見るものとの距離
+	//カメラシェイク用
+	NEasing::EaseTimer shakeTimer_;	//シェイク時間
+	NVec3 shakeVec_;				//シェイク方向
+	float shakePower_;				//シェイクの大きさ
+	NVec3 shakePrevPos;				//シェイク前のカメラ座標
 
 private:
 	//カメラ固有の初期化、更新処理
@@ -79,6 +84,9 @@ private:
 	void ClearCameraInit();
 	void ClearCameraUpdate();
 
+	//カメラシェイク用更新処理
+	void ShakeUpdate();
+
 	//Vec3のイージング用
 	NVec3 InQuad(const NVec3& start, const NVec3& end, float timerate);
 	NVec3 OutQuad(const NVec3& start, const NVec3& end, float timerate);
@@ -98,6 +106,11 @@ public:
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
 
 	void SetDebugCamera(NCamera& camera);
+
+	//カメラシェイク開始、パラメーター設定
+	//shakePower:シェイクの大きさ
+	//シェイク時間(秒)
+	void ShakeStart(float shakePower, float shakeTime);
 
 private:
 	NCameraManager() = default;
