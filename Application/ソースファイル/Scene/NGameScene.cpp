@@ -313,7 +313,6 @@ void NGameScene::Update()
 			else
 			{
 				sScene = SceneMode::Play;	//プレイに戻る
-				NAudioManager::GetInstance()->SetVolume("playBGM", 0.2f);
 			}
 		}
 	}
@@ -353,7 +352,6 @@ void NGameScene::Update()
 			if (NInput::IsKeyDown(DIK_ESCAPE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_START))
 			{
 				sScene = SceneMode::Pause;	//ポーズ画面に切り替え
-				NAudioManager::GetInstance()->SetVolume("playBGM", 0.05f);
 			}
 
 			Player::GetInstance()->Update();

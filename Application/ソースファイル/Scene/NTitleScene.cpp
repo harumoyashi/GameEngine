@@ -10,6 +10,7 @@
 #include "NCameraManager.h"
 #include "IPostEffect.h"
 #include "Bloom.h"
+#include "UI.h"
 
 #include "Player.h"
 #include "Field.h"
@@ -65,13 +66,14 @@ void NTitleScene::Init()
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	titleLogo_->color_.SetColor255(255, 255, 255, 255);
 
-	for (uint32_t i = 0; i < aButton_.size(); i++)
-	{
-		aButton_[i] = std::make_unique<NSprite>();
-		aButton_[i]->CreateClipSprite("Abutton", { i * 192.f,0 }, { 192.f,192.f });
-		aButton_[i]->SetPos(
-			(float)NWindows::GetInstance()->kWin_width * 0.5f, 600.f);
-	}
+	UIManager::GetInstance()->SetSize(UIType::Abutton,
+		{ 120.f, 120.f });
+	UIManager::GetInstance()->SetPos(UIType::Abutton,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 620.f });
+	UIManager::GetInstance()->SetSize(UIType::AbuttonPush,
+		{ 120.f, 120.f });
+	UIManager::GetInstance()->SetPos(UIType::AbuttonPush,
+		{ (float)NWindows::GetInstance()->kWin_width * 0.5f, 620.f });
 
 #pragma endregion
 	// ライト生成
@@ -95,21 +97,17 @@ void NTitleScene::Update()
 #pragma endregion
 	backSprite_->Update();
 	titleLogo_->Update();
-	for (uint32_t i = 0; i < aButton_.size(); i++)
-	{
-		aButton_[i]->Update();
-	}
 
 	flashingTimer_.Roop();
 	if (flashingTimer_.GetTimeRate() > 0.7f)
 	{
-		aButton_[0]->isInvisible_ = true;
-		aButton_[1]->isInvisible_ = false;
+		UIManager::GetInstance()->SetInvisible(UIType::Abutton,false);
+		UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush,true);
 	}
 	else
 	{
-		aButton_[0]->isInvisible_ = false;
-		aButton_[1]->isInvisible_ = true;
+		UIManager::GetInstance()->SetInvisible(UIType::Abutton, true);
+		UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 	}
 
 	Player::GetInstance()->SetIsMove(false);
@@ -151,8 +149,6 @@ void NTitleScene::DrawParticle()
 void NTitleScene::DrawForeSprite()
 {
 	titleLogo_->Draw();
-	for (uint32_t i = 0; i < aButton_.size(); i++)
-	{
-		aButton_[i]->Draw();
-	}
+	UIManager::GetInstance()->Draw(UIType::Abutton);
+	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
 }

@@ -21,10 +21,10 @@ float Gaussian(float2 drawUV, float2 pickUV, float sigma)
 float4 Blur(float2 uv)
 {
 	//ガウシアンブラー//
-    float totalWeight = 0, _Sigma = 0.003, _StepWidth = 0.001; //Bloomはブラーを大げさに
+    float totalWeight = 0.f, _Sigma = 0.002f, _StepWidth = 0.001f; //Bloomはブラーを大げさに
     float4 blurCol = float4(0, 0, 0, 0);
 
-    for (float py = -_Sigma * 2.0f; py <= _Sigma * 2.0f; py += _StepWidth)
+    for (float py = -_Sigma * 4.0f; py <= _Sigma * 4.0f; py += _StepWidth)
     {
         for (float px = -_Sigma * 2.0f; px <= _Sigma * 2.0f; px += _StepWidth)
         {

@@ -50,6 +50,7 @@ void UIManager::Init()
 		uiBul_[i].easeBackTimer = 0.2f;
 		uiBul_[i].startPos = { -150.f,150.f + 30.f * i };
 		uiBul_[i].endPos = { 180.f,150.f + 30.f * i };
+		uiBul_[i].sprite.isInvisible_ = true;	//とりあえず出さない
 	}
 }
 
@@ -158,7 +159,7 @@ void UIManager::EaseTimerUpdate()
 				uiBul_[i].easeTimer.Reset();
 				uiBul_[i].keepTimer.Reset();
 				uiBul_[i].easeBackTimer.Reset();
-				uiBul_[i].isActive = false;
+				uiBul_[i].sprite.isInvisible_ = true;
 			}
 		}
 	}
@@ -168,11 +169,11 @@ void UIManager::PlusUIBul(const std::string& texName)
 {
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		if (uiBul_[i].isActive == false)
+		if (uiBul_[i].sprite.isInvisible_ == true)
 		{
 			uiBul_[i].sprite.texHandle_ =
 				NTextureManager::GetInstance()->textureMap_[texName].fileName_;
-			uiBul_[i].isActive = true;
+			uiBul_[i].sprite.isInvisible_ = false;
 			uiBul_[i].easeTimer.Start();
 
 			break;
@@ -183,20 +184,14 @@ void UIManager::PlusUIBul(const std::string& texName)
 void UIManager::Draw(UIType uiType)
 {
 	//指定されたUIを描画
-	if (ui_[(uint32_t)uiType].isActive)
-	{
-		ui_[(uint32_t)uiType].sprite.Draw();
-	}
+	ui_[(uint32_t)uiType].sprite.Draw();
 }
 
 void UIManager::DrawUIBul()
 {
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		if (uiBul_[i].isActive)
-		{
-			uiBul_[i].sprite.Draw();
-		}
+		uiBul_[i].sprite.Draw();
 	}
 }
 
@@ -242,10 +237,7 @@ void UIManager::DrawUIVol()
 	{
 		for (uint32_t j = 0; j < 3; j++)
 		{
-			if (uiVol_[i].at(j).isActive)
-			{
-				uiVol_[i].at(j).sprite.Draw();
-			}
+			uiVol_[i].at(j).sprite.Draw();
 		}
 	}
 

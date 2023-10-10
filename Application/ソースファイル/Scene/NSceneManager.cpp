@@ -30,10 +30,10 @@ NSceneManager* NSceneManager::GetInstance()
 
 void NSceneManager::Init()
 {
+	UIManager::GetInstance()->Init();
 	NAudio::GetInstance()->Init();
 	currentScene_->Init();
 	NSceneChange::GetInstance()->Init();
-	UIManager::GetInstance()->Init();
 }
 
 void NSceneManager::Update()

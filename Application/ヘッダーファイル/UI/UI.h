@@ -32,7 +32,6 @@ struct UI
 	NEasing::EaseTimer easeBackTimer;	//UI用イージングバックタイマー群
 	NVec2 startPos;						//始点座標
 	NVec2 endPos;						//終点座標
-	bool isActive = true;				//有効フラグ
 };
 
 class UIManager
