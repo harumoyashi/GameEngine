@@ -63,6 +63,10 @@ public:
 	void AddEmitter(uint32_t eneNum);
 	//死んだときのパーティクルを出す
 	void DeadParticle();
+	//画面内にいるか判定
+	bool IsInScreen();
+	//生きてていい範囲内にいるか判定
+	bool IsInActiveArea();
 
 	//---------------------------- 継承するやつら ----------------------------//
 	//移動

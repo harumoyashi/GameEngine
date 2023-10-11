@@ -60,57 +60,12 @@ void IEnemy::Update()
 	//デバッグカメラの時はカメラ基準で消えられると困るから消さない
 	if (NCameraManager::GetInstance()->GetIsDebugCamera() == false)
 	{
-		// 「2Dに直した行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
-		float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
-
-		//「2Dに直した行動範囲+画面端座標」
-		//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
-		NMatrix4 matWorldRight, matWorldLeft;
-
-		matWorldRight = matWorldRight.Translation(NVec3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
-		borderLineRight = MathUtil::WorldToScreen(matWorldRight).x + NWindows::kWin_width * 0.5f;
-
-		matWorldLeft = matWorldLeft.Translation(NVec3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
-		borderLineLeft = MathUtil::WorldToScreen(matWorldLeft).x - NWindows::kWin_width * 0.5f;
-
-		float objRight, objLeft;	//オブジェの右端左端
-		NMatrix4 objRightMat = 
-			NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
-		NMatrix4 objLeftMat =
-			NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
-		objRight = MathUtil::WorldToScreen(objRightMat).x;
-		objLeft = MathUtil::WorldToScreen(objLeftMat).x;
-		//ボーダーライン超えたら殺す
-		if (borderLineRight < objLeft || borderLineLeft > objRight)
-		{
-			isAlive_ = false;
-		}
+		// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
+		isAlive_ = IsInActiveArea();
 	}
 
-	// 「画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合描画しない //
-	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
-	NMatrix4 matWorldRight, matWorldLeft;
-
-	NVec2 objPosPlusScale;	//オブジェのスケール足した場合の2D座標
-	NVec2 objPosMinusScale;	//オブジェのスケール引いた場合の2D座標
-	//スケール足したのと引いたのそれぞれ平行移動行列として求める
-	NMatrix4 posPlusScaleMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
-	NMatrix4 posMinusScaleMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
-	//スクリーン座標に直して
-	objPosPlusScale = MathUtil::WorldToScreen(posPlusScaleMat);
-	objPosMinusScale = MathUtil::WorldToScreen(posMinusScaleMat);
-	//画面内なら描画する
-	if (0 < objPosPlusScale.x && NWindows::kWin_width > objPosMinusScale.x &&
-		0 < objPosMinusScale.y && NWindows::kWin_height > objPosPlusScale.y)
-	{
-		isDraw_ = true;
-	}
-	else
-	{
-		isDraw_ = false;
-	}
+	//画面内にいる奴だけ描画フラグ立てる
+	isDraw_ = IsInScreen();
 
 	obj_->Update();
 	collider_.Update(obj_.get());
@@ -167,6 +122,70 @@ void IEnemy::DeadParticle()
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetPos(GetPos());
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->Add(
 			15, 0.25f, obj_->color_, 0.1f, 0.4f, { -0.5f,-0.1f,-0.5f }, { 0.5f,0.1f,0.5f }, NVec3::zero, -NVec3::one, NVec3::one);
+	}
+}
+
+bool IEnemy::IsInScreen()
+{
+	// 「画面端座標」を「2Dに直した敵の座標+敵の半径」が超えたか判定 //
+	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
+	NMatrix4 matWorldRight, matWorldLeft;
+
+	NVec2 objPosPlusScale;	//オブジェのスケール足した場合の2D座標
+	NVec2 objPosMinusScale;	//オブジェのスケール引いた場合の2D座標
+	//スケール足したのと引いたのそれぞれ平行移動行列として求める
+	NMatrix4 posPlusScaleMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
+	NMatrix4 posMinusScaleMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
+	//スクリーン座標に直して
+	objPosPlusScale = MathUtil::WorldToScreen(posPlusScaleMat);
+	objPosMinusScale = MathUtil::WorldToScreen(posMinusScaleMat);
+	//画面内か判定
+	if (0 < objPosPlusScale.x && NWindows::kWin_width > objPosMinusScale.x &&
+		0 < objPosMinusScale.y && NWindows::kWin_height > objPosPlusScale.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool IEnemy::IsInActiveArea()
+{
+	// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えてるか判定 //
+	float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
+
+	//「2Dに直した行動範囲+画面端座標」
+	//行動範囲をスクリーン座標に変換してウィンドウ座標と足す
+	NMatrix4 matWorldRight, matWorldLeft;
+
+	//行動範囲座標を平行移動行列に変換
+	matWorldRight = matWorldRight.Translation(NVec3(Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	matWorldLeft = matWorldLeft.Translation(NVec3(-Field::GetInstance()->GetActivityAreaX(), 0, 0));
+	//行動範囲座標をスクリーン座標に変換して、画面サイズ分ずらしたのが敵の行動範囲
+	borderLineRight = MathUtil::WorldToScreen(matWorldRight).x + NWindows::kWin_width * 0.5f;
+	borderLineLeft = MathUtil::WorldToScreen(matWorldLeft).x - NWindows::kWin_width * 0.5f;
+
+	float objRight, objLeft;	//オブジェの右端左端
+	//スケール足したのと引いたのそれぞれ平行移動行列として求める
+	NMatrix4 objRightMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
+	NMatrix4 objLeftMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
+	//スクリーン座標に直して
+	objRight = MathUtil::WorldToScreen(objRightMat).x;
+	objLeft = MathUtil::WorldToScreen(objLeftMat).x;
+	//ボーダーライン超えてるか判定
+	if (borderLineRight < objLeft || borderLineLeft > objRight)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
 	}
 }
 
