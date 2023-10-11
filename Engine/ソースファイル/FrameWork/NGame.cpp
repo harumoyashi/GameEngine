@@ -56,6 +56,11 @@ void NGame::Update()
 	//ImGui::ShowDemoWindow();でImGuiのサンプル見れる//
 
 #ifdef _DEBUG //ポストエフェクトImGui
+	static bool isPostEffect = false;
+	ImGui::Begin("PostEffect");
+	ImGui::Checkbox("PostEffectActive",&isPostEffect);
+	ImGui::End();
+	IPostEffect::SetIsActive(isPostEffect);
 #endif // DEBUG
 
 	NFramework::Update();
