@@ -36,7 +36,7 @@ protected:
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
 	bool isItem_;					//アイテム持ってるかフラグ
-	bool isDraw_;					//アイテム持ってるかフラグ
+	bool isDraw_;					//描画するかフラグ
 
 public:
 	IEnemy();

@@ -101,10 +101,14 @@ public:
 	//指定したカメラに変更
 	void ChangeCameara(const CameraType cameraType);
 
+	//有効フラグ取得
 	bool GetIsActive() { return isActive_; }
 	//通常カメラへの遷移が完了したかどうか取得
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
+	//現在のカメラタイプがデバッグカメラかフラグを取得
+	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 
+	//今のカメラ情報をデバッグカメラに入れる
 	void SetDebugCamera(NCamera& camera);
 
 	//カメラシェイク開始、パラメーター設定
