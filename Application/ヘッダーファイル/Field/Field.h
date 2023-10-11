@@ -39,10 +39,10 @@ private:
 
 	float tileDivide_ = 0.5f;					//タイルの分割幅
 	float activityAreaX_ = 10.0f;				//行動範囲制限
-	uint32_t checkPointNum = 3;					//チェックポイントの数
+	uint32_t checkPointNum = 5;					//チェックポイントの数
 
 	float startPosZ_ = 3.0f;					//スタート地点(縦だけ)
-	float goalPosZ_ = 20.0f;					//ゴール地点(縦だけ)
+	float goalPosZ_ = 40.0f;					//ゴール地点(縦だけ)
 
 	bool isStart_ = false;						//スタートしたかフラグ
 	bool isGoal_ = false;						//ゴールしたかフラグ

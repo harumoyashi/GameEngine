@@ -42,6 +42,7 @@ void NTitleScene::Init()
 
 #pragma endregion
 	Player::GetInstance()->Init();
+	Field::GetInstance()->Init();
 
 #pragma region オブジェクトの初期値設定
 
@@ -53,7 +54,7 @@ void NTitleScene::Init()
 	backSprite_->SetPos(
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
-	backSprite_->color_.SetColor255(10, 10, 10);
+	backSprite_->color_.SetColor255(1, 1, 1);
 
 	//前景スプライト生成
 	titleLogo_ = std::make_unique<NSprite>();
@@ -98,6 +99,8 @@ void NTitleScene::Update()
 	backSprite_->Update();
 	titleLogo_->Update();
 
+	Field::GetInstance()->Update();
+
 	flashingTimer_.Roop();
 	if (flashingTimer_.GetTimeRate() > 0.7f)
 	{
@@ -135,6 +138,7 @@ void NTitleScene::DrawBackSprite()
 
 void NTitleScene::DrawBack3D()
 {
+	Field::GetInstance()->Draw();
 }
 
 void NTitleScene::Draw3D()

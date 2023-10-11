@@ -57,7 +57,7 @@ void NGameScene::Init()
 	backSprite_->SetPos(
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
-	backSprite_->color_.SetColor255(10, 10, 10);
+	backSprite_->color_.SetColor255(1, 1, 1);
 #pragma endregion
 #pragma region 前景スプライト生成
 	darken_ = std::make_unique<NSprite>();
@@ -550,14 +550,20 @@ void NGameScene::DrawBackSprite()
 void NGameScene::DrawBack3D()
 {
 	Field::GetInstance()->Draw();
-	Wave::GetInstance()->DrawObj();
+	if (sScene == SceneMode::Play || sScene == SceneMode::Pause)	//プレイ中かポーズ中
+	{
+		Wave::GetInstance()->DrawObj();
+	}
 }
 
 void NGameScene::Draw3D()
 {
-	BulletManager::GetInstance()->Draw();
-	EnemyManager::GetInstance()->Draw();
-	ItemManager::GetInstance()->Draw();
+	if (sScene == SceneMode::Play || sScene == SceneMode::Pause)	//プレイ中かポーズ中
+	{
+		BulletManager::GetInstance()->Draw();
+		EnemyManager::GetInstance()->Draw();
+		ItemManager::GetInstance()->Draw();
+	}
 	Player::GetInstance()->Draw();
 }
 
@@ -593,7 +599,10 @@ void NGameScene::DrawForeSprite()
 		UIManager::GetInstance()->Draw(UIType::Lstick);
 	}
 
-	Wave::GetInstance()->DrawSprite();
+	if (sScene == SceneMode::Play)	//プレイ中
+	{
+		Wave::GetInstance()->DrawSprite();
+	}
 
 	UIManager::GetInstance()->Draw(UIType::Abutton);
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
