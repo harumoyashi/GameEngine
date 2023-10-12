@@ -31,6 +31,9 @@ void NGPipeline::Create()
 {
 	NDX12::GetInstance()->GetDevice()->
 		CreateGraphicsPipelineState(&psDesc_, IID_PPV_ARGS(&pso_));
+	
+	/*NDX12::GetInstance()->GetDevice()->
+		CreateComputePipelineState(&csDesc_, IID_PPV_ARGS(&pso_));*/
 }
 
 void NGPipeline::SetDesc(PipelineDesc desc)
@@ -1103,41 +1106,41 @@ void PipeLineManager::CreateAll()
 	//パイプライン生成
 	NGPipeline::Create(particleAddDesc, "Particle3dAdd");
 #pragma endregion
-	//#pragma region GPUパーティクル
-	//	//シェーダー生成
-	//	NShader::CreateShader("GPUParticle", "GPUParticle", false, true);
-	//
-	//	PipelineDesc gpuParticleDesc;
-	//	//頂点レイアウト設定
-	//	gpuParticleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutGPUParticle_;
-	//	gpuParticleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutGPUParticle_);
-	//
-	//	gpuParticleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
-	//
-	//	//ルートシグネチャ設定
-	//	NRootSignature rootSigGPUParticle;
-	//	rootSigGPUParticle.SetSamplerDesc(false);
-	//	//テクスチャ2個、行列、光源
-	//	rootSigGPUParticle.SetRootParam(2, 2);
-	//	rootSigGPUParticle.Create();
-	//	gpuParticleDesc.rootSig = rootSigGPUParticle;
-	//
-	//	//シェーダー設定
-	//	gpuParticleDesc.shader.pShader = NShader::GetShader("GPUParticle");
-	//
-	//	//深度テストする
-	//	gpuParticleDesc.depth.DepthStencilState.DepthEnable = true;
-	//
-	//	//カリング設定
-	//	gpuParticleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
-	//
-	//	//ブレンドモード設定
-	//	gpuParticleDesc.blend.blendDesc =
-	//		bDesc::GetBlendMode(BlendMode::None);
-	//
-	//	//パイプライン生成
-	//	NGPipeline::Create(gpuParticleDesc, "GPUParticleNone");
-	//#pragma endregion
+#pragma region GPUパーティクル
+	////シェーダー生成
+	//NShader::CreateShader("GPUParticle", "GPUParticle", false, true);
+
+	//PipelineDesc gpuParticleDesc;
+	////頂点レイアウト設定
+	//gpuParticleDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutGPUParticle_;
+	//gpuParticleDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutGPUParticle_);
+
+	//gpuParticleDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+
+	////ルートシグネチャ設定
+	//NRootSignature rootSigGPUParticle;
+	//rootSigGPUParticle.SetSamplerDesc(false);
+	////テクスチャ2個、行列、光源
+	//rootSigGPUParticle.SetRootParam(2, 2);
+	//rootSigGPUParticle.Create();
+	//gpuParticleDesc.rootSig = rootSigGPUParticle;
+
+	////シェーダー設定
+	//gpuParticleDesc.shader.pShader = NShader::GetShader("GPUParticle");
+
+	////深度テストする
+	//gpuParticleDesc.depth.DepthStencilState.DepthEnable = true;
+
+	////カリング設定
+	//gpuParticleDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	////ブレンドモード設定
+	//gpuParticleDesc.blend.blendDesc =
+	//	bDesc::GetBlendMode(BlendMode::None);
+
+	////パイプライン生成
+	//NGPipeline::Create(gpuParticleDesc, "GPUParticleNone");
+#pragma endregion
 }
 
 bDesc bDesc::GetBlendMode(BlendMode blendMode)

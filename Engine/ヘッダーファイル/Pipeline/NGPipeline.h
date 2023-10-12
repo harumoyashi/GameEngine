@@ -107,6 +107,7 @@ class NGPipeline final
 public:
 	//パイプラインデスク
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psDesc_{};
+	D3D12_COMPUTE_PIPELINE_STATE_DESC csDesc_{};
 	//パイプラインステート
 	ComPtr<ID3D12PipelineState> pso_ = nullptr;
 
