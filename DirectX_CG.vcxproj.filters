@@ -24,6 +24,7 @@
     <FxCompile Include="Resources\shaders\GPUParticlePS.hlsl" />
     <FxCompile Include="Resources\shaders\GPUParticleVS.hlsl" />
     <FxCompile Include="Resources\shaders\GPUParticleGS.hlsl" />
+    <FxCompile Include="Resources\shaders\TileGS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\ソースファイル\Bullet\BulletFactory.cpp" />
