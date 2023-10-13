@@ -40,7 +40,7 @@ std::string NUtil::GetExtension(const std::string& path)
 		ext = path.substr(pos1 + 1, path.size() - pos1);
 		std::string::iterator itr = ext.begin();
 		while (itr != ext.end()) {
-			*itr = tolower(*itr);
+			*itr = (char)tolower(*itr);
 			itr++;
 		}
 		itr = ext.end() - 1;

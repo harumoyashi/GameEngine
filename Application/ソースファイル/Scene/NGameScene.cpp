@@ -578,18 +578,18 @@ void NGameScene::DrawForeSprite()
 	{
 		darken_->Draw();
 
-		if (isOption_ == false)
+		if (isOption_)
 		{
-			UIManager::GetInstance()->Draw(UIType::Back);
+			UIManager::GetInstance()->DrawUIVol();
+		}
+		else if (isOption_ == false)
+		{
 			UIManager::GetInstance()->Draw(UIType::Retry);
 			UIManager::GetInstance()->Draw(UIType::Title);
 			UIManager::GetInstance()->Draw(UIType::Option);
 		}
 
-		if (isOption_)
-		{
-			UIManager::GetInstance()->DrawUIVol();
-		}
+		UIManager::GetInstance()->Draw(UIType::Back);
 	}
 	else
 	{
