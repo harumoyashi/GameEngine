@@ -17,15 +17,9 @@ std::string NModelManager::sDirectoryPath = "Resources/Model/";
 void NModelManager::AllLoad()
 {
 	LoadObjModel("sphere", "sphere");
-	LoadObjModel("sphere", "sphere");
 	LoadObjModel("Cube", "cube");
 	LoadObjModel("plane", "plane");
-	LoadObjModel("busterSword", "busterSword");
-	LoadObjModel("boss_model", "boss");
-	LoadObjModel("catObj", "cat");
 	LoadObjModel("mouse", "mouse");
-	LoadFbxModel("boneTest", "boneTest");
-	LoadFbxModel("Tripping", "girl");
 	LoadFbxModel("cat", "catWalk");
 }
 

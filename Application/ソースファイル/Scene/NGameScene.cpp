@@ -564,6 +564,11 @@ void NGameScene::Draw3D()
 		EnemyManager::GetInstance()->Draw();
 		ItemManager::GetInstance()->Draw();
 	}
+	else if (sScene == SceneMode::Faild)	//失敗シーン
+	{
+		EnemyManager::GetInstance()->Draw();
+		ItemManager::GetInstance()->Draw();
+	}
 	Player::GetInstance()->Draw();
 }
 
