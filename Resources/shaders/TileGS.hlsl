@@ -40,7 +40,7 @@ static const float3 normal_array[vnum] =
 
 [maxvertexcount(vnum)]
 void main(
-	point VSOutput input[1] : SV_POSITION,
+	point VSOutput input[1],
 	inout TriangleStream<GSOutput> output
 )
 {
@@ -48,20 +48,25 @@ void main(
    
     for (uint i = 0; i < vnum; i++)
     {
+         //ワールド行列からスケールを抽出
+        float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));
+        float y = sqrt(pow(world[1][0], 2) + pow(world[1][1], 2) + pow(world[1][2], 2));
+        float z = sqrt(pow(world[2][0], 2) + pow(world[2][1], 2) + pow(world[2][2], 2));
+    
+        float3 scale = { x, y, z };
+    
         //中心からのオフセットをスケーリング
-        float3 offset = offset_array[i] * input[0].scale;
+        float3 offset = offset_array[i] * scale;
         
         //オフセット分ずらす(ワールド座標)
-        element.svpos = input[0].svpos + (offset, 0);
+        float4 svpos = input[0].svpos + (offset, 0);
         
         //ビュー、射影変換
-        element.svpos = mul(viewproj, element.svpos);
-        element.worldpos = input[0].worldpos;
+        svpos = mul(viewproj, svpos);
+        element.worldpos = mul(world, svpos);
         element.normal = normal_array[i];
         element.uv = uv_array[i];
-        element.scale = input[0].scale;
-        element.divide = input[0].divide;
-        element.activityArea = input[0].activityArea;
+        element.scale = scale;
         
         output.Append(element);
     }

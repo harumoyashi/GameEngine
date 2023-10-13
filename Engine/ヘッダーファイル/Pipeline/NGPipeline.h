@@ -113,7 +113,6 @@ public:
 public:
 	//頂点レイアウトたち(必要な分だけ用意する)
 	D3D12_INPUT_ELEMENT_DESC vertLayoutObj_[3];
-	D3D12_INPUT_ELEMENT_DESC vertLayoutTile_[5];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutFbx_[5];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutSprite_[2];
 	D3D12_INPUT_ELEMENT_DESC vertLayoutPostEffect_[2];

@@ -23,7 +23,7 @@ static const float2 uv_array[vnum] =
 
 [maxvertexcount(vnum)]
 void main(
-	point VSOutput input[1] : SV_POSITION,
+	point VSOutput input[1],
 	inout TriangleStream<GSOutput> output
 )
 {

@@ -12,26 +12,10 @@ float4 Vec4TimeMat(float4 v, float4x4 m)
 
 VSOutput main(float3 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
 {
-    //法線にワールド行列によるスケーリング・回転を適用
-    float4 wnormal = normalize(mul(world, float4(normal, 0)));
-    float4 wpos = mul(world, float4(pos, 1));
-    
-    VSOutput output; // ピクセルシェーダに渡す値
-    output.svpos = mul(mul(viewproj, world), float4(pos, 1));
-    output.worldpos = wpos;
-    output.normal = wnormal.xyz;
+    VSOutput output; // ジオメトリシェーダに渡す値
+    output.svpos = float4(pos, 1);
+    output.normal = normal;
     output.uv = uv;
     
-    //ワールド行列からスケールを抽出
-    float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));
-    float y = sqrt(pow(world[1][0], 2) + pow(world[1][1], 2) + pow(world[1][2], 2));
-    float z = sqrt(pow(world[2][0], 2) + pow(world[2][1], 2) + pow(world[2][2], 2));
-    
-    float3 scale = { x, y, z };
-    
-    output.scale = scale;
-    output.divide = divide;
-    output.activityArea = activityArea;
-	
     return output;
 }
