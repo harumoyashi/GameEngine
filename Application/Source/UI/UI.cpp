@@ -12,7 +12,7 @@ UIManager* UIManager::GetInstance()
 
 void UIManager::Init()
 {
-	//読み込み～
+	//スプライト生成
 	ui_[(uint32_t)UIType::Abutton].sprite.CreateClipSprite("Abutton", { 0.f,0.f }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::AbuttonPush].sprite.CreateClipSprite("Abutton", { 192.f,0.f }, { 192.f,192.f });
 	ui_[(uint32_t)UIType::Lstick].sprite.CreateSprite("stick");
@@ -27,12 +27,12 @@ void UIManager::Init()
 	ui_[(uint32_t)UIType::All].sprite.CreateSprite("allUI");
 	ui_[(uint32_t)UIType::BGM].sprite.CreateSprite("bgmUI");
 	ui_[(uint32_t)UIType::SE].sprite.CreateSprite("seUI");
-	//弾取った時に
+	//弾取った時のやつは動的に割り当てるからとりま空
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
 		uiBul_[i].sprite.CreateSprite();
 	}
-	//四角2つと点1つで構成される
+	//音量調節UIは四角2つと点1つで構成される
 	for (uint32_t i = 0; i < maxUIVol; i++)
 	{
 		uiVol_[i].at(0).sprite.CreateSprite("white");
@@ -56,6 +56,7 @@ void UIManager::Init()
 
 void UIManager::Update()
 {
+	//それぞれのスプライト更新忘れずに
 	for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
 	{
 		ui_[i].sprite.Update();
@@ -71,7 +72,7 @@ void UIManager::Update()
 			uiVol_[i].at(j).sprite.Update();
 		}
 	}
-
+	//イージングタイマーの更新も
 	EaseTimerUpdate();
 }
 
@@ -79,38 +80,44 @@ void UIManager::EaseTimerUpdate()
 {
 	for (uint32_t i = 0; i < (uint32_t)UIType::Max; i++)
 	{
+		//スタートしてて、終了してなければ
 		if (ui_[i].easeTimer.GetStarted() && ui_[i].easeTimer.GetEnd() == false)
 		{
 			ui_[i].easeTimer.Update();
 
+			//設定された始点から終点に移動
 			float posX = NEasing::OutQuad(ui_[i].startPos.x, ui_[i].endPos.x, ui_[i].easeTimer.GetTimeRate());
 			float posY = NEasing::OutQuad(ui_[i].startPos.y, ui_[i].endPos.y, ui_[i].easeTimer.GetTimeRate());
 			ui_[i].sprite.SetPos(posX, posY);
 
-			if (ui_[i].easeTimer.GetEnd())
+			if (ui_[i].easeTimer.GetEnd())	//行きが終わったら止まる時間も設ける
 			{
 				ui_[i].keepTimer.Start();
 			}
 		}
 
+		//ここは待機してるだけ
 		if (ui_[i].keepTimer.GetStarted() && ui_[i].keepTimer.GetEnd() == false)
 		{
 			ui_[i].keepTimer.Update();
 
-			if (ui_[i].keepTimer.GetEnd())
+			if (ui_[i].keepTimer.GetEnd())	//待機時間終わったら戻る
 			{
 				ui_[i].easeBackTimer.Start();
 			}
 		}
 
+		//戻りの処理
 		if (ui_[i].easeBackTimer.GetStarted() && ui_[i].easeBackTimer.GetEnd() == false)
 		{
 			ui_[i].easeBackTimer.Update();
 
+			//今度は終点から始点まで移動
 			float posX = NEasing::OutQuad(ui_[i].endPos.x, ui_[i].startPos.x, ui_[i].easeBackTimer.GetTimeRate());
 			float posY = NEasing::OutQuad(ui_[i].endPos.y, ui_[i].startPos.y, ui_[i].easeBackTimer.GetTimeRate());
 			ui_[i].sprite.SetPos(posX, posY);
 
+			//戻り切ったら3つのタイマーをリセット
 			if (ui_[i].easeBackTimer.GetEnd())
 			{
 				ui_[i].easeTimer.Reset();
@@ -120,6 +127,7 @@ void UIManager::EaseTimerUpdate()
 		}
 	}
 
+	//弾取った時UIも変わらず
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
 		if (uiBul_[i].easeTimer.GetStarted() && uiBul_[i].easeTimer.GetEnd() == false)
@@ -169,8 +177,9 @@ void UIManager::PlusUIBul(const std::string& texName)
 {
 	for (uint32_t i = 0; i < maxUIBul; i++)
 	{
-		if (uiBul_[i].sprite.isInvisible_ == true)
+		if (uiBul_[i].sprite.isInvisible_ == true)	//見えない状態なら
 		{
+			//指定されたテクスチャを割り当てて見えるようにして、イージングタイマー起動
 			uiBul_[i].sprite.texHandle_ =
 				NTextureManager::GetInstance()->textureMap_[texName].fileName_;
 			uiBul_[i].sprite.isInvisible_ = false;
@@ -248,12 +257,16 @@ void UIManager::DrawUIVol()
 
 void UIManager::SetUIVolPoint(uint32_t volType, float volume, float size)
 {
+	//正の値と負の値が半々になるように
 	float volPosX = volume * 2.f - 1.f;
+
+	//点の位置を指定された音量の位置に合わせる
 	uiVol_[volType].at(2).sprite.SetPos(
 		(float)NWindows::GetInstance()->kWin_width * 0.5f + uiVol_[volType].at(0).sprite.GetSize().x * 0.5f * volPosX,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f - 150.0f + volType * 150.f);
-
+	//点は指定されたサイズに
 	uiVol_[volType].at(2).sprite.SetSize(size, size);
+	//音量に合わせて音量バーのサイズを変える
 	uiVol_[volType].at(1).sprite.SetSize(volume * 400.f, 10.f);
 }
 
