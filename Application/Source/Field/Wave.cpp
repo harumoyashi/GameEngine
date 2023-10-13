@@ -84,8 +84,9 @@ void Wave::Update()
 	for (size_t i = 0; i < obj_.size(); i++)
 	{
 		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
-		obj_[i]->scale_ =
-		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
+		//「全体の大きさ/分割数」を横幅とする
+		obj_[i]->scale_ = { waveScaleX / waveDivide_,1.0f, scaleZ_ };
+		//分割数に応じて座標もずらしてく
 		obj_[i]->position_.x = obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX;
 	}
 
@@ -93,7 +94,8 @@ void Wave::Update()
 
 	for (size_t i = 0; i < obj_.size(); i++)
 	{
-		waveTimer_[i].RoopReverse();
+		waveTimer_[i].RoopReverse();	//うねうねタイマー回し続ける
+		//基準値から個々がどれだけうねるか
 		float plusPos = sinf(randomPosZ_[i] * waveTimer_[i].GetTimeRate());
 		obj_[i]->position_.z = posZ_ + plusPos;
 

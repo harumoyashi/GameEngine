@@ -24,7 +24,7 @@ void EnemyManager::Init()
 void EnemyManager::Update()
 {
 	//寿命が尽きた＋死亡パーティクル出し切った敵を全削除
-	for (size_t i = 0; i < enemys_.size(); i++)
+	for (uint32_t i = 0; i < enemys_.size(); i++)
 	{
 		if (enemys_[i]->GetisAlive() == false && enemys_[i]->GetParticlesDead())
 		{
@@ -32,7 +32,7 @@ void EnemyManager::Update()
 			//エミッター群から削除
 			NParticleManager::GetInstance()->enemyEmitters_.erase(
 				NParticleManager::GetInstance()->enemyEmitters_.begin() + i);
-			i = (size_t)-1;
+			i--;
 			isEnemyDead = true;
 		}
 	}

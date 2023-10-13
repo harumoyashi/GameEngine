@@ -266,13 +266,13 @@ void FbxModel::ParseNodeHeirarchy(const float currentTime, const uint32_t index,
 
 	NMatrix4 globalTransformMat = currentPoseMat * parentMat;
 
-	for (uint32_t i = 0; i < bones.size(); i++)
+	for (auto& bone : bones)
 	{
-		if (bones[i].name == nodeName)
+		if (bone.name == nodeName)
 		{
-			NMatrix4 initalMat = bones[i].offsetMat;
+			NMatrix4 initalMat = bone.offsetMat;
 			NMatrix4 invWorldMat = NAssimpLoader::AssimpMatToMat4(scene->mRootNode->mTransformation);
-			bones[i].currentMat = initalMat * globalTransformMat * invWorldMat;
+			bone.currentMat = initalMat * globalTransformMat * invWorldMat;
 		}
 	}
 

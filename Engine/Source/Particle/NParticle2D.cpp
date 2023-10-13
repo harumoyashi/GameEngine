@@ -16,38 +16,38 @@ void Emitter2D::Init()
 void Emitter2D::Update(bool isGravity)
 {
 	//寿命が尽きたパーティクルを全削除
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (uint32_t i = 0; i < particles_.size(); i++)
 	{
 		if (particles_[i].frame >= particles_[i].num_frame)
 		{
 			particles_.erase(particles_.begin() + i);
-			i = (size_t)-1;
+			i--;
 		}
 	}
 
 	//全パーティクル更新
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (auto& particle : particles_)
 	{
-		particles_[i].timer.Update();
+		particle.timer.Update();
 
 		//経過フレームをカウント
-		particles_[i].frame++;
+		particle.frame++;
 
 		//スケールの線形補間
-		particles_[i].scale.x = NEasing::lerp(particles_[i].startScale.x, particles_[i].endScale.x, particles_[i].timer.GetTimeRate());
-		particles_[i].scale.y = NEasing::lerp(particles_[i].startScale.y, particles_[i].endScale.y, particles_[i].timer.GetTimeRate());
+		particle.scale.x = NEasing::lerp(particle.startScale.x, particle.endScale.x, particle.timer.GetTimeRate());
+		particle.scale.y = NEasing::lerp(particle.startScale.y, particle.endScale.y, particle.timer.GetTimeRate());
 
 		//加速度を速度に加算
-		particles_[i].velo += particles_[i].accel;
+		particle.velo += particle.accel;
 
 		//重力加算
 		if (isGravity)
 		{
-			particles_[i].velo.y += particles_[i].gravity;
+			particle.velo.y += particle.gravity;
 		}
 
 		//速度による移動
-		particles_[i].pos += particles_[i].velo;
+		particle.pos += particle.velo;
 	}
 }
 

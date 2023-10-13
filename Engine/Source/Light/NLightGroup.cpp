@@ -12,42 +12,42 @@ void NLightGroup::Init(bool isDirLights, bool isPointLights,
 	cbLight_ = std::make_unique<NConstBuff<ConstBuffDataLightGroup>>();
 	cbLight_->Init();
 
-	for (uint32_t i = 0; i < kDirLightNum; i++)
+	for (auto& dirLight : sDirLights)
 	{
-		sDirLights[i] = std::make_unique<NDirectionalLight>();
+		dirLight = std::make_unique<NDirectionalLight>();
 		if (isDirLights)
 		{
-			sDirLights[i]->Init();
+			dirLight->Init();
 		}
 		else
 		{
-			sDirLights[i]->SetActive(false);
+			dirLight->SetActive(false);
 		}
 	}
 
-	for (uint32_t i = 0; i < kPointLightNum; i++)
+	for (auto& pointLight : sPointLights)
 	{
-		sPointLights[i] = std::make_unique<NPointLight>();
+		pointLight = std::make_unique<NPointLight>();
 		if (isPointLights)
 		{
-			sPointLights[i]->Init();
+			pointLight->Init();
 		}
 		else
 		{
-			sPointLights[i]->SetActive(false);
+			pointLight->SetActive(false);
 		}
 	}
 
-	for (uint32_t i = 0; i < kSpotLightNum; i++)
+	for (auto& spotLight : sSpotLights)
 	{
-		sSpotLights[i] = std::make_unique<NSpotLight>();
+		spotLight = std::make_unique<NSpotLight>();
 		if (isSpotLights)
 		{
-			sSpotLights[i]->Init();
+			spotLight->Init();
 		}
 		else
 		{
-			sSpotLights[i]->SetActive(false);
+			spotLight->SetActive(false);
 		}
 	}
 
@@ -167,24 +167,24 @@ void NLightGroup::SetAmbientColor(const NVec3& color)
 
 void NLightGroup::SetDirLightColor(const NVec3& lightcolor)
 {
-	for (uint32_t i = 0; i < kDirLightNum; i++)
+	for (auto& dirLight : sDirLights)
 	{
-		sDirLights[i]->SetLightColor(lightcolor);
+		dirLight->SetLightColor(lightcolor);
 	}
 }
 
 void NLightGroup::SetPointLightColor(const NVec3& lightcolor)
 {
-	for (uint32_t i = 0; i < kPointLightNum; i++)
+	for (auto& pointLight : sPointLights)
 	{
-		sPointLights[i]->SetLightColor(lightcolor);
+		pointLight->SetLightColor(lightcolor);
 	}
 }
 
 void NLightGroup::SetSpotLightColor(const NVec3& lightcolor)
 {
-	for (uint32_t i = 0; i < kSpotLightNum; i++)
+	for (auto& spotLight : sSpotLights)
 	{
-		sSpotLights[i]->SetLightColor(lightcolor);
+		spotLight->SetLightColor(lightcolor);
 	}
 }

@@ -174,10 +174,10 @@ void Field::Update()
 				-fieldObj_->scale_.x,
 				lines_[(uint32_t)LineType::Start].slideTimer.GetTimeRate());
 		//画面左外までぶっ飛ばす
-		for (uint32_t i = 0; i < checkPointNum; i++)
+		for (auto& cp : checkPoints_)
 		{
-			checkPoints_[i].slidePos =
-				NEasing::InQuad(0.0f, -fieldObj_->scale_.x, checkPoints_[i].slideTimer.GetTimeRate());
+			cp.slidePos =
+				NEasing::InQuad(0.0f, -fieldObj_->scale_.x, cp.slideTimer.GetTimeRate());
 		}
 
 		//スライドしきったら
@@ -233,44 +233,44 @@ void Field::Update()
 	}
 
 	//スライドしていいなら
-	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	for (auto& line : lines_)
 	{
-		if (lines_[i].isSlide)
+		if (line.isSlide)
 		{
 			//スタート線スライドタイマー開始
-			if (lines_[i].slideTimer.GetStarted() == false)
+			if (line.slideTimer.GetStarted() == false)
 			{
-				lines_[i].slideTimer.Start();
+				line.slideTimer.Start();
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");
-				lines_[i].isSlide = false;	//スライドしちゃだめにする
+				line.isSlide = false;	//スライドしちゃだめにする
 			}
 		}
 		//タイマー更新
-		lines_[i].slideTimer.Update();
+		line.slideTimer.Update();
 	}
 	//スライドしていいなら
-	for (uint32_t i = 0; i < checkPointNum; i++)
+	for (auto& cp : checkPoints_)
 	{
-		if (checkPoints_[i].isSlide)
+		if (cp.isSlide)
 		{
 			//スタート線スライドタイマー開始
-			if (checkPoints_[i].slideTimer.GetStarted() == false)
+			if (cp.slideTimer.GetStarted() == false)
 			{
-				checkPoints_[i].slideTimer.Start();
+				cp.slideTimer.Start();
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");
-				checkPoints_[i].isSlide = false;	//スライドしちゃだめにする
+				cp.isSlide = false;	//スライドしちゃだめにする
 			}
 		}
 		//タイマー更新
-		checkPoints_[i].slideTimer.Update();
+		cp.slideTimer.Update();
 	}
 
 	//オブジェクトの更新
@@ -278,16 +278,16 @@ void Field::Update()
 	fieldObj_->SetActivityArea(activityAreaX_);
 	fieldObj_->Update();
 
-	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	for (auto& line : lines_)
 	{
-		lines_[i].line->Update();
-		lines_[i].text->Update();
+		line.line->Update();
+		line.text->Update();
 	}
 
-	for (uint32_t i = 0; i < checkPointNum; i++)
+	for (auto& cp : checkPoints_)
 	{
-		checkPoints_[i].line->Update();
-		checkPoints_[i].text->Update();
+		cp.line->Update();
+		cp.text->Update();
 	}
 
 #ifdef _DEBUG
@@ -308,20 +308,20 @@ void Field::Draw()
 	fieldObj_->Draw();
 
 	NObj3d::CommonBeginDraw();
-	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
+	for (auto& line : lines_)
 	{
-		lines_[i].line->SetBlendMode(BlendMode::Alpha);
-		lines_[i].line->Draw();
-		lines_[i].text->Draw();
-		lines_[i].text->SetBlendMode(BlendMode::None);
+		line.line->SetBlendMode(BlendMode::Alpha);
+		line.line->Draw();
+		line.text->Draw();
+		line.text->SetBlendMode(BlendMode::None);
 	}
 
-	for (uint32_t i = 0; i < checkPointNum; i++)
+	for (auto& cp : checkPoints_)
 	{
-		checkPoints_[i].line->SetBlendMode(BlendMode::Alpha);
-		checkPoints_[i].line->Draw();
-		checkPoints_[i].text->Draw();
-		checkPoints_[i].text->SetBlendMode(BlendMode::None);
+		cp.line->SetBlendMode(BlendMode::Alpha);
+		cp.line->Draw();
+		cp.text->Draw();
+		cp.text->SetBlendMode(BlendMode::None);
 	}
 }
 

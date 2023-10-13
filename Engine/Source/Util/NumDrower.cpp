@@ -18,17 +18,17 @@ void NumDrower::Create(uint32_t spriteNum, float indent)
 
 void NumDrower::Update()
 {
-	for (size_t i = 0; i < numSprite_.size(); i++)
+	for (auto& numSprite : numSprite_)
 	{
-		numSprite_[i]->Update();
+		numSprite->Update();
 	}
 }
 
 void NumDrower::Draw()
 {
-	for (size_t i = 0; i < numSprite_.size(); i++)
+	for (auto& numSprite : numSprite_)
 	{
-		numSprite_[i]->Draw();
+		numSprite->Draw();
 	}
 }
 
@@ -45,9 +45,9 @@ void NumDrower::SetPos(const NVec2& pos)
 void NumDrower::SetSize(const NVec2& size)
 {
 	size_ = size;
-	for (size_t i = 0; i < numSprite_.size(); i++)
+	for (auto& numSprite : numSprite_)
 	{
-		numSprite_[i]->SetSize(size_.x, size_.y);
+		numSprite->SetSize(size_.x, size_.y);
 	}
 }
 
@@ -60,9 +60,9 @@ void NumDrower::SetIndent(float indent)
 void NumDrower::SetColor(const NColor& color)
 {
 	color_ = color;
-	for (size_t i = 0; i < numSprite_.size(); i++)
+	for (auto& numSprite : numSprite_)
 	{
-		numSprite_[i]->color_ = color_;
+		numSprite->color_ = color_;
 	}
 }
 

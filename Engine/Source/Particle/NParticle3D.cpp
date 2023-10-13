@@ -41,58 +41,58 @@ void IEmitter3D::Update()
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
 	//寿命が尽きたパーティクルを全削除
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (uint32_t i = 0; i < particles_.size(); i++)
 	{
 		if (particles_[i].aliveTimer.GetEnd())
 		{
 			particles_.erase(particles_.begin() + i);
-			i = (size_t)-1;
+			i--;
 		}
 	}
 
 	//全パーティクル更新
-	for (size_t i = 0; i < particles_.size(); i++)
+	for (auto& particle : particles_)
 	{
 		//生存時間とイージング用タイマーの更新
-		particles_[i].aliveTimer.Update(elapseSpeed_);
-		particles_[i].easeTimer.Update(elapseSpeed_);
+		particle.aliveTimer.Update(elapseSpeed_);
+		particle.easeTimer.Update(elapseSpeed_);
 
 		//スケールの線形補間
-		particles_[i].scale = NEasing::lerp(particles_[i].startScale, particles_[i].endScale, particles_[i].easeTimer.GetTimeRate());
+		particle.scale = NEasing::lerp(particle.startScale, particle.endScale, particle.easeTimer.GetTimeRate());
 
 		//加速度を速度に加算
-		particles_[i].velo += particles_[i].accel;
+		particle.velo += particle.accel;
 
 		//初期のランダム角度をもとに回す
 		if (isRotation_)
 		{
-			particles_[i].rot += particles_[i].plusRot * elapseSpeed_;
+			particle.rot += particle.plusRot * elapseSpeed_;
 
 			//一回転したら0に戻してあげる
-			if (abs(particles_[i].rot.x) >= PI2)
+			if (abs(particle.rot.x) >= PI2)
 			{
-				particles_[i].rot.x = 0.0f;
+				particle.rot.x = 0.0f;
 			}
 
-			if (abs(particles_[i].rot.y) >= PI2)
+			if (abs(particle.rot.y) >= PI2)
 			{
-				particles_[i].rot.y = 0.0f;
+				particle.rot.y = 0.0f;
 			}
 
-			if (abs(particles_[i].rot.z) >= PI2)
+			if (abs(particle.rot.z) >= PI2)
 			{
-				particles_[i].rot.z = 0.0f;
+				particle.rot.z = 0.0f;
 			}
 		}
 
 		//重力加算
 		if (isGravity_)
 		{
-			particles_[i].velo.y += particles_[i].gravity * elapseSpeed_;
+			particle.velo.y += particle.gravity * elapseSpeed_;
 		}
 
 		//速度による移動
-		particles_[i].pos += particles_[i].velo * elapseSpeed_;
+		particle.pos += particle.velo * elapseSpeed_;
 	}
 
 	//頂点バッファへデータ転送

@@ -61,7 +61,7 @@ void IEnemy::Update()
 	if (NCameraManager::GetInstance()->GetIsDebugCamera() == false)
 	{
 		// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
-		isAlive_ = IsInActiveArea();
+		IsInActiveArea();
 	}
 
 	//画面内にいる奴だけ描画フラグ立てる
@@ -153,7 +153,7 @@ bool IEnemy::IsInScreen()
 	}
 }
 
-bool IEnemy::IsInActiveArea()
+void IEnemy::IsInActiveArea()
 {
 	// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えてるか判定 //
 	float borderLineRight, borderLineLeft;	//超えたら死ぬとこ
@@ -181,11 +181,7 @@ bool IEnemy::IsInActiveArea()
 	//ボーダーライン超えてるか判定
 	if (borderLineRight < objLeft || borderLineLeft > objRight)
 	{
-		return false;
-	}
-	else
-	{
-		return true;
+		isAlive_ = false;
 	}
 }
 

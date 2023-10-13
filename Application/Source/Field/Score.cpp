@@ -18,9 +18,9 @@ void Score::Init()
 	LoadScore();
 
 	sNowScore = 0;
-	for (size_t i = 0; i < sScoreTex.size(); i++)
+	for (auto& scoreTex : sScoreTex)
 	{
-		sScoreTex[i].Create(5);
+		scoreTex.Create(5);
 	}
 
 	sScoreTex[(uint32_t)TexType::Now].SetPos({ 50.f,50.f });
@@ -49,18 +49,18 @@ void Score::Update()
 {
 	sTopTex->SetPos(Score::GetPos(TexType::Result).x, Score::GetPos(TexType::Top).y);
 
-	for (size_t i = 0; i < sScoreTex.size(); i++)
+	for (auto& scoreTex : sScoreTex)
 	{
-		sScoreTex[i].Update();
+		scoreTex.Update();
 	}
 	sTopTex->Update();
 }
 
 void Score::Draw()
 {
-	for (size_t i = 0; i < sScoreTex.size(); i++)
+	for (auto& scoreTex : sScoreTex)
 	{
-		sScoreTex[i].Draw();
+		scoreTex.Draw();
 	}
 	sTopTex->Draw();
 }

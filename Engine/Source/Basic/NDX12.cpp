@@ -65,14 +65,14 @@ void NDX12::ChoiceAdapters()
 	}
 
 	// 妥当なアダプタを選別する
-	for (size_t i = 0; i < adapters_.size(); i++) {
+	for (auto& adapter : adapters_) {
 		DXGI_ADAPTER_DESC3 adapterDesc;
 		// アダプターの情報を取得する
-		adapters_[i]->GetDesc3(&adapterDesc);
+		adapter->GetDesc3(&adapterDesc);
 		// ソフトウェアデバイスを回避
 		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
 			// デバイスを採用してループを抜ける
-			tmpAdapter_ = adapters_[i];
+			tmpAdapter_ = adapter;
 			break;
 		}
 	}
@@ -91,13 +91,13 @@ void NDX12::CreateDevice()
 	};
 
 	//生成可能なバージョンが見つかったら打ち切り
-	for (size_t i = 0; i < levels.size(); i++) {
+	for (auto& level : levels) {
 		// 採用したアダプターでデバイスを生成
-		result = D3D12CreateDevice(tmpAdapter_.Get(), levels[i],
+		result = D3D12CreateDevice(tmpAdapter_.Get(), level,
 			IID_PPV_ARGS(&device_));
 		if (result == S_OK) {	//HRESULT型の関数はtrue,falseの代わりにS_OK,特定の型が返される
 			// デバイスを生成できた時点でループを抜ける
-			featureLevel_ = levels[i];
+			featureLevel_ = level;
 			break;
 		}
 	}

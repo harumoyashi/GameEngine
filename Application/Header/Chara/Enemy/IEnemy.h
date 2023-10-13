@@ -65,8 +65,8 @@ public:
 	void DeadParticle();
 	//画面内にいるか判定
 	bool IsInScreen();
-	//生きてていい範囲内にいるか判定
-	bool IsInActiveArea();
+	//生きてていい範囲内にいるか判定していなければ殺す
+	void IsInActiveArea();
 
 	//---------------------------- 継承するやつら ----------------------------//
 	//移動
