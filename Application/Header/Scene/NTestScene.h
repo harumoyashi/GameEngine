@@ -21,7 +21,7 @@ class NTestScene final :
 {
 private:
 	//オブジェクト
-	std::unique_ptr<NObj3d> obj_;
+	std::vector<std::unique_ptr<NObj3d>> obj_;
 	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
 	bool isCol_ = false;

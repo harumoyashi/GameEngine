@@ -10,6 +10,8 @@
 #include "Bloom.h"
 #include "RadialBlur.h"
 #include "GaussianBlur.h"
+#include "Player.h"
+#include "Field.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -34,17 +36,31 @@ void NTestScene::Init()
 #pragma endregion
 #pragma region	カメラ初期化
 	NCameraManager::GetInstance()->Init();
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::Debug);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 #pragma endregion
 #pragma region 描画初期化処理
-	//オブジェクト
-	obj_ = std::make_unique<NObj3d>();
-	obj_->SetModel("catWalk");
-	obj_->Init();
+	Player::GetInstance()->Init();
+	Field::GetInstance()->Init();
+	for (uint32_t i = 0; i < 8; i++)
+	{
+		obj_.emplace_back();
+		obj_[i] = std::make_unique<NObj3d>();
+		obj_[i]->Init();
+		obj_[i]->SetModel("cube");
+
+		obj_[i]->scale_ = Player::GetInstance()->GetScale();
+	}
+	
 #pragma region オブジェクトの初期値設定
-	obj_->color_.SetColor255(240, 30, 20, 255);	//オレンジっぽく
-	obj_->SetIsElapseAnime(false);	//経過時間無視しておく
-	obj_->Update();
+	obj_[0]->position_ = { -0.1f,-0.2f,-0.1f };
+	obj_[1]->position_ = { +0.1f,-0.2f,-0.1f };
+	obj_[2]->position_ = { -0.1f,+0.0f,-0.1f };
+	obj_[3]->position_ = { +0.1f,+0.0f,-0.1f };
+	obj_[4]->position_ = { -0.1f,-0.2f,+0.1f };
+	obj_[5]->position_ = { +0.1f,-0.2f,+0.1f };
+	obj_[6]->position_ = { -0.1f,+0.0f,+0.1f };
+	obj_[7]->position_ = { +0.1f,+0.0f,+0.1f };
+
 #pragma endregion
 	//背景スプライト生成
 	backSprite_ = std::make_unique<NSprite>();
@@ -112,7 +128,12 @@ void NTestScene::Update()
 #pragma region スプライト
 	backSprite_->Update();
 #pragma endregion
-	obj_->Update();
+	Player::GetInstance()->Update();
+	Field::GetInstance()->Update();
+	for (auto& obj : obj_)
+	{
+		obj->Update();
+	}
 
 	//ライトたちの更新
 	lightGroup_->Update();
@@ -138,13 +159,18 @@ void NTestScene::DrawBackSprite()
 
 void NTestScene::DrawBack3D()
 {
+	Field::GetInstance()->Draw();
 }
 
 void NTestScene::Draw3D()
 {
-	obj_->SetBlendMode(BlendMode::None);
-	obj_->Draw();
-	obj_->SetBlendMode(BlendMode::None);
+	Player::GetInstance()->Draw();
+	for (auto& obj : obj_)
+	{
+		obj->SetBlendMode(BlendMode::None);
+		obj->Draw();
+		obj->SetBlendMode(BlendMode::None);
+	}
 }
 
 void NTestScene::DrawParticle()
