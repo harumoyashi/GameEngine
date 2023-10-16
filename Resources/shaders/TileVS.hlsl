@@ -10,12 +10,13 @@ float4 Vec4TimeMat(float4 v, float4x4 m)
     return result;
 }
 
-VSOutput main(float3 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
+VSOutput main(VSOutput input)
 {
-    VSOutput output; // ジオメトリシェーダに渡す値
-    output.svpos = float4(pos, 1);
-    output.normal = normal;
-    output.uv = uv;
+    float4 svpos = mul(viewproj, input.svpos);
+    float4 wpos = mul(world, svpos);
+    input.svpos = wpos;
+    input.normal = input.normal;
+    input.uv = input.uv;
     
-    return output;
+    return input;
 }

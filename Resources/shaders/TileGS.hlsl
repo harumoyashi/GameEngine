@@ -40,10 +40,11 @@ static const float3 normal_array[vnum] =
 
 [maxvertexcount(vnum)]
 void main(
-	point VSOutput input[1],
+	triangle VSOutput input[3],
 	inout TriangleStream<GSOutput> output
 )
 {
+    
     GSOutput element; //出力用頂点データ
    
     for (uint i = 0; i < vnum; i++)
