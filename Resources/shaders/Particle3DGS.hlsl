@@ -164,12 +164,13 @@ void main(
         rotMat = mul(matX, rotMat);
         rotMat = mul(matY, rotMat);
         
+        //システム用頂点座標
         //オフセット分ずらす(ワールド座標)
-        element.svpos = input[0].pos + offset;
+        float4 svpos = input[0].pos + offset;
         
         //ビュー、射影変換
-        element.svpos = mul(viewproj, element.svpos);
-        float4 wpos = mul(world, element.svpos);
+        svpos = mul(viewproj, svpos);
+        float4 wpos = mul(world, svpos);
         element.worldpos = wpos;
         element.color = input[0].color;
         float4 wnormal = normalize(mul(rotMat, float4(normal_array[i], 0)));

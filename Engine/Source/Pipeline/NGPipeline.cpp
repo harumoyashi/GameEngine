@@ -679,7 +679,7 @@ void PipeLineManager::CreateAll()
 	//#pragma endregion
 #pragma region タイリング3D(背景オブジェクトとかに使う)
 	//シェーダー生成
-	NShader::CreateShader("Tile", "Tile");
+	NShader::CreateShader("Tile", "Tile",true);
 
 	PipelineDesc tileDesc;
 	//頂点レイアウト設定
