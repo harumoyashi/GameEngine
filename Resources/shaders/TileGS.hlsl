@@ -23,7 +23,8 @@ void main(
         float4 offset = (input[i].normal, 0);
     
         //ƒrƒ…[AË‰e•ÏŠ·
-        element.worldpos = input[i].svpos;
+        element.svpos = input[i].svpos;
+        element.worldpos = input[i].worldpos;
         element.normal = input[i].normal;
         element.uv = input[i].uv;
         element.scale = scale;
