@@ -24,7 +24,7 @@ void Field::Init()
 	{
 		fieldObj_ = std::make_unique<NTile>();
 		fieldObj_->Init();
-		fieldObj_->SetModel("plane");
+		fieldObj_->SetModel("field");
 		fieldObj_->SetTexture("tile");
 	}
 	fieldObj_->color_.SetColor255(5, 5, 5, 255);

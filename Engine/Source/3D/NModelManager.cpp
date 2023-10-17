@@ -20,6 +20,7 @@ void NModelManager::AllLoad()
 	LoadObjModel("Cube", "cube");
 	LoadObjModel("plane", "plane");
 	LoadObjModel("mouse", "mouse");
+	LoadObjModel("field", "field");
 	LoadFbxModel("cat", "catWalk");
 }
 

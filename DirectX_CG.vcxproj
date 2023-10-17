@@ -170,7 +170,7 @@
     <ClInclude Include="Engine\Header\Light\NPointLight.h" />
     <ClInclude Include="Engine\Header\PostEffect\IPostEffect.h" />
     <ClInclude Include="Application\Header\Scene\NTestScene.h" />
-    <ClInclude Include="Application\Header\Scene\NSceneChange.h" />
+    <ClInclude Include="Engine\Header\Scene\NSceneChange.h" />
     <ClInclude Include="Engine\Header\Pipeline\NShader.h" />
     <ClInclude Include="Engine\Header\Light\NSpotLight.h" />
     <ClInclude Include="Engine\Header\3D\NTile.h" />
@@ -263,7 +263,7 @@
     <ClCompile Include="Engine\Source\Light\NPointLight.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\IPostEffect.cpp" />
     <ClCompile Include="Application\Source\Scene\NTestScene.cpp" />
-    <ClCompile Include="Application\Source\Scene\NSceneChange.cpp" />
+    <ClCompile Include="Engine\Source\Scene\NSceneChange.cpp" />
     <ClCompile Include="Engine\Source\Pipeline\NShader.cpp" />
     <ClCompile Include="Engine\Source\Light\NSpotLight.cpp" />
     <ClCompile Include="Engine\Source\3D\NTile.cpp" />
