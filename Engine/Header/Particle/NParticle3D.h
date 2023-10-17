@@ -115,7 +115,7 @@ public:
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
 	//life:秒数指定なので注意
 	virtual void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-		NVec3 minVelo, NVec3 maxVelo, NVec3 accel = {}, NVec3 minRot = {}, NVec3 maxRot = {}) = 0;
+		NVec3 minVelo, NVec3 maxVelo, float accelPower = 0.f, NVec3 minRot = {}, NVec3 maxRot = {}) = 0;
 	//パーティクル全消し
 	void ClearParticles() { particles_.clear(); }
 

@@ -168,7 +168,7 @@ void Player::ClearUpdate()
 			clearParticle_.Add(
 				10, 1.5f, NColor::kWhite, 0.1f, 0.8f,
 				{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
-				NVec3::zero, -NVec3::one, NVec3::one);
+				0.05f, -NVec3::one, NVec3::one);
 		}
 	}
 }
@@ -325,7 +325,7 @@ void Player::DeadParticle()
 
 		deadParticle_.SetPos(obj_->position_);
 		deadParticle_.Add(
-			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -2,-2,-2 }, { 2,2,2 }, NVec3::zero, -NVec3::one, NVec3::one);
+			100, 1.5f, obj_->color_, 0.1f, 1.0f, { -1.5f,-1.5f,-1.5f }, { 1.5f,1.5f,1.5f }, 0.03f, -NVec3::one, NVec3::one);
 	}
 }
 

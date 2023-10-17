@@ -207,7 +207,7 @@ void IEmitter3D::TransferMatrix()
 }
 
 void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-	NVec3 minVelo, NVec3 maxVelo, NVec3 accel, NVec3 minRot, NVec3 maxRot)
+	NVec3 minVelo, NVec3 maxVelo, float accelPower, NVec3 minRot, NVec3 maxRot)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -248,7 +248,7 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 		p.rot = randomRot;
 		p.plusRot = p.rot;
 		p.velo = randomVelo;
-		p.accel = accel;
+		p.accel = randomVelo * accelPower;
 		p.aliveTimer = life;
 		p.aliveTimer.Start();
 		p.scale = sX;
