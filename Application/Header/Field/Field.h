@@ -4,6 +4,7 @@
 #include "PlaneCollider.h"
 #include "NTile.h"
 #include "NEasing.h"
+#include <array>
 
 //床
 class Field final
@@ -32,20 +33,20 @@ public:
 	};
 
 private:
-	std::unique_ptr<NTile> fieldObj_;			//床
-	PlaneCollider collider_;					//床の当たり判定
-	std::vector<Line> lines_;					//フィールドにある線たち
-	std::vector<Line> checkPoints_;				//フィールドにあるチェックポイントたち
+	std::array<std::unique_ptr<NTile>,2> fieldObj_;	//床2枚用意してスクロールさせる
+	std::array<PlaneCollider,2> collider_;			//床の当たり判定も2枚分用意
+	std::vector<Line> lines_;						//フィールドにある線たち
+	std::vector<Line> checkPoints_;					//フィールドにあるチェックポイントたち
 
-	float tileDivide_ = 0.5f;					//タイルの分割幅
-	float activityAreaX_ = 10.0f;				//行動範囲制限
-	uint32_t checkPointNum = 5;					//チェックポイントの数
+	float tileDivide_ = 0.5f;						//タイルの分割幅
+	float activityAreaX_ = 10.0f;					//行動範囲制限
+	uint32_t checkPointNum = 5;						//チェックポイントの数
 
-	float startPosZ_ = 3.0f;					//スタート地点(縦だけ)
-	float goalPosZ_ = 40.0f;					//ゴール地点(縦だけ)
+	float startPosZ_ = 3.0f;						//スタート地点(縦だけ)
+	float goalPosZ_ = 40.0f;						//ゴール地点(縦だけ)
 
-	bool isStart_ = false;						//スタートしたかフラグ
-	bool isGoal_ = false;						//ゴールしたかフラグ
+	bool isStart_ = false;							//スタートしたかフラグ
+	bool isGoal_ = false;							//ゴールしたかフラグ
 
 public:
 	static Field* GetInstance();
@@ -62,8 +63,6 @@ public:
 	float GetStartPos() const { return startPosZ_; }
 	//ゴール地点座標取得
 	float GetGoalPos() const { return goalPosZ_; }
-	//フィールドの大きさ取得
-	NVec3 GetScale() const { return fieldObj_->scale_; }
 	//スタートしたかフラグ取得
 	bool GetIsStart() const { return isStart_; }
 	//ゴールしたかフラグ取得
