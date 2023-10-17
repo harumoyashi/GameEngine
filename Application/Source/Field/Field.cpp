@@ -20,25 +20,28 @@ void Field::Init()
 	isGoal_ = false;
 
 #pragma region オブジェクトの生成
-	if (fieldObj_ == nullptr)
+	for (uint32_t i = 0; i < 2; i++)
 	{
-		fieldObj_ = std::make_unique<NTile>();
-		fieldObj_->Init();
-		fieldObj_->SetModel("field");
-		fieldObj_->SetTexture("tile");
-	}
-	fieldObj_->color_.SetColor255(5, 5, 5, 255);
-	fieldObj_->scale_ = { 100.0f,0.01f,1000.0f };
-	fieldObj_->position_ = { 0,-0.1f,fieldObj_->scale_.z - 100.0f };
-	fieldObj_->SetDivide(tileDivide_);
-	fieldObj_->SetActivityArea(activityAreaX_);
+		if (fieldObj_[i] == nullptr)
+		{
+			fieldObj_[i] = std::make_unique<NTile>();
+			fieldObj_[i]->Init();
+			fieldObj_[i]->SetModel("field");
+			fieldObj_[i]->SetTexture("tile");
+		}
+		fieldObj_[i]->color_.SetColor255(5, 5, 5, 255);
+		fieldObj_[i]->scale_ = { 50.0f,0.01f,50.0f };
+		fieldObj_[i]->position_ = { 0,-0.1f,fieldObj_[i]->scale_.z * (float)i };
+		fieldObj_[i]->SetDivide(tileDivide_);
+		fieldObj_[i]->SetActivityArea(activityAreaX_);
 
-	//コライダー設定
-	collider_.SetNormal(NVec3::up);
-	collider_.SetDistance(0.f);
-	collider_.SetColID("field");
-	NCollisionManager::GetInstance()->AddCollider(&collider_);
-	collider_.SetOnCollision(std::bind(&Field::OnCollision, this));
+		//コライダー設定
+		collider_[i].SetNormal(NVec3::up);
+		collider_[i].SetDistance(0.f);
+		collider_[i].SetColID("field");
+		NCollisionManager::GetInstance()->AddCollider(&collider_[i]);
+		collider_[i].SetOnCollision(std::bind(&Field::OnCollision, this));
+	}
 
 	lines_.clear();	//一回全部消してから生成し直す
 	for (uint32_t i = 0; i < (uint32_t)LineType::MaxSize; i++)
@@ -47,7 +50,7 @@ void Field::Init()
 		lines_.back().line = std::make_unique<NObj3d>();
 		lines_.back().line->Init();
 		lines_.back().line->SetModel("plane");
-		lines_.back().line->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
+		lines_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.1f,1.0f, 0.05f };
 		lines_.back().text = std::make_unique<NObj3d>();
 		lines_.back().text->Init();
 		lines_.back().text->SetModel("plane");
@@ -65,7 +68,7 @@ void Field::Init()
 		checkPoints_.back().line = std::make_unique<NObj3d>();
 		checkPoints_.back().line->Init();
 		checkPoints_.back().line->SetModel("plane");
-		checkPoints_.back().line->scale_ = { fieldObj_->scale_.x * 0.1f,1.0f, 0.05f };
+		checkPoints_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.1f,1.0f, 0.05f };
 		checkPoints_.back().text = std::make_unique<NObj3d>();
 		checkPoints_.back().text->Init();
 		checkPoints_.back().text->SetModel("plane");
@@ -154,6 +157,29 @@ void Field::Update()
 		};
 	}
 #pragma endregion 
+	//床のスクロール処理
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		//プレイヤーと床の距離
+		float toPlayerLen = fieldObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
+		//プレイヤーと床が床のサイズより離れたら
+		if (abs(toPlayerLen) > fieldObj_[i]->scale_.z)
+		{
+			//1枚目の場合2枚目基準にずらす
+			if (i == 0)
+			{
+				fieldObj_[i]->position_.z =
+					fieldObj_[1]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(toPlayerLen);
+			}
+			//2枚目の場合1枚目基準にずらす
+			else
+			{
+				fieldObj_[i]->position_.z =
+					fieldObj_[0]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(toPlayerLen);
+			}
+		}
+	}
+
 	//スタートしてないとき
 	if (isStart_ == false)
 	{
@@ -171,13 +197,13 @@ void Field::Update()
 		//画面左外までぶっ飛ばす
 		lines_[(uint32_t)LineType::Start].slidePos =
 			NEasing::InQuad(0.0f,
-				-fieldObj_->scale_.x,
+				-fieldObj_[0]->scale_.x,
 				lines_[(uint32_t)LineType::Start].slideTimer.GetTimeRate());
 		//画面左外までぶっ飛ばす
 		for (auto& cp : checkPoints_)
 		{
 			cp.slidePos =
-				NEasing::InQuad(0.0f, -fieldObj_->scale_.x, cp.slideTimer.GetTimeRate());
+				NEasing::InQuad(0.0f, -fieldObj_[0]->scale_.x, cp.slideTimer.GetTimeRate());
 		}
 
 		//スライドしきったら
@@ -223,7 +249,7 @@ void Field::Update()
 		//画面左外までぶっ飛ばす
 		lines_[(uint32_t)LineType::Goal].slidePos =
 			NEasing::InQuad(0.0f,
-				-fieldObj_->scale_.x,
+				-fieldObj_[0]->scale_.x,
 				lines_[(uint32_t)LineType::Goal].slideTimer.GetTimeRate());
 
 		//スライドしきったら
@@ -274,9 +300,12 @@ void Field::Update()
 	}
 
 	//オブジェクトの更新
-	fieldObj_->SetDivide(tileDivide_);
-	fieldObj_->SetActivityArea(activityAreaX_);
-	fieldObj_->Update();
+	for (auto& field : fieldObj_)
+	{
+		field->SetDivide(tileDivide_);
+		field->SetActivityArea(activityAreaX_);
+		field->Update();
+	}
 
 	for (auto& line : lines_)
 	{
@@ -305,7 +334,10 @@ void Field::Draw()
 {
 	//床だけタイリングする
 	NTile::CommonBeginDraw();
-	fieldObj_->Draw();
+	for (auto& field : fieldObj_)
+	{
+		field->Draw();
+	}
 
 	NObj3d::CommonBeginDraw();
 	for (auto& line : lines_)
