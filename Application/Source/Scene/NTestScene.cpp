@@ -41,25 +41,26 @@ void NTestScene::Init()
 #pragma region 描画初期化処理
 	Player::GetInstance()->Init();
 	Field::GetInstance()->Init();
-	for (uint32_t i = 0; i < 8; i++)
-	{
-		obj_.emplace_back();
-		obj_[i] = std::make_unique<NObj3d>();
-		obj_[i]->Init();
-		obj_[i]->SetModel("cube");
 
-		obj_[i]->scale_ = Player::GetInstance()->GetScale();
+	for (uint32_t i = 0; i < kMaxFragment_; i++)
+	{
+		fragment_[i].obj = std::make_unique<NObj3d>();
+		fragment_[i].obj->Init();
+		fragment_[i].obj->SetModel("cube");
+
+		float dist = Player::GetInstance()->GetScale().x * 2.f;
+		fragment_[i].oriPos =
+		{ (float)(i % fragmentNum_) * dist,0.f,(float)(i / fragmentNum_) * dist };
+
+		fragment_[i].obj->scale_ = Player::GetInstance()->GetScale();
+		fragment_[i].obj->position_ = fragment_[i].oriPos;
+		if (i % 2 == 1)
+		{
+			fragment_[i].obj->color_ = NColor::kLightblue;
+		}
 	}
-	
+
 #pragma region オブジェクトの初期値設定
-	obj_[0]->position_ = { -0.1f,-0.2f,-0.1f };
-	obj_[1]->position_ = { +0.1f,-0.2f,-0.1f };
-	obj_[2]->position_ = { -0.1f,+0.0f,-0.1f };
-	obj_[3]->position_ = { +0.1f,+0.0f,-0.1f };
-	obj_[4]->position_ = { -0.1f,-0.2f,+0.1f };
-	obj_[5]->position_ = { +0.1f,-0.2f,+0.1f };
-	obj_[6]->position_ = { -0.1f,+0.0f,+0.1f };
-	obj_[7]->position_ = { +0.1f,+0.0f,+0.1f };
 
 #pragma endregion
 	//背景スプライト生成
@@ -130,9 +131,16 @@ void NTestScene::Update()
 #pragma endregion
 	Player::GetInstance()->Update();
 	Field::GetInstance()->Update();
-	for (auto& obj : obj_)
+	for (auto& fragment : fragment_)
 	{
-		obj->Update();
+		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();
+		fragment.toPlayerDist = fragment.toPlayerVec.Length();
+		fragment.toPlayerDist = MathUtil::Clamp(fragment.toPlayerDist,0.f, fragment.maxDist);
+		fragment.toPlayerDist = fragment.maxDist - fragment.toPlayerDist;
+
+		fragment.toPlayerVec.Normalize();
+		fragment.obj->position_ = fragment.oriPos + fragment.toPlayerVec * fragment.toPlayerDist;
+		fragment.obj->Update();
 	}
 
 	//ライトたちの更新
@@ -165,11 +173,11 @@ void NTestScene::DrawBack3D()
 void NTestScene::Draw3D()
 {
 	Player::GetInstance()->Draw();
-	for (auto& obj : obj_)
+	for (auto& fragment : fragment_)
 	{
-		obj->SetBlendMode(BlendMode::None);
-		obj->Draw();
-		obj->SetBlendMode(BlendMode::None);
+		fragment.obj->SetBlendMode(BlendMode::None);
+		fragment.obj->Draw();
+		fragment.obj->SetBlendMode(BlendMode::None);
 	}
 }
 

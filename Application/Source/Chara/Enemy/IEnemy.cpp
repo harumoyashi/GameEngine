@@ -142,8 +142,18 @@ bool IEnemy::IsInScreen()
 	objPosPlusScale = MathUtil::WorldToScreen(posPlusScaleMat);
 	objPosMinusScale = MathUtil::WorldToScreen(posMinusScaleMat);
 	//画面内か判定
-	if (0 < objPosPlusScale.x && NWindows::kWin_width > objPosMinusScale.x &&
+	/*if (0 < objPosPlusScale.x && NWindows::kWin_width > objPosMinusScale.x &&
 		0 < objPosMinusScale.y && NWindows::kWin_height > objPosPlusScale.y)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}*/
+	//判定わかりやすくする用
+	if (0 < objPosMinusScale.x && NWindows::kWin_width > objPosPlusScale.x &&
+		0 < objPosPlusScale.y && NWindows::kWin_height > objPosMinusScale.y)
 	{
 		return true;
 	}

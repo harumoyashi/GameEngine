@@ -21,7 +21,19 @@ class NTestScene final :
 {
 private:
 	//オブジェクト
-	std::vector<std::unique_ptr<NObj3d>> obj_;
+	struct Fragment	//プレイヤーから遠ざかる破片
+	{
+		std::unique_ptr<NObj3d> obj;	//オブジェクト
+		NVec3 toPlayerVec;				//プレイヤーとのベクトル
+		float toPlayerDist;				//プレイヤーとの距離
+		float maxDist = 2.f;			//最大で離れる距離
+		NVec3 oriPos;					//元の座標
+		NVec3 floatingVec;				//ふよふよ浮いてるみたいにみせるベクトル
+	};
+
+	uint32_t fragmentNum_ = 11;
+	static const uint32_t kMaxFragment_ = 121;
+	std::array<Fragment, kMaxFragment_> fragment_;
 	std::vector<std::unique_ptr<NObj3d>> levelDataobj_;	//レベルデータから読み込んだオブジェクト
 
 	bool isCol_ = false;
