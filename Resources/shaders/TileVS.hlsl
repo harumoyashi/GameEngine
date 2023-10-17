@@ -14,6 +14,4 @@ VSOutput main(VSInput input)
     element.uv = input.uv;
     
     return element;
-	
-    return element;
 }
