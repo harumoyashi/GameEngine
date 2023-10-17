@@ -30,8 +30,6 @@ VSOutput main(float3 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
     float3 scale = { x, y, z };
     
     output.scale = scale;
-    output.divide = divide;
-    output.activityArea = activityArea;
 	
     return output;
 }

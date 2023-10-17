@@ -14,8 +14,8 @@ PSOutput main(VSOutput input) : SV_TARGET
     PSOutput output;
     
 	// テクスチャマッピング
-    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / input.divide, input.scale.z / input.divide));
-    if (input.activityArea < input.worldpos.x || -input.activityArea > input.worldpos.x)
+    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / divide, input.scale.z / divide));
+    if (activityArea < input.worldpos.x || -activityArea > input.worldpos.x)
     {
         texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
     }

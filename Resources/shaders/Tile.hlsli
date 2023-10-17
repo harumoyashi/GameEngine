@@ -91,6 +91,4 @@ struct VSOutput
     float3 normal : NORMAL;     // 法線ベクトル
     float2 uv : TEXCOORD;       // uv値
     float3 scale : SCALE;       // 行列から抜き出したスケール
-    float divide : DIVIDE;      // タイルの分割幅
-    float activityArea : AREA;  // 行動範囲
 };
