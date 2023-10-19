@@ -77,10 +77,12 @@ cbuffer cbuff3 : register(b3)
     CircleShadow circleShadows[CIRCLESHADOW_NUM];
 };
 
+static const int maxObj = 256;
 cbuffer cbuff4 : register(b4)
 {
     float divide;
     float activityArea;
+    float3 objPos[maxObj];
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体

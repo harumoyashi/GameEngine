@@ -40,6 +40,7 @@ private:
 
 	float tileDivide_ = 0.5f;						//タイルの分割幅
 	float activityAreaX_ = 10.0f;					//行動範囲制限
+	std::array<NVec3,maxObj> objPos_;				//
 	uint32_t checkPointNum = 5;						//チェックポイントの数
 
 	float startPosZ_ = 3.0f;						//スタート地点(縦だけ)

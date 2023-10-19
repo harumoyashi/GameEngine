@@ -300,10 +300,21 @@ void Field::Update()
 	}
 
 	//オブジェクトの更新
+	//プレイヤー
+	objPos_[0] = Player::GetInstance()->GetPos();
+	//全敵
+	/*for (auto& enemy : EnemyManager::GetInstance()->enemys_)
+	{
+		static uint32_t i = 1;
+		objPos_[i] = enemy->GetPos();
+		i++;
+	}*/
+
 	for (auto& field : fieldObj_)
 	{
 		field->SetDivide(tileDivide_);
 		field->SetActivityArea(activityAreaX_);
+		field->SetObjPos(objPos_);
 		field->Update();
 	}
 
