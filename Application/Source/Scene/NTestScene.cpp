@@ -133,12 +133,15 @@ void NTestScene::Update()
 	Field::GetInstance()->Update();
 	for (auto& fragment : fragment_)
 	{
-		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();
-		fragment.toPlayerDist = fragment.toPlayerVec.Length();
+		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();	//オブジェクトとポリゴンの中心点とのベクトル
+		fragment.toPlayerDist = fragment.toPlayerVec.Length();						//オブジェクトとポリゴンの中心点との距離
+		//大きくなりすぎないように
 		fragment.toPlayerDist = MathUtil::Clamp(fragment.toPlayerDist,0.f, fragment.maxDist);
+		//オブジェクトに近い程大きい値に
 		fragment.toPlayerDist = fragment.maxDist - fragment.toPlayerDist;
 
 		fragment.toPlayerVec.Normalize();
+		//最終的にプレイヤーから近いほど遠ざかるベクトルを足す
 		fragment.obj->position_ = fragment.oriPos + fragment.toPlayerVec * fragment.toPlayerDist;
 		fragment.obj->Update();
 	}
