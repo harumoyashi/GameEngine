@@ -26,7 +26,7 @@ public:
 	//行動範囲設定
 	void SetActivityArea(float activityArea) { activityArea_ = activityArea; }
 	//フィールド上にいるオブジェクトの座標設定
-	void SetObjPos(std::array<NVec3,maxObj> objPos) { objPos_ = objPos; }
+	void SetObjPos(NVec3 objPos,uint32_t eleNum);
 
 
 private:

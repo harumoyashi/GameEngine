@@ -102,6 +102,8 @@ struct ConstBuffDataTile
 {
 	float divide;						//分割幅
 	float activityArea;					//行動範囲
+	float pad1;
+	float pad2;
 	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
 };
 

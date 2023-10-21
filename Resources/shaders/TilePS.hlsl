@@ -15,10 +15,10 @@ PSOutput main(GSOutput input) : SV_TARGET
     
 	// テクスチャマッピング
     float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / divide, input.scale.z / divide));
-    if (activityArea < input.worldpos.x || -activityArea > input.worldpos.x)
-    {
-        texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
-    }
+    //if (activityArea < input.worldpos.x || -activityArea > input.worldpos.x)
+    //{
+    //    texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
+    //}
     
 	// 光沢度
     const float shininess = 4.0f;

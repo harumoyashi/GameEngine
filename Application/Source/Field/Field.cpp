@@ -314,7 +314,10 @@ void Field::Update()
 	{
 		field->SetDivide(tileDivide_);
 		field->SetActivityArea(activityAreaX_);
-		field->SetObjPos(objPos_);
+		for (uint32_t i = 0; i < maxObj; i++)
+		{
+			field->SetObjPos(objPos_[i], i);
+		}
 		field->Update();
 	}
 
