@@ -58,6 +58,8 @@ void NTestScene::Init()
 		{
 			fragment_[i].obj->color_ = NColor::kLightblue;
 		}
+
+		fragment_[i].floatingTimer = MathUtil::Randomf(1.f, 3.f);	//1~3秒の間で設定
 	}
 
 #pragma region オブジェクトの初期値設定
@@ -136,13 +138,23 @@ void NTestScene::Update()
 		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();	//オブジェクトとポリゴンの中心点とのベクトル
 		fragment.toPlayerDist = fragment.toPlayerVec.Length();						//オブジェクトとポリゴンの中心点との距離
 		//大きくなりすぎないように
-		fragment.toPlayerDist = MathUtil::Clamp(fragment.toPlayerDist,0.f, fragment.maxDist);
+		fragment.toPlayerDist = MathUtil::Clamp(fragment.toPlayerDist, 0.f, fragment.maxDist);
 		//オブジェクトに近い程大きい値に
 		fragment.toPlayerDist = fragment.maxDist - fragment.toPlayerDist;
 
 		fragment.toPlayerVec.Normalize();
+
+		fragment.floatingTimer.RoopReverse();
+		NVec3 plusVec = fragment.toPlayerVec * fragment.toPlayerDist;
+		plusVec.y = fragment.toPlayerDist * 0.3f;
+		if (fragment.toPlayerDist > 0)
+		{
+			plusVec += NEasing::OutQuad(fragment.floatingTimer.GetTimeRate()) * fragment.toPlayerVec * 0.2f;
+		}
+
 		//最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-		fragment.obj->position_ = fragment.oriPos + fragment.toPlayerVec * fragment.toPlayerDist;
+		fragment.obj->position_ = fragment.oriPos + plusVec;
+		fragment.obj->rotation_ = plusVec * 360.f;
 		fragment.obj->Update();
 	}
 

@@ -44,29 +44,28 @@ void main(
         //オブジェクトに近いポリゴンほど高く浮く処理
         float3 centerPos =
         (input[0].pos.xyz + input[1].pos.xyz + input[2].pos.xyz) / 3.f; //ポリゴンの中心点
+        centerPos = mul(world, float4(centerPos, 1)).xyz;               //ワールド座標に直す
         float maxDist = 2.f; //浮く範囲
         
         float3 plusVec;
         for (uint j = 0; j < 1; j++)
         {
-            float3 objToPolyVec = objPos[j] - centerPos; //オブジェクトとポリゴンの中心点とのベクトル
-            float objToPolyDist = length(objToPolyVec); //オブジェクトとポリゴンの中心点との距離
+            float3 objToPolyVec = objPos[j] - centerPos;        //オブジェクトとポリゴンの中心点とのベクトル
+            float objToPolyDist = length(objToPolyVec);         //オブジェクトとポリゴンの中心点との距離
             objToPolyDist = Clamp(objToPolyDist, 0.f, maxDist); //大きくなりすぎないように
 
-            objToPolyDist = maxDist - objToPolyDist; //オブジェクトに近い程大きい値に
+            objToPolyDist = maxDist - objToPolyDist;            //オブジェクトに近い程大きい値に
             
             objToPolyVec = normalize(objToPolyVec);
             
-            plusVec = objToPolyVec * objToPolyDist; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
+            plusVec = objToPolyVec * objToPolyDist;             //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
+            plusVec.y = 1;
         }
         
         float3 plusPos = input[i].pos + plusVec;
         
-        wpos = mul(world, float4(input[i].pos, 1));
-        
         element.svpos = mul(mul(viewproj, world), float4(plusPos, 1));
-        element.worldpos = wpos;
-        //element.worldpos = mul(world, float4(input[i].pos, 1));
+        element.worldpos = mul(world, float4(input[i].pos, 1));
         element.normal = input[i].normal;
         element.uv = input[i].uv;
         element.scale = scale;
