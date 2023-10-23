@@ -170,7 +170,8 @@ void main(
         
         //ÉrÉÖÅ[ÅAéÀâeïœä∑
         svpos = mul(viewproj, svpos);
-        float4 wpos = mul(world, svpos);
+        float4 wpos = mul(world, input[0].pos + offset);
+        element.svpos = svpos;
         element.worldpos = wpos;
         element.color = input[0].color;
         float4 wnormal = normalize(mul(rotMat, float4(normal_array[i], 0)));
