@@ -303,12 +303,12 @@ void Field::Update()
 	//プレイヤー
 	objPos_[0] = Player::GetInstance()->GetPos();
 	//全敵
-	/*for (auto& enemy : EnemyManager::GetInstance()->enemys_)
+	for (auto& enemy : EnemyManager::GetInstance()->enemys_)
 	{
-		static uint32_t i = 1;
+		static uint32_t i = 1;	//プレイヤー追加してるので要素番号は1からスタート
 		objPos_[i] = enemy->GetPos();
 		i++;
-	}*/
+	}
 
 	for (auto& field : fieldObj_)
 	{

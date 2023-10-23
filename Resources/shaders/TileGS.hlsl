@@ -24,6 +24,33 @@ void main(
 )
 {
     GSOutput element; //出力用頂点データ
+    
+     //ふよふよタイマー回す
+    float floatingTimer = 0, maxFloatingTimer = 0;
+    bool isTimerPlus = true; //タイマー足すか引くかフラグ
+        
+    if (maxFloatingTimer <= 0)
+    {
+        maxFloatingTimer = 120.f;
+    }
+        
+    if (isTimerPlus)
+    {
+        floatingTimer++;
+    }
+    else
+    {
+        floatingTimer--;
+    }
+    
+    if (isTimerPlus && floatingTimer >= maxFloatingTimer)
+    {
+        isTimerPlus = false;
+    }
+    else if (isTimerPlus == false && floatingTimer <= 0)
+    {
+        isTimerPlus = true;
+    }
    
     for (uint i = 0; i < vnum; i++)
     {
@@ -57,38 +84,21 @@ void main(
             objToPolyVec = normalize(objToPolyVec);
             
             plusVec = objToPolyVec * objToPolyDist; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-            plusVec.y = -abs(objToPolyDist) * 0.2f;
+            plusVec.y = -abs(objToPolyDist) * 0.5f;
         }
-        
-        ////ふよふよタイマー回す
-        //uint floatingTimer, maxFloatingTimer;
-        //bool isTimerPlus; //タイマー足すか引くかフラグ
-        
-        //if (maxFloatingTimer <= 0)
-        //{
-            
-        //}
-        
-        //if (isTimerPlus)
-        //{
-        //    floatingTimer++;
-        //}
         
         ////浮いてるならさらにふよふよさせる
         //if (objToPolyDist > 0)
         //{
-        //    plusVec += floatingTimer * objToPolyVec * 0.2f;
+        //    plusVec += (floatingTimer / maxFloatingTimer) * objToPolyVec * 0.2f;
         //}
         
-        //ワールド座標
-        float4 wpos = mul(world, float4(input[i].pos, 1));
-        //plusVecがワールド座標基準だからワールド座標に直したものに足す
-        float3 plusPos = wpos.xyz + plusVec;
-        
         //-------------------- 回転 --------------------//
+        //足す回転ベクトル
+        float3 plusRot = plusVec * 3.14f;
         //Z軸回転行列
-        float sinZ = sin(plusVec.z);
-        float cosZ = cos(plusVec.z);
+        float sinZ = sin(plusRot.z);
+        float cosZ = cos(plusRot.z);
 
         float4x4 matZ = float4x4(
         cosZ, sinZ, 0, 0,
@@ -97,8 +107,8 @@ void main(
         0, 0, 0, 1);
         
         //X軸回転行列
-        float sinX = sin(plusVec.x);
-        float cosX = cos(plusVec.x);
+        float sinX = sin(plusRot.x);
+        float cosX = cos(plusRot.x);
 
         float4x4 matX = float4x4(
         1, 0, 0, 0,
@@ -107,8 +117,8 @@ void main(
         0, 0, 0, 1);
         
         //Y軸回転行列
-        float sinY = sin(plusVec.y);
-        float cosY = cos(plusVec.y);
+        float sinY = sin(plusRot.y);
+        float cosY = cos(plusRot.y);
 
         float4x4 matY = float4x4(
         cosY, 0, sinY, 0,
@@ -118,15 +128,20 @@ void main(
         
         //回転行列掛ける
         //plusPosがワールド座標基準なのでおかしくなってる
-        float4 rotPos = mul(matZ, float4(plusPos, 1));
+        float4 rotPos = mul(matZ, float4(input[i].pos, 1));
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
+        
+        //ワールド座標
+        float4 wpos = mul(world, rotPos);
+        //plusVecがワールド座標基準だからワールド座標に直したものに足す
+        float3 plusPos = wpos.xyz + plusVec;
         
         if (isAvoid)
         {
             //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
-            element.svpos = mul(viewproj, rotPos);
-            element.worldpos = rotPos;
+            element.svpos = mul(viewproj, float4(plusPos, 1));
+            element.worldpos = float4(plusPos, 1);
             element.normal = input[i].normal;
             element.uv = input[i].uv;
             element.scale = scale;
