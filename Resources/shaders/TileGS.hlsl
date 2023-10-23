@@ -37,29 +37,48 @@ void main(
     
         float3 scale = { x, y, z };
         
-        float4 offset = (input[i].normal, 0);
-    
         //ビュー、射影変換
         //オブジェクトに近いポリゴンほど高く浮く処理
         float3 centerPos =
         (input[0].pos.xyz + input[1].pos.xyz + input[2].pos.xyz) / 3.f; //ポリゴンの中心点
-        centerPos = mul(world, float4(centerPos, 1)).xyz;               //ワールド座標に直す
+        centerPos = mul(world, float4(centerPos, 1)).xyz; //ワールド座標に直す
         float maxDist = 2.f; //浮く範囲
         
-        float3 objToPolyVec,plusVec;
+        float3 objToPolyVec, plusVec;
+        float objToPolyDist;
         for (uint j = 0; j < 1; j++)
         {
-            objToPolyVec = objPos[j] - centerPos;        //オブジェクトとポリゴンの中心点とのベクトル
-            float objToPolyDist = length(objToPolyVec);         //オブジェクトとポリゴンの中心点との距離
+            objToPolyVec = objPos[j] - centerPos; //オブジェクトとポリゴンの中心点とのベクトル
+            objToPolyDist = length(objToPolyVec); //オブジェクトとポリゴンの中心点との距離
             objToPolyDist = Clamp(objToPolyDist, 0.f, maxDist); //大きくなりすぎないように
 
-            objToPolyDist = maxDist - objToPolyDist;            //オブジェクトに近い程大きい値に
+            objToPolyDist = maxDist - objToPolyDist; //オブジェクトに近い程大きい値に
             
             objToPolyVec = normalize(objToPolyVec);
             
-            plusVec = objToPolyVec * objToPolyDist;             //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-            plusVec.y = -objToPolyDist * 0.2f;
+            plusVec = objToPolyVec * objToPolyDist; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
+            plusVec.y = -abs(objToPolyDist) * 0.2f;
         }
+        
+        ////ふよふよタイマー回す
+        //uint floatingTimer, maxFloatingTimer;
+        //bool isTimerPlus; //タイマー足すか引くかフラグ
+        
+        //if (maxFloatingTimer <= 0)
+        //{
+            
+        //}
+        
+        //if (isTimerPlus)
+        //{
+        //    floatingTimer++;
+        //}
+        
+        ////浮いてるならさらにふよふよさせる
+        //if (objToPolyDist > 0)
+        //{
+        //    plusVec += floatingTimer * objToPolyVec * 0.2f;
+        //}
         
         //ワールド座標
         float4 wpos = mul(world, float4(input[i].pos, 1));
@@ -97,12 +116,8 @@ void main(
         -sinY, 0, cosY, 0,
         0, 0, 0, 1);
         
-        //回転行列
-        float4x4 rotMat = world;
-        rotMat = mul(matZ, rotMat);
-        rotMat = mul(matX, rotMat);
-        rotMat = mul(matY, rotMat);
-        
+        //回転行列掛ける
+        //plusPosがワールド座標基準なのでおかしくなってる
         float4 rotPos = mul(matZ, float4(plusPos, 1));
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
