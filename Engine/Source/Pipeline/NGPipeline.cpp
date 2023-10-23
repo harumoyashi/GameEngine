@@ -698,7 +698,7 @@ void PipeLineManager::CreateAll()
 	tileDesc.shader.pShader = NShader::GetShader("Tile");
 
 	//カリング設定
-	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;		//背面カリングする
+	tileDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		//背面カリングしない
 	//レンダーターゲット数設定
 	tileDesc.render.NumRenderTargets = 2;
 

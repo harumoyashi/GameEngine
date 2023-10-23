@@ -29,7 +29,6 @@ void main(
     {
          //法線にワールド行列によるスケーリング・回転を適用
         float4 wnormal = normalize(mul(world, float4(input[i].normal, 0)));
-        float4 wpos = (0,0,0,0);
         
         //ワールド行列からスケールを抽出
         float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));
@@ -47,10 +46,10 @@ void main(
         centerPos = mul(world, float4(centerPos, 1)).xyz;               //ワールド座標に直す
         float maxDist = 2.f; //浮く範囲
         
-        float3 plusVec;
+        float3 objToPolyVec,plusVec;
         for (uint j = 0; j < 1; j++)
         {
-            float3 objToPolyVec = objPos[j] - centerPos;        //オブジェクトとポリゴンの中心点とのベクトル
+            objToPolyVec = objPos[j] - centerPos;        //オブジェクトとポリゴンの中心点とのベクトル
             float objToPolyDist = length(objToPolyVec);         //オブジェクトとポリゴンの中心点との距離
             objToPolyDist = Clamp(objToPolyDist, 0.f, maxDist); //大きくなりすぎないように
 
@@ -59,13 +58,58 @@ void main(
             objToPolyVec = normalize(objToPolyVec);
             
             plusVec = objToPolyVec * objToPolyDist;             //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-            plusVec.y = 1;
+            plusVec.y = -objToPolyDist * 0.2f;
         }
         
-        float3 plusPos = input[i].pos + plusVec;
+        //ワールド座標
+        float4 wpos = mul(world, float4(input[i].pos, 1));
+        //plusVecがワールド座標基準だからワールド座標に直したものに足す
+        float3 plusPos = wpos.xyz + plusVec;
         
-        element.svpos = mul(mul(viewproj, world), float4(plusPos, 1));
-        element.worldpos = mul(world, float4(input[i].pos, 1));
+        //-------------------- 回転 --------------------//
+        //Z軸回転行列
+        float sinZ = sin(plusVec.z);
+        float cosZ = cos(plusVec.z);
+
+        float4x4 matZ = float4x4(
+        cosZ, sinZ, 0, 0,
+        -sinZ, cosZ, 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1);
+        
+        //X軸回転行列
+        float sinX = sin(plusVec.x);
+        float cosX = cos(plusVec.x);
+
+        float4x4 matX = float4x4(
+        1, 0, 0, 0,
+        0, cosX, sinX, 0,
+        0, -sinX, cosX, 0,
+        0, 0, 0, 1);
+        
+        //Y軸回転行列
+        float sinY = sin(plusVec.y);
+        float cosY = cos(plusVec.y);
+
+        float4x4 matY = float4x4(
+        cosY, 0, sinY, 0,
+        0, 1, 0, 0,
+        -sinY, 0, cosY, 0,
+        0, 0, 0, 1);
+        
+        //回転行列
+        float4x4 rotMat = world;
+        rotMat = mul(matZ, rotMat);
+        rotMat = mul(matX, rotMat);
+        rotMat = mul(matY, rotMat);
+        
+        float4 rotPos = mul(matZ, float4(plusPos, 1));
+        rotPos = mul(matX, rotPos);
+        rotPos = mul(matY, rotPos);
+        
+        //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
+        element.svpos = mul(viewproj, rotPos);
+        element.worldpos = rotPos;
         element.normal = input[i].normal;
         element.uv = input[i].uv;
         element.scale = scale;

@@ -143,10 +143,12 @@ void NTestScene::Update()
 		fragment.toPlayerDist = fragment.maxDist - fragment.toPlayerDist;
 
 		fragment.toPlayerVec.Normalize();
-
+		//ふよふよタイマー回す
 		fragment.floatingTimer.RoopReverse();
+		//もとに位置に足すベクトル
 		NVec3 plusVec = fragment.toPlayerVec * fragment.toPlayerDist;
-		plusVec.y = fragment.toPlayerDist * 0.3f;
+		plusVec.y = fragment.toPlayerDist * 0.3f;	//y座標は同じで絶対0になるから距離に応じて少し浮かす
+		//浮いてるならさらにふよふよさせる
 		if (fragment.toPlayerDist > 0)
 		{
 			plusVec += NEasing::OutQuad(fragment.floatingTimer.GetTimeRate()) * fragment.toPlayerVec * 0.2f;
@@ -154,7 +156,7 @@ void NTestScene::Update()
 
 		//最終的にプレイヤーから近いほど遠ざかるベクトルを足す
 		fragment.obj->position_ = fragment.oriPos + plusVec;
-		fragment.obj->rotation_ = plusVec * 360.f;
+		fragment.obj->rotation_ = plusVec * 360.f;	//角度っぽくしてふよふよ
 		fragment.obj->Update();
 	}
 
