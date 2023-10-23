@@ -61,4 +61,5 @@ void NTile::TransferCBTile()
 	cbTile_->constMap_->divide = divide_;
 	cbTile_->constMap_->activityArea = activityArea_;
 	cbTile_->constMap_->objPos = objPos_;
+	cbTile_->constMap_->isAvoid = isAvoid_;
 }

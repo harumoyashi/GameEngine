@@ -82,6 +82,7 @@ cbuffer cbuff4 : register(b4)
 {
     float divide;
     float activityArea;
+    bool isAvoid;
     float3 objPos[maxObj];
 }
 

@@ -40,7 +40,7 @@ void main(
         //ビュー、射影変換
         //オブジェクトに近いポリゴンほど高く浮く処理
         float3 centerPos =
-        (input[0].pos.xyz + input[1].pos.xyz + input[2].pos.xyz) / 3.f; //ポリゴンの中心点
+        (input[0].pos + input[1].pos + input[2].pos) / 3.f; //ポリゴンの中心点
         centerPos = mul(world, float4(centerPos, 1)).xyz; //ワールド座標に直す
         float maxDist = 2.f; //浮く範囲
         
@@ -122,12 +122,23 @@ void main(
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
         
-        //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
-        element.svpos = mul(viewproj, rotPos);
-        element.worldpos = rotPos;
-        element.normal = input[i].normal;
-        element.uv = input[i].uv;
-        element.scale = scale;
+        if (isAvoid)
+        {
+            //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
+            element.svpos = mul(viewproj, rotPos);
+            element.worldpos = rotPos;
+            element.normal = input[i].normal;
+            element.uv = input[i].uv;
+            element.scale = scale;
+        }
+        else
+        {
+            element.svpos = mul(viewproj, wpos);
+            element.worldpos = wpos;
+            element.normal = input[i].normal;
+            element.uv = input[i].uv;
+            element.scale = scale;
+        }
         
         output.Append(element);
     }

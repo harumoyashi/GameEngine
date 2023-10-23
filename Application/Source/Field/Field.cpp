@@ -314,6 +314,7 @@ void Field::Update()
 	{
 		field->SetDivide(tileDivide_);
 		field->SetActivityArea(activityAreaX_);
+		field->SetIsAvoid(isAvoid_);
 		for (uint32_t i = 0; i < maxObj; i++)
 		{
 			field->SetObjPos(objPos_[i], i);
@@ -340,6 +341,7 @@ void Field::Update()
 	ImGui::SliderFloat("GoalPosZ", &goalPosZ_, 1.0f, 180.0f);
 	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
 	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
+	ImGui::Checkbox("IsAvoid", &isAvoid_);
 	ImGui::End();
 #endif //DEBUG
 }

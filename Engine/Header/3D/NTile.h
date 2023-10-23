@@ -11,6 +11,7 @@ private:
 	float divide_;						//タイルの分割幅
 	float activityArea_;				//行動範囲
 	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
+	bool isAvoid_;						//避けるようになるか否か
 
 public:
 	bool Init()override;
@@ -27,7 +28,8 @@ public:
 	void SetActivityArea(float activityArea) { activityArea_ = activityArea; }
 	//フィールド上にいるオブジェクトの座標設定
 	void SetObjPos(NVec3 objPos,uint32_t eleNum);
-
+	//避けるようになるか否か設定
+	void SetIsAvoid(bool isAvoid) { isAvoid_ = isAvoid; }
 
 private:
 	//タイル用定数バッファ転送

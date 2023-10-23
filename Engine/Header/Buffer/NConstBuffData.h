@@ -102,7 +102,7 @@ struct ConstBuffDataTile
 {
 	float divide;						//分割幅
 	float activityArea;					//行動範囲
-	float pad1;
+	bool isAvoid;						//避けるようになるか否か
 	float pad2;
 	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
 };
