@@ -27,9 +27,6 @@ public:
 	//インスタンス取得
 	static NAudioManager* GetInstance();
 
-	//ImGui
-	void ImGuiDraw();
-
 	//全部の音ファイル読み込み
 	void AllLoad();
 

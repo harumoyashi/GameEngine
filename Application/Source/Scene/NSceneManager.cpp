@@ -41,7 +41,6 @@ void NSceneManager::Update()
 	currentScene_->Update();
 	NSceneChange::GetInstance()->Update();
 	UIManager::GetInstance()->Update();
-	NAudioManager::GetInstance()->ImGuiDraw();
 }
 
 void NSceneManager::Draw()

@@ -23,12 +23,12 @@ private:
 	//オブジェクト
 	struct Fragment	//プレイヤーから遠ざかる破片
 	{
-		std::unique_ptr<NObj3d> obj;	//オブジェクト
-		NVec3 toPlayerVec;				//プレイヤーとのベクトル
-		float toPlayerDist;				//プレイヤーとの距離
-		float maxDist = 2.f;			//最大で離れる距離
-		NVec3 oriPos;					//元の座標
-		NVec3 floatingVec;				//ふよふよ浮いてるみたいにみせるベクトル
+		std::unique_ptr<NObj3d> obj;		//オブジェクト
+		NVec3 toPlayerVec;					//プレイヤーとのベクトル
+		float toPlayerDist;					//プレイヤーとの距離
+		float maxDist = 2.f;				//最大で離れる距離
+		NVec3 oriPos;						//元の座標
+		NEasing::EaseTimer floatingTimer;	//ふよふよするタイマー
 	};
 
 	uint32_t fragmentNum_ = 11;

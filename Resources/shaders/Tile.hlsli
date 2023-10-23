@@ -77,10 +77,12 @@ cbuffer cbuff3 : register(b3)
     CircleShadow circleShadows[CIRCLESHADOW_NUM];
 };
 
+static const int maxObj = 256;
 cbuffer cbuff4 : register(b4)
 {
     float divide;
     float activityArea;
+    float3 objPos[maxObj];
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
@@ -93,10 +95,9 @@ struct VSInput
 
 struct VSOutput
 {
-    float4 svpos : SV_POSITION; // システム用頂点座標
-    float4 worldpos : POSITION; // ワールド座標
-    float3 normal : NORMAL;     // 法線ベクトル
-    float2 uv : TEXCOORD;       // uv値
+    float3 pos : POSITION;  // システム用頂点座標
+    float3 normal : NORMAL; // 法線ベクトル
+    float2 uv : TEXCOORD;   // uv値
 };
 
 struct GSOutput
