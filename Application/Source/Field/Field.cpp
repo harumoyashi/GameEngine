@@ -50,7 +50,7 @@ void Field::Init()
 		lines_.back().line = std::make_unique<NObj3d>();
 		lines_.back().line->Init();
 		lines_.back().line->SetModel("plane");
-		lines_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.1f,1.0f, 0.05f };
+		lines_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.5f,1.0f, 0.05f };
 		lines_.back().text = std::make_unique<NObj3d>();
 		lines_.back().text->Init();
 		lines_.back().text->SetModel("plane");
@@ -68,7 +68,7 @@ void Field::Init()
 		checkPoints_.back().line = std::make_unique<NObj3d>();
 		checkPoints_.back().line->Init();
 		checkPoints_.back().line->SetModel("plane");
-		checkPoints_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.1f,1.0f, 0.05f };
+		checkPoints_.back().line->scale_ = { fieldObj_[0]->scale_.x * 0.5f,1.0f, 0.05f };
 		checkPoints_.back().text = std::make_unique<NObj3d>();
 		checkPoints_.back().text->Init();
 		checkPoints_.back().text->SetModel("plane");
@@ -303,12 +303,12 @@ void Field::Update()
 	//プレイヤー
 	objPos_[0] = Player::GetInstance()->GetPos();
 	//全敵
-	for (auto& enemy : EnemyManager::GetInstance()->enemys_)
-	{
-		static uint32_t i = 1;	//プレイヤー追加してるので要素番号は1からスタート
-		objPos_[i] = enemy->GetPos();
-		i++;
-	}
+	//for (auto& enemy : EnemyManager::GetInstance()->enemys_)
+	//{
+	//	static uint32_t i = 1;	//プレイヤー追加してるので要素番号は1からスタート
+	//	objPos_[i] = enemy->GetPos();
+	//	i++;
+	//}
 
 	for (auto& field : fieldObj_)
 	{

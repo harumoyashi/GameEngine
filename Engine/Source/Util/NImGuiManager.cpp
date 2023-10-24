@@ -64,9 +64,12 @@ void NImGuiManager::End()
 
 void NImGuiManager::Draw()
 {
+#ifdef _DEBUG
 	//デスクリプタヒープの配列をセットするコマンド
 	std::vector<ID3D12DescriptorHeap*> ppHeaps = { srvHeap_.Get() };
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
+
 	//描画コマンドを発行
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), NDX12::GetInstance()->GetCommandList());
+#endif //_DEBUG
 }

@@ -132,13 +132,13 @@ void main(
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
         
-        //ワールド座標
-        float4 wpos = mul(world, rotPos);
-        //plusVecがワールド座標基準だからワールド座標に直したものに足す
-        float3 plusPos = wpos.xyz + plusVec;
-        
         if (isAvoid)
         {
+            //ワールド座標
+            float4 wpos = mul(world, rotPos);
+            //plusVecがワールド座標基準だからワールド座標に直したものに足す
+            float3 plusPos = wpos.xyz + plusVec;
+            
             //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
             element.svpos = mul(viewproj, float4(plusPos, 1));
             element.worldpos = float4(plusPos, 1);
@@ -148,6 +148,9 @@ void main(
         }
         else
         {
+            //ワールド座標
+            float4 wpos = mul(world, float4(input[i].pos, 1));
+            
             element.svpos = mul(viewproj, wpos);
             element.worldpos = wpos;
             element.normal = input[i].normal;

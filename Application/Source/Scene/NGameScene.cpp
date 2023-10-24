@@ -57,7 +57,7 @@ void NGameScene::Init()
 	backSprite_->SetPos(
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
-	backSprite_->color_.SetColor255(1, 1, 1);
+	backSprite_->color_.SetColor255(10, 10, 10);
 #pragma endregion
 #pragma region 前景スプライト生成
 	darken_ = std::make_unique<NSprite>();
