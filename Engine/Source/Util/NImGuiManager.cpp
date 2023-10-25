@@ -12,6 +12,7 @@ NImGuiManager* NImGuiManager::GetInstance()
 
 void NImGuiManager::Init()
 {
+#ifdef _DEBUG
 	//ImGuiのコンテキストを生成
 	ImGui::CreateContext();
 	//ImGuiのスタイルを設定
@@ -39,27 +40,34 @@ void NImGuiManager::Init()
 	ImGuiIO& io = ImGui::GetIO();
 	//標準フォントを追加する
 	io.Fonts->AddFontDefault();
+#endif //_DEBUG
 }
 
 void NImGuiManager::Finalize()
 {
+#ifdef _DEBUG
 	ImGui_ImplDX12_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
 
 	srvHeap_.Reset();
+#endif //_DEBUG
 }
 
 void NImGuiManager::Begin()
 {
+#ifdef _DEBUG
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+#endif //_DEBUG
 }
 
 void NImGuiManager::End()
 {
+#ifdef _DEBUG
 	ImGui::Render();
+#endif //_DEBUG
 }
 
 void NImGuiManager::Draw()
