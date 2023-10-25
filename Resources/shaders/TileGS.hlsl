@@ -135,7 +135,7 @@ void main(
         if (isAvoid)
         {
             //ワールド座標
-            float4 wpos = mul(world, rotPos);
+            float4 wpos = mul(world, float4(input[i].pos, 1) + rotPos);
             //plusVecがワールド座標基準だからワールド座標に直したものに足す
             float3 plusPos = wpos.xyz + plusVec;
             

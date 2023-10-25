@@ -342,6 +342,12 @@ void NGameScene::Update()
 		if (sScene == SceneMode::BeforeStart)	//始まる前の処理
 		{
 			beforeStartTimer_.Update();
+
+			if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
+			{
+				beforeStartTimer_.SetEnd(true);
+			}
+
 			//演出終わったらプレイシーンに移行
 			if (beforeStartTimer_.GetEnd())
 			{
