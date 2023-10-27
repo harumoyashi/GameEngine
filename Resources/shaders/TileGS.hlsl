@@ -128,14 +128,15 @@ void main(
         
         //回転行列掛ける
         //plusPosがワールド座標基準なのでおかしくなってる
-        float4 rotPos = mul(matZ, float4(input[i].pos, 1));
+        float4 rotPos = float4(plusVec, 1);
+        rotPos = mul(matZ, rotPos);
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
         
         if (isAvoid)
         {
             //ワールド座標
-            float4 wpos = mul(world, float4(input[i].pos, 1) + rotPos);
+            float4 wpos = mul(world, float4(input[i].pos, 1));
             //plusVecがワールド座標基準だからワールド座標に直したものに足す
             float3 plusPos = wpos.xyz + plusVec;
             
