@@ -21,7 +21,7 @@ PSOutput main(GSOutput input) : SV_TARGET
     }
     
 	// 光沢度
-    const float shininess = 4.0f;
+        const float shininess = 4.0f;
 	// 頂点から視点への方向ベクトル
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	

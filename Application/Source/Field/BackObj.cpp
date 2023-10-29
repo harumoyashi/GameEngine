@@ -54,4 +54,5 @@ void BackObj::Draw()
 void BackObj::TransferCBBackObj()
 {
 	cbBackObj_->constMap_->isAvoid = isAvoid_;
+	cbBackObj_->constMap_->extrusionTimer = extrusionTimer_;
 }

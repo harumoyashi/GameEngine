@@ -30,7 +30,7 @@ void Field::Init()
 			fieldObj_[i]->SetModel("field");
 			fieldObj_[i]->SetTexture("tile");
 		}
-		fieldObj_[i]->color_.SetColor255(200, 200, 200, 230);
+		fieldObj_[i]->color_.SetColor255(200, 200, 200, 253);
 		fieldObj_[i]->scale_ = { 50.0f,0.01f,50.0f };
 		fieldObj_[i]->position_ = { 0,-0.1f,fieldObj_[i]->scale_.z * (float)i };
 		fieldObj_[i]->SetDivide(tileDivide_);
@@ -54,7 +54,7 @@ void Field::Init()
 		}
 		backObj_[i]->color_.SetColor255(50, 50, 50, 255);
 		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.5f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.5f };
-		backObj_[i]->position_ = { 0,-1.f,backObj_[i]->scale_.z * (float)i };
+		backObj_[i]->position_ = { 0,-10.f,backObj_[i]->scale_.z * (float)i };
 	}
 
 	lines_.clear();	//一回全部消してから生成し直す
@@ -125,6 +125,8 @@ void Field::Init()
 		0, goalPosZ_ - 0.5f
 	};
 #pragma endregion
+
+	extrusionTimer_.Reset();
 }
 
 void Field::Update()
@@ -356,9 +358,11 @@ void Field::Update()
 		field->Update();
 	}
 
+	extrusionTimer_.RoopReverse();
 	for (auto& backObj : backObj_)
 	{
 		backObj->SetIsAvoid(isAvoid_);
+		backObj->SetExtrusionTimer(NEasing::OutQuad(extrusionTimer_.GetTimeRate()));
 		backObj->Update();
 	}
 
@@ -382,6 +386,8 @@ void Field::Update()
 	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
 	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
 	ImGui::SliderFloat("AvoidArea", &avoidArea_, 0.0f, 10.0f);
+	ImGui::SliderFloat("FieldAlpha", &fieldObj_[0]->color_.a, 0.0f, 1.0f);
+	fieldObj_[1]->color_.a = fieldObj_[0]->color_.a;
 	ImGui::Checkbox("IsAvoid", &isAvoid_);
 	ImGui::End();
 #endif //DEBUG
@@ -397,7 +403,7 @@ void Field::Draw()
 	}
 
 	//床だけタイリングする
-	NTile::CommonBeginDraw();
+	NTile::CommonBeginDraw(isAvoid_);
 	for (auto& field : fieldObj_)
 	{
 		field->Draw();

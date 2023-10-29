@@ -25,7 +25,7 @@ void main(
 {
     GSOutput element; //出力用頂点データ
     
-     //ふよふよタイマー回す
+    //ふよふよタイマー回す
     float floatingTimer = 0, maxFloatingTimer = 0;
     bool isTimerPlus = true; //タイマー足すか引くかフラグ
         
@@ -54,9 +54,6 @@ void main(
    
     for (uint i = 0; i < vnum; i++)
     {
-         //法線にワールド行列によるスケーリング・回転を適用
-        float4 wnormal = normalize(mul(world, float4(input[i].normal, 0)));
-        
         //ワールド行列からスケールを抽出
         float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));
         float y = sqrt(pow(world[1][0], 2) + pow(world[1][1], 2) + pow(world[1][2], 2));
@@ -139,10 +136,17 @@ void main(
             //plusVecがワールド座標基準だからワールド座標に直したものに足す
             float3 plusPos = wpos.xyz + plusVec;
             
+            //法線にワールド行列によるスケーリング・回転を適用
+            float4x4 rotMat = world;
+            rotMat = mul(matZ, rotMat);
+            rotMat = mul(matX, rotMat);
+            rotMat = mul(matY, rotMat);
+            float4 wnormal = normalize(mul(rotMat, float4(input[i].normal, 0)));
+            
             //もうワールド座標に直してるからシステム座標に掛けるのはビュー行列だけ
             element.svpos = mul(viewproj, float4(plusPos, 1));
             element.worldpos = float4(plusPos, 1);
-            element.normal = input[i].normal;
+            element.normal = wnormal;
             element.uv = input[i].uv;
             element.scale = scale;
         }

@@ -110,6 +110,9 @@ struct ConstBuffDataTile
 struct ConstBuffDataBackObj
 {
 	bool isAvoid;						//避けるようになるか否か
+	float extrusionTimer;				//押し出しタイマー
+	float pad1;
+	float pad2;
 };
 
 //スキン情報

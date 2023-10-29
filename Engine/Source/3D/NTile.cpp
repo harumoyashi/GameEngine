@@ -25,11 +25,20 @@ void NTile::Update()
 	TransferCBTile();
 }
 
-void NTile::CommonBeginDraw()
+void NTile::CommonBeginDraw(bool isAvoid)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjAlpha"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjAlpha")->pRootSignature);
+	// 割れる表現の時だけ透過させる
+	if (isAvoid)	
+	{
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjAlpha"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjAlpha")->pRootSignature);
+	}
+	else
+	{
+		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjNone"));
+		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjNone")->pRootSignature);
+	}
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト

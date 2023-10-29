@@ -18,7 +18,7 @@ public:
 	bool Init()override;
 	void Update()override;
 	//共通グラフィックスコマンド
-	static void CommonBeginDraw();
+	static void CommonBeginDraw(bool isAvoid);
 	//描画
 	void Draw()override;
 
