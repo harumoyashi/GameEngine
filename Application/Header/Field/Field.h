@@ -42,6 +42,7 @@ private:
 
 	float tileDivide_ = 0.5f;						//タイルの分割幅
 	float activityAreaX_ = 10.0f;					//行動範囲制限
+	float avoidArea_ = 2.0f;						//割れる範囲
 	std::array<NVec3,maxObj> objPos_;				//フィールド上のオブジェクト座標
 	bool isAvoid_ = false;							//避けるようになるか否か
 	uint32_t checkPointNum = 5;						//チェックポイントの数

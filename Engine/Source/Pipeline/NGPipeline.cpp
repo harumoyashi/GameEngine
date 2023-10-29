@@ -741,7 +741,7 @@ void PipeLineManager::CreateAll()
 	//ルートシグネチャ設定
 	NRootSignature rootSigBackObj;
 	rootSigBackObj.SetSamplerDesc(true);
-	//テクスチャ1個、行列、マテリアル、色、光源、タイル用の情報
+	//テクスチャ1個、行列、マテリアル、色、光源、背景オブジェクト用の情報
 	rootSigBackObj.SetRootParam(1, 5);
 	rootSigBackObj.Create();
 	backObjDesc.rootSig = rootSigBackObj;

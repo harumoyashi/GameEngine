@@ -17,9 +17,8 @@ PSOutput main(GSOutput input) : SV_TARGET
     float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / divide, input.scale.z / divide));
     if (activityArea < input.worldpos.x || -activityArea > input.worldpos.x)
     {
-        texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
+        texcolor = float4(1.0f - texcolor.rgb - 0.9f, texcolor.a);
     }
-    texcolor.a = 0.85f;
     
 	// Œõ‘ò“x
     const float shininess = 4.0f;

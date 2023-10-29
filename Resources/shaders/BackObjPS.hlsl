@@ -138,7 +138,8 @@ PSOutput main(GSOutput input) : SV_TARGET
 
     
     // シェーディング色で描画
-    float4 color = shadecolor * texcolor * m_color;
+    //float4 color = shadecolor * texcolor * m_color;
+    float4 color = float4(1.f, 1.f, 1.f, 1.f);
     output.target0 = color;
     output.target1 = color;
     return output;

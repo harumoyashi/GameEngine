@@ -41,7 +41,7 @@ void BackObj::CommonBeginDraw()
 void BackObj::Draw()
 {
 	SetCBV();
-	//タイル用の定数バッファ渡す
+	//背景オブジェクト用の定数バッファ渡す
 	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbBackObj_->constBuff_->GetGPUVirtualAddress());
 	SetVB(model_->mesh.vertexBuff.GetView());
 	SetIB(*model_->mesh.indexBuff.GetView());

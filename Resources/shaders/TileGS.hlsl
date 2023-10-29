@@ -69,7 +69,6 @@ void main(
         float3 centerPos =
         (input[0].pos + input[1].pos + input[2].pos) / 3.f; //ポリゴンの中心点
         centerPos = mul(world, float4(centerPos, 1)).xyz; //ワールド座標に直す
-        float maxDist = 2.f; //浮く範囲
         
         float3 objToPolyVec, plusVec;
         float objToPolyDist;
@@ -77,9 +76,9 @@ void main(
         {
             objToPolyVec = objPos[j] - centerPos; //オブジェクトとポリゴンの中心点とのベクトル
             objToPolyDist = length(objToPolyVec); //オブジェクトとポリゴンの中心点との距離
-            objToPolyDist = Clamp(objToPolyDist, 0.f, maxDist); //大きくなりすぎないように
+            objToPolyDist = Clamp(objToPolyDist, 0.f, avoidArea); //大きくなりすぎないように
 
-            objToPolyDist = maxDist - objToPolyDist; //オブジェクトに近い程大きい値に
+            objToPolyDist = avoidArea - objToPolyDist; //オブジェクトに近い程大きい値に
             
             objToPolyVec = normalize(objToPolyVec);
             

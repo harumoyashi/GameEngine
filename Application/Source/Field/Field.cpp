@@ -30,11 +30,12 @@ void Field::Init()
 			fieldObj_[i]->SetModel("field");
 			fieldObj_[i]->SetTexture("tile");
 		}
-		fieldObj_[i]->color_.SetColor255(5, 5, 5, 255);
+		fieldObj_[i]->color_.SetColor255(200, 200, 200, 230);
 		fieldObj_[i]->scale_ = { 50.0f,0.01f,50.0f };
 		fieldObj_[i]->position_ = { 0,-0.1f,fieldObj_[i]->scale_.z * (float)i };
 		fieldObj_[i]->SetDivide(tileDivide_);
 		fieldObj_[i]->SetActivityArea(activityAreaX_);
+		fieldObj_[i]->SetAvoidArea(avoidArea_);
 
 		//コライダー設定
 		collider_[i].SetNormal(NVec3::up);
@@ -53,7 +54,7 @@ void Field::Init()
 		}
 		backObj_[i]->color_.SetColor255(50, 50, 50, 255);
 		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.5f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.5f };
-		backObj_[i]->position_ = { 0,-20.f,backObj_[i]->scale_.z * (float)i };
+		backObj_[i]->position_ = { 0,-1.f,backObj_[i]->scale_.z * (float)i };
 	}
 
 	lines_.clear();	//一回全部消してから生成し直す
@@ -347,6 +348,7 @@ void Field::Update()
 		field->SetDivide(tileDivide_);
 		field->SetActivityArea(activityAreaX_);
 		field->SetIsAvoid(isAvoid_);
+		field->SetAvoidArea(avoidArea_);
 		for (uint32_t i = 0; i < maxObj; i++)
 		{
 			field->SetObjPos(objPos_[i], i);
@@ -379,6 +381,7 @@ void Field::Update()
 	ImGui::SliderFloat("GoalPosZ", &goalPosZ_, 1.0f, 180.0f);
 	ImGui::SliderFloat("Divide", &tileDivide_, 0.0f, 10.0f);
 	ImGui::SliderFloat("ActivityArea", &activityAreaX_, 1.0f, 100.0f);
+	ImGui::SliderFloat("AvoidArea", &avoidArea_, 0.0f, 10.0f);
 	ImGui::Checkbox("IsAvoid", &isAvoid_);
 	ImGui::End();
 #endif //DEBUG
