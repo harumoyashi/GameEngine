@@ -96,6 +96,8 @@ public:
 	const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
 	NVec2 GetMoveVelo()const { return moveVelo_; }
+	//移動速度取得
+	float GetMoveSpeed()const { return moveSpeed_; }
 	//経過時間取得
 	float GetElapseSpeed()const { return elapseSpeed_; }
 	//オブジェクトの色取得

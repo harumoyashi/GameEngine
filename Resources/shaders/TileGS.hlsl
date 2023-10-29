@@ -79,8 +79,8 @@ void main(
             
             objToPolyVec = normalize(objToPolyVec);
             
-            plusVec = objToPolyVec * objToPolyDist; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-            plusVec.y = -abs(objToPolyDist) * 0.5f;
+            plusVec = objToPolyVec * objToPolyDist * 0.2f; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
+            plusVec.y = -abs(objToPolyDist) * 0.1f;
         }
         
         ////浮いてるならさらにふよふよさせる

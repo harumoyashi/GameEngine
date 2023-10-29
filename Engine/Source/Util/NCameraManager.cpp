@@ -75,7 +75,7 @@ void NCameraManager::DebugCameraUpdate()
 
 void NCameraManager::TitleCameraInit()
 {
-	length_ = 1.0f;
+	length_ = 1.5f;
 	cameraRotEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
@@ -372,7 +372,7 @@ void NCameraManager::Init()
 	isChange_ = false;
 	isActive_ = true;
 
-	cameraRotEase_ = 4.0f;
+	cameraRotEase_ = 8.0f;
 	normalCameraMoveEase_ = 0.8f;
 	beforeStartCameraMoveEase_ = 0.3f;
 	faildCameraMoveEase_ = 0.3f;

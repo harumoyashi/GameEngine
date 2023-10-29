@@ -86,6 +86,8 @@ void NTitleScene::Init()
 
 	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 	Bloom::Init();
+
+	playerPosZ_ = Field::GetInstance()->GetGoalPos();
 }
 
 void NTitleScene::Update()
@@ -114,6 +116,9 @@ void NTitleScene::Update()
 	}
 
 	Player::GetInstance()->SetIsMove(false);
+	//進ませる
+	playerPosZ_ += Player::GetInstance()->GetMoveSpeed();
+	Player::GetInstance()->SetPos({0.f,0.f,playerPosZ_ });
 	Player::GetInstance()->Update();
 
 	//シーン切り替え

@@ -45,7 +45,7 @@ private:
 	float avoidArea_ = 2.0f;						//割れる範囲
 	NEasing::EaseTimer extrusionTimer_ = 3.0f;		//押し出すタイマー
 	std::array<NVec3,maxObj> objPos_;				//フィールド上のオブジェクト座標
-	bool isAvoid_ = false;							//避けるようになるか否か
+	bool isAvoid_ = true;							//避けるようになるか否か
 	uint32_t checkPointNum = 5;						//チェックポイントの数
 
 	float startPosZ_ = 3.0f;						//スタート地点(縦だけ)
