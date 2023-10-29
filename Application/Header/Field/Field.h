@@ -3,6 +3,7 @@
 #include "NCollider.h"
 #include "PlaneCollider.h"
 #include "NTile.h"
+#include "BackObj.h"
 #include "NEasing.h"
 #include <array>
 
@@ -34,6 +35,7 @@ public:
 
 private:
 	std::array<std::unique_ptr<NTile>,2> fieldObj_;	//床2枚用意してスクロールさせる
+	std::array<std::unique_ptr<BackObj>,2> backObj_;//背景オブジェクト2枚用意してスクロールさせる
 	std::array<PlaneCollider,2> collider_;			//床の当たり判定も2枚分用意
 	std::vector<Line> lines_;						//フィールドにある線たち
 	std::vector<Line> checkPoints_;					//フィールドにあるチェックポイントたち

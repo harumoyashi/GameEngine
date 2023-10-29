@@ -25,6 +25,9 @@
     <FxCompile Include="Resources\shaders\GPUParticleVS.hlsl" />
     <FxCompile Include="Resources\shaders\GPUParticleGS.hlsl" />
     <FxCompile Include="Resources\shaders\TileGS.hlsl" />
+    <FxCompile Include="Resources\shaders\BackObjGS.hlsl" />
+    <FxCompile Include="Resources\shaders\BackObjPS .hlsl" />
+    <FxCompile Include="Resources\shaders\BackObjVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Source\Bullet\BulletFactory.cpp" />
@@ -192,6 +195,7 @@
     <ClCompile Include="Engine\Source\PostEffect\Bloom.cpp" />
     <ClCompile Include="Application\Source\UI\UI.cpp" />
     <ClCompile Include="Engine\Source\Particle\NGPUParticle.cpp" />
+    <ClCompile Include="Application\Source\Field\BackObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -218,6 +222,7 @@
     <None Include="Resources\shaders\Tile.hlsli" />
     <None Include="Resources\shaders\Fbx.hlsli" />
     <None Include="Resources\shaders\GPUParticle.hlsli" />
+    <None Include="Resources\shaders\BackObj.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Collision\PlaneCollider.h" />
@@ -227,5 +232,6 @@
     <ClInclude Include="Engine\Header\PostEffect\Bloom.h" />
     <ClInclude Include="Application\Header\UI\UI.h" />
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
+    <ClInclude Include="Application\Header\Field\BackObj.h" />
   </ItemGroup>
 </Project>

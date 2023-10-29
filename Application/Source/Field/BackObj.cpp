@@ -1,35 +1,35 @@
-#include "NTile.h"
+#include "BackObj.h"
 
-bool NTile::Init()
+bool BackObj::Init()
 {
 	//定数バッファ
 	cbTrans_ = std::make_unique<NConstBuff<ConstBuffDataTransform>>();
 	cbMaterial_ = std::make_unique<NConstBuff<ConstBuffDataMaterial>>();
 	cbColor_ = std::make_unique<NConstBuff<ConstBuffDataColor>>();
-	cbTile_ = std::make_unique<NConstBuff<ConstBuffDataTile>>();
+	cbBackObj_ = std::make_unique<NConstBuff<ConstBuffDataBackObj>>();
 	cbTrans_->Init();
 	cbMaterial_->Init();
 	cbColor_->Init();
-	cbTile_->Init();
+	cbBackObj_->Init();
 	color_ = NColor::kWhite;
 
 	objName_ = typeid(*this).name();
 	return true;
 }
 
-void NTile::Update()
+void BackObj::Update()
 {
 	UpdateMatrix();
 	TransferMaterial();
 	TransferColor();
-	TransferCBTile();
+	TransferCBBackObj();
 }
 
-void NTile::CommonBeginDraw()
+void BackObj::CommonBeginDraw()
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("TileObjNone"));
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("TileObjNone")->pRootSignature);
+	NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("BackObjNone"));
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("BackObjNone")->pRootSignature);
 
 	// プリミティブ形状の設定コマンド
 	NDX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST); // 三角形リスト
@@ -38,11 +38,11 @@ void NTile::CommonBeginDraw()
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 }
 
-void NTile::Draw()
+void BackObj::Draw()
 {
 	SetCBV();
 	//タイル用の定数バッファ渡す
-	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbTile_->constBuff_->GetGPUVirtualAddress());
+	NDX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, cbBackObj_->constBuff_->GetGPUVirtualAddress());
 	SetVB(model_->mesh.vertexBuff.GetView());
 	SetIB(*model_->mesh.indexBuff.GetView());
 	SetSRVHeap(texture_->gpuHandle_);
@@ -51,16 +51,7 @@ void NTile::Draw()
 	DrawCommand((uint32_t)model_->mesh.indices.size());
 }
 
-void NTile::SetObjPos(NVec3 objPos, uint32_t eleNum)
+void BackObj::TransferCBBackObj()
 {
-	objPos_[eleNum] = objPos;
-}
-
-void NTile::TransferCBTile()
-{
-	cbTile_->constMap_->divide = divide_;
-	cbTile_->constMap_->activityArea = activityArea_;
-	cbTile_->constMap_->objPos = objPos_;
-	cbTile_->constMap_->isAvoid = isAvoid_;
-	cbTile_->constMap_->avoidArea = avoidArea_;
+	cbBackObj_->constMap_->isAvoid = isAvoid_;
 }

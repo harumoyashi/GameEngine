@@ -103,8 +103,13 @@ struct ConstBuffDataTile
 	float divide;						//分割幅
 	float activityArea;					//行動範囲
 	bool isAvoid;						//避けるようになるか否か
-	float pad2;
+	float avoidArea;					//避ける範囲
 	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
+};
+
+struct ConstBuffDataBackObj
+{
+	bool isAvoid;						//避けるようになるか否か
 };
 
 //スキン情報

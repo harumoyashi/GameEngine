@@ -1,4 +1,4 @@
-#include "Tile.hlsli"
+#include "BackObj.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
@@ -14,12 +14,7 @@ PSOutput main(GSOutput input) : SV_TARGET
     PSOutput output;
     
 	// テクスチャマッピング
-    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x / divide, input.scale.z / divide));
-    if (activityArea < input.worldpos.x || -activityArea > input.worldpos.x)
-    {
-        texcolor = float4(1.0f - texcolor.rgb, texcolor.a);
-    }
-    texcolor.a = 0.85f;
+    float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x, input.scale.z));
     
 	// 光沢度
     const float shininess = 4.0f;

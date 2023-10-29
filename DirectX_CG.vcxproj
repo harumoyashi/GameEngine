@@ -115,6 +115,7 @@
     <ClInclude Include="Application\Header\Bullet\IBullet.h" />
     <ClInclude Include="Application\Header\Bullet\BulletManager.h" />
     <ClInclude Include="Application\Header\Chara\Enemy\IEnemy.h" />
+    <ClInclude Include="Application\Header\Field\BackObj.h" />
     <ClInclude Include="Engine\Header\Scene\IScene.h" />
     <ClInclude Include="Application\Header\Bullet\LineBullet.h" />
     <ClInclude Include="Engine\Header\PostEffect\Bloom.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="Application\Source\Bullet\IBullet.cpp" />
     <ClCompile Include="Application\Source\Bullet\BulletManager.cpp" />
     <ClCompile Include="Application\Source\Chara\Enemy\IEnemy.cpp" />
+    <ClCompile Include="Application\Source\Field\BackObj.cpp" />
     <ClCompile Include="Engine\Source\Scene\IScene.cpp" />
     <ClCompile Include="Application\Source\Bullet\LineBullet.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\Bloom.cpp" />
@@ -292,6 +294,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\shaders\BackObj.hlsli" />
     <None Include="Resources\shaders\Fbx.hlsli" />
     <None Include="Resources\shaders\GaussianBlur.hlsli" />
     <None Include="Resources\shaders\Bloom.hlsli" />
@@ -304,6 +307,24 @@
     <None Include="Resources\shaders\Tile.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\shaders\BackObjGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\BackObjPS .hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\BackObjVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Resources\shaders\FbxPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

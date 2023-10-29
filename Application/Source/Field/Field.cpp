@@ -22,6 +22,7 @@ void Field::Init()
 #pragma region オブジェクトの生成
 	for (uint32_t i = 0; i < 2; i++)
 	{
+		//フィールドの生成
 		if (fieldObj_[i] == nullptr)
 		{
 			fieldObj_[i] = std::make_unique<NTile>();
@@ -41,6 +42,18 @@ void Field::Init()
 		collider_[i].SetColID("field");
 		NCollisionManager::GetInstance()->AddCollider(&collider_[i]);
 		collider_[i].SetOnCollision(std::bind(&Field::OnCollision, this));
+
+		//背景オブジェクトの生成
+		if (backObj_[i] == nullptr)
+		{
+			backObj_[i] = std::make_unique<BackObj>();
+			backObj_[i]->Init();
+			backObj_[i]->SetModel("field");
+			backObj_[i]->SetTexture("white");
+		}
+		backObj_[i]->color_.SetColor255(50, 50, 50, 255);
+		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.5f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.5f };
+		backObj_[i]->position_ = { 0,-20.f,backObj_[i]->scale_.z * (float)i };
 	}
 
 	lines_.clear();	//一回全部消してから生成し直す
@@ -161,21 +174,40 @@ void Field::Update()
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		//プレイヤーと床の距離
-		float toPlayerLen = fieldObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
+		float field2PlayerLen = fieldObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
 		//プレイヤーと床が床のサイズより離れたら
-		if (abs(toPlayerLen) > fieldObj_[i]->scale_.z)
+		if (abs(field2PlayerLen) > fieldObj_[i]->scale_.z)
 		{
 			//1枚目の場合2枚目基準にずらす
 			if (i == 0)
 			{
 				fieldObj_[i]->position_.z =
-					fieldObj_[1]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(toPlayerLen);
+					fieldObj_[1]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PlayerLen);
 			}
 			//2枚目の場合1枚目基準にずらす
 			else
 			{
 				fieldObj_[i]->position_.z =
-					fieldObj_[0]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(toPlayerLen);
+					fieldObj_[0]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PlayerLen);
+			}
+		}
+
+		//プレイヤーと床の距離
+		float backObj2PlayerLen = backObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
+		//プレイヤーと床が床のサイズより離れたら
+		if (abs(backObj2PlayerLen) > backObj_[i]->scale_.z)
+		{
+			//1枚目の場合2枚目基準にずらす
+			if (i == 0)
+			{
+				backObj_[i]->position_.z =
+					backObj_[1]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PlayerLen);
+			}
+			//2枚目の場合1枚目基準にずらす
+			else
+			{
+				backObj_[i]->position_.z =
+					backObj_[0]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PlayerLen);
 			}
 		}
 	}
@@ -322,6 +354,12 @@ void Field::Update()
 		field->Update();
 	}
 
+	for (auto& backObj : backObj_)
+	{
+		backObj->SetIsAvoid(isAvoid_);
+		backObj->Update();
+	}
+
 	for (auto& line : lines_)
 	{
 		line.line->Update();
@@ -348,6 +386,13 @@ void Field::Update()
 
 void Field::Draw()
 {
+	//背景オブジェクトの描画
+	BackObj::CommonBeginDraw();
+	for (auto& backObj : backObj_)
+	{
+		backObj->Draw();
+	}
+
 	//床だけタイリングする
 	NTile::CommonBeginDraw();
 	for (auto& field : fieldObj_)

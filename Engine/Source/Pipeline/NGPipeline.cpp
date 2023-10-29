@@ -363,9 +363,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(objDesc, "ObjNone");
 #pragma endregion
 #pragma region αブレンド3D
-	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj");
-
 	PipelineDesc objAlphaDesc;
 	//頂点レイアウト設定
 	objAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
@@ -398,9 +395,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(objAlphaDesc, "ObjAlpha");
 #pragma endregion
 #pragma region 加算3D
-	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj");
-
 	PipelineDesc objAddDesc;
 	//頂点レイアウト設定
 	objAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
@@ -433,9 +427,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(objAddDesc, "ObjAdd");
 #pragma endregion
 #pragma region 減算3D
-	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj");
-
 	PipelineDesc objSubDesc;
 	//頂点レイアウト設定
 	objSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
@@ -468,9 +459,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(objSubDesc, "ObjSub");
 #pragma endregion
 #pragma region 色反転3D
-	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj");
-
 	PipelineDesc objInvDesc;
 	//頂点レイアウト設定
 	objInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
@@ -538,9 +526,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(fbxDesc, "FbxNone");
 #pragma endregion
 	//#pragma region αブレンドFBX
-	//	//シェーダー生成
-	//	NShader::CreateShader("Fbx", "Fbx");
-	//
 	//	PipelineDesc fbxAlphaDesc;
 	//	//頂点レイアウト設定
 	//	fbxAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutFbx_;
@@ -677,7 +662,7 @@ void PipeLineManager::CreateAll()
 	//	//パイプライン生成
 	//	NGPipeline::Create(fbxInvDesc, "FbxInv");
 	//#pragma endregion
-#pragma region タイリング3D(背景オブジェクトとかに使う)
+#pragma region タイリング3D(床とかに使う)
 	//シェーダー生成
 	NShader::CreateShader("Tile", "Tile",true);
 
@@ -711,6 +696,73 @@ void PipeLineManager::CreateAll()
 
 	//パイプライン生成
 	NGPipeline::Create(tileDesc, "TileObjNone");
+#pragma endregion
+#pragma region αブレンドタイリング3D(床とかに使う)
+	PipelineDesc tileAlphaDesc;
+	//頂点レイアウト設定
+	tileAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
+	tileAlphaDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigTileAlpha;
+	rootSigTileAlpha.SetSamplerDesc(true);
+	//テクスチャ1個、行列、マテリアル、色、光源、タイル用の情報
+	rootSigTileAlpha.SetRootParam(1, 5);
+	rootSigTileAlpha.Create();
+	tileAlphaDesc.rootSig = rootSigTileAlpha;
+
+	//シェーダー設定
+	tileAlphaDesc.shader.pShader = NShader::GetShader("Tile");
+
+	//カリング設定
+	tileAlphaDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		//背面カリングしない
+	//レンダーターゲット数設定
+	tileAlphaDesc.render.NumRenderTargets = 2;
+
+	//深度テストする
+	tileAlphaDesc.depth.DepthStencilState.DepthEnable = true;
+
+	//ブレンドモード設定
+	tileAlphaDesc.blend.blendDesc =
+		bDesc::GetBlendMode(BlendMode::Alpha);
+
+	//パイプライン生成
+	NGPipeline::Create(tileAlphaDesc, "TileObjAlpha");
+#pragma endregion
+#pragma region 背景オブジェクト3D
+	//シェーダー生成
+	NShader::CreateShader("BackObj", "BackObj", true);
+
+	PipelineDesc backObjDesc;
+	//頂点レイアウト設定
+	backObjDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutObj_;
+	backObjDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutObj_);
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigBackObj;
+	rootSigBackObj.SetSamplerDesc(true);
+	//テクスチャ1個、行列、マテリアル、色、光源、タイル用の情報
+	rootSigBackObj.SetRootParam(1, 5);
+	rootSigBackObj.Create();
+	backObjDesc.rootSig = rootSigBackObj;
+
+	//シェーダー設定
+	backObjDesc.shader.pShader = NShader::GetShader("BackObj");
+
+	//カリング設定
+	backObjDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;		//背面カリングしない
+	//レンダーターゲット数設定
+	backObjDesc.render.NumRenderTargets = 2;
+
+	//深度テストする
+	backObjDesc.depth.DepthStencilState.DepthEnable = true;
+
+	//ブレンドモード設定
+	backObjDesc.blend.blendDesc =
+		bDesc::GetBlendMode(BlendMode::None);
+
+	//パイプライン生成
+	NGPipeline::Create(backObjDesc, "BackObjNone");
 #pragma endregion
 #pragma region デフォルト2D
 	//シェーダー生成
@@ -751,9 +803,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(spriteDesc, "SpriteNone");
 #pragma endregion
 #pragma region αブレンド2D
-	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite");
-
 	PipelineDesc spriteAlphaDesc;
 	//頂点レイアウト設定
 	spriteAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
@@ -789,9 +838,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(spriteAlphaDesc, "SpriteAlpha");
 #pragma endregion
 #pragma region 加算2D
-	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite");
-
 	PipelineDesc spriteAddDesc;
 	//頂点レイアウト設定
 	spriteAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
@@ -827,9 +873,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(spriteAddDesc, "SpriteAdd");
 #pragma endregion
 #pragma region 減算2D
-	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite");
-
 	PipelineDesc spriteSubDesc;
 	//頂点レイアウト設定
 	spriteSubDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
@@ -865,9 +908,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(spriteSubDesc, "SpriteSub");
 #pragma endregion
 #pragma region 色反転2D
-	//シェーダー生成
-	NShader::CreateShader("Sprite", "Sprite");
-
 	PipelineDesc spriteInvDesc;
 	//頂点レイアウト設定
 	spriteInvDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutSprite_;
@@ -1034,9 +1074,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(particleDesc, "Particle3dNone");
 #pragma endregion
 #pragma region αブレンドパーティクル3D
-	//シェーダー生成
-	NShader::CreateShader("Particle3d", "Particle3D", true);
-
 	PipelineDesc particleAlphaDesc;
 	//頂点レイアウト設定
 	particleAlphaDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
@@ -1069,9 +1106,6 @@ void PipeLineManager::CreateAll()
 	NGPipeline::Create(particleAlphaDesc, "Particle3dAlpha");
 #pragma endregion
 #pragma region 加算パーティクル3D
-	//シェーダー生成
-	NShader::CreateShader("Particle3d", "Particle3D", true);
-
 	PipelineDesc particleAddDesc;
 	//頂点レイアウト設定
 	particleAddDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;

@@ -47,7 +47,7 @@ void NShader::LoadPS(std::string psPath)
 	std::string shaderType = "PS.hlsl";
 	psPath = shaderFolder + psPath + shaderType;
 
-	// 頂点シェーダの読み込みとコンパイル
+	// ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		std::wstring(psPath.begin(), psPath.end()).c_str(),  // シェーダファイル名
 		nullptr,
@@ -80,7 +80,7 @@ void NShader::LoadGS(std::string gsPath)
 	std::string shaderType = "GS.hlsl";
 	gsPath = shaderFolder + gsPath + shaderType;
 
-	// 頂点シェーダの読み込みとコンパイル
+	// ジオメトリシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		std::wstring(gsPath.begin(), gsPath.end()).c_str(),  // シェーダファイル名
 		nullptr,
@@ -113,7 +113,7 @@ void NShader::LoadCS(std::string csPath)
 	std::string shaderType = "CS.hlsl";
 	csPath = shaderFolder + csPath + shaderType;
 
-	// 頂点シェーダの読み込みとコンパイル
+	// コンピュートシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
 		std::wstring(csPath.begin(), csPath.end()).c_str(),  // シェーダファイル名
 		nullptr,

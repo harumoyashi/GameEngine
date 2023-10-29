@@ -12,6 +12,7 @@ private:
 	float activityArea_;				//行動範囲
 	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
 	bool isAvoid_;						//避けるようになるか否か
+	float avoidArea_;					//避ける範囲
 
 public:
 	bool Init()override;
@@ -30,6 +31,8 @@ public:
 	void SetObjPos(NVec3 objPos,uint32_t eleNum);
 	//避けるようになるか否か設定
 	void SetIsAvoid(bool isAvoid) { isAvoid_ = isAvoid; }
+	//避ける範囲設定
+	void SetAvoidArea(float avoidArea) { avoidArea_ = avoidArea; }
 
 private:
 	//タイル用定数バッファ転送
