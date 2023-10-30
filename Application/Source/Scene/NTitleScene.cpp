@@ -43,6 +43,7 @@ void NTitleScene::Init()
 #pragma endregion
 	Player::GetInstance()->Init();
 	Field::GetInstance()->Init();
+	Field::GetInstance()->SetIsGoal(true);
 
 #pragma region オブジェクトの初期値設定
 
@@ -102,6 +103,7 @@ void NTitleScene::Update()
 	titleLogo_->Update();
 
 	Field::GetInstance()->Update();
+	Field::GetInstance()->StopSE();
 
 	flashingTimer_.Roop();
 	if (flashingTimer_.GetTimeRate() > 0.7f)

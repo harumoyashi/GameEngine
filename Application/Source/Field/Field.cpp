@@ -430,3 +430,8 @@ void Field::Draw()
 void Field::OnCollision()
 {
 }
+
+void Field::StopSE()
+{
+	NAudioManager::GetInstance()->Destroy("startSE");
+}

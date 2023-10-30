@@ -64,6 +64,8 @@ public:
 	//何かに当たった時の処理
 	void OnCollision();
 
+	void StopSE();
+
 	// ゲッター //
 	//スタート地点座標取得
 	float GetStartPos() const { return startPosZ_; }
@@ -77,7 +79,7 @@ public:
 	float GetActivityAreaX() const { return activityAreaX_; }
 
 	// セッター //
-
+	void SetIsGoal(bool isGoal) { isGoal_ = isGoal, isStart_ = isGoal; }
 
 private:
 	Field() = default;

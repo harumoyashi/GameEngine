@@ -16,7 +16,7 @@ void Wave::Init()
 {
 	scaleZ_ = 20.0f;
 	posZ_ = Field::GetInstance()->GetStartPos() - 15.0f - scaleZ_;
-	moveSpeed_ = 0.02f;		//プレイヤーが0.05fの場合
+	moveSpeed_ = 0.01f;		//プレイヤーが0.05fの場合
 #pragma region オブジェクトの生成,設定
 	for (uint32_t i = 0; i < waveDivide_; i++)
 	{
