@@ -190,12 +190,12 @@ void NTestScene::DrawBack3D()
 void NTestScene::Draw3D()
 {
 	Player::GetInstance()->Draw();
-	for (auto& fragment : fragment_)
+	/*for (auto& fragment : fragment_)
 	{
 		fragment.obj->SetBlendMode(BlendMode::None);
 		fragment.obj->Draw();
 		fragment.obj->SetBlendMode(BlendMode::None);
-	}
+	}*/
 }
 
 void NTestScene::DrawParticle()

@@ -28,7 +28,7 @@ void main(
     
     //------------- 三角形の頂点を法線方向に押し出す -------------//
     //押し出す量
-    float extrusion =  extrusionTimer * 0.001f;
+    float extrusion = extrusionTimer * 0.001f;
     extrusion *= sin(pid) * pid;
     //float ext = saturate(0.4 - cos(_LocalTime * UNITY_PI * 2) * 0.41);
     //ext *= 1 + 0.3 * sin(pid * 832.37843 + _LocalTime * 88.76);
@@ -44,77 +44,85 @@ void main(
     }
             
     //------------- 押し出した上面と側面のプリミティブを出力する -------------//   
-    //if (isAvoid)
-    //{
-        //押し出された上面の三角形
-    for (uint k = vnum; k < 6; k++)
+    if (isAvoid)
     {
-        element.svpos = mul(viewproj, float4(wpos[k], 1));
-        element.worldpos = float4(wpos[k], 1);
-        element.normal = triNormal * saturate(wpos[k].xyz);
-        element.uv = input[k - vnum].uv;
-        element.scale = scale;
+        //押し出された上面の三角形
+        for (uint k = vnum; k < 6; k++)
+        {
+            element.svpos = mul(viewproj, float4(wpos[k], 1));
+            element.worldpos = float4(wpos[k], 1);
+            element.normal = triNormal * saturate(wpos[k].xyz);
+            element.uv = input[k - vnum].uv;
+            element.scale = scale;
         
-        output.Append(element);
-    }
+            output.Append(element);
+        }
         
         //側面
-    for (uint l = 0; l < vnum; l++)
-    {
-        element.svpos = mul(viewproj, float4(wpos[l + 3], 1));
-        element.worldpos = float4(wpos[l + 3], 1);
-        element.normal = triNormal * saturate(wpos[l].xyz);
-        element.uv = input[0].uv;
-        element.scale = scale;
-        output.Append(element);
-            
-        element.svpos = mul(viewproj, float4(wpos[l + 0], 1));
-        element.worldpos = float4(wpos[l + 0], 1);
-        element.normal = triNormal * saturate(wpos[l].xyz);
-        element.uv = input[0].uv;
-        element.scale = scale;
-        output.Append(element);
-            
-        if (l < 2)
+        for (uint l = 0; l < vnum; l++)
         {
-            element.svpos = mul(viewproj, float4(wpos[l + 4], 1));
-            element.worldpos = float4(wpos[l + 4], 1);
+            element.svpos = mul(viewproj, float4(wpos[l + 3], 1));
+            element.worldpos = float4(wpos[l + 3], 1);
             element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
             
-            element.svpos = mul(viewproj, float4(wpos[l + 1], 1));
-            element.worldpos = float4(wpos[l + 1], 1);
-            element.normal = triNormal * saturate(wpos[l].xyz);
-            element.uv = input[0].uv;
-            element.scale = scale;
-            output.Append(element);
-        }
-        else
-        {
-            element.svpos = mul(viewproj, float4(wpos[3], 1));
-            element.worldpos = float4(wpos[3], 1);
+            element.svpos = mul(viewproj, float4(wpos[l + 0], 1));
+            element.worldpos = float4(wpos[l + 0], 1);
             element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
             
-            element.svpos = mul(viewproj, float4(wpos[0], 1));
-            element.worldpos = float4(wpos[0], 1);
-            element.normal = triNormal * saturate(wpos[l].xyz);
-            element.uv = input[0].uv;
-            element.scale = scale;
-            output.Append(element);
+            if (l < 2)
+            {
+                element.svpos = mul(viewproj, float4(wpos[l + 4], 1));
+                element.worldpos = float4(wpos[l + 4], 1);
+                element.normal = triNormal * saturate(wpos[l].xyz);
+                element.uv = input[0].uv;
+                element.scale = scale;
+                output.Append(element);
+            
+                element.svpos = mul(viewproj, float4(wpos[l + 1], 1));
+                element.worldpos = float4(wpos[l + 1], 1);
+                element.normal = triNormal * saturate(wpos[l].xyz);
+                element.uv = input[0].uv;
+                element.scale = scale;
+                output.Append(element);
+            }
+            else
+            {
+                element.svpos = mul(viewproj, float4(wpos[3], 1));
+                element.worldpos = float4(wpos[3], 1);
+                element.normal = triNormal * saturate(wpos[l].xyz);
+                element.uv = input[0].uv;
+                element.scale = scale;
+                output.Append(element);
+            
+                element.svpos = mul(viewproj, float4(wpos[0], 1));
+                element.worldpos = float4(wpos[0], 1);
+                element.normal = triNormal * saturate(wpos[l].xyz);
+                element.uv = input[0].uv;
+                element.scale = scale;
+                output.Append(element);
+            }
         }
     }
-    //}
-    //else
-    //{
-    //    element.svpos = mul(viewproj, wpos);
-    //    element.worldpos = wpos;
-    //    element.normal = input[i].normal;
-    //    element.uv = input[i].uv;
-    //    element.scale = scale;
-    //}
+    else
+    {
+        for (uint i = 0; i < 5; i++)
+        {
+            for (uint j = 0; j < vnum; j++)
+            {
+                element.svpos = mul(viewproj, float4(wpos[j], 1));
+                element.worldpos = float4(wpos[j], 1);
+                element.normal = triNormal * saturate(wpos[j].xyz);
+                element.uv = input[j].uv;
+                element.scale = scale;
+                
+                output.Append(element);
+            }
+        }
+    }
 }
