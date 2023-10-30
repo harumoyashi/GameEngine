@@ -42,6 +42,7 @@ Player* Player::GetInstance()
 bool Player::Init()
 {
 	obj_->position_ = {};
+	obj_->rotation_ = {};
 	obj_->scale_ = 0.1f;
 	obj_->color_ = NColor::kPlayer;	//オレンジっぽく
 	obj_->SetIsElapseAnime(false);	//経過時間無視しておく
