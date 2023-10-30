@@ -15,7 +15,7 @@ PSOutput main(GSOutput input) : SV_TARGET
     
 	// テクスチャマッピング
     float4 texcolor = tex.Sample(smp, input.uv * float2(input.scale.x, input.scale.z));
-    float z = sin(input.worldpos.z * input.scale.z);
+    float z = sin(input.worldpos.z / (input.scale.z / 20.f));
 
     texcolor.rgb = float3(z,z,z);
     
@@ -142,6 +142,7 @@ PSOutput main(GSOutput input) : SV_TARGET
     
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;
+    color += 0.2f;
     output.target0 = color;
     output.target1 = color;
     return output;

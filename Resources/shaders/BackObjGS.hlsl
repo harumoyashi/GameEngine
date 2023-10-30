@@ -51,7 +51,7 @@ void main(
     {
         element.svpos = mul(viewproj, float4(wpos[k], 1));
         element.worldpos = float4(wpos[k], 1);
-        element.normal = triNormal;
+        element.normal = triNormal * saturate(wpos[k].xyz);
         element.uv = input[k - vnum].uv;
         element.scale = scale;
         
@@ -63,14 +63,14 @@ void main(
     {
         element.svpos = mul(viewproj, float4(wpos[l + 3], 1));
         element.worldpos = float4(wpos[l + 3], 1);
-        element.normal = triNormal;
+        element.normal = triNormal * saturate(wpos[l].xyz);
         element.uv = input[0].uv;
         element.scale = scale;
         output.Append(element);
             
         element.svpos = mul(viewproj, float4(wpos[l + 0], 1));
         element.worldpos = float4(wpos[l + 0], 1);
-        element.normal = triNormal;
+        element.normal = triNormal * saturate(wpos[l].xyz);
         element.uv = input[0].uv;
         element.scale = scale;
         output.Append(element);
@@ -79,14 +79,14 @@ void main(
         {
             element.svpos = mul(viewproj, float4(wpos[l + 4], 1));
             element.worldpos = float4(wpos[l + 4], 1);
-            element.normal = triNormal;
+            element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
             
             element.svpos = mul(viewproj, float4(wpos[l + 1], 1));
             element.worldpos = float4(wpos[l + 1], 1);
-            element.normal = triNormal;
+            element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
@@ -95,14 +95,14 @@ void main(
         {
             element.svpos = mul(viewproj, float4(wpos[3], 1));
             element.worldpos = float4(wpos[3], 1);
-            element.normal = triNormal;
+            element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
             
             element.svpos = mul(viewproj, float4(wpos[0], 1));
             element.worldpos = float4(wpos[0], 1);
-            element.normal = triNormal;
+            element.normal = triNormal * saturate(wpos[l].xyz);
             element.uv = input[0].uv;
             element.scale = scale;
             output.Append(element);
