@@ -31,7 +31,7 @@ void Field::Init()
 			fieldObj_[i]->SetTexture("tile");
 		}
 		fieldObj_[i]->color_.SetColor255(200, 200, 200, 245);
-		fieldObj_[i]->scale_ = { 50.0f,0.01f,50.0f };
+		fieldObj_[i]->scale_ = { 20.0f,0.01f,20.0f };
 		fieldObj_[i]->position_ = { 0,-0.1f,fieldObj_[i]->scale_.z * (float)i };
 		fieldObj_[i]->SetDivide(tileDivide_);
 		fieldObj_[i]->SetActivityArea(activityAreaX_);
@@ -53,7 +53,7 @@ void Field::Init()
 			backObj_[i]->SetTexture("white");
 		}
 		backObj_[i]->color_.SetColor255(150,150,150, 255);
-		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.5f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.5f };
+		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.2f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.2f };
 		backObj_[i]->position_ = { 0,-10.f,backObj_[i]->scale_.z * (float)i };
 	}
 
