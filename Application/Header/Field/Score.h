@@ -20,7 +20,9 @@ private:
 	static std::vector<NumDrower> sScoreTex;	//スコア表示用
 	static std::unique_ptr<NSprite> sTopTex;	//TOPテクスチャ
 
-	static bool sIsAddScore;	//スコア加算してOKかフラグ
+	static bool sIsAddScore;					//スコア加算してOKかフラグ
+
+	static NEasing::EaseTimer addEaseTimer_;	//スコア加算時のイージング用タイマー
 
 public:
 	static void Create();

@@ -11,7 +11,8 @@ uint32_t Score::sNowScore;	//現在のスコア
 uint32_t Score::sTopScore;	//一番高いスコア
 std::vector<NumDrower> Score::sScoreTex{ 3 };	//スコア表示用
 std::unique_ptr<NSprite> Score::sTopTex;		//TOPテクスチャ
-bool Score::sIsAddScore;	//スコア加算してOKかフラグ
+bool Score::sIsAddScore;						//スコア加算してOKかフラグ
+NEasing::EaseTimer Score::addEaseTimer_ = 0.1f;	//スコア加算時のイージング用タイマー
 
 void Score::Init()
 {
@@ -25,6 +26,7 @@ void Score::Init()
 
 	sScoreTex[(uint32_t)TexType::Now].SetPos({ 50.f,50.f });
 	sScoreTex[(uint32_t)TexType::Now].SetSize({ 45.f,50.f });
+	sScoreTex[(uint32_t)TexType::Now].SetIndent(1.0f);
 	sScoreTex[(uint32_t)TexType::Now].SetNum(sNowScore);
 	sScoreTex[(uint32_t)TexType::Result].SetPos(
 		{ NWindows::kWin_width * 0.5f - sScoreTex[(uint32_t)TexType::Result].GetSize().x * 2.5f,-500.f });
@@ -48,6 +50,23 @@ void Score::Init()
 void Score::Update()
 {
 	sTopTex->SetPos(Score::GetPos(TexType::Result).x, Score::GetPos(TexType::Top).y);
+
+	//イージングタイマー更新
+	addEaseTimer_.Update();
+	if (addEaseTimer_.GetEnd())
+	{
+		addEaseTimer_.ReverseStart();
+	}
+	else if (addEaseTimer_.GetReverseEnd())
+	{
+		addEaseTimer_.Reset();
+	}
+
+	float plusPosY = -NEasing::InQuad(addEaseTimer_.GetTimeRate() * 5.f);
+	sScoreTex[(uint32_t)TexType::Now].SetPos({ 50.f ,50.f + plusPosY });
+
+	float plusScale = NEasing::InQuad(addEaseTimer_.GetTimeRate() * 2.f);
+	sScoreTex[(uint32_t)TexType::Now].SetSize({ 45.f + plusScale ,50.f + plusScale });
 
 	for (auto& scoreTex : sScoreTex)
 	{
@@ -125,6 +144,8 @@ void Score::AddScore(uint32_t score)
 		{
 			sScoreTex[i].SetNum(sNowScore);
 		}
+
+		addEaseTimer_.Start();
 	}
 }
 
