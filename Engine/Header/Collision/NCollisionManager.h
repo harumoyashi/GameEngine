@@ -11,6 +11,8 @@ private:
 	NBaseCollider* colA_;
 	NBaseCollider* colB_;
 
+	bool isCollisionCheck = true;	//当たり判定するかフラグ
+
 public:
 	static NCollisionManager* GetInstance();
 

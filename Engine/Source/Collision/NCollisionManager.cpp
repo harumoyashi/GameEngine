@@ -2,6 +2,9 @@
 #include "NBaseCollider.h"
 #include "NCollision.h"
 
+#include "NImGuiManager.h"
+#include "imgui.h"
+
 NCollisionManager* NCollisionManager::GetInstance()
 {
 	static NCollisionManager instance;
@@ -18,22 +21,31 @@ void NCollisionManager::CheckAllCollision()
 	std::forward_list<NBaseCollider*>::iterator itA;
 	std::forward_list<NBaseCollider*>::iterator itB;
 
-	//全ての組み合わせについて総当たりでチェック
-	itA = colliders_.begin();
-	for (; itA != colliders_.end(); ++itA)
-	{
-		itB = itA;
-		++itB;
-		for (; itB != colliders_.end(); ++itB)
-		{
-			colA_ = *itA;
-			colB_ = *itB;
+#ifdef _DEBUG
+	ImGui::Begin("Collision");
+	ImGui::Checkbox("IsCollisionCheck", &isCollisionCheck);	//当たり判定するかフラグ指定
+	ImGui::End();
+#endif // _DEBUG
 
-			//比較対象がある場合のみ判定を行う
-			if (colA_ != nullptr && colB_ != nullptr)
+	if (isCollisionCheck)
+	{
+		//全ての組み合わせについて総当たりでチェック
+		itA = colliders_.begin();
+		for (; itA != colliders_.end(); ++itA)
+		{
+			itB = itA;
+			++itB;
+			for (; itB != colliders_.end(); ++itB)
 			{
-				SphereCol();
-				//Sphere2PlaneCol();
+				colA_ = *itA;
+				colB_ = *itB;
+
+				//比較対象がある場合のみ判定を行う
+				if (colA_ != nullptr && colB_ != nullptr)
+				{
+					SphereCol();
+					//Sphere2PlaneCol();
+				}
 			}
 		}
 	}
