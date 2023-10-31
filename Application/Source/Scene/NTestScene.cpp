@@ -12,6 +12,7 @@
 #include "GaussianBlur.h"
 #include "Player.h"
 #include "Field.h"
+#include "Wave.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -41,6 +42,7 @@ void NTestScene::Init()
 #pragma region 描画初期化処理
 	Player::GetInstance()->Init();
 	Field::GetInstance()->Init();
+	Wave::GetInstance()->Init();
 
 	for (uint32_t i = 0; i < kMaxFragment_; i++)
 	{
@@ -133,6 +135,7 @@ void NTestScene::Update()
 #pragma endregion
 	Player::GetInstance()->Update();
 	Field::GetInstance()->Update();
+	Wave::GetInstance()->Update();
 	for (auto& fragment : fragment_)
 	{
 		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();	//オブジェクトとポリゴンの中心点とのベクトル
@@ -185,6 +188,7 @@ void NTestScene::DrawBackSprite()
 void NTestScene::DrawBack3D()
 {
 	Field::GetInstance()->Draw();
+	Wave::GetInstance()->DrawObj();
 }
 
 void NTestScene::Draw3D()
@@ -204,4 +208,5 @@ void NTestScene::DrawParticle()
 
 void NTestScene::DrawForeSprite()
 {
+	Wave::GetInstance()->DrawSprite();
 }

@@ -41,7 +41,7 @@ void Wave::Init()
 		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
 		obj_[i]->position_ =
 		{ obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX, 0,  posZ_ };
-		obj_[i]->color_.SetColor255(5, 5, 255);
+		obj_[i]->color_.SetColor255(180, 180, 180, 200);
 	}
 #pragma endregion
 #pragma region スプライトの生成,設定
