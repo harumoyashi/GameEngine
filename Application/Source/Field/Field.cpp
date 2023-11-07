@@ -345,12 +345,15 @@ void Field::Update()
 	//	i++;
 	//}
 
+	extrusionTimer_.RoopReverse();
 	for (auto& field : fieldObj_)
 	{
 		field->SetDivide(tileDivide_);
 		field->SetActivityArea(activityAreaX_);
 		field->SetIsAvoid(isAvoid_);
 		field->SetAvoidArea(avoidArea_);
+		//とりあえず押し出しタイマーと同じにしてみる
+		field->SetFloatingTimer(NEasing::OutQuad(extrusionTimer_.GetTimeRate()));
 		for (uint32_t i = 0; i < maxObj; i++)
 		{
 			field->SetObjPos(objPos_[i], i);
@@ -358,7 +361,6 @@ void Field::Update()
 		field->Update();
 	}
 
-	extrusionTimer_.RoopReverse();
 	for (auto& backObj : backObj_)
 	{
 		backObj->SetIsAvoid(isAvoid_);

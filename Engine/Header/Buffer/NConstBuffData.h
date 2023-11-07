@@ -104,9 +104,14 @@ struct ConstBuffDataTile
 	float activityArea;					//行動範囲
 	bool isAvoid;						//避けるようになるか否か
 	float avoidArea;					//避ける範囲
+	float floatingTimer;				//ふよふよタイマー
+	float pad1;
+	float pad2;
+	float pad3;
 	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
 };
 
+//背景オブジェクト
 struct ConstBuffDataBackObj
 {
 	bool isAvoid;						//避けるようになるか否か

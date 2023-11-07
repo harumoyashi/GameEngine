@@ -30,9 +30,7 @@ void main(
     //押し出す量
     float extrusion = extrusionTimer * 0.001f;
     extrusion *= sin(pid) * pid;
-    //float ext = saturate(0.4 - cos(_LocalTime * UNITY_PI * 2) * 0.41);
-    //ext *= 1 + 0.3 * sin(pid * 832.37843 + _LocalTime * 88.76);
-        
+    
     //三角形の法線方向取得
     float3 triNormal = input[0].normal + input[1].normal + input[2].normal;
     //その方向に押し出す量を掛けたオフセットを出す

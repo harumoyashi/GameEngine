@@ -20,38 +20,12 @@ static const uint vnum = 3;
 [maxvertexcount(vnum)]
 void main(
 	triangle VSOutput input[3], //ポリゴンを形成する三角形ごとに処理される
-	inout TriangleStream<GSOutput> output
+    uint pid : SV_PrimitiveID, //各プリミティブのID(それぞれの面でふよふよ感を変えたいから)	
+    inout TriangleStream<GSOutput> output
 )
 {
     GSOutput element; //出力用頂点データ
     
-    //ふよふよタイマー回す
-    float floatingTimer = 0, maxFloatingTimer = 0;
-    bool isTimerPlus = true; //タイマー足すか引くかフラグ
-        
-    if (maxFloatingTimer <= 0)
-    {
-        maxFloatingTimer = 120.f;
-    }
-        
-    if (isTimerPlus)
-    {
-        floatingTimer++;
-    }
-    else
-    {
-        floatingTimer--;
-    }
-    
-    if (isTimerPlus && floatingTimer >= maxFloatingTimer)
-    {
-        isTimerPlus = false;
-    }
-    else if (isTimerPlus == false && floatingTimer <= 0)
-    {
-        isTimerPlus = true;
-    }
-   
     for (uint i = 0; i < vnum; i++)
     {
         //ワールド行列からスケールを抽出
@@ -83,11 +57,18 @@ void main(
             plusVec.y = -abs(objToPolyDist) * 0.1f;
         }
         
-        ////浮いてるならさらにふよふよさせる
-        //if (objToPolyDist > 0)
-        //{
-        //    plusVec += (floatingTimer / maxFloatingTimer) * objToPolyVec * 0.2f;
-        //}
+        //浮いてるならさらにふよふよさせる
+        if (length(plusVec) > 0.f)
+        {
+            if (((pid % 5) + 1) > 3)
+            {
+                plusVec += (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+            }
+            else
+            {
+                plusVec -= (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+            }
+        }
         
         //-------------------- 回転 --------------------//
         //足す回転ベクトル

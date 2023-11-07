@@ -72,4 +72,5 @@ void NTile::TransferCBTile()
 	cbTile_->constMap_->objPos = objPos_;
 	cbTile_->constMap_->isAvoid = isAvoid_;
 	cbTile_->constMap_->avoidArea = avoidArea_;
+	cbTile_->constMap_->floatingTimer = floatingTimer_;
 }

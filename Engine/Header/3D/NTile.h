@@ -10,9 +10,10 @@ private:
 
 	float divide_;						//タイルの分割幅
 	float activityArea_;				//行動範囲
-	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
 	bool isAvoid_;						//避けるようになるか否か
 	float avoidArea_;					//避ける範囲
+	float floatingTimer_;				//ふよふよタイマー
+	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
 
 public:
 	bool Init()override;
@@ -33,6 +34,8 @@ public:
 	void SetIsAvoid(bool isAvoid) { isAvoid_ = isAvoid; }
 	//避ける範囲設定
 	void SetAvoidArea(float avoidArea) { avoidArea_ = avoidArea; }
+	//ふよふよタイマー設定
+	void SetFloatingTimer(float floatingTimer) { floatingTimer_ = floatingTimer; }
 
 private:
 	//タイル用定数バッファ転送
