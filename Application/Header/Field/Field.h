@@ -41,7 +41,7 @@ private:
 	std::vector<Line> checkPoints_;					//フィールドにあるチェックポイントたち
 
 	float tileDivide_ = 0.5f;						//タイルの分割幅
-	float activityAreaX_ = 10.0f;					//行動範囲制限
+	float activityAreaX_ = 9.0f;					//行動範囲制限
 	float avoidArea_ = 2.0f;						//割れる範囲
 	NEasing::EaseTimer extrusionTimer_ = 3.0f;		//押し出すタイマー
 	std::array<NVec3,maxObj> objPos_;				//フィールド上のオブジェクト座標
@@ -65,6 +65,8 @@ public:
 	void OnCollision();
 
 	void StopSE();
+
+	void FieldScroll(float standardPosZ);
 
 	// ゲッター //
 	//スタート地点座標取得

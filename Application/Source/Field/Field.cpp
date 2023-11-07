@@ -3,6 +3,7 @@
 #include "EnemyFactory.h"
 #include "NCollisionManager.h"
 #include "NAudioManager.h"
+#include "NCameraManager.h"
 
 #include <functional>
 #include "NImGuiManager.h"
@@ -31,7 +32,7 @@ void Field::Init()
 			fieldObj_[i]->SetTexture("tile");
 		}
 		fieldObj_[i]->color_.SetColor255(200, 200, 200, 245);
-		fieldObj_[i]->scale_ = { 20.0f,0.01f,20.0f };
+		fieldObj_[i]->scale_ = { 18.0f,0.01f,18.0f };
 		fieldObj_[i]->position_ = { 0,-0.1f,fieldObj_[i]->scale_.z * (float)i };
 		fieldObj_[i]->SetDivide(tileDivide_);
 		fieldObj_[i]->SetActivityArea(activityAreaX_);
@@ -52,7 +53,7 @@ void Field::Init()
 			backObj_[i]->SetModel("field");
 			backObj_[i]->SetTexture("white");
 		}
-		backObj_[i]->color_.SetColor255(150,150,150, 255);
+		backObj_[i]->color_.SetColor255(150, 150, 150, 255);
 		backObj_[i]->scale_ = { fieldObj_[i]->scale_.x * 1.2f,fieldObj_[i]->scale_.y,fieldObj_[i]->scale_.z * 1.2f };
 		backObj_[i]->position_ = { 0,-10.f,backObj_[i]->scale_.z * (float)i };
 	}
@@ -174,45 +175,13 @@ void Field::Update()
 	}
 #pragma endregion 
 	//床のスクロール処理
-	for (uint32_t i = 0; i < 2; i++)
+	if (NCameraManager::GetInstance()->GetNowCameraType() == CameraType::BeforeStart)	//始まる前だけカメラ基準でスクロール
 	{
-		//プレイヤーと床の距離
-		float field2PlayerLen = fieldObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
-		//プレイヤーと床が床のサイズより離れたら
-		if (abs(field2PlayerLen) > fieldObj_[i]->scale_.z)
-		{
-			//1枚目の場合2枚目基準にずらす
-			if (i == 0)
-			{
-				fieldObj_[i]->position_.z =
-					fieldObj_[1]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PlayerLen);
-			}
-			//2枚目の場合1枚目基準にずらす
-			else
-			{
-				fieldObj_[i]->position_.z =
-					fieldObj_[0]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PlayerLen);
-			}
-		}
-
-		//プレイヤーと床の距離
-		float backObj2PlayerLen = backObj_[i]->position_.z - Player::GetInstance()->GetPos().z;
-		//プレイヤーと床が床のサイズより離れたら
-		if (abs(backObj2PlayerLen) > backObj_[i]->scale_.z)
-		{
-			//1枚目の場合2枚目基準にずらす
-			if (i == 0)
-			{
-				backObj_[i]->position_.z =
-					backObj_[1]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PlayerLen);
-			}
-			//2枚目の場合1枚目基準にずらす
-			else
-			{
-				backObj_[i]->position_.z =
-					backObj_[0]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PlayerLen);
-			}
-		}
+		FieldScroll(NCamera::sCurrentCamera->GetTarget().z);
+	}
+	else
+	{
+		FieldScroll(Player::GetInstance()->GetFrontPosZ());
 	}
 
 	//スタートしてないとき
@@ -436,4 +405,48 @@ void Field::OnCollision()
 void Field::StopSE()
 {
 	NAudioManager::GetInstance()->Destroy("startSE");
+}
+
+void Field::FieldScroll(float standardPosZ)
+{
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		//基準点と床の距離
+		float field2PosZLen = fieldObj_[i]->position_.z - standardPosZ;
+		//基準点と床が床のサイズより離れたら
+		if (abs(field2PosZLen) > fieldObj_[i]->scale_.z)
+		{
+			//1枚目の場合2枚目基準にずらす
+			if (i == 0)
+			{
+				fieldObj_[i]->position_.z =
+					fieldObj_[1]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PosZLen);
+			}
+			//2枚目の場合1枚目基準にずらす
+			else
+			{
+				fieldObj_[i]->position_.z =
+					fieldObj_[0]->position_.z + fieldObj_[i]->scale_.z * -MathUtil::Signf(field2PosZLen);
+			}
+		}
+
+		//基準点と床の距離
+		float backObj2PosZLen = backObj_[i]->position_.z - standardPosZ;
+		//基準点と床が床のサイズより離れたら
+		if (abs(backObj2PosZLen) > backObj_[i]->scale_.z)
+		{
+			//1枚目の場合2枚目基準にずらす
+			if (i == 0)
+			{
+				backObj_[i]->position_.z =
+					backObj_[1]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PosZLen);
+			}
+			//2枚目の場合1枚目基準にずらす
+			else
+			{
+				backObj_[i]->position_.z =
+					backObj_[0]->position_.z + backObj_[i]->scale_.z * -MathUtil::Signf(backObj2PosZLen);
+			}
+		}
+	}
 }

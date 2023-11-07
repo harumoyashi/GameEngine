@@ -107,6 +107,8 @@ public:
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
+	//現在のカメラの種類取得
+	CameraType GetNowCameraType() { return (CameraType)nowCameraType_; }
 
 	//今のカメラ情報をデバッグカメラに入れる
 	void SetDebugCamera(NCamera& camera);
