@@ -307,10 +307,10 @@ void Player::Shot()
 
 void Player::OnCollision()
 {
-	//当たった相手が敵だった時の処理
-	if (collider_.GetColInfo()->GetColID() == "enemy")
+	//当たった相手が敵だった時の処理(かつ無敵じゃないなら)
+	if (collider_.GetColInfo()->GetColID() == "enemy" && isGodmode_ == false)
 	{
-		NCameraManager::GetInstance()->ShakeStart(2.f,0.3f);
+		NCameraManager::GetInstance()->ShakeStart(2.f, 0.3f);
 		NAudioManager::GetInstance()->Play("deadSE");
 		SetIsAlive(false);
 		NInput::Vibration(0.8f, 0.8f, 0.3f);
@@ -362,6 +362,15 @@ void Player::LevelUp(BulletType bulletType)
 			roketLevel_ += 1;
 		}
 		break;*/
+	case BulletType::MaxType:	//最強になる！！！
+		
+		lineLevel_ = maxBulLevel_;
+		sideLevel_ = maxBulLevel_;
+		wideLevel_ = maxBulLevel_;
+		moveSpeed_ *= 10.f;
+		isGodmode_ = true;
+		//UIManager::GetInstance()->PlusUIBul("");
+		break;
 	default:
 		break;
 	}

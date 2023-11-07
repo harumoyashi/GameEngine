@@ -146,6 +146,8 @@ void NGameScene::Init()
 	volume_[0] = NAudioManager::GetInstance()->GetMasterVolume();
 	volume_[1] = NAudioManager::GetInstance()->GetBGMVolume();
 	volume_[2] = NAudioManager::GetInstance()->GetSEVolume();
+
+	ItemManager::GetInstance()->Generate(NVec3(2.f,0,0), BulletType::MaxType);
 #pragma endregion
 }
 
@@ -385,7 +387,8 @@ void NGameScene::Update()
 			UIManager::GetInstance()->SetPos(UIType::Lstick,
 				{ NWindows::GetInstance()->kWin_width * 0.5f + stickVec.x + slidePos_, 500.0f - stickVec.y });
 
-			if (Field::GetInstance()->GetIsStart())
+			//プレイヤーが無敵じゃないとき
+			if (Player::GetInstance()->GetIsGodmode() == false)
 			{
 				//プレイヤーが波に飲み込まれたら殺す
 				if (Wave::GetInstance()->GetFrontPosZ() > Player::GetInstance()->GetFrontPosZ())
