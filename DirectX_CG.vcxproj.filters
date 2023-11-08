@@ -1,35 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Resources\shaders\GaussianBlurPS.hlsl" />
-    <FxCompile Include="Resources\shaders\GaussianBlurVS.hlsl" />
-    <FxCompile Include="Resources\shaders\BloomPS.hlsl" />
-    <FxCompile Include="Resources\shaders\BloomVS.hlsl" />
-    <FxCompile Include="Resources\shaders\ModelPS.hlsl" />
-    <FxCompile Include="Resources\shaders\ModelVS.hlsl" />
-    <FxCompile Include="Resources\shaders\ObjPS.hlsl" />
-    <FxCompile Include="Resources\shaders\ObjVS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle3DGS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle3DPS.hlsl" />
-    <FxCompile Include="Resources\shaders\Particle3DVS.hlsl" />
-    <FxCompile Include="Resources\shaders\RadialBlurPS.hlsl" />
-    <FxCompile Include="Resources\shaders\RadialBlurVS.hlsl" />
-    <FxCompile Include="Resources\shaders\SpritePS.hlsl" />
-    <FxCompile Include="Resources\shaders\SpriteVS.hlsl" />
-    <FxCompile Include="Resources\shaders\TilePS.hlsl" />
-    <FxCompile Include="Resources\shaders\TileVS.hlsl" />
-    <FxCompile Include="Resources\shaders\FbxPS.hlsl" />
-    <FxCompile Include="Resources\shaders\FbxVS.hlsl" />
-    <FxCompile Include="Resources\shaders\GPUParticleCS.hlsl" />
-    <FxCompile Include="Resources\shaders\GPUParticlePS.hlsl" />
-    <FxCompile Include="Resources\shaders\GPUParticleVS.hlsl" />
-    <FxCompile Include="Resources\shaders\GPUParticleGS.hlsl" />
-    <FxCompile Include="Resources\shaders\TileGS.hlsl" />
-    <FxCompile Include="Resources\shaders\BackObjGS.hlsl" />
-    <FxCompile Include="Resources\shaders\BackObjPS.hlsl" />
-    <FxCompile Include="Resources\shaders\BackObjVS.hlsl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Application\Source\Bullet\BulletFactory.cpp" />
     <ClCompile Include="Application\Source\Chara\Enemy\EnemyFactory.cpp" />
     <ClCompile Include="Application\Source\Chara\Enemy\EnemyManager.cpp" />
@@ -212,17 +183,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Resources\shaders\GaussianBlur.hlsli" />
-    <None Include="Resources\shaders\Bloom.hlsli" />
-    <None Include="Resources\shaders\Model.hlsli" />
-    <None Include="Resources\shaders\Obj.hlsli" />
-    <None Include="Resources\shaders\Particle3D.hlsli" />
-    <None Include="Resources\shaders\RadialBlur.hlsli" />
-    <None Include="Resources\shaders\Sprite.hlsli" />
-    <None Include="Resources\shaders\Tile.hlsli" />
-    <None Include="Resources\shaders\Fbx.hlsli" />
-    <None Include="Resources\shaders\GPUParticle.hlsli" />
-    <None Include="Resources\shaders\BackObj.hlsli" />
+    <None Include="Resources\shaders\BackObj\BackObj.hlsli" />
+    <None Include="Resources\shaders\Fbx\Fbx.hlsli" />
+    <None Include="Resources\shaders\Bloom\Bloom.hlsli" />
+    <None Include="Resources\shaders\GaussianBlur\GaussianBlur.hlsli" />
+    <None Include="Resources\shaders\Glitch\Glitch.hlsli" />
+    <None Include="Resources\shaders\GPUParticle\GPUParticle.hlsli" />
+    <None Include="Resources\shaders\Model\Model.hlsli" />
+    <None Include="Resources\shaders\Obj\Obj.hlsli" />
+    <None Include="Resources\shaders\Particle3D\Particle3D.hlsli" />
+    <None Include="Resources\shaders\ParticlePolygon\ParticlePolygon.hlsli" />
+    <None Include="Resources\shaders\RadialBlur\RadialBlur.hlsli" />
+    <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
+    <None Include="Resources\shaders\Tile\Tile.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Collision\PlaneCollider.h" />
@@ -233,5 +206,39 @@
     <ClInclude Include="Application\Header\UI\UI.h" />
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
     <ClInclude Include="Application\Header\Field\BackObj.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\shaders\BackObj\BackObjGS.hlsl" />
+    <FxCompile Include="Resources\shaders\BackObj\BackObjPS.hlsl" />
+    <FxCompile Include="Resources\shaders\BackObj\BackObjVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Fbx\FbxPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Fbx\FbxVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Bloom\BloomPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Bloom\BloomVS.hlsl" />
+    <FxCompile Include="Resources\shaders\GaussianBlur\GaussianBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\GaussianBlur\GaussianBlurVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Glitch\GlitchPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Glitch\GlitchVS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticle\GPUParticleCS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticle\GPUParticleGS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticle\GPUParticlePS.hlsl" />
+    <FxCompile Include="Resources\shaders\GPUParticle\GPUParticleVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Model\ModelPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Model\ModelVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj\ObjPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj\ObjVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle3D\Particle3DGS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle3D\Particle3DPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Particle3D\Particle3DVS.hlsl" />
+    <FxCompile Include="Resources\shaders\ParticlePolygon\ParticlePolygonGS.hlsl" />
+    <FxCompile Include="Resources\shaders\ParticlePolygon\ParticlePolygonPS.hlsl" />
+    <FxCompile Include="Resources\shaders\ParticlePolygon\ParticlePolygonVS.hlsl" />
+    <FxCompile Include="Resources\shaders\RadialBlur\RadialBlurPS.hlsl" />
+    <FxCompile Include="Resources\shaders\RadialBlur\RadialBlurVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Sprite\SpritePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Sprite\SpriteVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Tile\TileGS.hlsl" />
+    <FxCompile Include="Resources\shaders\Tile\TilePS.hlsl" />
+    <FxCompile Include="Resources\shaders\Tile\TileVS.hlsl" />
   </ItemGroup>
 </Project>

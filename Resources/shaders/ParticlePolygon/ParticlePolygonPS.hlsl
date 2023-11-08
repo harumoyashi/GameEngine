@@ -1,7 +1,7 @@
-#include "OBJ.hlsli"
+#include "ParticlePolygon.hlsli"
 
-Texture2D<float4> tex : register(t0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒeƒNƒXƒ`ƒƒ
-SamplerState smp : register(s0); // 0”ÔƒXƒƒbƒg‚Éİ’è‚³‚ê‚½ƒTƒ“ƒvƒ‰[
+Texture2D<float4> tex : register(t0);  // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸãƒ†ã‚¯ã‚¹ãƒãƒ£
+SamplerState smp : register(s0);      // 0ç•ªã‚¹ãƒ­ãƒƒãƒˆã«è¨­å®šã•ã‚ŒãŸã‚µãƒ³ãƒ—ãƒ©ãƒ¼
 
 struct PSOutput
 {
@@ -9,136 +9,139 @@ struct PSOutput
     float4 target1 : SV_TARGET1;
 };
 
-PSOutput main(VSOutput input) : SV_TARGET
+float4 main(GSOutput input) : SV_TARGET
 {
     PSOutput output;
     
-	// ƒeƒNƒXƒ`ƒƒƒ}ƒbƒsƒ“ƒO
+    float m_ambient = 0.3f;
+    float m_diffuse = 0.8f;
+    float m_specular = 0.5f;
+    
+    // ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ”ãƒ³ã‚°
     float4 texcolor = tex.Sample(smp, input.uv);
     
-	// Œõ‘ò“x
+	// å…‰æ²¢åº¦
     const float shininess = 4.0f;
-	// ’¸“_‚©‚ç‹“_‚Ö‚Ì•ûŒüƒxƒNƒgƒ‹
+	// é ‚ç‚¹ã‹ã‚‰è¦–ç‚¹ã¸ã®æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	
-	// ŠÂ‹«”½ËŒõ
+	// ç’°å¢ƒåå°„å…‰
     float3 ambient = m_ambient * ambientColor;
     
-	// ƒVƒF[ƒfƒBƒ“ƒO‚É‚æ‚éF
-    float4 shadecolor = float4(ambient, m_color.a);
+	// ã‚·ã‚§ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°ã«ã‚ˆã‚‹è‰²
+    float4 shadecolor = float4(ambient, 1.0f);
 	
-    //•½sŒõŒ¹
+    //å¹³è¡Œå…‰æº
     for (uint i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
             float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
-	        // ”½ËŒõƒxƒNƒgƒ‹
+	        // åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
             float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
-            // ŠgU”½ËŒõ
-            float3 diffuse = dotlightnormal * m_diffuse;
-	        // ‹¾–Ê”½ËŒõ
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
-	        // ‘S‚Ä‰ÁZ‚·‚é
+            // æ‹¡æ•£åå°„å…‰
+            float3 diffuse = dotlightnormal * 0.3f;
+	        // é¡é¢åå°„å…‰
+            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * 0.0f;
+	        // å…¨ã¦åŠ ç®—ã™ã‚‹
             shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
         }
     }
     
-     //“_ŒõŒ¹
+     //ç‚¹å…‰æº
     for (uint j = 0; j < POINTLIGHT_NUM; j++)
     {
         if (pointLights[j].active)
         {
-            // ƒ‰ƒCƒg‚ÌƒxƒNƒgƒ‹
+            // ãƒ©ã‚¤ãƒˆã®ãƒ™ã‚¯ãƒˆãƒ«
             float3 lightv = pointLights[j].lightpos - input.worldpos.xyz;
-            //ƒxƒNƒgƒ‹‚Ì’·‚³
+            //ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•
             float d = length(lightv);
-            //³‹K‰»‚µA’PˆÊƒxƒNƒgƒ‹‚É‚·‚é
+            //æ­£è¦åŒ–ã—ã€å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã«ã™ã‚‹
             lightv = normalize(lightv);
-            //‹——£Œ¸ŠŒW”
+            //è·é›¢æ¸›è¡°ä¿‚æ•°
             float atten = 1.0f / (pointLights[j].lightatten.x + pointLights[j].lightatten.y * d +
             pointLights[j].lightatten.z * d * d);
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
             float3 dotlightnormal = dot(lightv, input.normal);
-	        // ”½ËŒõƒxƒNƒgƒ‹
+	        // åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
             float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
-            // ŠgU”½ËŒõ
+            // æ‹¡æ•£åå°„å…‰
             float3 diffuse = dotlightnormal * m_diffuse;
-	        // ‹¾–Ê”½ËŒõ
+	        // é¡é¢åå°„å…‰
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
-	        // ‘S‚Ä‰ÁZ‚·‚é
+	        // å…¨ã¦åŠ ç®—ã™ã‚‹
             shadecolor.rgb += atten * (diffuse + specular) * pointLights[j].lightcolor;
         }
     }
     
-    //ƒXƒ|ƒbƒgƒ‰ƒCƒg
+    //ã‚¹ãƒãƒƒãƒˆãƒ©ã‚¤ãƒˆ
     for (uint k = 0; k < SPOTLIGHT_NUM; k++)
     {
         if (spotLights[k].active)
         {
-            // ƒ‰ƒCƒg‚ÌƒxƒNƒgƒ‹
+            // ãƒ©ã‚¤ãƒˆã®ãƒ™ã‚¯ãƒˆãƒ«
             float3 lightv = spotLights[k].lightpos - input.worldpos.xyz;
-            //ƒxƒNƒgƒ‹‚Ì’·‚³
+            //ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•
             float d = length(lightv);
-            //³‹K‰»‚µA’PˆÊƒxƒNƒgƒ‹‚É‚·‚é
+            //æ­£è¦åŒ–ã—ã€å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã«ã™ã‚‹
             lightv = normalize(lightv);
-            //‹——£Œ¸ŠŒW”
+            //è·é›¢æ¸›è¡°ä¿‚æ•°
             float atten = saturate(1.0f / (spotLights[k].lightatten.x + spotLights[k].lightatten.y * d +
             spotLights[k].lightatten.z * d * d));
-            //Šp“xŒ¸Š
+            //è§’åº¦æ¸›è¡°
             float cos = dot(lightv, spotLights[k].lightv);
-            //Œ¸ŠŠJnŠp“x‚©‚çŒ¸ŠI—¹Šp“x‚É‚©‚¯‚ÄŒ¸Š
-            //Œ¸ŠŠJnŠp“x‚Ì“à‘¤‚Í1”{@Œ¸ŠI—¹Šp“x‚ÌŠO‘¤‚Í0”{‚Ì‹P“x
+            //æ¸›è¡°é–‹å§‹è§’åº¦ã‹ã‚‰æ¸›è¡°çµ‚äº†è§’åº¦ã«ã‹ã‘ã¦æ¸›è¡°
+            //æ¸›è¡°é–‹å§‹è§’åº¦ã®å†…å´ã¯1å€ã€€æ¸›è¡°çµ‚äº†è§’åº¦ã®å¤–å´ã¯0å€ã®è¼åº¦
             float angleatten = smoothstep(spotLights[k].lightfactoranglecos.y, spotLights[k].lightfactoranglecos.x, cos);
-            //Šp“xŒ¸Š‚ğæZ
+            //è§’åº¦æ¸›è¡°ã‚’ä¹—ç®—
             atten *= angleatten;
-            // ƒ‰ƒCƒg‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹‚Æ–@ü‚Ì“àÏ
+            // ãƒ©ã‚¤ãƒˆã«å‘ã‹ã†ãƒ™ã‚¯ãƒˆãƒ«ã¨æ³•ç·šã®å†…ç©
             float3 dotlightnormal = dot(lightv, input.normal);
-	        // ”½ËŒõƒxƒNƒgƒ‹
+	        // åå°„å…‰ãƒ™ã‚¯ãƒˆãƒ«
             float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
-            // ŠgU”½ËŒõ
+            // æ‹¡æ•£åå°„å…‰
             float3 diffuse = dotlightnormal * m_diffuse;
-	        // ‹¾–Ê”½ËŒõ
+	        // é¡é¢åå°„å…‰
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
-	        // ‘S‚Ä‰ÁZ‚·‚é
+	        // å…¨ã¦åŠ ç®—ã™ã‚‹
             shadecolor.rgb += atten * (diffuse + specular) * spotLights[k].lightcolor;
         }
     }
     
-    //ŠÛ‰e
+    //ä¸¸å½±
     for (uint l = 0; l < CIRCLESHADOW_NUM; l++)
     {
         if (circleShadows[l].active)
         {
-            //ƒIƒuƒWƒFƒNƒg•\–Ê‚©‚çƒLƒƒƒXƒ^[‚Ö‚ÌƒxƒNƒgƒ‹
+            //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¡¨é¢ã‹ã‚‰ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«
             float3 casterv = circleShadows[l].casterPos - input.worldpos.xyz;
-            //“Š‰e•ûŒü‚Å‚Ì‹——£
+            //æŠ•å½±æ–¹å‘ã§ã®è·é›¢
             float d = dot(casterv, circleShadows[l].dir);
-            //‹——£Œ¸ŠŒW”
+            //è·é›¢æ¸›è¡°ä¿‚æ•°
             float atten = saturate(1.0f / (circleShadows[l].atten.x + circleShadows[l].atten.y * d +
             circleShadows[i].atten.z * d * d));
-            //‹——£‚ªƒ}ƒCƒiƒX‚È‚ç0‚É‚·‚é
+            //è·é›¢ãŒãƒã‚¤ãƒŠã‚¹ãªã‚‰0ã«ã™ã‚‹
             atten *= step(0, d);
-            //‰¼‘zƒ‰ƒCƒg‚ÌÀ•W
+            //ä»®æƒ³ãƒ©ã‚¤ãƒˆã®åº§æ¨™
             float3 lightpos = circleShadows[l].casterPos + circleShadows[l].dir * circleShadows[l].distanceCasterLight;
-            //ƒIƒuƒWƒFƒNƒg•\–Ê‚©‚çƒ‰ƒCƒg‚Ö‚ÌƒxƒNƒgƒ‹(’PˆÊƒxƒNƒgƒ‹)
+            //ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆè¡¨é¢ã‹ã‚‰ãƒ©ã‚¤ãƒˆã¸ã®ãƒ™ã‚¯ãƒˆãƒ«(å˜ä½ãƒ™ã‚¯ãƒˆãƒ«)
             float3 lightv = normalize(lightpos - input.worldpos.xyz);
-            //Šp“xŒ¸Š
+            //è§’åº¦æ¸›è¡°
             float cos = dot(lightv, circleShadows[l].dir);
-            //Œ¸ŠŠJnŠp“x‚©‚çŒ¸ŠI—¹Šp“x‚É‚©‚¯‚ÄŒ¸Š
-            //Œ¸ŠŠJnŠp“x‚Ì“à‘¤‚Í1”{@Œ¸ŠI—¹Šp“x‚ÌŠO‘¤‚Í0”{‚Ì‹P“x
+            //æ¸›è¡°é–‹å§‹è§’åº¦ã‹ã‚‰æ¸›è¡°çµ‚äº†è§’åº¦ã«ã‹ã‘ã¦æ¸›è¡°
+            //æ¸›è¡°é–‹å§‹è§’åº¦ã®å†…å´ã¯1å€ã€€æ¸›è¡°çµ‚äº†è§’åº¦ã®å¤–å´ã¯0å€ã®è¼åº¦
             float angleatten = smoothstep(circleShadows[l].factoranglecos.y, circleShadows[l].factoranglecos.x, cos);
-            //Šp“xŒ¸Š‚ğæZ
+            //è§’åº¦æ¸›è¡°ã‚’ä¹—ç®—
             atten *= angleatten;
-	        // ‘S‚ÄŒ¸Z‚·‚é
+	        // å…¨ã¦æ¸›ç®—ã™ã‚‹
             shadecolor.rgb -= atten;
         }
     }
 
-    // ƒVƒF[ƒfƒBƒ“ƒOF‚Å•`‰æ
-    float4 color = shadecolor * texcolor * m_color;
-    output.target0 = color;
-    output.target1 = color;
-    return output;
+    // ã‚·ã‚§ãƒ¼ãƒ‡ã‚£ãƒ³ã‚°è‰²ã§æç”»
+    float4 color = shadecolor * texcolor * input.color;
+    
+    return color;
 }

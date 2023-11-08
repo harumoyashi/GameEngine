@@ -10,7 +10,7 @@ void NShader::LoadVS(std::string vsPath)
 {
 	HRESULT result;
 
-	std::string shaderFolder = "Resources/shaders/";
+	std::string shaderFolder = "Resources/shaders/" + vsPath + "/";
 	std::string shaderType = "VS.hlsl";
 	vsPath = shaderFolder + vsPath + shaderType;
 
@@ -43,7 +43,7 @@ void NShader::LoadPS(std::string psPath)
 {
 	HRESULT result;
 
-	std::string shaderFolder = "Resources/shaders/";
+	std::string shaderFolder = "Resources/shaders/" + psPath + "/";
 	std::string shaderType = "PS.hlsl";
 	psPath = shaderFolder + psPath + shaderType;
 
@@ -76,7 +76,7 @@ void NShader::LoadGS(std::string gsPath)
 {
 	HRESULT result;
 
-	std::string shaderFolder = "Resources/shaders/";
+	std::string shaderFolder = "Resources/shaders/" + gsPath + "/";
 	std::string shaderType = "GS.hlsl";
 	gsPath = shaderFolder + gsPath + shaderType;
 
@@ -109,7 +109,7 @@ void NShader::LoadCS(std::string csPath)
 {
 	HRESULT result;
 
-	std::string shaderFolder = "Resources/shaders/";
+	std::string shaderFolder = "Resources/shaders/" + csPath + "/";
 	std::string shaderType = "CS.hlsl";
 	csPath = shaderFolder + csPath + shaderType;
 
