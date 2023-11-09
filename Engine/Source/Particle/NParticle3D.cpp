@@ -56,9 +56,24 @@ void IEmitter3D::Update()
 		//生存時間とイージング用タイマーの更新
 		particle.aliveTimer.Update(elapseSpeed_);
 		particle.easeTimer.Update(elapseSpeed_);
+		particle.growingTimer.Update(elapseSpeed_);
 
 		//スケールの線形補間
-		particle.scale = NEasing::lerp(particle.startScale, particle.endScale, particle.easeTimer.GetTimeRate());
+		if (isGrowing_)	//発生時に拡大する場合
+		{
+			if (particle.growingTimer.GetRun())	//拡大タイマーが動いてたら
+			{
+				particle.scale = NEasing::lerp(0.f, particle.startScale, particle.growingTimer.GetTimeRate());
+			}
+			else
+			{
+				particle.scale = NEasing::lerp(particle.startScale, particle.endScale, particle.easeTimer.GetTimeRate());
+			}
+		}
+		else
+		{
+			particle.scale = NEasing::lerp(particle.startScale, particle.endScale, particle.easeTimer.GetTimeRate());
+		}
 
 		//加速度を速度に加算
 		particle.velo += particle.accel;
@@ -128,25 +143,44 @@ void IEmitter3D::CommonBeginDraw()
 	NDX12::GetInstance()->GetCommandList()->SetDescriptorHeaps((uint32_t)ppHeaps.size(), ppHeaps.data());
 }
 
-void IEmitter3D::SetBlendMode(BlendMode blendMode)
+void IEmitter3D::SetBlendMode(BlendMode blendMode, bool isBox)
 {
 	// パイプラインステートとルートシグネチャの設定コマンド
-	switch (blendMode)
+	if (isBox)
 	{
-	case BlendMode::None:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dNone"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dNone")->pRootSignature);
-		break;
-	case BlendMode::Alpha:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAlpha"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAlpha")->pRootSignature);
-		break;
-	case BlendMode::Add:
-		NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAdd"));
-		NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAdd")->pRootSignature);
-		break;
-	default:
-		break;
+		switch (blendMode)
+		{
+		case BlendMode::None:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dNone"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dNone")->pRootSignature);
+			break;
+		case BlendMode::Alpha:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAlpha"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAlpha")->pRootSignature);
+			break;
+		case BlendMode::Add:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("Particle3dAdd"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("Particle3dAdd")->pRootSignature);
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		switch (blendMode)
+		{
+		case BlendMode::None:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ParticlePolygonNone"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ParticlePolygonNone")->pRootSignature);
+			break;
+		case BlendMode::Alpha:
+			NDX12::GetInstance()->GetCommandList()->SetPipelineState(NGPipeline::GetState("ParticlePolygonAlpha"));
+			NDX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(NGPipeline::GetDesc("ParticlePolygonAlpha")->pRootSignature);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
@@ -207,7 +241,7 @@ void IEmitter3D::TransferMatrix()
 }
 
 void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-	NVec3 minVelo, NVec3 maxVelo, float accelPower, NVec3 minRot, NVec3 maxRot)
+	NVec3 minVelo, NVec3 maxVelo, float accelPower, NVec3 minRot, NVec3 maxRot, float growingTimer)
 {
 	for (uint32_t i = 0; i < addNum; i++)
 	{
@@ -256,8 +290,10 @@ void IEmitter3D::Add(uint32_t addNum, float life, NColor color, float minScale, 
 		p.endScale = 0.0f;
 		p.color = color;
 		//イージング用のタイマーを設定、開始
-		p.easeTimer.maxTime_ = life;
+		p.easeTimer.maxTime_ = life - growingTimer;	//全体の時間がずれないように最初の拡大部分を引く
 		p.easeTimer.Start();
+		p.growingTimer.maxTime_ = growingTimer;
+		p.growingTimer.Start();
 	}
 }
 

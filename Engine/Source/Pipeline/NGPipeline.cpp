@@ -1172,6 +1172,38 @@ void PipeLineManager::CreateAll()
 	//パイプライン生成
 	NGPipeline::Create(particlePolyDesc, "ParticlePolygonNone");
 #pragma endregion
+#pragma region αブレンドポリゴンパーティクル
+	PipelineDesc particleAlphaPolyDesc;
+	//頂点レイアウト設定
+	particleAlphaPolyDesc.render.InputLayout.pInputElementDescs = pipeLine.vertLayoutParticle_;
+	particleAlphaPolyDesc.render.InputLayout.NumElements = _countof(pipeLine.vertLayoutParticle_);
+
+	particleAlphaPolyDesc.render.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT;
+
+	//ルートシグネチャ設定
+	NRootSignature rootSigParticleAlphaPoly;
+	rootSigParticleAlphaPoly.SetSamplerDesc(false);
+	//テクスチャ2個、行列、光源
+	rootSigParticleAlphaPoly.SetRootParam(2, 2);
+	rootSigParticleAlphaPoly.Create();
+	particleAlphaPolyDesc.rootSig = rootSigParticleAlphaPoly;
+
+	//シェーダー設定
+	particleAlphaPolyDesc.shader.pShader = NShader::GetShader("ParticlePolygon");
+
+	//深度テストする
+	particleAlphaPolyDesc.depth.DepthStencilState.DepthEnable = true;
+
+	//カリング設定
+	particleAlphaPolyDesc.render.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;
+
+	//ブレンドモード設定
+	particleAlphaPolyDesc.blend.blendDesc =
+		bDesc::GetBlendMode(BlendMode::Alpha);
+
+	//パイプライン生成
+	NGPipeline::Create(particleAlphaPolyDesc, "ParticlePolygonAlpha");
+#pragma endregion
 	//#pragma region GPUパーティクル
 	//	//シェーダー生成
 	//	NShader::CreateShader("GPUParticle", "GPUParticle", false, true);

@@ -33,8 +33,6 @@ private:
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 
-	float playerPosZ_ = 0.f;	//プレイヤーのz座標
-
 public:
 	NTitleScene();
 	~NTitleScene();

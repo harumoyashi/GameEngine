@@ -47,7 +47,17 @@ void NParticleManager::Draw()
 		//パーティクルがあるときだけ描画処理回す
 		if (emitter.second->GetParticlesDead() == false)
 		{
-			emitter.second->Draw();
+			//ポリゴンの場合はパイプラインを変える
+			if (emitter.second->GetShapeType() == (uint32_t)ShapeType::Polygon)
+			{
+				IEmitter3D::SetBlendMode(BlendMode::Alpha, false);
+				emitter.second->Draw();
+				IEmitter3D::SetBlendMode(BlendMode::None, true);
+			}
+			else
+			{
+				emitter.second->Draw();
+			}
 		}
 	}
 

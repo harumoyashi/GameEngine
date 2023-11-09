@@ -79,6 +79,8 @@ public:
 	bool GetIsGoal() const { return isGoal_; }
 	//行動範囲取得
 	float GetActivityAreaX() const { return activityAreaX_; }
+	//色取得
+	NColor GetColor() { return fieldObj_[0]->color_; }
 
 	// セッター //
 	void SetIsGoal(bool isGoal) { isGoal_ = isGoal, isStart_ = isGoal; }

@@ -52,7 +52,7 @@ void NSceneManager::Draw()
 	currentScene_->DrawBack3D();
 	NObj3d::CommonBeginDraw();
 	currentScene_->Draw3D();
-	IEmitter3D::SetBlendMode(BlendMode::None);
+	IEmitter3D::SetBlendMode(BlendMode::None,true);
 	IEmitter3D::CommonBeginDraw();
 	currentScene_->DrawParticle();
 	NSprite::SetBlendMode(BlendMode::Alpha);

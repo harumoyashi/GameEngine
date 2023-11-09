@@ -9,6 +9,12 @@
 #include "NTimer.h"
 #include "NUtil.h"
 
+enum class ShapeType
+{
+	Cube,
+	Polygon,
+};
+
 class IEmitter3D
 {
 	//粒子1粒
@@ -37,6 +43,7 @@ class IEmitter3D
 
 		//イージング用タイマー
 		NEasing::EaseTimer easeTimer = 1.0f;
+		NEasing::EaseTimer growingTimer = 0.1f;
 
 		//エミッター座標からの距離
 		float radius = 0;
@@ -87,6 +94,10 @@ private:
 
 	bool isGravity_ = false;				//重力の影響受けるかフラグ
 	bool isRotation_ = false;				//回すかフラグ
+	bool isGrowing_ = true;					//発生時に徐々に大きくなるかフラグ
+
+	//形状のタイプ
+	uint32_t shapeType_;
 
 	NTexture texture_;						//テクスチャ(使うかわからん)
 
@@ -103,7 +114,8 @@ public:
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();
 	//ブレンドモード設定
-	static void SetBlendMode(BlendMode blendMode);
+	//isBox:立方体かポリゴンか
+	static void SetBlendMode(BlendMode blendMode,bool isBox);
 	//描画
 	void Draw();
 
@@ -115,7 +127,7 @@ public:
 	//パーティクル追加(固有処理にしたかったらoverrideで上書きする)
 	//life:秒数指定なので注意
 	virtual void Add(uint32_t addNum, float life, NColor color, float minScale, float maxScale,
-		NVec3 minVelo, NVec3 maxVelo, float accelPower = 0.f, NVec3 minRot = {}, NVec3 maxRot = {}) = 0;
+		NVec3 minVelo, NVec3 maxVelo, float accelPower = 0.f, NVec3 minRot = {}, NVec3 maxRot = {},float growingTimer = 0.f) = 0;
 	//パーティクル全消し
 	void ClearParticles() { particles_.clear(); }
 
@@ -130,6 +142,8 @@ public:
 	size_t GetParticlesSize()const { return particles_.size(); }
 	//有効フラグ取得
 	bool GetIsActive()const { return isActive_; }
+	//形状取得
+	uint32_t GetShapeType()const { return shapeType_; }
 
 	//セッター//
 	//座標設定
@@ -147,6 +161,10 @@ public:
 	void SetIsGravity(bool isGravity) { isGravity_ = isGravity; }
 	//回転フラグ設定
 	void SetIsRotation(bool isRotation) { isRotation_ = isRotation; }
+	//発生時拡大フラグ設定
+	void SetIsGrowing(bool isGrowing) { isGrowing_ = isGrowing; }
+	//形状設定
+	void SetShapeType(uint32_t shapeType) { shapeType_ = shapeType; }
 
 	//拡縮用タイマーが切り替わる時間設定(秒)
 	void SetScalingTimer(float timer);

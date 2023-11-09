@@ -5,6 +5,7 @@
 #include "NSceneChange.h"
 #include "NAudioManager.h"
 #include "NModelManager.h"
+#include "NParticleManager.h"
 #include "NInput.h"
 #include "NMathUtil.h"
 #include "NCameraManager.h"
@@ -39,11 +40,11 @@ void NTitleScene::Init()
 #pragma region 描画初期化処理
 
 #pragma region オブジェクトの初期値設定
-
-#pragma endregion
+	NParticleManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Field::GetInstance()->SetIsGoal(true);
+#pragma endregion
 
 #pragma region オブジェクトの初期値設定
 
@@ -84,11 +85,12 @@ void NTitleScene::Init()
 	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
+	IEmitter3D::SetLightGroup(lightGroup_.get());
 
 	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 	Bloom::Init();
 
-	playerPosZ_ = Field::GetInstance()->GetGoalPos();
+	Player::GetInstance()->SetPos({ 0,0,Field::GetInstance()->GetGoalPos()+10.f });
 }
 
 void NTitleScene::Update()
@@ -117,11 +119,10 @@ void NTitleScene::Update()
 		UIManager::GetInstance()->SetInvisible(UIType::AbuttonPush, false);
 	}
 
-	Player::GetInstance()->SetIsMove(false);
-	//進ませる
-	playerPosZ_ += Player::GetInstance()->GetMoveSpeed();
-	Player::GetInstance()->SetPos({0.f,0.f,playerPosZ_ });
-	Player::GetInstance()->Update();
+	//タイトル用の更新処理する
+	Player::GetInstance()->TitleUpdate();
+
+	NParticleManager::GetInstance()->Update();
 
 	//シーン切り替え
 	if (NInput::IsKeyDown(DIK_SPACE) || NInput::GetInstance()->IsButtonDown(XINPUT_GAMEPAD_A))
@@ -155,6 +156,7 @@ void NTitleScene::Draw3D()
 
 void NTitleScene::DrawParticle()
 {
+	NParticleManager::GetInstance()->Draw();
 }
 
 void NTitleScene::DrawForeSprite()

@@ -6,6 +6,7 @@
 #include "NSceneChange.h"
 #include "NAudioManager.h"
 #include "NModelManager.h"
+#include "NParticleManager.h"
 #include "NInput.h"
 #include "Bloom.h"
 #include "RadialBlur.h"
@@ -40,6 +41,7 @@ void NTestScene::Init()
 	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 #pragma endregion
 #pragma region 描画初期化処理
+	NParticleManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
 	Field::GetInstance()->Init();
 	Wave::GetInstance()->Init();
@@ -85,6 +87,8 @@ void NTestScene::Init()
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	//NAssimpModel::SetLightGroup(lightGroup_.get());
+
+	IEmitter3D::SetLightGroup(lightGroup_.get());
 }
 
 void NTestScene::Update()
@@ -133,9 +137,13 @@ void NTestScene::Update()
 #pragma region スプライト
 	backSprite_->Update();
 #pragma endregion
+	Player::GetInstance()->Move();
 	Player::GetInstance()->Update();
 	Field::GetInstance()->Update();
 	Wave::GetInstance()->Update();
+	NParticleManager::GetInstance()->Update();
+
+	//破片のシミュレーション
 	for (auto& fragment : fragment_)
 	{
 		fragment.toPlayerVec = fragment.oriPos - Player::GetInstance()->GetPos();	//オブジェクトとポリゴンの中心点とのベクトル
@@ -194,16 +202,17 @@ void NTestScene::DrawBack3D()
 void NTestScene::Draw3D()
 {
 	Player::GetInstance()->Draw();
-	/*for (auto& fragment : fragment_)
+	for (auto& fragment : fragment_)
 	{
 		fragment.obj->SetBlendMode(BlendMode::None);
 		fragment.obj->Draw();
 		fragment.obj->SetBlendMode(BlendMode::None);
-	}*/
+	}
 }
 
 void NTestScene::DrawParticle()
 {
+	NParticleManager::GetInstance()->Draw();
 }
 
 void NTestScene::DrawForeSprite()

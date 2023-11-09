@@ -22,9 +22,16 @@ Player::Player()
 	//パーティクルエミッターをマネージャーに登録
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 	deadParticle_.SetIsRotation(true);
+	deadParticle_.SetShapeType((uint32_t)ShapeType::Cube);
 
 	NParticleManager::GetInstance()->AddEmitter(&clearParticle_, "gameClear");
 	clearParticle_.SetIsRotation(true);
+	clearParticle_.SetShapeType((uint32_t)ShapeType::Cube);
+
+	NParticleManager::GetInstance()->AddEmitter(&moveParticle_, "playerMove");
+	moveParticle_.SetIsRotation(true);
+	moveParticle_.SetIsGrowing(true);
+	moveParticle_.SetShapeType((uint32_t)ShapeType::Polygon);
 }
 
 Player::~Player()
@@ -147,12 +154,26 @@ void Player::Update()
 	}
 }
 
+void Player::TitleUpdate()
+{
+	isDraw_ = true;						//絶対描画させる
+	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
+	obj_->rotation_.y = 0.0f;			//前に向かせる
+	moveVelo_.y = 1.f;					//前に向かって走り続ける
+
+	AutoMove();
+
+	obj_->Update();
+}
+
 void Player::ClearUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->rotation_.y = 0.0f;			//前に向かせる
-	obj_->position_.z += 0.05f;			//前に向かって走り続ける
+	moveVelo_.y = 1.f;					//前に向かって走り続ける
+
+	AutoMove();
 
 	obj_->Update();
 
@@ -233,6 +254,23 @@ void Player::Move()
 		elapseSpeed_ = abs(moveVelo_.x) + abs(moveVelo_.y);	//移動量によって経過時間変化
 		elapseSpeed_ = MathUtil::Clamp(elapseSpeed_, 0.0f, 1.0f);
 
+		moveAmount_ += (moveVelo_ * moveSpeed_).Length();
+		if (moveAmount_ >= 0.3f)
+		{
+			moveAmount_ = 0.f;
+			//エミッターの座標はプレイヤーの座標から移動方向の逆側にスケール分ずらしたもの
+			NVec3 emitterPos = obj_->position_;
+			NVec2 mVelo = moveVelo_;	//moveVelo_を正規化すると実際の移動に支障が出るので一時変数に格納
+			emitterPos.x -= mVelo.Normalize().x * obj_->scale_.x * 4.f;
+			emitterPos.z -= mVelo.Normalize().y * obj_->scale_.z * 4.f;
+
+			moveParticle_.SetPos(emitterPos);
+			moveParticle_.Add(
+				3, 0.7f, obj_->color_, 0.1f, 0.6f,
+				{ -0.001f,0.01f,-0.001f }, { 0.001f,0.03f,0.001f },
+				0.01f, -NVec3::one * 0.1f, NVec3::one * 0.1f, 0.05f);
+		}
+
 		//移動量を加算
 		obj_->position_.x += moveVelo_.x * moveSpeed_;
 		obj_->position_.z += moveVelo_.y * moveSpeed_;
@@ -277,6 +315,49 @@ void Player::Move()
 	ImGui::Text("MoveLen:%f", moveVelo_.Length());
 	ImGui::End();
 #endif //DEBUG
+}
+
+void Player::AutoMove()
+{
+	elapseSpeed_ = 1.f;
+
+	moveAmount_ += (moveVelo_ * moveSpeed_).Length();
+	if (moveAmount_ >= 0.3f)
+	{
+		moveAmount_ = 0.f;
+		//エミッターの座標はプレイヤーの座標から移動方向の逆側にスケール分ずらしたもの
+		NVec3 emitterPos = obj_->position_;
+		NVec2 mVelo = moveVelo_;	//moveVelo_を正規化すると実際の移動に支障が出るので一時変数に格納
+		emitterPos.x -= mVelo.Normalize().x * obj_->scale_.x * 4.f;
+		emitterPos.z -= mVelo.Normalize().y * obj_->scale_.z * 4.f;
+
+		moveParticle_.SetPos(emitterPos);
+		moveParticle_.Add(
+			3, 0.7f, obj_->color_, 0.1f, 0.6f,
+			{ -0.001f,0.01f,-0.001f }, { 0.001f,0.03f,0.001f },
+			0.01f, -NVec3::one * 0.1f, NVec3::one * 0.1f, 0.05f);
+	}
+
+	//移動量を加算
+	obj_->position_.x += moveVelo_.x * moveSpeed_;
+	obj_->position_.z += moveVelo_.y * moveSpeed_;
+	//加算後に行動範囲超えてる場合は超えないようにする
+	obj_->position_.x = (std::max)(obj_->position_.x, -Field::GetInstance()->GetActivityAreaX() + obj_->scale_.x);
+	obj_->position_.x = (std::min)(obj_->position_.x, Field::GetInstance()->GetActivityAreaX() - obj_->scale_.x);
+
+	//移動方向に合わせて回転
+	if (moveVelo_.Length() > 0.0f)			//入力されてたら
+	{
+		NVec2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
+		velo.Normalize();
+		moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
+		if (velo.x < 0)
+		{
+			moveAngle_ = -moveAngle_;
+		}
+
+		obj_->rotation_.y = moveAngle_;
+	}
 }
 
 void Player::Shot()
@@ -363,7 +444,7 @@ void Player::LevelUp(BulletType bulletType)
 		}
 		break;*/
 	case BulletType::MaxType:	//最強になる！！！
-		
+
 		lineLevel_ = maxBulLevel_;
 		sideLevel_ = maxBulLevel_;
 		wideLevel_ = maxBulLevel_;

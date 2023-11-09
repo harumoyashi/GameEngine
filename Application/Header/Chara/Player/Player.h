@@ -15,13 +15,16 @@ private:
 	bool isDraw_;				//描画するかフラグ
 
 	//------------------------ 移動関連 ------------------------//
-	bool isMove_;				//動いてるかフラグ
-	NVec2 moveVelo_;			//移動量
-	float moveSpeed_;			//移動速度
+	bool isMove_;					//動いてるかフラグ
+	NVec2 moveVelo_;				//移動量
+	float moveSpeed_;				//移動速度
 
-	float moveAngle_;			//回転角度
+	float moveAngle_;				//回転角度
 
-	float elapseSpeed_;			//経過時間(こいつが全てに影響を及ぼす)
+	float elapseSpeed_;				//経過時間(こいつが全てに影響を及ぼす)
+
+	SimpleParticle moveParticle_;	//歩いたとこに出るパーティクル
+	float moveAmount_;				//移動量保存用(パーティクル出すタイミング測るために使う)
 
 	//------------------------ ダメージ関連 ------------------------//
 	bool isGodmode_;			//無敵状態か
@@ -56,6 +59,8 @@ public:
 	bool Init();
 	//更新
 	void Update();
+	//タイトル時専用の更新
+	void TitleUpdate();
 	//クリア時専用の更新
 	void ClearUpdate();
 	//失敗時専用の更新
@@ -65,6 +70,8 @@ public:
 
 	//移動処理
 	void Move();
+	//自動で移動する時に座標更新とかしたいとき呼ぶ
+	void AutoMove();
 	//射撃
 	void Shot();
 
