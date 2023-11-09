@@ -20,18 +20,18 @@ Player::Player()
 	obj_->SetModel("catWalk");
 
 	//パーティクルエミッターをマネージャーに登録
+	deadParticle_.SetShapeType((uint32_t)ShapeType::Cube);
 	NParticleManager::GetInstance()->AddEmitter(&deadParticle_, "playerDead");
 	deadParticle_.SetIsRotation(true);
-	deadParticle_.SetShapeType((uint32_t)ShapeType::Cube);
 
+	clearParticle_.SetShapeType((uint32_t)ShapeType::Cube);
 	NParticleManager::GetInstance()->AddEmitter(&clearParticle_, "gameClear");
 	clearParticle_.SetIsRotation(true);
-	clearParticle_.SetShapeType((uint32_t)ShapeType::Cube);
 
+	moveParticle_.SetShapeType((uint32_t)ShapeType::Polygon);
 	NParticleManager::GetInstance()->AddEmitter(&moveParticle_, "playerMove");
 	moveParticle_.SetIsRotation(true);
 	moveParticle_.SetIsGrowing(true);
-	moveParticle_.SetShapeType((uint32_t)ShapeType::Polygon);
 }
 
 Player::~Player()
@@ -159,7 +159,7 @@ void Player::TitleUpdate()
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->rotation_.y = 0.0f;			//前に向かせる
-	moveVelo_.y = 1.f;					//前に向かって走り続ける
+	moveVelo_ = { 0,1.f };				//前に向かって走り続ける
 
 	AutoMove();
 
@@ -171,7 +171,7 @@ void Player::ClearUpdate()
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->rotation_.y = 0.0f;			//前に向かせる
-	moveVelo_.y = 1.f;					//前に向かって走り続ける
+	moveVelo_ = { 0,1.f };				//前に向かって走り続ける
 
 	AutoMove();
 
@@ -463,6 +463,7 @@ void Player::SetIsAlive(bool isAlive)
 	//死んだならコントローラー振動させる
 	if (isAlive_ == false)
 	{
+		moveParticle_.ClearParticles();
 		NInput::Vibration(0.8f, 0.8f, 0.3f);
 	}
 }

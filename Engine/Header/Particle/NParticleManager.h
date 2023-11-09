@@ -7,8 +7,9 @@ class IEmitter3D;
 class NParticleManager final
 {
 public:
-	std::unordered_map<std::string, IEmitter3D*> emitters_;	//パーティクルエミッター群
-	std::vector<IEmitter3D*> enemyEmitters_;				//敵用パーティクルエミッター群
+	std::unordered_map<std::string, IEmitter3D*> emitters_;			//パーティクルエミッター群
+	std::unordered_map<std::string, IEmitter3D*> polygonEmitters_;	//ポリゴンパーティクルエミッター群
+	std::vector<IEmitter3D*> enemyEmitters_;						//敵用パーティクルエミッター群
 
 public:
 	static NParticleManager* GetInstance();
@@ -19,16 +20,33 @@ public:
 	//エミッターをunordered_mapに追加
 	void AddEmitter(IEmitter3D* emitter, const std::string& key)
 	{
-		//同じ名前のやつが登録されてたら追加せずに処理終了
-		for (auto& emit : emitters_)
+		//形状によって登録するエミッター群の種類わける
+		if (emitter->GetShapeType() == (uint32_t)ShapeType::Cube)
 		{
-			if (emit.first == key)
+			//同じ名前のやつが登録されてたら追加せずに処理終了
+			for (auto& emit : emitters_)
 			{
-				return;
+				if (emit.first == key)
+				{
+					return;
+				}
 			}
+			emitter->Init();					//初期化してから登録
+			emitters_.emplace(std::make_pair(key, emitter));
 		}
-		emitter->Init();					//初期化してから登録
-		emitters_.emplace(std::make_pair(key, emitter));
+		else if(emitter->GetShapeType() == (uint32_t)ShapeType::Polygon)
+		{
+			//同じ名前のやつが登録されてたら追加せずに処理終了
+			for (auto& emit : polygonEmitters_)
+			{
+				if (emit.first == key)
+				{
+					return;
+				}
+			}
+			emitter->Init();					//初期化してから登録
+			polygonEmitters_.emplace(std::make_pair(key, emitter));
+		}
 	}
 	//エミッターをunordered_mapから削除
 	void EraseEmitter(const std::string& key)

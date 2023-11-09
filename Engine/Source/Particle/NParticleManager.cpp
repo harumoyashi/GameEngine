@@ -16,6 +16,12 @@ void NParticleManager::Init()
 		//プレイヤーに持たせておけば大丈夫そうだけどなんでなのかわからないから先生に聞く
 	}
 
+	for (auto& emitter : polygonEmitters_)
+	{
+		emitter.second->ClearParticles();
+		emitter.second->Init();
+	}
+
 	for (auto& eneEmitter : enemyEmitters_)
 	{
 		eneEmitter->ClearParticles();
@@ -26,6 +32,15 @@ void NParticleManager::Init()
 void NParticleManager::Update()
 {
 	for (auto& emitter : emitters_)
+	{
+		//パーティクルがあるときだけ更新処理回す
+		if (emitter.second->GetParticlesDead() == false)
+		{
+			emitter.second->Update();
+		}
+	}
+
+	for (auto& emitter : polygonEmitters_)
 	{
 		//パーティクルがあるときだけ更新処理回す
 		if (emitter.second->GetParticlesDead() == false)
@@ -47,19 +62,17 @@ void NParticleManager::Draw()
 		//パーティクルがあるときだけ描画処理回す
 		if (emitter.second->GetParticlesDead() == false)
 		{
-			//ポリゴンの場合はパイプラインを変える
-			if (emitter.second->GetShapeType() == (uint32_t)ShapeType::Polygon)
-			{
-				IEmitter3D::SetBlendMode(BlendMode::Alpha, false);
-				emitter.second->Draw();
-				IEmitter3D::SetBlendMode(BlendMode::None, true);
-			}
-			else
-			{
-				emitter.second->Draw();
-			}
+			emitter.second->Draw();
 		}
 	}
+
+	//ポリゴンの場合はパイプライン変える
+	IEmitter3D::SetBlendMode(BlendMode::Alpha, false);
+	for (auto& emitter : polygonEmitters_)
+	{
+		emitter.second->Draw();
+	}
+	IEmitter3D::SetBlendMode(BlendMode::None, true);
 
 	for (auto& eneEmitter : enemyEmitters_)
 	{
