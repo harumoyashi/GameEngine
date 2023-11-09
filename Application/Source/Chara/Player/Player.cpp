@@ -158,8 +158,7 @@ void Player::TitleUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
-	obj_->rotation_.y = 0.0f;			//前に向かせる
-	moveVelo_ = { 0,1.f };				//前に向かって走り続ける
+	moveVelo_ = { 0,-1.f };				//後ろに向かって走り続ける
 
 	AutoMove();
 
@@ -170,7 +169,6 @@ void Player::ClearUpdate()
 {
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
-	obj_->rotation_.y = 0.0f;			//前に向かせる
 	moveVelo_ = { 0,1.f };				//前に向かって走り続ける
 
 	AutoMove();

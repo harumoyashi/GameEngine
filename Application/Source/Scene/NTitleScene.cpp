@@ -89,8 +89,6 @@ void NTitleScene::Init()
 
 	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 	Bloom::Init();
-
-	Player::GetInstance()->SetPos({ 0,0,Field::GetInstance()->GetGoalPos()+10.f });
 }
 
 void NTitleScene::Update()
