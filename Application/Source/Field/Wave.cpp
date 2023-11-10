@@ -47,19 +47,21 @@ void Wave::Init()
 #pragma region スプライトの生成,設定
 	waveUI_ = std::make_unique<NSprite>();
 	waveUI_->CreateSprite("waveUI", { 0.5f,0.5f });
-	waveUI_->SetSize(100.f, 100.f);
+	waveUI_->SetSize(90.f, 90.f);
 	waveUI_->SetPos(NWindows::kWin_width * 0.5f, 650.f);
-	waveUI_->color_ = obj_[0]->color_;
+	waveUI_->color_ = obj_[0]->color_ - 0.2f;
 
 	meterUI_ = std::make_unique<NSprite>();
 	meterUI_->CreateSprite("meter");
 	meterUI_->SetPos(NWindows::kWin_width * 0.5f + 30.f, 582.f);
 	meterUI_->SetSize(20.f, 15.f);
+	meterUI_->color_ = obj_[0]->color_ - 0.2f;
 
 	player2WaveLen_ = 0;
 	meterTex_.Create(3, 0.3f);
 	meterTex_.SetSize({ 20.f,20.f });
 	meterTex_.SetPos({ NWindows::kWin_width * 0.5f - 40.f, 570.f });
+	meterTex_.SetColor(obj_[0]->color_ - 0.2f);
 #pragma endregion
 }
 
