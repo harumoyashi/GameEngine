@@ -28,6 +28,11 @@ void main(
     
     //------------- 三角形の頂点を法線方向に押し出す -------------//
     //押し出す量
+    //float extrusion = sin(input[0].pos.z + input[0].pos.x) * extrusionTimer * 10.f;
+    //if (extrusion < 0.f)
+    //{
+    //    extrusion = -extrusion;
+    //}
     float extrusion = extrusionTimer * 0.001f;
     extrusion *= sin(pid) * pid;
     

@@ -88,6 +88,11 @@ bool Player::Init()
 
 	clearParticleTimer_.Reset();
 
+	redTimer.nowTime_ = kGamingTimer_;
+	redTimer.SetEnd(true);
+	greenTimer.SetReverseEnd(true);
+	blueTimer.SetReverseEnd(true);
+
 	return true;
 }
 
@@ -107,6 +112,12 @@ void Player::Update()
 		{
 			Shot();
 		}
+	}
+
+	//無敵ならゲーミング猫になる
+	if (isGodmode_)
+	{
+		obj_->color_ = GamingColorUpdate();
 	}
 
 	obj_->Update();
@@ -172,6 +183,12 @@ void Player::ClearUpdate()
 	moveVelo_ = { 0,1.f };				//前に向かって走り続ける
 
 	AutoMove();
+
+	//無敵ならゲーミング猫になる
+	if (isGodmode_)
+	{
+		obj_->color_ = GamingColorUpdate();
+	}
 
 	obj_->Update();
 
@@ -453,6 +470,48 @@ void Player::LevelUp(BulletType bulletType)
 	default:
 		break;
 	}
+}
+
+NColor Player::GamingColorUpdate()
+{
+	//タイマー更新
+	redTimer.Update();
+	greenTimer.Update();
+	blueTimer.Update();
+
+	//タイマー無限ループ
+	if (blueTimer.GetReverseEnd() && !greenTimer.GetStarted())
+	{
+		greenTimer.Start();
+	}
+
+	if (greenTimer.GetEnd() && !redTimer.GetReverseStarted())
+	{
+		redTimer.ReverseStart();
+	}
+
+	if (redTimer.GetReverseEnd() && !blueTimer.GetStarted())
+	{
+		blueTimer.Start();
+	}
+
+	if (blueTimer.GetEnd() && !greenTimer.GetReverseStarted())
+	{
+		greenTimer.ReverseStart();
+	}
+
+	if (greenTimer.GetReverseEnd() && !redTimer.GetStarted())
+	{
+		redTimer.Start();
+	}
+
+	if (redTimer.GetEnd() && !blueTimer.GetReverseStarted())
+	{
+		blueTimer.ReverseStart();
+	}
+
+	NColor gamingColor(redTimer.GetTimeRate(), greenTimer.GetTimeRate(), blueTimer.GetTimeRate());
+	return gamingColor;
 }
 
 void Player::SetIsAlive(bool isAlive)

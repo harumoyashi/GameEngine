@@ -39,6 +39,7 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 
 	moveAngle_ = moveAngle;
 
+	//エミッターの設定
 	NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetIsRotation(true);
 	NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetIsGrowing(true);
 }

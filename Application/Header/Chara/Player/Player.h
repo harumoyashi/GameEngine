@@ -50,6 +50,12 @@ private:
 	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
 	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
 
+	//ゲーミングパレットの遷移タイマー
+	const float kGamingTimer_ = 0.5f;
+	NEasing::EaseTimer redTimer = kGamingTimer_;
+	NEasing::EaseTimer greenTimer = kGamingTimer_;
+	NEasing::EaseTimer blueTimer = kGamingTimer_;
+
 public:
 	Player();
 	~Player();
@@ -83,6 +89,10 @@ public:
 
 	//指定された弾の種類のレベルを1上げる
 	void LevelUp(BulletType bulletType);
+
+	//ゲーミングカラーの更新処理
+	//ゲーミングカラー返す
+	NColor GamingColorUpdate();
 
 	// ゲッター //
 	//座標取得
