@@ -71,6 +71,7 @@ void NGameScene::Init()
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		movieDarken_[i] = std::make_unique<NSprite>();
+		movieDarken_[i] = std::make_unique<NSprite>();
 		movieDarken_[i]->CreateSprite("white");
 		movieDarken_[i]->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height * 0.1f);
 		movieDarken_[i]->SetPos(
@@ -634,9 +635,12 @@ void NGameScene::DrawForeSprite()
 	}
 	else
 	{
-		for (uint32_t i = 0; i < 2; i++)
+		if (Player::GetInstance()->GetIsMutekiDirection())
 		{
-			movieDarken_[i]->Draw();
+			for (uint32_t i = 0; i < 2; i++)
+			{
+				movieDarken_[i]->Draw();
+			}
 		}
 
 		UIManager::GetInstance()->Draw(UIType::Menu);
