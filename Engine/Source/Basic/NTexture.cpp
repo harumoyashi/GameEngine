@@ -30,6 +30,7 @@ void NTextureManager::Init()
 	LoadTexture(directryPass + "shaft_UI.png", "shaft");
 	LoadTexture(directryPass + "stick_UI.png", "stick");
 	LoadTexture(directryPass + "checkpoint.png", "checkpoint");
+	LoadTexture(directryPass + "muteki_UI.png", "muteki");
 	LoadTexture(directryPass + "clear.png", "clear");
 	LoadTexture(directryPass + "faild.png", "faild");
 	LoadTexture(directryPass + "number.png", "number");

@@ -13,7 +13,7 @@ Item::~Item()
 	NCollisionManager::GetInstance()->RemoveCollider(&collider_);
 }
 
-void Item::Generate(const NVec3& pos)
+void Item::Generate(const NVec3& pos, bool isPop)
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel("cube");
@@ -30,7 +30,14 @@ void Item::Generate(const NVec3& pos)
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Item::OnCollision, this));
 
-	moveVelo_ = { 0.f,0.8f };
+	if (isPop)
+	{
+		moveVelo_ = { 0.f,0.8f };
+	}
+	else
+	{
+		moveVelo_ = { 0,0 };
+	}
 }
 
 void Item::Update()

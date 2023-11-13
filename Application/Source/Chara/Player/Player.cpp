@@ -5,6 +5,7 @@
 #include "NParticleManager.h"
 #include "NAudioManager.h"
 #include "NCameraManager.h"
+#include "ItemManager.h"
 #include "Field.h"
 #include "RadialBlur.h"
 #include "Bloom.h"
@@ -465,7 +466,7 @@ void Player::LevelUp(BulletType bulletType)
 		wideLevel_ = maxBulLevel_;
 		moveSpeed_ *= 10.f;
 		isGodmode_ = true;
-		//UIManager::GetInstance()->PlusUIBul("");
+		ItemManager::GetInstance()->SetIsMutekiGet(true);
 		break;
 	default:
 		break;

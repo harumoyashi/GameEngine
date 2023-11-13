@@ -23,7 +23,8 @@ public:
 	~Item();
 
 	//生成
-	void Generate(const NVec3& pos);
+	//isPop:生成時に跳ねるか
+	void Generate(const NVec3& pos,bool isPop = true);
 	//更新
 	void Update();
 	//描画
@@ -38,6 +39,10 @@ public:
 	const SphereCollider& GetIBulletCollider()const { return collider_; }
 	//生存フラグ取得
 	bool GetisAlive()const { return isAlive_; }
+	//座標取得
+	NVec3 GetPos()const { return obj_->position_; }
+	//弾の種類
+	BulletType GetBulletType()const { return bulletType_; }
 
 	// セッター //
 	//生存フラグ設定

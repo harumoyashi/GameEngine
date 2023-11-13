@@ -147,7 +147,7 @@ void NGameScene::Init()
 	volume_[1] = NAudioManager::GetInstance()->GetBGMVolume();
 	volume_[2] = NAudioManager::GetInstance()->GetSEVolume();
 
-	ItemManager::GetInstance()->Generate(NVec3(2.f,0,0), BulletType::MaxType);
+	ItemManager::GetInstance()->Generate(NVec3(2.f,0,0), BulletType::MaxType,false);
 #pragma endregion
 }
 
