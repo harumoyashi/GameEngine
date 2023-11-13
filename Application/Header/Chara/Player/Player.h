@@ -61,6 +61,8 @@ private:
 	NEasing::EaseTimer mutekiDirectionTimer_ = 2.f;	//無敵演出タイマー
 	SimpleParticle mutekiDirectionParticle_;		//無敵演出時に出るパーティクル
 
+	
+
 public:
 	Player();
 	~Player();
@@ -126,6 +128,8 @@ public:
 	NColor& GetColor()const { return obj_->color_; }
 	//死亡演出が終わったかどうか取得
 	bool GetDeadEffectEnd()const { return deadEffectTimer_.GetEnd(); }
+	//無敵演出中かどうか取得
+	bool GetIsMutekiDirection()const { return mutekiDirectionTimer_.GetRun(); }
 
 	// セッター //
 	//座標設定

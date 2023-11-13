@@ -39,7 +39,8 @@ private:
 	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
 
 	//前景スプライト
-	std::unique_ptr<NSprite> darken_;		//ポーズ画面の暗幕的な
+	std::unique_ptr<NSprite> darken_;						//ポーズ画面の暗幕的な
+	std::array<std::unique_ptr<NSprite>,2> movieDarken_;	//ムービーシーンの暗幕的な
 
 	//UI用の変数
 	NEasing::EaseTimer beforeStartTimer_ = 2.0f;	//始まる前の演出タイマー

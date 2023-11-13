@@ -67,6 +67,17 @@ void NGameScene::Init()
 		(float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	darken_->color_.SetColor255(0, 0, 0, 180);
+
+	for (uint32_t i = 0; i < 2; i++)
+	{
+		movieDarken_[i] = std::make_unique<NSprite>();
+		movieDarken_[i]->CreateSprite("white");
+		movieDarken_[i]->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height * 0.1f);
+		movieDarken_[i]->SetPos(
+			(float)NWindows::GetInstance()->kWin_width * 0.5f,
+			-(float)NWindows::GetInstance()->kWin_height);
+		movieDarken_[i]->color_.SetColor255(0, 0, 0, 255);
+	}
 #pragma endregion
 #pragma region 各スプライトの設定
 	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
@@ -328,6 +339,10 @@ void NGameScene::Update()
 #pragma region スプライト
 		backSprite_->Update();
 		darken_->Update();
+		for (uint32_t i = 0; i < 2; i++)
+		{
+			movieDarken_[i]->Update();
+		}
 		Score::Update();
 #pragma endregion
 		BulletManager::GetInstance()->Update();
@@ -340,6 +355,18 @@ void NGameScene::Update()
 
 		//ライトたちの更新
 		lightGroup_->Update();
+
+		//無敵演出中なら
+		if (Player::GetInstance()->GetIsMutekiDirection())
+		{
+			movieDarken_[0]->SetPos(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				0.f + movieDarken_[0]->GetSize().y * 0.5f);
+
+			movieDarken_[1]->SetPos(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				(float)NWindows::GetInstance()->kWin_height - movieDarken_[1]->GetSize().y * 0.5f);
+		}
 
 		if (sScene == SceneMode::BeforeStart)	//始まる前の処理
 		{
@@ -607,6 +634,11 @@ void NGameScene::DrawForeSprite()
 	}
 	else
 	{
+		for (uint32_t i = 0; i < 2; i++)
+		{
+			movieDarken_[i]->Draw();
+		}
+
 		UIManager::GetInstance()->Draw(UIType::Menu);
 
 		UIManager::GetInstance()->Draw(UIType::Shaft);
