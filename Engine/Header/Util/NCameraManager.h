@@ -11,6 +11,7 @@ enum class CameraType
 	BeforeStart,	//始まる前にゴール見せる用
 	Faild,			//失敗リザルト用
 	Clear,			//クリアリザルト用
+	Muteki,			//無敵演出用
 };
 
 class NCameraManager final
@@ -39,13 +40,16 @@ private:
 	//クリアリザルト時のカメラ関連
 	NCamera clearCamera_;							//クリアリザルトのカメラ
 	NEasing::EaseTimer clearCameraMoveEase_;		//クリアリザルトカメラに持ってくためのイージング
+	//無敵演出時のカメラ関連
+	NCamera mutekiCamera_;							//無敵演出時のカメラ
+	NEasing::EaseTimer mutekiCameraMoveEase_;		//無敵演出時カメラに持ってくためのイージング
 
 	// 姿勢制御関連
 	NVec3 frontVec_;
 	NVec3 upVec_;
 	NVec3 rightVec_;
 
-	bool isChange_;				//カメラの種類切り替えフラグ
+	bool isChange_;			//カメラの種類切り替えフラグ
 	bool isActive_;
 
 	//共通のカメラに必要な情報
@@ -65,8 +69,8 @@ private:
 	NVec3 shakePrevPos;				//シェイク前のカメラ座標
 
 private:
-	//カメラ固有の初期化、更新処理
-	// 通常時
+	//　カメラ固有の初期化、更新処理
+	//　通常時
 	void NormalCameraInit();
 	void NormalCameraUpdate();
 	// デバッグカメラ時
@@ -83,8 +87,11 @@ private:
 	// クリアリザルト時
 	void ClearCameraInit();
 	void ClearCameraUpdate();
+	// 無敵演出時
+	void MutekiCameraInit();
+	void MutekiCameraUpdate();
 
-	//カメラシェイク用更新処理
+	//　カメラシェイク用更新処理
 	void ShakeUpdate();
 
 	//Vec3のイージング用
@@ -105,6 +112,8 @@ public:
 	bool GetIsActive() { return isActive_; }
 	//通常カメラへの遷移が完了したかどうか取得
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
+	//無敵演出カメラへの遷移が完了したかどうか取得
+	bool GetIsMutekiCameraChanged() { return mutekiCameraMoveEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 	//現在のカメラの種類取得

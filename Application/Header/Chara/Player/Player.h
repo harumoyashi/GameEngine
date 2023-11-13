@@ -17,6 +17,7 @@ private:
 	//------------------------ 移動関連 ------------------------//
 	bool isMove_;					//動いてるかフラグ
 	NVec2 moveVelo_;				//移動量
+	NVec2 directionVec_;			//向いてる方向
 	float moveSpeed_;				//移動速度
 
 	float moveAngle_;				//回転角度
@@ -52,9 +53,13 @@ private:
 
 	//ゲーミングパレットの遷移タイマー
 	const float kGamingTimer_ = 0.5f;
-	NEasing::EaseTimer redTimer = kGamingTimer_;
-	NEasing::EaseTimer greenTimer = kGamingTimer_;
-	NEasing::EaseTimer blueTimer = kGamingTimer_;
+	NEasing::EaseTimer redTimer_ = kGamingTimer_;
+	NEasing::EaseTimer greenTimer_ = kGamingTimer_;
+	NEasing::EaseTimer blueTimer_ = kGamingTimer_;
+
+	//無敵演出
+	NEasing::EaseTimer mutekiDirectionTimer_ = 2.f;	//無敵演出タイマー
+	SimpleParticle mutekiDirectionParticle_;		//無敵演出時に出るパーティクル
 
 public:
 	Player();
@@ -112,7 +117,7 @@ public:
 	//コライダー取得
 	const SphereCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
-	NVec2 GetMoveVelo()const { return moveVelo_; }
+	NVec2 GetDirectionVec()const { return directionVec_; }
 	//移動速度取得
 	float GetMoveSpeed()const { return moveSpeed_; }
 	//経過時間取得

@@ -33,6 +33,10 @@ Player::Player()
 	NParticleManager::GetInstance()->AddEmitter(&moveParticle_, "playerMove");
 	moveParticle_.SetIsRotation(true);
 	moveParticle_.SetIsGrowing(true);
+
+	mutekiDirectionParticle_.SetShapeType((uint32_t)ShapeType::Cube);
+	NParticleManager::GetInstance()->AddEmitter(&mutekiDirectionParticle_, "mutekiDirection");
+	mutekiDirectionParticle_.SetIsRotation(true);
 }
 
 Player::~Player()
@@ -89,10 +93,16 @@ bool Player::Init()
 
 	clearParticleTimer_.Reset();
 
-	redTimer.nowTime_ = kGamingTimer_;
-	redTimer.SetEnd(true);
-	greenTimer.SetReverseEnd(true);
-	blueTimer.SetReverseEnd(true);
+	redTimer_.nowTime_ = kGamingTimer_;
+	redTimer_.Reset();
+	greenTimer_.Reset();
+	blueTimer_.Reset();
+
+	redTimer_.SetEnd(true);
+	greenTimer_.SetReverseEnd(true);
+	blueTimer_.SetReverseEnd(true);
+
+	mutekiDirectionTimer_.Reset();
 
 	return true;
 }
@@ -101,6 +111,26 @@ void Player::Update()
 {
 	//タイマー更新
 	deadEffectTimer_.Update();
+	mutekiDirectionTimer_.Update();
+
+	if (NCameraManager::GetInstance()->GetIsMutekiCameraChanged() && mutekiDirectionTimer_.GetRun())
+	{
+		NVec3 emitterPos = obj_->position_ - NVec3(directionVec_.x,0.f,directionVec_.y) * 3.f;
+		mutekiDirectionParticle_.SetPos(emitterPos);
+		mutekiDirectionParticle_.SetScale({2.f,1.f,2.f});
+		mutekiDirectionParticle_.Add(
+			10, 1.5f, obj_->color_, 0.1f, 0.8f,
+			{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
+			0.05f, -NVec3::one, NVec3::one);
+	}
+
+	//演出終わったら元のカメラに戻す
+	if (mutekiDirectionTimer_.GetEnd())
+	{
+		isMove_ = true;	//動けるようにする
+		mutekiDirectionTimer_.Reset();
+		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+	}
 
 	if (isAlive_)
 	{
@@ -297,10 +327,10 @@ void Player::Move()
 		//移動方向に合わせて回転
 		if (moveVelo_.Length() > 0.0f)			//入力されてたら
 		{
-			NVec2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
-			velo.Normalize();
-			moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
-			if (velo.x < 0)
+			directionVec_ = moveVelo_;	//moveVelo_の値が変わらないように格納
+			directionVec_.Normalize();
+			moveAngle_ = MathUtil::Radian2Degree(acosf(directionVec_.Dot({ 0,1 })));
+			if (directionVec_.x < 0)
 			{
 				moveAngle_ = -moveAngle_;
 			}
@@ -364,10 +394,10 @@ void Player::AutoMove()
 	//移動方向に合わせて回転
 	if (moveVelo_.Length() > 0.0f)			//入力されてたら
 	{
-		NVec2 velo = moveVelo_;	//moveVelo_の値が変わらないように格納
-		velo.Normalize();
-		moveAngle_ = MathUtil::Radian2Degree(acosf(velo.Dot({ 0,1 })));
-		if (velo.x < 0)
+		directionVec_ = moveVelo_;	//moveVelo_の値が変わらないように格納
+		directionVec_.Normalize();
+		moveAngle_ = MathUtil::Radian2Degree(acosf(directionVec_.Dot({ 0,1 })));
+		if (directionVec_.x < 0)
 		{
 			moveAngle_ = -moveAngle_;
 		}
@@ -466,7 +496,11 @@ void Player::LevelUp(BulletType bulletType)
 		wideLevel_ = maxBulLevel_;
 		moveSpeed_ *= 10.f;
 		isGodmode_ = true;
+		isMove_ = false;	//一旦演出終わるまで動けなくする
 		ItemManager::GetInstance()->SetIsMutekiGet(true);
+		//演出用にカメラ遷移する
+		NCameraManager::GetInstance()->ChangeCameara(CameraType::Muteki);
+		mutekiDirectionTimer_.Start();
 		break;
 	default:
 		break;
@@ -476,42 +510,42 @@ void Player::LevelUp(BulletType bulletType)
 NColor Player::GamingColorUpdate()
 {
 	//タイマー更新
-	redTimer.Update();
-	greenTimer.Update();
-	blueTimer.Update();
+	redTimer_.Update();
+	greenTimer_.Update();
+	blueTimer_.Update();
 
 	//タイマー無限ループ
-	if (blueTimer.GetReverseEnd() && !greenTimer.GetStarted())
+	if (blueTimer_.GetReverseEnd() && !greenTimer_.GetStarted())
 	{
-		greenTimer.Start();
+		greenTimer_.Start();
 	}
 
-	if (greenTimer.GetEnd() && !redTimer.GetReverseStarted())
+	if (greenTimer_.GetEnd() && !redTimer_.GetReverseStarted())
 	{
-		redTimer.ReverseStart();
+		redTimer_.ReverseStart();
 	}
 
-	if (redTimer.GetReverseEnd() && !blueTimer.GetStarted())
+	if (redTimer_.GetReverseEnd() && !blueTimer_.GetStarted())
 	{
-		blueTimer.Start();
+		blueTimer_.Start();
 	}
 
-	if (blueTimer.GetEnd() && !greenTimer.GetReverseStarted())
+	if (blueTimer_.GetEnd() && !greenTimer_.GetReverseStarted())
 	{
-		greenTimer.ReverseStart();
+		greenTimer_.ReverseStart();
 	}
 
-	if (greenTimer.GetReverseEnd() && !redTimer.GetStarted())
+	if (greenTimer_.GetReverseEnd() && !redTimer_.GetStarted())
 	{
-		redTimer.Start();
+		redTimer_.Start();
 	}
 
-	if (redTimer.GetEnd() && !blueTimer.GetReverseStarted())
+	if (redTimer_.GetEnd() && !blueTimer_.GetReverseStarted())
 	{
-		blueTimer.ReverseStart();
+		blueTimer_.ReverseStart();
 	}
 
-	NColor gamingColor(redTimer.GetTimeRate(), greenTimer.GetTimeRate(), blueTimer.GetTimeRate());
+	NColor gamingColor(redTimer_.GetTimeRate(), greenTimer_.GetTimeRate(), blueTimer_.GetTimeRate());
 	return gamingColor;
 }
 

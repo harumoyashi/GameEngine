@@ -291,19 +291,63 @@ void NCameraManager::ClearCameraUpdate()
 		clearCamera_.SetUpVec(upVec);
 	}
 
-	//補間終わった後もプレイヤーが動くので追いかけ続ける
-	if (clearCameraMoveEase_.GetEnd())
-	{
-		NVec3 pos;
-		pos = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
-		clearCamera_.SetEye(pos);
-		clearCamera_.SetTarget(Player::GetInstance()->GetHeadPos());
-	}
-
 	clearCamera_.SetEye(clearCamera_.GetEye() + shakeVec_);
 
 	clearCamera_.Update();
 	NCamera::sCurrentCamera = &clearCamera_;
+}
+
+void NCameraManager::MutekiCameraInit()
+{
+	length_ = 1.5f;
+	mutekiCameraMoveEase_.Reset();
+
+	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+	nextTarget_ = Player::GetInstance()->GetHeadPos();
+
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
+	NVec3 pVec = { Player::GetInstance()->GetDirectionVec().x,0.f,Player::GetInstance()->GetDirectionVec().y };
+	nextPos_ = Player::GetInstance()->GetHeadPos() + pVec * length_;
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	nextUpVec_ = NVec3(0, 1, 0);
+
+	currentFov_ = NCamera::sCurrentCamera->GetFov();
+	nextFov_ = 45.0f;
+}
+
+void NCameraManager::MutekiCameraUpdate()
+{
+	if (isChange_ == false)
+	{
+		MutekiCameraInit();
+		isChange_ = true;
+	}
+
+	//イージング用のタイマー動かす
+	mutekiCameraMoveEase_.Update();
+	if (mutekiCameraMoveEase_.GetStarted() == false)
+	{
+		mutekiCameraMoveEase_.Start();
+	}
+
+	//前のカメラから現在のカメラまでの補間
+	if (mutekiCameraMoveEase_.GetRun())
+	{
+		NVec3 target, pos, upVec;
+		target = InQuad(currentTarget_, nextTarget_, mutekiCameraMoveEase_.GetTimeRate());
+		pos = InQuad(currentPos_, nextPos_, mutekiCameraMoveEase_.GetTimeRate());
+		upVec = InQuad(currentUpVec_, nextUpVec_, mutekiCameraMoveEase_.GetTimeRate());
+
+		mutekiCamera_.SetTarget(target);
+		mutekiCamera_.SetEye(pos);
+		mutekiCamera_.SetUpVec(upVec);
+	}	//カメラ動くことないから補間終わったら放置
+
+	mutekiCamera_.SetEye(mutekiCamera_.GetEye() + shakeVec_);
+
+	mutekiCamera_.Update();
+	NCamera::sCurrentCamera = &mutekiCamera_;
 }
 
 void NCameraManager::ShakeStart(float shakePower, float shakeTime)
@@ -330,7 +374,7 @@ void NCameraManager::ShakeUpdate()
 		shakeVec_ *= shakePower_ * (1.f - shakeTimer_.GetTimeRate());
 		shakeTimer_.Update();
 	}
-	else if(shakeTimer_.GetEnd())
+	else if (shakeTimer_.GetEnd())
 	{
 		//終わったら揺れる前の位置に戻してあげて、揺れの値も0に
 		shakeVec_ = NVec3::zero;
@@ -377,6 +421,7 @@ void NCameraManager::Init()
 	beforeStartCameraMoveEase_ = 0.3f;
 	faildCameraMoveEase_ = 0.3f;
 	clearCameraMoveEase_ = 0.5f;
+	mutekiCameraMoveEase_ = 0.5f;
 }
 
 void NCameraManager::Update()
@@ -408,6 +453,7 @@ void NCameraManager::Update()
 		&NCameraManager::BeforeStartCameraUpdate,
 		&NCameraManager::FaildCameraUpdate,
 		&NCameraManager::ClearCameraUpdate,
+		&NCameraManager::MutekiCameraUpdate,
 	};
 
 	// 実行

@@ -40,7 +40,7 @@ void ItemManager::Update()
 
 			mutekiTex_->position_ = item->GetPos() + NVec3(0, 0, mutekiTexPlusPos_);
 
-			//無敵アイテム取ったらテキストの縮小タイマー開始
+			//無敵アイテム取ったらテキストを縮小して消す
 			if (isMutekiGet_)
 			{
 				scalingTimer_.Update();
