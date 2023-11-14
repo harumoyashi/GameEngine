@@ -399,7 +399,7 @@ void Field::Draw()
 		line.line->SetBlendMode(BlendMode::Alpha);
 		line.line->Draw();
 		line.text->Draw();
-		line.text->SetBlendMode(BlendMode::None);
+		line.text->SetBlendMode(BlendMode::Alpha);
 	}
 
 	for (auto& cp : checkPoints_)
@@ -407,7 +407,7 @@ void Field::Draw()
 		cp.line->SetBlendMode(BlendMode::Alpha);
 		cp.line->Draw();
 		cp.text->Draw();
-		cp.text->SetBlendMode(BlendMode::None);
+		cp.text->SetBlendMode(BlendMode::Alpha);
 	}
 }
 

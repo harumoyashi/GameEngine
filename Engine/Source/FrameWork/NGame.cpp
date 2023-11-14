@@ -85,11 +85,15 @@ void NGame::Draw()
 	if (IPostEffect::GetIsActive())
 	{
 		IPostEffect::PreDrawScene();			//レンダーテクスチャの準備(書き込み専用状態にする)
-		sceneMane_->Draw();						//レンダーテクスチャにゲームシーンの描画
+		sceneMane_->DrawBackSprite();			//レンダーテクスチャにゲームシーンの描画
+		sceneMane_->DrawBack3D();
+		sceneMane_->Draw3D();
+		sceneMane_->DrawParticle();
 		IPostEffect::PostDrawScene();			//読み込み専用状態にして終了
 
 		NDX12::GetInstance()->PreDraw();		//バックバッファの入れ替え
 		IPostEffect::Draw();					//バックバッファにポストエフェクトの描画
+		sceneMane_->DrawForeSprite();
 		NSceneChange::GetInstance()->Draw();	//暗幕はポストエフェクトの上から描画し直す
 		NImGuiManager::GetInstance()->Draw();	//ImGui描画
 		NDX12::GetInstance()->PostDraw();		//バックバッファのに描画したのを表示に

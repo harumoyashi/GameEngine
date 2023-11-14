@@ -40,7 +40,7 @@ void Wave::Init()
 		obj_[i]->scale_ =
 		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
 		obj_[i]->position_ =
-		{ obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX, 0,  posZ_ };
+		{ obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX, 0.1f,  posZ_ };
 		obj_[i]->color_.SetColor255(180, 180, 180, 200);
 	}
 #pragma endregion
@@ -120,7 +120,7 @@ void Wave::DrawObj()
 	{
 		obj->SetBlendMode(BlendMode::Alpha);
 		obj->Draw();
-		obj->SetBlendMode(BlendMode::None);
+		obj->SetBlendMode(BlendMode::Alpha);
 	}
 }
 

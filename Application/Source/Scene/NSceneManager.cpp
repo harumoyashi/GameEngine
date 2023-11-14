@@ -60,3 +60,56 @@ void NSceneManager::Draw()
 	currentScene_->DrawForeSprite();
 	NSceneChange::GetInstance()->Draw();
 }
+
+void NSceneManager::DrawBackSprite()
+{
+	NSprite::SetBlendMode(BlendMode::Alpha);
+	NSprite::CommonBeginDraw();
+	currentScene_->DrawBackSprite();
+}
+
+void NSceneManager::DrawBack3D()
+{
+	NObj3d::CommonBeginDraw();
+	currentScene_->DrawBack3D();
+}
+
+void NSceneManager::Draw3D()
+{
+	NObj3d::CommonBeginDraw();
+	currentScene_->Draw3D();
+}
+
+void NSceneManager::DrawParticle()
+{
+	IEmitter3D::SetBlendMode(BlendMode::None, true);
+	IEmitter3D::CommonBeginDraw();
+	currentScene_->DrawParticle();
+}
+
+void NSceneManager::DrawForeSprite()
+{
+	NSprite::SetBlendMode(BlendMode::Alpha);
+	NSprite::CommonBeginDraw();
+	currentScene_->DrawForeSprite();
+}
+
+void NSceneManager::DrawBackSpritePE()
+{
+}
+
+void NSceneManager::DrawBack3DPE()
+{
+}
+
+void NSceneManager::Draw3DPE()
+{
+}
+
+void NSceneManager::DrawParticlePE()
+{
+}
+
+void NSceneManager::DrawForeSpritePE()
+{
+}

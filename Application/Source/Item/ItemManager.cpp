@@ -10,7 +10,7 @@ void ItemManager::Init()
 {
 	items_.clear();
 	mutekiTex_ = std::make_unique<NObj3d>();
-	mutekiTex_->scale_ = NVec3(1.f, 0.1f, 0.3f);
+	mutekiTex_->scale_ = NVec3(1.f, 0.01f, 0.3f);
 	mutekiTex_->SetModel("plane");
 	mutekiTex_->SetTexture("muteki");
 
@@ -66,7 +66,7 @@ void ItemManager::Draw()
 
 	mutekiTex_->SetBlendMode(BlendMode::Alpha);
 	mutekiTex_->Draw();
-	mutekiTex_->SetBlendMode(BlendMode::None);
+	mutekiTex_->SetBlendMode(BlendMode::Alpha);
 }
 
 void ItemManager::Generate(const NVec3& pos, BulletType bulletType, bool isPop)

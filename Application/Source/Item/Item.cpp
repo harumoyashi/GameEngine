@@ -70,9 +70,9 @@ void Item::Draw()
 {
 	if (isAlive_)
 	{
-		obj_->SetBlendMode(BlendMode::None);
+		obj_->SetBlendMode(BlendMode::Alpha);
 		obj_->Draw();
-		obj_->SetBlendMode(BlendMode::None);
+		obj_->SetBlendMode(BlendMode::Alpha);
 	}
 }
 

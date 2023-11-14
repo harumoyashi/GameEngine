@@ -26,6 +26,18 @@ public:
 	void Update();
 	//描画
 	void Draw();
+	void DrawBackSprite();
+	void DrawBack3D();
+	void Draw3D();
+	void DrawParticle();
+	void DrawForeSprite();
+	//ポストエフェクトかけるものだけ描画
+	void DrawBackSpritePE();
+	void DrawBack3DPE();
+	void Draw3DPE();
+	void DrawParticlePE();
+	void DrawForeSpritePE();
+
 	//シーンの変更
 	template<typename T>
 	static void ChangeScene()

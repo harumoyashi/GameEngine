@@ -84,9 +84,9 @@ void IEnemy::Draw()
 {
 	if (isAlive_ && isDraw_)
 	{
-		obj_->SetBlendMode(BlendMode::None);
+		obj_->SetBlendMode(BlendMode::Alpha);
 		obj_->Draw();
-		obj_->SetBlendMode(BlendMode::None);
+		obj_->SetBlendMode(BlendMode::Alpha);
 	}
 }
 
