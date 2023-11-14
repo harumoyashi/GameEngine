@@ -291,6 +291,15 @@ void NCameraManager::ClearCameraUpdate()
 		clearCamera_.SetUpVec(upVec);
 	}
 
+	//補間終わった後もプレイヤーが動くので追いかけ続ける
+	if (clearCameraMoveEase_.GetEnd())
+	{
+		NVec3 pos;
+		pos = Player::GetInstance()->GetHeadPos() + NVec3(-length_, length_ * 0.5f, length_);
+		clearCamera_.SetEye(pos);
+		clearCamera_.SetTarget(Player::GetInstance()->GetHeadPos());
+	}
+
 	clearCamera_.SetEye(clearCamera_.GetEye() + shakeVec_);
 
 	clearCamera_.Update();
