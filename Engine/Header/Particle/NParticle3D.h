@@ -174,6 +174,7 @@ public:
 	void StartScalingTimer(bool isRun = true);
 
 	//経過時間スピード設定
-	//任意に決めた時間にするなら経過時間の影響を受けないように
-	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed,isElapse_ = false; }
+	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	//拡縮用タイマー開始
+	void SetIsElapse(bool isElapse) { isElapse_ = isElapse; }
 };

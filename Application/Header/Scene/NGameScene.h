@@ -56,6 +56,14 @@ private:
 	std::vector<float> volume_;							//音量群(0.0f~1.0f)
 	NEasing::EaseTimer volEaseTimer_ = 1.0f;			//音量が増える量を徐々に上げるためのイージングタイマー
 
+	//無敵演出用
+	std::unique_ptr<NSprite> mutekiTex_;				//無敵テキスト
+	NVec2 mutekiTexStartPos;
+	NVec2 mutekiTexEndPos;
+	NVec2 mutekiTexNowPos;
+	NEasing::EaseTimer mutekiInTimer_ = 0.3f;			//無敵テキスト出現のためのイージングタイマー
+	NEasing::EaseTimer mutekiOutTimer_ = 0.3f;			//無敵テキスト掃けるのためのイージングタイマー
+
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 

@@ -68,15 +68,34 @@ void NGameScene::Init()
 		(float)NWindows::GetInstance()->kWin_height * 0.5f);
 	darken_->color_.SetColor255(0, 0, 0, 180);
 
+	mutekiTex_ = std::make_unique<NSprite>();
+	mutekiTex_->CreateSprite("muteki");
+	mutekiTex_->SetAncor({ 0.5f,0.5f });
+	mutekiTex_->SetSize(1000.f, 200.f);
+	mutekiTex_->rotation_ = -15.0f;
+	mutekiTex_->SetPos(
+		-(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	mutekiTex_->color_.SetColor255(255, 255, 255, 100);
+
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		movieDarken_[i] = std::make_unique<NSprite>();
 		movieDarken_[i] = std::make_unique<NSprite>();
 		movieDarken_[i]->CreateSprite("white");
 		movieDarken_[i]->SetSize((float)NWindows::GetInstance()->kWin_width, (float)NWindows::GetInstance()->kWin_height * 0.1f);
-		movieDarken_[i]->SetPos(
-			(float)NWindows::GetInstance()->kWin_width * 0.5f,
-			-(float)NWindows::GetInstance()->kWin_height);
+		if (i == 1)
+		{
+			movieDarken_[i]->SetPos(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				(float)NWindows::GetInstance()->kWin_height * i - movieDarken_[i]->GetSize().y * 0.5f);
+		}
+		else
+		{
+			movieDarken_[i]->SetPos(
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				(float)NWindows::GetInstance()->kWin_height * i + movieDarken_[i]->GetSize().y * 0.5f);
+		}
 		movieDarken_[i]->color_.SetColor255(0, 0, 0, 255);
 	}
 #pragma endregion
@@ -159,7 +178,15 @@ void NGameScene::Init()
 	volume_[1] = NAudioManager::GetInstance()->GetBGMVolume();
 	volume_[2] = NAudioManager::GetInstance()->GetSEVolume();
 
-	ItemManager::GetInstance()->Generate(NVec3(2.f,0,0), BulletType::MaxType,false);
+	ItemManager::GetInstance()->Generate(NVec3(2.f, 0, 0), BulletType::MaxType, false);
+
+	mutekiTexStartPos = {
+		-(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height };
+	mutekiTexEndPos = {
+		(float)NWindows::GetInstance()->kWin_width + (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		0.f };
+	mutekiTexNowPos = mutekiTexStartPos;
 #pragma endregion
 }
 
@@ -340,6 +367,7 @@ void NGameScene::Update()
 #pragma region スプライト
 		backSprite_->Update();
 		darken_->Update();
+		mutekiTex_->Update();
 		for (uint32_t i = 0; i < 2; i++)
 		{
 			movieDarken_[i]->Update();
@@ -360,14 +388,52 @@ void NGameScene::Update()
 		//無敵演出中なら
 		if (Player::GetInstance()->GetIsMutekiDirection())
 		{
-			movieDarken_[0]->SetPos(
-				(float)NWindows::GetInstance()->kWin_width * 0.5f,
-				0.f + movieDarken_[0]->GetSize().y * 0.5f);
+			if (mutekiInTimer_.GetStarted() == false)
+			{
+				mutekiInTimer_.Start();
+			}
 
-			movieDarken_[1]->SetPos(
-				(float)NWindows::GetInstance()->kWin_width * 0.5f,
-				(float)NWindows::GetInstance()->kWin_height - movieDarken_[1]->GetSize().y * 0.5f);
+			if (mutekiInTimer_.GetRun())
+			{
+				mutekiTexNowPos.x = NEasing::InOutBack(
+					mutekiTexStartPos.x,
+					(float)NWindows::GetInstance()->kWin_width * 0.5f,
+					mutekiInTimer_.GetTimeRate());
+				mutekiTexNowPos.y = NEasing::InOutBack(
+					mutekiTexStartPos.y,
+					(float)NWindows::GetInstance()->kWin_height * 0.5f,
+					mutekiInTimer_.GetTimeRate());
+			}
 		}
+		else
+		{
+			if (mutekiOutTimer_.GetStarted() == false && mutekiInTimer_.GetEnd())
+			{
+				mutekiOutTimer_.Start();
+			}
+
+			if (mutekiOutTimer_.GetRun())
+			{
+				mutekiTexNowPos.x = NEasing::OutQuad(
+					(float)NWindows::GetInstance()->kWin_width * 0.5f,
+					mutekiTexEndPos.x,
+					mutekiOutTimer_.GetTimeRate());
+				mutekiTexNowPos.y = NEasing::OutQuad(
+					(float)NWindows::GetInstance()->kWin_height * 0.5f,
+					mutekiTexEndPos.y,
+					mutekiOutTimer_.GetTimeRate());
+			}
+
+			if (mutekiOutTimer_.GetEnd())
+			{
+				mutekiInTimer_.Reset();
+				mutekiOutTimer_.Reset();
+			}
+		}
+
+		mutekiTex_->SetPos(mutekiTexNowPos.x, mutekiTexNowPos.y);
+		mutekiInTimer_.Update();
+		mutekiOutTimer_.Update();
 
 		if (sScene == SceneMode::BeforeStart)	//始まる前の処理
 		{
@@ -642,6 +708,7 @@ void NGameScene::DrawForeSprite()
 				movieDarken_[i]->Draw();
 			}
 		}
+		mutekiTex_->Draw();
 
 		UIManager::GetInstance()->Draw(UIType::Menu);
 

@@ -34,6 +34,8 @@ void IEmitter3D::Init()
 	vertexBuff_.Init(vertices_);
 
 	isActive_ = true;	//生成時には有効フラグ立てる
+
+	elapseSpeed_ = 1.f;
 }
 
 void IEmitter3D::Update()
