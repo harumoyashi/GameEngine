@@ -41,13 +41,14 @@ void NAudioManager::AllLoad()
 	LoadSound("faild_BGM.mp3", "faildBGM", true);     //失敗リザルトのBGM
 
 	//SE読み込み
-	LoadSound("shot_SE.mp3", "shotSE", false);                 //弾撃った時
-	LoadSound("start_SE.mp3", "startSE", false);               //スタートの文字掃ける音
-	LoadSound("vanish_SE.mp3", "vanishSE", false);             //敵が弾ける音
-	LoadSound("explosion_SE.mp3", "explosionSE", false);       //プレイヤーが弾ける音
-	LoadSound("sceneChange_SE.mp3", "sceneChangeSE", false);   //シーン遷移音
-	LoadSound("dead_SE.mp3", "deadSE", false);                 //プレイヤー死亡音
-	LoadSound("item_get_SE.mp3", "itemGetSE", false);          //アイテム獲得音
+	LoadSound("shot_SE.mp3", "shotSE", false);					//弾撃った時
+	LoadSound("start_SE.mp3", "startSE", false);				//スタートの文字掃ける音
+	LoadSound("vanish_SE.mp3", "vanishSE", false);				//敵が弾ける音
+	LoadSound("explosion_SE.mp3", "explosionSE", false);		//プレイヤーが弾ける音
+	LoadSound("sceneChange_SE.mp3", "sceneChangeSE", false);	//シーン遷移音
+	LoadSound("dead_SE.mp3", "deadSE", false);					//プレイヤー死亡音
+	LoadSound("item_get_SE.mp3", "itemGetSE", false);			//アイテム獲得音
+	LoadSound("muteki_SE.mp3", "mutekiSE", false);				//無敵演出音
 
 	LoadVolume();	//保存してた音量データ読み込んで
 	AllSetVolume();	//音量を調節する

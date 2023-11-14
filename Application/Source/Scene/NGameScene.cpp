@@ -187,6 +187,9 @@ void NGameScene::Init()
 		(float)NWindows::GetInstance()->kWin_width + (float)NWindows::GetInstance()->kWin_width * 0.5f,
 		0.f };
 	mutekiTexNowPos = mutekiTexStartPos;
+
+	mutekiInTimer_.Reset();
+	mutekiOutTimer_.Reset();
 #pragma endregion
 }
 
@@ -388,11 +391,14 @@ void NGameScene::Update()
 		//無敵演出中なら
 		if (Player::GetInstance()->GetIsMutekiDirection())
 		{
-			if (mutekiInTimer_.GetStarted() == false)
+			//カメラの遷移も終わったタイミングで文字出し始める
+			if (mutekiInTimer_.GetStarted() == false && NCameraManager::GetInstance()->GetIsMutekiCameraChanged())
 			{
 				mutekiInTimer_.Start();
+				NAudioManager::GetInstance()->Play("mutekiSE");	//音も鳴らす
 			}
 
+			//文字スライドさせて出現
 			if (mutekiInTimer_.GetRun())
 			{
 				mutekiTexNowPos.x = NEasing::InOutBack(
@@ -407,11 +413,13 @@ void NGameScene::Update()
 		}
 		else
 		{
+			//演出が終わったら掃けさせる
 			if (mutekiOutTimer_.GetStarted() == false && mutekiInTimer_.GetEnd())
 			{
 				mutekiOutTimer_.Start();
 			}
 
+			//文字スライドさせて掃けさす
 			if (mutekiOutTimer_.GetRun())
 			{
 				mutekiTexNowPos.x = NEasing::OutQuad(
@@ -424,6 +432,7 @@ void NGameScene::Update()
 					mutekiOutTimer_.GetTimeRate());
 			}
 
+			//全部終わったらリセット
 			if (mutekiOutTimer_.GetEnd())
 			{
 				mutekiInTimer_.Reset();
