@@ -76,3 +76,16 @@ void ItemManager::Generate(const NVec3& pos, BulletType bulletType, bool isPop)
 	items_.back()->Generate(pos, isPop);
 	items_.back()->SetBulletType(bulletType);
 }
+
+NVec3 ItemManager::GetMutekiItemPos()
+{
+	for (auto& item : items_)
+	{
+		if (item->GetBulletType() == BulletType::MaxType)
+		{
+			return item->GetPos();
+		}
+	}
+
+	return NVec3::zero;
+}

@@ -22,6 +22,9 @@ public:
 
 	//生成
 	void Generate(const NVec3& pos, BulletType bulletType,bool isPop = true);
+
+	NVec3 GetMutekiItemPos();
+
 	//無敵アイテム取ったかフラグ設定
 	void SetIsMutekiGet(bool isMutekiGet) { isMutekiGet_ = isMutekiGet; }
 

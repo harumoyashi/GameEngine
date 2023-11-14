@@ -70,11 +70,11 @@ void NLightGroup::Init(bool isDirLights, bool isPointLights,
 void NLightGroup::Update()
 {
 	//値の更新があった時だけ定数バッファに転送する
-	if (isDirty)
-	{
+	/*if (isDirty)
+	{*/
 		TransferConstBuffer();
 		isDirty = false;
-	}
+	/*}*/
 }
 
 void NLightGroup::Draw(const uint32_t rootParamIndex)

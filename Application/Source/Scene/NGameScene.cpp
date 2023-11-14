@@ -100,8 +100,8 @@ void NGameScene::Init()
 	}
 #pragma endregion
 #pragma region 各スプライトの設定
-	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,100.0f });
-	UIManager::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
+	UIManager::GetInstance()->SetSize(UIType::Shaft, { 100.0f,150.0f });
+	UIManager::GetInstance()->SetPos(UIType::Shaft, { NWindows::GetInstance()->kWin_width * 0.5f, 480.0f });
 	UIManager::GetInstance()->SetSize(UIType::Lstick, { 100.0f,100.0f });
 	UIManager::GetInstance()->SetPos(UIType::Lstick, { NWindows::GetInstance()->kWin_width * 0.5f, 500.0f });
 
@@ -149,7 +149,10 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init();
+	lightGroup_->Init(true, true, false, false);
+	lightGroup_->sPointLights[0]->SetLightAtten({0.1f,0.1f,0.1f});
+	lightGroup_->sPointLights[1]->SetActive(false);
+	lightGroup_->sPointLights[2]->SetActive(false);
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
@@ -386,6 +389,16 @@ void NGameScene::Update()
 		NParticleManager::GetInstance()->Update();
 
 		//ライトたちの更新
+		if (Player::GetInstance()->GetIsGodmode())
+		{
+			lightGroup_->sPointLights[0]->SetLightPos(Player::GetInstance()->GetHeadPos() + NVec3(0, 0.5f, 0));
+			lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
+		}
+		else
+		{
+			lightGroup_->sPointLights[0]->SetLightPos(ItemManager::GetInstance()->GetMutekiItemPos() + NVec3(0, 0.5f, 0));
+			lightGroup_->sPointLights[0]->SetLightColor({0.5f,1.f,0.1f});
+		}
 		lightGroup_->Update();
 
 		//無敵演出中なら
