@@ -118,6 +118,7 @@ void Player::Update()
 		NVec3 emitterPos = obj_->position_ - NVec3(directionVec_.x,0.f,directionVec_.y) * 3.f;
 		mutekiDirectionParticle_.SetPos(emitterPos);
 		mutekiDirectionParticle_.SetScale({2.f,1.f,2.f});
+		mutekiDirectionParticle_.SetElapseSpeed(1.f);
 		mutekiDirectionParticle_.Add(
 			10, 1.5f, obj_->color_, 0.1f, 0.8f,
 			{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
@@ -496,6 +497,7 @@ void Player::LevelUp(BulletType bulletType)
 		wideLevel_ = maxBulLevel_;
 		moveSpeed_ *= 10.f;
 		isGodmode_ = true;
+		elapseSpeed_ = 0.f;
 		isMove_ = false;	//一旦演出終わるまで動けなくする
 		ItemManager::GetInstance()->SetIsMutekiGet(true);
 		//演出用にカメラ遷移する

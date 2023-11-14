@@ -85,6 +85,7 @@ private:
 	uint32_t addInterval_;
 
 	//経過時間のスピード(スローモーション用)
+	bool isElapse_ = true;					//経過時間の影響受けるかフラグ
 	float elapseSpeed_;
 
 	const uint32_t maxParticle_ = 256;		//最大数
@@ -173,5 +174,6 @@ public:
 	void StartScalingTimer(bool isRun = true);
 
 	//経過時間スピード設定
-	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	//任意に決めた時間にするなら経過時間の影響を受けないように
+	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed,isElapse_ = false; }
 };

@@ -307,7 +307,7 @@ void NCameraManager::MutekiCameraInit()
 
 	currentPos_ = NCamera::sCurrentCamera->GetEye();
 	NVec3 pVec = { Player::GetInstance()->GetDirectionVec().x,0.f,Player::GetInstance()->GetDirectionVec().y };
-	nextPos_ = Player::GetInstance()->GetHeadPos() + pVec * length_;
+	nextPos_ = Player::GetInstance()->GetPos() + pVec * length_;
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVec3(0, 1, 0);
