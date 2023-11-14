@@ -115,14 +115,15 @@ void Player::Update()
 
 	if (NCameraManager::GetInstance()->GetIsMutekiCameraChanged() && mutekiDirectionTimer_.GetRun())
 	{
-		NVec3 emitterPos = obj_->position_ - NVec3(directionVec_.x,0.f,directionVec_.y) * 3.f;
+		NVec3 emitterPos = obj_->position_ - NVec3(0.f, 0.f, 3.f);
 		mutekiDirectionParticle_.SetPos(emitterPos);
-		mutekiDirectionParticle_.SetScale({2.f,1.f,2.f});
+		mutekiDirectionParticle_.SetScale({ 2.5f,1.f,2.5f });
 		mutekiDirectionParticle_.SetIsElapse(false);
 		mutekiDirectionParticle_.Add(
 			10, 1.5f, obj_->color_, 0.1f, 0.8f,
 			{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
 			0.05f, -NVec3::one, NVec3::one);
+		obj_->rotation_.y = (1.f - NEasing::OutQuad(mutekiDirectionTimer_.GetTimeRate())) * 360.f * 10.f;
 	}
 
 	//演出終わったら元のカメラに戻す

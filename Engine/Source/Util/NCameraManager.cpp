@@ -308,15 +308,14 @@ void NCameraManager::ClearCameraUpdate()
 
 void NCameraManager::MutekiCameraInit()
 {
-	length_ = 1.5f;
+	length_ = 1.8f;
 	mutekiCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetEye();
-	NVec3 pVec = { Player::GetInstance()->GetDirectionVec().x,0.f,Player::GetInstance()->GetDirectionVec().y };
-	nextPos_ = Player::GetInstance()->GetPos() + pVec * length_;
+	nextPos_ = Player::GetInstance()->GetHeadPos() + NVec3(-length_ * 0.3f, length_ * 0.1f, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVec3(0, 1, 0);
