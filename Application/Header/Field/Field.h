@@ -34,25 +34,25 @@ public:
 	};
 
 private:
-	std::array<std::unique_ptr<NTile>,2> fieldObj_;	//床2枚用意してスクロールさせる
-	std::array<std::unique_ptr<BackObj>,2> backObj_;//背景オブジェクト2枚用意してスクロールさせる
-	std::array<PlaneCollider,2> collider_;			//床の当たり判定も2枚分用意
-	std::vector<Line> lines_;						//フィールドにある線たち
-	std::vector<Line> checkPoints_;					//フィールドにあるチェックポイントたち
+	std::array<std::unique_ptr<NTile>,2> fieldObj_;		//床2枚用意してスクロールさせる
+	std::array<std::unique_ptr<BackObj>,2> backObj_;	//背景オブジェクト2枚用意してスクロールさせる
+	std::array<PlaneCollider,2> collider_;				//床の当たり判定も2枚分用意
+	std::vector<Line> lines_;							//フィールドにある線たち
+	std::vector<Line> checkPoints_;						//フィールドにあるチェックポイントたち
 
-	float tileDivide_ = 0.5f;						//タイルの分割幅
-	float activityAreaX_ = 9.0f;					//行動範囲制限
-	float avoidArea_ = 2.0f;						//割れる範囲
-	NEasing::EaseTimer extrusionTimer_ = 3.0f;		//押し出すタイマー
-	std::array<NVec3,maxObj> objPos_;				//フィールド上のオブジェクト座標
-	bool isAvoid_ = true;							//避けるようになるか否か
-	uint32_t checkPointNum = 5;						//チェックポイントの数
+	float tileDivide_ = 0.5f;							//タイルの分割幅
+	float activityAreaX_ = 9.0f;						//行動範囲制限
+	float avoidArea_ = 2.0f;							//割れる範囲
+	std::array<NEasing::EaseTimer,3> extrusionTimer_;	//押し出すタイマー
+	std::array<NVec3,maxObj> objPos_;					//フィールド上のオブジェクト座標
+	bool isAvoid_ = true;								//避けるようになるか否か
+	uint32_t checkPointNum = 5;							//チェックポイントの数
 
-	float startPosZ_ = 3.0f;						//スタート地点(縦だけ)
-	float goalPosZ_ = 40.0f;						//ゴール地点(縦だけ)
+	float startPosZ_ = 3.0f;							//スタート地点(縦だけ)
+	float goalPosZ_ = 40.0f;							//ゴール地点(縦だけ)
 
-	bool isStart_ = false;							//スタートしたかフラグ
-	bool isGoal_ = false;							//ゴールしたかフラグ
+	bool isStart_ = false;								//スタートしたかフラグ
+	bool isGoal_ = false;								//ゴールしたかフラグ
 
 public:
 	static Field* GetInstance();

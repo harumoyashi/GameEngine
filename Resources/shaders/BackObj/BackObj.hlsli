@@ -80,7 +80,7 @@ cbuffer cbuff3 : register(b3)
 cbuffer cbuff4 : register(b4)
 {
     bool isAvoid;
-    float extrusionTimer;
+    float3 extrusionTimer;
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体

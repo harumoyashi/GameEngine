@@ -115,9 +115,7 @@ struct ConstBuffDataTile
 struct ConstBuffDataBackObj
 {
 	bool isAvoid;						//避けるようになるか否か
-	float extrusionTimer;				//押し出しタイマー
-	float pad1;
-	float pad2;
+	NVec3 extrusionTimer;				//押し出しタイマー群
 };
 
 //スキン情報

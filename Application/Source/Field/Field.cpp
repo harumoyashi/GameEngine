@@ -127,7 +127,13 @@ void Field::Init()
 	};
 #pragma endregion
 
-	extrusionTimer_.Reset();
+	extrusionTimer_[0] = 3.f;
+	extrusionTimer_[1] = 2.3f;
+	extrusionTimer_[2] = 4.7f;
+	for (auto& timer : extrusionTimer_)
+	{
+		timer.Reset();
+	}
 }
 
 void Field::Update()
@@ -314,7 +320,11 @@ void Field::Update()
 	//	i++;
 	//}
 
-	extrusionTimer_.RoopReverse();
+	for (auto& timer : extrusionTimer_)
+	{
+		timer.RoopReverse();
+	}
+
 	for (auto& field : fieldObj_)
 	{
 		field->SetDivide(tileDivide_);
@@ -322,7 +332,7 @@ void Field::Update()
 		field->SetIsAvoid(isAvoid_);
 		field->SetAvoidArea(avoidArea_);
 		//とりあえず押し出しタイマーと同じにしてみる
-		field->SetFloatingTimer(NEasing::OutQuad(extrusionTimer_.GetTimeRate()));
+		field->SetFloatingTimer(NEasing::OutQuad(extrusionTimer_[0].GetTimeRate()));
 		for (uint32_t i = 0; i < maxObj; i++)
 		{
 			field->SetObjPos(objPos_[i], i);
@@ -333,7 +343,10 @@ void Field::Update()
 	for (auto& backObj : backObj_)
 	{
 		backObj->SetIsAvoid(isAvoid_);
-		backObj->SetExtrusionTimer(NEasing::OutQuad(extrusionTimer_.GetTimeRate()));
+		backObj->SetExtrusionTimer(
+			NVec3(NEasing::OutQuad(extrusionTimer_[0].GetTimeRate()),
+				NEasing::OutQuad(extrusionTimer_[1].GetTimeRate()),
+				NEasing::OutQuad(extrusionTimer_[2].GetTimeRate())));
 		backObj->Update();
 	}
 
