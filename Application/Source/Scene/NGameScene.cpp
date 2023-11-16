@@ -592,6 +592,7 @@ void NGameScene::Update()
 		}
 		else if (sScene == SceneMode::Faild)	//失敗リザルトの処理
 		{
+			lightGroup_->sPointLights[0]->SetActive(false);
 			Player::GetInstance()->FaildUpdate();
 
 			//スタート線スライドタイマー開始
@@ -734,8 +735,11 @@ void NGameScene::DrawForeSprite()
 
 		UIManager::GetInstance()->Draw(UIType::Menu);
 
-		UIManager::GetInstance()->Draw(UIType::Shaft);
-		UIManager::GetInstance()->Draw(UIType::Lstick);
+		if (Player::GetInstance()->GetIsMutekiDirection() == false)
+		{
+			UIManager::GetInstance()->Draw(UIType::Shaft);
+			UIManager::GetInstance()->Draw(UIType::Lstick);
+		}
 	}
 
 	if (sScene == SceneMode::Play)	//プレイ中
