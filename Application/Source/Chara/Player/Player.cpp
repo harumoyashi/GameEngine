@@ -496,7 +496,7 @@ void Player::LevelUp(BulletType bulletType)
 		lineLevel_ = maxBulLevel_;
 		sideLevel_ = maxBulLevel_;
 		wideLevel_ = maxBulLevel_;
-		moveSpeed_ *= 10.f;
+		moveSpeed_ *= 7.f;
 		isGodmode_ = true;
 		elapseSpeed_ = 0.f;
 		isMove_ = false;	//一旦演出終わるまで動けなくする
