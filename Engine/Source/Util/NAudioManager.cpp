@@ -39,6 +39,7 @@ void NAudioManager::AllLoad()
 	LoadSound("play_BGM.mp3", "playBGM", true);       //プレイ中のBGM
 	LoadSound("clear_BGM.mp3", "clearBGM", true);     //クリアリザルトのBGM
 	LoadSound("faild_BGM.mp3", "faildBGM", true);     //失敗リザルトのBGM
+	LoadSound("muteki_BGM.mp3", "mutekiBGM", true);   //無敵中のBGM
 
 	//SE読み込み
 	LoadSound("shot_SE.mp3", "shotSE", false);					//弾撃った時
@@ -49,6 +50,7 @@ void NAudioManager::AllLoad()
 	LoadSound("dead_SE.mp3", "deadSE", false);					//プレイヤー死亡音
 	LoadSound("item_get_SE.mp3", "itemGetSE", false);			//アイテム獲得音
 	LoadSound("muteki_SE.mp3", "mutekiSE", false);				//無敵演出音
+	LoadSound("muteki_get_SE.mp3", "mutekiGetSE", false);		//無敵アイテム取得音
 
 	LoadVolume();	//保存してた音量データ読み込んで
 	AllSetVolume();	//音量を調節する

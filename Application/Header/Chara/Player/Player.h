@@ -58,8 +58,8 @@ private:
 	NEasing::EaseTimer blueTimer_ = kGamingTimer_;
 
 	//無敵演出
-	NEasing::EaseTimer mutekiDirectionTimer_ = 2.f;	//無敵演出タイマー
-	SimpleParticle mutekiDirectionParticle_;		//無敵演出時に出るパーティクル
+	NEasing::EaseTimer mutekiDirectionTimer_ = 2.3f;	//無敵演出タイマー
+	SimpleParticle mutekiDirectionParticle_;			//無敵演出時に出るパーティクル
 
 	
 

@@ -409,6 +409,7 @@ void NGameScene::Update()
 			{
 				mutekiInTimer_.Start();
 				NAudioManager::GetInstance()->Play("mutekiSE");	//音も鳴らす
+				NAudioManager::GetInstance()->Destroy("playBGM");
 			}
 
 			//文字スライドさせて出現
@@ -430,6 +431,7 @@ void NGameScene::Update()
 			if (mutekiOutTimer_.GetStarted() == false && mutekiInTimer_.GetEnd())
 			{
 				mutekiOutTimer_.Start();
+				NAudioManager::GetInstance()->Play("mutekiBGM", true, 0.2f);
 			}
 
 			//文字スライドさせて掃けさす
@@ -520,6 +522,7 @@ void NGameScene::Update()
 			if (Player::GetInstance()->GetIsAlive() == false &&
 				Player::GetInstance()->GetDeadEffectEnd())
 			{
+				NAudioManager::GetInstance()->Destroy("mutekiBGM");
 				NAudioManager::GetInstance()->Destroy("playBGM");
 				NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
 				sScene = SceneMode::Faild;
@@ -535,6 +538,7 @@ void NGameScene::Update()
 			if (Field::GetInstance()->GetIsGoal())
 			{
 				NAudioManager::GetInstance()->Destroy("playBGM");
+				NAudioManager::GetInstance()->Destroy("mutekiBGM");
 				NAudioManager::GetInstance()->Play("clearBGM", true, 0.2f);
 				sScene = SceneMode::Clear;
 				slideTimer_.Reset();
@@ -639,6 +643,7 @@ void NGameScene::Update()
 	//切り替えてﾖｼって言われたら
 	if (NSceneChange::GetInstance()->GetIsChange() == true)
 	{
+		NAudioManager::GetInstance()->Destroy("mutekiBGM");
 		NAudioManager::GetInstance()->Destroy("playBGM");
 		NAudioManager::GetInstance()->Destroy("clearBGM");
 		NAudioManager::GetInstance()->Destroy("faildBGM");

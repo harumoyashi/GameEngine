@@ -113,6 +113,13 @@ void Player::Update()
 	deadEffectTimer_.Update();
 	mutekiDirectionTimer_.Update();
 
+	//実質0.3秒のヒットストップ
+	if (mutekiDirectionTimer_.nowTime_ > 0.3f && NCameraManager::GetInstance()->GetNowCameraType() == CameraType::Normal)
+	{
+		//演出用にカメラ遷移する
+		NCameraManager::GetInstance()->ChangeCameara(CameraType::Muteki);
+	}
+
 	if (NCameraManager::GetInstance()->GetIsMutekiCameraChanged() && mutekiDirectionTimer_.GetRun())
 	{
 		NVec3 emitterPos = obj_->position_ - NVec3(0.f, 0.f, 3.f);
@@ -491,8 +498,7 @@ void Player::LevelUp(BulletType bulletType)
 			roketLevel_ += 1;
 		}
 		break;*/
-	case BulletType::MaxType:	//最強になる！！！
-
+	case BulletType::MaxType:	//最強になる！！
 		lineLevel_ = maxBulLevel_;
 		sideLevel_ = maxBulLevel_;
 		wideLevel_ = maxBulLevel_;
@@ -502,8 +508,7 @@ void Player::LevelUp(BulletType bulletType)
 		isMove_ = false;	//一旦演出終わるまで動けなくする
 		moveParticle_.ClearParticles();	//今までの移動パーティクルは消す
 		ItemManager::GetInstance()->SetIsMutekiGet(true);
-		//演出用にカメラ遷移する
-		NCameraManager::GetInstance()->ChangeCameara(CameraType::Muteki);
+
 		mutekiDirectionTimer_.Start();
 		break;
 	default:

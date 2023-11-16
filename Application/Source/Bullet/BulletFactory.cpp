@@ -51,7 +51,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 			line_.SetIsCanShot(false);
 			line_.ReSetShotCoolTimer();
 
-			NAudioManager::GetInstance()->Play("shotSE", false, 0.5f);
+			NAudioManager::GetInstance()->Play("shotSE", false, 0.4f);
 		}
 
 		break;
@@ -80,7 +80,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				side_.ReSetShortShotCoolTimer();
 				shotCount++;	//撃った回数を加算してく
 
-				NAudioManager::GetInstance()->Play("shotSE", false, 0.5f);
+				NAudioManager::GetInstance()->Play("shotSE", false, 0.4f);
 			}
 
 			//撃った回数が弾レベルに達したら終わり
@@ -120,7 +120,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				wide_.ReSetShortShotCoolTimer();
 				shotCount++;	//撃った回数を加算してく
 
-				NAudioManager::GetInstance()->Play("shotSE", false, 0.5f);
+				NAudioManager::GetInstance()->Play("shotSE", false, 0.4f);
 			}
 
 			//撃った回数が弾レベルに達したら終わり

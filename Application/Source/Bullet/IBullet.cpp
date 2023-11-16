@@ -19,7 +19,7 @@ void IBullet::Generate(const NVec3& pos, const float moveAngle)
 	obj_->SetModel("sphere");
 	obj_->position_ = pos;
 	obj_->scale_ = Player::GetInstance()->GetScale() * 0.7f;
-	obj_->color_ = NColor::kPlayer;
+	obj_->color_ = Player::GetInstance()->GetColor();
 
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);

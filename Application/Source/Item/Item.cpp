@@ -83,6 +83,14 @@ void Item::OnCollision()
 	{
 		isAlive_ = false;
 		Player::GetInstance()->LevelUp(bulletType_);
-		NAudioManager::GetInstance()->Play("itemGetSE");
+		//無敵アイテムの時だけ別のSE鳴らす
+		if (bulletType_ != BulletType::MaxType)
+		{
+			NAudioManager::GetInstance()->Play("itemGetSE");
+		}
+		else
+		{
+			NAudioManager::GetInstance()->Play("mutekiGetSE");
+		}
 	}
 }
