@@ -33,6 +33,10 @@ private:
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 
+	//その他
+	NEasing::EaseTimer logoMoveTimer_ = 2.f;					//タイトルロゴ動かす用タイマー
+	float logoPosY_;											//タイトルロゴY座標
+
 public:
 	NTitleScene();
 	~NTitleScene();

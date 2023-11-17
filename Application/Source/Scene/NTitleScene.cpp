@@ -89,6 +89,9 @@ void NTitleScene::Init()
 
 	//IPostEffect::SetIsActive(false);	//ポストエフェクト消す
 	Bloom::Init();
+
+	//その他
+	logoMoveTimer_.Reset();
 }
 
 void NTitleScene::Update()
@@ -100,6 +103,15 @@ void NTitleScene::Update()
 	NCameraManager::GetInstance()->Update();
 #pragma endregion
 	backSprite_->Update();
+
+	logoMoveTimer_.RoopReverse();
+	logoMoveTimer_.Update();
+
+	logoPosY_ = 
+		(float)NWindows::GetInstance()->kWin_height * 0.5f +
+		NEasing::InBack(logoMoveTimer_.GetTimeRate()) * 15.f;
+
+	titleLogo_->position_.y = logoPosY_;
 	titleLogo_->Update();
 
 	Field::GetInstance()->Update();
