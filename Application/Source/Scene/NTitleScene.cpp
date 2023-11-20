@@ -117,6 +117,7 @@ void NTitleScene::Update()
 	Field::GetInstance()->Update();
 	Field::GetInstance()->StopSE();
 
+
 	flashingTimer_.Roop();
 	if (flashingTimer_.GetTimeRate() > 0.7f)
 	{
