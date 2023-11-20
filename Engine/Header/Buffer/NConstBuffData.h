@@ -105,10 +105,9 @@ struct ConstBuffDataTile
 	bool isAvoid;						//避けるようになるか否か
 	float avoidArea;					//避ける範囲
 	float floatingTimer;				//ふよふよタイマー
+	float wavePosZ;						//波のZ座標
 	float pad1;
 	float pad2;
-	float pad3;
-	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
 };
 
 //背景オブジェクト

@@ -13,7 +13,7 @@ private:
 	bool isAvoid_;						//避けるようになるか否か
 	float avoidArea_;					//避ける範囲
 	float floatingTimer_;				//ふよふよタイマー
-	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
+	float wavePosZ_;					//波のZ座標
 
 public:
 	bool Init()override;
@@ -28,8 +28,8 @@ public:
 	void SetDivide(float divide) { divide_ = divide; }
 	//行動範囲設定
 	void SetActivityArea(float activityArea) { activityArea_ = activityArea; }
-	//フィールド上にいるオブジェクトの座標設定
-	void SetObjPos(NVec3 objPos,uint32_t eleNum);
+	//波のZ座標設定
+	void SetWavePosZ(float wavePosZ) { wavePosZ_ = wavePosZ; }
 	//避けるようになるか否か設定
 	void SetIsAvoid(bool isAvoid) { isAvoid_ = isAvoid; }
 	//避ける範囲設定

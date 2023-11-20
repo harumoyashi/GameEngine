@@ -29,20 +29,11 @@ void main(
         
         float3 objToPolyVec = { 0, 0, 0 }, plusVec = { 0, 0, 0 };
         float objToPolyDist = 0.f;
-        for (uint j = 0; j < 1; j++)
-        {
-            float3 oPos = objPos[j];
-            objToPolyVec = objPos[j] - centerPos; //オブジェクトとポリゴンの中心点とのベクトル
-            objToPolyDist = length(objToPolyVec); //オブジェクトとポリゴンの中心点との距離
-            objToPolyDist = clamp(objToPolyDist, 0.f, avoidArea); //大きくなりすぎないように
-
-            objToPolyDist = avoidArea - objToPolyDist; //オブジェクトに近い程大きい値に
+        
+        input[i].pos.x += clamp(wavePosZ - centerPos.z, 0.f, 10.f); //横に流れる感じに
             
-            objToPolyVec = normalize(objToPolyVec);
-            
-            plusVec = objToPolyVec * objToPolyDist * 0.2f; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-            plusVec.y = -abs(objToPolyDist) * 0.1f;
-        }
+        plusVec = objToPolyVec * objToPolyDist * 0.2f; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
+        plusVec.y = -abs(objToPolyDist) * 0.1f;
         
         //浮いてるならさらにふよふよさせる
         plusVec +=
@@ -92,7 +83,6 @@ void main(
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
         
-       
         //ワールド座標
         float4 wpos = mul(world, float4(input[i].pos, 1));
         //plusVecがワールド座標基準だからワールド座標に直したものに足す

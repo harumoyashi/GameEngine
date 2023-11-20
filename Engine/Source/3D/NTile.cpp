@@ -60,16 +60,11 @@ void NTile::Draw()
 	DrawCommand((uint32_t)model_->mesh.indices.size());
 }
 
-void NTile::SetObjPos(NVec3 objPos, uint32_t eleNum)
-{
-	objPos_[eleNum] = objPos;
-}
-
 void NTile::TransferCBTile()
 {
 	cbTile_->constMap_->divide = divide_;
 	cbTile_->constMap_->activityArea = activityArea_;
-	cbTile_->constMap_->objPos = objPos_;
+	cbTile_->constMap_->wavePosZ = wavePosZ_;
 	cbTile_->constMap_->isAvoid = isAvoid_;
 	cbTile_->constMap_->avoidArea = avoidArea_;
 	cbTile_->constMap_->floatingTimer = floatingTimer_;

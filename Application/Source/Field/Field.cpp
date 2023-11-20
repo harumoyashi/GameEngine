@@ -1,4 +1,5 @@
 #include "Field.h"
+#include "Wave.h"
 #include "Player.h"
 #include "EnemyFactory.h"
 #include "NCollisionManager.h"
@@ -310,16 +311,6 @@ void Field::Update()
 	}
 
 	//オブジェクトの更新
-	//プレイヤー
-	objPos_[0] = Player::GetInstance()->GetPos();
-	//全敵
-	uint32_t eneNum = 1;	//プレイヤー追加してるので要素番号は1からスタート
-	for (auto& enemy : EnemyManager::GetInstance()->enemys_)
-	{
-		objPos_[eneNum] = enemy->GetPos();
-		eneNum++;
-	}
-
 	for (auto& timer : extrusionTimer_)
 	{
 		timer.RoopReverse();
@@ -333,10 +324,7 @@ void Field::Update()
 		field->SetAvoidArea(avoidArea_);
 		//とりあえず押し出しタイマーと同じにしてみる
 		field->SetFloatingTimer(NEasing::OutQuad(extrusionTimer_[0].GetTimeRate()));
-		for (uint32_t i = 0; i < maxObj; i++)
-		{
-			field->SetObjPos(objPos_[i], i);
-		}
+		field->SetWavePosZ(Wave::GetInstance()->GetFrontPosZ());
 		field->Update();
 	}
 

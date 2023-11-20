@@ -77,7 +77,6 @@ cbuffer cbuff3 : register(b3)
     CircleShadow circleShadows[CIRCLESHADOW_NUM];
 };
 
-static const int maxObj = 256;
 cbuffer cbuff4 : register(b4)
 {
     float divide;
@@ -85,7 +84,7 @@ cbuffer cbuff4 : register(b4)
     bool isAvoid;
     float avoidArea;
     float floatingTimer;
-    float3 objPos[maxObj];
+    float wavePosZ;
 }
 
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
