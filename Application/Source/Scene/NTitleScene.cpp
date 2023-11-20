@@ -81,10 +81,7 @@ void NTitleScene::Init()
 #pragma endregion
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init(true, true, false, false);
-	lightGroup_->sPointLights[0]->SetActive(false);
-	lightGroup_->sPointLights[1]->SetActive(false);
-	lightGroup_->sPointLights[2]->SetActive(false);
+	lightGroup_->Init(true, false, false, false);
 	lightGroup_->TransferConstBuffer();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
