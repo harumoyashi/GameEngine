@@ -130,19 +130,19 @@ void NCameraManager::TitleCameraUpdate()
 
 void NCameraManager::BeforeStartCameraInit()
 {
-	length_ = 10.0f;
+	length_ = 8.0f;
 	beforeStartCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
-	nextTarget_ = { 0,0,Field::GetInstance()->GetGoalPos() };
+	nextTarget_ = { 6.f,0,Field::GetInstance()->GetGoalPos() };
 
 	currentPos_ = NCamera::sCurrentCamera->GetEye();
-	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.8f);
+	nextPos_ = nextTarget_ + NVec3(0, length_, -length_ * 0.7f);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	//あえてZ方向を見る形にすることで、見下ろす形に遷移してくといい感じのカメラワークになる
 	//多分回転とかでやったほうがいいけどまあいいやいい感じだもん
-	nextUpVec_ = NVec3(0, 1, 0);
+	nextUpVec_ = NVec3(0, 0, 1);
 
 	currentFov_ = NCamera::sCurrentCamera->GetFov();
 	nextFov_ = 45.0f;
