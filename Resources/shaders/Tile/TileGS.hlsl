@@ -31,14 +31,9 @@ void main(
         float objToPolyDist = 0.f;
         
         input[i].pos.x += clamp(wavePosZ - centerPos.z, 0.f, 10.f); //横に流れる感じに
-            
-        plusVec = objToPolyVec * objToPolyDist * 0.2f; //最終的にプレイヤーから近いほど遠ざかるベクトルを足す
-        plusVec.y = -abs(objToPolyDist) * 0.1f;
         
         //浮いてるならさらにふよふよさせる
-        plusVec +=
-            ((pid % 5) - 2) * length(plusVec) *
-            (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+        plusVec.z += clamp(wavePosZ - centerPos.z, 0.f, 10.f);
         
         //割れる設定がtrueの時だけ座標とか回転足すように(if文禁止！)
         plusVec *= isAvoid;
