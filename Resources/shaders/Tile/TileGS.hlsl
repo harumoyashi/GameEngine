@@ -45,11 +45,19 @@ void main(
         }
         
         //浮いてるならさらにふよふよさせる
-        plusVec +=
-            ((pid % 5) - 2) * length(plusVec) *
-            (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+        if (length(plusVec) > 0.f)
+        {
+            if (((pid % 5) + 1) > 3)
+            {
+                plusVec += (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+            }
+            else
+            {
+                plusVec -= (floatingTimer + (pid % 5) * 0.1f) * objToPolyVec * ((pid % 5) + 1) * 0.05f;
+            }
+        }
         
-        //割れる設定がtrueの時だけ座標とか回転足すように(if文禁止！)
+        //割れる設定がtrueの時だけ座標とか回転足すように(if文)
         plusVec *= isAvoid;
         
         //-------------------- 回転 --------------------//
@@ -91,7 +99,6 @@ void main(
         rotPos = mul(matZ, rotPos);
         rotPos = mul(matX, rotPos);
         rotPos = mul(matY, rotPos);
-        
        
         //ワールド座標
         float4 wpos = mul(world, float4(input[i].pos, 1));
