@@ -11,6 +11,7 @@
 #include "Bloom.h"
 
 #include "Player.h"
+#include "Boss.h"
 #include "BulletManager.h"
 #include "EnemyManager.h"
 #include "ItemManager.h"
@@ -39,6 +40,7 @@ void NGameScene::Init()
 	NParticleManager::GetInstance()->Init();
 	NCollisionManager::GetInstance()->Init();
 	Player::GetInstance()->Init();
+	Boss::GetInstance()->Init();
 	Player::GetInstance()->SetIsElapseAnime(true);
 	BulletManager::GetInstance()->Init();
 	EnemyManager::GetInstance()->Init();
@@ -483,6 +485,7 @@ void NGameScene::Update()
 			}
 
 			Player::GetInstance()->Update();
+			Boss::GetInstance()->Update();
 
 			if (Field::GetInstance()->GetIsStart())
 			{
@@ -693,11 +696,13 @@ void NGameScene::Draw3D()
 	{
 		BulletManager::GetInstance()->Draw();
 		EnemyManager::GetInstance()->Draw();
+		Boss::GetInstance()->Draw();
 		ItemManager::GetInstance()->Draw();
 	}
 	else if (sScene == SceneMode::Faild)	//失敗シーン
 	{
 		EnemyManager::GetInstance()->Draw();
+		Boss::GetInstance()->Draw();
 		ItemManager::GetInstance()->Draw();
 	}
 	Player::GetInstance()->Draw();

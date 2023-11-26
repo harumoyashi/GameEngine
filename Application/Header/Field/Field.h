@@ -53,6 +53,7 @@ private:
 
 	bool isStart_ = false;								//スタートしたかフラグ
 	bool isGoal_ = false;								//ゴールしたかフラグ
+	bool isBossGene_ = false;							//ボス生成したかフラグ
 
 public:
 	static Field* GetInstance();

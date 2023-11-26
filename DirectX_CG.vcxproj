@@ -66,7 +66,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\Header\2D;$(ProjectDir)\Engine\Header\3D;$(ProjectDir)\Engine\Header\Basic;$(ProjectDir)\Engine\Header\Buffer;$(ProjectDir)\Engine\Header\Collision;$(ProjectDir)\Engine\Header\Math;$(ProjectDir)\Engine\Header\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\Header\Light;$(ProjectDir)\Engine\Header\Loader;$(ProjectDir)\Engine\Header\Particle;$(ProjectDir)\Engine\Header\Pipeline;$(ProjectDir)\Engine\Header\PostEffect;$(ProjectDir)\Engine\Header\Util;$(ProjectDir)\Engine\Header\Undefined;$(ProjectDir)\Application\Header\Bullet;$(ProjectDir)\Application\Header\Chara\Enemy;$(ProjectDir)\Application\Header\Chara\Player;$(ProjectDir)\Application\Header\Field;$(ProjectDir)\Application\Header\Scene;$(ProjectDir)\Application\Header\Item;$(ProjectDir)\Application\Header\UI;$(ProjectDir)\Engine\Header\Scene</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\Header\2D;$(ProjectDir)\Engine\Header\3D;$(ProjectDir)\Engine\Header\Basic;$(ProjectDir)\Engine\Header\Buffer;$(ProjectDir)\Engine\Header\Collision;$(ProjectDir)\Engine\Header\Math;$(ProjectDir)\Engine\Header\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\Header\Light;$(ProjectDir)\Engine\Header\Loader;$(ProjectDir)\Engine\Header\Particle;$(ProjectDir)\Engine\Header\Pipeline;$(ProjectDir)\Engine\Header\PostEffect;$(ProjectDir)\Engine\Header\Util;$(ProjectDir)\Engine\Header\Undefined;$(ProjectDir)\Application\Header\Bullet;$(ProjectDir)\Application\Header\Chara\Enemy;$(ProjectDir)\Application\Header\Chara\Player;$(ProjectDir)\Application\Header\Field;$(ProjectDir)\Application\Header\Scene;$(ProjectDir)\Application\Header\Item;$(ProjectDir)\Application\Header\UI;$(ProjectDir)\Engine\Header\Scene;$(ProjectDir)\Application\Header\Chara\Boss</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -91,7 +91,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\Header\2D;$(ProjectDir)\Engine\Header\3D;$(ProjectDir)\Engine\Header\Basic;$(ProjectDir)\Engine\Header\Buffer;$(ProjectDir)\Engine\Header\Collision;$(ProjectDir)\Engine\Header\Math;$(ProjectDir)\Engine\Header\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\Header\Light;$(ProjectDir)\Engine\Header\Loader;$(ProjectDir)\Engine\Header\Particle;$(ProjectDir)\Engine\Header\Pipeline;$(ProjectDir)\Engine\Header\PostEffect;$(ProjectDir)\Engine\Header\Util;$(ProjectDir)\Engine\Header\Undefined;$(ProjectDir)\Application\Header\Bullet;$(ProjectDir)\Application\Header\Chara\Enemy;$(ProjectDir)\Application\Header\Chara\Player;$(ProjectDir)\Application\Header\Field;$(ProjectDir)\Application\Header\Scene;$(ProjectDir)\Application\Header\Item;$(ProjectDir)\Application\Header\UI;$(ProjectDir)\Engine\Header\Scene</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\Engine\Header\2D;$(ProjectDir)\Engine\Header\3D;$(ProjectDir)\Engine\Header\Basic;$(ProjectDir)\Engine\Header\Buffer;$(ProjectDir)\Engine\Header\Collision;$(ProjectDir)\Engine\Header\Math;$(ProjectDir)\Engine\Header\FrameWork;$(ProjectDir);$(ProjectDir)packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ProjectDir)\Engine\Header\Light;$(ProjectDir)\Engine\Header\Loader;$(ProjectDir)\Engine\Header\Particle;$(ProjectDir)\Engine\Header\Pipeline;$(ProjectDir)\Engine\Header\PostEffect;$(ProjectDir)\Engine\Header\Util;$(ProjectDir)\Engine\Header\Undefined;$(ProjectDir)\Application\Header\Bullet;$(ProjectDir)\Application\Header\Chara\Enemy;$(ProjectDir)\Application\Header\Chara\Player;$(ProjectDir)\Application\Header\Field;$(ProjectDir)\Application\Header\Scene;$(ProjectDir)\Application\Header\Item;$(ProjectDir)\Application\Header\UI;$(ProjectDir)\Engine\Header\Scene;$(ProjectDir)\Application\Header\Chara\Boss</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -116,6 +116,7 @@
     <ClInclude Include="Application\Header\Bullet\BulletManager.h" />
     <ClInclude Include="Application\Header\Chara\Enemy\IEnemy.h" />
     <ClInclude Include="Application\Header\Field\BackObj.h" />
+    <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
     <ClInclude Include="Engine\Header\Scene\IScene.h" />
     <ClInclude Include="Application\Header\Bullet\LineBullet.h" />
     <ClInclude Include="Engine\Header\PostEffect\Bloom.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="Application\Source\Bullet\BulletManager.cpp" />
     <ClCompile Include="Application\Source\Chara\Enemy\IEnemy.cpp" />
     <ClCompile Include="Application\Source\Field\BackObj.cpp" />
+    <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
     <ClCompile Include="Engine\Source\Scene\IScene.cpp" />
     <ClCompile Include="Application\Source\Bullet\LineBullet.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\Bloom.cpp" />

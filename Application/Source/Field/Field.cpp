@@ -1,5 +1,6 @@
 #include "Field.h"
 #include "Player.h"
+#include "Boss.h"
 #include "EnemyFactory.h"
 #include "NCollisionManager.h"
 #include "NAudioManager.h"
@@ -19,6 +20,7 @@ void Field::Init()
 {
 	isStart_ = false;
 	isGoal_ = false;
+	isBossGene_ = false;
 
 #pragma region オブジェクトの生成
 	for (uint32_t i = 0; i < 2; i++)
@@ -201,6 +203,18 @@ void Field::Update()
 		}
 	}
 
+	//ボス生成してないとき
+	if (isBossGene_ == false)
+	{
+		//線を超えたらスタートした判定trueに
+		float centerPosZ = (goalPosZ_ - startPosZ_) * 0.5f + startPosZ_;	//スタートとゴールの中間地点
+		if (centerPosZ <= Player::GetInstance()->GetPos().z)
+		{
+			isBossGene_ = true;
+			Boss::GetInstance()->Generate({ 5.f,0.f,centerPosZ - 5.f });
+		}
+	}
+
 	//スタートしたなら
 	if (isStart_)
 	{
@@ -238,9 +252,9 @@ void Field::Update()
 		if (NInput::IsKeyDown(DIK_C))
 		{
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-		}
-#endif
 	}
+#endif
+}
 
 	//ゴールしてないとき
 	if (isGoal_ == false)

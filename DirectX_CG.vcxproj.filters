@@ -167,6 +167,7 @@
     <ClCompile Include="Application\Source\UI\UI.cpp" />
     <ClCompile Include="Engine\Source\Particle\NGPUParticle.cpp" />
     <ClCompile Include="Application\Source\Field\BackObj.cpp" />
+    <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -206,6 +207,7 @@
     <ClInclude Include="Application\Header\UI\UI.h" />
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
     <ClInclude Include="Application\Header\Field\BackObj.h" />
+    <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BackObj\BackObjGS.hlsl" />

@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Field.h"
 #include "NCameraManager.h"
-#include "SphereCollider.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
