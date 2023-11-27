@@ -11,8 +11,8 @@
 #include "imgui.h"
 
 Boss::Boss() :
-	moveVelo_({ 0,0 }), moveAngle_(0.0f), isAlive_(true), homingPower_(0.2f),
-	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_), score_(300)
+	moveVelo_({ 0,0 }), moveAngle_(0.0f), isAlive_(true), homingPower_(0.1f),
+	elapseSpeed_(0.0f), maxHP_(10), hp_(maxHP_), score_(300)
 {
 	obj_ = move(std::make_unique<NObj3d>());
 	obj_->SetModel("catWalk");
@@ -42,7 +42,7 @@ void Boss::Generate(const NVec3& pos)
 	obj_->position_ = pos;
 	oriScale_ = Player::GetInstance()->GetScale() * 3.f;
 	obj_->scale_ = oriScale_;
-	obj_->color_ = NColor::kRed;
+	obj_->color_ = NColor::kYellow;
 	obj_->Update();
 
 	//コライダー設定
@@ -53,6 +53,7 @@ void Boss::Generate(const NVec3& pos)
 	collider_.SetOnCollision(std::bind(&Boss::OnCollision, this));
 
 	isAlive_ = true;
+	hp_ = maxHP_;
 	moveSpeed_ = Player::GetInstance()->GetMoveSpeed() * 1.2f;
 }
 
@@ -73,6 +74,18 @@ void Boss::Update()
 
 		obj_->Update();
 		collider_.Update(obj_.get());
+
+		if (hp_ <= 0)
+		{
+			DeadParticle();
+			Score::AddScore(score_);
+			isAlive_ = false;
+			//アイテム落とす
+			uint32_t bulType = MathUtil::Random(0, (uint32_t)BulletType::MaxType);
+			ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
+
+			NAudioManager::GetInstance()->Play("vanishSE");
+		}
 	}
 
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる

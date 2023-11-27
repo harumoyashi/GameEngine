@@ -77,7 +77,7 @@ void IBullet::Draw()
 void IBullet::OnCollision()
 {
 	//当たった相手が弾だった時の処理
-	if (collider_.GetColInfo()->GetColID() == "enemy")
+	if (collider_.GetColInfo()->GetColID() == "enemy" || collider_.GetColInfo()->GetColID() == "boss")
 	{
 		isAlive_ = false;
 	}
