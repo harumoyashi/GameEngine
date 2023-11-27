@@ -211,7 +211,7 @@ void Field::Update()
 		if (centerPosZ <= Player::GetInstance()->GetPos().z)
 		{
 			isBossGene_ = true;
-			Boss::GetInstance()->Generate({ 5.f,0.f,centerPosZ - 5.f });
+			Boss::GetInstance()->Generate({ 5.f,0.f,centerPosZ - 5.5f });
 		}
 	}
 
