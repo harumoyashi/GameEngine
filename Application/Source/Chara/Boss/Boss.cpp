@@ -57,9 +57,9 @@ void Boss::Generate(const NVec3& pos)
 	hp_ = maxHP_;
 	moveSpeed_ = Player::GetInstance()->GetMoveSpeed() * 1.2f;
 
-	entryTimer_.Start();
-	//演出用にカメラ遷移する
-	NCameraManager::GetInstance()->ChangeCameara(CameraType::BossEntry);
+	//entryTimer_.Start();
+	////演出用にカメラ遷移する
+	//NCameraManager::GetInstance()->ChangeCameara(CameraType::BossEntry);
 }
 
 void Boss::Init()
@@ -71,41 +71,41 @@ void Boss::Init()
 
 void Boss::Update()
 {
-	entryTimer_.Update();
+	//entryTimer_.Update();
 
-	if (entryTimer_.GetRun())
-	{
-		Player::GetInstance()->SetElapseSpeed(0.f);
+	//if (entryTimer_.GetRun())
+	//{
+	//	Player::GetInstance()->SetElapseSpeed(0.f);
 
-		/*if (isLanding_ == false)
-		{
-			obj_->position_.y -= 0.3f;
-		}*/
-		
-		if (obj_->position_.y <= 0.f)
-		{
-			obj_->position_.y = 0.f;
-			isLanding_ = true;
-		}
-	}
+	//	/*if (isLanding_ == false)
+	//	{
+	//		obj_->position_.y -= 0.3f;
+	//	}*/
+	//	
+	//	if (obj_->position_.y <= 0.f)
+	//	{
+	//		obj_->position_.y = 0.f;
+	//		isLanding_ = true;
+	//	}
+	//}
 
-	//演出終わったら元のカメラに戻す
-	if (entryTimer_.GetEnd())
-	{
-		entryTimer_.Reset();
-		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
-	}
+	////演出終わったら元のカメラに戻す
+	//if (entryTimer_.GetEnd())
+	//{
+	//	entryTimer_.Reset();
+	//	NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
+	//}
 
 	if (isAlive_)
 	{
 		//経過時間を適用
 		SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
-		if (entryTimer_.GetRun() == false)
-		{
+		/*if (entryTimer_.GetRun() == false)
+		{*/
 			//移動
 			Move();
-		}
+		/*}*/
 
 		obj_->Update();
 		collider_.Update(obj_.get());
