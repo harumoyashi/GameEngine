@@ -10,6 +10,7 @@ public:
 	std::unordered_map<std::string, IEmitter3D*> emitters_;			//パーティクルエミッター群
 	std::unordered_map<std::string, IEmitter3D*> polygonEmitters_;	//ポリゴンパーティクルエミッター群
 	std::vector<IEmitter3D*> enemyEmitters_;						//敵用パーティクルエミッター群
+	std::vector<IEmitter3D*> bulletEmitters_;						//弾用パーティクルエミッター群
 
 public:
 	static NParticleManager* GetInstance();

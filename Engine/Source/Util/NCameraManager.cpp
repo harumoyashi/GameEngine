@@ -1,5 +1,6 @@
 #include "NCameraManager.h"
 #include "Player.h"
+#include "Boss.h"
 #include "Field.h"
 
 void NCameraManager::NormalCameraInit()
@@ -358,6 +359,99 @@ void NCameraManager::MutekiCameraUpdate()
 	NCamera::sCurrentCamera = &mutekiCamera_;
 }
 
+void NCameraManager::EntryCameraInit()
+{
+	length_ = 3.5f;
+	mutekiCameraMoveEase_.Reset();
+
+	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
+	nextTarget_ = Boss::GetInstance()->GetPos();
+
+	currentPos_ = NCamera::sCurrentCamera->GetEye();
+	nextPos_ = Boss::GetInstance()->GetPos() + NVec3(0.f, length_ * 0.1f, length_);
+
+	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
+	nextUpVec_ = NVec3(0, 1, 0);
+
+	currentFov_ = NCamera::sCurrentCamera->GetFov();
+	nextFov_ = 45.0f;
+}
+
+void NCameraManager::EntryCameraUpdate()
+{
+	if (isChange_ == false)
+	{
+		EntryCameraInit();
+		isChange_ = true;
+	}
+
+	//イージング用のタイマー動かす
+	entryCameraMoveEase_.Update();
+	entryCameraZoomOutEase_.Update();
+	entryCameraShakeEase_.Update();
+
+	//まずは寄り
+	if (entryCameraMoveEase_.GetStarted() == false)
+	{
+		entryCameraMoveEase_.Start();
+	}
+
+	entryCamera_.SetTarget(Boss::GetInstance()->GetPos());
+
+	//前のカメラから現在のカメラまでの補間
+	if (entryCameraMoveEase_.GetRun())
+	{
+		NVec3 target, pos, upVec;
+		target = InQuad(currentTarget_, nextTarget_, entryCameraMoveEase_.GetTimeRate());
+		pos = InQuad(currentPos_, nextPos_, entryCameraMoveEase_.GetTimeRate());
+		upVec = InQuad(currentUpVec_, nextUpVec_, entryCameraMoveEase_.GetTimeRate());
+
+		entryCamera_.SetTarget(target);
+		entryCamera_.SetEye(pos);
+		entryCamera_.SetUpVec(upVec);
+	}
+	//カメラ切り替わって着地もしたら咆哮の予備動作として一瞬引く
+	else if (entryCameraMoveEase_.GetEnd() && Boss::GetInstance()->GetIsLanding())
+	{
+		if (entryCameraZoomOutEase_.GetStarted() == false)
+		{
+			entryCameraZoomOutEase_.Start();
+		}
+	}
+
+	if (entryCameraZoomOutEase_.GetRun())
+	{
+		currentFov_ = NCamera::sCurrentCamera->GetFov();
+		nextFov_ = 65.0f;
+		float fov;
+		fov = NEasing::InQuad(currentFov_, nextFov_, entryCameraZoomOutEase_.GetTimeRate());
+
+		entryCamera_.SetFov(fov);
+	}
+
+	//一瞬引き終わったら揺らす
+	if (entryCameraZoomOutEase_.GetEnd() && entryCameraShakeEase_.GetStarted() == false)
+	{
+		entryCameraShakeEase_.Start();
+		//ShakeStart(0.8f, entryCameraShakeEase_.maxTime_);
+	}
+
+	if (entryCameraShakeEase_.GetRun())
+	{
+		currentFov_ = NCamera::sCurrentCamera->GetFov();
+		nextFov_ = 45.0f;
+		float fov;
+		fov = NEasing::InQuad(currentFov_, nextFov_, entryCameraShakeEase_.GetTimeRate());
+
+		entryCamera_.SetFov(fov);
+	}
+
+	entryCamera_.SetEye(entryCamera_.GetEye() + shakeVec_);
+
+	entryCamera_.Update();
+	NCamera::sCurrentCamera = &entryCamera_;
+}
+
 void NCameraManager::ShakeStart(float shakePower, float shakeTime)
 {
 	shakeTimer_ = shakeTime;
@@ -376,7 +470,7 @@ void NCameraManager::ShakeUpdate()
 		{
 			shakeVecRand,
 			shakeVecRand,
-			shakeVecRand
+			0
 		};
 		//大きさかけて、タイマーが進むごとに揺れ小さくなってく
 		shakeVec_ *= shakePower_ * (1.f - shakeTimer_.GetTimeRate());
@@ -430,6 +524,9 @@ void NCameraManager::Init()
 	faildCameraMoveEase_ = 0.3f;
 	clearCameraMoveEase_ = 0.5f;
 	mutekiCameraMoveEase_ = 0.5f;
+	entryCameraMoveEase_ = 0.5f;
+	entryCameraZoomOutEase_ = 0.2f;
+	entryCameraShakeEase_ = 0.8f;
 }
 
 void NCameraManager::Update()
@@ -462,6 +559,7 @@ void NCameraManager::Update()
 		&NCameraManager::FaildCameraUpdate,
 		&NCameraManager::ClearCameraUpdate,
 		&NCameraManager::MutekiCameraUpdate,
+		&NCameraManager::EntryCameraUpdate,
 	};
 
 	// 実行

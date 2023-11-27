@@ -12,6 +12,7 @@ enum class CameraType
 	Faild,			//失敗リザルト用
 	Clear,			//クリアリザルト用
 	Muteki,			//無敵演出用
+	BossEntry,		//ボス登場演出用
 };
 
 class NCameraManager final
@@ -43,6 +44,11 @@ private:
 	//無敵演出時のカメラ関連
 	NCamera mutekiCamera_;							//無敵演出時のカメラ
 	NEasing::EaseTimer mutekiCameraMoveEase_;		//無敵演出時カメラに持ってくためのイージング
+	//ボス登場演出時のカメラ関連
+	NCamera entryCamera_;							//ボス登場演出時のカメラ
+	NEasing::EaseTimer entryCameraMoveEase_;		//ボス登場演出時カメラに持ってくためのイージング
+	NEasing::EaseTimer entryCameraZoomOutEase_;		//ボス登場演出時カメラ一瞬引くためのイージング
+	NEasing::EaseTimer entryCameraShakeEase_;		//ボス登場演出時カメラ揺らすためのイージング
 
 	// 姿勢制御関連
 	NVec3 frontVec_;
@@ -90,6 +96,9 @@ private:
 	// 無敵演出時
 	void MutekiCameraInit();
 	void MutekiCameraUpdate();
+	// ボス登場演出時
+	void EntryCameraInit();
+	void EntryCameraUpdate();
 
 	//　カメラシェイク用更新処理
 	void ShakeUpdate();

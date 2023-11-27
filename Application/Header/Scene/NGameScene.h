@@ -64,6 +64,8 @@ private:
 	NEasing::EaseTimer mutekiInTimer_ = 0.3f;			//無敵テキスト出現のためのイージングタイマー
 	NEasing::EaseTimer mutekiOutTimer_ = 0.3f;			//無敵テキスト掃けるのためのイージングタイマー
 
+
+
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
 

@@ -34,9 +34,9 @@ Player::Player()
 	moveParticle_.SetIsRotation(true);
 	moveParticle_.SetIsGrowing(true);
 
-	mutekiDirectionParticle_.SetShapeType((uint32_t)ShapeType::Cube);
-	NParticleManager::GetInstance()->AddEmitter(&mutekiDirectionParticle_, "mutekiDirection");
-	mutekiDirectionParticle_.SetIsRotation(true);
+	smokeParticle_.SetShapeType((uint32_t)ShapeType::Cube);
+	NParticleManager::GetInstance()->AddEmitter(&smokeParticle_, "mutekiDirection");
+	smokeParticle_.SetIsRotation(true);
 }
 
 Player::~Player()
@@ -123,10 +123,10 @@ void Player::Update()
 	if (NCameraManager::GetInstance()->GetIsMutekiCameraChanged() && mutekiDirectionTimer_.GetRun())
 	{
 		NVec3 emitterPos = obj_->position_ - NVec3(0.f, 0.f, 3.f);
-		mutekiDirectionParticle_.SetPos(emitterPos);
-		mutekiDirectionParticle_.SetScale({ 2.5f,1.f,2.5f });
-		mutekiDirectionParticle_.SetIsElapse(false);
-		mutekiDirectionParticle_.Add(
+		smokeParticle_.SetPos(emitterPos);
+		smokeParticle_.SetScale({ 2.5f,1.f,2.5f });
+		smokeParticle_.SetIsElapse(false);
+		smokeParticle_.Add(
 			10, 1.5f, obj_->color_, 0.1f, 0.8f,
 			{ -0.3f,0.1f,-0.3f }, { 0.3f,0.5f,0.3f },
 			0.05f, -NVec3::one, NVec3::one);

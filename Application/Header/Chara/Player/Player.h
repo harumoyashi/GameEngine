@@ -28,8 +28,8 @@ private:
 	float moveAmount_;				//移動量保存用(パーティクル出すタイミング測るために使う)
 
 	//------------------------ ダメージ関連 ------------------------//
-	bool isGodmode_;			//無敵状態か
-	bool isFlashing_;			//チカチカさせるため用
+	bool isGodmode_;						//無敵状態か
+	bool isFlashing_;						//チカチカさせるため用
 	NEasing::EaseTimer godmodeTimer_;		//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
@@ -46,7 +46,7 @@ private:
 	NVec3 deadPos_;								//死んだ座標保存用
 
 	//------------------------ その他 ------------------------//
-	NEasing::EaseTimer faildEffectTimer_;		//失敗演出用タイマー
+	NEasing::EaseTimer faildEffectTimer_;			//失敗演出用タイマー
 
 	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
 	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
@@ -59,9 +59,7 @@ private:
 
 	//無敵演出
 	NEasing::EaseTimer mutekiDirectionTimer_ = 2.3f;	//無敵演出タイマー
-	SimpleParticle mutekiDirectionParticle_;			//無敵演出時に出るパーティクル
-
-	
+	SimpleParticle smokeParticle_;						//無敵演出時に出るパーティクル
 
 public:
 	Player();

@@ -26,6 +26,11 @@ private:
 
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
 
+	//登場演出
+	NEasing::EaseTimer entryTimer_ = 2.5f;		//登場演出タイマー
+	bool isLanding_;					//着地してるかどうか
+	SimpleParticle landingParticle_;			//着地時に出るパーティクル
+
 public:
 	Boss();
 	~Boss();
@@ -53,6 +58,9 @@ public:
 	void Move();
 
 	// ゲッター //
+	NVec3 GetPos() { return obj_->position_; }
+
+	bool GetIsLanding() { return isLanding_; }
 
 	// セッター //
 	//経過時間スピード設定
