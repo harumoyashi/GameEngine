@@ -15,6 +15,13 @@ enum class CameraType
 	BossEntry,		//ボス登場演出用
 };
 
+enum class EntryState
+{
+	CameraChange,	//カメラ遷移
+	ZoomOut,		//咆哮前にカメラ引き
+	Shake			//咆哮中のカメラシェイク
+};
+
 class NCameraManager final
 {
 private:
@@ -49,6 +56,7 @@ private:
 	NEasing::EaseTimer entryCameraMoveEase_;		//ボス登場演出時カメラに持ってくためのイージング
 	NEasing::EaseTimer entryCameraZoomOutEase_;		//ボス登場演出時カメラ一瞬引くためのイージング
 	NEasing::EaseTimer entryCameraShakeEase_;		//ボス登場演出時カメラ揺らすためのイージング
+	EntryState entryState_ = EntryState::CameraChange;
 
 	// 姿勢制御関連
 	NVec3 frontVec_;

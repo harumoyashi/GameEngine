@@ -59,6 +59,7 @@ public:
 
 	// ゲッター //
 	NVec3 GetPos() { return obj_->position_; }
+	NVec3 GetHeadPos() { return obj_->position_ + NVec3(0, obj_->scale_.y, 0); }
 
 	bool GetIsLanding() { return isLanding_; }
 
