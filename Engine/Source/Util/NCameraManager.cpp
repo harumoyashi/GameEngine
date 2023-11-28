@@ -415,8 +415,9 @@ void NCameraManager::EntryCameraUpdate()
 
 		shakePrevPos = pos;	//シェイク前の座標も更新
 	}
+
 	//カメラ切り替わって着地もしたら咆哮の予備動作として一瞬引く
-	else if (entryCameraMoveEase_.GetEnd() && Boss::GetInstance()->GetIsLanding())
+	if (entryCameraMoveEase_.GetEnd()/* && Boss::GetInstance()->GetIsLanding()*/)
 	{
 		if (entryCameraZoomOutEase_.GetStarted() == false)
 		{
@@ -439,7 +440,7 @@ void NCameraManager::EntryCameraUpdate()
 	if (entryCameraZoomOutEase_.GetEnd() && entryCameraShakeEase_.GetStarted() == false)
 	{
 		entryCameraShakeEase_.Start();
-		//ShakeStart(0.8f, entryCameraShakeEase_.maxTime_);
+		ShakeStart(0.8f, entryCameraShakeEase_.maxTime_);
 
 		entryState_ = EntryState::Shake;
 	}
