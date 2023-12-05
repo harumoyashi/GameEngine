@@ -734,13 +734,14 @@ void NGameScene::DrawForeSprite()
 	}
 	else
 	{
-		if (Player::GetInstance()->GetIsMutekiDirection())
+		if (Player::GetInstance()->GetIsMutekiDirection() || Boss::GetInstance()->GetIsEntry())
 		{
 			for (uint32_t i = 0; i < 2; i++)
 			{
 				movieDarken_[i]->Draw();
 			}
 		}
+
 		mutekiTex_->Draw();
 
 		UIManager::GetInstance()->Draw(UIType::Menu);

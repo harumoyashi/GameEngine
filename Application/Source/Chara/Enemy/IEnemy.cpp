@@ -59,7 +59,8 @@ void IEnemy::Update()
 	Move();
 
 	//デバッグカメラの時はカメラ基準で消えられると困るから消さない
-	if (NCameraManager::GetInstance()->GetIsDebugCamera() == false)
+	if (NCameraManager::GetInstance()->GetNowCameraType() == CameraType::Normal &&
+		NCameraManager::GetInstance()->GetIsNormalCameraChanged())
 	{
 		// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
 		IsInActiveArea();

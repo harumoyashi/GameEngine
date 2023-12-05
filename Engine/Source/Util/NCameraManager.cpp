@@ -368,7 +368,7 @@ void NCameraManager::EntryCameraInit()
 	nextTarget_ = Boss::GetInstance()->GetHeadPos();
 
 	currentPos_ = NCamera::sCurrentCamera->GetEye();
-	nextPos_ = Boss::GetInstance()->GetHeadPos() + NVec3(0.f, length_ * 0.1f, length_);
+	nextPos_ = Boss::GetInstance()->GetHeadPos() + NVec3(0.f, length_ * 0.2f, length_);
 
 	currentUpVec_ = NCamera::sCurrentCamera->GetUpVec();
 	nextUpVec_ = NVec3(0, 1, 0);

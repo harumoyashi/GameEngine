@@ -62,6 +62,7 @@ public:
 	NVec3 GetHeadPos() { return obj_->position_ + NVec3(0, obj_->scale_.y, 0); }
 
 	bool GetIsLanding() { return isLanding_; }
+	bool GetIsEntry() { return entryTimer_.GetRun(); }
 
 	// セッター //
 	//経過時間スピード設定

@@ -42,13 +42,15 @@ void Boss::Generate(const NVec3& pos)
 {
 	obj_->position_ = pos;
 	oriScale_ = Player::GetInstance()->GetScale() * 3.f;
-	obj_->scale_ = oriScale_;
+	//obj_->scale_ = oriScale_;
+	obj_->scale_ = NVec3::zero;
+	obj_->rotation_ = NVec3::zero;
 	obj_->color_ = NColor::kYellow;
 	obj_->Update();
 
 	//コライダー設定
 	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(obj_->scale_.x);
+	collider_.SetRadius(oriScale_.x);
 	collider_.SetColID("boss");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Boss::OnCollision, this));
@@ -76,6 +78,11 @@ void Boss::Update()
 	if (entryTimer_.GetRun())
 	{
 		Player::GetInstance()->SetElapseSpeed(0.f);
+		Player::GetInstance()->SetIsMove(false);
+
+		obj_->scale_.x = NEasing::OutQuad(0, oriScale_.x, entryTimer_.GetTimeRate());
+		obj_->scale_.y = NEasing::OutQuad(0, oriScale_.y, entryTimer_.GetTimeRate());
+		obj_->scale_.z = NEasing::OutQuad(0, oriScale_.z, entryTimer_.GetTimeRate());
 
 		/*if (isLanding_ == false)
 		{
@@ -92,6 +99,7 @@ void Boss::Update()
 	//演出終わったら元のカメラに戻す
 	if (entryTimer_.GetEnd())
 	{
+		Player::GetInstance()->SetIsMove(true);
 		entryTimer_.Reset();
 		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 	}
