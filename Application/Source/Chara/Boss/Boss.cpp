@@ -43,7 +43,6 @@ void Boss::Generate(const NVec3& pos)
 {
 	obj_->position_ = pos;
 	oriScale_ = Player::GetInstance()->GetScale() * 3.f;
-	//obj_->scale_ = oriScale_;
 	obj_->scale_ = NVec3::zero;
 	obj_->rotation_ = NVec3::zero;
 	obj_->color_ = NColor::kYellow;
@@ -60,9 +59,9 @@ void Boss::Generate(const NVec3& pos)
 	hp_ = maxHP_;
 	moveSpeed_ = Player::GetInstance()->GetMoveSpeed() * 1.2f;
 
-	//entryTimer_.Start();
+	entryTimer_.Start();
 	////演出用にカメラ遷移する
-	//NCameraManager::GetInstance()->ChangeCameara(CameraType::BossEntry);
+	NCameraManager::GetInstance()->ChangeCameara(CameraType::BossEntry);
 }
 
 void Boss::Init()
@@ -123,11 +122,11 @@ void Boss::Update()
 		//経過時間を適用
 		SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
-		/*if (entryTimer_.GetRun() == false)
-		{*/
+		if (entryTimer_.GetRun() == false)
+		{
 			//移動
 			Move();
-		/*}*/
+		}
 
 		obj_->Update();
 		collider_.Update(obj_.get());
