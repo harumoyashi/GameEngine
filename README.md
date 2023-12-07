@@ -18,3 +18,6 @@
 - [DirectXTex](https://github.com/microsoft/DirectXTex)
 - [Dear ImGui](https://github.com/ocornut/imgui)
 - [Assimp](https://github.com/assimp/assimp)
+## 制作環境
+- WindowsSDK：10.0.22000.0
+- DirectX：DirectX12
