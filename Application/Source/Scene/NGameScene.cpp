@@ -152,7 +152,7 @@ void NGameScene::Init()
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, true, false, false);
-	lightGroup_->sPointLights[0]->SetLightAtten({0.1f,0.1f,0.1f});
+	lightGroup_->sPointLights[0]->SetLightAtten({0.2f,0.2f,0.2f});
 	lightGroup_->sPointLights[1]->SetActive(false);
 	lightGroup_->sPointLights[2]->SetActive(false);
 	// 3Dオブジェクトにライトをセット
@@ -734,13 +734,14 @@ void NGameScene::DrawForeSprite()
 	}
 	else
 	{
-		if (Player::GetInstance()->GetIsMutekiDirection())
+		if (Player::GetInstance()->GetIsMutekiDirection() || Boss::GetInstance()->GetIsEntry())
 		{
 			for (uint32_t i = 0; i < 2; i++)
 			{
 				movieDarken_[i]->Draw();
 			}
 		}
+
 		mutekiTex_->Draw();
 
 		UIManager::GetInstance()->Draw(UIType::Menu);

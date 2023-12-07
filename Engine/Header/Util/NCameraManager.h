@@ -15,6 +15,13 @@ enum class CameraType
 	BossEntry,		//ボス登場演出用
 };
 
+enum class EntryState
+{
+	CameraChange,	//カメラ遷移
+	ZoomOut,		//咆哮前にカメラ引き
+	Shake			//咆哮中のカメラシェイク
+};
+
 class NCameraManager final
 {
 private:
@@ -49,6 +56,7 @@ private:
 	NEasing::EaseTimer entryCameraMoveEase_;		//ボス登場演出時カメラに持ってくためのイージング
 	NEasing::EaseTimer entryCameraZoomOutEase_;		//ボス登場演出時カメラ一瞬引くためのイージング
 	NEasing::EaseTimer entryCameraShakeEase_;		//ボス登場演出時カメラ揺らすためのイージング
+	EntryState entryState_ = EntryState::CameraChange;
 
 	// 姿勢制御関連
 	NVec3 frontVec_;
@@ -103,9 +111,7 @@ private:
 	//　カメラシェイク用更新処理
 	void ShakeUpdate();
 
-	//Vec3のイージング用
-	NVec3 InQuad(const NVec3& start, const NVec3& end, float timerate);
-	NVec3 OutQuad(const NVec3& start, const NVec3& end, float timerate);
+	
 
 public:
 	//シングルトンインスタンス取得
@@ -123,6 +129,10 @@ public:
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
 	//無敵演出カメラへの遷移が完了したかどうか取得
 	bool GetIsMutekiCameraChanged() { return mutekiCameraMoveEase_.GetEnd(); }
+	//ボスの登場演出カメラへの遷移が完了したかどうか取得
+	bool GetIsEntryCameraChanged() { return entryCameraMoveEase_.GetEnd(); }
+	//ボスの登場演出カメラの引きが完了したかどうか取得
+	bool GetIsEntryCameraZoomOutEnd() { return entryCameraZoomOutEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 	//現在のカメラの種類取得

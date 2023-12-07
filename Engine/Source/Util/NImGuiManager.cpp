@@ -38,6 +38,7 @@ void NImGuiManager::Init()
 	);
 
 	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	//標準フォントを追加する
 	io.Fonts->AddFontDefault();
 #endif //_DEBUG

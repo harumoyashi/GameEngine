@@ -208,6 +208,7 @@ void Field::Update()
 	{
 		//線を超えたらスタートした判定trueに
 		float centerPosZ = (goalPosZ_ - startPosZ_) * 0.5f + startPosZ_;	//スタートとゴールの中間地点
+		//float centerPosZ = startPosZ_;	//スタート地点
 		if (centerPosZ <= Player::GetInstance()->GetPos().z)
 		{
 			isBossGene_ = true;
