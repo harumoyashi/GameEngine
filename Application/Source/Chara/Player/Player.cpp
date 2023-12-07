@@ -7,6 +7,7 @@
 #include "NCameraManager.h"
 #include "ItemManager.h"
 #include "Field.h"
+#include "Wave.h"
 #include "RadialBlur.h"
 #include "Bloom.h"
 #include "UI.h"
@@ -122,6 +123,8 @@ void Player::Update()
 
 	if (NCameraManager::GetInstance()->GetIsMutekiCameraChanged() && mutekiDirectionTimer_.GetRun())
 	{
+		Wave::GetInstance()->SetIsMove(false);
+
 		NVec3 emitterPos = obj_->position_ - NVec3(0.f, 0.f, 3.f);
 		smokeParticle_.SetPos(emitterPos);
 		smokeParticle_.SetScale({ 2.5f,1.f,2.5f });
@@ -137,6 +140,7 @@ void Player::Update()
 	if (mutekiDirectionTimer_.GetEnd())
 	{
 		isMove_ = true;	//動けるようにする
+		Wave::GetInstance()->SetIsMove(true);
 		mutekiDirectionTimer_.Reset();
 		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 	}

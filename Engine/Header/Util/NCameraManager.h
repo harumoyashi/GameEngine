@@ -131,6 +131,8 @@ public:
 	bool GetIsMutekiCameraChanged() { return mutekiCameraMoveEase_.GetEnd(); }
 	//ボスの登場演出カメラへの遷移が完了したかどうか取得
 	bool GetIsEntryCameraChanged() { return entryCameraMoveEase_.GetEnd(); }
+	//ボスの登場演出カメラの引きが完了したかどうか取得
+	bool GetIsEntryCameraZoomOutEnd() { return entryCameraZoomOutEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 	//現在のカメラの種類取得

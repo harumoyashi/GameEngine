@@ -14,6 +14,7 @@ private:
 	float scaleZ_;								//波の大きさ(zだけ)
 	float posZ_;								//波全体の共通座標(z座標)
 	float moveSpeed_;							//移動速度
+	bool isMove_;								//移動していいか
 
 	std::vector<NEasing::EaseTimer> waveTimer_;	//波のうねり用タイマー
 
@@ -35,6 +36,7 @@ public:
 	float GetFrontPosZ() const { return posZ_ + scaleZ_; }
 
 	// セッター //
+	void SetIsMove(bool isMove) { isMove_ = isMove; }
 
 private:
 	Wave() = default;

@@ -1,5 +1,6 @@
 #include "Boss.h"
 #include "Player.h"
+#include "Wave.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
 #include "NAudioManager.h"
@@ -80,8 +81,26 @@ void Boss::Update()
 
 	if (entryTimer_.GetRun())
 	{
+		//演出中は波とプレイヤーの動き止める
+		Wave::GetInstance()->SetIsMove(false);
 		Player::GetInstance()->SetElapseSpeed(0.f);
 		Player::GetInstance()->SetIsMove(false);
+
+		//咆哮前のズームアウト終わったら咆哮音鳴らす
+		if (NCameraManager::GetInstance()->GetIsEntryCameraZoomOutEnd() &&
+			NAudioManager::GetInstance()->GetIsPlaying("shoutSE") == false)
+		{
+			NAudioManager::GetInstance()->Play("shoutSE");
+		}
+	}
+	//演出終わったら元のカメラに戻す
+	else if (entryTimer_.GetEnd())
+	{
+		//演出終わったら波とプレイヤーの動き戻す
+		Wave::GetInstance()->SetIsMove(true);
+		Player::GetInstance()->SetIsMove(true);
+		entryTimer_.Reset();
+		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 	}
 
 	//だんだん大きく
@@ -97,14 +116,6 @@ void Boss::Update()
 	else if (scalingTimer_.GetEnd())
 	{
 		obj_->scale_ = oriScale_;	//一応タイマー終わったら元の大きさにする
-	}
-
-	//演出終わったら元のカメラに戻す
-	if (entryTimer_.GetEnd())
-	{
-		Player::GetInstance()->SetIsMove(true);
-		entryTimer_.Reset();
-		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 	}
 
 	if (isAlive_)
