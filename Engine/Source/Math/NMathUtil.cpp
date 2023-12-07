@@ -1,6 +1,7 @@
 #include "NMathUtil.h"
 #include "NCamera.h"
 #include "NWindows.h"
+#include "NEasing.h"
 #include <math.h>
 #include <random>
 
@@ -177,4 +178,40 @@ NVec2 MathUtil::CircleMotion(NVec2 CenterPoint, float radius, float angle)
 	position.y = CenterPoint.y + radius * sinf(angle);
 
 	return position;
+}
+
+NVec3 MathUtil::InQuad(const NVec3& start, const NVec3& end, float timerate)
+{
+	NVec3 result;
+	result.x = NEasing::InQuad(start.x, end.x, timerate);
+	result.y = NEasing::InQuad(start.y, end.y, timerate);
+	result.z = NEasing::InQuad(start.z, end.z, timerate);
+	return result;
+}
+
+NVec3 MathUtil::InBack(const NVec3& start, const NVec3& end, float timerate)
+{
+	NVec3 result;
+	result.x = NEasing::InBack(start.x, end.x, timerate);
+	result.y = NEasing::InBack(start.y, end.y, timerate);
+	result.z = NEasing::InBack(start.z, end.z, timerate);
+	return result;
+}
+
+NVec3 MathUtil::OutQuad(const NVec3& start, const NVec3& end, float timerate)
+{
+	NVec3 result;
+	result.x = NEasing::OutQuad(start.x, end.x, timerate);
+	result.y = NEasing::OutQuad(start.y, end.y, timerate);
+	result.z = NEasing::OutQuad(start.z, end.z, timerate);
+	return result;
+}
+
+NVec3 MathUtil::OutBack(const NVec3& start, const NVec3& end, float timerate)
+{
+	NVec3 result;
+	result.x = NEasing::OutBack(start.x, end.x, timerate);
+	result.y = NEasing::OutBack(start.y, end.y, timerate);
+	result.z = NEasing::OutBack(start.z, end.z, timerate);
+	return result;
 }

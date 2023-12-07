@@ -152,7 +152,7 @@ void NGameScene::Init()
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, true, false, false);
-	lightGroup_->sPointLights[0]->SetLightAtten({0.1f,0.1f,0.1f});
+	lightGroup_->sPointLights[0]->SetLightAtten({0.2f,0.2f,0.2f});
 	lightGroup_->sPointLights[1]->SetActive(false);
 	lightGroup_->sPointLights[2]->SetActive(false);
 	// 3Dオブジェクトにライトをセット

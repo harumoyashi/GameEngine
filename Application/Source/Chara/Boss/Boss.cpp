@@ -12,7 +12,7 @@
 #include "imgui.h"
 
 Boss::Boss() :
-	moveVelo_({ 0,0 }), moveAngle_(0.0f), isAlive_(true), homingPower_(0.1f),
+	moveVelo_({ 0,0 }), moveAngle_(0.0f), isAlive_(true), homingPower_(0.2f),
 	elapseSpeed_(0.0f), maxHP_(10), hp_(maxHP_), score_(300)
 {
 	obj_ = move(std::make_unique<NObj3d>());
@@ -67,33 +67,36 @@ void Boss::Generate(const NVec3& pos)
 void Boss::Init()
 {
 	isAlive_ = false;
+	moveAngle_ = 0.f;
 
 	entryTimer_.Reset();
+	scalingTimer_.Reset();
 }
 
 void Boss::Update()
 {
 	entryTimer_.Update();
+	scalingTimer_.Update();
 
 	if (entryTimer_.GetRun())
 	{
 		Player::GetInstance()->SetElapseSpeed(0.f);
 		Player::GetInstance()->SetIsMove(false);
+	}
 
-		obj_->scale_.x = NEasing::OutQuad(0, oriScale_.x, entryTimer_.GetTimeRate());
-		obj_->scale_.y = NEasing::OutQuad(0, oriScale_.y, entryTimer_.GetTimeRate());
-		obj_->scale_.z = NEasing::OutQuad(0, oriScale_.z, entryTimer_.GetTimeRate());
+	//だんだん大きく
+	if (NCameraManager::GetInstance()->GetIsEntryCameraChanged() && scalingTimer_.GetStarted() == false)
+	{
+		scalingTimer_.Start();
+	}
 
-		/*if (isLanding_ == false)
-		{
-			obj_->position_.y -= 0.3f;
-		}*/
-		
-		if (obj_->position_.y <= 0.f)
-		{
-			obj_->position_.y = 0.f;
-			isLanding_ = true;
-		}
+	if (scalingTimer_.GetRun())
+	{
+		obj_->scale_ = MathUtil::OutBack(NVec3::zero, oriScale_, scalingTimer_.GetTimeRate());
+	}
+	else if (scalingTimer_.GetEnd())
+	{
+		obj_->scale_ = oriScale_;	//一応タイマー終わったら元の大きさにする
 	}
 
 	//演出終わったら元のカメラに戻す

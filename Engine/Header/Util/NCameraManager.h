@@ -111,9 +111,7 @@ private:
 	//　カメラシェイク用更新処理
 	void ShakeUpdate();
 
-	//Vec3のイージング用
-	NVec3 InQuad(const NVec3& start, const NVec3& end, float timerate);
-	NVec3 OutQuad(const NVec3& start, const NVec3& end, float timerate);
+	
 
 public:
 	//シングルトンインスタンス取得
@@ -131,6 +129,8 @@ public:
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
 	//無敵演出カメラへの遷移が完了したかどうか取得
 	bool GetIsMutekiCameraChanged() { return mutekiCameraMoveEase_.GetEnd(); }
+	//ボスの登場演出カメラへの遷移が完了したかどうか取得
+	bool GetIsEntryCameraChanged() { return entryCameraMoveEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 	//現在のカメラの種類取得

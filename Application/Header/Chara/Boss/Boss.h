@@ -28,7 +28,7 @@ private:
 
 	//登場演出
 	NEasing::EaseTimer entryTimer_ = 2.5f;		//登場演出タイマー
-	bool isLanding_;					//着地してるかどうか
+	NEasing::EaseTimer scalingTimer_ = 0.4f;	//おっきくなるタイマー
 	SimpleParticle landingParticle_;			//着地時に出るパーティクル
 
 public:
@@ -61,8 +61,10 @@ public:
 	NVec3 GetPos() { return obj_->position_; }
 	NVec3 GetHeadPos() { return obj_->position_ + NVec3(0, obj_->scale_.y, 0); }
 
-	bool GetIsLanding() { return isLanding_; }
+	//登場演出中か
 	bool GetIsEntry() { return entryTimer_.GetRun(); }
+	//おっきくなるの終わったか
+	bool GetIsScalingEnd() { return scalingTimer_.GetEnd(); }
 
 	// セッター //
 	//経過時間スピード設定
