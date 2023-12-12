@@ -1,5 +1,6 @@
 #pragma once
 #include "NDX12.h"
+#include "NTextureConverter.h"
 #include <array>
 #include <unordered_map>
 
@@ -37,6 +38,8 @@ public:
 
 	std::unordered_map<TextureHandle, NTexture> textureMap_;	//テクスチャ群
 	ComPtr<ID3D12Resource> tb_;	//転送用のテクスチャバッファ
+
+	NTextureConverter converter;
 
 public:
 	//TextureManagerを取得する

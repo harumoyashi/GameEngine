@@ -1,6 +1,7 @@
 #include "NTexture.h"
 #include "NVec4.h"
 #include "NUtil.h"
+#include <DirectXTex.h>
 
 NTextureManager* NTextureManager::GetInstance()
 {
@@ -132,7 +133,7 @@ NTexture NTextureManager::LoadTexture(const std::string& pictureName, const std:
 			return CreateErrorTexture();
 		}
 
-		CreateMipmap();
+		//CreateMipmap();
 		//テクスチャバッファ設定
 		SetTBHeap();
 		SetTBResource();
@@ -161,26 +162,12 @@ bool NTextureManager::Load(const std::string& pictureName)
 
 	//拡張子を抽出してそれに応じた方で読み込み
 	std::string ext = NUtil::GetExtension(pictureName);
-	//.psdだった場合は.tgaに変更(同じフォルダ内に.psdと同じ名前の.tgaファイルがないとだめ)
-	if (ext == "psd")
-	{
-		wPictureName = NUtil::ReplaceExtension(wPictureName, "tga");
-		ext = "tga";
-	}
+	
+	wPictureName = converter.ConvertTextureWICToDDS(pictureName);
 
-	if (ext == "tga")
-	{
-		result = LoadFromTGAFile(
-			wPictureName.c_str(),	//ここで文字型に
-			&metadata_, scratchImg_);
-	}
-	else
-	{
-		result = LoadFromWICFile(
-			wPictureName.c_str(),	//ここで文字型に
-			DirectX::WIC_FLAGS_NONE,
-			&metadata_, scratchImg_);
-	}
+	result = LoadFromDDSFile(
+		wPictureName.c_str(), DirectX::DDS_FLAGS_NONE,	//ここで文字型に
+		&metadata_, scratchImg_);
 
 	if (result != S_OK)
 	{
@@ -196,6 +183,7 @@ void NTextureManager::CreateMipmap()
 	result = GenerateMipMaps(
 		scratchImg_.GetImages(), scratchImg_.GetImageCount(), scratchImg_.GetMetadata(),
 		DirectX::TEX_FILTER_DEFAULT, 0, mipChain_);
+
 	if (SUCCEEDED(result))
 	{
 		scratchImg_ = std::move(mipChain_);

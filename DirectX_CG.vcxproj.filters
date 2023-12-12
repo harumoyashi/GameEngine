@@ -168,6 +168,7 @@
     <ClCompile Include="Engine\Source\Particle\NGPUParticle.cpp" />
     <ClCompile Include="Application\Source\Field\BackObj.cpp" />
     <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
+    <ClCompile Include="Engine\Source\Util\NTextureConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -208,6 +209,7 @@
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
     <ClInclude Include="Application\Header\Field\BackObj.h" />
     <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
+    <ClInclude Include="Engine\Header\Util\NTextureConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BackObj\BackObjGS.hlsl" />
