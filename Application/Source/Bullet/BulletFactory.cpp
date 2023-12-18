@@ -26,6 +26,10 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 			for (uint32_t i = 0; i < line_.GetLevel(); i++)
 			{
 				//レベルに応じて追加
+				if (BulletManager::GetInstance()->GetIsEmpty())	//満杯なら最初に追加した奴消す
+				{
+					BulletManager::GetInstance()->EraceBegin();
+				}
 				BulletManager::GetInstance()->bullets_.emplace_back();
 
 				//対応した種類に所有権持たせて生成
@@ -67,7 +71,12 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				for (size_t j = 0; j < side_.GetAllAtOnceNum(); j++)
 				{
 					//とりあえず追加
+					if (BulletManager::GetInstance()->GetIsEmpty())	//満杯なら最初に追加した奴消す
+					{
+						BulletManager::GetInstance()->EraceBegin();
+					}
 					BulletManager::GetInstance()->bullets_.emplace_back();
+
 					//レベル格納して(レベル用の処理未対応)
 					side_.SetLevel(level);
 					//対応した種類に所有権持たせて生成
@@ -107,7 +116,12 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				for (size_t j = 0; j < wide_.GetAllAtOnceNum(); j++)
 				{
 					//とりあえず追加
+					if (BulletManager::GetInstance()->GetIsEmpty())	//満杯なら最初に追加した奴消す
+					{
+						BulletManager::GetInstance()->EraceBegin();
+					}
 					BulletManager::GetInstance()->bullets_.emplace_back();
+
 					//レベル格納して(レベル用の処理未対応)
 					wide_.SetLevel(level);
 					//対応した種類に所有権持たせて生成

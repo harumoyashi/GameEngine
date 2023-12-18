@@ -165,7 +165,7 @@ void Boss::Draw()
 void Boss::OnCollision()
 {
 	//当たった相手が弾だった時の処理
-	if (collider_.GetColInfo()->GetColID() == "bullet")
+	if (collider_.GetColInfo()->GetColID() == "bullet" && hp_ > 0)
 	{
 		hp_--;
 

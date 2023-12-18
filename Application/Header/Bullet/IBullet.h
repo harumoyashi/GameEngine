@@ -59,6 +59,8 @@ public:
 	NVec3& GetPos()const { return obj_->position_; }
 	//大きさ取得
 	NVec3& GetScale()const { return obj_->scale_; }
+	//色取得
+	NVec3 GetColor() { return obj_->color_.GetRGB(); }
 	//移動用角度取得
 	float GetMoveAngle()const { return moveAngle_; }
 

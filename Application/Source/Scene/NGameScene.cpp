@@ -152,9 +152,15 @@ void NGameScene::Init()
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, true, false, false);
-	lightGroup_->sPointLights[0]->SetLightAtten({0.2f,0.2f,0.2f});
-	lightGroup_->sPointLights[1]->SetActive(false);
-	lightGroup_->sPointLights[2]->SetActive(false);
+	lightGroup_->sPointLights[0]->SetLightAtten({ 0.2f,0.2f,0.2f });
+	for (uint32_t i = 1; i <= BulletManager::GetInstance()->maxBul; i++)
+	{
+		lightGroup_->sPointLights[i]->SetActive(false);
+	}
+	lightGroup_->Update();
+
+	/*lightGroup_->sPointLights[1]->SetActive(false);
+	lightGroup_->sPointLights[2]->SetActive(false);*/
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
@@ -399,7 +405,19 @@ void NGameScene::Update()
 		else
 		{
 			lightGroup_->sPointLights[0]->SetLightPos(ItemManager::GetInstance()->GetMutekiItemPos() + NVec3(0, 0.5f, 0));
-			lightGroup_->sPointLights[0]->SetLightColor({0.5f,1.f,0.1f});
+			lightGroup_->sPointLights[0]->SetLightColor({ 0.5f,1.f,0.1f });
+		}
+
+		for (uint32_t i = 1; i <= BulletManager::GetInstance()->maxBul; i++)
+		{
+			lightGroup_->sPointLights[i]->SetActive(false);
+		}
+
+		for (uint32_t i = 1; i < BulletManager::GetInstance()->bullets_.size(); i++)
+		{
+			lightGroup_->sPointLights[i]->SetActive(true);
+			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i]->GetPos());
+			lightGroup_->sPointLights[i]->SetLightColor(BulletManager::GetInstance()->bullets_[i]->GetColor());
 		}
 		lightGroup_->Update();
 
@@ -674,7 +692,7 @@ void NGameScene::Update()
 		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
 #endif
-}
+	}
 
 void NGameScene::DrawBackSprite()
 {
