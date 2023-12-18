@@ -7,7 +7,7 @@ class BulletManager final
 {
 public:
 	std::vector<std::unique_ptr<IBullet>> bullets_;	//弾ども
-	const uint32_t maxBul = 99;	//最大弾数
+	const uint32_t maxBul = 126;	//最大弾数
 
 public:
 	static BulletManager* GetInstance();

@@ -152,15 +152,14 @@ void NGameScene::Init()
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, true, false, false);
-	lightGroup_->sPointLights[0]->SetLightAtten({ 0.2f,0.2f,0.2f });
-	for (uint32_t i = 1; i <= BulletManager::GetInstance()->maxBul; i++)
+
+	lightGroup_->sPointLights[0]->SetLightAtten({ 0.5f,0.5f,0.5f });
+	for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
 	{
 		lightGroup_->sPointLights[i]->SetActive(false);
 	}
 	lightGroup_->Update();
 
-	/*lightGroup_->sPointLights[1]->SetActive(false);
-	lightGroup_->sPointLights[2]->SetActive(false);*/
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 
@@ -189,7 +188,7 @@ void NGameScene::Init()
 	volume_[1] = NAudioManager::GetInstance()->GetBGMVolume();
 	volume_[2] = NAudioManager::GetInstance()->GetSEVolume();
 
-	ItemManager::GetInstance()->Generate(NVec3(2.f, 0, 0), BulletType::MaxType, false);
+	ItemManager::GetInstance()->Generate(NVec3(3.f, 0, 0), BulletType::MaxType, false);
 
 	mutekiTexStartPos = {
 		-(float)NWindows::GetInstance()->kWin_width * 0.5f,
@@ -401,23 +400,26 @@ void NGameScene::Update()
 		{
 			lightGroup_->sPointLights[0]->SetLightPos(Player::GetInstance()->GetHeadPos() + NVec3(0, 0.5f, 0));
 			lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
+			lightGroup_->sPointLights[1]->SetActive(false);
 		}
 		else
 		{
-			lightGroup_->sPointLights[0]->SetLightPos(ItemManager::GetInstance()->GetMutekiItemPos() + NVec3(0, 0.5f, 0));
-			lightGroup_->sPointLights[0]->SetLightColor({ 0.5f,1.f,0.1f });
+			lightGroup_->sPointLights[0]->SetLightPos(Player::GetInstance()->GetHeadPos() + NVec3(0, 0.5f, 0));
+			lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
+			lightGroup_->sPointLights[1]->SetLightPos(ItemManager::GetInstance()->GetMutekiItemPos() + NVec3(0, 0.5f, 0));
+			lightGroup_->sPointLights[1]->SetLightColor({ 0.5f,1.f,0.1f });
 		}
 
-		for (uint32_t i = 1; i <= BulletManager::GetInstance()->maxBul; i++)
+		for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
 		{
 			lightGroup_->sPointLights[i]->SetActive(false);
 		}
 
-		for (uint32_t i = 1; i < BulletManager::GetInstance()->bullets_.size(); i++)
+		for (uint32_t i = 2; i < BulletManager::GetInstance()->bullets_.size() + 2; i++)
 		{
 			lightGroup_->sPointLights[i]->SetActive(true);
-			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i]->GetPos());
-			lightGroup_->sPointLights[i]->SetLightColor(BulletManager::GetInstance()->bullets_[i]->GetColor());
+			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i - 2]->GetPos());
+			lightGroup_->sPointLights[i]->SetLightColor(BulletManager::GetInstance()->bullets_[i - 2]->GetColor());
 		}
 		lightGroup_->Update();
 

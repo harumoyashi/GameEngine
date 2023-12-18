@@ -9,7 +9,7 @@ class NLightGroup final
 {
 public:
 	static const uint32_t kDirLightNum = 3;
-	static const uint32_t kPointLightNum = 100;
+	static const uint32_t kPointLightNum = 128;
 	static const uint32_t kSpotLightNum = 3;
 	static const uint32_t kCircleShadowNum = 1;
 
