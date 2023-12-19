@@ -200,6 +200,8 @@
     <ClInclude Include="Engine\Header\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
     <ClInclude Include="Application\Header\UI\UI.h" />
+    <ClInclude Include="Engine\Header\Collision\CircleCollider.h" />
+    <ClInclude Include="Engine\Header\Collision\SquareCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\Source\Bullet\BulletFactory.cpp" />
@@ -293,6 +295,8 @@
     <ClCompile Include="Engine\Source\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\Source\Particle\NGPUParticle.cpp" />
     <ClCompile Include="Application\Source\UI\UI.cpp" />
+    <ClCompile Include="Engine\Source\Collision\CircleCollider.cpp" />
+    <ClCompile Include="Engine\Source\Collision\SquareCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

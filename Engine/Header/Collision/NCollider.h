@@ -16,6 +16,17 @@ struct Circle
 	Circle(const NVec2& centerPos, const float radius);
 };
 
+//矩形コライダー//
+struct Square
+{
+	NVec2 centerPos;
+	float wide;
+	float height;
+
+	Square();
+	Square(const NVec2& centerPos, const float wide, const float height);
+};
+
 //球コライダー//
 struct Sphere
 {

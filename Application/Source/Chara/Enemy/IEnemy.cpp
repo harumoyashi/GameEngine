@@ -30,8 +30,8 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->color_ = NColor::kLightblue;
 	obj_->Update();
 
-	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(obj_->scale_.x * 2.f);
+	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
+	collider_.SetRadius(obj_->scale_.x * 2.f * 2.f);
 	collider_.SetColID("enemy");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));

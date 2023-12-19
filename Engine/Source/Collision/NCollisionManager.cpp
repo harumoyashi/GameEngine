@@ -43,11 +43,101 @@ void NCollisionManager::CheckAllCollision()
 				//比較対象がある場合のみ判定を行う
 				if (colA_ != nullptr && colB_ != nullptr)
 				{
-					SphereCol();
+					//CircleCol();
+					SquareCol();
+					Square2CircleCol();
+					//SphereCol();
 					//Sphere2PlaneCol();
 				}
 			}
 		}
+	}
+}
+
+void NCollisionManager::CircleCol()
+{
+	//円同士だった場合
+	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_CIRCLE &&
+		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_CIRCLE)
+	{
+		//型変換
+		CircleCollider* circleA = static_cast<CircleCollider*>(colA_);
+		CircleCollider* circleB = static_cast<CircleCollider*>(colB_);
+
+		NVec2 inter; //交差点(今は使ってない)
+		if (NCollision::CircleCol(*circleA, *circleB, inter))
+		{
+			colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
+			colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
+			colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+
+			colB_->SetColInfo(colA_);
+			colB_->GetOnCollision()();
+			colB_->SetIsCol(true);
+		}
+	}
+}
+
+void NCollisionManager::SquareCol()
+{
+	//矩形同士だった場合
+	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SQUARE &&
+		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SQUARE)
+	{
+		//型変換
+		SquareCollider* squareA = static_cast<SquareCollider*>(colA_);
+		SquareCollider* squareB = static_cast<SquareCollider*>(colB_);
+
+		NVec2 inter; //交差点(今は使ってない)
+		if (NCollision::SquareCol(*squareA, *squareB, inter))
+		{
+			colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
+			colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
+			colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+
+			colB_->SetColInfo(colA_);
+			colB_->GetOnCollision()();
+			colB_->SetIsCol(true);
+		}
+	}
+}
+
+void NCollisionManager::Square2CircleCol()
+{
+	//矩形と円か確かめる
+	SquareCollider* square{};
+	CircleCollider* circle{};
+
+	if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_SQUARE &&
+		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_CIRCLE)
+	{
+		//型変換
+		square = static_cast<SquareCollider*>(colA_);
+		circle = static_cast<CircleCollider*>(colB_);
+	}
+	else if (colA_->GetShapeType() == NBaseCollider::ColShapeType::COL_CIRCLE &&
+		colB_->GetShapeType() == NBaseCollider::ColShapeType::COL_SQUARE)
+	{
+		//型変換
+		square = static_cast<SquareCollider*>(colB_);
+		circle = static_cast<CircleCollider*>(colA_);
+	}
+	else
+	{
+		return;		//矩形と円じゃないなら終わり
+	}
+
+	//矩形と円だった場合当たり判定を取る
+	NVec2 inter; //交差点(今は使ってない)
+	if (NCollision::Square2CircleCol(*square, *circle, inter))
+	{
+		colA_->SetColInfo(colB_);		//衝突相手のコライダーを登録
+		colA_->GetOnCollision()();		//コールバック関数ポインタの呼び出し。後ろの()には本来引数を入れるが、引数がないので空にしてる。
+		colA_->SetIsCol(true);			//いるかわからないが一応当たったよフラグtrueに
+
+		colB_->SetColInfo(colA_);
+		colB_->GetOnCollision()();
+		colB_->SetIsCol(true);
 	}
 }
 

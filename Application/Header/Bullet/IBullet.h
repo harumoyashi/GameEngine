@@ -1,6 +1,6 @@
 #pragma once
 #include "NObj3d.h"
-#include "SphereCollider.h"
+#include "CircleCollider.h"
 #include "NEasing.h"
 
 enum class BulletType
@@ -24,7 +24,7 @@ protected:
 	float moveSpeed_;				//移動スピード
 
 	bool isAlive_;					//生存フラグ
-	SphereCollider collider_;		//弾の当たり判定
+	CircleCollider collider_;		//弾の当たり判定
 
 	NEasing::EaseTimer lifeTimer_;	//生存時間
 
@@ -48,7 +48,7 @@ public:
 public:
 	// ゲッター //
 	//コライダー取得
-	const SphereCollider& GetIBulletCollider()const { return collider_; }
+	const CircleCollider& GetIBulletCollider()const { return collider_; }
 	//生存フラグ取得
 	bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得

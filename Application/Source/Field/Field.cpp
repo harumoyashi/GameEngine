@@ -2,7 +2,6 @@
 #include "Player.h"
 #include "Boss.h"
 #include "EnemyFactory.h"
-#include "NCollisionManager.h"
 #include "NAudioManager.h"
 #include "NCameraManager.h"
 
@@ -39,13 +38,6 @@ void Field::Init()
 		fieldObj_[i]->SetDivide(tileDivide_);
 		fieldObj_[i]->SetActivityArea(activityAreaX_);
 		fieldObj_[i]->SetAvoidArea(avoidArea_);
-
-		//コライダー設定
-		collider_[i].SetNormal(NVec3::up);
-		collider_[i].SetDistance(0.f);
-		collider_[i].SetColID("field");
-		NCollisionManager::GetInstance()->AddCollider(&collider_[i]);
-		collider_[i].SetOnCollision(std::bind(&Field::OnCollision, this));
 
 		//背景オブジェクトの生成
 		if (backObj_[i] == nullptr)

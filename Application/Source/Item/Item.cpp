@@ -24,7 +24,7 @@ void Item::Generate(const NVec3& pos, bool isPop)
 	obj_->scale_ = Player::GetInstance()->GetScale() * 2.0f;
 
 	//コライダー設定
-	collider_.SetCenterPos(obj_->position_);
+	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 	collider_.SetRadius(obj_->scale_.x * 2.5f);	//ちょい大きめに判定取る
 	collider_.SetColID("item");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);

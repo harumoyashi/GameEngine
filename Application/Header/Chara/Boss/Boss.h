@@ -1,15 +1,14 @@
 #pragma once
 #include "NObj3d.h"
 #include "NSprite.h"
-#include "NCollider.h"
-#include "SphereCollider.h"
+#include "SquareCollider.h"
 #include "SimpleParticle.h"
 
 class Boss
 {
 private:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-	SphereCollider collider_;		//コライダー
+	SquareCollider collider_;		//コライダー
 	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
 	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
 	NVec2 moveVelo_;				//移動量

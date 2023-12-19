@@ -10,6 +10,8 @@ public:
 		COL_SPHERE,				//球
 		COL_PLANE,				//平面
 		COL_RAY,				//レイ
+		COL_CIRCLE,				//円
+		COL_SQUARE,				//矩形
 	};
 
 	//衝突属性定義

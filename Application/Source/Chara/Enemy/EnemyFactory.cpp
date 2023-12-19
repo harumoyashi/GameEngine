@@ -65,7 +65,7 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 
 						//今生成したやつら同士で当たり判定取る
 						bool isCol =
-							NCollision::SphereCol(
+							NCollision::CircleCol(
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetCollider(),
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetCollider());
 
@@ -128,7 +128,7 @@ void EnemyFactory::Create(IEnemy::EnemyType type, NVec3 pos, bool isItem)
 
 						//今生成したやつら同士で当たり判定取る
 						bool isCol =
-							NCollision::SphereCol(
+							NCollision::CircleCol(
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)i)->GetCollider(),
 								EnemyManager::GetInstance()->enemys_.at(enemySize - (size_t)j)->GetCollider());
 

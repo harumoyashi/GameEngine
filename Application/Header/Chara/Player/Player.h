@@ -1,7 +1,7 @@
 #pragma once
 #include "NObj3d.h"
 #include "NCollider.h"
-#include "SphereCollider.h"
+#include "SquareCollider.h"
 #include "SimpleParticle.h"
 #include "IBullet.h"
 
@@ -9,7 +9,7 @@ class Player final
 {
 private:
 	std::unique_ptr<NObj3d> obj_;
-	SphereCollider collider_;	//プレイヤーの当たり判定
+	SquareCollider collider_;	//プレイヤーの当たり判定
 
 	bool isAlive_;				//生きてるかフラグ
 	bool isDraw_;				//描画するかフラグ
@@ -115,7 +115,7 @@ public:
 	//動けるかフラグ取得
 	bool GetIsMove()const { return isMove_; }
 	//コライダー取得
-	const SphereCollider& GetPlayerCollider()const { return collider_; }
+	const SquareCollider& GetPlayerCollider()const { return collider_; }
 	//移動量取得
 	NVec2 GetDirectionVec()const { return directionVec_; }
 	//移動速度取得

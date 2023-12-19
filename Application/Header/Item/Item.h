@@ -1,6 +1,6 @@
 #pragma once
 #include "NObj3d.h"
-#include "SphereCollider.h"
+#include "CircleCollider.h"
 #include "NEasing.h"
 #include "IBullet.h"
 
@@ -12,7 +12,7 @@ private:
 	float moveSpeed_;				//移動スピード
 
 	bool isAlive_;					//生存フラグ
-	SphereCollider collider_;		//当たり判定
+	CircleCollider collider_;		//当たり判定
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
@@ -36,7 +36,7 @@ public:
 public:
 	// ゲッター //
 	//コライダー取得
-	const SphereCollider& GetIBulletCollider()const { return collider_; }
+	const CircleCollider& GetIBulletCollider()const { return collider_; }
 	//生存フラグ取得
 	bool GetisAlive()const { return isAlive_; }
 	//座標取得

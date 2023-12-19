@@ -1,16 +1,71 @@
 #include "NCollision.h"
 
-bool NCollision::CircleCol(const Circle& c0, const Circle& c1, const NVec2& inter)
+bool NCollision::CircleCol(const CircleCollider& c0, const CircleCollider& c1, const NVec2& inter)
 {
-	float distX = (c0.centerPos.x - c1.centerPos.x) * (c0.centerPos.x - c1.centerPos.x);
-	float distY = (c0.centerPos.y - c1.centerPos.y) * (c0.centerPos.y - c1.centerPos.y);
-	float distR = (c0.radius + c1.radius) * (c0.radius + c1.radius);
+	float distX = (c0.GetCenterPos().x - c1.GetCenterPos().x) * (c0.GetCenterPos().x - c1.GetCenterPos().x);
+	float distY = (c0.GetCenterPos().y - c1.GetCenterPos().y) * (c0.GetCenterPos().y - c1.GetCenterPos().y);
+	float distR = (c0.GetRadius() + c1.GetRadius()) * (c0.GetRadius() + c1.GetRadius());
 
 	if (distX + distY <= distR)
 	{
 		return true;
 	}
 	return false;
+
+	static_cast<void> (inter);	//引数をなかったことにする
+}
+
+bool NCollision::SquareCol(const SquareCollider& s0, const SquareCollider& s1, const NVec2& inter)
+{
+	float left0 = s0.GetCenterPos().x - s0.GetWide();
+	float right0 = s0.GetCenterPos().x + s0.GetWide();
+	float top0 = s0.GetCenterPos().y - s0.GetHeight();
+	float bottom0 = s0.GetCenterPos().y + s0.GetHeight();
+
+	float left1 = s1.GetCenterPos().x - s1.GetWide();
+	float right1 = s1.GetCenterPos().x + s1.GetWide();
+	float top1 = s1.GetCenterPos().y - s1.GetHeight();
+	float bottom1 = s1.GetCenterPos().y + s1.GetHeight();
+
+	if (left0 < right1 && right0 > left1)
+	{
+		if (top0 < bottom1 && bottom0 > top1)
+		{
+			return true;
+		}
+	}
+	return false;
+
+	static_cast<void> (inter);	//引数をなかったことにする
+}
+
+bool NCollision::Square2CircleCol(const SquareCollider& s, const CircleCollider& c, const NVec2& inter)
+{
+	float left = s.GetCenterPos().x - s.GetWide();
+	float right = s.GetCenterPos().x + s.GetWide();
+	float top = s.GetCenterPos().y - s.GetHeight();
+	float bottom = s.GetCenterPos().y + s.GetHeight();
+
+	float x = c.GetCenterPos().x;
+	float y = c.GetCenterPos().y;
+	float r = c.GetRadius();
+
+	if (left - r > x || right + r < x || top - r > y || bottom + r < y) {	//矩形に円の半径分を足した範囲
+		return false;
+	}
+	if (left > x && top > y && !((left - x) * (left - x) + (top - y) * (top - y) < r * r)) {                //左上の当たり判定
+		return false;
+	}
+	if (right < x && top > y && !((right - x) * (right - x) + (top - y) * (top - y) < r * r)) {             //右上の当たり判定
+		return false;
+	}
+	if (left > x && bottom < y && !((left - x) * (left - x) + (bottom - y) * (bottom - y) < r * r)) {       //左下の当たり判定
+		return false;
+	}
+	if (right < x && bottom < y && !((right - x) * (right - x) + (bottom - y) * (bottom - y) < r * r)) {    //右下の当たり判定
+		return false;
+	}
+	return true;//すべての条件が外れたときに当たっている
 
 	static_cast<void> (inter);	//引数をなかったことにする
 }

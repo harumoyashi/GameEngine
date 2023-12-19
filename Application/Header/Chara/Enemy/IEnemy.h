@@ -1,8 +1,7 @@
 #pragma once
 #include "NObj3d.h"
 #include "NSprite.h"
-#include "NCollider.h"
-#include "SphereCollider.h"
+#include "CircleCollider.h"
 #include "SimpleParticle.h"
 
 class IEnemy
@@ -17,7 +16,7 @@ public:
 
 protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-	SphereCollider collider_;		//コライダー
+	CircleCollider collider_;		//コライダー
 	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
 	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
 	NVec2 moveVelo_;				//移動量
@@ -74,7 +73,7 @@ public:
 
 	// ゲッター //
 	//コライダー取得
-	const SphereCollider GetCollider()const { return collider_; }
+	const CircleCollider GetCollider()const { return collider_; }
 	//生存フラグ取得
 	bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
@@ -92,7 +91,7 @@ public:
 	//生存フラグ設定
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//座標設定
-	void SetPos(const NVec3 pos) { obj_->position_ = pos; collider_.SetCenterPos(pos); }
+	void SetPos(const NVec3 pos) { obj_->position_ = pos; collider_.SetCenterPos({ pos.x,pos.z }); }
 	//大きさ設定
 	void SetScale(const float scale) {
 		obj_->scale_ = scale;  collider_.SetRadius(scale);

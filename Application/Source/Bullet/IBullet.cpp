@@ -22,7 +22,7 @@ void IBullet::Generate(const NVec3& pos, const float moveAngle)
 	obj_->color_ = Player::GetInstance()->GetColor();
 
 	//コライダー設定
-	collider_.SetCenterPos(obj_->position_);
+	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 	collider_.SetRadius(obj_->scale_.x);
 	collider_.SetColID("bullet");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);

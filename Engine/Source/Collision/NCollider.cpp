@@ -10,6 +10,16 @@ Circle::Circle(const NVec2& centerPos, const float radius) :
 {
 }
 
+Square::Square() :
+	centerPos(0, 0), wide(1),height(1)
+{
+}
+
+Square::Square(const NVec2& centerPos, const float wide, const float height) :
+	centerPos(centerPos), wide(wide), height(height)
+{
+}
+
 Sphere::Sphere() :
 	centerPos(0, 0, 0), radius(1)
 {

@@ -39,6 +39,12 @@ private:
 	~NCollisionManager() = default;
 	NCollisionManager& operator=(const NCollisionManager&) = delete;
 
+	//円同士の当たり判定
+	void CircleCol();
+	//矩形同士の当たり判定
+	void SquareCol();
+	//矩形と円の当たり判定
+	void Square2CircleCol();
 	//球体同士の当たり判定
 	void SphereCol();
 	//球体と平面の当たり判定

@@ -49,8 +49,9 @@ void Boss::Generate(const NVec3& pos)
 	obj_->Update();
 
 	//コライダー設定
-	collider_.SetCenterPos(obj_->position_);
-	collider_.SetRadius(oriScale_.x);
+	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
+	collider_.SetWide(oriScale_.x);
+	collider_.SetHeight(oriScale_.z);
 	collider_.SetColID("boss");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Boss::OnCollision, this));
