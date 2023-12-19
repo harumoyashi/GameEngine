@@ -43,7 +43,7 @@ void NCollisionManager::CheckAllCollision()
 				//比較対象がある場合のみ判定を行う
 				if (colA_ != nullptr && colB_ != nullptr)
 				{
-					//CircleCol();
+					CircleCol();
 					SquareCol();
 					Square2CircleCol();
 					//SphereCol();
