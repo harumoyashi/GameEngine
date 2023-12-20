@@ -1,4 +1,4 @@
-#include "Fbx.hlsli"
+#include "OBJ.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
@@ -9,7 +9,7 @@ struct PSOutput
     float4 target1 : SV_TARGET1;
 };
 
-PSOutput main(VSOutput input)
+PSOutput main(VSOutput input) : SV_TARGET
 {
     PSOutput output;
     
@@ -135,11 +135,6 @@ PSOutput main(VSOutput input)
             shadecolor.rgb -= atten;
         }
     }
-    
-    //float4 color = texcolor * m_color;
-    //output.target0 = color;
-    //output.target1 = color;
-    //return output;
 
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;

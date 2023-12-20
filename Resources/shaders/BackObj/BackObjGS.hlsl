@@ -34,7 +34,7 @@ void main(
     //三角形の法線方向取得
     float3 triNormal = input[0].normal + input[1].normal + input[2].normal;
     //その方向に押し出す量を掛けたオフセットを出す
-    float3 offset = normalize(mul(world, float4(triNormal, 0))) * extrusion;
+    float3 offset = normalize(mul(world, float4(triNormal, 0))).xyz * extrusion;
     //押し出した座標を取得
     for (uint j = vnum; j < 6; j++)
     {

@@ -12,13 +12,13 @@ cbuffer cbuff1 : register(b1)
 
 cbuffer cbuff2 : register(b2)
 {
-    matrix viewproj;    // ビュープロジェクション行列
-    matrix world;       // ワールド行列
-    float3 cameraPos;   // カメラ座標(ワールド座標)
+    matrix viewproj; // ビュープロジェクション行列
+    matrix world; // ワールド行列
+    float3 cameraPos; // カメラ座標(ワールド座標)
 };
 
 //平行光源の数
-static const uint DIRLIGHT_NUM = 3;
+static const int DIRLIGHT_NUM = 3;
 
 //平行光源
 struct DirLight
@@ -29,7 +29,7 @@ struct DirLight
 };
 
 //点光源の数
-static const uint POINTLIGHT_NUM = 128;
+static const int POINTLIGHT_NUM = 3;
 
 //点光源
 struct PointLight
@@ -41,7 +41,7 @@ struct PointLight
 };
 
 //スポットライトの数
-static const uint SPOTLIGHT_NUM = 3;
+static const int SPOTLIGHT_NUM = 128;
 
 //スポットライト
 struct SpotLight
@@ -55,7 +55,7 @@ struct SpotLight
 };
 
 //丸影の数
-static const uint CIRCLESHADOW_NUM = 2;
+static const int CIRCLESHADOW_NUM = 1;
 
 //丸影
 struct CircleShadow
@@ -77,32 +77,11 @@ cbuffer cbuff3 : register(b3)
     CircleShadow circleShadows[CIRCLESHADOW_NUM];
 };
 
-cbuffer cbuff4 : register(b4)
-{
-    bool isAvoid;
-    float3 extrusionTimer;
-}
-
 // 頂点シェーダーからピクセルシェーダーへのやり取りに使用する構造体
-struct VSInput
-{
-    float3 pos : POSITION;  // システム用頂点座標
-    float3 normal : NORMAL; // 法線ベクトル
-    float2 uv : TEXCOORD;   // uv値
-};
-
 struct VSOutput
 {
-    float3 pos : POSITION;  // システム用頂点座標
-    float3 normal : NORMAL; // 法線ベクトル
-    float2 uv : TEXCOORD;   // uv値
-};
-
-struct GSOutput
-{
-    float4 svpos : SV_POSITION;     // システム用頂点座標
-    float4 worldpos : POSITION;     // ワールド座標
-    float3 normal : NORMAL;         // 法線ベクトル
-    float2 uv : TEXCOORD;           // uv値
-    float3 scale : SCALE;           // 行列から抜き出したスケール
+    float4 svpos : SV_POSITION; // システム用頂点座標
+    float4 worldpos : POSITION; // ワールド座標
+    float3 normal : NORMAL;     // 法線ベクトル
+    float2 uv : TEXCOORD;       // uv値
 };

@@ -9,7 +9,7 @@ struct PSOutput
     float4 target1 : SV_TARGET1;
 };
 
-PSOutput main(GSOutput input) : SV_TARGET
+PSOutput main(GSOutput input)
 {
     PSOutput output;
     
@@ -120,7 +120,7 @@ PSOutput main(GSOutput input) : SV_TARGET
             float d = dot(casterv, circleShadows[l].dir);
             //距離減衰係数
             float atten = saturate(1.0f / (circleShadows[l].atten.x + circleShadows[l].atten.y * d +
-            circleShadows[i].atten.z * d * d));
+            circleShadows[l].atten.z * d * d));
             //距離がマイナスなら0にする
             atten *= step(0, d);
             //仮想ライトの座標

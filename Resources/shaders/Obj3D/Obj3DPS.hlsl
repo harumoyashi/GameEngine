@@ -1,4 +1,4 @@
-#include "Fbx.hlsli"
+#include "Obj3D.hlsli"
 
 Texture2D<float4> tex : register(t0); // 0番スロットに設定されたテクスチャ
 SamplerState smp : register(s0); // 0番スロットに設定されたサンプラー
@@ -28,7 +28,7 @@ PSOutput main(VSOutput input)
     float4 shadecolor = float4(ambient, m_color.a);
 	
     //平行光源
-    for (uint i = 0; i < DIRLIGHT_NUM; i++)
+    for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {
@@ -46,7 +46,7 @@ PSOutput main(VSOutput input)
     }
     
      //点光源
-    for (uint j = 0; j < POINTLIGHT_NUM; j++)
+    for (int j = 0; j < POINTLIGHT_NUM; j++)
     {
         if (pointLights[j].active)
         {
@@ -73,7 +73,7 @@ PSOutput main(VSOutput input)
     }
     
     //スポットライト
-    for (uint k = 0; k < SPOTLIGHT_NUM; k++)
+    for (int k = 0; k < SPOTLIGHT_NUM; k++)
     {
         if (spotLights[k].active)
         {
@@ -107,7 +107,7 @@ PSOutput main(VSOutput input)
     }
     
     //丸影
-    for (uint l = 0; l < CIRCLESHADOW_NUM; l++)
+    for (int l = 0; l < CIRCLESHADOW_NUM; l++)
     {
         if (circleShadows[l].active)
         {
@@ -117,7 +117,7 @@ PSOutput main(VSOutput input)
             float d = dot(casterv, circleShadows[l].dir);
             //距離減衰係数
             float atten = saturate(1.0f / (circleShadows[l].atten.x + circleShadows[l].atten.y * d +
-            circleShadows[i].atten.z * d * d));
+            circleShadows[l].atten.z * d * d));
             //距離がマイナスなら0にする
             atten *= step(0, d);
             //仮想ライトの座標
@@ -135,11 +135,6 @@ PSOutput main(VSOutput input)
             shadecolor.rgb -= atten;
         }
     }
-    
-    //float4 color = texcolor * m_color;
-    //output.target0 = color;
-    //output.target1 = color;
-    //return output;
 
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;

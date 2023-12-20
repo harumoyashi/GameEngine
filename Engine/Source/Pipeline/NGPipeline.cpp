@@ -329,7 +329,7 @@ void PipeLineManager::CreateAll()
 	pipeLine.SetVertLayoutGPUParticle();
 #pragma region デフォルト3D
 	//シェーダー生成
-	NShader::CreateShader("Obj", "Obj");
+	NShader::CreateShader("Obj", "Obj3D");
 
 	PipelineDesc objDesc;
 	//頂点レイアウト設定

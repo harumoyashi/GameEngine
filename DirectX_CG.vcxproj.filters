@@ -194,12 +194,13 @@
     <None Include="Resources\shaders\Glitch\Glitch.hlsli" />
     <None Include="Resources\shaders\GPUParticle\GPUParticle.hlsli" />
     <None Include="Resources\shaders\Model\Model.hlsli" />
-    <None Include="Resources\shaders\Obj\Obj.hlsli" />
+    <None Include="Resources\shaders\Obj3D\Obj3D.hlsli" />
     <None Include="Resources\shaders\Particle3D\Particle3D.hlsli" />
     <None Include="Resources\shaders\ParticlePolygon\ParticlePolygon.hlsli" />
     <None Include="Resources\shaders\RadialBlur\RadialBlur.hlsli" />
     <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
     <None Include="Resources\shaders\Tile\Tile.hlsli" />
+    <None Include="Resources\shaders\Obj\Obj.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Collision\PlaneCollider.h" />
@@ -233,8 +234,8 @@
     <FxCompile Include="Resources\shaders\GPUParticle\GPUParticleVS.hlsl" />
     <FxCompile Include="Resources\shaders\Model\ModelPS.hlsl" />
     <FxCompile Include="Resources\shaders\Model\ModelVS.hlsl" />
-    <FxCompile Include="Resources\shaders\Obj\ObjPS.hlsl" />
-    <FxCompile Include="Resources\shaders\Obj\ObjVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj3D\Obj3DPS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj3D\Obj3DVS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle3D\Particle3DGS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle3D\Particle3DPS.hlsl" />
     <FxCompile Include="Resources\shaders\Particle3D\Particle3DVS.hlsl" />
@@ -248,5 +249,7 @@
     <FxCompile Include="Resources\shaders\Tile\TileGS.hlsl" />
     <FxCompile Include="Resources\shaders\Tile\TilePS.hlsl" />
     <FxCompile Include="Resources\shaders\Tile\TileVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj\ObjVS.hlsl" />
+    <FxCompile Include="Resources\shaders\Obj\ObjPS.hlsl" />
   </ItemGroup>
 </Project>
