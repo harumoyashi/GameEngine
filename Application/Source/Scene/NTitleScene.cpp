@@ -82,7 +82,15 @@ void NTitleScene::Init()
 	// ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, false, false, false);
-	lightGroup_->TransferConstBuffer();
+
+	for (auto& pointLight : lightGroup_->sPointLights)
+	{
+		pointLight->SetActive(false);
+	}
+	lightGroup_->sPointLights[0]->SetActive(true);
+	lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
+
+	lightGroup_->Update();
 	// 3Dオブジェクトにライトをセット
 	NObj3d::SetLightGroup(lightGroup_.get());
 	IEmitter3D::SetLightGroup(lightGroup_.get());
@@ -97,6 +105,7 @@ void NTitleScene::Init()
 void NTitleScene::Update()
 {
 	//ライトたちの更新
+	lightGroup_->sPointLights[0]->SetLightPos(Player::GetInstance()->GetHeadPos() + NVec3(0, 0.5f, 0));
 	lightGroup_->Update();
 
 #pragma region カメラ
