@@ -43,11 +43,17 @@ void NCollisionManager::CheckAllCollision()
 				//比較対象がある場合のみ判定を行う
 				if (colA_ != nullptr && colB_ != nullptr)
 				{
-					CircleCol();
-					SquareCol();
-					Square2CircleCol();
-					//SphereCol();
-					//Sphere2PlaneCol();
+					if (colA_->GetIsActive() && colB_->GetIsActive())
+					{
+						if (colA_->GetColID() != colB_->GetColID())	//同じIDの物とは当たり判定取らない
+						{
+							CircleCol();
+							SquareCol();
+							Square2CircleCol();
+							//SphereCol();
+							//Sphere2PlaneCol();
+						}
+					}
 				}
 			}
 		}

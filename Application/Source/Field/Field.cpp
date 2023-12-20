@@ -244,7 +244,7 @@ void Field::Update()
 		//敵出しちゃうよボタン
 		if (NInput::IsKeyDown(DIK_C))
 		{
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
 	}
 #endif
 }
@@ -284,8 +284,8 @@ void Field::Update()
 			if (line.slideTimer.GetStarted() == false)
 			{
 				line.slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");
@@ -304,8 +304,8 @@ void Field::Update()
 			if (cp.slideTimer.GetStarted() == false)
 			{
 				cp.slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");

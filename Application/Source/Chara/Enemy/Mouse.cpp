@@ -1,4 +1,8 @@
 #include "Mouse.h"
+#include "NCollisionManager.h"
+#include "NAudioManager.h"
+#include "ItemManager.h"
+#include "Score.h"
 
 Mouse::Mouse()
 {

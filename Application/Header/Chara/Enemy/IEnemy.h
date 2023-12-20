@@ -2,6 +2,7 @@
 #include "NObj3d.h"
 #include "NSprite.h"
 #include "CircleCollider.h"
+#include "SquareCollider.h"
 #include "SimpleParticle.h"
 
 class IEnemy
@@ -12,17 +13,20 @@ public:
 	{
 		MouseSide,	//横からくるねずみたち
 		MouseFront,	//正面からくるねずみたち
+		SnakeSide,	//横からくるへびたち
 	};
 
 protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
-	CircleCollider collider_;		//コライダー
+	CircleCollider circleCollider_;	//円コライダー
+	SquareCollider squareCollider_;	//矩形コライダー
 	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
 	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
 	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード
 
+	bool isCollision_;				//衝突フラグ
 	bool isAlive_;					//生存フラグ
 	uint32_t maxHP_;				//最大体力
 	uint32_t hp_;					//現在の体力
@@ -72,8 +76,10 @@ public:
 	virtual void Move();
 
 	// ゲッター //
-	//コライダー取得
-	const CircleCollider GetCollider()const { return collider_; }
+	//円コライダー取得
+	const CircleCollider GetCircleCollider()const { return circleCollider_; }
+	//矩形コライダー取得
+	const SquareCollider GetSquareCollider()const { return squareCollider_; }
 	//生存フラグ取得
 	bool GetisAlive()const { return isAlive_; }
 	//移動スピード取得
@@ -91,10 +97,16 @@ public:
 	//生存フラグ設定
 	void SetisAlive(bool isAlive) { isAlive_ = isAlive; }
 	//座標設定
-	void SetPos(const NVec3 pos) { obj_->position_ = pos; collider_.SetCenterPos({ pos.x,pos.z }); }
+	void SetPos(const NVec3 pos) {
+		obj_->position_ = pos;
+		circleCollider_.SetCenterPos({ pos.x,pos.z });
+		squareCollider_.SetCenterPos({ pos.x,pos.z });
+	}
 	//大きさ設定
 	void SetScale(const float scale) {
-		obj_->scale_ = scale;  collider_.SetRadius(scale);
+		obj_->scale_ = scale;
+		circleCollider_.SetRadius(scale);
+		squareCollider_.SetSize(scale);
 	}
 	//スケールいじる用変数設定
 	void SetAddScale(const float scale) { addScale_ = scale; }

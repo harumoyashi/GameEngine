@@ -24,6 +24,7 @@ protected:
 	NObj3d* obj_ = nullptr;							//オブジェクト
 	ColShapeType shapeType_ = SHAPE_UNKNOWN;		//形状タイプ
 	bool isCollision_;								//当たったかフラグ
+	bool isActive_ = true;							//有効かフラグ
 
 	NBaseCollider* colInfo_;						//衝突相手のコライダー
 	std::string colID;								//コライダーの識別ID
@@ -45,6 +46,8 @@ public:
 	ColShapeType GetShapeType() { return shapeType_; }
 	//当たってるかフラグ取得
 	bool GetIsCol() { return isCollision_; }
+	//有効かフラグ取得
+	bool GetIsActive() { return isActive_; }
 	//コライダー自身を取得
 	NBaseCollider* GetCollider() { return this; }
 
@@ -62,6 +65,8 @@ public:
 	void SetObj(NObj3d* obj) { obj_ = obj; }
 	//当たってるかフラグ設定
 	void SetIsCol(bool isCol) { isCollision_ = isCol; }
+	//有効かフラグ設定
+	void SetIsActive(bool isActive) { isActive_ = isActive; }
 	//コールバック関数ポインタ変数設定
 	void SetOnCollision(const std::function<void(void)>& onCollision) { onCollision_ = onCollision; }
 	//コライダーの識別ID設定

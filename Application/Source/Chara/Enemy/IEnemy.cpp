@@ -10,7 +10,7 @@
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
-	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isAlive_(true),
+	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isCollision_(false), isAlive_(true),
 	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_), score_(10), isItem_(false), isDraw_(true)
 {
 }
@@ -30,11 +30,33 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->color_ = NColor::kLightblue;
 	obj_->Update();
 
-	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
-	collider_.SetRadius(obj_->scale_.x * 2.f * 2.f);
-	collider_.SetColID("enemy");
-	NCollisionManager::GetInstance()->AddCollider(&collider_);
-	collider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+	if (modelname == "mouse")
+	{
+		squareCollider_.SetIsActive(false);
+		circleCollider_.SetIsActive(true);
+		circleCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
+		circleCollider_.SetRadius(obj_->scale_.x * 2.f);
+		circleCollider_.SetColID("enemy");
+		NCollisionManager::GetInstance()->AddCollider(&circleCollider_);
+		circleCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+	}
+	else if (modelname == "cube")
+	{
+		circleCollider_.SetIsActive(false);
+		squareCollider_.SetIsActive(true);
+		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
+		squareCollider_.SetWide(1.f);
+		squareCollider_.SetHeight(0.2f);
+		squareCollider_.SetSize(obj_->scale_.x * 10.f);
+		squareCollider_.SetColID("enemy");
+		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
+		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+
+		//テスト用に描画で当たり判定の大きさ見るため
+		oriScale_.z = Player::GetInstance()->GetScale().z * 10.0f;
+		obj_->scale_.z = oriScale_.z;
+		obj_->scale_ = oriScale_;
+	}
 
 	moveAngle_ = moveAngle;
 
@@ -70,13 +92,15 @@ void IEnemy::Update()
 	isDraw_ = IsInScreen();
 
 	obj_->Update();
-	collider_.Update(obj_.get());
+	circleCollider_.Update(obj_.get());
+	squareCollider_.Update(obj_.get());
 
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
 	{
 		//コライダーマネージャーから削除
-		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+		NCollisionManager::GetInstance()->RemoveCollider(&circleCollider_);
+		NCollisionManager::GetInstance()->RemoveCollider(&squareCollider_);
 	}
 }
 
@@ -93,10 +117,27 @@ void IEnemy::Draw()
 void IEnemy::OnCollision()
 {
 	//当たった相手が弾だった時の処理
-	if (collider_.GetColInfo()->GetColID() == "bullet")
+	if (circleCollider_.GetIsActive())
+	{
+		if (circleCollider_.GetColInfo()->GetColID() == "bullet")
+		{
+			isCollision_ = true;
+		}
+	}
+
+	if (squareCollider_.GetIsActive())
+	{
+		if (squareCollider_.GetColInfo()->GetColID() == "bullet")
+		{
+			isCollision_ = true;
+		}
+	}
+
+	if (isCollision_)
 	{
 		DeadParticle();
 		isAlive_ = false;
+		isCollision_ = false;
 		Score::AddScore(score_);
 		//アイテム持ってるフラグ立ってたらアイテム落とす
 		if (isItem_)

@@ -170,6 +170,7 @@
     <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
     <ClCompile Include="Engine\Source\Collision\CircleCollider.cpp" />
     <ClCompile Include="Engine\Source\Collision\SquareCollider.cpp" />
+    <ClCompile Include="Application\Source\Chara\Enemy\Snake.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -212,6 +213,7 @@
     <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
     <ClInclude Include="Engine\Header\Collision\CircleCollider.h" />
     <ClInclude Include="Engine\Header\Collision\SquareCollider.h" />
+    <ClInclude Include="Application\Header\Chara\Enemy\Snake.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BackObj\BackObjGS.hlsl" />

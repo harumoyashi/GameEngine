@@ -17,15 +17,15 @@ bool NCollision::CircleCol(const CircleCollider& c0, const CircleCollider& c1, c
 
 bool NCollision::SquareCol(const SquareCollider& s0, const SquareCollider& s1, const NVec2& inter)
 {
-	float left0 = s0.GetCenterPos().x - s0.GetWide();
-	float right0 = s0.GetCenterPos().x + s0.GetWide();
-	float top0 = s0.GetCenterPos().y - s0.GetHeight();
-	float bottom0 = s0.GetCenterPos().y + s0.GetHeight();
+	float left0 = s0.GetCenterPos().x - s0.GetWide() * s0.GetSize();
+	float right0 = s0.GetCenterPos().x + s0.GetWide() * s0.GetSize();
+	float top0 = s0.GetCenterPos().y - s0.GetHeight() * s0.GetSize();
+	float bottom0 = s0.GetCenterPos().y + s0.GetHeight() * s0.GetSize();
 
-	float left1 = s1.GetCenterPos().x - s1.GetWide();
-	float right1 = s1.GetCenterPos().x + s1.GetWide();
-	float top1 = s1.GetCenterPos().y - s1.GetHeight();
-	float bottom1 = s1.GetCenterPos().y + s1.GetHeight();
+	float left1 = s1.GetCenterPos().x - s1.GetWide() * s0.GetSize();
+	float right1 = s1.GetCenterPos().x + s1.GetWide() * s0.GetSize();
+	float top1 = s1.GetCenterPos().y - s1.GetHeight() * s0.GetSize();
+	float bottom1 = s1.GetCenterPos().y + s1.GetHeight() * s0.GetSize();
 
 	if (left0 < right1 && right0 > left1)
 	{
@@ -41,10 +41,10 @@ bool NCollision::SquareCol(const SquareCollider& s0, const SquareCollider& s1, c
 
 bool NCollision::Square2CircleCol(const SquareCollider& s, const CircleCollider& c, const NVec2& inter)
 {
-	float left = s.GetCenterPos().x - s.GetWide();
-	float right = s.GetCenterPos().x + s.GetWide();
-	float top = s.GetCenterPos().y - s.GetHeight();
-	float bottom = s.GetCenterPos().y + s.GetHeight();
+	float left = s.GetCenterPos().x - s.GetWide() * s.GetSize();
+	float right = s.GetCenterPos().x + s.GetWide() * s.GetSize();
+	float top = s.GetCenterPos().y - s.GetHeight() * s.GetSize();
+	float bottom = s.GetCenterPos().y + s.GetHeight() * s.GetSize();
 
 	float x = c.GetCenterPos().x;
 	float y = c.GetCenterPos().y;
