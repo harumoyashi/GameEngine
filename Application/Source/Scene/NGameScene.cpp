@@ -151,7 +151,7 @@ void NGameScene::Init()
 #pragma endregion
 #pragma region	ライト生成
 	lightGroup_ = std::make_unique<NLightGroup>();
-	lightGroup_->Init(true, false, false, false);
+	lightGroup_->Init(true, true, false, false);
 
 	lightGroup_->sPointLights[0]->SetLightAtten({ 0.5f,0.5f,0.5f });
 	for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
@@ -417,7 +417,7 @@ void NGameScene::Update()
 
 		for (uint32_t i = 2; i < BulletManager::GetInstance()->bullets_.size() + 2; i++)
 		{
-			//lightGroup_->sPointLights[i]->SetActive(true);
+			lightGroup_->sPointLights[i]->SetActive(true);
 			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i - 2]->GetPos());
 			lightGroup_->sPointLights[i]->SetLightColor(BulletManager::GetInstance()->bullets_[i - 2]->GetColor());
 		}
