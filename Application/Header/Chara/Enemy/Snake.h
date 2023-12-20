@@ -6,7 +6,7 @@ class Snake :
 	public IEnemy
 {
 public:
-	std::string modelname = "cube";    //モデル名
+	std::string modelname = "snake";   //モデル名
 	SquareCollider collider_;		   //コライダー
 
 	Snake();

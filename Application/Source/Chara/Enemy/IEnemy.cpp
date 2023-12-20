@@ -40,7 +40,7 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		NCollisionManager::GetInstance()->AddCollider(&circleCollider_);
 		circleCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 	}
-	else if (modelname == "cube")
+	else if (modelname == "snake")
 	{
 		circleCollider_.SetIsActive(false);
 		squareCollider_.SetIsActive(true);
@@ -51,11 +51,6 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
-
-		//テスト用に描画で当たり判定の大きさ見るため
-		oriScale_.z = Player::GetInstance()->GetScale().z * 10.0f;
-		obj_->scale_.z = oriScale_.z;
-		obj_->scale_ = oriScale_;
 	}
 
 	moveAngle_ = moveAngle;
