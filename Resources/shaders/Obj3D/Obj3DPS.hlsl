@@ -28,7 +28,7 @@ PSOutput main(VSOutput input)
     float4 shadecolor = float4(ambient, m_color.a);
 	
     //平行光源
-    for (int i = 0; i < DIRLIGHT_NUM; i++)
+    for (uint i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {
@@ -46,7 +46,7 @@ PSOutput main(VSOutput input)
     }
     
      //点光源
-    for (int j = 0; j < POINTLIGHT_NUM; j++)
+    for (uint j = 0; j < POINTLIGHT_NUM; j++)
     {
         if (pointLights[j].active)
         {
@@ -73,7 +73,7 @@ PSOutput main(VSOutput input)
     }
     
     //スポットライト
-    for (int k = 0; k < SPOTLIGHT_NUM; k++)
+    for (uint k = 0; k < SPOTLIGHT_NUM; k++)
     {
         if (spotLights[k].active)
         {
@@ -107,7 +107,7 @@ PSOutput main(VSOutput input)
     }
     
     //丸影
-    for (int l = 0; l < CIRCLESHADOW_NUM; l++)
+    for (uint l = 0; l < CIRCLESHADOW_NUM; l++)
     {
         if (circleShadows[l].active)
         {

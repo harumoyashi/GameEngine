@@ -200,7 +200,6 @@
     <None Include="Resources\shaders\RadialBlur\RadialBlur.hlsli" />
     <None Include="Resources\shaders\Sprite\Sprite.hlsli" />
     <None Include="Resources\shaders\Tile\Tile.hlsli" />
-    <None Include="Resources\shaders\Obj\Obj.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Collision\PlaneCollider.h" />
@@ -249,7 +248,5 @@
     <FxCompile Include="Resources\shaders\Tile\TileGS.hlsl" />
     <FxCompile Include="Resources\shaders\Tile\TilePS.hlsl" />
     <FxCompile Include="Resources\shaders\Tile\TileVS.hlsl" />
-    <FxCompile Include="Resources\shaders\Obj\ObjVS.hlsl" />
-    <FxCompile Include="Resources\shaders\Obj\ObjPS.hlsl" />
   </ItemGroup>
 </Project>
