@@ -21,7 +21,7 @@ void Item::Generate(const NVec3& pos, bool isPop)
 	obj_->position_ = pos;
 	obj_->rotation_.x = 45.f;
 	obj_->rotation_.z = 45.f;
-	obj_->scale_ = Player::GetInstance()->GetScale() * 2.0f;
+	obj_->scale_ = Player::GetInstance()->GetScale() * 2.5f;
 
 	//コライダー設定
 	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });

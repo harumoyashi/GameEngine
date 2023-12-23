@@ -88,6 +88,7 @@ void NTitleScene::Init()
 		pointLight->SetActive(false);
 	}
 	lightGroup_->sPointLights[0]->SetActive(true);
+	lightGroup_->sPointLights[0]->SetLightAtten({ 0.05f,0.05f,0.05f });
 	lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
 
 	lightGroup_->Update();

@@ -45,7 +45,7 @@ float4 main(GSOutput input) : SV_TARGET
 	        // 鏡面反射光
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * 0.0f;
 	        //ハーフランバート係数
-            float cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
+            float3 cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
             shadecolor.rgb += cos * (diffuse + specular) * dirLights[i].lightcolor;
         }
@@ -74,7 +74,7 @@ float4 main(GSOutput input) : SV_TARGET
 	        // 鏡面反射光
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
 	        //ハーフランバート係数
-            float cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
+            float3 cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
             shadecolor.rgb += cos * atten * (diffuse + specular) * pointLights[j].lightcolor;
         }
@@ -125,7 +125,7 @@ float4 main(GSOutput input) : SV_TARGET
             float d = dot(casterv, circleShadows[l].dir);
             //距離減衰係数
             float atten = saturate(1.0f / (circleShadows[l].atten.x + circleShadows[l].atten.y * d +
-            circleShadows[i].atten.z * d * d));
+            circleShadows[l].atten.z * d * d));
             //距離がマイナスなら0にする
             atten *= step(0, d);
             //仮想ライトの座標
