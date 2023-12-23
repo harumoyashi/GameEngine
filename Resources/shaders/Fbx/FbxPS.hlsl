@@ -22,7 +22,11 @@ PSOutput main(VSOutput input)
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	
 	// 環境反射光
-    float3 ambient = m_ambient * ambientColor;
+    float3 ambient = /*m_ambient **/ ambientColor;
+    // 決め打ちの仮拡散反射光
+    float3 c_diffuse = (0.2f,0.2f,0.2f);
+    // 決め打ちの仮鏡面反射光
+    float3 c_specular = (0.2f, 0.2f, 0.2f);
     
 	// シェーディングによる色
     float4 shadecolor = float4(ambient, m_color.a);
@@ -37,10 +41,10 @@ PSOutput main(VSOutput input)
 	        // 反射光ベクトル
             float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+            float3 diffuse = dotlightnormal * c_diffuse /** m_diffuse*/;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
-	        //ハーフランバート係数
+            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * c_specular /** m_specular*/;
+            //ハーフランバート係数
             float3 cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
             shadecolor.rgb += cos * (diffuse + specular) * dirLights[i].lightcolor;
@@ -66,10 +70,10 @@ PSOutput main(VSOutput input)
 	        // 反射光ベクトル
             float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+            float3 diffuse = dotlightnormal * c_diffuse /** m_diffuse*/;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
-	        //ハーフランバート係数
+            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * c_specular /** m_specular*/;
+            //ハーフランバート係数
             float3 cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
             shadecolor.rgb += cos * atten * (diffuse + specular) * pointLights[j].lightcolor;
@@ -102,9 +106,9 @@ PSOutput main(VSOutput input)
 	        // 反射光ベクトル
             float3 reflect = normalize(-lightv + 2 * dotlightnormal * input.normal);
             // 拡散反射光
-            float3 diffuse = dotlightnormal * m_diffuse;
+            float3 diffuse = dotlightnormal * c_diffuse /** m_diffuse*/;
 	        // 鏡面反射光
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * c_specular /** m_specular*/;
 	        // 全て加算する
             shadecolor.rgb += atten * (diffuse + specular) * spotLights[k].lightcolor;
         }
@@ -139,11 +143,6 @@ PSOutput main(VSOutput input)
             shadecolor.rgb -= atten;
         }
     }
-    
-    //float4 color = texcolor * m_color;
-    //output.target0 = color;
-    //output.target1 = color;
-    //return output;
 
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;

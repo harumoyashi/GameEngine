@@ -81,8 +81,7 @@ bool Player::Init()
 
 	//コライダー設定
 	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
-	collider_.SetWide(obj_->scale_.x);
-	collider_.SetHeight(obj_->scale_.z);
+	collider_.SetRadius(obj_->scale_.x);
 	collider_.SetColID("player");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Player::OnCollision, this));

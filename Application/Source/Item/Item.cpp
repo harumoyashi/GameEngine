@@ -21,11 +21,11 @@ void Item::Generate(const NVec3& pos, bool isPop)
 	obj_->position_ = pos;
 	obj_->rotation_.x = 45.f;
 	obj_->rotation_.z = 45.f;
-	obj_->scale_ = Player::GetInstance()->GetScale() * 2.5f;
+	obj_->scale_ = Player::GetInstance()->GetScale() * 2.f;
 
 	//コライダー設定
 	collider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
-	collider_.SetRadius(obj_->scale_.x * 2.5f);	//ちょい大きめに判定取る
+	collider_.SetRadius(obj_->scale_.x * 3.f);	//ちょい大きめに判定取る
 	collider_.SetColID("item");
 	NCollisionManager::GetInstance()->AddCollider(&collider_);
 	collider_.SetOnCollision(std::bind(&Item::OnCollision, this));
