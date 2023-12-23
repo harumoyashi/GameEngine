@@ -153,10 +153,11 @@ void NGameScene::Init()
 	lightGroup_ = std::make_unique<NLightGroup>();
 	lightGroup_->Init(true, true, false, false);
 
-	lightGroup_->sPointLights[0]->SetLightAtten({ 0.5f,0.5f,0.5f });
+	lightGroup_->sPointLights[0]->SetLightAtten({ 0.7f,0.7f,0.7f });
 	for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
 	{
 		lightGroup_->sPointLights[i]->SetActive(false);
+		lightGroup_->sPointLights[i]->SetLightAtten({ 0.4f,0.4f,0.4f });
 	}
 	lightGroup_->Update();
 

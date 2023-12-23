@@ -72,8 +72,10 @@ PSOutput main(GSOutput input)
             float3 diffuse = dotlightnormal * m_diffuse;
 	        // 鏡面反射光
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+	        //ハーフランバート係数
+            float cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
-            shadecolor.rgb += atten * (diffuse + specular) * pointLights[j].lightcolor;
+            shadecolor.rgb += cos * atten * (diffuse + specular) * pointLights[j].lightcolor;
         }
     }
     
