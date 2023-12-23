@@ -418,7 +418,7 @@ void NGameScene::Update()
 		for (uint32_t i = 2; i < BulletManager::GetInstance()->bullets_.size() + 2; i++)
 		{
 			lightGroup_->sPointLights[i]->SetActive(true);
-			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i - 2]->GetPos());
+			lightGroup_->sPointLights[i]->SetLightPos(BulletManager::GetInstance()->bullets_[i - 2]->GetPos() + NVec3::up * 0.2f);
 			lightGroup_->sPointLights[i]->SetLightColor(BulletManager::GetInstance()->bullets_[i - 2]->GetColor());
 		}
 		lightGroup_->Update();
@@ -694,7 +694,7 @@ void NGameScene::Update()
 		ItemManager::GetInstance()->Generate(NVec3::zero, BulletType::LineBullet);
 	}
 #endif
-	}
+}
 
 void NGameScene::DrawBackSprite()
 {

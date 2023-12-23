@@ -44,8 +44,10 @@ float4 main(GSOutput input) : SV_TARGET
             float3 diffuse = dotlightnormal * 0.3f;
 	        // 鏡面反射光
             float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * 0.0f;
+	        //ハーフランバート係数
+            float cos = pow(dotlightnormal * 0.5f + 0.5f, 2.0f);
 	        // 全て加算する
-            shadecolor.rgb += (diffuse + specular) * dirLights[i].lightcolor;
+            shadecolor.rgb += cos * (diffuse + specular) * dirLights[i].lightcolor;
         }
     }
     
