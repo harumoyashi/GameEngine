@@ -60,7 +60,7 @@ void NTestScene::Init()
 		fragment_[i].obj->position_ = fragment_[i].oriPos;
 		if (i % 2 == 1)
 		{
-			fragment_[i].obj->color_ = NColor::kLightblue;
+			fragment_[i].obj->color_ = NColor::kEnemy;
 		}
 
 		fragment_[i].floatingTimer = MathUtil::Randomf(1.f, 3.f);	//1~3秒の間で設定

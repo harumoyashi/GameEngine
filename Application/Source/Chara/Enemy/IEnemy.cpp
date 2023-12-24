@@ -27,7 +27,7 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->position_ = pos;
 	oriScale_ = Player::GetInstance()->GetScale();
 	obj_->scale_ = oriScale_;
-	obj_->color_ = NColor::kLightblue;
+	obj_->color_ = NColor::kEnemy;
 	obj_->Update();
 
 	if (modelname == "mouse")
