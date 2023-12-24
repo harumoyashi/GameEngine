@@ -171,14 +171,27 @@ bool IEnemy::IsInScreen()
 
 	NVec2 objPosPlusScale;	//オブジェのスケール足した場合の2D座標
 	NVec2 objPosMinusScale;	//オブジェのスケール引いた場合の2D座標
+
 	//スケール足したのと引いたのそれぞれ平行移動行列として求める
-	NMatrix4 posPlusScaleMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
-	NMatrix4 posMinusScaleMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
+	NVec3 scale;	//オブジェクトの大きさ
+	if (circleCollider_.GetIsActive())
+	{
+		scale = obj_->GetMatWorld().GetScale() * circleCollider_.GetRadius();
+	}
+	else if (squareCollider_.GetIsActive())
+	{
+		scale = obj_->GetMatWorld().GetScale();
+		scale.x *= squareCollider_.GetWide() * (squareCollider_.GetSize() / obj_->scale_.x);
+		scale.z *= squareCollider_.GetHeight() * (squareCollider_.GetSize() / obj_->scale_.z);
+	}
+
+	NMatrix4 objRightMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + scale);
+	NMatrix4 objLeftMat =
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - scale);
 	//スクリーン座標に直して
-	objPosPlusScale = MathUtil::WorldToScreen(posPlusScaleMat);
-	objPosMinusScale = MathUtil::WorldToScreen(posMinusScaleMat);
+	objPosPlusScale = MathUtil::WorldToScreen(objRightMat);
+	objPosMinusScale = MathUtil::WorldToScreen(objLeftMat);
 	//画面内か判定
 	if (0 < objPosPlusScale.x && NWindows::kWin_width > objPosMinusScale.x &&
 		0 < objPosMinusScale.y && NWindows::kWin_height > objPosPlusScale.y)
@@ -219,10 +232,22 @@ void IEnemy::IsInActiveArea()
 
 	float objRight, objLeft;	//オブジェの右端左端
 	//スケール足したのと引いたのそれぞれ平行移動行列として求める
+	NVec3 scale;	//オブジェクトの大きさ
+	if (circleCollider_.GetIsActive())
+	{
+		scale = obj_->GetMatWorld().GetScale() * circleCollider_.GetRadius();
+	}
+	else if (squareCollider_.GetIsActive())
+	{
+		scale = obj_->GetMatWorld().GetScale();
+		scale.x *= squareCollider_.GetWide() * (squareCollider_.GetSize() / obj_->scale_.x);
+		scale.z *= squareCollider_.GetHeight() * (squareCollider_.GetSize() / obj_->scale_.z);
+	}
+
 	NMatrix4 objRightMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + obj_->GetMatWorld().GetScale());
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() + scale);
 	NMatrix4 objLeftMat =
-		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - obj_->GetMatWorld().GetScale());
+		NMatrix4::Translation(obj_->GetMatWorld().GetWorldPos() - scale);
 	//スクリーン座標に直して
 	objRight = MathUtil::WorldToScreen(objRightMat).x;
 	objLeft = MathUtil::WorldToScreen(objLeftMat).x;
