@@ -43,10 +43,10 @@ private:
 	std::array<NEasing::EaseTimer,3> extrusionTimer_;	//押し出すタイマー
 	std::array<NVec3,maxObj> objPos_;					//フィールド上のオブジェクト座標
 	bool isAvoid_ = true;								//避けるようになるか否か
-	uint32_t checkPointNum = 5;							//チェックポイントの数
+	uint32_t checkPointNum = 7;							//チェックポイントの数
 
 	float startPosZ_ = 3.0f;							//スタート地点(縦だけ)
-	float goalPosZ_ = 40.0f;							//ゴール地点(縦だけ)
+	float goalPosZ_ = 60.0f;							//ゴール地点(縦だけ)
 
 	bool isStart_ = false;								//スタートしたかフラグ
 	bool isGoal_ = false;								//ゴールしたかフラグ

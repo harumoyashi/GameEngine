@@ -45,6 +45,13 @@ void Item::Update()
 	//経過時間を適用
 	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
+	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
+	if (isAlive_ == false)
+	{
+		//コライダーマネージャーから削除
+		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
+	}
+
 	//くるくるまわす
 	obj_->rotation_.y += 5.f * elapseSpeed_;
 
@@ -57,13 +64,6 @@ void Item::Update()
 
 	obj_->Update();
 	collider_.Update(obj_.get());
-
-	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
-	if (isAlive_ == false)
-	{
-		//コライダーマネージャーから削除
-		NCollisionManager::GetInstance()->RemoveCollider(&collider_);
-	}
 }
 
 void Item::Draw()

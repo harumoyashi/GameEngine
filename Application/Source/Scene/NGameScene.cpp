@@ -409,7 +409,8 @@ void NGameScene::Update()
 			lightGroup_->sPointLights[0]->SetLightPos(Player::GetInstance()->GetHeadPos() + NVec3(0, 0.5f, 0));
 			lightGroup_->sPointLights[0]->SetLightColor(Player::GetInstance()->GetColor().GetRGB());
 			lightGroup_->sPointLights[1]->SetLightPos(ItemManager::GetInstance()->GetMutekiItemPos() + NVec3(0, 0.5f, 0));
-			lightGroup_->sPointLights[1]->SetLightColor({ 0.5f,1.f,0.1f });
+			NColor itemColor = NColor::kItem;
+			lightGroup_->sPointLights[1]->SetLightColor(itemColor.GetRGB());
 		}
 
 		for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)

@@ -562,7 +562,7 @@ NColor Player::GamingColorUpdate()
 	}
 
 	NColor gamingColor(redTimer_.GetTimeRate(), greenTimer_.GetTimeRate(), blueTimer_.GetTimeRate());
-	return gamingColor;
+	return gamingColor * 0.7f;
 }
 
 void Player::SetIsAlive(bool isAlive)

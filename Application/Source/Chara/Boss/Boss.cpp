@@ -45,7 +45,7 @@ void Boss::Generate(const NVec3& pos)
 	oriScale_ = Player::GetInstance()->GetScale() * 3.f;
 	obj_->scale_ = NVec3::zero;
 	obj_->rotation_ = NVec3::zero;
-	obj_->color_ = NColor::kYellow;
+	obj_->color_ = NColor::kItem;
 	obj_->Update();
 
 	//コライダー設定

@@ -245,9 +245,9 @@ void Field::Update()
 		if (NInput::IsKeyDown(DIK_C))
 		{
 			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-	}
+		}
 #endif
-}
+	}
 
 	//ゴールしてないとき
 	if (isGoal_ == false)
@@ -275,26 +275,24 @@ void Field::Update()
 		}
 	}
 
-	//スライドしていいなら
-	for (auto& line : lines_)
+	//スタート線スライドしていいなら
+	if (lines_[(uint32_t)LineType::Start].isSlide)
 	{
-		if (line.isSlide)
+		//スタート線スライドタイマー開始
+		if (lines_[(uint32_t)LineType::Start].slideTimer.GetStarted() == false)
 		{
-			//スタート線スライドタイマー開始
-			if (line.slideTimer.GetStarted() == false)
-			{
-				line.slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
+			lines_[(uint32_t)LineType::Start].slideTimer.Start();
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
-				NAudioManager::GetInstance()->Play("startSE");
-				line.isSlide = false;	//スライドしちゃだめにする
-			}
+			NAudioManager::GetInstance()->Play("startSE");
+			lines_[(uint32_t)LineType::Start].isSlide = false;	//スライドしちゃだめにする
 		}
-		//タイマー更新
-		line.slideTimer.Update();
 	}
+	//タイマー更新
+	lines_[(uint32_t)LineType::Start].slideTimer.Update();
+
 	//スライドしていいなら
 	for (auto& cp : checkPoints_)
 	{
@@ -304,8 +302,19 @@ void Field::Update()
 			if (cp.slideTimer.GetStarted() == false)
 			{
 				cp.slideTimer.Start();
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
+
+				float centerPosZ = (goalPosZ_ - startPosZ_) * 0.5f + startPosZ_;	//スタートとゴールの中間地点
+				//半分行くまではヘビ主体で
+				if (Player::GetInstance()->GetPos().z < centerPosZ)
+				{
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
+				}
+				else
+				{
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
+				}
 				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
 
 				NAudioManager::GetInstance()->Play("startSE");

@@ -249,5 +249,5 @@ void IEnemy::Move()
 void IEnemy::SetisItem(bool isItem)
 {
 	isItem_ = isItem;
-	obj_->color_ = NColor::kYellow;	//アイテム持ってる敵は黄色にする
+	obj_->color_ = NColor::kItem;	//アイテム持ってる敵はアイテム色にする
 }
