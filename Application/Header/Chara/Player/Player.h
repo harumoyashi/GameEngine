@@ -64,8 +64,11 @@ private:
 	SimpleParticle smokeParticle_;						//無敵演出時に出るパーティクル
 
 public:
+	//コンストラクタ
 	Player();
+	//デストラクタ
 	~Player();
+	//シングルトンインスタンス取得
 	static Player* GetInstance();
 
 	//初期化

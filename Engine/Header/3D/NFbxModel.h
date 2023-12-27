@@ -48,6 +48,7 @@ struct FbxModel final
 	Assimp::Importer importer;
 	const aiScene* scene;
 
+	//コンストラクタ
 	FbxModel();
 
 	//アニメーションの再生

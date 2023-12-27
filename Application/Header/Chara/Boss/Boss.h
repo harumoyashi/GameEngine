@@ -33,9 +33,12 @@ private:
 	SimpleParticle landingParticle_;			//着地時に出るパーティクル
 
 public:
+	//コンストラクタ
 	Boss();
+	//デストラクタ
 	~Boss();
 
+	//シングルトンインスタンス取得
 	static Boss* GetInstance();
 
 	//生成

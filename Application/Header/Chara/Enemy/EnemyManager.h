@@ -14,6 +14,7 @@ public:
 	NEasing::EaseTimer beatInTimer_ = 0.25f;		//リズムに乗る用タイマー(でかくなる)
 	NEasing::EaseTimer beatOutTimer_ = 0.25f;		//リズムに乗る用タイマー(縮む)
 
+	//シングルトンインスタンス取得
 	static EnemyManager* GetInstance();
 	//初期化
 	void Init();

@@ -53,7 +53,9 @@ private:
 	std::unique_ptr<NLightGroup> lightGroup_;
 
 public:
+	//コンストラクタ
 	NTestScene();
+	//デストラクタ
 	~NTestScene();
 
 	//リソース読み込み

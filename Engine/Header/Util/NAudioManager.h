@@ -26,7 +26,7 @@ private:
 	void AllSetVolume();
 
 public:
-	//インスタンス取得
+	//シングルトンインスタンス取得
 	static NAudioManager* GetInstance();
 
 	//全部の音ファイル読み込み

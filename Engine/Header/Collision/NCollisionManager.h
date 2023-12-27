@@ -17,6 +17,7 @@ private:
 	bool isCollisionCheck = true;	//当たり判定するかフラグ
 
 public:
+	//シングルトンインスタンス取得
 	static NCollisionManager* GetInstance();
 
 	//初期化(コライダー群全削除)

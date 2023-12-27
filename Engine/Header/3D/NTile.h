@@ -19,7 +19,9 @@ private:
 	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
 
 public:
+	//初期化
 	bool Init()override;
+	//更新
 	void Update()override;
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw(bool isAvoid);

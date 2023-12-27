@@ -40,7 +40,9 @@ private:
 	float logoPosY_;											//タイトルロゴY座標
 
 public:
+	//コンストラクタ
 	NTitleScene();
+	//デストラクタ
 	~NTitleScene();
 
 	//リソース読み込み

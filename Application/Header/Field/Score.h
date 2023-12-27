@@ -28,7 +28,6 @@ private:
 	static NEasing::EaseTimer addEaseTimer_;	//スコア加算時のイージング用タイマー
 
 public:
-	static void Create();
 	//初期化
 	static void Init();
 	//更新

@@ -11,6 +11,7 @@ public:
 	std::string modelname = "snake";   //モデル名
 	SquareCollider collider_;		   //コライダー
 
+	//コンストラクタ
 	Snake();
 
 	// ゲッター //

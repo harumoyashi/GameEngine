@@ -65,6 +65,7 @@ private:
 	static ComPtr<IDirectInput8> sDirectInput;
 
 public:
+	//シングルトンインスタンス取得
 	static NInput* GetInstance();
 
 	//key初期化

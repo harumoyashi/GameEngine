@@ -24,6 +24,7 @@ private:
 	NVec2 snakeSideEmitter = { 2.0f,1.0f };	//へび群(横)の出現範囲
 
 public:
+	//シングルトンインスタンス取得
 	static EnemyFactory* GetInstance();
 
 	//更新

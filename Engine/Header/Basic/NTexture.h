@@ -42,7 +42,7 @@ public:
 	ComPtr<ID3D12Resource> tb_;	//転送用のテクスチャバッファ
 
 public:
-	//TextureManagerを取得する
+	//シングルトンインスタンス取得
 	static NTextureManager* GetInstance();
 
 	//初期化

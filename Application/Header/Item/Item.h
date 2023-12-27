@@ -21,7 +21,9 @@ private:
 	BulletType bulletType_;			//弾の種類
 
 public:
+	//コンストラクタ
 	Item();
+	//デストラクタ
 	~Item();
 
 	//生成

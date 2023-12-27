@@ -160,6 +160,7 @@ public:
 class PipeLineManager final
 {
 public:
+	//シングルトンインスタンス取得
 	static PipeLineManager* GetInstance();
 	//パイプライン全種つくる
 	void CreateAll();

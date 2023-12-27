@@ -101,6 +101,7 @@ private:
 	};
 
 public:
+	//シングルトンインスタンス取得
 	static NAudio* GetInstance();
 
 	//初期化

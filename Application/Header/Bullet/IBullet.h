@@ -35,7 +35,9 @@ protected:
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
 public:
+	//コンストラクタ
 	IBullet();
+	//デストラクタ
 	virtual ~IBullet();
 	//生成
 	void Generate(const NVec3& pos, const float moveAngle = 0.0f);

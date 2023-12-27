@@ -15,6 +15,7 @@ private:
 	WideBullet wide_;	//ワイド弾
 
 public:
+	//シングルトンインスタンス取得
 	static BulletFactory* GetInstance();
 
 	//更新

@@ -6,6 +6,7 @@
 struct ObjModel final
 	: public IModel
 {
+	//コンストラクタ
 	ObjModel()
 	{
 		format = ModelFormat::Obj;

@@ -11,6 +11,7 @@ public:
     std::string modelname = "mouse";    //モデル名
     CircleCollider collider_;		    //コライダー
 
+    //コンストラクタ
     Mouse();
 
     // ゲッター //

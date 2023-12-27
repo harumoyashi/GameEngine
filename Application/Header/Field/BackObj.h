@@ -14,7 +14,9 @@ private:
 	NVec3 extrusionTimer_;	//押し出しタイマー
 
 public:
+	//初期化
 	bool Init()override;
+	//更新
 	void Update()override;
 	//共通グラフィックスコマンド
 	static void CommonBeginDraw();

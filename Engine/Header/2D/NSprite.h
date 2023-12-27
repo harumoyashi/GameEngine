@@ -53,7 +53,9 @@ public:
 	NColor color_;
 
 public:
+	//コンストラクタ
 	NSprite();
+	//デストラクタ
 	~NSprite();
 #pragma region 初期化
 	//スプライト生成

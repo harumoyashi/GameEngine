@@ -54,6 +54,7 @@ private:
 	bool isBossGene_ = false;							//ボス生成したかフラグ
 
 public:
+	//シングルトンインスタンス取得
 	static Field* GetInstance();
 
 	//初期化

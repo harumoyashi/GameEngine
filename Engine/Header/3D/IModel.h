@@ -12,5 +12,6 @@ struct IModel
 	NMaterial material;	//マテリアル
 	ModelFormat format;	//モデルの種類
 
+	//デストラクタ
 	virtual ~IModel() = default;
 };

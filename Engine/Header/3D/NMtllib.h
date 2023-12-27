@@ -7,5 +7,6 @@
 struct NMtllib
 {
 public:
+	//マテリアル読み込み
 	static NMaterial Load(const std::string& directoryPath, const std::string& filename);
 };

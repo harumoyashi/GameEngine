@@ -11,6 +11,7 @@ private:
 	ComPtr<ID3D12DescriptorHeap> srvHeap_;
 
 public:
+	//シングルトンインスタンス取得
 	static NImGuiManager* GetInstance();
 	//初期化
 	void Init();

@@ -11,6 +11,7 @@ public:
 	const uint32_t maxBul = 126;	//最大弾数
 
 public:
+	//シングルトンインスタンス取得
 	static BulletManager* GetInstance();
 
 	//初期化

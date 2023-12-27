@@ -13,6 +13,7 @@ private:
 	std::unique_ptr<Bloom> bloom_;
 
 public:
+	//シングルトンインスタンス取得
 	static NPostEffectManager* GetInstance();
 
 	//初期化

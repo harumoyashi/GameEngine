@@ -13,6 +13,7 @@ private:
 	uint32_t level_;						//弾の強化レベル
 
 public:
+	//コンストラクタ
 	LineBullet();
 
 	//通常弾専用アップデート

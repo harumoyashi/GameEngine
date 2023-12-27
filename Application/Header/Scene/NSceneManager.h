@@ -19,7 +19,7 @@ private:
 	static std::unique_ptr<IScene> nextScene_;
 
 public:
-	//インスタンス取得
+	//シングルトンインスタンス取得
 	static NSceneManager* GetInstance();
 
 	//初期化

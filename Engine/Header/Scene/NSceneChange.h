@@ -19,7 +19,9 @@ private:
 	NVec2 pos_;	//暗幕の座標
 
 public:
+	//コンストラクタ
 	NSceneChange();
+	//シングルトンインスタンス取得
 	static NSceneChange* GetInstance();
 
 	void Init();	//初期化

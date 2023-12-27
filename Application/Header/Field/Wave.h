@@ -26,6 +26,7 @@ private:
 	NumDrower meterTex_;						//プレイヤーと波の距離表示
 
 public:
+	//シングルトンインスタンス取得
 	static Wave* GetInstance();
 
 	//初期化

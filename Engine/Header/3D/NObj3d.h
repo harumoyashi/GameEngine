@@ -49,7 +49,9 @@ public:
 	NColor color_;				//色
 
 public:
+	//コンストラクタ
 	NObj3d();
+	//デストラクタ
 	virtual ~NObj3d();
 	//初期化
 	virtual bool Init();

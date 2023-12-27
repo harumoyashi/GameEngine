@@ -16,6 +16,7 @@ private:
 	bool isMutekiGet_;							//無敵アイテム取ったか否か
 
 public:
+	//シングルトンインスタンス取得
 	static ItemManager* GetInstance();
 	//初期化
 	void Init();

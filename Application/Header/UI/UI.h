@@ -47,7 +47,9 @@ private:
 	std::vector<std::array<UI,3>> uiVol_{(maxUIVol)};	//音量調節UI群
 
 public:
+	//コンストラクタ
 	UIManager();
+	//シングルトンインスタンス取得
 	static UIManager* GetInstance();
 	//初期化
 	void Init();

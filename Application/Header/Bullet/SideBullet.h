@@ -16,6 +16,7 @@ private:
 	uint32_t allAtOnceNum_;     //一度に撃つ弾の数
 
 public:
+	//コンストラクタ
 	SideBullet();
 
 	//サイド弾専用アップデート

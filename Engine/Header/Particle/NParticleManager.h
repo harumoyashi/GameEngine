@@ -16,6 +16,7 @@ public:
 	std::vector<IEmitter3D*> bulletEmitters_;						//弾用パーティクルエミッター群
 
 public:
+	//シングルトンインスタンス取得
 	static NParticleManager* GetInstance();
 	//初期化
 	void Init();

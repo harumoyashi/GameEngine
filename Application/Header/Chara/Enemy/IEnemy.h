@@ -44,7 +44,9 @@ protected:
 	bool isDraw_;					//描画するかフラグ
 
 public:
+	//コンストラクタ
 	IEnemy();
+	//デストラクタ
 	virtual ~IEnemy();
 
 	//生成
