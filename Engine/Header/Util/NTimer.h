@@ -1,5 +1,7 @@
 #pragma once
 
+// タイマー //
+
 //時間取得の際に使う時間の種類
 enum class TimeType
 {

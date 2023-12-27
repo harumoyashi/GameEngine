@@ -1,6 +1,8 @@
 #pragma once
 #include "IEnemy.h"
 
+// 敵管理 //
+
 class EnemyManager final
 {
 private:

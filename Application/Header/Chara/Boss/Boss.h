@@ -4,6 +4,8 @@
 #include "CircleCollider.h"
 #include "SimpleParticle.h"
 
+// ただ追いかけてくるボス //
+
 class Boss
 {
 private:

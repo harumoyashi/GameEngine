@@ -1,6 +1,8 @@
 #pragma once
 #include "NBaseCollider.h"
 
+// 矩形のコライダー //
+
 class SquareCollider :
     public NBaseCollider
 {

@@ -8,6 +8,8 @@
 #include "NMathUtil.h"
 #include "NConstBuff.h"
 
+// スポットライト //
+
 class NSpotLight final
 {
 public:

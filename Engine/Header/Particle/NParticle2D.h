@@ -4,6 +4,9 @@
 #include <NTexture.h>
 #include <NEasing.h>
 
+// 2Dのパーティクル //
+// エミッターも含む //
+
 class Emitter2D final
 {
 	//粒子1粒

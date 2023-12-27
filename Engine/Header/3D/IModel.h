@@ -3,6 +3,8 @@
 #include "NMaterial.h"
 #include "NUtil.h"
 
+// モデルのひな形 //
+
 struct IModel
 {
 	std::string name;	//モデル名

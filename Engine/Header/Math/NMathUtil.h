@@ -5,6 +5,8 @@
 #include "NQuaternion.h"
 #include <stdint.h>
 
+// 数学系の便利関数まとめ //
+
 const float PI = 3.141592654f;
 const float PI2 = PI * 2.0f;
 

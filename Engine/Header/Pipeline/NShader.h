@@ -2,8 +2,11 @@
 #include <d3d12.h>
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <wrl.h>
+
+// シェーダー //
+// unordered_mapにまとめて登録もやってる //
 
 class NShader final
 {
@@ -16,7 +19,7 @@ private:
 	ComPtr<ID3DBlob> csBlob_;		// コンピュートシェーダオブジェクト
 	ComPtr<ID3DBlob> errorBlob_;	// エラーオブジェクト
 
-	static std::map<std::string, NShader> shaderMap_;
+	static std::unordered_map<std::string, NShader> shaderMap_;
 
 public:
 	//パスに合わせた頂点シェーダーの読み込み

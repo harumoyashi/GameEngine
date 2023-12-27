@@ -13,6 +13,8 @@
 #include <mfidl.h>
 #include <mfreadwrite.h>
 
+// xAudio2を用いた音の再生 //
+
 //音声データ
 struct SoundData
 {

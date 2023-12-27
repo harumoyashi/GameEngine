@@ -4,6 +4,8 @@
 #include "NEasing.h"
 #include "IBullet.h"
 
+// アイテム //
+
 class Item
 {
 private:

@@ -1,6 +1,8 @@
 #pragma once
 #include "NSprite.h"
 
+// 数字描画用 //
+
 class NumDrower final
 {
 private:

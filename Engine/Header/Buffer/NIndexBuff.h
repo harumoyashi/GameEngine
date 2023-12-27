@@ -3,6 +3,8 @@
 #include <wrl.h>
 #include <vector>
 
+// インデックスバッファ //
+
 struct NIndexBuff
 {
 private:

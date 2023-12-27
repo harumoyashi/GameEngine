@@ -1,4 +1,7 @@
 #pragma once
+
+// フレームワーク //
+
 class NFramework
 {
 private:

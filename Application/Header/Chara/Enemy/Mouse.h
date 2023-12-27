@@ -2,6 +2,8 @@
 #include "IEnemy.h"
 #include "CircleCollider.h"
 
+// ねずみの敵 //
+
 class Mouse final :
     public IEnemy
 {

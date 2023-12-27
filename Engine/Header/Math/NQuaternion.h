@@ -1,6 +1,8 @@
 #pragma once
 #include "NVec3.h"
 
+// 自作クォータニオン //
+
 struct NMatrix4;
 
 struct NQuaternion {

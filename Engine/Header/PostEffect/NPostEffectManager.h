@@ -3,6 +3,8 @@
 #include "RadialBlur.h"
 #include "Bloom.h"
 
+// ポストエフェクト管理 //
+
 class NPostEffectManager
 {
 private:

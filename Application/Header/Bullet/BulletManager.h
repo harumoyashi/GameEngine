@@ -1,7 +1,8 @@
 #pragma once
 #include <memory>
-
 #include "IBullet.h"
+
+// 弾管理 //
 
 class BulletManager final
 {

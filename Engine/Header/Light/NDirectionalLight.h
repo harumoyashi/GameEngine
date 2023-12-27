@@ -6,6 +6,8 @@
 #include "NVec3.h"
 #include "NConstBuff.h"
 
+// 平行光源 //
+
 class NDirectionalLight final
 {
 private://静的メンバ変数

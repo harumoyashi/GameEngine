@@ -1,8 +1,9 @@
 #pragma once
 #include "IBullet.h"
 
-//斜め45度で左右同時に2発撃つ
-//強化によりn回連続で撃つ
+// 斜め45度で左右同時に2発撃つ //
+// 強化によりn回連続で撃つ //
+
 class WideBullet final :
 	public IBullet
 {

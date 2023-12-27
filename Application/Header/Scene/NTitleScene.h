@@ -15,6 +15,8 @@
 #include "NEasing.h"
 #include "NConstBuff.h"
 
+// タイトルシーン //
+
 class NTitleScene final :
 	public IScene
 {

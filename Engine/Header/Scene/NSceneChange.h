@@ -2,6 +2,8 @@
 #include "NSprite.h"
 #include "NEasing.h"
 
+// シーン遷移 //
+
 class NSceneChange
 {
 private:

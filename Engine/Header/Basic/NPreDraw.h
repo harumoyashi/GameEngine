@@ -3,6 +3,8 @@
 
 #include <wrl.h>
 
+// 描画前処理 //
+
 class NPreDraw final
 {
 private:

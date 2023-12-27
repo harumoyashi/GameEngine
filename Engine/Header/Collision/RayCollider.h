@@ -1,6 +1,8 @@
 #pragma once
 #include "NBaseCollider.h"
 
+// レイ形のコライダー //
+
 class RayCollider final :
 	public NBaseCollider
 {

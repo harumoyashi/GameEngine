@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+// シーンのひな形 //
+
 class IScene
 {
 public:

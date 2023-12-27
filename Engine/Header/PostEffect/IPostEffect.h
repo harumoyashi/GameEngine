@@ -1,6 +1,8 @@
 #pragma once
 #include "NSprite.h"
 
+// ポストエフェクトのひな形 //
+
 class IPostEffect
 	: public NSprite
 {

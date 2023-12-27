@@ -2,6 +2,8 @@
 #include "Item.h"
 #include <vector>
 
+// アイテム管理 //
+
 class ItemManager
 {
 private:

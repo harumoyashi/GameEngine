@@ -2,6 +2,9 @@
 #include "SimpleParticle.h"
 #include <unordered_map>
 
+// パーティクルの管理 //
+// エミッターを登録して更新処理をまとめてかけてる //
+
 class IEmitter3D;
 
 class NParticleManager final

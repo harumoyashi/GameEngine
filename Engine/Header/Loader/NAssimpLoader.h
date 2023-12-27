@@ -5,6 +5,8 @@
 #include <memory>
 #include "NFbxModel.h"
 
+// Assimpの読み込み //
+
 //前方宣言
 struct aiMesh;
 struct aiScene;

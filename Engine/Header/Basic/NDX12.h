@@ -12,6 +12,8 @@
 
 #include "NInput.h"
 
+// ゲームに必要な基盤部分 //
+
 class NDX12 final
 {
 private:

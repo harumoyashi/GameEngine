@@ -9,6 +9,8 @@
 #include "SimpleParticle.h"
 #include "NEasing.h"
 
+// ゲームシーン(プレイするとこ) //
+
 //ゲームシーン内でのシーン分け
 enum class SceneMode
 {

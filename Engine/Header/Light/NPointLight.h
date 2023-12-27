@@ -6,6 +6,8 @@
 #include "NVec3.h"
 #include "NConstBuff.h"
 
+// 点光源 //
+
 class NPointLight final
 {
 public:

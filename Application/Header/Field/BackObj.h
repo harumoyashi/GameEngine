@@ -1,6 +1,8 @@
 #pragma once
 #include "NObj3d.h"
 
+// 背景オブジェクト(うねうねしてるやつ) //
+
 class BackObj final :
 	public NObj3d
 {

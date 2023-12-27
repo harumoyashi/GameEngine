@@ -2,6 +2,8 @@
 #include "NCamera.h"
 #include "NEasing.h"
 
+// カメラ管理、制御 //
+
 //ここにカメラの種類登録
 enum class CameraType
 {

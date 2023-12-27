@@ -5,6 +5,8 @@
 #include "SquareCollider.h"
 #include "SimpleParticle.h"
 
+// 敵のひな形 //
+
 class IEnemy
 {
 public:

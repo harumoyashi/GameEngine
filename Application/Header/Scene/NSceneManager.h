@@ -3,6 +3,8 @@
 #include <memory>
 #include <wrl.h>
 
+// シーン管理 //
+
 enum Scene {
 	TITLESCENE,
 	GAMESCENE,

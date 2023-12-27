@@ -16,6 +16,8 @@
 #include "NConstBuff.h"
 #include "NLevelDataLoader.h"
 
+// お試しシーン //
+
 class NTestScene final :
 	public IScene
 {

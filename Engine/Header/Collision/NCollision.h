@@ -8,6 +8,8 @@
 #include "PlaneCollider.h"
 #include "RayCollider.h"
 
+// それぞれの形状の当たり判定まとめ //
+
 class NCollision final
 {
 public:

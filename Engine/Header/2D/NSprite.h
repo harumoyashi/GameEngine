@@ -11,6 +11,8 @@
 #include <d3dx12.h>
 #include <wrl.h>
 
+// スプライトの基本機能詰め合わせ //
+
 class NSprite
 {
 protected:

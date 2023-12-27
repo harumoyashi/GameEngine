@@ -2,6 +2,8 @@
 #include "NAudio.h"
 #include <unordered_map>
 
+// 音管理 //
+
 typedef std::string SoundHandle;
 struct Sound
 {

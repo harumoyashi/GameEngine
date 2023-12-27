@@ -1,4 +1,7 @@
 #pragma once
+
+// イージング関数まとめ //
+
 namespace NEasing
 {
 	//イージング群

@@ -5,6 +5,8 @@
 #include "SimpleParticle.h"
 #include "IBullet.h"
 
+// プレイヤー //
+
 class Player final
 {
 private:

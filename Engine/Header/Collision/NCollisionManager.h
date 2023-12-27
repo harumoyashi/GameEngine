@@ -1,6 +1,9 @@
 #pragma once
 #include <forward_list>
 
+// 当たり判定管理 //
+// 当たり判定登録して総当たりさせる //
+
 class NBaseCollider;
 
 class NCollisionManager final

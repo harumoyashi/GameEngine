@@ -4,7 +4,7 @@
 #include "NColor.h"
 #include <array>
 
-//定数バッファ用データ構造体//
+// 定数バッファ用データ構造体 //
 
 //3D変換行列
 struct  ConstBuffDataTransform

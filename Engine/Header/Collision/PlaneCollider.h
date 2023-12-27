@@ -1,6 +1,8 @@
 #pragma once
 #include "NBaseCollider.h"
 
+// 平面形のコライダー //
+
 class PlaneCollider final :
 	public NBaseCollider
 {

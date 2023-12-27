@@ -9,6 +9,8 @@
 #include "NModelManager.h"
 #include "NFramework.h"
 
+// ゲームの流れまとめたフレームワーク //
+
 class NGame final
 	:public NFramework
 {

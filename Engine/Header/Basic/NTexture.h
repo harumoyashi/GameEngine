@@ -5,6 +5,9 @@
 
 #include <wrl.h>
 
+// テクスチャ //
+// 管理部分も別クラスだがここにまとまってる //
+
 typedef std::string TextureHandle;
 
 struct NTexture final

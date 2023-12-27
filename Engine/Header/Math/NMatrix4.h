@@ -3,6 +3,8 @@
 #include "NVec3.h"
 #include "NVec4.h"
 
+// 自作4*4の行列 //
+
 struct NMatrix4
 {
 	float m[4][4];

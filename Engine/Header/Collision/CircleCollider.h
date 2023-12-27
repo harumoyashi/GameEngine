@@ -1,5 +1,8 @@
 #pragma once
 #include "NBaseCollider.h"
+
+// 円形のコライダー //
+
 class CircleCollider :
     public NBaseCollider
 {

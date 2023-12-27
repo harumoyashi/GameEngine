@@ -1,5 +1,7 @@
 #pragma once
 
+// 自作Vector2 //
+
 struct NVec2
 {
     // メンバ変数

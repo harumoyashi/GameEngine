@@ -3,6 +3,9 @@
 #include <vector>
 #include "NumDrower.h"
 
+// スコア //
+// 描画機能も含む //
+
 class Score final
 {
 public:

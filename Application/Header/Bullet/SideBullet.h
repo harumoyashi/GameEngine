@@ -1,8 +1,9 @@
 #pragma once
 #include "IBullet.h"
 
-//左右同時に2発撃つ
-//強化によりn回連続で撃つ
+// 左右同時に2発撃つ //
+// 強化によりn回連続で撃つ //
+
 class SideBullet final :
 	public IBullet
 {

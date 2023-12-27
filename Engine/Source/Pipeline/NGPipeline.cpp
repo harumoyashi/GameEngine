@@ -1,6 +1,7 @@
 #include "NGPipeline.h"
+#include <unordered_map>
 
-std::map<std::string, NGPipeline> psoMap;	//パイプラインステートのマップ
+std::unordered_map<std::string, NGPipeline> psoMap;	//パイプラインステートのマップ
 
 using bDesc = PipelineDesc::Blend::BlendDesc;	//長すぎるから省略
 

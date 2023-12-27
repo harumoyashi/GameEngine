@@ -5,6 +5,8 @@
 #include<memory>
 #include <wrl.h>
 
+// 定数バッファ //
+
 template<typename T>
 struct NConstBuff
 {

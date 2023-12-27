@@ -3,6 +3,8 @@
 #include "Mouse.h"
 #include "Snake.h"
 
+// 敵生成工場 //
+
 class EnemyFactory final
 {
 private:

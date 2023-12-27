@@ -9,6 +9,9 @@
 
 #include <wrl.h>
 
+// 入力系全般 //
+// マウス、キーボード、XBoxコントローラー //
+
 class NInput final
 {
 public:

@@ -3,6 +3,8 @@
 #include "CircleCollider.h"
 #include "NEasing.h"
 
+// 弾のひな形 //
+
 enum class BulletType
 {
 	LineBullet,

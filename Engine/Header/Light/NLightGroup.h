@@ -5,6 +5,8 @@
 #include "NCircleShadow.h"
 #include "NConstBuff.h"
 
+// 光源まとめて管理 //
+
 class NLightGroup final
 {
 public:

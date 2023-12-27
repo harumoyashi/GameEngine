@@ -2,6 +2,8 @@
 #include "NDX12.h"
 #include <wrl.h>
 
+// ImGui管理 //
+
 class NImGuiManager final
 {
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;

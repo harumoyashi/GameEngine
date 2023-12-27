@@ -11,6 +11,8 @@
 #include<memory>
 #include <wrl.h>
 
+// 3Dオブジェクトの基本機能詰め合わせ //
+
 class NBaseCollider;
 
 class NObj3d

@@ -5,7 +5,8 @@
 #include "NEasing.h"
 #include <array>
 
-//床
+// フィールド関係全般 //
+
 class Field final
 {
 public:

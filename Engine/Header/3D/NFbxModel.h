@@ -4,6 +4,8 @@
 
 #include <assimp/Importer.hpp>
 
+// FBXモデルのひな形 //
+
 struct Bone
 {
 	std::string name;

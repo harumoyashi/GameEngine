@@ -3,6 +3,8 @@
 #include "NIndexBuff.h"
 #include "NConstBuff.h"
 
+// メッシュ //
+
 struct NMesh final
 {
 public:

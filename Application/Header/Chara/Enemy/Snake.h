@@ -2,6 +2,8 @@
 #include "IEnemy.h"
 #include "SquareCollider.h"
 
+// ヘビの敵 //
+
 class Snake :
 	public IEnemy
 {

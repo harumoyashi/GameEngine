@@ -4,6 +4,8 @@
 #include "NSprite.h"
 #include "NEasing.h"
 
+// UI全般(音量設定のやつも含む) //
+
 enum class UIType
 {
 	Abutton,	//Aボタン

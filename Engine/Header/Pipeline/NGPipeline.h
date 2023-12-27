@@ -9,6 +9,8 @@
 
 #include <wrl.h>
 
+// グラフィックスパイプライン //
+
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 struct PipelineDesc

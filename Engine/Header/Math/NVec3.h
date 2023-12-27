@@ -1,5 +1,7 @@
 #pragma once
 
+// 自作Vector3 //
+
 struct NVec3
 {
 	float x;

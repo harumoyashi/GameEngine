@@ -1,10 +1,11 @@
 #pragma once
-#include <DirectXMath.h>
 #include <memory>
 
 #include "NVec2.h"
 #include "NVec3.h"
 #include "NMatrix4.h"
+
+// カメラ //
 
 class NCamera final
 {

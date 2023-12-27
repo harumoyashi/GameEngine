@@ -4,7 +4,8 @@
 #include "SideBullet.h"
 #include "WideBullet.h"
 
-//弾生成工場
+// 弾生成工場 //
+
 //循環参照が起きないようにBulletManagerと分けてる
 class BulletFactory final
 {

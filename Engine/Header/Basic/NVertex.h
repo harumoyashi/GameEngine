@@ -7,6 +7,8 @@
 #include "NColor.h"
 #include "NUtil.h"
 
+// 頂点情報まとめ //
+
 struct NVertex
 {
 	NVec3 pos = { 0, 0, 0 };

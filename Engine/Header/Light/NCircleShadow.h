@@ -8,6 +8,8 @@
 #include "NMathUtil.h"
 #include "NConstBuff.h"
 
+// 丸影 //
+
 class NCircleShadow final
 {
 public://サブクラス

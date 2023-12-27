@@ -1,6 +1,8 @@
 #pragma once
 #include "NObj3d.h"
 
+// コライダーのひな形 //
+
 class NBaseCollider
 {
 public:

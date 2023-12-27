@@ -2,6 +2,8 @@
 #include "NVec3.h"
 #include <stdint.h>
 
+// 自作の色クラス //
+
 struct NColor
 {
 	float r, g, b, a;

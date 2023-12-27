@@ -2,6 +2,8 @@
 #include "NMaterial.h"
 #include <vector>
 
+// マテリアル読み取るやつ //
+
 struct NMtllib
 {
 public:

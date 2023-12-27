@@ -1,6 +1,9 @@
 #pragma once
 #include "NObj3d.h"
 
+// タイルオブジェクト //
+// 今回のゲーム用に地割れ要素も入ってるので汎用的ではない //
+
 class NTile final :
 	public NObj3d
 {

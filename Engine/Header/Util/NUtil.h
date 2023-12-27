@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 
+// 便利な構造体やら関数やら //
+
 static const int maxBoneIndices = 4;
 
 enum class BlendMode

@@ -7,6 +7,9 @@
 
 #include<memory>
 #include <wrl.h>
+
+// マテリアル //
+
 template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 struct NMaterial

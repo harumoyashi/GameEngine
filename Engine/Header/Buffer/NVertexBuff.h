@@ -4,6 +4,8 @@
 #include <vector>
 #include "NVertex.h"
 
+// 頂点バッファ //
+
 template<typename T> class NVertexBuff final
 {
 private:

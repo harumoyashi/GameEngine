@@ -2,6 +2,8 @@
 #include <vector>
 #include "NDX12.h"
 
+// ルートパラメータ //
+
 class NRootParam final
 {
 public:

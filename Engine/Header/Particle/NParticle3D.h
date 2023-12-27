@@ -9,6 +9,9 @@
 #include "NTimer.h"
 #include "NUtil.h"
 
+// 3Dのパーティクル //
+// エミッターも含む //
+
 enum class ShapeType
 {
 	Cube,

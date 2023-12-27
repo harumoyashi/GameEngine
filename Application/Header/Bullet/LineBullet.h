@@ -1,8 +1,9 @@
 #pragma once
 #include "IBullet.h"
 
-//通常の弾
-//強化で本数が増える
+// 通常の弾 //
+// 強化で本数が増える //
+
 class LineBullet final :
 	public IBullet
 {

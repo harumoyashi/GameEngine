@@ -1,4 +1,7 @@
 #pragma once
+
+// 自作Vector4 //
+
 struct NVec4
 {
 	float x;

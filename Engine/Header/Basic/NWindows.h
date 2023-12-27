@@ -2,6 +2,8 @@
 #include <string>
 #include <windows.h>
 
+// ウィンドウ周りの処理 //
+
 class NWindows final
 {
 public:

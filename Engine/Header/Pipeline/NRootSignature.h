@@ -4,6 +4,8 @@
 
 #include <wrl.h>
 
+// ルートシグネチャ //
+
 class NRootSignature final
 {
 private:

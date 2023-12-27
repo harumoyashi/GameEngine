@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <mutex>
 
+// モデル管理 //
+
 typedef std::string ModelHandle;
 
 class NModelManager final

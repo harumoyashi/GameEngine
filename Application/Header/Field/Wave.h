@@ -4,6 +4,8 @@
 #include "NEasing.h"
 #include "NumDrower.h"
 
+// 波 //
+
 class Wave final
 {
 private:
