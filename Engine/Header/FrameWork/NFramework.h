@@ -10,9 +10,13 @@ private:
 
 public:
 	virtual ~NFramework() = default;
+	//初期化
 	virtual void Init();
+	//更新
 	virtual void Update();
+	//描画
 	virtual void Draw() = 0;
+	//終了処理
 	virtual void Finalize();
 
 	//実行

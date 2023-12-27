@@ -49,8 +49,9 @@ private:
 public:
 	UIManager();
 	static UIManager* GetInstance();
-
+	//初期化
 	void Init();
+	//更新
 	void Update();
 	void EaseTimerUpdate();
 

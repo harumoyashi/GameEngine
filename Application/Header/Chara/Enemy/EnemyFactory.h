@@ -26,7 +26,9 @@ private:
 public:
 	static EnemyFactory* GetInstance();
 
+	//更新
 	void Update();
+
 	//敵の生成
 	//type:敵の種類
 	//pos:生成の基準座標

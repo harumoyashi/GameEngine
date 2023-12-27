@@ -18,7 +18,9 @@ public:
 	//生成
 	//spriteNum:確保するスプライトの数
 	void Create(uint32_t spriteNum, float indent = 0.8f);
+	//更新
 	void Update();
+	//描画
 	void Draw();
 
 	// ゲッター //

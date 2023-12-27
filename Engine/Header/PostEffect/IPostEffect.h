@@ -47,7 +47,9 @@ public:
 	IPostEffect();
 	virtual ~IPostEffect() = default;
 
+	//初期化
 	static void Init();
+	//更新
 	static void Update();
 
 	//テクスチャ生成
@@ -58,6 +60,7 @@ public:
 	static void CreateDepthBuff();
 	//デプスステンシルビュー生成
 	static void CreateDSV();
+	//描画
 	static void Draw();
 
 	static void PreDrawScene();

@@ -56,8 +56,11 @@ private:
 public:
 	static Field* GetInstance();
 
+	//初期化
 	void Init();
+	//更新
 	void Update();
+	//描画
 	void Draw();
 
 	//何かに当たった時の処理

@@ -46,6 +46,7 @@ public://静的メンバ関数
 	//何も指定しなければ平行光源と丸影が有効になる
 	void Init(bool isDirLights = true, bool isPointLights = false,
 		bool isSpotLights = false, bool isCircleShadows = false);
+	//更新
 	void Update();
 	//rootParamIndex:ルートパラメータの何番目か
 	void Draw(const uint32_t rootParamIndex);

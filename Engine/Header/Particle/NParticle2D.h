@@ -79,8 +79,9 @@ public:
 	void Init();
 	//更新
 	void Update(bool isGravity = false);
-	//描画
+	//矩形で描画
 	void DrawBox();
+	//画像で描画
 	void DrawGraph();
 
 	//パーティクル追加

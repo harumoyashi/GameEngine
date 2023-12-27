@@ -43,8 +43,11 @@ public:
 	NTitleScene();
 	~NTitleScene();
 
+	//リソース読み込み
 	void LoadResources();
+	//初期化
 	void Init() override;
+	//更新
 	void Update() override;
 	//背景スプライト
 	void DrawBackSprite()override;

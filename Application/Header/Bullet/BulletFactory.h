@@ -17,6 +17,7 @@ private:
 public:
 	static BulletFactory* GetInstance();
 
+	//更新
 	void Update();
 	//弾の生成
 	void Create(BulletType type, NVec3 pos, uint32_t level);

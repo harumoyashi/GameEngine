@@ -28,16 +28,27 @@ public:
 	void Update();
 	//描画
 	void Draw();
+	//背景スプライト描画
 	void DrawBackSprite();
+	//背景オブジェクト描画
 	void DrawBack3D();
+	//前景オブジェクト描画
 	void Draw3D();
+	//パーティクル描画
 	void DrawParticle();
+	//前景スプライト描画
 	void DrawForeSprite();
+
 	//ポストエフェクトかけるものだけ描画
+	//背景スプライト描画
 	void DrawBackSpritePE();
+	//背景オブジェクト描画
 	void DrawBack3DPE();
+	//前景オブジェクト描画
 	void Draw3DPE();
+	//パーティクル描画
 	void DrawParticlePE();
+	//前景スプライト描画
 	void DrawForeSpritePE();
 
 	//シーンの変更

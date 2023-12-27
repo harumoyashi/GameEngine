@@ -34,7 +34,9 @@ private:
 	void ProjectiveProjection();
 
 public:
+	//初期化
 	void Init();
+	//更新
 	void Update();
 	//デバッグカメラ用の移動処理
 	void DebugCameraUpdate();

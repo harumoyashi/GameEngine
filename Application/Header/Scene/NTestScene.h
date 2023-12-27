@@ -56,17 +56,20 @@ public:
 	NTestScene();
 	~NTestScene();
 
+	//リソース読み込み
 	void LoadResources();
+	//初期化
 	void Init() override;
+	//更新
 	void Update() override;
-	//背景スプライト
+	//背景スプライト描画
 	void DrawBackSprite()override;
-	//背景3Dオブジェクト
+	//背景3Dオブジェクト描画
 	void DrawBack3D()override;
-	//3Dオブジェクト
+	//3Dオブジェクト描画
 	void Draw3D() override;
-	//パーティクル
+	//パーティクル描画
 	void DrawParticle() override;
-	//前景スプライト
+	//前景スプライト描画
 	void DrawForeSprite() override;
 };

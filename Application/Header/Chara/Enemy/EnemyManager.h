@@ -15,8 +15,11 @@ public:
 	NEasing::EaseTimer beatOutTimer_ = 0.25f;		//リズムに乗る用タイマー(縮む)
 
 	static EnemyManager* GetInstance();
+	//初期化
 	void Init();
+	//更新
 	void Update();
+	//描画
 	void Draw();
 
 private:

@@ -28,9 +28,13 @@ private:
 public:
 	static Wave* GetInstance();
 
+	//初期化
 	void Init();
+	//更新
 	void Update();
+	//オブジェクト描画
 	void DrawObj();
+	//スプライト描画
 	void DrawSprite();
 
 	// ゲッター //

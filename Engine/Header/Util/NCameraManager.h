@@ -119,7 +119,9 @@ public:
 	//シングルトンインスタンス取得
 	static NCameraManager* GetInstance();
 
+	//初期化
 	void Init();
+	//更新
 	void Update();
 
 	//指定したカメラに変更

@@ -29,9 +29,13 @@ private:
 
 public:
 	static void Create();
+	//初期化
 	static void Init();
+	//更新
 	static void Update();
+	//描画
 	static void Draw();
+	//ImGui描画
 	static void DrawImGui();
 
 	static void LoadScore();

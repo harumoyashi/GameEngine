@@ -15,7 +15,9 @@ private:
 public:
 	static NPostEffectManager* GetInstance();
 
+	//初期化
 	void Init();
+	//更新
 	void Update();
 	void PreDraw();
 	void PostDraw();

@@ -12,7 +12,9 @@ private:
 
 public:
 	static NImGuiManager* GetInstance();
+	//初期化
 	void Init();
+	//終了処理
 	void Finalize();
 
 	//ImGui受付開始
