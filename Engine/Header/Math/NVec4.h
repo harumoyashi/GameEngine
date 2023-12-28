@@ -9,13 +9,18 @@ struct NVec4
 	float z;
 	float w;
 
-	NVec4();								//ゼロベクトルとする
-	NVec4(const float x, const float y, const float z, const float w);	//x成分,y成分,z成分,w成分を指定しての生成
+	//ゼロベクトルとする
+	NVec4();
+	//x成分,y成分,z成分,w成分を指定しての生成
+	NVec4(const float x, const float y, const float z, const float w);
 
 	//メンバ変数
-	float Length() const;						//ノルム(長さ)を求める
-	NVec4 Normalize() const;					//正規化をする
-	float Dot(const NVec4& v) const;			//内積を求める
+	//ノルム(長さ)を求める
+	float Length() const;
+	//正規化をする
+	NVec4 Normalize() const;
+	//内積を求める
+	float Dot(const NVec4& v) const;
 
 	//単項演算子オーバーロード
 	NVec4 operator+() const;

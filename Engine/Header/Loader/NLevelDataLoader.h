@@ -31,6 +31,7 @@ private:
 public:
 	//シングルトンインスタンス取得
 	static NLevelDataLoader* GetInstance();
+	//レベルエディタの読み込み
 	std::unique_ptr<LevelData> Load(const std::string& filename);
 	//走査
 	void Traversal(nlohmann::json& object, LevelData* levelData);
@@ -42,9 +43,13 @@ public:
 	NCamera SetCamera(const LevelData* levelData);
 
 private:
+	//コンストラクタ
 	NLevelDataLoader() = default;
+	//コピー禁止
 	NLevelDataLoader(const NLevelDataLoader&) = delete;
+	//デストラクタ
 	~NLevelDataLoader() = default;
+	//コピー禁止
 	NLevelDataLoader& operator=(const NLevelDataLoader&) = delete;
 };
 

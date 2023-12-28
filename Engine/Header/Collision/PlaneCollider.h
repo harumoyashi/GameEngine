@@ -11,12 +11,14 @@ private:
 	float distance_;	//原点からの距離
 
 public:
+	//コンストラクタ
 	PlaneCollider(NVec3 normal = NVec3::up, float distance = 0.f) :
 		normal_(normal), distance_(distance)
 	{
 		shapeType_ = COL_PLANE;
 	}
 
+	//更新
 	void Update(NObj3d* obj)override;
 
 	// ゲッター //

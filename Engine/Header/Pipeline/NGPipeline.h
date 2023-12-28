@@ -131,8 +131,6 @@ public:
 	//指定したIDのパイプラインを取得
 	static NGPipeline* GetGPipeline(std::string id);
 
-	NGPipeline() {};
-
 private:
 	//パイプライン生成
 	void Create();
@@ -166,8 +164,12 @@ public:
 	void CreateAll();
 
 private:
+	//コンストラクタ
 	PipeLineManager() = default;
+	//コピー禁止
 	PipeLineManager(const PipeLineManager&) = delete;
+	//デストラクタ
 	~PipeLineManager() = default;
+	//コピー禁止
 	PipeLineManager& operator=(const PipeLineManager&) = delete;
 };

@@ -17,9 +17,12 @@ public:
 	T* constMap_;	// マッピング用
 
 public:
+	//コンストラクタ
 	NConstBuff() :constMap_(nullptr) {}
+	//デストラクタ
 	~NConstBuff() = default;
 
+	//初期化
 	void Init()
 	{
 		HRESULT result;
@@ -55,5 +58,6 @@ public:
 		constBuff_->Unmap(0, nullptr);
 	};
 
+	//解除
 	void Unmap() { constBuff_->Unmap(0, nullptr); }
 };

@@ -51,8 +51,10 @@ public://静的メンバ関数
 	//rootParamIndex:ルートパラメータの何番目か
 	void Draw(const uint32_t rootParamIndex);
 
+	//定数バッファ情報転送
 	void TransferConstBuffer();
 
+	//アンビエント色設定
 	void SetAmbientColor(const NVec3& color);
 
 	//ライトの色をセット

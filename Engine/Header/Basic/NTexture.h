@@ -19,7 +19,9 @@ struct NTexture final
 	D3D12_GPU_DESCRIPTOR_HANDLE gpuHandle_ = D3D12_GPU_DESCRIPTOR_HANDLE(); //SRVのハンドル(GPU側)
 	std::string fileName_; //ファイル名
 
+	//コンストラクタ
 	NTexture();
+	//デストラクタ
 	~NTexture();
 };
 

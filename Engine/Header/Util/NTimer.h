@@ -18,7 +18,9 @@ private:
 	bool isTimeOut_;	//タイマーが最大値に達したかフラグ
 
 public:
+	//コンストラクタ
 	NTimer() : timer_(0), maxTimer_(0), isTimeOut_(false) {}
+	//タイマーの最大値を指定指定して生成
 	NTimer(const float maxTimer) : timer_(0), maxTimer_(maxTimer), isTimeOut_(false) {}
 
 	//タイマーリセット

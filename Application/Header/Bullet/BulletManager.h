@@ -28,8 +28,12 @@ public:
 	bool GetIsEmpty() { return bullets_.size() >= maxBul; }
 
 private:
+	//コンストラクタ
 	BulletManager() = default;
+	//コピー禁止
 	BulletManager(const BulletManager&) = delete;
+	//デストラクタ
 	~BulletManager() = default;
+	//コピー禁止
 	BulletManager& operator=(const BulletManager&) = delete;
 };

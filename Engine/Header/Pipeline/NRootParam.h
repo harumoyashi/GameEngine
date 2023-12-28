@@ -12,6 +12,7 @@ private:
 	std::vector<D3D12_DESCRIPTOR_RANGE> descriptorRange_{};
 
 public:
+	//デストラクタ
 	~NRootParam();
 	//ルートパラメーターの設定
 	void SetRootParam(const uint32_t texNum, const uint32_t constantNum);

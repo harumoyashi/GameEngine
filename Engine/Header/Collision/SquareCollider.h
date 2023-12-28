@@ -14,12 +14,14 @@ private:
 	float size_;		//大きさ
 
 public:
-	SquareCollider(NVec2 offset = { 0.f,0.f }, float wide = 1.0f, float height = 1.0f) :
-		offset_(offset), wide_(wide), height_(height)
+	//コンストラクタ
+	SquareCollider(NVec2 offset = { 0.f,0.f }, float wide = 1.0f, float height = 1.0f,float size = 1.0f) :
+		offset_(offset), wide_(wide), height_(height), size_(size)
 	{
 		shapeType_ = COL_SQUARE;	//形状設定
 	}
 
+	//更新
 	void Update(NObj3d* obj)override;
 
 	// ゲッター //

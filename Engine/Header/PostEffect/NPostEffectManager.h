@@ -20,6 +20,8 @@ public:
 	void Init();
 	//更新
 	void Update();
+	//描画前処理
 	void PreDraw();
+	//描画後処理
 	void PostDraw();
 };

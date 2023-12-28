@@ -37,8 +37,12 @@ public:
 	void Create(IEnemy::EnemyType type, NVec3 pos, bool isItem);
 
 private:
+	//コンストラクタ
 	EnemyFactory() = default;
+	//コピー禁止
 	EnemyFactory(const EnemyFactory&) = delete;
+	//デストラクタ
 	~EnemyFactory() = default;
+	//コピー禁止
 	EnemyFactory& operator=(const EnemyFactory&) = delete;
 };

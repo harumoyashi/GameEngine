@@ -6,6 +6,7 @@
 class NBaseCollider
 {
 public:
+	//当たり判定の形状
 	enum ColShapeType
 	{
 		SHAPE_UNKNOWN = -1,		//未定義
@@ -36,9 +37,12 @@ protected:
 	std::function<void(void)>onCollision_;			//コールバック関数ポインタ変数
 
 public:
+	//コンストラクタ
 	NBaseCollider() = default;
+	//デストラクタ
 	virtual ~NBaseCollider() = default;
 
+	//更新
 	virtual void Update(NObj3d* obj) = 0;
 
 	// ゲッター //

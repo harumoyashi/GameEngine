@@ -24,8 +24,12 @@ public:
 	void Create(BulletType type, NVec3 pos, uint32_t level);
 
 private:
+	//コンストラクタ
 	BulletFactory() = default;
+	//コピー禁止
 	BulletFactory(const BulletFactory&) = delete;
+	//デストラクタ
 	~BulletFactory() = default;
+	//コピー禁止
 	BulletFactory& operator=(const BulletFactory&) = delete;
 };

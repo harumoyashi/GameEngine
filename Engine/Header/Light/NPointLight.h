@@ -25,7 +25,9 @@ private://静的メンバ変数
 	bool isActive_ = false;
 
 public://メンバ関数
+	//コンストラクタ
 	NPointLight();
+	//デストラクタ
 	~NPointLight();
 
 	//初期化

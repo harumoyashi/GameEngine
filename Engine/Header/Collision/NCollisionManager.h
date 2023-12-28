@@ -38,9 +38,13 @@ public:
 	void CheckAllCollision();
 
 private:
+	//コンストラクタ
 	NCollisionManager() = default;
+	//コピー禁止
 	NCollisionManager(const NCollisionManager&) = delete;
+	//デストラクタ
 	~NCollisionManager() = default;
+	//コピー禁止
 	NCollisionManager& operator=(const NCollisionManager&) = delete;
 
 	//円同士の当たり判定

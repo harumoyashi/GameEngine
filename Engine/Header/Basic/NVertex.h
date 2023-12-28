@@ -13,6 +13,7 @@ struct NVertex
 {
 	NVec3 pos = { 0, 0, 0 };
 
+	//コンストラクタ
 	NVertex(NVec3 pos = { 0, 0, 0 })
 		: pos(pos) {}
 };
@@ -23,6 +24,7 @@ struct NVertexUV
 	NVec3 pos = { 0, 0, 0 };
 	NVec2 uv = { 0, 0 };
 
+	//コンストラクタ
 	NVertexUV(NVec3 pos = { 0, 0, 0 }, NVec2 uv = { 0, 0 })
 		: pos(pos), uv(uv) {}
 
@@ -36,6 +38,7 @@ struct NVertexPNU
 	NVec3 normal = { 0, 0, 1 };
 	NVec2 uv = { 0, 0 };
 
+	//コンストラクタ
 	NVertexPNU(NVec3 pos = { 0, 0, 0 }, NVec3 normal = { 0, 0, 1 }, NVec2 uv = { 0, 0 })
 		: pos(pos), normal(normal), uv(uv) {}
 
@@ -57,6 +60,7 @@ struct NVertexParticle
 	NColor color = NColor::kWhite;
 	float scale = 0.0f;
 
+	//コンストラクタ
 	NVertexParticle(NVec3 pos = { 0, 0, 0 }, NVec3 rot = { 0, 0, 0 },
 		NColor color = NColor::kWhite, float scale = 0.0f)
 		: pos(pos), rot(rot), color(color), scale(scale) {}

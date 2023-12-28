@@ -15,24 +15,32 @@ struct aiNode;
 class NAssimpLoader final
 {
 private:
-	void ParseMesh(FbxModel* model, aiMesh* mesh);								//メッシュの解析
-	void ParseVertex(FbxModel* model, aiMesh* mesh);							//頂点の解析
-	void ParseFace(FbxModel* model, aiMesh* mesh);								//フェイスの解析
-	void ParseSkin(FbxModel* model, aiMesh* mesh);								//スキンの解析
+	//メッシュの解析
+	void ParseMesh(FbxModel* model, aiMesh* mesh);
+	//頂点の解析
+	void ParseVertex(FbxModel* model, aiMesh* mesh);
+	//フェイスの解析
+	void ParseFace(FbxModel* model, aiMesh* mesh);
+	//スキンの解析
+	void ParseSkin(FbxModel* model, aiMesh* mesh);
 
 public:
-	void ParseMaterial(FbxModel* model, const aiScene* scene);					//マテリアルの解析
-	void ParseNodeRecursive(FbxModel* model, Node* parent, const aiNode* node);	//解析
+	//マテリアルの解析
+	void ParseMaterial(FbxModel* model, const aiScene* scene);
+	//解析
+	void ParseNodeRecursive(FbxModel* model, Node* parent, const aiNode* node);
 
 public:
 	//シングルトンインスタンス取得
 	static NAssimpLoader* GetInstance();
-	bool Load(const std::string& filePath, FbxModel* model);	//モデルをロードする
+	//モデルをロードする
+	bool Load(const std::string& filePath, FbxModel* model);
 	//AssimpのMat4を自作Mat4型に変換
 	static NMatrix4 AssimpMatToMat4(const aiMatrix4x4& mat);
 	//ファイル名切り取って返す
 	std::string ExractFileName(const std::string& path);
 
 private:
+	//コンストラクタ
 	NAssimpLoader() = default;
 };

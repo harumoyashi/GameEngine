@@ -46,8 +46,12 @@ public:
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
 
 private:
+	//コンストラクタ
 	Wave() = default;
+	//コピー禁止
 	Wave(const Wave&) = delete;
+	//デストラクタ
 	~Wave() = default;
+	//コピー禁止
 	Wave& operator=(const Wave&) = delete;
 };

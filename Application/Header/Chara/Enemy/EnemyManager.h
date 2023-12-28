@@ -24,8 +24,12 @@ public:
 	void Draw();
 
 private:
+	//コンストラクタ
 	EnemyManager() = default;
+	//コピー禁止
 	EnemyManager(const EnemyManager&) = delete;
+	//デストラクタ
 	~EnemyManager() = default;
+	//コピー禁止
 	EnemyManager& operator=(const EnemyManager&) = delete;
 };

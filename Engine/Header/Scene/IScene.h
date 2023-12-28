@@ -6,7 +6,9 @@
 class IScene
 {
 public:
+	//コンストラクタ
 	IScene() {};
+	//デストラクタ
 	virtual ~IScene() = default;
 
 	//リソース読み込み

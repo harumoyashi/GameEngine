@@ -51,8 +51,12 @@ public:
 #pragma endregion
 
 private:
+	//コンストラクタ
 	NWindows() = default;
+	//コピー禁止
 	NWindows(const NWindows&) = delete;
+	//デストラクタ
 	~NWindows() = default;
+	//コピー禁止
 	NWindows& operator=(const NWindows&) = delete;
 };

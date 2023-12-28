@@ -24,7 +24,9 @@ public:
 	std::unique_ptr<NConstBuff<ConstBuffDataLight>> cbLight;
 
 public: //メンバ関数
+	//コンストラクタ
 	NDirectionalLight();
+	//デストラクタ
 	~NDirectionalLight();
 
 	//初期化

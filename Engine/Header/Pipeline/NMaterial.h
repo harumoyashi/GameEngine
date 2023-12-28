@@ -24,6 +24,7 @@ struct NMaterial
 
 	//コンストラクタ
 	NMaterial();
+	//デストラクタ
 	~NMaterial();
 };
 

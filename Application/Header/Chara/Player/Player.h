@@ -151,5 +151,6 @@ public:
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
 
 private:
+	//コピー禁止
 	Player& operator=(const Player&) = delete;
 };

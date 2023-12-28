@@ -12,12 +12,14 @@ private:
 	float radius_;		//半径
 
 public:
+	//コンストラクタ
 	SphereCollider(NVec3 offset = NVec3::zero, float radius = 1.0f) :
 		offset_(offset), radius_(radius)
 	{
 		shapeType_ = COL_SPHERE;	//形状設定
 	}
 
+	//更新
 	void Update(NObj3d* obj)override;
 
 	// ゲッター //

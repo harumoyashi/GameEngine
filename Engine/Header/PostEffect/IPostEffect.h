@@ -44,7 +44,9 @@ protected:
 	static bool isActive_;	//ポストエフェクト有効フラグ
 
 public:
+	//コンストラクタ
 	IPostEffect();
+	//デストラクタ
 	virtual ~IPostEffect() = default;
 
 	//初期化

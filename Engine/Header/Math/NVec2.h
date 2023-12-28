@@ -9,14 +9,20 @@ struct NVec2
     float y; // y成分
 
     // コンストラクタ
-    NVec2();                            // 零ベクトルとして生成
-    NVec2(const float x, const float y);            // x,y成分を指定しての生成
+    // 零ベクトルとして生成
+    NVec2();
+    // x,y成分を指定しての生成
+    NVec2(const float x, const float y);
 
     // メンバ関数
-    float Length() const;                // ノルム(長さ)を求める
-    NVec2& Normalize();                // 正規化
-    float Dot(const NVec2& v) const;    // 内積を求める
-    float Cross(const NVec2& v) const;// 外積を求める
+    // ノルム(長さ)を求める
+    float Length() const;
+    // 正規化
+    NVec2& Normalize();
+    // 内積を求める
+    float Dot(const NVec2& v) const;
+    // 外積を求める
+    float Cross(const NVec2& v) const;
 
     // 単項演算子オーバーロード
     NVec2 operator+() const;

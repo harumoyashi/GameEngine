@@ -24,11 +24,15 @@ public:
 	//シングルトンインスタンス取得
 	static NSceneChange* GetInstance();
 
-	void Init();	//初期化
-	void Update();	//更新
-	void Draw();	//描画
+	//初期化
+	void Init();
+	//更新
+	void Update();
+	//描画
+	void Draw();
 
-	void Start();	//シーン遷移開始！
+	//シーン遷移開始！
+	void Start();
 
 	// ゲッター //
 	//シーン切り替えるかフラグ取得
@@ -41,7 +45,10 @@ public:
 	void SetIsChange(bool isChange) { this->isSceneChange_ = isChange; }
 
 private:
+	//コピー禁止
 	NSceneChange(const NSceneChange&) = delete;
+	//デストラクタ
 	~NSceneChange() = default;
+	//コピー禁止
 	NSceneChange& operator=(const NSceneChange&) = delete;
 };

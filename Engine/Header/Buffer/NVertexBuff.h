@@ -16,7 +16,8 @@ private:
 	T* vertMap_;		//マッピング用
 
 public:
-	NVertexBuff() {};	//既定のコンストラクタ
+	//コンストラクタ
+	NVertexBuff() {};
 
 	//頂点のポインタとサイズで初期化
 	void Init(T* vertices, const uint32_t size)

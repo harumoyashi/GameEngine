@@ -68,8 +68,12 @@ public:
 	}
 
 private:
+	//コンストラクタ
 	NParticleManager() = default;
+	//コピー禁止
 	NParticleManager(const NParticleManager&) = delete;
+	//デストラクタ
 	~NParticleManager() = default;
+	//コピー禁止
 	NParticleManager& operator=(const NParticleManager&) = delete;
 };

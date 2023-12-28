@@ -74,6 +74,7 @@ private:
 	bool isActive_ = false;
 
 public:
+	//コンストラクタ
 	Emitter2D();
 	//初期化
 	void Init();
@@ -105,6 +106,7 @@ public:
 	//セッター//
 	//座標設定
 	void SetPos(float x, float y) { pos_ = { x,y }; }
+	//座標設定
 	void SetPos(NVec2& pos) { pos_ = pos; }
 	//大きさ設定
 	void SetScale(NVec2& scale);

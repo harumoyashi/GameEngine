@@ -60,13 +60,16 @@ public:
 		currentScene_ = std::move(nextScene);
 	}
 
+	//コンストラクタ
 	NSceneManager();
 
 #pragma region ゲッター
 #pragma endregion
 private:
+	//コピー禁止
 	NSceneManager(const NSceneManager&) = delete;
+	//デストラクタ
 	~NSceneManager() = default;
+	//コピー禁止
 	NSceneManager& operator=(const NSceneManager&) = delete;
-
 };

@@ -176,9 +176,13 @@ private:
 	void SetScissorRect();
 
 private:
+	//コンストラクタ
 	NDX12() = default;
+	//コピー禁止
 	NDX12(const NDX12&) = delete;
+	//デストラクタ
 	~NDX12() = default;
+	//コピー禁止
 	NDX12& operator=(const NDX12&) = delete;
 };
 

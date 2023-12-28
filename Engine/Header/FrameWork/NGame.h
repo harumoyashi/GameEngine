@@ -23,8 +23,12 @@ private:
 	NSceneManager* sceneMane_;
 
 public:
+	//初期化
 	void Init() override;
+	//更新
 	void Update() override;
+	//描画
 	void Draw() override;
+	//終了処理
 	void Finalize() override;
 };

@@ -89,8 +89,12 @@ public:
 	void SetIsGoal(bool isGoal) { isGoal_ = isGoal, isStart_ = isGoal; }
 
 private:
+	//コンストラクタ
 	Field() = default;
+	//コピー禁止
 	Field(const Field&) = delete;
+	//デストラクタ
 	~Field() = default;
+	//コピー禁止
 	Field& operator=(const Field&) = delete;
 };

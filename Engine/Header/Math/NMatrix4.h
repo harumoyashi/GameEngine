@@ -16,6 +16,7 @@ struct NMatrix4
 			0,1,0,0,
 			0,0,1,0,
 			0,0,0,1 } {}
+	//指定した値で生成
 	NMatrix4(
 		float _00, float _01, float _02, float _03,
 		float _10, float _11, float _12, float _13,

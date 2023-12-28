@@ -11,12 +11,14 @@ private:
 	NVec3 dirVec_;
 
 public:
+	//コンストラクタ
 	RayCollider(NVec3 startPos = NVec3::zero, NVec3 dirVec = NVec3::zero) :
 		startPos_(startPos), dirVec_(dirVec)
 	{
 		shapeType_ = COL_RAY;
 	}
 
+	//更新
 	void Update(NObj3d* obj)override;
 
 	// ゲッター //

@@ -151,8 +151,12 @@ public:
 	void ShakeStart(float shakePower, float shakeTime);
 
 private:
+	//コンストラクタ
 	NCameraManager() = default;
+	//コピー禁止
 	NCameraManager(const NCameraManager&) = delete;
+	//デストラクタ
 	~NCameraManager() = default;
+	//コピー禁止
 	NCameraManager& operator=(const NCameraManager&) = delete;
 };

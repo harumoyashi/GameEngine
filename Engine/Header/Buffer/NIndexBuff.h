@@ -14,7 +14,8 @@ private:
 	D3D12_INDEX_BUFFER_VIEW view_{};
 
 public:
-	NIndexBuff() {};	//既定のコンストラクタ
+	//コンストラクタ
+	NIndexBuff() {};
 
 	//インデックスの配列とその大きさで頂点バッファを作る
 	NIndexBuff(uint32_t* list, const uint32_t size);

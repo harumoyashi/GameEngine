@@ -12,7 +12,9 @@ struct Circle
 	NVec2 centerPos;
 	float radius;
 
+	//コンストラクタ
 	Circle();
+	//コンストラクタ
 	Circle(const NVec2& centerPos, const float radius);
 };
 
@@ -23,7 +25,9 @@ struct Square
 	float wide;
 	float height;
 
+	//コンストラクタ
 	Square();
+	//コンストラクタ
 	Square(const NVec2& centerPos, const float wide, const float height);
 };
 
@@ -33,7 +37,9 @@ struct Sphere
 	NVec3 centerPos;
 	float radius;
 
+	//コンストラクタ
 	Sphere();
+	//コンストラクタ
 	Sphere(const NVec3& centerPos, const float radius);
 };
 
@@ -43,7 +49,9 @@ struct Ray
 	NVec3 startPos;
 	NVec3 dirVec;
 
+	//コンストラクタ
 	Ray();
+	//コンストラクタ
 	Ray(const NVec3& startPos, const NVec3& dirVec);
 };
 
@@ -53,7 +61,9 @@ struct Line
 	NVec3 startPos;
 	NVec3 endPos;
 
+	//コンストラクタ
 	Line();
+	//コンストラクタ
 	Line(const NVec3& startPos, const NVec3& endPos);
 };
 
@@ -63,6 +73,8 @@ struct Plane
 	NVec3 normal;	//法線
 	float distance;		//原点からの距離
 
+	//コンストラクタ
 	Plane();
+	//コンストラクタ
 	Plane(const NVec3& normal, const float distance);
 };

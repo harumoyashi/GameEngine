@@ -26,8 +26,12 @@ public:
 	void Draw();
 
 private:
+	//コンストラクタ
 	NImGuiManager() = default;
+	//コピー禁止
 	NImGuiManager(const NImGuiManager&) = delete;
+	//デストラクタ
 	~NImGuiManager() = default;
+	//コピー禁止
 	NImGuiManager& operator=(const NImGuiManager&) = delete;
 };

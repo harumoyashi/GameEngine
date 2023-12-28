@@ -29,7 +29,9 @@ private://静的メンバ変数
 	bool isActive_ = false;
 
 public://メンバ関数
+	//コンストラクタ
 	NCircleShadow();
+	//デストラクタ
 	~NCircleShadow();
 
 	//初期化

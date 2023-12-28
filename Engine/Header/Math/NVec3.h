@@ -8,8 +8,10 @@ struct NVec3
 	float y;
 	float z;
 
-	NVec3();								//ゼロベクトルとする
-	NVec3(const float x, const float y, const float z);	//x成分,y成分,z成分を指定しての生成
+	//ゼロベクトルとする
+	NVec3();
+	//x成分,y成分,z成分を指定しての生成
+	NVec3(const float x, const float y, const float z);
 
 	//代入楽する用
 	const static NVec3 zero;
@@ -19,10 +21,14 @@ struct NVec3
 	const static NVec3 right;
 
 	//メンバ関数
-	float Length() const;						//ノルム(長さ)を求める
-	NVec3 Normalize() const;					//正規化をする
-	float Dot(const NVec3& v) const;			//内積を求める
-	NVec3 Cross(const NVec3& v) const;			//外積を求める
+	//ノルム(長さ)を求める
+	float Length() const;
+	//正規化をする
+	NVec3 Normalize() const;
+	//内積を求める
+	float Dot(const NVec3& v) const;
+	//外積を求める
+	NVec3 Cross(const NVec3& v) const;
 	//線形補間
 	static NVec3 Lerp(const NVec3 start, const NVec3 end, const float timer);
 

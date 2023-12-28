@@ -134,8 +134,12 @@ public:
 	static bool GetIsConnect() { return sIsConnect; }
 
 private:
+	//コンストラクタ
 	NInput() = default;
+	//コピー禁止
 	NInput(const NInput&) = delete;
+	//デストラクタ
 	~NInput() = default;
+	//コピー禁止
 	NInput& operator=(const NInput&) = delete;
 };

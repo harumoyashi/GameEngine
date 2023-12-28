@@ -106,7 +106,9 @@ private:
 	NTexture texture_;						//テクスチャ(使うかわからん)
 
 public:
+	//コンストラクタ
 	IEmitter3D();
+	//デストラクタ
 	virtual ~IEmitter3D() = default;
 
 	//初期化
