@@ -4,36 +4,48 @@
 
 namespace NEasing
 {
-	//イージング群
+	// イージング群 //
+	//等速
 	float lerp(float start, float end, float timeRate);
-
+	//イージング関数
 	float InQuad(float timeRate);
+	//イージング関数
 	float OutQuad(float timeRate);
+	//イージング関数
 	float InQuad(float start, float end, float timeRate);
+	//イージング関数
 	float OutQuad(float start, float end, float timeRate);
-
+	//イージング関数
 	float InOutQuad(float timeRate);
+	//イージング関数
 	float InOutQuad(float start, float end, float timeRate);
-
+	//イージング関数
 	float OutBounce(float timeRate);
-
+	//イージング関数
 	float OutBounce(float start, float end, float timeRate);
+	//イージング関数
 	float InBounce(float start, float end, float timeRate);
+	//イージング関数
 	float InOutBounce(float start, float end, float timeRate);
-
+	//イージング関数
 	float InElastic(float timeRate);
+	//イージング関数
 	float OutElastic(float timeRate);
-
+	//イージング関数
 	float InElastic(float start, float end, float timeRate);
+	//イージング関数
 	float OutElastic(float start, float end, float timeRate);
-
+	//イージング関数
 	float InBack(float timeRate);
+	//イージング関数
 	float InBack(float start, float end, float timeRate);
-
+	//イージング関数
 	float OutBack(float timeRate);
+	//イージング関数
 	float OutBack(float start, float end, float timeRate);
-
+	//イージング関数
 	float InOutBack(float timeRate);
+	//イージング関数
 	float InOutBack(float start, float end, float timeRate);
 
 	//イージング用のタイマー(秒数)
@@ -86,6 +98,7 @@ namespace NEasing
 		void Update(const float elapseTimer = 1.0f);
 		//タイマー更新+無限ループ
 		void Roop(const float elapseTimer = 1.0f);
+		//タイマー更新+無限ループ
 		void RoopReverse(const float elapseTimer = 1.0f);
 
 		//現在が最大秒数のうちどの割合かを(0.0f～1.0f)の値で返す

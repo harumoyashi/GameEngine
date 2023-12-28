@@ -86,34 +86,46 @@ private:
 
 private:
 	//　カメラ固有の初期化、更新処理
-	//　通常時
+	//　通常時の初期化
 	void NormalCameraInit();
+	//　通常時の更新
 	void NormalCameraUpdate();
-	// デバッグカメラ時
+
+	// デバッグカメラ時の更新
 	void DebugCameraUpdate();
-	// タイトル時
+
+	// タイトル時の初期化
 	void TitleCameraInit();
+	// タイトル時の更新
 	void TitleCameraUpdate();
-	// 始まる前にゴール見せる時
+
+	// 始まる前にゴール見せる時の初期化
 	void BeforeStartCameraInit();
+	// 始まる前にゴール見せる時の更新
 	void BeforeStartCameraUpdate();
-	// 失敗リザルト時
+
+	// 失敗リザルト時の初期化
 	void FaildCameraInit();
+	// 失敗リザルト時の更新
 	void FaildCameraUpdate();
-	// クリアリザルト時
+
+	// クリアリザルト時の初期化
 	void ClearCameraInit();
+	// クリアリザルト時の更新
 	void ClearCameraUpdate();
-	// 無敵演出時
+
+	// 無敵演出時の初期化
 	void MutekiCameraInit();
+	// 無敵演出時の更新
 	void MutekiCameraUpdate();
-	// ボス登場演出時
+
+	// ボス登場演出時の初期化
 	void EntryCameraInit();
+	// ボス登場演出時の更新
 	void EntryCameraUpdate();
 
 	//　カメラシェイク用更新処理
 	void ShakeUpdate();
-
-	
 
 public:
 	//シングルトンインスタンス取得

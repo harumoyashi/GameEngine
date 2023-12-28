@@ -55,6 +55,7 @@ public:
 	void Init();
 	//更新
 	void Update();
+	//イージングタイマーの更新処理
 	void EaseTimerUpdate();
 
 	//弾取った時UI追加

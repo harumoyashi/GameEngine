@@ -53,14 +53,14 @@ struct FbxModel final
 
 	//アニメーションの再生
 	void PlayAnimation(bool isElapse);
-	//
+	//指定された名前のアニメーションノードを探す
 	aiNodeAnim* FindNodeAnimation(const std::string& nodeName, aiAnimation* anime);
 
-	//
+	//スケールインデックスを取得
 	uint32_t FindScaleIndex(const aiNodeAnim* nodeAnim, const float nowTime);
-	//
+	//回転インデックスを取得
 	uint32_t FindRotIndex(const aiNodeAnim* nodeAnim, const float nowTime);
-	//
+	//座標インデックスを取得
 	uint32_t FindPosIndex(const aiNodeAnim* nodeAnim, const float nowTime);
 
 	//スケーリングを補完

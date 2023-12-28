@@ -20,17 +20,17 @@ struct NQuaternion {
 	NQuaternion(const float x, const float y, const float z, const float w)
 		: x(x), y(y), z(z), w(w) {}
 
-	//足し算
+	//加算
 	NQuaternion operator+(const NQuaternion& q) const;
-	//引き算
+	//減算
 	NQuaternion operator-(const NQuaternion& q) const;
-	//掛け算(回転の合成)
+	//乗算(回転の合成)
 	NQuaternion operator*(const NQuaternion& q) const;
-	//値変更するタイプの足し算
+	//値変更するタイプの加算
 	NQuaternion operator+=(const NQuaternion& q);
-	//値変更するタイプの引き算
+	//値変更するタイプの減算
 	NQuaternion operator-=(const NQuaternion& q);
-	//値変更するタイプの掛け算(回転の合成)
+	//値変更するタイプの乗算(回転の合成)
 	NQuaternion& operator*=(const NQuaternion& q);
 	//全ての値反転(共役や逆クォータニオンとは違う)
 	NQuaternion operator-() const;

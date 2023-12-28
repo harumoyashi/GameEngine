@@ -40,8 +40,12 @@ public:
 	//指定したidのシェーダーを取得
 	static NShader* GetShader(std::string id);
 
+	//頂点シェーダオブジェクト取得
 	ID3DBlob* GetVSBlob() { return vsBlob_.Get(); }
+	//ピクセルシェーダオブジェクト取得
 	ID3DBlob* GetPSBlob() { return psBlob_.Get(); }
+	//ジオメトリシェーダオブジェクト取得
 	ID3DBlob* GetGSBlob() { return gsBlob_.Get(); }
+	//コンピュートシェーダオブジェクト取得
 	ID3DBlob* GetCSBlob() { return csBlob_.Get(); }
 };

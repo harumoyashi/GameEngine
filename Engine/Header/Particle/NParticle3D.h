@@ -154,6 +154,7 @@ public:
 	//セッター//
 	//座標設定
 	void SetPos(float x, float y, float z) { pos_ = { x,y,z }; }
+	//座標設定
 	void SetPos(const NVec3& pos) { pos_ = pos; }
 	//大きさ設定
 	void SetScale(const NVec3& scale);

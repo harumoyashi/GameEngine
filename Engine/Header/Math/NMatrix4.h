@@ -78,6 +78,9 @@ struct NMatrix4
 	NVec3 GetScale() const;
 };
 
+//Vec3とMat4の乗算(返り値：Vec3)
 NVec3 operator*(const NVec3& v, const NMatrix4& mat);
+//Vec4とMat4の乗算(返り値：Vec4)
 NVec4 operator*(const NVec4& v, const NMatrix4& mat);
+//Vec3とMat4の乗算(返り値：Vec3)
 NVec3& operator*=(NVec3& v, const NMatrix4& mat);

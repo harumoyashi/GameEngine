@@ -32,14 +32,19 @@ public: //メンバ関数
 	//初期化
 	void Init();
 
-	//ライトの方向をセット
-	void SetLightDir(const NVec3& lightdir);
+	// ゲッター //
+	//ライトの方向を取得
 	const NVec3& GetLightDir()const { return lightdir_; }
-	//ライトの色をセット
-	void SetLightColor(const NVec3& lightcolor);
+	//ライトの色を取得
 	const NVec3& GetLightColor()const { return lightcolor_; }
-	//有効フラグをセット
-	void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
 	bool GetActive()const { return isActive_; }
+	
+	// セッター //
+	//ライトの方向をセット
+	void SetLightDir(const NVec3& lightdir);
+	//ライトの色をセット
+	void SetLightColor(const NVec3& lightcolor);
+	//有効フラグをセット
+	void SetActive(bool isActive) { isActive_ = isActive; }
 };

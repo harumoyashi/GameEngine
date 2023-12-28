@@ -37,23 +37,31 @@ public://メンバ関数
 	//初期化
 	void Init();
 
-	//影の方向をセット
-	void SetDir(const NVec3& dir);
+	// ゲッター //
+	//影の方向を取得
 	const NVec3& GetDir()const { return dir_; }
-	//座標をセット
-	void SetCasterPos(const NVec3& casterPos);
+	//座標を取得
 	const NVec3& GetCasterPos()const { return casterPos_; }
-	//キャスターとライトの距離をセット
-	void SetDistanceCasterLight(const float distanceCasterLight);
+	//キャスターとライトの距離を取得
 	const float GetDistanceCasterLight()const { return distanceCasterLight_; }
-	//減衰係数をセット
-	void SetAtten(const NVec3& atten);
+	//減衰係数を取得
 	const NVec3& GetAtten()const { return atten_; }
-	//減衰角度をセット
-	void SetFactorAngle(const NVec2& factorAngle);
+	//減衰角度を取得
 	const NVec2& GetFactorAngle()const { return factorAngleCos_; }
-	//有効フラグをセット
-	void SetActive(bool isActive) { isActive_ = isActive; }
 	//有効フラグを取得
 	bool GetActive()const { return isActive_; }
+	
+	// セッター //
+	//影の方向をセット
+	void SetDir(const NVec3& dir);
+	//座標をセット
+	void SetCasterPos(const NVec3& casterPos);
+	//キャスターとライトの距離をセット
+	void SetDistanceCasterLight(const float distanceCasterLight);
+	//減衰係数をセット
+	void SetAtten(const NVec3& atten);
+	//減衰角度をセット
+	void SetFactorAngle(const NVec2& factorAngle);
+	//有効フラグをセット
+	void SetActive(bool isActive) { isActive_ = isActive; }
 };

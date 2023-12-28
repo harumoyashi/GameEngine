@@ -24,13 +24,20 @@ public:
 	void Draw();
 
 	// ゲッター //
+	//座標取得
 	NVec2 GetPos()const { return pos_; }
+	//大きさ取得
 	NVec2 GetSize()const { return size_; }
 
 	// セッター //
+	//座標設定
 	void SetPos(const NVec2& pos);
+	//大きさ設定
 	void SetSize(const NVec2& size);
+	//インデント設定
 	void SetIndent(float indent);
+	//色設定
 	void SetColor(const NColor& color);
+	//表示する値設定
 	void SetNum(uint32_t num);
 };

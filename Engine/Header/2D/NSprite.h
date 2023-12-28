@@ -45,9 +45,9 @@ protected:
 
 public:
 	//変換用//
-	float rotation_ = 0.0f;	//Z軸の回転角
+	float rotation_ = 0.0f;				//Z軸の回転角
 	NVec2 position_ = { 0.0f,0.0f };	//座標
-	bool isInvisible_ = false;	//非表示にするフラグ
+	bool isInvisible_ = false;			//非表示にするフラグ
 
 	std::string texHandle_ = "";	//テクスチャ指定用
 	NColor color_;
@@ -103,6 +103,8 @@ public:
 	//描画コマンド
 	void Draw();
 #pragma endregion
+	//テクスチャサイズ取得
 	const NVec2& GetTexSize()const { return texSize_; }
+	//サイズ取得
 	const NVec2& GetSize()const { return size_; }
 };

@@ -36,6 +36,7 @@ public:
 	uint32_t GetLevel() const { return level_; }
 	//一度に撃つ弾の数取得	
 	uint32_t GetAllAtOnceNum() const { return allAtOnceNum_; }
+	//弾撃つまでの時間取得
 	float GetShotCoolTimer() const { return shotCoolTimer_.nowTime_; }
 
 	// セッター //

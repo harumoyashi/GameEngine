@@ -25,20 +25,31 @@ struct NVec2
     float Cross(const NVec2& v) const;
 
     // 単項演算子オーバーロード
+    //加算
     NVec2 operator+() const;
+    //減算
     NVec2 operator-() const;
 
     // 代入演算子オーバーロード
+    //加算
     NVec2& operator+=(const NVec2& v);
+    //減算
     NVec2& operator-=(const NVec2& v);
+    //floatとの乗算
     NVec2& operator*=(const float s);
+    //floatとの除算
     NVec2& operator/=(const float s);
 };
 
 // 2項演算子オーバーロード
 // ※いろんな引数のパターンに対応するため、以下のように準備している
+//加算
 const NVec2 operator+(const NVec2& v1, const NVec2& v2);
+//減算
 const NVec2 operator-(const NVec2& v1, const NVec2& v2);
+//乗算
 const NVec2 operator*(const NVec2& v, const float s);
+//floatとの乗算
 const NVec2 operator*(const float s, const NVec2& v);
+//floatとの除算
 const NVec2 operator/(const NVec2& v, const float s);

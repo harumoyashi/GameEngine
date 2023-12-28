@@ -42,15 +42,24 @@ struct NColor
 	const static NColor kEnemy;
 	const static NColor kItem;
 
+	//RGBをインクリメント
 	NColor& operator++();
 
 	//単項演算子
+	//加算
 	NColor operator+(const float num) const;
+	//減算
 	NColor operator-(const float num) const;
+	//乗算
 	NColor operator*(const float num) const;
+	//除算
 	NColor operator/(const float num) const;
+	//代入
 	NColor operator=(const NColor& col);
+	//同じ色か返す
 	bool operator==(const NColor& col) const;
+	//同じ色じゃないか返す
 	bool operator!=(const NColor& col) const;
+	//加算
 	NColor operator+(const NColor& col) const;
 };

@@ -46,7 +46,9 @@ public:
 	void Finalize();
 #pragma endregion
 #pragma region ゲッター
+	//ウィンドウハンドル取得
 	const HWND& GetHwnd()const { return hwnd_; }
+	//インスタンスハンドルを取得
 	const HINSTANCE& GetHInstance()const { return win_.hInstance; }
 #pragma endregion
 

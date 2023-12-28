@@ -52,9 +52,12 @@ namespace MathUtil
 	//円運動
 	NVec2 CircleMotion(NVec2 CenterPoint, float radius, float angle);
 
-	//Vec3のイージング用
+	//Vec3用のイージング関数
 	NVec3 InQuad(const NVec3& start, const NVec3& end, float timerate);
+	//Vec3用のイージング関数
 	NVec3 InBack(const NVec3& start, const NVec3& end, float timerate);
+	//Vec3用のイージング関数
 	NVec3 OutQuad(const NVec3& start, const NVec3& end, float timerate);
+	//Vec3用のイージング関数
 	NVec3 OutBack(const NVec3& start, const NVec3& end, float timerate);
 }

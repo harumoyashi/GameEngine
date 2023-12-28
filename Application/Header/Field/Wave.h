@@ -43,6 +43,7 @@ public:
 	float GetFrontPosZ() const { return posZ_ + scaleZ_; }
 
 	// セッター //
+	//波が動くかフラグ設定
 	void SetIsMove(bool isMove) { isMove_ = isMove; }
 
 private:

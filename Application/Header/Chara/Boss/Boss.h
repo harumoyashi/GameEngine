@@ -62,7 +62,9 @@ public:
 	void Move();
 
 	// ゲッター //
+	//座標取得
 	NVec3 GetPos() { return obj_->position_; }
+	//頭らへんの座標取得
 	NVec3 GetHeadPos() { return obj_->position_ + NVec3(0, obj_->scale_.y, 0); }
 
 	//登場演出中か

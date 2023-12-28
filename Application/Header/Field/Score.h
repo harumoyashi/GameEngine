@@ -37,17 +37,25 @@ public:
 	//ImGui描画
 	static void DrawImGui();
 
+	//記録されてたスコアを読み込み
 	static void LoadScore();
+	//スコアを記録
 	static void SaveScore();
 
+	//スコア加算
 	static void AddScore(uint32_t score);
 
 	// ゲッター //
+	//座標取得
 	static NVec2 GetPos(TexType type) { return sScoreTex[(uint32_t)type].GetPos(); }
+	//大きさ取得
 	static NVec2 GetSize(TexType type) { return sScoreTex[(uint32_t)type].GetSize(); }
 
 	// セッター //
+	//座標設定
 	static void SetPos(const NVec2& pos, TexType type);
+	//大きさ設定
 	static void SetSize(const NVec2& size, TexType type);
+	//色設定
 	static void SetColor(const NColor& color, TexType type);
 };

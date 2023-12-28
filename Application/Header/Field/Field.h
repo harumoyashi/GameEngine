@@ -67,8 +67,10 @@ public:
 	//何かに当たった時の処理
 	void OnCollision();
 
+	//SE止める
 	void StopSE();
 
+	//フィールドのスクロール処理
 	void FieldScroll(float standardPosZ);
 
 	// ゲッター //

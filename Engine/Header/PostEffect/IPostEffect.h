@@ -65,10 +65,13 @@ public:
 	//描画
 	static void Draw();
 
+	//描画前処理
 	static void PreDrawScene();
+	//描画後処理
 	static void PostDrawScene();
 
 	// ゲッター //
+	//ポストエフェクト有効フラグ
 	static bool GetIsActive() { return isActive_; }
 
 	// セッター //

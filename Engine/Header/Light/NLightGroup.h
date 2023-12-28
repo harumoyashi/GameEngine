@@ -54,11 +54,13 @@ public://静的メンバ関数
 	//定数バッファ情報転送
 	void TransferConstBuffer();
 
+	// セッター //
 	//アンビエント色設定
 	void SetAmbientColor(const NVec3& color);
-
-	//ライトの色をセット
+	//平行光源の色をセット
 	void SetDirLightColor(const NVec3& lightcolor);
+	//ポイントライトの色をセット
 	void SetPointLightColor(const NVec3& lightcolor);
+	//スポットライトの色をセット
 	void SetSpotLightColor(const NVec3& lightcolor);
 };

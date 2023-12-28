@@ -31,17 +31,23 @@ public:
 	//指定した値分タイマーを減らしてく
 	void SubTimer(const float subTimer, const float elapseTimer = 1.0f);
 
-	//セッター
-	void SetTimer(const float timer) { timer_ = timer; }
-	void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
-	void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
-
-	//ゲッター
-	bool GetisTimeOut()const { return isTimeOut_; }
-	const float GetMaxTimer()const { return (float)maxTimer_; }
+	// ゲッター //
+	//タイマー取得
 	const float GetTimer()const { return (float)timer_; }
+	//タイマーの最大値取得
+	const float GetMaxTimer()const { return (float)maxTimer_; }
+	//タイマーが最大値に達したかフラグ取得
+	bool GetisTimeOut()const { return isTimeOut_; }
 	//タイマーの進み具合を取得
 	const float GetTimeRate()const { return (float)timer_ / (float)maxTimer_; }
 	//システムが開始されてからの時間を取得
 	float GetNowTime(const TimeType& timeType);
+
+	// セッター //
+	//タイマー設定
+	void SetTimer(const float timer) { timer_ = timer; }
+	//タイマーの最大値設定
+	void SetMaxTimer(const float maxTime_r) { maxTimer_ = maxTime_r; }
+	//タイマーが最大値に達したかフラグ設定
+	void SetisTimeOut(bool isTimeOut) { isTimeOut_ = isTimeOut; }
 };
