@@ -46,6 +46,7 @@ private:
 	NEasing::EaseTimer deadEffectTimer_;		//死亡演出どのくらいで切り上げるかタイマー
 	float slowElapseTime_ = 0.01f;				//死んだときのスローがどのくらいか
 	NVec3 deadPos_;								//死んだ座標保存用
+	float hitstopAmount = 0.2f;					//演出時間全体に対するヒットストップの割合
 
 	//------------------------ その他 ------------------------//
 	NEasing::EaseTimer faildEffectTimer_;			//失敗演出用タイマー

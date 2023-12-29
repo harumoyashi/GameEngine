@@ -175,7 +175,7 @@ void Player::Update()
 			deadEffectTimer_.Start();
 		}
 
-		if (deadEffectTimer_.GetTimeRate() <= 0.2f)	//死亡演出の2割はヒットストップに使う
+		if (deadEffectTimer_.GetTimeRate() <= hitstopAmount)	//死亡演出の2割はヒットストップに使う
 		{
 			isFlashing_ = ((int)(deadEffectTimer_.GetTimeRate() * 100.0f) % 2 == 0);
 			if (isFlashing_ ^ obj_->color_ == NColor::kWhite)
