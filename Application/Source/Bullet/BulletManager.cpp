@@ -1,4 +1,5 @@
 #include "BulletManager.h"
+#include "NParticleManager.h"
 #include "Player.h"
 
 #include "NImGuiManager.h"
@@ -17,14 +18,29 @@ void BulletManager::Init()
 
 void BulletManager::Update()
 {
-	//寿命が尽きたパーティクルを全削除
+	//寿命が尽きた弾を全削除
 	for (uint32_t i = 0; i < bullets_.size(); i++)
 	{
-		if (bullets_[i]->GetisAlive() == false)
+		if (bullets_[i]->GetisAlive() == false && bullets_[i]->GetParticlesDead())
 		{
 			bullets_.erase(bullets_.begin() + i);
+			//エミッター群から削除
+			NParticleManager::GetInstance()->bulletEmitters_.erase(
+				NParticleManager::GetInstance()->bulletEmitters_.begin() + i);
 			i--;
+
+			isBulletDead = true;
 		}
+	}
+
+	if (isBulletDead)	//もし誰か死んだら
+	{
+		for (uint32_t i = 0; i < bullets_.size(); i++)
+		{
+			//敵の識別番号を再登録
+			BulletManager::GetInstance()->bullets_[i]->SetBulletNum(i);
+		}
+		isBulletDead = false;
 	}
 
 	for (auto& bullet : bullets_)

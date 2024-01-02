@@ -51,6 +51,8 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+		hp_ = 3;
+		score_ = 20;
 	}
 
 	moveAngle_ = moveAngle;
@@ -66,29 +68,47 @@ void IEnemy::Init()
 
 void IEnemy::Update()
 {
-	//経過時間を適用
-	SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
-
-	//リズム乗らせるからスケールを常に更新
-	obj_->scale_ = oriScale_ + addScale_;
-
-	//移動
-	Move();
-
-	//デバッグカメラの時はカメラ基準で消えられると困るから消さない
-	if (NCameraManager::GetInstance()->GetNowCameraType() == CameraType::Normal &&
-		NCameraManager::GetInstance()->GetIsNormalCameraChanged())
+	if (isAlive_)
 	{
-		// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
-		IsInActiveArea();
+		//経過時間を適用
+		SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
+
+		//リズム乗らせるからスケールを常に更新
+		obj_->scale_ = oriScale_ + addScale_;
+
+		//移動
+		Move();
+
+		//デバッグカメラの時はカメラ基準で消えられると困るから消さない
+		if (NCameraManager::GetInstance()->GetNowCameraType() == CameraType::Normal &&
+			NCameraManager::GetInstance()->GetIsNormalCameraChanged())
+		{
+			// 「2Dになおした行動範囲+画面端座標」を「2Dに直した敵の座標+敵の半径」が超えた場合殺す //
+			IsInActiveArea();
+		}
+
+		//画面内にいる奴だけ描画フラグ立てる
+		isDraw_ = IsInScreen();
+
+		obj_->Update();
+		circleCollider_.Update(obj_.get());
+		squareCollider_.Update(obj_.get());
+
+		if (hp_ <= 0)
+		{
+			DeadParticle();
+			isAlive_ = false;
+			isCollision_ = false;
+			Score::AddScore(score_);
+			//アイテム持ってるフラグ立ってたらアイテム落とす
+			if (isItem_)
+			{
+				uint32_t bulType = MathUtil::Random(0, (uint32_t)BulletType::MaxType);
+				ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
+			}
+			NAudioManager::GetInstance()->Play("vanishSE");
+		}
 	}
-
-	//画面内にいる奴だけ描画フラグ立てる
-	isDraw_ = IsInScreen();
-
-	obj_->Update();
-	circleCollider_.Update(obj_.get());
-	squareCollider_.Update(obj_.get());
 
 	//OnCollision()で呼ぶと、そのフレームでの総当たりに影響が出るからここで消してる
 	if (isAlive_ == false)
@@ -130,17 +150,10 @@ void IEnemy::OnCollision()
 
 	if (isCollision_)
 	{
-		DeadParticle();
-		isAlive_ = false;
-		isCollision_ = false;
-		Score::AddScore(score_);
-		//アイテム持ってるフラグ立ってたらアイテム落とす
-		if (isItem_)
-		{
-			uint32_t bulType = MathUtil::Random(0, (uint32_t)BulletType::MaxType);
-			ItemManager::GetInstance()->Generate(obj_->position_, (BulletType)bulType);
-		}
-		NAudioManager::GetInstance()->Play("vanishSE");
+		hp_--;
+
+		//弾当たった時の音鳴らす
+		//NAudioManager::GetInstance()->Play("vanishSE");
 	}
 }
 

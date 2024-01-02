@@ -124,4 +124,6 @@ public:
 	void SetEnemyNum(const uint32_t eneNum) { enemyNum_ = eneNum; }
 	//アイテム持ってるかフラグ設定
 	void SetisItem(bool isItem);
+	//HP設定
+	void SetHP(const uint32_t hp) { hp_ = hp; }
 };

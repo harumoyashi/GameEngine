@@ -27,6 +27,12 @@ void NParticleManager::Init()
 		eneEmitter->ClearParticles();
 	}
 	enemyEmitters_.clear();
+
+	for (auto& bulEmitter : bulletEmitters_)
+	{
+		bulEmitter->ClearParticles();
+	}
+	bulletEmitters_.clear();
 }
 
 void NParticleManager::Update()
@@ -53,6 +59,11 @@ void NParticleManager::Update()
 	{
 		eneEmitter->Update();
 	}
+
+	for (auto& bulEmitter : bulletEmitters_)
+	{
+		bulEmitter->Update();
+	}
 }
 
 void NParticleManager::Draw()
@@ -77,5 +88,10 @@ void NParticleManager::Draw()
 	for (auto& eneEmitter : enemyEmitters_)
 	{
 		eneEmitter->Draw();
+	}
+
+	for (auto& bulEmitter : bulletEmitters_)
+	{
+		bulEmitter->Draw();
 	}
 }

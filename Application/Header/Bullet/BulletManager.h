@@ -6,6 +6,9 @@
 
 class BulletManager final
 {
+private:
+	bool isBulletDead = false;
+
 public:
 	std::vector<std::unique_ptr<IBullet>> bullets_;	//弾ども
 	const uint32_t maxBul = 126;	//最大弾数

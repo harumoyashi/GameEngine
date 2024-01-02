@@ -35,6 +35,9 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				//対応した種類に所有権持たせて生成
 				BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();
 
+				//パーティクルエミッターをマネージャーに登録
+				BulletManager::GetInstance()->bullets_.back()->AddEmitter((uint32_t)BulletManager::GetInstance()->bullets_.size() - 1);
+
 				//奇数か偶数かで左右に振り分け親方
 				if (i % 2 == 0)
 				{
@@ -83,6 +86,9 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
 					//左右に出すように
 					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(90.0f + 180.0f * j));
+
+					//パーティクルエミッターをマネージャーに登録
+					BulletManager::GetInstance()->bullets_.back()->AddEmitter((uint32_t)BulletManager::GetInstance()->bullets_.size() - 1);
 				}
 				//生成が終わったらタイマーとフラグをリセット
 				side_.SetIsShortCanShot(false);
@@ -128,6 +134,9 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 					BulletManager::GetInstance()->bullets_.back() = std::make_unique<SideBullet>();
 					//左右に出すように
 					BulletManager::GetInstance()->bullets_.back()->Generate(pos, MathUtil::Degree2Radian(-45.0f + 90.0f * j));
+
+					//パーティクルエミッターをマネージャーに登録
+					BulletManager::GetInstance()->bullets_.back()->AddEmitter((uint32_t)BulletManager::GetInstance()->bullets_.size() - 1);
 				}
 				//生成が終わったらタイマーとフラグをリセット
 				wide_.SetIsShortCanShot(false);

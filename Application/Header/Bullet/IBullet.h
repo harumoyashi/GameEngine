@@ -2,6 +2,7 @@
 #include "NObj3d.h"
 #include "CircleCollider.h"
 #include "NEasing.h"
+#include "SimpleParticle.h"
 
 // 弾のひな形 //
 
@@ -34,6 +35,9 @@ protected:
 
 	float elapseSpeed_;				//経過時間のスピード(スローモーション用)
 
+	uint32_t bulletNum_;			//弾の識別番号
+	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
+
 public:
 	//コンストラクタ
 	IBullet();
@@ -48,6 +52,12 @@ public:
 
 	//何かに当たった時の処理
 	void OnCollision();
+
+	//エミッターの登録
+	//bulmyNum:敵の識別番号
+	void AddEmitter(uint32_t bulNum);
+	//死んだときのパーティクルを出す
+	void DeadParticle();
 
 public:
 	// ゲッター //
@@ -67,6 +77,8 @@ public:
 	NVec3 GetColor() { return obj_->color_.GetRGB(); }
 	//移動用角度取得
 	float GetMoveAngle()const { return moveAngle_; }
+	//パーティクルが1つも出てないかフラグ取得
+	bool GetParticlesDead()const { return deadParticle_.GetParticlesDead(); }
 
 	// セッター //
 	//生存フラグ設定
@@ -83,4 +95,6 @@ public:
 	void SetLifeTimer(const float lifeTimer) { lifeTimer_ = lifeTimer; }
 	//経過時間スピード設定
 	void SetElapseSpeed(const float elapseSpeed) { elapseSpeed_ = elapseSpeed; }
+	//敵の識別番号設定
+	void SetBulletNum(const uint32_t bulNum) { bulletNum_ = bulNum; }
 };

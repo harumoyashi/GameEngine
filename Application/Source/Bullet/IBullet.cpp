@@ -1,6 +1,7 @@
 #include "IBullet.h"
 #include "Player.h"
 #include "NCollisionManager.h"
+#include "NParticleManager.h"
 
 IBullet::IBullet() :
 	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.2f), isAlive_(true),
@@ -29,6 +30,10 @@ void IBullet::Generate(const NVec3& pos, const float moveAngle)
 	collider_.SetOnCollision(std::bind(&IBullet::OnCollision, this));
 
 	moveAngle_ = moveAngle;
+
+	//エミッターの設定
+	NParticleManager::GetInstance()->bulletEmitters_[bulletNum_]->SetIsRotation(true);
+	NParticleManager::GetInstance()->bulletEmitters_[bulletNum_]->SetIsGrowing(true);
 }
 
 void IBullet::Update()
@@ -79,6 +84,26 @@ void IBullet::OnCollision()
 	//当たった相手が弾だった時の処理
 	if (collider_.GetColInfo()->GetColID() == "enemy" || collider_.GetColInfo()->GetColID() == "boss")
 	{
+		DeadParticle();
 		isAlive_ = false;
+	}
+}
+
+void IBullet::AddEmitter(uint32_t bulNum)
+{
+	//識別番号をつける
+	bulletNum_ = bulNum;
+	//パーティクルエミッターをマネージャーに登録
+	NParticleManager::GetInstance()->bulletEmitters_.emplace_back();
+	NParticleManager::GetInstance()->bulletEmitters_.back() = &deadParticle_;
+}
+
+void IBullet::DeadParticle()
+{
+	if (isAlive_)
+	{
+		NParticleManager::GetInstance()->bulletEmitters_[bulletNum_]->SetPos(GetPos());
+		NParticleManager::GetInstance()->bulletEmitters_[bulletNum_]->Add(
+			5, 0.25f, obj_->color_, 0.1f, 0.2f, { -0.3f,-0.1f,-0.3f }, { 0.3f,0.1f,0.3f }, 0.05f, -NVec3::one, NVec3::one);
 	}
 }
