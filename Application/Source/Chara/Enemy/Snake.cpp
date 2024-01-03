@@ -1,8 +1,4 @@
 #include "Snake.h"
-#include "NCollisionManager.h"
-#include "NAudioManager.h"
-#include "ItemManager.h"
-#include "Score.h"
 
 Snake::Snake()
 {

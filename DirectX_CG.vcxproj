@@ -117,6 +117,7 @@
     <ClInclude Include="Application\Header\Chara\Enemy\IEnemy.h" />
     <ClInclude Include="Application\Header\Field\BackObj.h" />
     <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="Engine\Header\Scene\IScene.h" />
     <ClInclude Include="Application\Header\Bullet\LineBullet.h" />
     <ClInclude Include="Engine\Header\PostEffect\Bloom.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="Application\Source\Chara\Enemy\IEnemy.cpp" />
     <ClCompile Include="Application\Source\Field\BackObj.cpp" />
     <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="Engine\Source\Scene\IScene.cpp" />
     <ClCompile Include="Application\Source\Bullet\LineBullet.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\Bloom.cpp" />

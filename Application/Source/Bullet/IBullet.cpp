@@ -74,9 +74,12 @@ void IBullet::Update()
 
 void IBullet::Draw()
 {
-	obj_->SetBlendMode(BlendMode::Alpha);
-	obj_->Draw();
-	obj_->SetBlendMode(BlendMode::Alpha);
+	if (isAlive_)
+	{
+		obj_->SetBlendMode(BlendMode::Alpha);
+		obj_->Draw();
+		obj_->SetBlendMode(BlendMode::Alpha);
+	}
 }
 
 void IBullet::OnCollision()
