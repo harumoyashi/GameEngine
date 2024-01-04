@@ -527,6 +527,7 @@ void NCameraManager::Update()
 	ShakeUpdate();
 
 	//通常カメラの時に右クリックしたらデバッグカメラモードと切り替わる
+#ifdef _DEBUG
 	if (NInput::TriggerMouse(NInput::MouseRight))
 	{
 		if (nowCameraType_ != (uint32_t)CameraType::Debug)
@@ -540,6 +541,7 @@ void NCameraManager::Update()
 			ChangeCameara((CameraType)prevCameraType_);
 		}
 	}
+#endif // _DEBUG
 
 	// 関数ポインタ
 	void (NCameraManager:: * pFunc[])() =

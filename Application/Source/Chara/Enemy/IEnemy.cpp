@@ -1,6 +1,7 @@
 #include "IEnemy.h"
 #include "Player.h"
 #include "Field.h"
+#include "Wave.h"
 #include "NCameraManager.h"
 #include "NCollisionManager.h"
 #include "NParticleManager.h"
@@ -28,9 +29,8 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	oriScale_ = Player::GetInstance()->GetScale();
 	obj_->scale_ = oriScale_;
 	obj_->color_ = NColor::kEnemy;
-	obj_->Update();
 
-	if (modelname == "mouse")
+	if (enemyTypeName_ == "mouse")
 	{
 		squareCollider_.SetIsActive(false);
 		circleCollider_.SetIsActive(true);
@@ -40,7 +40,7 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		NCollisionManager::GetInstance()->AddCollider(&circleCollider_);
 		circleCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
 	}
-	else if (modelname == "snake")
+	else if (enemyTypeName_ == "snake")
 	{
 		circleCollider_.SetIsActive(false);
 		squareCollider_.SetIsActive(true);
@@ -51,9 +51,25 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
-		hp_ = 3;
-		score_ = 20;
 	}
+	else if (enemyTypeName_ == "car")
+	{
+		circleCollider_.SetIsActive(false);
+		squareCollider_.SetIsActive(true);
+		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
+		squareCollider_.SetWide(0.6f);
+		squareCollider_.SetHeight(1.f);
+		squareCollider_.SetSize(0.5f);	//cubeのモデルが直径2だから半分に
+		oriScale_.x = squareCollider_.GetWide();
+		oriScale_.z = squareCollider_.GetHeight();
+		oriScale_ *= squareCollider_.GetSize();
+		obj_->scale_ = oriScale_;
+		squareCollider_.SetColID("enemy");
+		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
+		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+	}
+
+	obj_->Update();
 
 	moveAngle_ = moveAngle;
 
@@ -94,11 +110,11 @@ void IEnemy::Update()
 		circleCollider_.Update(obj_.get());
 		squareCollider_.Update(obj_.get());
 
+		isCollision_ = false;	//毎フレーム当たってない状態に戻す
 		if (hp_ <= 0)
 		{
 			DeadParticle();
 			isAlive_ = false;
-			isCollision_ = false;
 			Score::AddScore(score_);
 			//アイテム持ってるフラグ立ってたらアイテム落とす
 			if (isItem_)
@@ -132,28 +148,31 @@ void IEnemy::Draw()
 void IEnemy::OnCollision()
 {
 	//当たった相手が弾だった時の処理
-	if (circleCollider_.GetIsActive())
+	if (isAlive_)
 	{
-		if (circleCollider_.GetColInfo()->GetColID() == "bullet")
+		if (circleCollider_.GetIsActive())
 		{
-			isCollision_ = true;
+			if (circleCollider_.GetColInfo()->GetColID() == "bullet")
+			{
+				isCollision_ = true;
+			}
 		}
-	}
 
-	if (squareCollider_.GetIsActive())
-	{
-		if (squareCollider_.GetColInfo()->GetColID() == "bullet")
+		if (squareCollider_.GetIsActive())
 		{
-			isCollision_ = true;
+			if (squareCollider_.GetColInfo()->GetColID() == "bullet")
+			{
+				isCollision_ = true;
+			}
 		}
-	}
 
-	if (isCollision_)
-	{
-		hp_--;
+		if (isCollision_ && hp_ > 0)
+		{
+			hp_--;
 
-		//弾当たった時の音鳴らす
-		//NAudioManager::GetInstance()->Play("vanishSE");
+			//弾当たった時の音鳴らす
+			//NAudioManager::GetInstance()->Play("vanishSE");
+		}
 	}
 }
 
@@ -266,6 +285,12 @@ void IEnemy::IsInActiveArea()
 	objLeft = MathUtil::WorldToScreen(objLeftMat).x;
 	//ボーダーライン超えてるか判定
 	if (borderLineRight < objLeft || borderLineLeft > objRight)
+	{
+		isAlive_ = false;
+	}
+
+
+	if (obj_->position_.z < Wave::GetInstance()->GetFrontPosZ())
 	{
 		isAlive_ = false;
 	}

@@ -2,6 +2,7 @@
 #include "EnemyManager.h"
 #include "Mouse.h"
 #include "Snake.h"
+#include "Car.h"
 
 // 敵生成工場 //
 
@@ -10,6 +11,7 @@ class EnemyFactory final
 private:
 	Mouse mouse;
 	Snake snake;
+	Car car;
 
 	NVec3 offset;				//エミッター内でどれだけ出現位置ずらすか
 	bool isCollision = false;	//敵同士が被ってるかフラグ
@@ -21,7 +23,10 @@ private:
 	NVec2 mouseFrontEmitter = { 6.0f,1.0f };//ねずみ群(正面)の出現範囲
 
 	uint32_t snakeSideNum = 5;				//へび群(横)の出現数
-	NVec2 snakeSideEmitter = { 2.0f,1.0f };	//へび群(横)の出現範囲
+	NVec2 snakeSideEmitter = { 2.5f,1.0f };	//へび群(横)の出現範囲
+
+	uint32_t carSideNum = 3;				//車群(横)の出現数
+	NVec2 carSideEmitter = { 2.5f,1.0f };	//車群(横)の出現範囲
 
 public:
 	//シングルトンインスタンス取得

@@ -16,6 +16,7 @@ public:
 		MouseSide,	//横からくるねずみたち
 		MouseFront,	//正面からくるねずみたち
 		SnakeSide,	//横からくるへびたち
+		CarSide,	//横からくる車たち
 	};
 
 protected:

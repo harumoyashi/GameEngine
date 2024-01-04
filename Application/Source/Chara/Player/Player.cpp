@@ -450,13 +450,13 @@ void Player::OnCollision()
 	//当たった相手が敵だった時の処理(かつ無敵じゃないなら)
 	if (isGodmode_ == false)
 	{
-		if (collider_.GetColInfo()->GetColID() == "enemy" || collider_.GetColInfo()->GetColID() == "boss")
+		/*if (collider_.GetColInfo()->GetColID() == "enemy" || collider_.GetColInfo()->GetColID() == "boss")
 		{
 			NCameraManager::GetInstance()->ShakeStart(2.f, 0.3f);
 			NAudioManager::GetInstance()->Play("deadSE");
 			SetIsAlive(false);
 			NInput::Vibration(0.8f, 0.8f, 0.3f);
-		}
+		}*/
 	}
 }
 

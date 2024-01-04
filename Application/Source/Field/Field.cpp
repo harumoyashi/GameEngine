@@ -281,9 +281,9 @@ void Field::Update()
 		if (lines_[(uint32_t)LineType::Start].slideTimer.GetStarted() == false)
 		{
 			lines_[(uint32_t)LineType::Start].slideTimer.Start();
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
-			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
+			/*EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
+			EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);*/
 
 			NAudioManager::GetInstance()->Play("startSE");
 			lines_[(uint32_t)LineType::Start].isSlide = false;	//スライドしちゃだめにする
@@ -302,19 +302,27 @@ void Field::Update()
 			{
 				cp.slideTimer.Start();
 
-				float centerPosZ = (goalPosZ_ - startPosZ_) * 0.5f + startPosZ_;	//スタートとゴールの中間地点
-				//半分行くまではヘビ主体で
-				if (Player::GetInstance()->GetPos().z < centerPosZ)
-				{
-					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
-					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
-				}
-				else
-				{
-					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
-					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
-				}
-				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);
+				//float beforePosZ = (goalPosZ_ - startPosZ_) * 0.3f + startPosZ_;	//スタートとゴールの1/3地点
+				//float afterPosZ = (goalPosZ_ - startPosZ_) * 0.6f + startPosZ_;		//スタートとゴールの2/3地点
+				////1/3行くまではねずみ主体で
+				//if (Player::GetInstance()->GetPos().z < beforePosZ)
+				//{
+				//	EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), true);
+				//	EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), false);
+				//}
+				////1/3過ぎて2/3行くまではへび主体に
+				//else if(Player::GetInstance()->GetPos().z < afterPosZ)
+				//{
+				//	EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
+				//	EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::SnakeSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
+				//}
+				////ラストは車
+				//else
+				//{
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::CarSide, Player::GetInstance()->GetPos() + NVec3(10, 0, 8), false);
+					EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::CarSide, Player::GetInstance()->GetPos() + NVec3(-10, 0, 5), true);
+				/*}
+				EnemyFactory::GetInstance()->Create(IEnemy::EnemyType::MouseFront, Player::GetInstance()->GetPos() + NVec3(0, 0, 9), false);*/
 
 				NAudioManager::GetInstance()->Play("startSE");
 				cp.isSlide = false;	//スライドしちゃだめにする

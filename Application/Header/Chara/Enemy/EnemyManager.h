@@ -11,8 +11,6 @@ private:
 public:
 	std::vector<std::unique_ptr<IEnemy>> enemys_;
 
-	
-
 	NEasing::EaseTimer beatInTimer_ = 0.25f;		//リズムに乗る用タイマー(でかくなる)
 	NEasing::EaseTimer beatOutTimer_ = 0.25f;		//リズムに乗る用タイマー(縮む)
 
