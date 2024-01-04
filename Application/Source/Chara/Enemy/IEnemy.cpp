@@ -169,6 +169,7 @@ void IEnemy::OnCollision()
 		if (isCollision_ && hp_ > 0)
 		{
 			hp_--;
+			isCollision_ = false;
 
 			//弾当たった時の音鳴らす
 			//NAudioManager::GetInstance()->Play("vanishSE");

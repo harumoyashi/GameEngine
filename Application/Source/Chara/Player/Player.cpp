@@ -65,7 +65,7 @@ bool Player::Init()
 	isGodmode_ = false;
 	isDraw_ = true;
 
-	moveSpeed_ = 0.05f;
+	moveSpeed_ = 0.07f;
 
 	godmodeTimer_.Reset();
 	godmodeTimer_.maxTime_ = 2.5f;

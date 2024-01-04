@@ -89,6 +89,7 @@ void IBullet::OnCollision()
 	{
 		DeadParticle();
 		isAlive_ = false;
+		collider_.SetIsActive(false);
 	}
 }
 
