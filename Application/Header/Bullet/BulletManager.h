@@ -25,7 +25,7 @@ public:
 	void Draw();
 
 	//最初の要素削除
-	void EraceBegin() { bullets_.erase(bullets_.begin()); }
+	void EraceBegin();
 
 	//満杯かどうか返す
 	bool GetIsEmpty() { return bullets_.size() >= maxBul; }

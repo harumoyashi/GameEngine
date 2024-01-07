@@ -65,3 +65,11 @@ void BulletManager::Draw()
 		bullet->Draw();
 	}
 }
+
+void BulletManager::EraceBegin()
+{
+	bullets_.erase(bullets_.begin());
+	//エミッター群から削除
+	NParticleManager::GetInstance()->bulletEmitters_.erase(
+		NParticleManager::GetInstance()->bulletEmitters_.begin());
+}
