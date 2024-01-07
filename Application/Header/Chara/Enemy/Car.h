@@ -8,8 +8,8 @@ class Car :
 	public IEnemy
 {
 public:
-	std::string modelname = "cube";   //モデル名
-	SquareCollider collider_;		   //コライダー
+	std::string modelname = "car";		//モデル名
+	SquareCollider collider_;			//コライダー
 
 	//コンストラクタ
 	Car();

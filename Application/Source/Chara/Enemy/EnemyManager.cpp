@@ -42,7 +42,7 @@ void EnemyManager::Update()
 	if (beatInTimer_.GetRun())
 	{
 		beatInTimer_.Update(Player::GetInstance()->GetElapseSpeed());
-		size = NEasing::OutQuad(beatInTimer_.GetTimeRate());
+		size = NEasing::InQuad(beatInTimer_.GetTimeRate());
 
 		if (beatInTimer_.GetEnd())
 		{
@@ -52,7 +52,7 @@ void EnemyManager::Update()
 	else if (beatOutTimer_.GetRun())
 	{
 		beatOutTimer_.Update(Player::GetInstance()->GetElapseSpeed());
-		size = 1.f - NEasing::InBack(beatOutTimer_.GetTimeRate());
+		size = 1.f - NEasing::OutBack(beatOutTimer_.GetTimeRate());
 
 		if (beatOutTimer_.GetEnd())
 		{
@@ -63,7 +63,7 @@ void EnemyManager::Update()
 	//足す分のスケールを適用
 	for (auto& enemy : enemys_)
 	{
-		enemy->SetAddScale(size * Player::GetInstance()->GetScale().x);
+		enemy->SetAddScale(-size * Player::GetInstance()->GetScale().x);
 	}
 
 	if (isEnemyDead)	//もし誰か死んだら

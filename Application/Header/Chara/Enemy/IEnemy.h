@@ -23,8 +23,10 @@ protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
 	CircleCollider circleCollider_;	//円コライダー
 	SquareCollider squareCollider_;	//矩形コライダー
+	float scaleAmount_;				//プレイヤーに対してのスケール比率(0.0f~1.0f)
 	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
 	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
+	float addScaleAmount_;			//スケールいじる比率(0.0f~1.0f)
 	NVec2 moveVelo_;				//移動量
 	float moveAngle_;				//移動用角度
 	float moveSpeed_;				//移動スピード

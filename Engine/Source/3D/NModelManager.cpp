@@ -21,6 +21,7 @@ void NModelManager::AllLoad()
 	LoadObjModel("plane", "plane");
 	LoadObjModel("mouse", "mouse");
 	LoadObjModel("snake", "snake");
+	LoadObjModel("car", "car");
 	LoadObjModel("field", "field");
 	LoadFbxModel("cat", "catWalk");
 }

@@ -11,8 +11,8 @@
 
 //スピードは基本プレイヤーよりちょい遅め
 IEnemy::IEnemy() :
-	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isCollision_(false), isAlive_(true),
-	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_), score_(10), isItem_(false), isDraw_(true)
+	moveVelo_({ 0,0 }), moveAngle_(0.0f), moveSpeed_(0.04f), isCollision_(false), isAlive_(true), scaleAmount_(2.f),
+	elapseSpeed_(0.0f), maxHP_(1), hp_(maxHP_), score_(10), isItem_(false), isDraw_(true), addScaleAmount_(0.5f)
 {
 }
 
@@ -26,16 +26,18 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->SetModel(modelname);
 
 	obj_->position_ = pos;
-	oriScale_ = Player::GetInstance()->GetScale();
+	oriScale_ = Player::GetInstance()->GetScale() * scaleAmount_;	//サイズ感的に2倍くらいがちょうどよくなっちゃった
 	obj_->scale_ = oriScale_;
 	obj_->color_ = NColor::kEnemy;
 
+	float modelSize = 1.f;	//モデルのx軸の大きさ
 	if (enemyTypeName_ == "mouse")
 	{
 		squareCollider_.SetIsActive(false);
 		circleCollider_.SetIsActive(true);
 		circleCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
-		circleCollider_.SetRadius(obj_->scale_.x * 2.f);
+		modelSize = 2.f;
+		circleCollider_.SetRadius(obj_->scale_.x * modelSize / scaleAmount_);
 		circleCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&circleCollider_);
 		circleCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
@@ -47,7 +49,8 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 		squareCollider_.SetWide(1.f);
 		squareCollider_.SetHeight(0.2f);
-		squareCollider_.SetSize(obj_->scale_.x * 10.f);
+		modelSize = 10.f;
+		squareCollider_.SetSize(obj_->scale_.x * modelSize / scaleAmount_);
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
@@ -59,11 +62,8 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 		squareCollider_.SetWide(0.6f);
 		squareCollider_.SetHeight(1.f);
-		squareCollider_.SetSize(0.5f);	//cubeのモデルが直径2だから半分に
-		oriScale_.x = squareCollider_.GetWide();
-		oriScale_.z = squareCollider_.GetHeight();
-		oriScale_ *= squareCollider_.GetSize();
-		obj_->scale_ = oriScale_;
+		modelSize = 6.f;
+		squareCollider_.SetSize(obj_->scale_.x * modelSize / scaleAmount_);
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
@@ -90,7 +90,7 @@ void IEnemy::Update()
 		SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
 
 		//リズム乗らせるからスケールを常に更新
-		obj_->scale_ = oriScale_ + addScale_;
+		obj_->scale_ = oriScale_ + addScale_ * addScaleAmount_;
 
 		//移動
 		Move();
