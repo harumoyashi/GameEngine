@@ -30,7 +30,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 				{
 					BulletManager::GetInstance()->EraceBegin();
 				}
-				BulletManager::GetInstance()->bullets_.emplace_back();
+				BulletManager::GetInstance()->bullets_.emplace_back();	//弾追加
 
 				//対応した種類に所有権持たせて生成
 				BulletManager::GetInstance()->bullets_.back() = std::make_unique<LineBullet>();

@@ -52,6 +52,7 @@ void NAudioManager::AllLoad()
 	LoadSound("muteki_SE.mp3", "mutekiSE", false);				//無敵演出音
 	LoadSound("muteki_get_SE.mp3", "mutekiGetSE", false);		//無敵アイテム取得音
 	LoadSound("shout_SE.wav", "shoutSE", false);				//ボス登場時の咆哮音
+	LoadSound("hit_SE.mp3", "hitSE", false);					//弾当たった時の音
 
 	LoadVolume();	//保存してた音量データ読み込んで
 	AllSetVolume();	//音量を調節する

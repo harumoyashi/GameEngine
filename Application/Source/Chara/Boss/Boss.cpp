@@ -170,7 +170,7 @@ void Boss::OnCollision()
 		hp_--;
 
 		//弾当たった時の音鳴らす
-		//NAudioManager::GetInstance()->Play("vanishSE");
+		NAudioManager::GetInstance()->Play("hitSE", false, 0.4f);
 	}
 }
 
@@ -186,11 +186,15 @@ void Boss::DeadParticle()
 
 void Boss::Move()
 {
+	//プレイヤーからボスのベクトル
 	NVec3 p2bVec = obj_->position_ - Player::GetInstance()->GetPos();
+	//外積を取ってプレイヤーに対して右か左か判定
 	float isLR = moveVelo_.Cross({ p2bVec.x,p2bVec.z });
 
+	//動く角度をプレイヤー側に傾ける
 	moveAngle_ += isLR * homingPower_;
 
+	//行きすぎたら0に戻す
 	if (abs(moveAngle_) > PI2)
 	{
 		moveAngle_ = 0.f;

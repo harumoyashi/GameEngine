@@ -172,7 +172,7 @@ void IEnemy::OnCollision()
 			isCollision_ = false;
 
 			//弾当たった時の音鳴らす
-			//NAudioManager::GetInstance()->Play("vanishSE");
+			NAudioManager::GetInstance()->Play("hitSE", false, 0.4f);
 		}
 	}
 }
