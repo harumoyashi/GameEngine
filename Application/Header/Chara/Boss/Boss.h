@@ -31,6 +31,12 @@ private:
 	NEasing::EaseTimer entryTimer_ = 2.5f;		//登場演出タイマー
 	NEasing::EaseTimer scalingTimer_ = 0.4f;	//おっきくなるタイマー
 	SimpleParticle landingParticle_;			//着地時に出るパーティクル
+	std::unique_ptr<NSprite> bossTex_;			//BOSSテキスト
+	NVec2 bossTexStartPos;
+	NVec2 bossTexEndPos;
+	NVec2 bossTexNowPos;
+	NEasing::EaseTimer bossInTimer_ = 0.3f;	//BOSSテキスト出現のためのイージングタイマー
+	NEasing::EaseTimer bossOutTimer_ = 0.3f;	//BOSSテキスト掃けるのためのイージングタイマー
 
 public:
 	//コンストラクタ
@@ -51,6 +57,8 @@ public:
 	void Update();
 	//描画
 	void Draw();
+	//テキストの描画
+	void DrawSprite();
 
 	//何かに当たった時の処理
 	void OnCollision();

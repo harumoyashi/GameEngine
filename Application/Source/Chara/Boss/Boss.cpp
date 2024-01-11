@@ -71,6 +71,27 @@ void Boss::Init()
 
 	entryTimer_.Reset();
 	scalingTimer_.Reset();
+
+	bossTex_ = std::make_unique<NSprite>();
+	bossTex_->CreateSprite("boss");
+	bossTex_->SetAncor({ 0.5f,0.5f });
+	bossTex_->SetSize(700.f, 200.f);
+	bossTex_->rotation_ = -15.0f;
+	bossTex_->SetPos(
+		-(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height * 0.5f);
+	bossTex_->color_.SetColor255(255, 255, 255, 100);
+
+	bossTexStartPos = {
+		-(float)NWindows::GetInstance()->kWin_width * 0.5f,
+		(float)NWindows::GetInstance()->kWin_height };
+	bossTexEndPos = {
+		(float)NWindows::GetInstance()->kWin_width + (float)NWindows::GetInstance()->kWin_width * 0.5f,
+		0.f };
+	bossTexNowPos = bossTexStartPos;
+
+	bossInTimer_.Reset();
+	bossOutTimer_.Reset();
 }
 
 void Boss::Update()
@@ -84,6 +105,26 @@ void Boss::Update()
 		Wave::GetInstance()->SetIsMove(false);
 		Player::GetInstance()->SetElapseSpeed(0.f);
 		Player::GetInstance()->SetIsMove(false);
+
+		//カメラの遷移も終わったタイミングで文字出し始める
+		if (bossInTimer_.GetStarted() == false && NCameraManager::GetInstance()->GetIsEntryCameraChanged())
+		{
+			bossInTimer_.Start();
+			NAudioManager::GetInstance()->Play("mutekiSE");	//音も鳴らす
+		}
+
+		//文字スライドさせて出現
+		if (bossInTimer_.GetRun())
+		{
+			bossTexNowPos.x = NEasing::InOutBack(
+				bossTexStartPos.x,
+				(float)NWindows::GetInstance()->kWin_width * 0.5f,
+				bossInTimer_.GetTimeRate());
+			bossTexNowPos.y = NEasing::InOutBack(
+				bossTexStartPos.y,
+				(float)NWindows::GetInstance()->kWin_height * 0.5f,
+				bossInTimer_.GetTimeRate());
+		}
 
 		//咆哮前のズームアウト終わったら咆哮音鳴らす
 		if (NCameraManager::GetInstance()->GetIsEntryCameraZoomOutEnd() &&
@@ -102,6 +143,37 @@ void Boss::Update()
 		entryTimer_.Reset();
 		NCameraManager::GetInstance()->ChangeCameara(CameraType::Normal);
 	}
+
+	//演出が終わったら掃けさせる
+	if (bossOutTimer_.GetStarted() == false && bossInTimer_.GetEnd() &&
+		NCameraManager::GetInstance()->GetNowCameraType() == CameraType::Normal)
+	{
+		bossOutTimer_.Start();
+	}
+
+	//文字スライドさせて掃けさす
+	if (bossOutTimer_.GetRun())
+	{
+		bossTexNowPos.x = NEasing::OutQuad(
+			(float)NWindows::GetInstance()->kWin_width * 0.5f,
+			bossTexEndPos.x,
+			bossOutTimer_.GetTimeRate());
+		bossTexNowPos.y = NEasing::OutQuad(
+			(float)NWindows::GetInstance()->kWin_height * 0.5f,
+			bossTexEndPos.y,
+			bossOutTimer_.GetTimeRate());
+	}
+
+	//全部終わったらリセット
+	if (bossOutTimer_.GetEnd())
+	{
+		bossInTimer_.Reset();
+		bossOutTimer_.Reset();
+	}
+
+	bossTex_->SetPos(bossTexNowPos.x, bossTexNowPos.y);
+	bossInTimer_.Update();
+	bossOutTimer_.Update();
 
 	//だんだん大きく
 	if (NCameraManager::GetInstance()->GetIsEntryCameraChanged() && scalingTimer_.GetStarted() == false)
@@ -161,6 +233,11 @@ void Boss::Draw()
 		obj_->Draw();
 		obj_->SetBlendMode(BlendMode::None);
 	}
+}
+
+void Boss::DrawSprite()
+{
+	bossTex_->Draw();
 }
 
 void Boss::OnCollision()

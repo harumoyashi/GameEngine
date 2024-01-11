@@ -766,6 +766,7 @@ void NGameScene::DrawForeSprite()
 		}
 
 		mutekiTex_->Draw();
+		Boss::GetInstance()->DrawSprite();
 
 		UIManager::GetInstance()->Draw(UIType::Menu);
 
