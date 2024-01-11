@@ -44,6 +44,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 					//基準となる座標から横にずらして生成
 					NVec3 generatePos = pos;
 					generatePos.x += (float)(i / 2) * 0.3f;
+					generatePos.z -= (float)(i / 2) * 0.3f;
 					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
 				}
 				else
@@ -51,6 +52,7 @@ void BulletFactory::Create(BulletType type, NVec3 pos, uint32_t level)
 					//1足してあげないと2の時0で重なっちゃう
 					NVec3 generatePos = pos;
 					generatePos.x -= (float)(i / 2 + 1) * 0.3f;
+					generatePos.z -= (float)(i / 2 + 1) * 0.3f;
 					BulletManager::GetInstance()->bullets_.back()->Generate(generatePos);
 				}
 			}
