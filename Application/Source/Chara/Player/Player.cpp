@@ -562,7 +562,24 @@ NColor Player::GamingColorUpdate()
 	}
 
 	NColor gamingColor(redTimer_.GetTimeRate(), greenTimer_.GetTimeRate(), blueTimer_.GetTimeRate());
-	return gamingColor * 0.7f;
+
+	float vR, vG, vB;
+	if (gamingColor.r <= 0.04045f)
+	{
+		vR = gamingColor.r / 12.92f;
+	}
+	else
+	{
+		vR = pow((gamingColor.r + 0.055f) / 1.055f, 2.4f);
+	}
+
+	//若干暗めにしつつ
+	gamingColor = gamingColor * 0.7f;
+	//人間が見た時の見え方が違うからRGBごとに調整
+	gamingColor.r *= 0.8f;
+	gamingColor.g *= 0.6f;
+	gamingColor.b *= 1.2f;
+	return gamingColor;
 }
 
 void Player::SetIsAlive(bool isAlive)
