@@ -509,7 +509,7 @@ void Player::LevelUp(BulletType bulletType)
 		lineLevel_ = maxBulLevel_;
 		sideLevel_ = maxBulLevel_;
 		wideLevel_ = maxBulLevel_;
-		//moveSpeed_ *= 7.f;
+		moveSpeed_ *= 1.5f;
 		isGodmode_ = true;
 		elapseSpeed_ = 0.f;
 		isMove_ = false;	//一旦演出終わるまで動けなくする
@@ -562,16 +562,6 @@ NColor Player::GamingColorUpdate()
 	}
 
 	NColor gamingColor(redTimer_.GetTimeRate(), greenTimer_.GetTimeRate(), blueTimer_.GetTimeRate());
-
-	float vR, vG, vB;
-	if (gamingColor.r <= 0.04045f)
-	{
-		vR = gamingColor.r / 12.92f;
-	}
-	else
-	{
-		vR = pow((gamingColor.r + 0.055f) / 1.055f, 2.4f);
-	}
 
 	//若干暗めにしつつ
 	gamingColor = gamingColor * 0.7f;
