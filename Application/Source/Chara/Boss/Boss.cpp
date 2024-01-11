@@ -90,6 +90,7 @@ void Boss::Update()
 			NAudioManager::GetInstance()->GetIsPlaying("shoutSE") == false)
 		{
 			NAudioManager::GetInstance()->Play("shoutSE");
+			NInput::GetInstance()->Vibration(0.8f,0.8f,0.5f);
 		}
 	}
 	//演出終わったら元のカメラに戻す

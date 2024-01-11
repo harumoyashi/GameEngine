@@ -142,11 +142,9 @@ PSOutput main(GSOutput input)
             shadecolor.rgb -= atten;
         }
     }
-
     
     // シェーディング色で描画
     float4 color = shadecolor * texcolor * m_color;
-    color += 0.2f;
     output.target0 = color;
     output.target1 = color;
     return output;

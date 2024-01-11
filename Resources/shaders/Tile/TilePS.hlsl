@@ -19,7 +19,7 @@ PSOutput main(GSOutput input)
     {
         texcolor = float4(1.0f - texcolor.rgb - 0.9f, texcolor.a);
     }
-    texcolor.rgb *= 0.8f;   //ˆÃ‚ß‚É‚·‚é
+    texcolor.rgb *= 0.2f;   //ˆÃ‚ß‚É‚·‚é
     
 	// Œõ‘ò“x
         const float shininess = 4.0f;
