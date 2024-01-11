@@ -23,6 +23,7 @@ protected:
 	std::unique_ptr<NObj3d> obj_;	//オブジェクト
 	CircleCollider circleCollider_;	//円コライダー
 	SquareCollider squareCollider_;	//矩形コライダー
+	float modelSize_;				//モデルのx軸の大きさ
 	float scaleAmount_;				//プレイヤーに対してのスケール比率(0.0f~1.0f)
 	NVec3 oriScale_;				//元のスケール保存用(リズム乗らすときずらすから)
 	NVec3 addScale_;				//スケールいじる用(リズム乗らすときずらすから)
@@ -42,6 +43,7 @@ protected:
 	std::string enemyTypeName_;		//敵の種族名
 	uint32_t enemyNum_;				//敵の識別番号
 	SimpleParticle deadParticle_;	//死んだときに出すパーティクル
+	float particleSize_;			//死んだときのパーティクルの大きさ
 
 	bool isItem_;					//アイテム持ってるかフラグ
 	bool isDraw_;					//描画するかフラグ

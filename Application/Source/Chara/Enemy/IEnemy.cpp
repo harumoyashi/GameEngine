@@ -30,17 +30,17 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 	obj_->scale_ = oriScale_;
 	obj_->color_ = NColor::kEnemy;
 
-	float modelSize = 1.f;	//モデルのx軸の大きさ
 	if (enemyTypeName_ == "mouse")
 	{
 		squareCollider_.SetIsActive(false);
 		circleCollider_.SetIsActive(true);
 		circleCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
-		modelSize = 2.f;
-		circleCollider_.SetRadius(obj_->scale_.x * modelSize / scaleAmount_);
+		modelSize_ = 2.f;
+		circleCollider_.SetRadius(obj_->scale_.x * modelSize_ / scaleAmount_);
 		circleCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&circleCollider_);
 		circleCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+		particleSize_ = 1.f;
 	}
 	else if (enemyTypeName_ == "snake")
 	{
@@ -49,11 +49,12 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 		squareCollider_.SetWide(1.f);
 		squareCollider_.SetHeight(0.2f);
-		modelSize = 10.f;
-		squareCollider_.SetSize(obj_->scale_.x * modelSize / scaleAmount_);
+		modelSize_ = 10.f;
+		squareCollider_.SetSize(obj_->scale_.x * modelSize_ / scaleAmount_);
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+		particleSize_ = 1.5f;
 	}
 	else if (enemyTypeName_ == "car")
 	{
@@ -62,11 +63,12 @@ void IEnemy::Generate(const NVec3& pos, const float moveAngle, const std::string
 		squareCollider_.SetCenterPos({ obj_->position_.x,obj_->position_.z });
 		squareCollider_.SetWide(0.6f);
 		squareCollider_.SetHeight(1.f);
-		modelSize = 6.f;
-		squareCollider_.SetSize(obj_->scale_.x * modelSize / scaleAmount_);
+		modelSize_ = 6.f;
+		squareCollider_.SetSize(obj_->scale_.x * modelSize_ / scaleAmount_);
 		squareCollider_.SetColID("enemy");
 		NCollisionManager::GetInstance()->AddCollider(&squareCollider_);
 		squareCollider_.SetOnCollision(std::bind(&IEnemy::OnCollision, this));
+		particleSize_ = 3.f;
 	}
 
 	obj_->Update();
@@ -192,7 +194,9 @@ void IEnemy::DeadParticle()
 	{
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->SetPos(GetPos());
 		NParticleManager::GetInstance()->enemyEmitters_[enemyNum_]->Add(
-			15, 0.25f, obj_->color_, 0.1f, 0.4f, { -0.3f,-0.1f,-0.3f }, { 0.3f,0.1f,0.3f }, 0.05f, -NVec3::one, NVec3::one);
+			15, 0.25f, obj_->color_,
+			particleSize_ * 0.1f, particleSize_ * 0.3f,
+			{ -0.3f,-0.1f,-0.3f }, { 0.3f,0.1f,0.3f }, 0.05f, -NVec3::one, NVec3::one);
 	}
 }
 
