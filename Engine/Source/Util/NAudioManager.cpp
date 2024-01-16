@@ -38,7 +38,7 @@ void NAudioManager::AllLoad()
 	LoadSound("title_BGM.mp3", "titleBGM", true);     //タイトルのBGM
 	LoadSound("play_BGM.mp3", "playBGM", true);       //プレイ中のBGM
 	LoadSound("clear_BGM.mp3", "clearBGM", true);     //クリアリザルトのBGM
-	LoadSound("faild_BGM.mp3", "faildBGM", true);     //失敗リザルトのBGM
+	LoadSound("failed_BGM.mp3", "failedBGM", true);   //失敗リザルトのBGM
 	LoadSound("muteki_BGM.mp3", "mutekiBGM", true);   //無敵中のBGM
 
 	//SE読み込み

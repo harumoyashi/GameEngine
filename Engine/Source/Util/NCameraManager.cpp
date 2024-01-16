@@ -187,10 +187,10 @@ void NCameraManager::BeforeStartCameraUpdate()
 	NCamera::sCurrentCamera = &beforeStartCamera_;
 }
 
-void NCameraManager::FaildCameraInit()
+void NCameraManager::FailedCameraInit()
 {
 	length_ = 2.0f;
-	faildCameraMoveEase_.Reset();
+	failedCameraMoveEase_.Reset();
 
 	currentTarget_ = NCamera::sCurrentCamera->GetTarget();
 	nextTarget_ = Player::GetInstance()->GetHeadPos();
@@ -205,38 +205,38 @@ void NCameraManager::FaildCameraInit()
 	nextFov_ = 45.0f;
 }
 
-void NCameraManager::FaildCameraUpdate()
+void NCameraManager::FailedCameraUpdate()
 {
 	if (isChange_ == false)
 	{
-		FaildCameraInit();
+		FailedCameraInit();
 		isChange_ = true;
 	}
 
 	//イージング用のタイマー動かす
-	faildCameraMoveEase_.Update();
-	if (faildCameraMoveEase_.GetStarted() == false)
+	failedCameraMoveEase_.Update();
+	if (failedCameraMoveEase_.GetStarted() == false)
 	{
-		faildCameraMoveEase_.Start();
+		failedCameraMoveEase_.Start();
 	}
 
 	//前のカメラから現在のカメラまでの補間
-	if (faildCameraMoveEase_.GetRun())
+	if (failedCameraMoveEase_.GetRun())
 	{
 		NVec3 target, pos, upVec;
-		target = MathUtil::OutQuad(currentTarget_, nextTarget_, faildCameraMoveEase_.GetTimeRate());
-		pos = MathUtil::OutQuad(currentPos_, nextPos_, faildCameraMoveEase_.GetTimeRate());
-		upVec = MathUtil::OutQuad(currentUpVec_, nextUpVec_, faildCameraMoveEase_.GetTimeRate());
+		target = MathUtil::OutQuad(currentTarget_, nextTarget_, failedCameraMoveEase_.GetTimeRate());
+		pos = MathUtil::OutQuad(currentPos_, nextPos_, failedCameraMoveEase_.GetTimeRate());
+		upVec = MathUtil::OutQuad(currentUpVec_, nextUpVec_, failedCameraMoveEase_.GetTimeRate());
 
-		faildCamera_.SetTarget(target);
-		faildCamera_.SetEye(pos);
-		faildCamera_.SetUpVec(upVec);
+		failedCamera_.SetTarget(target);
+		failedCamera_.SetEye(pos);
+		failedCamera_.SetUpVec(upVec);
 	}	//カメラ動くことないから補間終わったら放置
 
-	faildCamera_.SetEye(faildCamera_.GetEye() + shakeVec_);
+	failedCamera_.SetEye(failedCamera_.GetEye() + shakeVec_);
 
-	faildCamera_.Update();
-	NCamera::sCurrentCamera = &faildCamera_;
+	failedCamera_.Update();
+	NCamera::sCurrentCamera = &failedCamera_;
 }
 
 void NCameraManager::ClearCameraInit()
@@ -514,7 +514,7 @@ void NCameraManager::Init()
 	cameraRotEase_ = 8.0f;
 	normalCameraMoveEase_ = 0.8f;
 	beforeStartCameraMoveEase_ = 0.3f;
-	faildCameraMoveEase_ = 0.3f;
+	failedCameraMoveEase_ = 0.3f;
 	clearCameraMoveEase_ = 0.5f;
 	mutekiCameraMoveEase_ = 0.5f;
 	entryCameraMoveEase_ = 0.5f;
@@ -551,7 +551,7 @@ void NCameraManager::Update()
 		&NCameraManager::DebugCameraUpdate,
 		&NCameraManager::TitleCameraUpdate,
 		&NCameraManager::BeforeStartCameraUpdate,
-		&NCameraManager::FaildCameraUpdate,
+		&NCameraManager::FailedCameraUpdate,
 		&NCameraManager::ClearCameraUpdate,
 		&NCameraManager::MutekiCameraUpdate,
 		&NCameraManager::EntryCameraUpdate,

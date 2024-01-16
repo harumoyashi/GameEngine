@@ -23,7 +23,7 @@ void UIManager::Init()
 	ui_[(uint32_t)UIType::Title].sprite.CreateSprite("titleUI");
 	ui_[(uint32_t)UIType::Option].sprite.CreateSprite("optionUI");
 	ui_[(uint32_t)UIType::Clear].sprite.CreateSprite("clear");
-	ui_[(uint32_t)UIType::Faild].sprite.CreateSprite("faild");
+	ui_[(uint32_t)UIType::Failed].sprite.CreateSprite("failed");
 	ui_[(uint32_t)UIType::All].sprite.CreateSprite("allUI");
 	ui_[(uint32_t)UIType::BGM].sprite.CreateSprite("bgmUI");
 	ui_[(uint32_t)UIType::SE].sprite.CreateSprite("seUI");

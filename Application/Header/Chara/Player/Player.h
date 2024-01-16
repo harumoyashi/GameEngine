@@ -49,7 +49,7 @@ private:
 	float hitstopAmount = 0.2f;					//演出時間全体に対するヒットストップの割合
 
 	//------------------------ その他 ------------------------//
-	NEasing::EaseTimer faildEffectTimer_;			//失敗演出用タイマー
+	NEasing::EaseTimer failedEffectTimer_;			//失敗演出用タイマー
 
 	SimpleParticle clearParticle_;					//クリア時に出るパーティクル
 	NEasing::EaseTimer clearParticleTimer_ = 1.0f;	//クリア時に出るパーティクル用タイマー
@@ -81,7 +81,7 @@ public:
 	//クリア時専用の更新
 	void ClearUpdate();
 	//失敗時専用の更新
-	void FaildUpdate();
+	void FailedUpdate();
 	//描画
 	void Draw();
 

@@ -18,7 +18,7 @@ enum class UIType
 	Title,		//タイトルへ
 	Option,		//オプション
 	Clear,		//クリア
-	Faild,		//失敗
+	Failed,		//失敗
 	All,		//全部の音量
 	BGM,		//BGMの音量
 	SE,			//SEの音量

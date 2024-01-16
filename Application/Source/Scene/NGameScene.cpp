@@ -119,8 +119,8 @@ void NGameScene::Init()
 
 	UIManager::GetInstance()->SetPos(UIType::Clear, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
 	UIManager::GetInstance()->SetSize(UIType::Clear, { 350.f, 100.f });
-	UIManager::GetInstance()->SetPos(UIType::Faild, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
-	UIManager::GetInstance()->SetSize(UIType::Faild, { 350.f, 100.f });
+	UIManager::GetInstance()->SetPos(UIType::Failed, { -(float)NWindows::GetInstance()->kWin_width, 100.0f });
+	UIManager::GetInstance()->SetSize(UIType::Failed, { 425.f, 100.f });
 
 	//ポーズメニュー関連
 	UIManager::GetInstance()->SetAncorPoint(UIType::Menu, { 0.f, 0.f });
@@ -550,14 +550,14 @@ void NGameScene::Update()
 			{
 				NAudioManager::GetInstance()->Destroy("mutekiBGM");
 				NAudioManager::GetInstance()->Destroy("playBGM");
-				NAudioManager::GetInstance()->Play("faildBGM", true, 0.2f);
-				sScene = SceneMode::Faild;
+				NAudioManager::GetInstance()->Play("failedBGM", true, 0.2f);
+				sScene = SceneMode::Failed;
 				slideTimer_.Reset();
 				slideTimer_ = 0.5f;
-				Player::GetInstance()->FaildUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
+				Player::GetInstance()->FailedUpdate();	//ここでプレイヤーの座標変えてあげないとカメラの座標が死んだ座標基準になっちゃう
 				Player::GetInstance()->SetIsElapseAnime(false);
 				Score::SaveScore();	//死亡演出終わるまではスコア入れたげる
-				NCameraManager::GetInstance()->ChangeCameara(CameraType::Faild);
+				NCameraManager::GetInstance()->ChangeCameara(CameraType::Failed);
 			}
 
 			//ゴールしたらクリアリザルトへ
@@ -620,10 +620,10 @@ void NGameScene::Update()
 				NSceneChange::GetInstance()->Start();	//シーン遷移開始
 			}
 		}
-		else if (sScene == SceneMode::Faild)	//失敗リザルトの処理
+		else if (sScene == SceneMode::Failed)	//失敗リザルトの処理
 		{
 			lightGroup_->sPointLights[0]->SetActive(false);
-			Player::GetInstance()->FaildUpdate();
+			Player::GetInstance()->FailedUpdate();
 
 			//スタート線スライドタイマー開始
 			if (slideTimer_.GetStarted() == false)
@@ -633,13 +633,13 @@ void NGameScene::Update()
 			slideTimer_.Update();
 			//失敗テキストスライド
 			slidePos_ = NEasing::InQuad(-(float)NWindows::GetInstance()->kWin_width, 0.0f, slideTimer_.GetTimeRate());
-			UIManager::GetInstance()->SetPos(UIType::Faild,
+			UIManager::GetInstance()->SetPos(UIType::Failed,
 				{ NWindows::GetInstance()->kWin_width * 0.5f + slidePos_, 100.0f });
 
 			//リザルトスコアが上から落ちてくる
 			float slideP = NEasing::InOutBack(-Score::GetSize(Score::TexType::Result).y, 300.0f, slideTimer_.GetTimeRate());
 			Score::SetPos(
-				{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 2.f, slideP },
+				{ NWindows::kWin_width * 0.5f - Score::GetSize(Score::TexType::Result).x * 3.f, slideP },
 				Score::TexType::Result);
 			Score::SetPos(
 				{ NWindows::kWin_width * 0.5f, slideP - Score::GetSize(Score::TexType::Result).y },
@@ -672,7 +672,7 @@ void NGameScene::Update()
 		NAudioManager::GetInstance()->Destroy("mutekiBGM");
 		NAudioManager::GetInstance()->Destroy("playBGM");
 		NAudioManager::GetInstance()->Destroy("clearBGM");
-		NAudioManager::GetInstance()->Destroy("faildBGM");
+		NAudioManager::GetInstance()->Destroy("failedBGM");
 		//「リトライ」が選ばれてる時
 		if (pauseScene_ == PauseSceneMode::Retry)
 		{
@@ -722,7 +722,7 @@ void NGameScene::Draw3D()
 		Boss::GetInstance()->Draw();
 		ItemManager::GetInstance()->Draw();
 	}
-	else if (sScene == SceneMode::Faild)	//失敗シーン
+	else if (sScene == SceneMode::Failed)	//失敗シーン
 	{
 		EnemyManager::GetInstance()->Draw();
 		Boss::GetInstance()->Draw();
@@ -785,7 +785,7 @@ void NGameScene::DrawForeSprite()
 	UIManager::GetInstance()->Draw(UIType::Abutton);
 	UIManager::GetInstance()->Draw(UIType::AbuttonPush);
 	UIManager::GetInstance()->Draw(UIType::Clear);
-	UIManager::GetInstance()->Draw(UIType::Faild);
+	UIManager::GetInstance()->Draw(UIType::Failed);
 	UIManager::GetInstance()->DrawUIBul();
 
 	Score::Draw();

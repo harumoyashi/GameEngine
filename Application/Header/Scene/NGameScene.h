@@ -18,7 +18,7 @@ enum class SceneMode
 	Play,			//プレイ中
 	Pause,			//ポーズ
 	Clear,			//クリアリザルト
-	Faild,			//失敗リザルト
+	Failed,			//失敗リザルト
 };
 
 enum class PauseSceneMode

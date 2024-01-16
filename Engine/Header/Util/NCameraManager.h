@@ -11,7 +11,7 @@ enum class CameraType
 	Debug,			//デバッグ用
 	Title,			//タイトル用
 	BeforeStart,	//始まる前にゴール見せる用
-	Faild,			//失敗リザルト用
+	Failed,			//失敗リザルト用
 	Clear,			//クリアリザルト用
 	Muteki,			//無敵演出用
 	BossEntry,		//ボス登場演出用
@@ -45,8 +45,8 @@ private:
 	NCamera beforeStartCamera_;						//始まる前にゴール見せるカメラ
 	NEasing::EaseTimer beforeStartCameraMoveEase_;	//始まる前にゴール見せるカメラに持ってくためのイージング
 	//失敗リザルト時のカメラ関連
-	NCamera faildCamera_;							//失敗リザルトのカメラ
-	NEasing::EaseTimer faildCameraMoveEase_;		//失敗リザルトカメラに持ってくためのイージング
+	NCamera failedCamera_;							//失敗リザルトのカメラ
+	NEasing::EaseTimer failedCameraMoveEase_;		//失敗リザルトカメラに持ってくためのイージング
 	//クリアリザルト時のカメラ関連
 	NCamera clearCamera_;							//クリアリザルトのカメラ
 	NEasing::EaseTimer clearCameraMoveEase_;		//クリアリザルトカメラに持ってくためのイージング
@@ -105,9 +105,9 @@ private:
 	void BeforeStartCameraUpdate();
 
 	// 失敗リザルト時の初期化
-	void FaildCameraInit();
+	void FailedCameraInit();
 	// 失敗リザルト時の更新
-	void FaildCameraUpdate();
+	void FailedCameraUpdate();
 
 	// クリアリザルト時の初期化
 	void ClearCameraInit();

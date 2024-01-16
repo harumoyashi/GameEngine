@@ -89,8 +89,8 @@ bool Player::Init()
 	deadEffectTimer_ = 1.5f;	//スローは考慮せずに何秒か
 	deadEffectTimer_.Reset();
 
-	faildEffectTimer_ = 3.0f;
-	faildEffectTimer_.Reset();
+	failedEffectTimer_ = 3.0f;
+	failedEffectTimer_.Reset();
 
 	clearParticleTimer_.Reset();
 
@@ -254,17 +254,17 @@ void Player::ClearUpdate()
 	}
 }
 
-void Player::FaildUpdate()
+void Player::FailedUpdate()
 {
 	//タイマーループ
-	faildEffectTimer_.Roop();
+	failedEffectTimer_.Roop();
 
 	isDraw_ = true;						//絶対描画させる
 	Bloom::Init();						//ラジアルブラー切ってブルームに戻す
 	obj_->position_ = deadPos_ + NVec3(3.0f, 2.0f, -8.0f);	//死んだ座標を基準に適当な値足してそれっぽくする
 
 	//その場で回転させる
-	obj_->rotation_.y = MathUtil::Radian2Degree(faildEffectTimer_.GetTimeRate() * PI2);
+	obj_->rotation_.y = MathUtil::Radian2Degree(failedEffectTimer_.GetTimeRate() * PI2);
 
 	obj_->Update();
 }
