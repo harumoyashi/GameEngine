@@ -20,7 +20,7 @@ private:
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 	//デバッグレイヤーをオンにするために使用されるインターフェイス
-	ComPtr<ID3D12Debug> debugController_;
+	ComPtr<ID3D12Debug1> debugController_;
 
 	//基本オブジェクトの生成
 	//受け皿になる変数生成

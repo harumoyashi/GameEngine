@@ -18,6 +18,7 @@ void NDX12::Init(NWindows* win)
 	//デバッグレイヤーをオンに
 	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_)))) {
 		debugController_->EnableDebugLayer();
+		debugController_->SetEnableGPUBasedValidation(FALSE);
 	}
 #endif
 	InitializeFixFPS();
