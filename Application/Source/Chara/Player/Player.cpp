@@ -361,9 +361,9 @@ void Player::Move()
 	//弾レベルいじいじ
 	if (isLevelMane)
 	{
-		ImGui::SliderInt("LineLevel", &lineLv, 0, maxBulLevel_);
-		ImGui::SliderInt("SideLevel", &sideLv, 0, maxBulLevel_);
-		ImGui::SliderInt("WideLevel", &wideLv, 0, maxBulLevel_);
+		ImGui::SliderInt("LineLevel", &lineLv, 0, kMaxBulLevel_);
+		ImGui::SliderInt("SideLevel", &sideLv, 0, kMaxBulLevel_);
+		ImGui::SliderInt("WideLevel", &wideLv, 0, kMaxBulLevel_);
 		lineLevel_ = lineLv;
 		sideLevel_ = sideLv;
 		wideLevel_ = wideLv;
@@ -479,21 +479,21 @@ void Player::LevelUp(BulletType bulletType)
 	switch (bulletType)
 	{
 	case BulletType::LineBullet:
-		if (lineLevel_ < maxBulLevel_)
+		if (lineLevel_ < kMaxBulLevel_)
 		{
 			lineLevel_ += 1;
 			UIManager::GetInstance()->PlusUIBul("lineUI");
 		}
 		break;
 	case BulletType::SideBullet:
-		if (sideLevel_ < maxBulLevel_)
+		if (sideLevel_ < kMaxBulLevel_)
 		{
 			sideLevel_ += 1;
 			UIManager::GetInstance()->PlusUIBul("sideUI");
 		}
 		break;
 	case BulletType::WideBullet:
-		if (wideLevel_ < maxBulLevel_)
+		if (wideLevel_ < kMaxBulLevel_)
 		{
 			wideLevel_ += 1;
 			UIManager::GetInstance()->PlusUIBul("wideUI");
@@ -506,9 +506,9 @@ void Player::LevelUp(BulletType bulletType)
 		}
 		break;*/
 	case BulletType::MaxType:	//最強になる！！
-		lineLevel_ = maxBulLevel_;
-		sideLevel_ = maxBulLevel_;
-		wideLevel_ = maxBulLevel_;
+		lineLevel_ = kMaxBulLevel_;
+		sideLevel_ = kMaxBulLevel_;
+		wideLevel_ = kMaxBulLevel_;
 		moveSpeed_ *= 1.5f;
 		isGodmode_ = true;
 		elapseSpeed_ = 0.f;

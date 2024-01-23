@@ -74,8 +74,8 @@ struct NVertexFbx
 	NVec3 pos = { 0, 0, 0 };
 	NVec3 normal = { 0, 0, 1 };
 	NVec2 uv = { 0, 0 };
-	uint32_t boneIndex[maxBoneIndices];
-	float boneWeight[maxBoneIndices];
+	uint32_t boneIndex[kMaxBoneIndices];
+	float boneWeight[kMaxBoneIndices];
 
 	bool operator==(const NVertexFbx& a) const;
 

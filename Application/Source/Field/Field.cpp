@@ -356,7 +356,7 @@ void Field::Update()
 		field->SetAvoidArea(avoidArea_);
 		//とりあえず押し出しタイマーと同じにしてみる
 		field->SetFloatingTimer(NEasing::OutQuad(extrusionTimer_[0].GetTimeRate()));
-		for (uint32_t i = 0; i < maxObj; i++)
+		for (uint32_t i = 0; i < kMaxObj; i++)
 		{
 			field->SetObjPos(objPos_[i], i);
 		}

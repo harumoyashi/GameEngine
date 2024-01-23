@@ -68,7 +68,7 @@ private:
 	//画像
 	TextureHandle key_;
 
-	static const uint32_t maxCount_ = 256;	//最大数
+	static const uint32_t kMaxCount_ = 256;	//最大数
 	std::vector<Particle2D> particles_;	//パーティクル配列
 
 	bool isActive_ = false;

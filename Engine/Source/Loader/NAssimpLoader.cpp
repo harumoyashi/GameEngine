@@ -287,11 +287,11 @@ void NAssimpLoader::ParseSkin(FbxModel* model, aiMesh* mesh)
 				vertices[i].boneIndex[weightArrayIndex] = weightSet.index;
 				vertices[i].boneWeight[weightArrayIndex] = weightSet.weight;
 				// 4つに達したら終了
-				if (++weightArrayIndex >= maxBoneIndices)
+				if (++weightArrayIndex >= kMaxBoneIndices)
 				{
 					float weight = 0.f;
 					// 2番目以降のウェイトを合計
-					for (size_t j = 1; j < maxBoneIndices; j++)
+					for (size_t j = 1; j < kMaxBoneIndices; j++)
 					{
 						weight += vertices[i].boneWeight[j];
 					}

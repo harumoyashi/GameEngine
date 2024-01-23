@@ -1,9 +1,9 @@
 #include "Tile.hlsli"
 
 //一度にいじる頂点数
-static const uint vnum = 3;
+static const uint kVnum = 3;
 
-[maxvertexcount(vnum)]
+[maxvertexcount(kVnum)]
 void main(
 	triangle VSOutput input[3], //ポリゴンを形成する三角形ごとに処理される
     uint pid : SV_PrimitiveID, //各プリミティブのID(それぞれの面でふよふよ感を変えたいから)	
@@ -12,7 +12,7 @@ void main(
 {
     GSOutput element; //出力用頂点データ
     
-    for (uint i = 0; i < vnum; i++)
+    for (uint i = 0; i < kVnum; i++)
     {
         //ワールド行列からスケールを抽出
         float x = sqrt(pow(world[0][0], 2) + pow(world[0][1], 2) + pow(world[0][2], 2));

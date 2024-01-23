@@ -155,7 +155,7 @@ void NGameScene::Init()
 
 	lightGroup_->sPointLights[0]->SetLightAtten({ 0.05f,0.05f,0.05f });
 	lightGroup_->sPointLights[0]->SetActive(true);
-	for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
+	for (uint32_t i = 2; i < BulletManager::GetInstance()->kMaxBul + 2; i++)
 	{
 		lightGroup_->sPointLights[i]->SetActive(false);
 		lightGroup_->sPointLights[i]->SetLightAtten({ 0.1f,0.1f,0.1f });
@@ -413,7 +413,7 @@ void NGameScene::Update()
 			lightGroup_->sPointLights[1]->SetLightColor(itemColor.GetRGB());
 		}
 
-		for (uint32_t i = 2; i < BulletManager::GetInstance()->maxBul + 2; i++)
+		for (uint32_t i = 2; i < BulletManager::GetInstance()->kMaxBul + 2; i++)
 		{
 			lightGroup_->sPointLights[i]->SetActive(false);
 		}

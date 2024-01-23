@@ -19,10 +19,10 @@ void Wave::Init()
 	moveSpeed_ = 0.01f;		//プレイヤーが0.05fの場合
 	isMove_ = true;
 #pragma region オブジェクトの生成,設定
-	for (uint32_t i = 0; i < waveDivide_; i++)
+	for (uint32_t i = 0; i < kWaveDivide_; i++)
 	{
 		//もうあるなら作らない
-		if ((uint32_t)obj_.size() < waveDivide_)
+		if ((uint32_t)obj_.size() < kWaveDivide_)
 		{
 			obj_.emplace_back();
 			obj_[i] = std::make_unique<NObj3d>();
@@ -39,7 +39,7 @@ void Wave::Init()
 		//フィールドの横幅をもとに分割する
 		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
 		obj_[i]->scale_ =
-		{ waveScaleX / waveDivide_,1.0f, scaleZ_ };
+		{ waveScaleX / kWaveDivide_,1.0f, scaleZ_ };
 		obj_[i]->position_ =
 		{ obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX, 0.1f,  posZ_ };
 		obj_[i]->color_.SetColor255(180, 180, 180, 200);
@@ -88,7 +88,7 @@ void Wave::Update()
 	{
 		float waveScaleX = Field::GetInstance()->GetActivityAreaX() * 2.0f;
 		//「全体の大きさ/分割数」を横幅とする
-		obj_[i]->scale_ = { waveScaleX / waveDivide_,1.0f, scaleZ_ };
+		obj_[i]->scale_ = { waveScaleX / kWaveDivide_,1.0f, scaleZ_ };
 		//分割数に応じて座標もずらしてく
 		obj_[i]->position_.x = obj_[i]->scale_.x * 2.0f * i - obj_[i]->scale_.x - waveScaleX;
 	}

@@ -1,7 +1,7 @@
 #include "BackObj.hlsli"
 
 //一度にいじる頂点数
-static const uint vnum = 3;
+static const uint kVnum = 3;
 
 [maxvertexcount(15)] //上面(三角) * 1 + 側面(四角) * 3 = 15(一度にいじる頂点数)
 void main(
@@ -21,7 +21,7 @@ void main(
     
     //------------- 三角形の各頂点のワールド座標代入 -------------//
     float3 wpos[6]; //押し出す前の三角形 + 押し出した後の三角形 = 6頂点
-    for (uint i = 0; i < vnum; i++)
+    for (uint i = 0; i < kVnum; i++)
     {
         wpos[i] = mul(world, float4(input[i].pos, 1)).xyz;
     }
@@ -36,28 +36,28 @@ void main(
     //その方向に押し出す量を掛けたオフセットを出す
     float3 offset = normalize(mul(world, float4(triNormal, 0))).xyz * extrusion;
     //押し出した座標を取得
-    for (uint j = vnum; j < 6; j++)
+    for (uint j = kVnum; j < 6; j++)
     {
-        wpos[j] = wpos[j - vnum] + offset; //押し出す前の頂点 + オフセット
+        wpos[j] = wpos[j - kVnum] + offset; //押し出す前の頂点 + オフセット
     }
             
     //------------- 押し出した上面と側面のプリミティブを出力する -------------//   
     if (isAvoid)
     {
         //押し出された上面の三角形
-        for (uint k = vnum; k < 6; k++)
+        for (uint k = kVnum; k < 6; k++)
         {
             element.svpos = mul(viewproj, float4(wpos[k], 1));
             element.worldpos = float4(wpos[k], 1);
             element.normal = triNormal * saturate(wpos[k].xyz);
-            element.uv = input[k - vnum].uv;
+            element.uv = input[k - kVnum].uv;
             element.scale = scale;
         
             output.Append(element);
         }
         
         //側面
-        for (uint l = 0; l < vnum; l++)
+        for (uint l = 0; l < kVnum; l++)
         {
             element.svpos = mul(viewproj, float4(wpos[l + 3], 1));
             element.worldpos = float4(wpos[l + 3], 1);
@@ -111,7 +111,7 @@ void main(
     {
         for (uint i = 0; i < 5; i++)
         {
-            for (uint j = 0; j < vnum; j++)
+            for (uint j = 0; j < kVnum; j++)
             {
                 element.svpos = mul(viewproj, float4(wpos[j], 1));
                 element.worldpos = float4(wpos[j], 1);

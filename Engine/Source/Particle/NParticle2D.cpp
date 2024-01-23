@@ -66,7 +66,7 @@ void Emitter2D::Add(uint32_t addNum, float life, float minScale, float maxScale,
 	for (uint32_t i = 0; i < addNum; i++)
 	{
 		//指定した最大数超えてたら生成しない
-		if (particles_.size() >= maxCount_)
+		if (particles_.size() >= kMaxCount_)
 		{
 			return;
 		}

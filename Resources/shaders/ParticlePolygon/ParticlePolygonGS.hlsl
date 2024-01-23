@@ -1,10 +1,10 @@
 #include "ParticlePolygon.hlsli"
 
 //四角形の頂点数
-static const uint vnum = 3;
+static const uint kVnum = 3;
 
 //センターからのオフセット
-static const float4 offset_array[vnum] =
+static const float4 kOffset_array[kVnum] =
 {
     float4(-0.5f, -0.5f, -0.5f, 0), //左下
     float4(-0.5f, +0.5f, -0.5f, 0), //左上
@@ -12,21 +12,21 @@ static const float4 offset_array[vnum] =
 };
 
 //左上が0,0　右下が1,1
-static const float2 uv_array[vnum] =
+static const float2 kUV_array[kVnum] =
 {
     float2(0.0f, 1.0f), //左下
     float2(0.0f, 0.0f), //左上
     float2(1.0f, 0.0f), //右上
 };
 
-static const float3 normal_array[vnum] =
+static const float3 kNormal_array[kVnum] =
 {
     float3(0.0f, 0.0f, -1.0f), //左下
     float3(0.0f, 0.0f, -1.0f), //左上
     float3(0.0f, 0.0f, -1.0f), //右上
 };
 
-[maxvertexcount(vnum)]
+[maxvertexcount(kVnum)]
 void main(
 	point VSOutput input[1],
 	inout TriangleStream<GSOutput> output
@@ -34,10 +34,10 @@ void main(
 {
     GSOutput element; //出力用頂点データ
    
-    for (uint i = 0; i < vnum; i++)
+    for (uint i = 0; i < kVnum; i++)
     {
         //中心からのオフセットをスケーリング
-        float4 offset = offset_array[i] * input[0].scale;
+        float4 offset = kOffset_array[i] * input[0].scale;
         
         //Z軸回転行列
         float sinZ = sin(input[0].rot.z);
@@ -88,9 +88,9 @@ void main(
         element.svpos = svpos;
         element.worldpos = wpos;
         element.color = input[0].color;
-        float4 wnormal = normalize(mul(rotMat, float4(normal_array[i], 0)));
+        float4 wnormal = normalize(mul(rotMat, float4(kNormal_array[i], 0)));
         element.normal = wnormal.xyz;
-        element.uv = uv_array[i];
+        element.uv = kUV_array[i];
         
         output.Append(element);
     }

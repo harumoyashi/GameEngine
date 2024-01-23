@@ -3,7 +3,7 @@
 
 // 便利な構造体やら関数やら //
 
-static const int maxBoneIndices = 4;
+static const int kMaxBoneIndices = 4;
 
 enum class BlendMode
 {

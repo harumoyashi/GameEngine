@@ -35,7 +35,7 @@ private:
 	NEasing::EaseTimer godmodeTimer_;		//無敵時間
 
 	//------------------------ 弾関連 ------------------------//
-	const uint32_t maxBulLevel_ = 5;	//弾の最高レベル(共通)
+	const uint32_t kMaxBulLevel_ = 5;	//弾の最高レベル(共通)
 	uint32_t lineLevel_;				//通常弾のレベル
 	uint32_t sideLevel_;				//横方向に出る弾のレベル
 	uint32_t wideLevel_;				//左右に角度つけて出る弾のレベル

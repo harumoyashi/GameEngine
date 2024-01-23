@@ -97,7 +97,7 @@ struct ConstBuffDataCircleShadow
 };
 
 //タイル
-static const uint32_t maxObj = 256;
+static const uint32_t kMaxObj = 256;
 struct ConstBuffDataTile
 {
 	float divide;						//分割幅
@@ -108,7 +108,7 @@ struct ConstBuffDataTile
 	float pad1;
 	float pad2;
 	float pad3;
-	std::array<NVec3,maxObj> objPos;	//フィールド上にいるオブジェクトの座標
+	std::array<NVec3,kMaxObj> objPos;	//フィールド上にいるオブジェクトの座標
 };
 
 //背景オブジェクト
@@ -119,8 +119,8 @@ struct ConstBuffDataBackObj
 };
 
 //スキン情報
-static const uint32_t maxBones = 32;
+static const uint32_t kMaxBones = 32;
 struct ConstBuffDataSkin
 {
-	std::array<NMatrix4, maxBones> bones;
+	std::array<NMatrix4, kMaxBones> bones;
 };

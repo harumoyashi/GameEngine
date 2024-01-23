@@ -16,7 +16,7 @@ private:
 	bool isAvoid_;						//避けるようになるか否か
 	float avoidArea_;					//避ける範囲
 	float floatingTimer_;				//ふよふよタイマー
-	std::array<NVec3,maxObj> objPos_;	//フィールド上にいるオブジェクトの座標
+	std::array<NVec3,kMaxObj> objPos_;	//フィールド上にいるオブジェクトの座標
 
 public:
 	//初期化

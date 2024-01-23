@@ -28,12 +28,12 @@ void UIManager::Init()
 	ui_[(uint32_t)UIType::BGM].sprite.CreateSprite("bgmUI");
 	ui_[(uint32_t)UIType::SE].sprite.CreateSprite("seUI");
 	//弾取った時のやつは動的に割り当てるからとりま空
-	for (uint32_t i = 0; i < maxUIBul; i++)
+	for (uint32_t i = 0; i < kMaxUIBul; i++)
 	{
 		uiBul_[i].sprite.CreateSprite();
 	}
 	//音量調節UIは四角2つと点1つで構成される
-	for (uint32_t i = 0; i < maxUIVol; i++)
+	for (uint32_t i = 0; i < kMaxUIVol; i++)
 	{
 		uiVol_[i].at(0).sprite.CreateSprite("white");
 		uiVol_[i].at(1).sprite.CreateSprite("white");
@@ -41,7 +41,7 @@ void UIManager::Init()
 	}
 
 	//こっち側で初期値設定するやつ
-	for (uint32_t i = 0; i < maxUIBul; i++)
+	for (uint32_t i = 0; i < kMaxUIBul; i++)
 	{
 		uiBul_[i].sprite.SetSize(250.f, 25.f);	//比率10:1
 		uiBul_[i].sprite.SetPos(-150.f, 150.f);
@@ -221,7 +221,7 @@ void UIManager::SetUIVol()
 		{ (float)NWindows::GetInstance()->kWin_width * 0.5f,
 		(float)NWindows::GetInstance()->kWin_height * 0.5f + 80.0f });
 
-	for (uint32_t i = 0; i < maxUIVol; i++)
+	for (uint32_t i = 0; i < kMaxUIVol; i++)
 	{
 		for (uint32_t j = 0; j < 2; j++)
 		{

@@ -86,10 +86,10 @@ struct VSOutput
     float2 uv : TEXCOORD;       // uv’l
 };
 
-static const int maxBones = 32;
+static const int kMaxBones = 32;
 cbuffer ConstantBufferDataSkinning : register(b4)
 {
-    matrix skinningMat[maxBones];
+    matrix skinningMat[kMaxBones];
 }
 
 struct SkinOutput

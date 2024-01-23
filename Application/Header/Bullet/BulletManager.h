@@ -11,7 +11,7 @@ private:
 
 public:
 	std::vector<std::unique_ptr<IBullet>> bullets_;	//弾ども
-	const uint32_t maxBul = 126;	//最大弾数
+	const uint32_t kMaxBul = 126;	//最大弾数
 
 public:
 	//シングルトンインスタンス取得
@@ -28,7 +28,7 @@ public:
 	void EraceBegin();
 
 	//満杯かどうか返す
-	bool GetIsEmpty() { return bullets_.size() >= maxBul; }
+	bool GetIsEmpty() { return bullets_.size() >= kMaxBul; }
 
 private:
 	//コンストラクタ

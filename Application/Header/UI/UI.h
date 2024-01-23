@@ -40,11 +40,11 @@ class UIManager
 {
 private:
 	std::vector<UI> ui_{ ((uint32_t)UIType::Max) };		//UI群
-	const uint32_t maxUIBul = 3;
-	std::vector<UI> uiBul_{ (maxUIBul) };				//弾取った時のUI群
-	const uint32_t maxUIVol = 3;
+	const uint32_t kMaxUIBul = 3;
+	std::vector<UI> uiBul_{ (kMaxUIBul) };				//弾取った時のUI群
+	const uint32_t kMaxUIVol = 3;
 	//背景box,ゲージbox,点の3つで構成されるからarrayとの二重配列にしてる
-	std::vector<std::array<UI,3>> uiVol_{(maxUIVol)};	//音量調節UI群
+	std::vector<std::array<UI,3>> uiVol_{(kMaxUIVol)};	//音量調節UI群
 
 public:
 	//コンストラクタ
