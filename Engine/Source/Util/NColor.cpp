@@ -10,7 +10,7 @@ const NColor NColor::kWhite(1.0f, 1.0f, 1.0f);
 const NColor NColor::kBlack(0, 0, 0);
 const NColor NColor::kPlayer(210.f / 225.f, 40.f / 225.f, 20.f / 225.f);
 const NColor NColor::kEnemy(0.05f, 0.5f, 0.8f);
-const NColor NColor::kItem(0.2f, 0.8f, 0.05f);
+const NColor NColor::kItem(160.f / 225.f, 140.f / 225.f, 40.f / 225.f);
 
 
 void NColor::SetColor255(const uint32_t R, const uint32_t G, const uint32_t B, const uint32_t A)
