@@ -23,21 +23,12 @@ class NTitleScene final :
 private:
 	//オブジェクト
 
-
 	//背景スプライト
-	std::unique_ptr<NSprite> backSprite_;	//背景スプライト
 
 	//前景スプライト
-	std::unique_ptr<NSprite> titleLogo_;						//タイトルロゴ
-	std::vector<std::unique_ptr<NSprite>> aButton_{ 2 };		//AボタンUI
-	NEasing::EaseTimer flashingTimer_ = 1.0f;					//点滅タイマー
 
 	//ライトたち
 	std::unique_ptr<NLightGroup> lightGroup_;
-
-	//その他
-	NEasing::EaseTimer logoMoveTimer_ = 2.f;					//タイトルロゴ動かす用タイマー
-	float logoPosY_;											//タイトルロゴY座標
 
 public:
 	//コンストラクタ

@@ -3,8 +3,6 @@
 #include "NCamera.h"
 #include "NMathUtil.h"
 
-#include "Player.h"
-
 NLightGroup* IEmitter3D::sLightGroup = nullptr;
 
 IEmitter3D::IEmitter3D()
@@ -42,7 +40,7 @@ void IEmitter3D::Update()
 {
 	if (isElapse_)
 	{
-		SetElapseSpeed(Player::GetInstance()->GetElapseSpeed());
+		SetElapseSpeed(1.f);
 	}
 
 	//寿命が尽きたパーティクルを全削除

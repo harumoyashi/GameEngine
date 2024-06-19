@@ -10,18 +10,6 @@ enum class CameraType
 	Normal,			//通常(プレイ中)
 	Debug,			//デバッグ用
 	Title,			//タイトル用
-	BeforeStart,	//始まる前にゴール見せる用
-	Failed,			//失敗リザルト用
-	Clear,			//クリアリザルト用
-	Muteki,			//無敵演出用
-	BossEntry,		//ボス登場演出用
-};
-
-enum class EntryState
-{
-	CameraChange,	//カメラ遷移
-	ZoomOut,		//咆哮前にカメラ引き
-	Shake			//咆哮中のカメラシェイク
 };
 
 class NCameraManager final
@@ -41,25 +29,7 @@ private:
 	NCamera titleCamera_;							//タイトルのカメラ
 	NEasing::EaseTimer titleCameraMoveEase_;		//タイトルカメラに持ってくためのイージング
 	NEasing::EaseTimer cameraRotEase_;				//カメラを回転させる用のタイマー
-	//始まる前にゴール見せる時のカメラ関連
-	NCamera beforeStartCamera_;						//始まる前にゴール見せるカメラ
-	NEasing::EaseTimer beforeStartCameraMoveEase_;	//始まる前にゴール見せるカメラに持ってくためのイージング
-	//失敗リザルト時のカメラ関連
-	NCamera failedCamera_;							//失敗リザルトのカメラ
-	NEasing::EaseTimer failedCameraMoveEase_;		//失敗リザルトカメラに持ってくためのイージング
-	//クリアリザルト時のカメラ関連
-	NCamera clearCamera_;							//クリアリザルトのカメラ
-	NEasing::EaseTimer clearCameraMoveEase_;		//クリアリザルトカメラに持ってくためのイージング
-	//無敵演出時のカメラ関連
-	NCamera mutekiCamera_;							//無敵演出時のカメラ
-	NEasing::EaseTimer mutekiCameraMoveEase_;		//無敵演出時カメラに持ってくためのイージング
-	//ボス登場演出時のカメラ関連
-	NCamera entryCamera_;							//ボス登場演出時のカメラ
-	NEasing::EaseTimer entryCameraMoveEase_;		//ボス登場演出時カメラに持ってくためのイージング
-	NEasing::EaseTimer entryCameraZoomOutEase_;		//ボス登場演出時カメラ一瞬引くためのイージング
-	NEasing::EaseTimer entryCameraShakeEase_;		//ボス登場演出時カメラ揺らすためのイージング
-	EntryState entryState_ = EntryState::CameraChange;
-
+	
 	// 姿勢制御関連
 	NVec3 frontVec_;
 	NVec3 upVec_;
@@ -99,31 +69,6 @@ private:
 	// タイトル時の更新
 	void TitleCameraUpdate();
 
-	// 始まる前にゴール見せる時の初期化
-	void BeforeStartCameraInit();
-	// 始まる前にゴール見せる時の更新
-	void BeforeStartCameraUpdate();
-
-	// 失敗リザルト時の初期化
-	void FailedCameraInit();
-	// 失敗リザルト時の更新
-	void FailedCameraUpdate();
-
-	// クリアリザルト時の初期化
-	void ClearCameraInit();
-	// クリアリザルト時の更新
-	void ClearCameraUpdate();
-
-	// 無敵演出時の初期化
-	void MutekiCameraInit();
-	// 無敵演出時の更新
-	void MutekiCameraUpdate();
-
-	// ボス登場演出時の初期化
-	void EntryCameraInit();
-	// ボス登場演出時の更新
-	void EntryCameraUpdate();
-
 	//　カメラシェイク用更新処理
 	void ShakeUpdate();
 
@@ -143,12 +88,6 @@ public:
 	bool GetIsActive() { return isActive_; }
 	//通常カメラへの遷移が完了したかどうか取得
 	bool GetIsNormalCameraChanged() { return normalCameraMoveEase_.GetEnd(); }
-	//無敵演出カメラへの遷移が完了したかどうか取得
-	bool GetIsMutekiCameraChanged() { return mutekiCameraMoveEase_.GetEnd(); }
-	//ボスの登場演出カメラへの遷移が完了したかどうか取得
-	bool GetIsEntryCameraChanged() { return entryCameraMoveEase_.GetEnd(); }
-	//ボスの登場演出カメラの引きが完了したかどうか取得
-	bool GetIsEntryCameraZoomOutEnd() { return entryCameraZoomOutEase_.GetEnd(); }
 	//現在のカメラタイプがデバッグカメラかフラグを取得
 	bool GetIsDebugCamera() { return (CameraType)nowCameraType_ == CameraType::Debug; }
 	//現在のカメラの種類取得

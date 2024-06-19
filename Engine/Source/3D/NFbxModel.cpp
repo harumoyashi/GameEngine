@@ -3,7 +3,6 @@
 #include "NAssimpLoader.h"
 #include "NQuaternion.h"
 #include "NMathUtil.h"
-#include "Player.h"
 
 FbxModel::FbxModel()
 {
@@ -38,7 +37,7 @@ void FbxModel::PlayAnimation(bool isElapse)
 	//ここでPlayer呼ぶことで他のとこになるべく影響でないように
 	if (isElapse)
 	{
-		animation.timer.Update(true, Player::GetInstance()->GetElapseSpeed());
+		animation.timer.Update(true);
 	}
 	else
 	{

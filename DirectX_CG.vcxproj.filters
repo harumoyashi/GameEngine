@@ -1,15 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Application\Source\Bullet\BulletFactory.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\EnemyFactory.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="Application\Source\Field\Field.cpp" />
-    <ClCompile Include="Application\Source\Bullet\IBullet.cpp" />
-    <ClCompile Include="Application\Source\Bullet\BulletManager.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\IEnemy.cpp" />
     <ClCompile Include="Engine\Source\Scene\IScene.cpp" />
-    <ClCompile Include="Application\Source\Bullet\LineBullet.cpp" />
     <ClCompile Include="Engine\Source\Loader\NAssimpLoader.cpp" />
     <ClCompile Include="Engine\Source\Util\NImGuiManager.cpp" />
     <ClCompile Include="Engine\Source\Collision\NBaseCollider.cpp" />
@@ -69,27 +61,14 @@
     <ClCompile Include="Engine\Source\Util\NUtil.cpp" />
     <ClCompile Include="Engine\Source\Math\NVec4.cpp" />
     <ClCompile Include="Engine\Source\Particle\NParticle3D.cpp" />
-    <ClCompile Include="Application\Source\Chara\Player\Player.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\RadialBlur.cpp" />
-    <ClCompile Include="Application\Source\Bullet\SideBullet.cpp" />
     <ClCompile Include="Engine\Source\Particle\SimpleParticle.cpp" />
     <ClCompile Include="Engine\Source\Collision\SphereCollider.cpp" />
-    <ClCompile Include="Application\Source\Field\Wave.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\Mouse.cpp" />
     <ClCompile Include="Engine\Source\3D\NFbxModel.cpp" />
     <ClCompile Include="Engine\Source\3D\NMesh.cpp" />
     <ClCompile Include="Engine\Source\3D\NObjModel.cpp" />
     <ClCompile Include="Engine\Source\Util\NumDrower.cpp" />
-    <ClCompile Include="Application\Source\Field\Score.cpp" />
-    <ClInclude Include="Application\Header\Bullet\BulletFactory.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\EnemyFactory.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\EnemyManager.h" />
-    <ClInclude Include="Application\Header\Field\Field.h" />
-    <ClInclude Include="Application\Header\Bullet\IBullet.h" />
-    <ClInclude Include="Application\Header\Bullet\BulletManager.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\IEnemy.h" />
     <ClInclude Include="Engine\Header\Scene\IScene.h" />
-    <ClInclude Include="Application\Header\Bullet\LineBullet.h" />
     <ClInclude Include="Engine\Header\Loader\NAssimpLoader.h" />
     <ClInclude Include="External\json.hpp" />
     <ClInclude Include="Engine\Header\Collision\NBaseCollider.h" />
@@ -150,28 +129,16 @@
     <ClInclude Include="Engine\Header\Util\NUtil.h" />
     <ClInclude Include="Engine\Header\Math\NVec4.h" />
     <ClInclude Include="Engine\Header\Particle\NParticle3D.h" />
-    <ClInclude Include="Application\Header\Chara\Player\Player.h" />
     <ClInclude Include="Engine\Header\PostEffect\RadialBlur.h" />
-    <ClInclude Include="Application\Header\Bullet\SideBullet.h" />
     <ClInclude Include="Engine\Header\Particle\SimpleParticle.h" />
     <ClInclude Include="Engine\Header\Collision\SphereCollider.h" />
-    <ClInclude Include="Application\Header\Field\Wave.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\Mouse.h" />
-    <ClInclude Include="Application\Header\Item\Item.h" />
-    <ClInclude Include="Application\Header\Item\ItemManager.h" />
     <ClCompile Include="Engine\Source\Collision\PlaneCollider.cpp" />
-    <ClCompile Include="Application\Source\Bullet\WideBullet.cpp" />
     <ClCompile Include="Engine\Source\Collision\RayCollider.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\NPostEffectManager.cpp" />
     <ClCompile Include="Engine\Source\PostEffect\Bloom.cpp" />
-    <ClCompile Include="Application\Source\UI\UI.cpp" />
     <ClCompile Include="Engine\Source\Particle\NGPUParticle.cpp" />
-    <ClCompile Include="Application\Source\Field\BackObj.cpp" />
-    <ClCompile Include="Application\Source\Chara\Boss\Boss.cpp" />
     <ClCompile Include="Engine\Source\Collision\CircleCollider.cpp" />
     <ClCompile Include="Engine\Source\Collision\SquareCollider.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\Snake.cpp" />
-    <ClCompile Include="Application\Source\Chara\Enemy\Car.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main\main.cpp">
@@ -182,9 +149,6 @@
     <ClInclude Include="Engine\Header\3D\NMesh.h" />
     <ClInclude Include="Engine\Header\3D\NObjModel.h" />
     <ClInclude Include="Engine\Header\Util\NumDrower.h" />
-    <ClInclude Include="Application\Header\Field\Score.h" />
-    <ClCompile Include="Application\Source\Item\Item.cpp" />
-    <ClCompile Include="Application\Source\Item\ItemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -204,18 +168,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Header\Collision\PlaneCollider.h" />
-    <ClInclude Include="Application\Header\Bullet\WideBullet.h" />
     <ClInclude Include="Engine\Header\Collision\RayCollider.h" />
     <ClInclude Include="Engine\Header\PostEffect\NPostEffectManager.h" />
     <ClInclude Include="Engine\Header\PostEffect\Bloom.h" />
-    <ClInclude Include="Application\Header\UI\UI.h" />
     <ClInclude Include="Engine\Header\Particle\NGPUParticle.h" />
-    <ClInclude Include="Application\Header\Field\BackObj.h" />
-    <ClInclude Include="Application\Header\Chara\Boss\Boss.h" />
     <ClInclude Include="Engine\Header\Collision\CircleCollider.h" />
     <ClInclude Include="Engine\Header\Collision\SquareCollider.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\Snake.h" />
-    <ClInclude Include="Application\Header\Chara\Enemy\Car.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\BackObj\BackObjGS.hlsl" />
